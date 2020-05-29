@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>スプラッシュ スクリーン をWPFへ追加する</title>
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+スプラッシュ スクリーン をWPFへ追加する</h1>
+
+<p> 以下の手順でスプラッシュ スクリーン をWPFへ追加します。</p>
+<ol>
+	<li>スプラッシュ スクリーンに使用するイメージを作成または検索します。BMP、GIF、JPEG、PNG、TIFF形式などを使用できます。</li>
+	<li>イメージファイルを WPF アプリケーション プロジェクトへ追加します。</li>
+	<li>ソリューション エクスプローラーでイメージを選択します。</li>
+	<li>[プロパティ]ウィンドウで、[ビルドアクション]プロパティのドロップダウン矢印をクリックします。</li>
+	<li>ドロップダウン リストの[SplashScreen]をクリックします。<br>
+	<img alt="" height="262" src="SplashScreen/VS_property_2.png" width="359"></li>
+	<li>スプラッシュ スクリーンの表時間が短すぎる場合は、MainWindowのコンストラクタに待ち時間処理を追加。<br>(例)<br>public 
+	MainWindow()<br>{<br>&nbsp;&nbsp;&nbsp; this.InitializeComponent();<br>&nbsp;&nbsp;&nbsp; 
+	// オブジェクト作成に必要なコードをこの点の下に挿入します。<br>&nbsp;&nbsp;&nbsp;
+	<span class="auto-style8">System.Threading.Thread.Sleep(1000);</span><br>}</li>
+</ol>
+<p>参考URL：<br>
+(1)
+<a href="http://msdn.microsoft.com/ja-jp/library/vstudio/cc656886.aspx" target="_blank">
+方法 : スプラッシュ スクリーンを WPF アプリケーションに追加する</a><br>(2)
+<a href="http://msdn.microsoft.com/ja-jp/library/vstudio/system.windows.splashscreen.aspx">
+SplashScreen クラス</a></p>
+<p>サンプルプログラム：<a href="SplashScreen/SplashScreen.zip">ダウンロード</a><br>&nbsp;&nbsp;&nbsp; 
+作成： Visual Studio 2012</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2012年12月07日 木下英俊<br>
+</font></p>
+</body>
+</html>

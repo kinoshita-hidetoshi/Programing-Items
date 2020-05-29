@@ -1,0 +1,170 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>WPF - ImageViewer</title>
+<meta content="WPFのドラッグ＆ドロップの秀作" name="description">
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	color: #990000;
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+WPF : ImageViewer</h1>
+<p class="auto-style7">
+「ドラッグ＆ドロップ」の秀作として、WPFでImageViewrを作ってみます。</p>
+<p class="auto-style7">
+作ってみるのは以下のようなアプリケーションです。ここにエクスプローラなどから画像ファイルをドロップすることでその画像を表示するアプリケーションを作成します。</p>
+<p class="auto-style7">
+<img alt="" src="ImageViewer/imgE1.jpg"></p>
+<p>開発環境：</p>
+<ul>
+	<li>Visual Studio 2012</li>
+	<li>.NET4</li>
+</ul>
+<hr>
+<h2>
+1. VS2012でWPF新規プロジェクトを作成</h2>
+<p class="auto-style7">
+最初にVS2012でWPF新規プロジェクトを作成します。<br>
+<img alt="" height="442" src="ImageViewer/img13.jpg" width="829"></p>
+<h2>
+2. 部品を配置、大きさを適当に修正</h2>
+<p class="auto-style7">
+(1) Windowの大きさを適当に修正。ここでは、幅を 287、高さを 272 に設定。<br>(2) Grid の下に Border と Image 
+を配置。後で使用するのでImageの名前を”Image01”と付けた。<br><br>
+<img alt="" src="ImageViewer/img17.jpg"></p>
+<h2>
+3. 起動時の画面イメージを作成</h2>
+<p class="auto-style7">
+起動時の画面であるメッセージ「ここに画像ファイルをドロップしてください。」をPNGファイルで作成し、Image01に表示します。<br>作成した画像は下図の通り。<br>
+<img alt="" height="303" src="ImageViewer/img1A.jpg" width="400"><br>これを Image01 
+の Source として設定し、Windowのタイトル（）を”ImageViewer”と設定すると、以下のようなアプリケーションが起動するようになります。<br>
+<img alt="" src="ImageViewer/img1C.jpg"><br>これでとりあえずとっかかりまで完成。</p>
+<h2>
+4. Drag&amp;Drop</h2>
+<p class="auto-style7">
+いよいよ本題のDrag&amp;Dropの実現方法になります。<br>以下の手順で進めます。<br>(1) Image01 の AllowDrop を有効にします。<br>
+<img alt="" src="ImageViewer/img1D.jpg"><br></p>
+<p class="auto-style7">
+(2) Image01 の Drop イベントを設定します。<br><img alt="" src="ImageViewer/img1F.jpg"><br>
+<table style="border-style: solid; border-color: #C0C0C0; width: 100%">
+	<tr>
+		<td>
+		<pre>    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+<span class="auto-style8">        private void Image01_Drop(object sender, DragEventArgs e)</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            String[] files = e.Data.GetData(DataFormats.FileDrop) as string[];</span>
+
+<span class="auto-style8">            foreach (string filename in files)</span>
+<span class="auto-style8">            {</span>
+<span class="auto-style8">                System.Diagnostics.Trace.WriteLine(filename);</span>
+<span class="auto-style8">            }</span>
+
+<span class="auto-style8">            if (files.Length &gt; 0)</span>
+<span class="auto-style8">            {</span>
+<span class="auto-style8">                try</span>
+<span class="auto-style8">                {</span>
+<span class="auto-style8">                    BitmapImage bi = new BitmapImage();</span>
+<span class="auto-style8">                    bi.BeginInit();</span>
+<span class="auto-style8">                    bi.CacheOption = BitmapCacheOption.OnLoad;    </span><span class="comment">// メモリリーク対策</span>
+<span class="auto-style8">                    bi.CreateOptions = BitmapCreateOptions.None;  </span><span class="comment">// メモリリーク対策</span>
+<span class="auto-style8">                    bi.UriSource = new Uri(files[0]);</span>
+<span class="auto-style8">                    bi.EndInit();</span>
+<span class="auto-style8">                    bi.Freeze();                                  </span><span class="comment">// メモリリーク対策</span>
+<span class="auto-style8">                    Image01.Stretch = Stretch.Uniform;</span>
+<span class="auto-style8">                    Image01.Source = bi;</span>
+<span class="auto-style8">                }</span>
+<span class="auto-style8">                catch (NotSupportedException)</span>
+<span class="auto-style8">                {</span>
+<span class="auto-style8">                    MessageBox.Show(</span><span class="auto-style9">&quot;ファイル\&quot;&quot;</span><span class="auto-style8"> + files[0] + </span><span class="auto-style9">&quot;\&quot; はサポート外のファイルフォーマットです。&quot;</span><span class="auto-style8">, </span><span class="auto-style9">&quot;ERRORメッセージ&quot;</span><span class="auto-style8">, MessageBoxButton.OK, MessageBoxImage.Warning);</span>
+<span class="auto-style8">                }</span>
+<span class="auto-style8">            }</span>
+
+<span class="auto-style8">            e.Handled = true;</span>
+<span class="auto-style8">        }</span>
+    }</pre>
+		</td>
+	</tr>
+</table>
+<br>これで Bitmap,PNGなどのイメージファイルをドラッグ＆ドロップすることで絵を表示するようになりました。</p>
+<p class="auto-style7">
+(3) DragOver イベント<br>
+最後にDragOverのイベント処理を追加します。アプリケーションにファイルをドロップしたときにマウスカーソルをコピー(+)のアイコンに変える処理です。<br>
+Image01のDragOverイベントを加えます。<br><img alt="" src="ImageViewer/img22.jpg"><br>
+<table style="border-style: solid; border-color: #C0C0C0; width: 100%">
+	<tr>
+		<td>
+		<pre>    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Image01_Drop(object sender, DragEventArgs e)
+        {
+            String[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+            foreach (string filename in files)
+            {
+                System.Diagnostics.Trace.WriteLine(filename);
+            }
+
+            if (files.Length &gt; 0)
+            {
+                try
+                {
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CacheOption = BitmapCacheOption.OnLoad;    <span class="comment">       // メモリリーク対策</span>
+                    bi. bi.CreateOptions = BitmapCreateOptions.None;     <span class="comment">// メモリリーク対策</span>
+                    bi.UriSource = new Uri(files[0]);
+                    bi.EndInit();
+                    bi.Freeze();                                         <span class="comment">// メモリリーク対策</span>
+                    Image01.Stretch = Stretch.Uniform;
+                    Image01.Source = bi;
+                }
+                catch (NotSupportedException)
+                {
+                    MessageBox.Show(<span class="string">&quot;ファイル\&quot;&quot;</span> + files[0] + <span class="string">&quot;\&quot; はサポート外のファイルフォーマットです。&quot;</span>, <span class="string">&quot;ERRORメッセージ&quot;</span>, MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+
+            e.Handled = true;
+        }
+
+<span class="auto-style8">        private void Image01_DragOver(object sender, DragEventArgs e)</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            e.Effects = DragDropEffects.Copy;</span>
+<span class="auto-style8">            e.Handled = true;</span>
+<span class="auto-style8">        }</span>
+    }</pre>
+		</td>
+	</tr>
+</table>
+<br><img alt="" src="ImageViewer/img28.jpg"><br>以上で完成です。</p>
+<p class="auto-style7">
+&nbsp;</p>
+<p class="auto-style7">
+<a href="ImageViewer/testDragAndDrop2.zip">サンプルプログラム ダウンロード</a></p>
+<hr>
+<p> <font face="Meiryo UI">記載：木下英俊<br>2013年08月18日 新規作成<br>2014年06月14日 BitmapImage のメモリリーク対策を追加<br>&nbsp;&nbsp;&nbsp; 
+参考URL：<a href="http://d.hatena.ne.jp/fkmt5/20130729/1375090831">http://d.hatena.ne.jp/fkmt5/20130729/1375090831</a><br></font></p>
+</body>
+</html>

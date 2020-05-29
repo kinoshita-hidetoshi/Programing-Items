@@ -1,0 +1,195 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>class ComputerInfo</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	border-collapse: collapse;
+	border: 2px solid #808080;
+}
+td {
+	border: thin solid #808080;
+}
+.auto-style9 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+ComputerInfo クラス</h1>
+
+<p> コンピューターのメモリ、読みこまれているアセンブリ、コンピューター名、オペレーティングシステムなどに関する情報を取得するためのプロパティを提供します。</p>
+<h2> 1. 概要</h2>
+<p> 継承階層<br>System.Object<br>&nbsp; Microsoft.VisualBasic.Devices.ComputerInfo</p>
+<p> 名前空間: Microsoft.VisualBasic.Devices</p>
+<p> アセンブリ： Microsoft.VisualBasic (Microsoft.VisualBasic.dll 内)</p>
+<h2> 2. プロパティ</h2>
+<table class="auto-style8" style="width: 100%">
+	<tr>
+		<td style="width: 64px; height: 24px"></td>
+		<td style="width: 100px; height: 24px">名前</td>
+		<td style="width: 400px; height: 24px">説明</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>AvailablePhysicalMemory</td>
+		<td>コンピューターの空き物理メモリの合計サイズを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>AvailableVirtualMemory</td>
+		<td>コンピューターの空き仮想アドレス空間の合計アドレスを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>InstalledUICulture</td>
+		<td>オペレーティングシステムにインストールされた現在のUIカルチャーを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>OSFullName</td>
+		<td>オペレーティングシステムの完全名を取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>OSPlatform</td>
+		<td>コンピューターで使用されているオペレーティングシステムのプラットフォームIDを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>OSVersion</td>
+		<td>コンピューターで使用されているオペレーティングシステムのバージョンを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>TotalPhysicalMemory</td>
+		<td>コンピューターの物理メモリの合計サイズを取得します。</td>
+	</tr>
+	<tr>
+		<td>public</td>
+		<td>TotalVirtualMmory</td>
+		<td>コンピューターの仮想アドレス空間の合計サイズを取得します。</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<h2>3. サンプルプログラム</h2>
+<p>環境：<br>&nbsp;&nbsp;&nbsp; 開発環境： Visual Studio 2013, C#, 
+.NET 4.0<br>&nbsp;&nbsp;&nbsp; ＯＳ： Windows8.1</p>
+<span class="table_title">[プログラムソース &quot;Program.cs&quot;]</span><table style="font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre  class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Microsoft.VisualBasic;
+
+
+namespace ComputerInfo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var info = new <span class="auto-style9">Microsoft.VisualBasic.Devices.ComputerInfo</span>();
+
+            Console.WriteLine(&quot;AvailablePhysicalMemory: &quot; + info.<span class="auto-style9">AvailablePhysicalMemory</span>.ToString(&quot;#,00&quot;));
+            Console.WriteLine(&quot;AvailableVirtualMemory:  &quot; + info.<span class="auto-style9">AvailableVirtualMemory</span>.ToString(&quot;#,00&quot;));
+            Console.WriteLine(&quot;InstalledUICulture:      &quot; + info.<span class="auto-style9">InstalledUICulture</span>);
+            Console.WriteLine(&quot;OSFullName:              &quot; + info.<span class="auto-style9">OSFullName</span>);
+            Console.WriteLine(&quot;OSPlatform:              &quot; + info.<span class="auto-style9">OSPlatform</span>);
+            Console.WriteLine(&quot;OSVersion:               &quot; + info.<span class="auto-style9">OSVersion</span>);
+            Console.WriteLine(&quot;TotalPhysicalMemory:     &quot; + info.<span class="auto-style9">TotalPhysicalMemory</span>.ToString(&quot;#,00&quot;));
+            Console.WriteLine(&quot;TotalVirtualMemory:      &quot; + info.<span class="auto-style9">TotalVirtualMemory</span>.ToString(&quot;#,00&quot;));
+            Console.WriteLine(&quot;Is64BitOperatingSystem:  &quot; + Environment.Is64BitOperatingSystem);
+            Console.WriteLine(&quot;===============================================&quot;);
+            Console.Write(&quot;HIT [Enter] KEY !! &quot;);
+            Console.ReadLine();
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+<br>マニュフェストファイルはこんな感じで。これをしないとWindows8.1のバージョンを正しく認識できません。<br><br>
+
+[app.manifest]
+<table style="font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;asmv1:assembly manifestVersion=&quot;1.0&quot; xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv1=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv2=&quot;urn:schemas-microsoft-com:asm.v2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+  &lt;assemblyIdentity version=&quot;1.0.0.0&quot; name=&quot;MyApplication.app&quot;/&gt;
+  &lt;trustInfo xmlns=&quot;urn:schemas-microsoft-com:asm.v2&quot;&gt;
+    &lt;security&gt;
+      &lt;requestedPrivileges xmlns=&quot;urn:schemas-microsoft-com:asm.v3&quot;&gt;
+        &lt;!-- UAC マニフェスト オプション
+            Windows のユーザー アカウント制御のレベルを変更するには、
+            requestedExecutionLevel ノードを以下のいずれかで置換します。
+
+        &lt;requestedExecutionLevel  level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;
+        &lt;requestedExecutionLevel  level=&quot;requireAdministrator&quot; uiAccess=&quot;false&quot; /&gt;
+        &lt;requestedExecutionLevel  level=&quot;highestAvailable&quot; uiAccess=&quot;false&quot; /&gt;
+
+            requestedExecutionLevel ノードを指定すると、ファイルおよびレジストリの仮想化は無効になります。
+            旧バージョンとの互換性のためにファイルおよびレジストリの仮想化を
+            使用する場合は、requestedExecutionLevel ノードを削除します。
+        --&gt;
+        &lt;requestedExecutionLevel level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;
+      &lt;/requestedPrivileges&gt;
+    &lt;/security&gt;
+  &lt;/trustInfo&gt;
+
+  &lt;compatibility xmlns=&quot;urn:schemas-microsoft-com:compatibility.v1&quot;&gt;
+    &lt;application&gt;
+      &lt;!--このアプリケーションが動作するように設計されている、Windows のすべてのバージョンの一覧。
+      Windows は最も互換性の高い環境を自動的に選択します。--&gt;
+
+      &lt;!--アプリケーションが Windows Vista で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します--&gt;
+      &lt;supportedOS Id=&quot;{e2011457-1546-43c5-a5fe-008deee3d3f0}&quot;&gt;&lt;/supportedOS&gt;
+
+      &lt;!-- アプリケーションが Windows 7 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します。--&gt;
+      &lt;supportedOS Id=&quot;{35138b9a-5d96-4fbd-8e2d-a2440225f93a}&quot;/&gt;
+
+      &lt;!--アプリケーションが Windows 8 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します--&gt;
+      &lt;supportedOS Id=&quot;{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}&quot;&gt;&lt;/supportedOS&gt;
+
+      &lt;!-- アプリケーションが Windows 8.1 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除してください--&gt;
+      &lt;supportedOS Id=&quot;{1f676c76-80e1-4239-95bb-83d0f6d0da78}&quot;/&gt;
+
+    &lt;/application&gt;
+  &lt;/compatibility&gt;
+
+&lt;/asmv1:assembly&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<span class="table_title"><br>[実行結果]<br>
+<br><img alt="" src="ComputerInfo/imgD.gif"></span><p>サンプルプログラム  
+<a href="ComputerInfo/GetTotalPhysicalMemory.zip">ダウンロード</a></p>
+<p>&nbsp;</p>
+<h2>参照</h2>
+<p>
+<a href="https://msdn.microsoft.com/ja-jp/library/microsoft.visualbasic.devices.computerinfo(v=vs.100).aspx">
+https://msdn.microsoft.com/ja-jp/library/microsoft.visualbasic.devices.computerinfo(v=vs.100).aspx</a></p>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年5月16日 木下英俊</font></p>
+</body>
+</html>

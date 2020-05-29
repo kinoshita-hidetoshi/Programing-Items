@@ -1,0 +1,453 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>［MahApp.Metro］ウィンドウを作成</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	margin-left: 40px;
+}
+.nt { color: #2f6f9f; } 
+
+	*
+	{
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-o-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.na { color: #4f9fcf } 
+.s { color: #d44950 } 
+.auto-style10 {
+	border: 1px solid #808080;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+［MahApp.Metro］ウィンドウを作成</h1>
+
+<p> MahApp.Metro を使ってWPFアプリをモダンなウィンドウデザインにしてみます。</p>
+<h2> 目次</h2>
+<p>
+<a href="#1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro を使ってウィンドウを作成してみる</a><br>
+<a href="#2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a><br>
+<a href="#3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a><br>
+<a href="#4._その他のウィンドウ属性">4. その他のウィンドウ属性</a><br>
+<a href="#4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a><br>
+<a href="#4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)</a><br>
+<a href="#4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a><br><br>
+<a href="#参考URL">参考URL</a><br><a href="#関連ページ">関連ページ</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro 
+を使ってウィンドウを作成してみる</a></h2>
+<p> MahApp.Metro の「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」に従って、まずはウィンドウを作成するところから始めてみましょう。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>MahApps.Metro: Ver. 1.2.4.</li>
+	<li>OS: Windows10 64bit home 日本語</li>
+</ul>
+<p> &nbsp;</p>
+<p> Visual Studio で作成したデフォルトのWPFアプリケーションは以下の通りです。<br>ここからスタートで改造していきます。</p>
+<p> 
+<img alt="" src="CreateWindow/imgB.jpg"></p>
+<p> 
+&nbsp;</p>
+<p> 
+手順を以下に記載します。</p>
+<h3> 
+1.1. NuGet からライブラリ取得</h3>
+<p> 
+ソリューションエクスプローラーでソリューションを右クリックし、「ソリューションのNuGetパッケージの管理」を選択します。パッケージマネージャーが開くので、左上のパッケージソースが「nuget.org」になっていることを確認し、検索ボックスに「MahApps.Metro」と入力して「Enter」キーを押します。MahApps.Metroを選択して「インストール」ボタンを押してアプリに組み込みます。</p>
+<p> 
+<img alt="" src="CreateWindow/img2.jpg"></p>
+<h3> 
+&nbsp;</h3>
+<h3> 
+1.2. ソース修正</h3>
+<p> 
+以下、上記の変更を行うために行ったソース修正です。</p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;<span class="auto-style8">Controls:MetroWindow</span> x:Class=&quot;ModernWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        <span class="auto-style8">xmlns:Controls=&quot;http://metro.mahapps.com/winfx/xaml/controls&quot;</span>
+        xmlns:local=&quot;clr-namespace:ModernWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Grid&gt;
+        
+    &lt;/Grid&gt;
+&lt;/Controls:MetroWindow&gt;
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+<span class="auto-style8">using MahApps.Metro.Controls;</span>
+
+namespace ModernWindow
+{
+	/// &lt;summary&gt;
+	/// MainWindow.xaml の相互作用ロジック
+	/// &lt;/summary&gt;
+	public partial class MainWindow : <span class="auto-style8">MetroWindow</span>
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
+	}
+}
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>ここまでのプログラム修正で下図のような画面を表示するようになります。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」とちょっと違うみたいですが、まぁいったん良しとしましょう。</p>
+<p><img alt="" src="CreateWindow/img4.gif"></p>
+<p>&nbsp;</p>
+<p>続いて「App.xaml」に &lt;ResourceDictionary&gt; を追加します。<br>以下の通り。</p>
+<span class="table_title">[プログラムソース &quot;App.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Application x:Class=&quot;ModernWindow.App&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             xmlns:local=&quot;clr-namespace:ModernWindow&quot;
+             StartupUri=&quot;MainWindow.xaml&quot;&gt;
+    &lt;Application.Resources&gt;
+<span class="auto-style8">        &lt;ResourceDictionary&gt;</span>
+<span class="auto-style8">            &lt;ResourceDictionary.MergedDictionaries&gt;</span>
+<span class="auto-style8">                &lt;!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! --&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;!-- Accent and AppTheme setting --&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml&quot; /&gt;</span>
+<span class="auto-style8">            &lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+<span class="auto-style8">        &lt;/ResourceDictionary&gt;</span>
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<p>以上の結果、下図の画面になります。</p>
+<p> 
+<img alt="" src="CreateWindow/img9.jpg"></p>
+<p>&nbsp;</p>
+<h3>1.3. Window Icon を追加</h3>
+<p>アプリにアイコンを追加します。</p>
+<p>アイコンは何を使っても良いのですが、「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」と同じにすることにこだわって MahApp.Metro のデモアプリに使用しているアイコンをプロジェクトに追加します。<br>アイコン 
+”mahapps.metro.logo2.ico” をMahApps.Metroのプロジェクトからコピーし、作成中のプロジェクト中のフォルダ Resources 
+中に保存します。</p>
+<table class="auto-style10" style="width: 100%">
+	<tr>
+		<td>参考：<br>スタティック アイコン の代わりに 最小化/最大化/閉じる 
+		のアイコンは、スタティックアイコンではなく&quot;Marlett&quot;と呼ばれるフォントを使っています。詳しくは 
+		<a href="https://en.wikipedia.org/wiki/Marlett" target="_blank">the 
+		Wikipedia article</a> を参照。</td>
+	</tr>
+</table>
+<p><img alt="" src="CreateWindow/img8.jpg"></p>
+<p>そしてVSまたはBlend上のGUIからアイコンを設定する、もしくはXAMLを直接修正してアイコンを設定します。</p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Controls:MetroWindow x:Class=&quot;ModernWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:Controls=&quot;http://metro.mahapps.com/winfx/xaml/controls&quot;
+        xmlns:local=&quot;clr-namespace:ModernWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;
+        <span class="auto-style8">Icon=&quot;Resources/mahapps.metro.logo2.ico&quot;</span>&gt;
+    &lt;Grid&gt;
+        
+    &lt;/Grid&gt;
+&lt;/Controls:MetroWindow&gt;
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>以上によりこんな感じになりました。</p>
+<p><img alt="" src="CreateWindow/img6.gif"></p>
+<p>&nbsp;</p>
+<h3>1.4. TitleBar の表示/非表示</h3>
+<p>ShowTitleBar=&quot;True|False&quot;</p>
+<p>”False” に設定したら下図のようにタイトルバーが無くなりました。</p>
+<p><img alt="" src="CreateWindow/img32.jpg"></p>
+<p>&nbsp;</p>
+<h3>1.5. Resize Grip</h3>
+<p>&quot;Resize Grip&quot; が無くとも MetroWindow をリサイズする方法はあります。&quot;Resize Grip&quot; 
+が無くてもウィンドウの全ての縁と角をつかんでリサイズすることができます。<br>しかしながら 
+MetroWindowがリサイズ可能であることを示すことができないので、このウィンドウがリサイズ可能であることをユーザーへ示すのに &quot;Resize Grip&quot; 
+は有効な方法です。</p>
+<ul>
+	<li>ResizeMode=&quot;CanResizeWithGrip&quot; ; &quot;Resize Grip&quot; を表示する。</li>
+	<li>ResizeMode=&quot;CanResize&quot; ; &quot;Resize Grip&quot; を表示しない。</li>
+</ul>
+<p><img alt="" src="CreateWindow/img30.jpg"></p>
+<h3>&nbsp;</h3>
+<h3>1.6. タイトルバー上のアイコン表示/非表示</h3>
+<p>ShowIconOnTitleBar=&quot;True|False&quot;</p>
+<p>”False”に設定したら下図のようになりました。</p>
+<p><img alt="" src="CreateWindow/img33.jpg"></p>
+<p>&nbsp;</p>
+<h3>1.7. WindowButtonCommands</h3>
+<p>&quot;WindowButtonCommands&quot; は 最大化/最小化/閉じる、の3つのボタンを持ちます。あなたはこれらのボタンを隠すことができます。</p>
+<ul>
+	<li>ShowMinButton=&quot;True|False&quot;</li>
+	<li>ShowMaxRestoreButton=&quot;True|False&quot;</li>
+	<li>ShowCloseButton=&quot;True|False&quot;</li>
+</ul>
+<p>同様に、最大化/最小化、のVisibilityを ResizeMode プロパティの設定により変更できます。</p>
+<ul>
+	<li>ResizeMode=&quot;NoResize&quot; ; 最大化/最小化 のボタンを無効化</li>
+	<li>ResizeMode=&quot;CanMinimize&quot; ; 最大化 のボタンを無効化</li>
+</ul>
+<p>&nbsp;</p>
+<h2><a name="2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a></h2>
+<p>MahApp.Metro ウィンドウの特徴の一つである &quot;LeftWindowsCommand&quot; または &quot;RightWindowsCommands&quot; は  
+ウィンドのタイトルバーに独自のボタンなどを追加することができる機能です。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」に従ってこれを実装してみます。</p>
+<p><img alt="" src="CreateWindow/imgF.jpg"></p>
+<h3>&nbsp;</h3>
+<h3>2.1. RightWindowCommands</h3>
+<p>&quot;RightWindowCommands&quot; として２つのボタンを追加します。</p>
+<ul>
+	<li>１つ目は、文字列 &quot;setting&quot; を表示するボタンです。</li>
+	<li>２つ目は、アイコンと文字列&quot;deploy cupcakes&quot;の２つを StackPanel で一体化させたボタンです。</li>
+</ul>
+<span class="table_title">最初に &quot;MainWindow.xaml&quot; に下記のソースを追加します。<br><br>[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Controls:MetroWindow x:Class=&quot;ModernWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:Controls=&quot;http://metro.mahapps.com/winfx/xaml/controls&quot;
+        xmlns:local=&quot;clr-namespace:ModernWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+                      
+        BorderThickness=&quot;1&quot;
+        BorderBrush=&quot;{DynamicResource AccentColorBrush}&quot;
+                      
+        ShowTitleBar=&quot;True&quot;
+        ShowIconOnTitleBar=&quot;False&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;
+        Icon=&quot;Resources/mahapps.metro.logo2.ico&quot;&gt;
+
+<span class="auto-style8">    &lt;Window.Resources&gt;</span>
+<span class="auto-style8">        &lt;ResourceDictionary&gt;</span>
+<span class="auto-style8">            &lt;ResourceDictionary.MergedDictionaries&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;/Resources/icons.xaml&quot;/&gt;</span>
+<span class="auto-style8">            &lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+<span class="auto-style8">        &lt;/ResourceDictionary&gt;</span>
+<span class="auto-style8">    &lt;/Window.Resources&gt;</span>
+
+<span class="auto-style8">    &lt;Controls:MetroWindow.RightWindowCommands&gt;</span>
+<span class="auto-style8">        &lt;Controls:WindowCommands&gt;</span>
+<span class="auto-style8">            &lt;Button Content=&quot;settings&quot; Click=&quot;Button_Click&quot; /&gt;</span>
+<span class="auto-style8">            &lt;Button&gt;</span>
+<span class="auto-style8">                &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;</span>
+<span class="auto-style8">                    &lt;Rectangle Width=&quot;20&quot; Height=&quot;20&quot;</span>
+<span class="auto-style8">                    Fill=&quot;{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}&quot;&gt;</span>
+<span class="auto-style8">                        &lt;Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">                            &lt;VisualBrush Stretch=&quot;Fill&quot; Visual=&quot;{StaticResource appbar_cupcake}&quot; /&gt;</span>
+<span class="auto-style8">                        &lt;/Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">                    &lt;/Rectangle&gt;</span>
+<span class="auto-style8">                    &lt;TextBlock Margin=&quot;4 0 0 0&quot;</span>
+<span class="auto-style8">                   VerticalAlignment=&quot;Center&quot;</span>
+<span class="auto-style8">                   Text=&quot;deploy cupcakes&quot; /&gt;</span>
+<span class="auto-style8">                &lt;/StackPanel&gt;</span>
+<span class="auto-style8">            &lt;/Button&gt;</span>
+<span class="auto-style8">        &lt;/Controls:WindowCommands&gt;</span>
+<span class="auto-style8">    &lt;/Controls:MetroWindow.RightWindowCommands&gt;</span>
+
+    &lt;Grid&gt;
+    &lt;/Grid&gt;
+&lt;/Controls:MetroWindow&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>上記のソースのままでは 「Visual = &quot;{StaticResource appbar_cupcake}&quot;」 の部分でエラーになります。<br>
+&quot;appbar_cupcake&quot; のアイコン情報が無いためのエラーです。これは”MahApps.Metro.Resources”に含まれるXAMLアイコンです。</p>
+<p>NuGet で MahApp.Metro.Resource を追加します。</p>
+<p><img alt="" src="CreateWindow/imgB1.jpg"></p>
+<p>ソリューションエクスプローラーで確認すると、以下の４つのファイルが追加されます。<br>- Entrypo-license.txt<br>- 
+Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
+<p><img alt="" src="CreateWindow/imgD.jpg"></p>
+<p>&nbsp;</p>
+<p>&quot;Icons.xaml&quot; のプロパティを確認します。デフォルトのままで修正不要のはずですが、以下の通りです。</p>
+<p><img alt="" src="CreateWindow/img11.jpg"></p>
+<p>&nbsp;</p>
+<p>ここまで修正した段階でコンパイルして実行すると、以下ようなウィンドウを表示できるようになります。<br>
+（ボタンを実装しただけでアクションの実装をしていないので、ボタンを押しても何も起こりません。）</p>
+<p><img alt="" src="CreateWindow/imgF.jpg"></p>
+<p>&nbsp;</p>
+<h3>2.2. LeftWindowCommands</h3>
+<p>&quot;LeftWindowCommands&quot; を加えます。<br>ボタンの内容は”RightWindowCommands”と同じものを適用します。</p>
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Controls:MetroWindow.RightWindowCommands&gt;
+    &lt;Controls:WindowCommands&gt;
+        &lt;Button Content=&quot;settings&quot; /&gt;
+        &lt;Button&gt;
+            &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+                &lt;Rectangle Width=&quot;20&quot; Height=&quot;20&quot;
+                    Fill=&quot;{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}&quot;&gt;
+                    &lt;Rectangle.OpacityMask&gt;
+                        &lt;VisualBrush Stretch=&quot;Fill&quot; Visual=&quot;{StaticResource appbar_cupcake}&quot; /&gt;
+                    &lt;/Rectangle.OpacityMask&gt;
+                &lt;/Rectangle&gt;
+                &lt;TextBlock Margin=&quot;4 0 0 0&quot; VerticalAlignment=&quot;Center&quot; Text=&quot;deploy cupcakes&quot; /&gt;
+            &lt;/StackPanel&gt;
+         	&lt;/Button&gt;
+    &lt;/Controls:WindowCommands&gt;
+&lt;/Controls:MetroWindow.RightWindowCommands&gt;
+
+<span class="auto-style8">&lt;Controls:MetroWindow.LeftWindowCommands&gt;</span>
+<span class="auto-style8">    &lt;Controls:WindowCommands&gt;</span>
+<span class="auto-style8">        &lt;Button Content=&quot;settings&quot; /&gt;</span>
+<span class="auto-style8">        &lt;Button&gt;</span>
+<span class="auto-style8">            &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;</span>
+<span class="auto-style8">                &lt;Rectangle Width=&quot;20&quot; Height=&quot;20&quot;</span>
+<span class="auto-style8">                    Fill=&quot;{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}&quot;&gt;</span>
+<span class="auto-style8">                    &lt;Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">                        &lt;VisualBrush Stretch=&quot;Fill&quot; Visual=&quot;{StaticResource appbar_cupcake}&quot; /&gt;</span>
+<span class="auto-style8">                    &lt;/Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">                &lt;/Rectangle&gt;</span>
+<span class="auto-style8">                &lt;TextBlock Margin=&quot;4 0 0 0&quot; VerticalAlignment=&quot;Center&quot; Text=&quot;deploy cupcakes&quot; /&gt;</span>
+<span class="auto-style8">            &lt;/StackPanel&gt;</span>
+<span class="auto-style8">         	&lt;/Button&gt;</span>
+<span class="auto-style8">    &lt;/Controls:WindowCommands&gt;</span>
+<span class="auto-style8">&lt;/Controls:MetroWindow.LeftWindowCommands&gt;</span></pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+ウィンドウタイトル ”MAINWINDOW” の左側にボタンが追加されました。</p>
+<p>
+<img alt="" src="CreateWindow/img1C.jpg"></p>
+<p>&nbsp;</p>
+<h2> <a name="3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a></h2>
+<p> ウィンドウの縁の表現を指定します。<br>デフォルト状態では BorderThickness=&quot;0&quot; で、GlowBrushの指定もされて無いようです。<br>
+以下のどれかを指定しておかないと、ウィンドウ背景によってはウィンドウが埋もれてしまう恐れがありそうです。<br>何かの指定はしましょう。</p>
+<h3> 3.1. Border</h3>
+<p class="auto-style9"> BorderBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
+BorderThickness=&quot;1&quot;</p>
+<p> <img alt="" src="CreateWindow/img28.jpg"></p>
+<h3> 3.2. Glow (ぼやっとする)</h3>
+<p class="auto-style9"> GlowBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
+BorderThickness=&quot;1&quot;</p>
+<p> <img alt="" src="CreateWindow/img26.jpg"></p>
+<h3> 3.3. DropShadow (影をつける)</h3>
+<p class="auto-style9"> EnableDWMDropShadow=&quot;True&quot;<br>GlowBrush=&quot;Black&quot;<br>BorderThickness=&quot;0&quot;</p>
+<p> <img alt="" src="CreateWindow/img2C.jpg"></p>
+<p> &nbsp;</p>
+<h2> <a name="4._その他のウィンドウ属性">4. その他のウィンドウ属性</a></h2>
+<h3><a name="4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a></h3>
+<p> 次に起動したときにウィンドウ位置とサイズを復帰する。</p>
+<p class="auto-style9"> SaveWindowPosition=&quot;True&quot;</p>
+<p> &nbsp;</p>
+<h3><a name="4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionsEnabled)</a></h3>
+<p> デフォルトは True</p>
+<p class="auto-style9"> WindowTransitionsEnabled = &quot;False&quot;</p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a></h3>
+<p>
+ウィンドウタイトルを大文字表記にします。<br>デフォルトは True。</p>
+<p class="auto-style9">
+TitleCaps = &quot;True&quot; or &quot;False&quot;</p>
+<p>
+&nbsp;</p>
+<h2><a name="参考URL">参考URL</a></h2>
+<ul>
+	<li>
+	<a href="http://mahapps.com/guides/quick-start.html" target="_blank">
+	MahApps.Metro</a></li>
+	<li>
+	<a href="http://mahapps.com/guides/quick-start.html" target="_parent">
+	MahApps.Metro - Guides - Quick Start</a></li>
+	<li>
+	<a href="http://qiita.com/kabosu/items/bc09f68aaa0a80a37ad8" target="_blank">
+	WPF 「MahApps.Metro」 MetroWindow プロパティ よく使うやつメモ</a></li>
+	<li>
+	MahApps.Metro を使ってみた<br>
+	<a href="http://sourcechord.hatenablog.com/entry/2016/02/23/012511" target="_blank">
+	http://sourcechord.hatenablog.com/entry/2016/02/23/012511</a></li>
+</ul>
+<h2><a name="関連ページ">関連ページ</a></h2>
+<ul>
+	<li>MahApp.Metro<ul>
+		<li><a href="abstract.html">初めに</a></li>
+		<li><a href="CreateWindow.html">ウィンドウを作成</a></li>
+	</ul>
+	</li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>
+2016/11/24 誤植修正： (正)WindowTransitionsEnabled ← (誤)WindowTransitionsEnable
+<br>2016/03/13 新規作成</font><br></p>
+</body>
+</html>

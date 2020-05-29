@@ -1,0 +1,157 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[VBA] ファイル一覧を出力する</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../prettify.css" rel="stylesheet" type="text/css">
+<script src="../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+[Excel VBA] ファイル一覧を出力する</h1>
+
+<p> Excel VBA を使ってファイル一覧をシートに出力する方法について記載します。</p>
+<h2> 目次</h2>
+<p>
+<a href="#1._ファイル一覧を出力する">1. ファイル一覧を出力する</a><br>
+<a href="#2._一覧のファイル名をダブルクリックすることで、対象のファイルを開く">2. 一覧のファイル名をダブルクリックすることで、対象のファイルを開く</a><br>
+<a href="#サンプルプログラム">サンプルプログラム </a>
+</p>
+<p> &nbsp;</p>
+
+<h2> <a name="1._ファイル一覧を出力する">1. ファイル一覧を出力する</a></h2>
+<p> [概要] 自身のファイルがあるフォルダー以下のファイル一覧を、シートへ出力するVBAマクロを作成します。</p>
+<p>[環境]</p>
+<ul>
+	<li>Excel 2016</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> [画面]</p>
+<p> 機能は２つです。こんな画面にしてみました。<br>（機能１）ファイル一覧を「ファイル一覧」シートに出力する。<br>（機能２）「ファイル一覧」シートをクリアする。</p>
+<p> 
+<img alt="" src="output_file_list/img6.jpg"></p>
+一覧出力した<span class="table_title">結果はこんな感じ<br><img alt="" src="output_file_list/imgB.jpg"><br>
+<br>[&quot;ファイル一覧出力&quot; する部分のVBA]<br>
+<pre class="prettyprint linenums">
+'
+' ここに記載のVBAは以下の書籍に記載の内容を参考に作成しました。
+' 「日経ソフトウェア 2017年11月号 － 実務ですぐに役立つ Excel VBA 第7回 ファイルやフォルダーを操作するマクロ」
+'
+
+Sub ファイル一覧出力()
+    Application.ScreenUpdating = False
+    
+    Worksheets(&quot;ファイル一覧&quot;).Activate
+    Cells.Clear
+    Cells(1, 1).Value = &quot;ファイル保存先一覧&quot;
+    
+    Call ファイル一覧取得(ThisWorkbook.Path)
+    Columns(&quot;A&quot;).AutoFit
+    
+    Application.ScreenUpdating = True
+    
+    MsgBox &quot;ファイルの一覧が出力されました&quot;, vbOKOnly, &quot;完了&quot;
+End Sub
+
+Sub ファイル一覧取得(Path As String)
+    Dim FileName As String, o As Object, r As Long
+    
+    FileName = Dir(Path &amp; &quot;\*.*&quot;)
+    
+    Do While FileName &lt;&gt; &quot;&quot;
+        r = Cells(Rows.Count, 1).End(xlUp).Row
+        Cells(r + 1, 1).Value = Path &amp; &quot;\&quot; &amp; FileName
+        FileName = Dir()
+    Loop
+    
+    For Each o In CreateObject(&quot;Scripting.FileSystemObject&quot;).GetFolder(Path).SubFolders
+        Call ファイル一覧取得(o.Path)
+    Next o
+End Sub</pre>
+
+<span class="table_title">[&quot;ファイル一覧クリア&quot; する部分のVBA]<br>
+
+<pre class="prettyprint linenums">
+Sub ファイル一覧クリア()
+    Application.ScreenUpdating = False
+    
+    ' &quot;ファイル一覧&quot; シートの内容をすべてクリア
+    Worksheets(&quot;ファイル一覧&quot;).Activate
+    Cells.Clear
+'   Columns(&quot;A&quot;).AutoFit
+
+    ' A列の幅を初期化(8.38に設定)
+    Columns(&quot;A:A&quot;).Select
+    Selection.ColumnWidth = 8.38
+    
+    Cells(1, 1).Select
+    
+    Application.ScreenUpdating = True
+End Sub</pre>
+<p>■マクロの登録<br>画面上のボタンとマクロを紐づけます。</p>
+<ul>
+	<li>ボタン［ファイル一覧 出力］を、&quot;ファイル一覧出力&quot; に紐づけます。</li>
+	<li>ボタン［ファイル一覧 クリア］を、&quot;ファイル一覧クリア&quot; に紐づけます。</li>
+</ul>
+</span>
+	
+<p>&nbsp;</p>
+<h2> <a name="2._一覧のファイル名をダブルクリックすることで、対象のファイルを開く">2. 
+一覧のファイル名をダブルクリックすることで、対象のファイルを開く</a></h2>
+<p> [概要] 前章で出力したファイル一覧のファイル名をマウスでダブルクリックすることで、対象のファイルを開く、というVBAを記載します。</p>
+<p>[環境]</p>
+<ul>
+	<li>Excel 2016</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p> [&quot;ダブルクリックしたファイル名のファイルを開く&quot; 処理を行うVBA]</p>
+<pre class="prettyprint linenums">
+Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
+    If Target.Value &lt;&gt; &quot;&quot; Then
+        Cancel = True                                       ' True: ダブルクリックしたセルにカーソルを入れない、False: ダブルクリックしたセルにカーソルを入れる
+
+        If Right(Dir(Target.Value), 5) = &quot;.xlsx&quot; Or Right(Dir(Target.Value), 5) = &quot;.xlsm&quot; Then
+            <span class="auto-style8">Workbooks.Open Target.Value</span>                     ' (方法１) エクセルファイル(&quot;*.xlsx&quot;,&quot;*.xlsm&quot;)を開く
+        Else
+            Set WSH = CreateObject(&quot;Wscript.Shell&quot;)
+            <span class="auto-style8">WSH.Run Chr(34) &amp; Target.Value &amp; Chr(34), 4</span>     ' (方法２) エクセル以外のファイルを開く
+        End If
+    End If
+End Sub
+</pre>
+	
+<br>
+	
+<br>
+<h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>
+サンプルプログラム <a href="output_file_list/output_file_list.xlsm">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>日経ソフトウェア 2017年11月号 － 実務ですぐに役立つ Excel VBA 第7回 ファイルやフォルダーを操作するマクロ</li>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/d5fk67ky(v=vs.84).aspx" target="_blank">
+	Run Method (Windows Script Host)</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2017年10月06日 木下英俊, 新規作成<br>
+</font></p>
+</body>
+</html>

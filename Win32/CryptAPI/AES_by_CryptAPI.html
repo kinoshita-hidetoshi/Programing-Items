@@ -1,0 +1,955 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>AES (CryptAPI)</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style1 {
+	border-style: groove;
+	border-width: 3px;
+}
+.auto-style2 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style3 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+
+<body onload="prettyPrint();">
+
+<h1>
+AES (CryptAPI)
+</h1>
+
+<p> <font face="Meiryo UI">Windows環境で AES と SHA256 をCryptAPIで使用したくなり、調べ始めました。<br>
+.NETで簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</font></p>
+<p> <a href="AES_by_CryptAPI/AES_by_CryptAPI.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<span class="table_title">[プログラムソース &quot;aes.h&quot;]<br><code>
+<pre class="prettyprint linenums">
+namespace aes_library {
+
+enum AES_ERROR_CODE {
+    NORMAL                    = 0,
+    INVALID_ALGORITHM         = 100,
+    INVALID_ARGUMENT,
+    INVALID_KEY_LENGTH,
+    LOGIC_ERROR
+};
+
+const size_t AES_KEY_SIZE = 16 ;
+
+bool createAesKey( std::string passFraise, unsigned char (&amp;aesKey)[AES_KEY_SIZE],  AES_ERROR_CODE &amp;errorCode );
+bool encryptData( unsigned char* rawData, size_t sizeRawData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* cryptData, size_t sizeCryptData, size_t &amp;cryptDataBytes, AES_ERROR_CODE &amp;errorCode );
+bool decryptData( unsigned char* cryptData, size_t sizeCryptData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* rawData, size_t sizeRawData, size_t &amp;rawDataBytes, AES_ERROR_CODE &amp;errorCode );
+
+} // namespace aes_library</pre>
+</code></span>
+&nbsp;<span class="table_title"><br>[プログラムソース &quot;aes.cpp&quot;]</span>
+<code>
+<pre class="prettyprint linenums">
+#include &lt;windows.h&gt;
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+
+#include "Aes.h"
+
+
+using namespace std;
+
+
+namespace aes_library {
+
+<span class="comment">
+/*=====================================================================*/
+//! AES 128ビット用の鍵データを作成
+/*!
+    AES 128ビット用の鍵データを作成します。16バイトデータです。
+    生成アルゴリズムは以下の通りです。
+    -# ハッシュアルゴリズム <span class="auto-style3">SHA256</span> により passFraise のダイジェスト32バイトデータを生成します。
+    -# ダイジェスト32バイト の偶数バイト{0,2,4,・・・,30}を連結した16バイトデータを生成、これをAES鍵データとして出力します。
+
+    @param[in]      passFraise      暗号化対象の平分データ
+    @param[out]     aesKey          AES128ビット用16バイト鍵
+    @param[out]     errorCode       エラーコード
+    @retval         true            正常終了
+    @retval         false           異常終了
+    @note           Windows Vista 以降でのみ動作します。
+                    Windows XP では CALG_SHA_256、CALG_SHA_384、CALG_SHA_512 は動作しません。
+    @author         木下英俊
+    @date           2011-12-04 新規作成
+*/
+/*=====================================================================*/
+</span>bool createAesKey( std::string passFraise, unsigned char (&amp;aesKey)[AES_KEY_SIZE],  AES_ERROR_CODE &amp;errorCode )
+{
+    bool    bRet = true ;
+
+<span class="comment">    // キーコンテナーの取得
+</span>    BOOL        bResult = TRUE ;
+    HCRYPTPROV  hProv = NULL ;
+    HCRYPTHASH  hHash = NULL ;
+
+
+<span class="comment">    /*========*/
+    /* 前処理 */
+    /*========*/
+</span>    errorCode = NORMAL ;
+
+<span class="comment">    /*========*/
+    /* 処理部 */
+    /*========*/
+</span>    while( bRet == true ){
+        const ALG_ID AlgId      = <span class="auto-style3"><strong>CALG_SHA_256</strong></span> ;
+        const size_t SizeHash   = <span class="auto-style3">32</span> ;
+
+
+<span class="comment">        // CPSハンドル取得
+</span>        {
+            bResult = <span class="auto-style3">CryptAcquireContext</span>(
+                        &amp;hProv,                 <span class="comment">// ハンドルが戻ります
+</span>                        NULL,                   <span class="comment">// 既定のユーザーのCSPを使います
+</span>                        <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// バンドルされたMicrosoftのCSPを指定
+</span>                        <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// タイプを指定
+</span>                        0);                     <span class="comment">// キーコンテナーがある場合の指定です
+</span>            if ( !bResult ){
+                if (!<span class="auto-style3">CryptAcquireContext</span>( &amp;hProv, NULL, <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>, <span class="auto-style3">PROV_RSA_AES</span>, <span class="auto-style3">CRYPT_NEWKEYSET</span>)){
+                    cerr &lt;&lt; "CryptAcquireContext error" &lt;&lt; endl;
+                    errorCode = LOGIC_ERROR ;
+                    bRet = false ;
+                    break ;
+                }
+            }
+        }
+
+<span class="comment">        // ハッシュ計算インスタンスハンドル生成
+</span>        {
+            bResult = <span class="auto-style3">CryptCreateHash</span>(
+                            hProv,              <span class="comment">// ハッシュ値を計算するCSPのハンドル
+</span>                            AlgId,              <span class="comment">// ハッシュ値の計算アルゴリズム</span>
+                            0,                  <span class="comment">// （後述します）</span>
+                            0,                  <span class="comment">//  未使用、0（ゼロ）をセット</span>
+                            &amp;hHash);            <span class="comment">//  求めるインスタンスのハンドル</span>
+            if (!bResult){
+                cerr &lt;&lt; "CryptCreateHash error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+        }
+
+<span class="comment">        // ハッシュ計算
+</span>        {
+            bResult = <span class="auto-style3">CryptHashData</span>(
+                            hHash,                      <span class="comment">// ハッシュ計算インスタンスのハンドル</span>
+                            (BYTE*)passFraise.c_str(),  <span class="comment">// 実際のパスワードを指定</span>
+                            (DWORD)passFraise.size(),   <span class="comment">// パスワードのバイト長</span>
+                            0);                         <span class="comment">// 0 指定</span>
+            if (!bResult){
+                cerr &lt;&lt; "CryptHashData error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+        }
+
+<span class="comment">        // ハッシュ値計算 &amp; AES用鍵データ作成
+</span>        {
+            DWORD   dwHashSize = 0 ;
+            unsigned char hashResult[SizeHash] ;
+
+<span class="comment">            // ハッシュサイズ確認；dwHashSize(32)バイト以外ならNG
+</span>            bResult = <span class="auto-style3">CryptGetHashParam</span>(hHash, HP_HASHVAL, NULL, &amp;dwHashSize, 0);
+            if (!bResult){
+                cerr &lt;&lt; "CryptGetHashParam error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // 生成されるハッシュサイズ(dwHashSize)が期待している値(SizeHash)と異なる場合は異常とする
+</span>            if ( dwHashSize != SizeHash ){
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // ハッシュ値 取得
+</span>            bResult = <span class="auto-style3">CryptGetHashParam</span>( hHash, HP_HASHVAL, (BYTE*)hashResult, &amp;dwHashSize, 0 );
+            if (!bResult){
+                cerr &lt;&lt; "CryptGetHashParam error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // ハッシュ値からAES用鍵データ作成
+            // ハッシュ結果の偶数バイトを連結して鍵とする
+</span>            assert( AES_KEY_SIZE*2 &lt;= SizeHash );
+            for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
+                aesKey[i] = hashResult[i*2] ;
+            }
+        }
+
+<span class="comment">        /**/
+</span>        break ;
+    }
+
+
+<span class="comment">    /*========*/
+    /* 後処理 */
+    /*========*/
+    // ハッシュ インスタンス 解放
+</span>    if ( hHash != NULL ){
+        bResult = <span class="auto-style3">CryptDestroyHash</span>(hHash);
+        if (!bResult){
+            cerr &lt;&lt; "CryptDestroyHash error" &lt;&lt; endl;
+            errorCode = LOGIC_ERROR ;
+            bRet = false ;
+        }
+    }
+
+<span class="comment">    // CPSハンドル解放
+</span>    if ( hProv != NULL ){
+        bResult = <span class="auto-style3">CryptReleaseContext</span>(hProv, 0);
+        if (!bResult){
+            cerr &lt;&lt; "CryptReleaseContext error" &lt;&lt; endl;
+            errorCode = LOGIC_ERROR ;
+            bRet = false ;
+        }
+    }
+
+    return bRet ;
+
+}
+
+
+
+namespace {
+<span class="comment">
+    /*=====================================================================*/
+    //! 暗号処理 初期化
+    /*!
+        CryptAPI を使用した暗号処理の初期化処理を行います。
+        暗号アルゴリズムなどは以下の方式で設定します。
+        - アルゴリズム：AES
+        - 鍵長：128ビット
+        - モード：CBCモード
+        - イニシャルベクタ(IV)：0
+        - パディング方式：PKCS7 (コード上ではPKCS5と記載していますがPKCS7と同義です。)
+        
+        @param[out]     hProv           CPSハンドル
+        @param[out]     hKey            鍵ハンドル
+        @param[in]      keyData         暗号鍵データ。データサイズは AES_KEY_SIZE 。
+        @param[out]     errorCode       エラーコード
+        @retval         true            正常終了
+        @retval         false           異常終了
+        @author         木下英俊
+        @date           2011-12-04 新規作成
+    */
+    /*=====================================================================*/
+</span>    bool InitializeAes( HCRYPTPROV &amp;hProv, HCRYPTKEY &amp;hKey, unsigned char (&amp;keyData)[AES_KEY_SIZE], AES_ERROR_CODE &amp;errorCode )
+    {
+        bool bRet = true ;
+
+<span class="comment">
+        /*========*/
+        /* 前処理 */
+        /*========*/
+</span>
+        errorCode = NORMAL ;
+
+<span class="comment">
+        /*========*/
+        /* 処理部 */
+        /*========*/
+</span>
+        <span class="command">while</span>( bRet == true ){
+            BOOL bResult = TRUE ;
+
+<span class="comment">            /* CPSハンドル取得（暗号処理 初期化） */
+</span>            {
+                bResult = <span class="auto-style3">CryptAcquireContext</span>(
+                            &amp;hProv,                 <span class="comment">// ハンドルが戻ります</span>
+                            NULL,                   <span class="comment">// 既定のユーザーのCSPを使います</span>
+                            <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// バンドルされたMicrosoftのCSPを指定</span>
+                                                    <span class="comment">// XP では MS_ENH_RSA_AES_PROV_XP を指定のこと</span>
+                            <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// タイプを指定</span>
+                            0);                     <span class="comment">// キーコンテナーがある場合の指定です</span>
+                if ( !bResult ){
+                    if (!<span class="auto-style3">CryptAcquireContext</span>( &amp;hProv, NULL, MS_ENH_RSA_AES_PROV, PROV_RSA_AES, CRYPT_NEWKEYSET)){
+                        cerr &lt;&lt; "CryptAcquireContext error" &lt;&lt; endl;
+                        errorCode = LOGIC_ERROR ;
+                        bRet = false ;
+                        break ;
+                    }
+                }
+            }
+
+<span class="comment">
+            /* 暗号アルゴリズム、鍵情報 設定 */</span>
+            {
+                struct KeyBLOB{
+                    BLOBHEADER hdr;
+                    DWORD cbKeySize;
+                    BYTE rgbKeyData[AES_KEY_SIZE]; // 16:AES_128のキー長
+                };
+
+                KeyBLOB kb;
+
+                kb.hdr.bType    = PLAINTEXTKEYBLOB;
+                kb.hdr.bVersion = CUR_BLOB_VERSION;
+                kb.hdr.reserved = 0;
+                kb.hdr.aiKeyAlg = <span class="auto-style3">CALG_AES_128</span>;     <span class="comment">// AES_128</span>
+                kb.cbKeySize    = AES_KEY_SIZE;     <span class="comment">// AES_KEY_SIZE = 16</span>
+
+                memcpy( kb.rgbKeyData, keyData, AES_KEY_SIZE );
+                
+                bResult = <span class="auto-style3">CryptImportKey</span>(hProv,(BYTE*)&amp;kb, sizeof(kb), 0, 0, &amp;hKey); <span class="comment">// キー作成</span>
+                if ( !bResult ){
+                    errorCode = LOGIC_ERROR ;
+                    bRet = false ;
+                    break ;
+                }       
+            }
+
+<span class="comment">
+            /* 暗号モード設定(CBCモード) */
+</span>            {
+                DWORD   mode = CRYPT_MODE_CBC;
+
+                if (!<span class="auto-style3">CryptSetKeyParam</span>( hKey, KP_MODE, (BYTE*)&amp;mode, 0 )){
+                    errorCode = LOGIC_ERROR ;
+                    bRet = false ;
+                    break ;
+                }
+            }
+
+<span class="comment">            /* IV（イニシャルベクタ）設定 */
+</span>            {
+                BYTE    iv[AES_KEY_SIZE] ;
+                
+                for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
+                    iv[i] = 0 ;
+                }
+                
+                if ( !<span class="auto-style3">CryptSetKeyParam</span>( hKey, KP_IV, iv, 0)){
+                    errorCode = LOGIC_ERROR ;
+                    bRet = false ;
+                    break ;
+                }
+            }
+
+<span class="comment">            /* パディングモード設定 */
+</span>            {
+                DWORD      padding_mode = <span class="auto-style3">PKCS5_PADDING</span>;
+                
+                if (!<span class="auto-style3">CryptSetKeyParam</span>( hKey, KP_PADDING, (BYTE*)&amp;padding_mode, 0)){
+                    errorCode = LOGIC_ERROR ;
+                    bRet = false ;
+                    break ;
+                }
+            }
+
+<span class="comment">            /* */
+</span>            break ;
+        }
+
+
+<span class="comment">
+        /*========*/
+        /* 後処理 */
+        /*========*/
+</span>        return bRet ;
+    }
+
+
+
+<span class="comment">    /*=====================================================================*/
+    //! 暗号処理 解放処理
+    /*!
+        CryptAPI を使用した暗号処理の解放処理を行います。
+        
+        @param[in]      hProv           CPSハンドル。InitializeAes で使用したハンドルを指定してください。                                       
+        @param[in]      hKey            鍵ハンドル。InitializeAes で使用したハンドルを指定してください。
+        @param[out]     errorCode       エラーコード
+        @retval         true            正常終了
+        @retval         false           異常終了
+        @author         木下英俊
+        @date           2011-12-04 新規作成
+    */
+    /*=====================================================================*/
+</span>    bool DisposeAes( HCRYPTPROV &amp;hProv, HCRYPTKEY &amp;hKey, AES_ERROR_CODE &amp;errorCode )
+    {
+        bool bRet = true ;
+
+<span class="comment">        /*========*/
+        /* 前処理 */
+        /*========*/
+</span>        errorCode = NORMAL ;
+
+<span class="comment">        /*========*/
+        /* 処理部 */
+        /*========*/
+        // 鍵ハンドル解放
+</span>        if ( hKey != NULL ){
+            if (!<span class="auto-style3">CryptDestroyKey</span>(hKey)){
+                cerr &lt;&lt; "CryptDestroyKey error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+            }
+        }
+
+<span class="comment">        // CPSハンドル解放
+</span>        if ( hProv != NULL ){
+            if (!<span class="auto-style3">CryptReleaseContext</span>(hProv, 0)){
+                cerr &lt;&lt; "CryptReleaseContext error" &lt;&lt; endl;
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+            }
+        }
+
+        return bRet ;
+    }
+}
+
+
+
+<span class="comment">/*=====================================================================*/
+//! データを暗号化する
+/*!
+    データを暗号化します。
+    暗号アルゴリズムなど詳細は関数 InitializeAes の説明を参照してください。
+    
+    @param[in]      rawData         暗号化対象の平分データ
+    @param[in]      sizeRawData     rawData の有効データサイズ
+    @param[in]      keyData         暗号鍵データ。データサイズは AES_KEY_SIZE 。
+    @param[out]     cryptData       暗号化データ格納領域
+                                    本関数をコールする前に呼び出し側でメモリ確保しておいてください。
+                                    必要とするデータサイズに関する説明は sizeCryptData の説明を参照してください。
+    @param[in]      sizeCryptData   cryptData の有効バッファサイズ。
+                                    以下の関係を満足しない場合、本関数はエラーになります。エラーコードは INVALID_ARGUMENT を応答します。
+                                    @code
+                                    sizeCryptData &gt;= ((sizeRawData+16)/16)*16 ;
+                                    @endcode
+    @param[out]     cryptDataBytes  暗号化データサイズ
+    @param[out]     errorCode       エラーコード
+    @retval         true            正常終了
+    @retval         false           異常終了
+    @author         木下英俊
+    @date           2011-12-04 新規作成
+*/
+/*=====================================================================*/
+</span>bool encryptData( unsigned char* rawData, size_t sizeRawData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* cryptData, size_t sizeCryptData, size_t &amp;cryptDataBytes, AES_ERROR_CODE &amp;errorCode )
+{
+    bool    bRet = true ;
+
+<span class="comment">    // キーコンテナーの取得
+</span>    HCRYPTPROV  hProv = NULL ;
+    HCRYPTKEY   hKey = NULL ;
+
+
+<span class="comment">    /*========*/
+    /* 前処理 */
+    /*========*/
+</span>    errorCode = NORMAL ;
+
+<span class="comment">    // 出力バッファサイズのチェック
+</span>    if ( sizeCryptData &lt; (((sizeRawData+16)/16)*16)){
+<span class="comment">
+        // 暗号データ出力領域不足
+</span>        cerr &lt;&lt; "[ERROR] cryptData output memory is not enough." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+<span class="comment">    // cryptData のNULLチェック
+</span>    if ( cryptData == NULL ){
+        cerr &lt;&lt; "[ERROR] cryptData must be memory allocated." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+<span class="comment">    // rawData のNULLチェック
+</span>    if ( rawData == NULL ){
+        cerr &lt;&lt; "[ERROR] rawData must be memory allocated." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+
+
+<span class="comment">    /*========*/
+    /* 処理部 */
+    /*========*/
+</span>    while( bRet == true ){
+
+<span class="comment">        /* 初期処理 */
+</span>        if ( !InitializeAes( hProv, hKey, keyData, errorCode ) ){
+            bRet = false ;
+            break ;
+        }
+
+<span class="comment">        /* 暗号化 */
+</span>        {
+            DWORD       sizeData_ = sizeRawData ;
+
+<span class="comment">            // 平分データを cryptData へコピー。cryptData が入力と出力を兼ねるAPI仕様のため
+</span>            memcpy( cryptData, rawData, sizeRawData );
+
+            //
+            cryptDataBytes = 0 ;
+
+<span class="comment">            // 暗号化
+</span>            if(!<span class="auto-style3">CryptEncrypt</span>(
+                    hKey,                       <span class="comment">// 鍵のハンドル</span>
+                    0,                          <span class="comment">// 暗号化と同時にハッシュ化する場合に指定</span>
+                    TRUE,                       <span class="comment">// 最後のデータを渡すときに真</span>
+                    0,                          <span class="comment">// ゼロを指定</span>
+                    cryptData,                  <span class="comment">// 暗号化されるデータのポインター</span>
+                    &amp;sizeData_,                 <span class="comment">// 暗号化データのバイト長データの格納ポインター, 演算後は暗号化された結果のデータサイズを格納</span>
+                    (DWORD)sizeCryptData))      <span class="comment">// データバッファーの大きさ</span>
+            {
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // 暗号化された結果のデータサイズを出力変数へコピー
+</span>            cryptDataBytes = sizeData_ ;
+        }
+
+<span class="comment">        /**/
+</span>        break ;
+    }
+<span class="comment">
+    /*========*/
+    /* 後処理 */
+    /*========*/
+</span>    if ( !DisposeAes( hProv, hKey, errorCode ) ){
+        bRet = false ;
+    }
+
+    return bRet ;
+}
+
+
+
+<span class="comment">/*=====================================================================*/
+//! データを復号化する
+/*!
+    データを復号化します。
+    暗号アルゴリズムなど詳細は関数 InitializeAes の説明を参照してください。
+    
+    @param[in]      cryptData       暗号データ
+    @param[in]      sizeCryptData   cryptData のデータサイズ
+    @param[in]      keyData         暗号鍵データ。データサイズは AES_KEY_SIZE 。
+    @param[out]     rawData         復号化データ格納領域
+                                    本関数をコールする前に呼び出し側でメモリ確保しておいてください。
+                                    必要とするデータサイズに関する説明は sizeRawData の説明を参照してください。
+    @param[in]      sizeRawstData   rawData の有効バッファサイズ。
+                                    以下の関係を満足しない場合、本関数はエラーになります。エラーコードは INVALID_ARGUMENT を応答します。
+                                    @code
+                                    sizeRawData >= sizeCryptData ;
+                                    @endcode
+    @param[out]     rawDataBytes    復号化データサイズ
+    @param[out]     errorCode       エラーコード
+    @retval         true            正常終了
+    @retval         false           異常終了
+    @author         木下英俊
+    @date           2011-12-04 新規作成
+*/
+/*=====================================================================*/
+</span>bool decryptData( unsigned char* cryptData, size_t sizeCryptData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* rawData, size_t sizeRawData, size_t &amp;rawDataBytes, AES_ERROR_CODE &amp;errorCode )
+{
+    bool    bRet = true ;
+
+<span class="comment">    // キーコンテナーの取得
+</span>    HCRYPTPROV  hProv = NULL ;
+    HCRYPTKEY   hKey = NULL ;
+
+
+<span class="comment">    /*========*/
+    /* 前処理 */
+    /*========*/
+</span>    errorCode = NORMAL ;
+
+<span class="comment">    // 出力バッファサイズのチェック
+</span>    if ( sizeRawData &lt; sizeCryptData ){
+<span class="comment">        // 復号化データ出力領域不足
+</span>        cerr &lt;&lt; "[ERROR] rawData output memory is not enough." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+<span class="comment">    // cryptData のNULLチェック
+</span>    if ( cryptData == NULL ){
+        cerr &lt;&lt; "[ERROR] cryptData must be memory allocated." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+<span class="comment">    // rawData のNULLチェック
+</span>    if ( rawData == NULL ){
+        cerr &lt;&lt; "[ERROR] rawData must be memory allocated." &lt;&lt; endl;
+        bRet = false ;
+        errorCode = INVALID_ARGUMENT ;
+    }
+
+
+<span class="comment">    /*========*/
+    /* 処理部 */
+    /*========*/
+</span>    while( bRet == true ){
+
+<span class="comment">        /* 初期処理 */
+</span>        if ( !InitializeAes( hProv, hKey, keyData, errorCode ) ){
+            bRet = false ;
+            break ;
+        }
+
+<span class="comment">        /* 復号化 */
+</span>        {
+            DWORD       sizeData_ = sizeCryptData ;
+
+<span class="comment">            // 暗号データを rawData へコピー。rawData が入力と出力を兼ねるAPI仕様のため
+</span>            memcpy( rawData, cryptData, sizeCryptData );
+            
+            //
+            rawDataBytes = 0 ;
+
+<span class="comment">            // 復号化
+</span>            if(!<span class="auto-style3">CryptDecrypt</span>(
+                    hKey,                       <span class="comment">// 鍵のハンドル</span>
+                    0,                          <span class="comment">// 復号化と同時にハッシュ化する場合に指定</span>
+                    TRUE,                       <span class="comment">// 最後のデータを渡すときに真</span>
+                    0,                          <span class="comment">// ゼロを指定</span>
+                    rawData,                    <span class="comment">// 復号化されるデータのポインター</span>
+                    &amp;sizeData_))                <span class="comment">// 暗号データのバイト長データの格納ポインター, 演算後は復号化された結果のデータサイズを格納</span>
+            {
+                errorCode = LOGIC_ERROR ;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // 復号化された結果のデータサイズを出力変数へコピー
+</span>            rawDataBytes = sizeData_ ;
+        }
+
+<span class="comment">        /**/
+</span>        break ;
+    }
+
+
+<span class="comment">    /*========*/
+    /* 後処理 */
+    /*========*/
+</span>    if ( !DisposeAes( hProv, hKey, errorCode ) ){
+        bRet = false ;
+    }
+
+    return bRet ;
+}
+
+
+} <span class="comment">// namespace aes_library
+</span>		</pre>
+</code>
+	
+<br>
+	
+<span class="table_title">[プログラムソース &quot;test_aes.cpp&quot;]</span>
+<code>
+<pre class="prettyprint linenums">
+#include "stdafx.h"
+
+#include "Aes.h"
+
+
+using namespace std;
+using namespace boost::property_tree;
+
+using namespace aes_library;
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    bool            bRet = true ;
+
+<span class="comment">    // 平文データ
+</span>    unsigned char   rawData[] = {00, 01, 02, 03};
+    size_t          sizeRawData = sizeof(rawData)/sizeof(rawData[0]);
+
+<span class="comment">    // 暗号データ
+</span>    unsigned char*  cryptData = NULL ;
+    size_t          sizeCryptData = 0 ;             <span class="comment">// crpyptData のバッファサイズ</span>
+    size_t          cryptDataBytes = 0 ;            <span class="comment">// 暗号化された結果のデータサイズ</span>
+
+<span class="comment">    // 暗号データから復号された平文データ
+</span>    unsigned char*  rawData2 = NULL ;
+    size_t          sizeRawData2 = 0 ;              <span class="comment">// rawData2 のバッファサイズ</span>
+    size_t          rawData2Bytes = 0 ;             <span class="comment">// 復号化された結果のデータサイズ</span>
+
+<span class="comment">    // 鍵情報</span>
+    string          strPassFraise = "";             <span class="comment">// パスフレーズ</span>
+    unsigned char   aesKey[AES_KEY_SIZE];           <span class="comment">// AES演算用鍵データ</span>
+    
+<span class="comment">    // エラーコード
+</span>    AES_ERROR_CODE  errorCode ;
+
+
+<span class="comment">    /*========*/
+    /* 前処理 */
+    /*========*/
+</span>    UNREFERENCED_PARAMETER(argc);           <span class="comment">// UNREFERENCED_PARAMETER は WinNT.h で定義されています。</span>
+    UNREFERENCED_PARAMETER(argv);           <span class="comment">// UNREFERENCED_PARAMETER は WinNT.h で定義されています。</span>
+
+
+<span class="comment">    /*========*/
+    /* 処理部 */
+    /*========*/
+</span>    while(bRet) {
+
+<span class="comment">        /*==================================================*/
+        /* configuration.xml ファイルからパスフレーズを取得 */
+        /*==================================================*/
+        /*
+            NOTE:
+            XMLファイルの読み取りに boostライブラリ(Ver. 1.47) の property_tree を使用しています。
+            property_tree は boostライブラリの1.41以降から使用できます。
+            boostライブラリは以下のURLから取得してください。boostpro にあるインストーラを使用する方が楽に導入できます。
+            http://www.boost.org/
+            http://www.boostpro.com/download/
+        */
+</span>        {
+            const string filename = "configuration.xml";
+            ptree pt;
+
+<span class="comment">            // XMLファイルを開く
+</span>            try{
+                read_xml( filename, pt );
+            }
+            catch( xml_parser_error e ){
+                // filename が無い場合の例外
+                cerr << "[ERROR] Cannnot open file \"" << filename << "\"" << "." << endl;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // パスフレーズ読み取り
+</span>            if ( boost::optional<std::string> str = pt.get_optional<std::string>(<xmlattr><span class="string">&quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise&quot;</span>) )
+            {
+                strPassFraise = str.get();
+                cout << "Pass fraise : \"" << strPassFraise << "\"" << endl << endl;
+            }
+            else {
+<span class="comment">                </span><xmlattr><span class="comment">// 属性 &quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise&quot; が無い場合の異常処理
+</span>                cerr << <xmlattr><span class="string">&quot;[ERROR] \&quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise\&quot; is nothing.&quot;</span> << std::endl;
+                bRet = false ;
+                break ;
+            }
+        }
+        
+<span class="comment">        // strPassFraise から16バイトの鍵情報生成
+</span>        {
+            AES_ERROR_CODE  errorCode = NORMAL ;
+
+            if (!createAesKey( strPassFraise, aesKey, errorCode )){
+                cerr << "[ERROR] createAesKey() is fail." << endl;
+                bRet = false ;
+                break ;
+            }
+        }
+
+<span class="comment">        // Encrypt
+</span>        {
+            cout << "[Encrypt]" << endl;
+
+<span class="comment">            // 暗号化した結果を保存する領域を確保
+            // 生データサイズ に1～16バイトを加えた数で、16の倍数になる値、が出力サイズ
+</span>            sizeCryptData = ((sizeRawData + 16)/16)*16 ;
+            if ( cryptData != NULL ){
+                delete[] cryptData ;
+            }
+            cryptData = new unsigned char[sizeCryptData];
+            
+            if ( !encryptData( rawData, sizeRawData, aesKey, cryptData, sizeCryptData, cryptDataBytes, errorCode ) ){
+                cerr << <span class="string">"[ERROR] encryptData() is fail."</span> << endl;
+                bRet = false ;
+                break ;
+            }
+
+<span class="comment">            // 暗号化されたデータサイズのチェック
+</span>            assert( sizeCryptData == cryptDataBytes );
+        }
+
+<span class="comment">        // 演算結果出力
+</span>        {
+            cout &lt;&lt; "Key         : ";
+            for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
+                cout << hex << setw(2) << setfill('0') << (int)aesKey[i] << " ";
+            }
+            cout << endl;
+
+            cout << "Raw data    : ";
+            for ( size_t i=0; i&lt;sizeRawData; ++i ){
+                cout << hex << setw(2) << (int)rawData[i] << " ";
+            }
+            cout << endl;
+
+            cout << "Crypt data  : ";
+            for ( size_t i=0; i&lt;cryptDataBytes; ++i ){
+                cout << hex << setw(2) << (int)cryptData[i] << " ";
+            }
+            cout << endl;
+
+            cout << endl;
+        }
+
+
+<span class="comment">        // Decrypt
+</span>        {
+            cout << "[Decrypt]" << endl;
+            
+<span class="comment">            // 復号化した結果を保存する領域を確保
+</span>            sizeRawData2 = cryptDataBytes ;
+            if ( rawData2 != NULL ){
+                delete[] rawData2 ;
+            }
+            rawData2 = new unsigned char[sizeRawData2];
+            
+            if ( !decryptData( cryptData, cryptDataBytes, aesKey, rawData2, sizeRawData2, rawData2Bytes, errorCode ) ){
+                cerr << <span class="string">"[ERROR] encryptData() is fail."</span> << endl;
+                bRet = false ;
+                break ;
+            }
+        }
+
+<span class="comment">        // 演算結果出力
+</span>        {
+            cout << "Key         : ";
+            for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
+                cout << hex << setw(2) << setfill('0') << (int)aesKey[i] << " ";
+            }
+            cout << endl;
+
+            cout << "Crypt data  : ";
+            for ( size_t i=0; i&lt;cryptDataBytes; ++i ){
+                cout << hex << setw(2) << (int)cryptData[i] << " ";
+            }
+            cout << endl;
+
+            cout << "Raw data    : ";
+            for ( size_t i=0; i&lt;rawData2Bytes; ++i ){
+                cout << hex << setw(2) << (int)rawData2[i] << " ";
+            }
+            cout << endl;
+
+            cout << endl;
+        }
+
+
+<span class="comment">        // 演算結果確認
+</span>        {
+<span class="comment">            // データサイズ チェック
+</span>            assert( sizeRawData == rawData2Bytes );
+
+<span class="comment">            // データチェック
+</span>            for ( size_t i=0; i&lt;sizeRawData; ++i ){
+                assert( rawData[i] == rawData2[i] );
+            }
+        }
+
+<span class="comment">        /**/
+</span>        break ;
+    }
+
+
+<span class="comment">    /*========*/
+    /* 後処理 */
+    /*========*/
+    // リソース解放
+</span>    if ( cryptData != NULL ){
+        delete[] cryptData ;
+        cryptData = NULL ;
+    }
+    if ( rawData2 != NULL ){
+        delete[] rawData2 ;
+        rawData2 = NULL ;
+    }
+
+<span class="comment">    // 処理結果出力
+</span>    {
+        cout << "[Result] " ;
+        if ( bRet ){
+            cout << "OK" << endl;
+        }
+        else{
+            cout << "!!! NG !!!" << endl;
+        }
+    }
+
+<span class="comment">    // [enter]キー押下待ち
+</span>    {
+        string str ;
+        cout << "HIT [enter] KEY !! " ;
+        getline( cin, str );
+        
+    }
+
+<span class="comment">    // return
+</span>    if ( bRet ){
+        return EXIT_SUCCESS;
+    }
+    else{
+        return EXIT_FAILURE;
+    }
+}
+</pre>
+</code>
+	
+<br>
+	
+<span class="table_title">[プログラムソース &quot;configuration.xml&quot;]</span>
+<code>
+<pre class="prettyprint linenums">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;Shift_JIS&quot;?&gt;
+&lt;Documents&gt;
+  &lt;DataFormat&gt;
+    &lt;Encryption PassFraise=&quot;PassFraise&quot;/&gt;
+  &lt;/DataFormat&gt;
+&lt;/Documents&gt;
+</pre>
+</code>
+</code>
+	
+<br>
+	
+<span class="table_title">[実行結果]</span>
+<code>
+<pre class="prettyprint linenums">
+Pass fraise : &quot;PassFraise&quot;
+
+[Encrypt]
+Key : 68 6d 26 2f 27 8c f6 99 53 20 55 8f 43 f7 11 0d
+Raw data : 00 01 02 03
+Crypt data : 72 0e bf e3 8b ff 8a f2 dc ba 09 b6 10 1d 6b ef
+
+[Decrypt]
+Key : 68 6d 26 2f 27 8c f6 99 53 20 55 8f 43 f7 11 0d
+Crypt data : 72 0e bf e3 8b ff 8a f2 dc ba 09 b6 10 1d 6b ef
+Raw data : 00 01 02 03
+
+[Result] OK
+HIT [enter] KEY !!
+</pre>
+</code>
+<p> OS: Windows7 64bit Proffesional<br>作成： VC++2008 sp1、32bitコンパイル、/MT(d)</p>
+<p> 参考URL：</p>
+<hr>
+<p> 記載： 2012年1月28日 木下英俊<br></p>
+</body>
+</html>

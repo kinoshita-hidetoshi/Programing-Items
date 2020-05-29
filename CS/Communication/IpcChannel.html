@@ -1,0 +1,262 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>IpcChannel</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+IpcChannel</h1>
+
+<p> IPC プロトコルを使用して、プロセス間でメッセージを送信するチャネル実装を提供します。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1. まずは作ってみよう">1. まずは作ってみよう</a></p>
+<p> &nbsp;</p>
+<h2> 1. まずは作って<a name="1. まずは作ってみよう"></a>みよう</h2>
+<p> まずはシンプルにコンソールで IPCチャネル を作ってみましょう。</p>
+<p> こんな感じに、クライアント側からリモートオブジェクトのプロパティ Counter を操作すると、サーバー側のイベントが発報されてそのときの 
+Counter の値をサーバー側で画面へ表示する、というようなプログラムにしてみます。</p>
+<p>環境：</p>
+<ul>
+	<li>開発環境： Visual Studio 2015 pro., C#, .NET Framework 4.0</li>
+	<li>確認OS: Windows10 home</li>
+</ul>
+<p> <img alt="" height="428" src="IpcChannel/IpcChannel_fig1.png" width="472"></p>
+<h3> サーバー</h3>
+<p> (*) 「System.Runtime.Remoting」の参照追加を行う必要があります。</p>
+<span class="table_title">[プログラムソース &quot;server.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using System.Threading;
+
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Ipc;
+
+using IpcSample;
+
+namespace Server
+{
+    class Program
+    {
+        private static IpcServer _ipcServer;
+
+        static void Main(string[] args)
+        {
+            _ipcServer = new IpcServer();
+            _ipcServer.remoteObject.counterChangeEvent += CounterChangeEventHandler;
+
+            // メイン処理
+
+            // 終了待ち
+            Console.Write(&quot;HIT [Enter] KEY !! &quot;);
+            Console.ReadLine();
+        }
+
+        private static void CounterChangeEventHandler(object sender, EventArgs e)
+        {
+            Console.WriteLine(&quot;[CounterChangeEventHandler] Counter = &quot; + _ipcServer.remoteObject.Counter);
+        }
+    }
+
+
+    class IpcServer
+    {
+        public IpcRemoteObject remoteObject { private set; get; }
+
+        /// &lt;summary&gt;
+        /// コンストラクタ
+        /// &lt;/summary&gt;
+        public IpcServer()
+        {
+            // サーバーチャンネルの作成
+            IpcServerChannel channel = new IpcServerChannel(&quot;IpcSample&quot;);
+
+            // チャンネルを登録
+            ChannelServices.RegisterChannel(channel, true);
+
+            // リモートオブジェクトを生成して公開
+            remoteObject = new IpcRemoteObject();
+            RemotingServices.Marshal(remoteObject, &quot;test&quot;, typeof(IpcRemoteObject));
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+<h3>クライアント</h3>
+<p> (*) 「System.Runtime.Remoting」の参照追加を行う必要があります。</p>
+<span class="table_title">[プログラムソース &quot;client.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using System.Threading;
+
+using System.Runtime.Remoting;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting.Channels.Ipc;
+
+using IpcSample;
+
+
+namespace Client
+{
+    class Program
+    {
+        private static IpcClient _ipcClient;
+
+        static void Main(string[] args)
+        {
+            System.Threading.Thread.Sleep(2000);
+
+            _ipcClient = new IpcClient();
+
+            // メイン処理
+            ThreadPool.QueueUserWorkItem(new WaitCallback(MethodTest));
+
+            // 終了待ち
+            Console.Write(&quot;HIT [Enter] KEY !! &quot;);
+            Console.ReadLine();
+        }
+
+
+        private static void MethodTest(Object obj)
+        {
+            for ( int i=0; i&lt;3000; ++i)
+            {
+                Thread.Sleep(1000);
+                _ipcClient.remoteObject.Counter++;
+                Console.WriteLine(&quot;Counter = &quot;+_ipcClient.remoteObject.Counter);
+            }
+        }
+    }
+
+
+    class IpcClient
+    {
+        public IpcRemoteObject remoteObject { private set; get; }
+
+        public IpcClient()
+        {
+            // クライアントチャネルの作成
+            IpcClientChannel channel = new IpcClientChannel();
+
+            // チャンネルを登録
+            ChannelServices.RegisterChannel(channel, true);
+
+            // リモートオブジェクトを取得
+            remoteObject = Activator.GetObject(typeof(IpcRemoteObject), &quot;ipc://IpcSample/test&quot;) as IpcRemoteObject;
+        }
+    }
+}
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+<h3>リモートオブジェクト</h3>
+<span class="table_title">[プログラムソース &quot;IpcRemoteObject.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System;
+using System.Runtime.Remoting.Lifetime;
+
+namespace IpcSample
+{
+    public class IpcRemoteObject : MarshalByRefObject
+    {
+        public delegate void CounterChangeEventHandler(object sender, EventArgs e);
+        public event CounterChangeEventHandler counterChangeEvent;
+
+        private int _counter;
+        public int Counter {
+            set {
+                _counter = value;
+                if ( counterChangeEvent != null)
+                {
+                    counterChangeEvent(this, new EventArgs());
+                }
+            }
+            get {
+                return _counter;
+            }
+        }
+
+        public override Object InitializeLifetimeService()
+        {
+            // このオブジェクトのリース期限を無制限にします。 
+            ILease lease = (ILease)base.InitializeLifetimeService();
+            if (lease.CurrentState == LeaseState.Initial)
+            {
+                lease.InitialLeaseTime = TimeSpan.Zero;              // リース期限を無制限にします
+                //lease.InitialLeaseTime = TimeSpan.FromSeconds(15); // リース期限を15秒にします
+            }
+            return lease;
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<h3>ダウンロード</h3>
+<p>サンプルダウンロード は <a href="IpcChannel/IpcChannel.zip">こちら</a>。</p>
+<p></p>
+<h2>参照</h2>
+<p>
+<a href="https://msdn.microsoft.com/ja-jp/library/system.runtime.remoting.channels.ipc.ipcchannel(v=vs.110).aspx" target="_blank">
+IpcChannel</a></p>
+<p>
+<a href="https://msdn.microsoft.com/ja-jp/library/system.runtime.remoting.channels.tcp.tcpchannel(v=vs.110).aspx" target="_blank">
+TcpChannel</a></p>
+<p>
+<a href="https://msdn.microsoft.com/ja-jp/library/system.runtime.remoting.lifetime.lifetimeservices(v=vs.110).aspx" target="_blank">
+LifetimeService クラス</a></p>
+<p>
+<a href="http://programmers.high-way.info/cs/ipc.html" target="_blank">http://programmers.high-way.info/cs/ipc.html</a></p>
+<p>
+一定時間で自動的に切断されてしまう － <a href="http://programmers.high-way.info/cs/ipc2.html">
+http://programmers.high-way.info/cs/ipc2.html</a></p>
+<p>
+異なるユーザー間で通信できない － <a href="http://programmers.high-way.info/cs/ipc3.html">
+http://programmers.high-way.info/cs/ipc3.html</a></p>
+<p>
+<a href="http://bbs.wankuma.com/index.cgi?mode=al2&amp;namber=21484&amp;KLOG=41" target="_blank">
+http://bbs.wankuma.com/index.cgi?mode=al2&amp;namber=21484&amp;KLOG=41</a></p>
+<p>
+&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年12月06日 木下英俊</font></p>
+</body>
+</html>

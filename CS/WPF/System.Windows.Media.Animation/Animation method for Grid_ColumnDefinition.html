@@ -1,0 +1,294 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Animation method for Grid.ColumnDefinition</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+WPF : Grid.ColumnDefinition の Width をアニメーションで動かす</h1>
+
+<p> Grid を GridSplitter を使って分割レイアウト表示することがあります。<br>この分割表示をアニメーションで動作する方法を記載します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._Grid.ColumnDefinition_の_Width_をアニメーションで動かす">1. 
+Grid.ColumnDefinition の Width をアニメーションで動かす</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._Grid.ColumnDefinition_の_Width_をアニメーションで動かす">1. 
+Grid.ColumnDefinition の Width をアニメーションで動かす</a></h2>
+<h3> [概要] とりあえずやってみましょう。</h3>
+<p> Grid.ColumnDefinition をアニメーションするには単純に DoubleAnimation で実現することはできないようです。<br>
+ここではインターネットを調査して見つけたプログラムをまねして、AnimationTimeline の派生クラスを使うことで実現しています。<br>
+この手法はいろいろと応用できそうなので、こちらのプログラミングアイテムに記録を残すことにしました。</p>
+<p> 作成するプログラムは下図の通りです。<br>・画面中央のボタンをクリックすることで、画面レイアウトがアニメーションにより開閉します。<br>
+・ボタンの矢印も逆方向を向きます。</p>
+<p> 
+<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img12.jpg"></p>
+<p> 
+<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img13.jpg"></p>
+
+<video controls autoplay="y" loop="y" src="Animation method for Grid_ColumnDefinition/animation.mp4">
+<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+</video>
+
+<p> &nbsp;</p>
+<h3>[環境]</h3>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.0</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>&nbsp;</p>
+<h3> [プログラムソース]</h3>
+<p>[&quot;MainWindow.xaml&quot;]</p>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;test_GridSplitter_02.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:test_GridSplitter_02&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot; ResizeMode=&quot;CanResizeWithGrip&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+            &lt;ColumnDefinition Width=&quot;100*&quot; Name=&quot;menuWidth&quot;/&gt;
+            &lt;ColumnDefinition Width=&quot;Auto&quot;/&gt;
+            &lt;ColumnDefinition Width=&quot;100*&quot;/&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+        &lt;StackPanel Margin=&quot;0&quot;/&gt;
+        &lt;GridSplitter x:Name=&quot;menuGlidSplitter&quot; HorizontalAlignment=&quot;Center&quot; Margin=&quot;0&quot; Width=&quot;5&quot;
+            Grid.Column=&quot;1&quot; HorizontalContentAlignment=&quot;Center&quot; VerticalContentAlignment=&quot;Stretch&quot;/&gt;
+        &lt;StackPanel Grid.Column=&quot;2&quot; Margin=&quot;0&quot;&gt;
+            &lt;Image Source=&quot;P1070769.jpg&quot; VerticalAlignment=&quot;Top&quot; Stretch=&quot;UniformToFill&quot;/&gt;
+        &lt;/StackPanel&gt;
+        &lt;Button x:Name=&quot;btnOpenClose&quot; Content=&quot;&#8656;&quot; Margin=&quot;0,0,-15,0&quot; Height=&quot;24&quot; HorizontalAlignment=&quot;Right&quot;
+            Width=&quot;24&quot; VerticalContentAlignment=&quot;Stretch&quot; FontSize=&quot;16&quot; Click=&quot;Button_Click&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+
+	
+<br>[&quot;MainWindow.xaml.cs&quot;]<br>
+<pre class="prettyprint linenums">
+using System;
+using System.Windows;                   // GridLength, ContentElement.BeginAnimation
+using System.Windows.Controls;
+
+using System.Windows.Media.Animation;   // EasingFunctionBase, CubicEase
+
+
+namespace test_GridSplitter_02
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        private bool bMenuOpened = true;
+        private GridLength menuWidthOrg;
+        private EasingFunctionBase ease = new CubicEase();
+        private GridLength fromMenuWidth;
+        private GridLength toMenuWidth;
+
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var glaMenu = new GridLengthAnimation();
+
+            if ( bMenuOpened == true)
+            {
+                // menu を閉じる
+                bMenuOpened = false;
+
+                // GridSplitter の可動範囲を指定する
+                //menuWidth.MinWidth = 0; menuWidth.MaxWidth = 500;
+
+                menuWidthOrg = menuWidth.Width;
+                fromMenuWidth = menuWidth.Width;
+                toMenuWidth = new GridLength(0.0, GridUnitType.Star);
+
+                // EasingFunction definitions.
+                ease.EasingMode = EasingMode.EaseInOut;
+                glaMenu.EasingFunction = ease;
+            }
+            else
+            {
+                // menu を開く
+                bMenuOpened = true;
+
+                // GridSplitter の可動範囲を指定する
+                //menuWidth.MinWidth = 0; menuWidth.MaxWidth = 500;
+
+                //fromMenuWidth = new GridLength(menuWidth.ActualWidth);
+                fromMenuWidth = menuWidth.Width;
+                toMenuWidth = menuWidthOrg;
+
+                // EasingFunction definitions.
+                ease.EasingMode = EasingMode.EaseInOut;
+                glaMenu.EasingFunction = ease;
+            }
+
+            // GridLengthAnimation を設定
+            glaMenu.Completed += GlaMenu_Completed;                     // アニメーション完了を通知
+            glaMenu.Duration = new Duration(TimeSpan.FromSeconds(0.5)); // 0.5秒 でアニメーション
+            //glaMenu.FillBehavior = FillBehavior.HoldEnd;              // FillBehavior の設定は重要。どちらを使う？
+            glaMenu.FillBehavior = FillBehavior.Stop;                   // FillBehavior の設定は重要。どちらを使う？
+            glaMenu.From = fromMenuWidth;
+            glaMenu.To = toMenuWidth;
+
+            // アニメーション開始
+            menuWidth.<span class="auto-style8">BeginAnimation</span>(ColumnDefinition.WidthProperty, glaMenu);
+        }
+
+        private void GlaMenu_Completed(object sender, EventArgs e)
+        {
+            menuWidth.Width = toMenuWidth;
+
+            if ( bMenuOpened)
+            {
+                btnOpenClose.Content = &quot;&#8656;&quot;;
+                menuGlidSplitter.IsEnabled = true;
+            }
+            else
+            {
+                btnOpenClose.Content = &quot;⇒&quot;;
+                menuGlidSplitter.IsEnabled = false;
+            }
+        }
+    }
+}</pre>
+
+<br>[&quot;GridLengthAimation.cs&quot;]<br>
+
+
+<pre class="prettyprint linenums">
+using System;
+using System.Windows;
+using System.Windows.Media.Animation;
+
+
+/// &lt;summary&gt;
+/// 下記URLの記事に記載のコードを参考にしました。
+/// <a href="http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column" target="_blank">http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column</a>
+/// &lt;/summary&gt;
+
+namespace test_GridSplitter_02
+{
+    internal class GridLengthAnimation : AnimationTimeline
+    {
+
+        public static readonly DependencyProperty FromProperty;
+        public static readonly DependencyProperty ToProperty;
+        public static readonly DependencyProperty EasingFunctionProperty;
+
+        static GridLengthAnimation()
+        {
+            FromProperty = DependencyProperty.Register(&quot;From&quot;, typeof(GridLength), typeof(GridLengthAnimation));
+            ToProperty = DependencyProperty.Register(&quot;To&quot;, typeof(GridLength), typeof(GridLengthAnimation));
+            EasingFunctionProperty = DependencyProperty.Register(&quot;EasingFunction&quot;, typeof(IEasingFunction), typeof(GridLengthAnimation));
+        }
+
+        protected override Freezable CreateInstanceCore()
+        {
+            return new GridLengthAnimation();
+        }
+
+        public override Type TargetPropertyType
+        {
+            get { return typeof(GridLength); }
+        }
+
+        public IEasingFunction EasingFunction
+        {
+            get
+            {
+                return (IEasingFunction)GetValue(GridLengthAnimation.EasingFunctionProperty);
+            }
+            set
+            {
+                SetValue(GridLengthAnimation.EasingFunctionProperty, value);
+            }
+
+        }
+
+        public GridLength From
+        {
+            get
+            {
+                return (GridLength)GetValue(GridLengthAnimation.FromProperty);
+            }
+            set
+            {
+                SetValue(GridLengthAnimation.FromProperty, value);
+            }
+        }
+
+        public GridLength To
+        {
+            get
+            {
+                return (GridLength)GetValue(GridLengthAnimation.ToProperty);
+            }
+            set
+            {
+                SetValue(GridLengthAnimation.ToProperty, value);
+            }
+        }
+
+        public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock)
+        {
+            double fromValue = ((GridLength)GetValue(GridLengthAnimation.FromProperty)).Value;
+            double toValue = ((GridLength)GetValue(GridLengthAnimation.ToProperty)).Value;
+
+            IEasingFunction easingFunction = this.EasingFunction;
+
+            double progress = (easingFunction != null) ? easingFunction.Ease(animationClock.CurrentProgress.Value) : animationClock.CurrentProgress.Value;
+
+            if (fromValue &gt; toValue)
+            {
+                return new GridLength((1 - progress) * (fromValue - toValue) + toValue, this.To.IsStar ? GridUnitType.Star : GridUnitType.Pixel);
+            }
+            else
+            {
+                return new GridLength((progress) * (toValue - fromValue) + fromValue, this.To.IsStar ? GridUnitType.Star : GridUnitType.Pixel);
+            }
+        }
+    }
+}</pre>
+
+
+<br><br>
+	
+<br>
+<h3>サンプルプログラム</h3>
+<p>サンプルプログラム  
+<a href="Animation%20method%20for%20Grid_ColumnDefinition/Animation%20method%20for%20GridSplitter.zip">ダウンロード</a></p>
+<p>&nbsp;</p>
+
+<h3>参考</h3>
+<ul>
+	<li>
+	<a href="http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column" target="_blank">http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2017年08月15日 木下英俊、新規作成<br>
+</font></p>
+</body>
+</html>

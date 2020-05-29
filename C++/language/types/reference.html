@@ -1,0 +1,602 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>参照 － 左辺値参照、右辺値参照</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	color: #808080;
+}
+.auto-style9 {
+	text-indent:4em;
+}
+.auto-style10 {
+	background-color: #FFFF00;
+}
+.auto-style11 {
+	background-color: #00FF00;
+}
+.auto-style12 {
+	color: #000;
+	background-color: #FF0000;
+}
+.auto-style13 {
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+参照 － 左辺値参照、右辺値参照</h1>
+
+<p> 参照 (左辺値参照) は、オブジェクトの別名のように振る舞います。<br>例えば関数の仮引数を参照にすることで、無駄なコピーが発生しません。これは特に大きなオブジェクトを関数へ渡す場合に、コピーによるメモリ消費を抑えられ、同時にコピー処理による時間もかからないため有効です。</p>
+<p> c++11 で、右辺値参照とムーブセマンティクス、という機能が追加になりました。<br>右辺値参照は &quot;一時オブジェクト&quot; 
+を参照することができるようになり、大きなコピーコストを気にすることなく扱うことができます。</p>
+<p> これら参照機能を有効に活用できるようになることで、低コストで有効なプログラムを作成できるようになりましょう。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._構文">1. 構文</a><br><a href="#2._左辺値参照">2. 左辺値参照</a><br>&nbsp;
+<a href="#2-1._左辺値参照とは">2-1. 左辺値参照とは</a><br>&nbsp; 
+<a href="#2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a><br>&nbsp;
+<a href="#2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a><br>
+<a href="#3._右辺値参照 (c++11)">3._右辺値参照 (c++11)</a><br>&nbsp;
+<a href="#3-1._右辺値参照とは">3-1. 右辺値参照とは</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._構文">1. 構文</a></h2>
+<p> 参照変数宣言は、宣言子が以下の形式を持つ単純宣言です。</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="10"></td>
+	</tr>
+	
+	<tr>
+		<td><span class="auto-style8">&lt;cv修飾子&gt; 型名</span> <code><b>&amp; </b></code><span class="auto-style8"><em>attr<span class="comment">(オプション) </span>declarator 
+		= 初期化子;</em></span></td>
+		<td>(1)</td>
+		<td></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="10"></td>
+	</tr>
+	
+	<tr>
+		<td><span class="auto-style8">&lt;cv修飾子&gt; 型名</span><code> <b>&amp;&amp; </b></code><span class="auto-style8"><em>attr</em></span><span class="comment">(オプション)</span><span class="auto-style8"><em> declarator 
+		= 初期化子;</em></span> </td>
+		<td>(2)</td>
+		<td class="comment">(c++11)</td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="10"></td>
+	</tr>
+</tbody>
+</table>
+<p class="auto-style9"> (1) 左辺値参照宣言子 － 宣言
+<span class="cpp-source">S&amp; D;</span>&nbsp;は S によって決定される型への左辺値参照として D 
+を宣言します。</p>
+<p class="auto-style9"> (2) 右辺値参照宣言子 － 宣言
+<span class="cpp-source"> S&amp;&amp; D;</span>&nbsp;は S によって決定される型への右辺値参照として D を宣言します。</p>
+<p> declarator - 別の参照宣言子を除く任意の宣言子。</p>
+<p> attr(c++11) - オプショナルな<a href="https://ja.cppreference.com/w/cpp/language/attributes" target="_blank">属性</a>のリスト。</p>
+<p> &nbsp;</p>
+<p> 補足です。</p>
+<ul>
+	<li>参照はオブジェクトではありません。参照は記憶領域を占めるとは限りません。</li>
+	<li>参照はオブジェクトではないため、参照の配列、参照へのポインタ、参照への参照、はありません。以下のようにエラーになります。</li>
+</ul>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+int&amp; a[3];    // エラー
+int&amp;* p;      // エラー
+int&amp; &amp;r;      // エラー</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> <a name="2._左辺値参照">2. 左辺値参照</a></h2>
+<h3> <a name="2-1._左辺値参照とは">2-1. 左辺値参照とは</a></h3>
+<p> 左辺値参照とは、既存のオブジェクトをエイリアスするために使用できます。<br>
+C++03では、参照といえばこの左辺値参照でしたし左辺値参照という言葉自体も当時なかったように記憶します。C++11で後述の<a href="#3._右辺値参照 (c++11)">右辺値参照</a>が登場したことで、これと区別するために恐らく左辺値参照という言葉が定義されたのではないかと推察します。</p>
+<p> まずは左辺値参照を簡単に使用してみます。<br>基本的な変数をエイリアスする使い方の例を以下に示します。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;test_reference_01.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;
+int main()
+{
+    int     a = 10;
+    <span class="auto-style10">int&amp;</span>    b = a;      // b は a の参照
+    //int&amp;  c;          // エラー。参照は必ず初期化されねばならない
+
+    int     d = 30;
+    std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
+
+    b = 20;             // a の値は 20 になる
+    std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
+
+    b = d;              // 参照先は変更できない。d の値が b,a に代入され、a の値は 30 になる。
+    std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
+}</code>
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>
+&nbsp;</p>
+<p>
+[実行結果]<br><img alt="" src="reference/img7.gif"></p>
+<p>
+&nbsp;</p>
+	
+<h4>
+参考</h4>
+<ul>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<h3> <a name="2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a></h3>
+<p> 参照は、関数の仮引数でも使用できます。<br>
+関数の仮引数を参照にすることで、無駄なコピーを発生しません。これは特に大きなオブジェクトを関数へ渡す場合にコピーによるメモリ消費を抑えられ、コピー処理による時間もかからないため、とても有効です。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;test_reference_02.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+void double_string(<span class="auto-style10">std::string&amp;</span> str) {
+    std::cout &lt;&lt; &quot;(2) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // 変数 str のアドレスを出力
+    str += str;
+}
+int main()
+{
+    std::string str = &quot;Test&quot;;
+    std::cout &lt;&lt; &quot;(1) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // 変数 str のアドレスを出力
+
+    std::cout &lt;&lt; &quot;str = &quot; &lt;&lt; str &lt;&lt; std::endl;
+    double_string(str);
+    std::cout &lt;&lt; &quot;str = &quot; &lt;&lt; str &lt;&lt; std::endl;
+}</code>
+</pre>
+
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p><img alt="" src="reference/img18.jpg"></p>
+<p>&nbsp;</p>
+<p>参照は、ポインタと違い、一時オブジェクトや定数も const 参照へ渡すことができます。</p>
+<p>[プログラムソース &quot;test_reference_03.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;
+
+struct S {
+    int data = 0;
+};
+
+
+void fr(S&amp; v) {
+    std::cout &lt;&lt; &quot;[fr(S&amp; v)] &quot; &lt;&lt; v.data &lt;&lt; std::endl;
+}
+
+void fr(int&amp; v) {
+    std::cout &lt;&lt; &quot;[fr(int&amp; v)] &quot; &lt;&lt; v &lt;&lt; std::endl;
+}
+
+void fcr(<span class="auto-style10">const S&amp;</span> v) {
+    std::cout &lt;&lt; &quot;[fcr(const S&amp; v)] &quot; &lt;&lt; v.data &lt;&lt; std::endl;
+}
+
+void fcr(<span class="auto-style10">const int&amp;</span> v) {
+    std::cout &lt;&lt; &quot;[fcr(const int&amp; v)] &quot; &lt;&lt; v &lt;&lt; std::endl;
+}
+
+void fp(S* v) {
+    std::cout &lt;&lt; &quot;[fp(S* v)] &quot; &lt;&lt; v-&gt;data &lt;&lt; std::endl;
+}
+
+void fp(int* v) {
+    std::cout &lt;&lt; *v &lt;&lt; std::endl;
+}
+
+
+int main()
+{
+    S       s;
+    int     a = 42;
+
+    fr(s);
+    fr(a);
+    //fr(S());          // エラー。一時オブジェクトを参照で渡すことはできない。
+    //fr(42);           // エラー。整数リテラルを参照で渡すことはできない。
+    <span class="auto-style10">fcr(S());</span>           // OK。一時オブジェクトを const 参照で渡すことはできる。
+    <span class="auto-style10">fcr(42);</span>            // OK。整数リテラルを const 参照で渡すことはできる。
+
+    fp(&amp;s);             // OK。
+    //fp(&amp;S());         // エラー。一時オブジェクトのアドレスは取得できない。
+    //fp(&amp;42);          // エラー。整数リテラルのアドレスは取得できない。
+}</code>
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p><img alt="" src="reference/img1D.gif"></p>
+<p>&nbsp;</p>
+<p>参照は、下記のような表記で固定長配列を渡すことができます。<br>
+ポインタ渡しと異なり、配列長が不一致の時にコンパイラがエラーにすること、デバッガでブレークしたときに配列の中身を閲覧しやすいこと、などがメリットです。静的解析ツールでエラーを見つけやすくなることも良い点です。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;test_reference_04.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;
+
+const size_t    N = 5;
+
+void display_data( const <span class="auto-style10">int(&amp;data)[N]</span> )
+{
+    for ( const auto&amp; d : data ) {
+        std::cout &lt;&lt; d &lt;&lt; &quot;, &quot;;
+    }
+    std::cout &lt;&lt; std::endl;
+}
+
+int main()
+{
+    int     data[N] = {0, 1, 2, 3, 4};
+    display_data(<span class="auto-style10">data</span>);
+}</code></pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p>
+<img alt="" src="reference/img24.jpg"></p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+template を使うことで次のように表記することもできます。</p>
+<p>[プログラムソース &quot;test_reference_04-2.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+
+<span class="auto-style10">template &lt;size_t N&gt;</span>
+void display_data( const <span class="auto-style10">int(&amp;data)[N]</span> )
+{
+    for (const auto&amp; d : data) {
+        std::cout &lt;&lt; d &lt;&lt; &quot;, &quot;;
+    }
+    std::cout &lt;&lt; std::endl;
+}
+
+int main()
+{
+    int     data[] = { 0, 1, 2, 3, 4 };
+    display_data(<span class="auto-style10">data</span>);
+
+    display_data(<span class="auto-style10">{ 10, 11, 12 }</span>);
+}</code>
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>
+	
+&nbsp;</p>
+<p>
+	
+[実行結果]</p>
+<p>
+	
+<img alt="" src="reference/img2A.gif"></p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+[デバッガでブレークした時の様子]</p>
+<p>
+	
+VS2019でデバッグ実行中に中断した時の様子を下図に示します。<br>
+配列を関数へポインタ渡しした場合、こういう風に変数中の内容を確認できません。やっぱり便利です。</p>
+<p>
+	
+<img alt="" src="reference/img31.jpg"></p>
+<p>
+	
+&nbsp;</p>
+	
+<h4>
+参考</h4>
+<ul>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3> <a name="2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a></h3>
+<p>参照は、関数の戻り値でも使用できます。以下で例を示します。<br>
+私個人の感想としては、この手法を必要とするシチュエーションを思いつきません。代用手段があるように思われ無理に参照を使用する必要はないように思います。</p>
+<font face="Meiryo UI">
+<p>&nbsp;</p>
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;test_reference_05.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+<span class="auto-style10">char&amp;</span> char_number(std::string&amp; s, size_t n) {
+    return s.at(n);                 // string::at() は char を返します。
+}
+
+int main() {
+        
+    std::string str = &quot;Test&quot;;
+
+    std::cout &lt;&lt; str &lt;&lt; '\n';
+    char_number(str, 1) = 'a';      // この関数呼び出しは str[1] を示す左辺値であり、代入できます。
+    std::cout &lt;&lt; str &lt;&lt; '\n';
+}</code></pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>
+	
+&nbsp;</p>
+<p>
+	
+[実行結果]</p>
+<p>
+	
+<img alt="" src="reference/imgE.gif"></p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+関数の戻り値として参照が渡されるのでここに代入することができる、という例でした。</p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+一方、戻り値として渡される参照元が関数内で作成した<span class="auto-style13">一時変数</span>である場合、関数から戻るときにこの一時変数が解放されてしまうためうまく行きません。<br>
+以下にうまく動作しない例を示します。コンパイルはエラー無しに完了するのですが、実行時に Access Violation の例外がスローされます。<br>
+（参照で戻す意味のない例ですがご容赦ください。普通に値で返せば良いだけの例です。）</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+<span class="auto-style10">string&amp;</span> string_builder(const string a, const string b)
+{
+    <span class="auto-style11">string str;</span>
+    str = str + a + &quot; &quot; + b + &quot; &quot;;
+    return str;
+}
+
+int main()
+{
+    <span class="auto-style10">string&amp;</span> str = string_builder(&quot;a&quot;, &quot;b&quot;);
+    cout &lt;&lt; str &lt;&lt; endl;                       // <span class="auto-style12">&lt;- ここで例外発生 !!</span>
+}</code></pre>
+<p>
+	
+この例は、コンパイルは通るのですが実行時に例外が発生します。0xC0000005 は&quot;Access 
+Violation&quot;ですね。確保されていないメモリ領域へのアクセスによる例外発生です。</p>
+<p>
+	
+<img alt="" src="reference/imgE.jpg"></p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+このようなことを行いたい場合、対象の変数(ここでは str)を static 
+指定することで一時変数ではなくなり関数を終了後も実体が残るようになります。関数内部の変数の参照を関数の戻り値として返すことができるようになります。</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+<span class="auto-style10">string&amp;</span> string_builder(const string a, const string b)
+{
+    <span class="auto-style11">static string str;</span>
+    str = str + a + &quot; &quot; + b + &quot; &quot;;
+    return str;
+}
+
+int main()
+{
+    <span class="auto-style10">string&amp;</span> str = string_builder(&quot;a&quot;, &quot;b&quot;);
+    cout &lt;&lt; str &lt;&lt; endl;
+
+    str += &quot;? &quot;;
+    string_builder(&quot;c&quot;, &quot;d&quot;);
+    cout &lt;&lt; str &lt;&lt; endl;
+}</code></pre>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+[実行結果]</p>
+<p>
+	
+<img alt="" src="reference/img5.gif"></p>
+<p>
+	
+&nbsp;<br>
+	
+</p>
+	
+<h4>
+参考</h4>
+<ul>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> <a name="3._右辺値参照 (c++11)">3. 右辺値参照</a></h2>
+<h3> <a name="3-1._右辺値参照とは">3-1. 右辺値参照とは</a></h3>
+<p> C++03 
+までは「コピー」という概念でデータが管理されていました。通常「a=b;」という式は「bをaにコピーする」という意味を持ちます。このとき、aとbは同じデータを異なる領域に持ちます。これは小さいデータの場合には問題になりにくいですが、大きなデータを扱う場合にコピーコストと同じデータが２つできてしまうコストが問題となる場合があります。<br>
+C++11から追加された<span class="auto-style13">ムーブセマンティクス</span>という概念と、その言語機能である<span class="auto-style13">右辺値参照</span>を使用することで解決(？改善)できます。</p>
+<p> 例えば以下のケースを考えてみましょう。</p>
+<pre class="prettyprint linenums"><code>vector&lt;X&gt; make_data() {
+    vector&lt;X&gt; v;
+    ・・・大量のデータを v へ追加する・・・
+    return v;
+}
+
+vector&lt;X&gt; v = make_data(); </code></pre>
+<p> &nbsp;&nbsp; ここでは大きな要素数を持つ可変長配列オブジェクトを関数の return 
+文で返し、それを新たな可変長配列オブジェクトで受け取っています。<br>&nbsp; その際、make_data()関数が返すオブジェクトからオブジェクト v 
+へのコピーが発生します。make_data()関数によって返されたオブジェクトは、その関数が評価された後は消えてしまうことから<span class="auto-style13">一時オブジェクト</span>と呼ばれます。<br>&nbsp; 
+C++11から追加された機能である右辺値参照は、一時オブジェクトを参照する機能です。C++11の std::vector 
+クラスでは、一時オブジェクトを参照するコンストラクタが追加されています。以下に疑似実装を紹介します。</p>
+<pre class="prettyprint linenums">
+<code>template &lt;class T, class Allocator=allocator&lt;T&gt;&gt;
+class vector {
+    T* data_;
+    size_t size_;
+public:
+    ･･･
+    // 一時オブジェクトを参照するコンストラクタ
+<span class="auto-style10">    vector( vector&amp;&amp; rhd ){</span>
+<span class="auto-style10">        data_ = rhd.data_;</span>
+<span class="auto-style10">        size_ = rhd.size_;</span>
+<span class="auto-style10">        rhd.data_ = nullptr;</span>
+<span class="auto-style10">        rhd.size_ = 0; </span>
+<span class="auto-style10">    }</span>
+
+    // これまで通りのコピーコンストラクタ
+    vector( vector&amp; rhd ){
+        // rhd から自身へコピーする ･･･
+    }
+};</code></pre>
+<p> 
+一時オブジェクトを参照する右辺値参照には、&amp;&amp;という記号を使用します。&amp;&amp;が付いた仮引数を受け取る関数は、その型の一時オブジェクトを受け取ります。一時オブジェクトは評価されたらすぐに破棄されるので、多くの場所で破壊しても構わないものとして扱えます。<br>
+std::vector クラスの右辺値参照を受け取るコンストラクタでは、一時オブジェクトが持つデータ（可変長配列を表すポインタ、サイズ、その他のデータ）を 
+*this につなぎ変えたあと、一時オブジェクトが持つデータを無効にしています。こうすることで大きなデータのコピーコストを気にすることなく扱えます。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>[引用] 「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
+	著、ISBN978-4-7741-9567-4</li>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
+	著、ISBN978-4-7741-9567-4</li>
+	<li>
+	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載：</font></p>
+<ul>
+	<li><font face="Meiryo UI">2019年11月16日 新規作成、木下英俊</font></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title></title>
+<link href="../../design.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.auto-style1 {
+	text-align: left;
+}
+</style>
+</head>
+<body>
+<h1>boost::mutex,<br>boost::mutex::scoped_lock,<br>boost::condition</h1>
+<p><font face="Meiryo UI">boost のスレッド関連ユーティリティです。<br>
+
+ boost::thread を使用する場合、これらは必需品となるでしょう。まぁ、mutexにこだわる理由事態はありませんが、今現在は critical section に相当するものを boost で見つけられないので、まぁ当面はこの mutex を使用することになるでしょう。名前付きの mutex にもできるのかしら？</font></p>
+<table style="border-style: double; border-color: #C0C0C0; WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0" title="[サンプルソース]">
+<caption align="left" class="auto-style1">[サンプルソース]</caption>
+  <tr>
+    <td>
+      <code><br>#include &lt;iostream&gt;<br>
+#include &lt;string&gt;<br>
+#include 
+      &lt;boost/ref.hpp&gt;<br>
+<font color="#ff0000">#include 
+      &lt;boost/thread.hpp&gt; <font color="#008000">// boost::thread, 
+      boost::mutex, boost::mutex::scoped_lock</font><br>
+#include 
+      &lt;boost/thread/condition.hpp&gt;</font> <font color="#008000">// 
+      boost::condition</font>
+      <br><br>using namespace std;
+      <br><br>class urger<br>
+{<br>&nbsp;&nbsp;&nbsp; 
+volatile bool end_flag ;<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp; typedef boost::mutex::scoped_lock</font> lock ;<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp; boost::mutex</font> ef_guard ;<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp; boost::condition</font> exitRequest ;
+      <br><br>public:<br>&nbsp;&nbsp;&nbsp; 
+urger() : 
+      end_flag(false)<br>&nbsp;&nbsp;&nbsp; 
+{<br>&nbsp;&nbsp;&nbsp; 
+}<br><br>&nbsp;&nbsp;&nbsp; void operator()()<br>&nbsp;&nbsp;&nbsp; 
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+// 
+      基本的に無限ループしておく<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+for (;;){<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      lock lk( ef_guard 
+      );<br><br>&nbsp;</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      // 終了通知を受けてたらループを終了<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+if ( end_flag ){<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+break ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+}<br><br>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      // 現在の5秒後の時間を計算<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+boost::xtime xt ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+boost::xtime_get( 
+      &amp;xt, boost::TIME_UTC );<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+xt.sec += 5 ;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      // 終了通知を待ちます。ただし5秒たったら待ち解除<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+if ( <font color="#ff0000">exitRequest.timed_wait</font>( lk, xt )){<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+break 
+      ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+else{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+cout &lt;&lt; "n何か書くのじゃー！：" &lt;&lt; flush 
+      ;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      
+}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<br>&nbsp;&nbsp;&nbsp; 
+}<br><br>&nbsp;&nbsp;&nbsp; void exit()<br>&nbsp;&nbsp;&nbsp; 
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+// 終了を通知します。<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lock 
+      lk(ef_guard);</font><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_flag =        
+  true ;<br>
+<font color="#ff0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      exitRequest.notify_one();</font><br>&nbsp;&nbsp;&nbsp; 
+}<br>
+};<br><br>int main(int argc, char* argv[])<br>
+{<br>&nbsp;&nbsp;&nbsp; 
+urger u ;<br>&nbsp;&nbsp;&nbsp; 
+boost::thread 
+      thr( boost::ref(u) );<br><br>&nbsp;&nbsp;&nbsp; // 入力待ち<br>&nbsp;&nbsp;&nbsp; 
+cout &lt;&lt; "何か書いてね： " ;<br>&nbsp;&nbsp;&nbsp; 
+string str ;<br>&nbsp;&nbsp;&nbsp; 
+getline( cin, 
+      str );<br><br>&nbsp;&nbsp;&nbsp; // 入力が終わったら、スレッドを終了して欲しいことをスレッドへ通知<br>&nbsp;&nbsp;&nbsp; 
+      
+u.exit();<br><br>&nbsp;&nbsp;&nbsp; // 催促スレッドの終了待ち<br>&nbsp;&nbsp;&nbsp; 
+thr.join();<br><br>&nbsp;&nbsp;&nbsp; cout &lt;&lt; "Thank you!" &lt;&lt; endl;<br>
+<br>&nbsp;&nbsp;&nbsp; return 
+0;<br>
+}</code><br></td></tr></table><font face="Meiryo UI">
+<p><br>
+記載： 2010年3月26日 木下英俊<br></p>
+</font>
+</body>
+</html>

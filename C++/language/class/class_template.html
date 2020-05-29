@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>クラスの基本テンプレート</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+［c++］クラスの基本テンプレート</h1>
+
+<p> &nbsp;c++ のクラスは、基本的に必要とするコンストラクタやメンバー関数がいろいろあります。<br>加えて &quot;自動的に作成される特殊メンバ関数&quot; 
+なんてものがあり、さらに面倒なことに自動的に生成されるルールがあるため、自動生成されたり、自動生成されなかったりします。正直、お手本のソースコードでも用意しておかないと難しい内容です。</p>
+<p> &nbsp;ここでは c++ の class 
+の雛形を用意して、これをもとにして必要な修正を行うだけである程度のコーディングを行えるようにすることを目指します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._単純なテンプレート">1. 単純なテンプレート</a><br>2. ***<br>3. ***</p>
+<p> &nbsp;</p>
+<h2> <a name="1._単純なテンプレート">1. 単純なテンプレート</a></h2>
+<p> [概要]</p>
+<p> 一番シンプルであろうテンプレートを以下に示します。<br>今更 c++98 もないと思うので c++11 を前提に、まずは default 
+指定で全て記載した例を示します。<br>&quot;自動的に作成される特殊メンバ関数&quot; を全て default 
+指定しているので、自動的に作成されるメンバ関数はありません。</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p> &nbsp;</p>
+
+<p>[プログラムソース &quot;class_template_01.cpp&quot;]</p>
+	
+<pre class="prettyprint linenums"><code>#include &lt;utility&gt;  // std::move
+
+<span class="auto-style8">class Base {</span>
+<span class="auto-style8">public:</span>
+<span class="auto-style8">    Base() = default;                               // default constructor</span>
+<span class="auto-style8">    virtual     ~Base() = default;                  // destructor</span>
+
+<span class="auto-style8">    Base(const Base&amp;) = default;                    // copy constructor</span>
+<span class="auto-style8">    Base&amp; operator = (const Base&amp;) = default;       // copy operator</span>
+
+<span class="auto-style8">    Base(Base&amp;&amp;) = default;                         // move constructor</span>
+<span class="auto-style8">    Base&amp; operator = (Base&amp;&amp;) = default;            // move operator</span>
+<span class="auto-style8">};</span>
+
+int main()
+{
+    Base b1;                // call 'default constructor'.
+    Base b2(b1);            // call 'copy constructor'.
+    Base b3 = b2;           // call 'copy constructor'.
+    Base b4(Base());        // call 'move constructor'.
+    Base b5 = Base();       // call 'move constructor'.
+    
+    Base b6;
+    b6 = b1;                // call 'copy operator'.
+    Base b7;
+    b7 = std::move(b1);     // call 'move operator'.
+}</code></pre>
+<p>&nbsp;</p>
+<p>使用例</p>
+<p>[プログラムソース &quot;class_template_02.cpp&quot;]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt; // std::cout, std::endl
+#include &lt;string&gt;   // std::string
+#include &lt;utility&gt;  // std::move
+
+<span class="auto-style8">class Base {</span>
+<span class="auto-style8">private:</span>
+<span class="auto-style8">    std::string     str_;</span>
+<span class="auto-style8">    </span>
+<span class="auto-style8">public:</span>
+<span class="auto-style8">    Base() = default;                               // default constructor</span>
+
+<span class="auto-style8">    Base(std::string str)</span>
+<span class="auto-style8">        : str_(str)</span>
+<span class="auto-style8">    {}</span>
+
+<span class="auto-style8">    virtual     ~Base() = default;                  // destructor</span>
+
+<span class="auto-style8">    Base(const Base&amp;) = default;                    // copy constructor</span>
+<span class="auto-style8">    Base&amp; operator = (const Base&amp;) = default;       // copy operator</span>
+
+<span class="auto-style8">    Base(Base&amp;&amp;) = default;                         // move constructor</span>
+<span class="auto-style8">    Base&amp; operator = (Base&amp;&amp;) = default;            // move operator</span>
+
+<span class="auto-style8">    void set_str(std::string str)</span>
+<span class="auto-style8">    {</span>
+<span class="auto-style8">        str_ = str;</span>
+<span class="auto-style8">    }</span>
+
+<span class="auto-style8">    void print_str(std::string item)</span>
+<span class="auto-style8">    {</span>
+<span class="auto-style8">        std::cout &lt;&lt; item &lt;&lt; &quot;str_ = &quot; &lt;&lt; str_ &lt;&lt; std::endl;</span>
+<span class="auto-style8">    }</span>
+<span class="auto-style8">};</span>
+
+
+int main()
+{
+    Base b1;                        // call 'default constructor'.
+    b1.print_str(&quot;[b1] &quot;);
+    b1.set_str(&quot;b1&quot;);
+    b1.print_str(&quot;[b1] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b2(b1);                    // call 'copy constructor'.
+    b2.print_str(&quot;[b2] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b3 = b1;                   // call 'copy constructor'.
+    b3.print_str(&quot;[b3] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    // Base b4(Base());             // これは VS Version 16.4.0 ではエラー。
+    Base b4{ Base() };              // call 'move constructor'.    
+    // Base b4(std::move(Base());   // これもOK。
+    b4.print_str(&quot;[b4] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b5 = Base(&quot;b5&quot;);           // call 'move constructor'.
+    b5.print_str(&quot;[b5] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b6;
+    b6.set_str(&quot;b6&quot;);
+    b6.print_str(&quot;[b6] &quot;);
+    Base b7 = std::move(b6);        // call 'move constructor'.
+    b7.print_str(&quot;[b7] &quot;);
+    b6.print_str(&quot;[b6] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b8;
+    b8 = b1;                        // call 'copy operator'.
+    b8.print_str(&quot;[b8] &quot;);
+    b1.print_str(&quot;[b1] &quot;);
+    std::cout &lt;&lt; std::endl;
+
+    Base b9;
+    b9 = std::move(b1);             // call 'move operator'.
+    b9.print_str(&quot;[b9] &quot;);
+    b1.print_str(&quot;[b1] &quot;);
+}</code></pre>
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p><img alt="" src="class_template/img1D.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>Effective Modern C++, Scott Meyers 著 千住治郎 訳, オライリー・ジャパン, 
+	ISBN978-4-87311-736-2</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> 2. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2019 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<br>
+	
+<br>
+<h4>
+サンプルプログラム</h4>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>(例) http://www.****.com</li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載：</font></p>
+<ul>
+	<li><font face="Meiryo UI">2019年MM月DD日 新規作成、木下英俊<br></font></li>
+</ul>
+</body>
+</html>

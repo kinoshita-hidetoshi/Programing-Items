@@ -1,0 +1,411 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[WPF]立方体（Qube）</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+[WPF] 立方体 (qube)</h1>
+
+<p> 3Dグラフィックスで立方体(qube)を作成します。XAMLだけで作成します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._まずは立方体を作ってみる">1. まずは立方体を作ってみる</a><br>
+<a href="#2._上面と他の色を変える（複数の_GeometryModel3D_でモデルを作る）">2. 上面と他の色を変える（複数の 
+&quot;GeometryModel3D&quot; でモデルを作る）</a><br>
+<a href="#3._ModelUIElement3Dで立方体を作る">3. ModelUIElement3Dで立方体を作る</a><br><br><a href="#サンプルプログラム">サンプルプログラム</a></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="1._まずは立方体を作ってみる">1. まずは立方体を作ってみる</a></h2>
+<p>
+最初に、まずは立方体を作ってみましょう。</p>
+<p>
+環境：</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+[実行結果]<br>
+</p>
+<p>
+<img alt="" src="Qube/imgC.jpg"></p>
+<p>
+<br>[立方体の座標]<br><br>
+<img alt="" height="289" src="Qube/Qube_ModelCoodinates.png" width="427"><br><br></p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;Qube.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:Qube&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Viewport3D Margin=&quot;10&quot;&gt;
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-4,4,9&quot; LookDirection=&quot;4,-4,-9&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;50&quot;/&gt;
+            &lt;/Viewport3D.Camera&gt;
+
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;Model3DGroup&gt;
+                        &lt;DirectionalLight Direction=&quot;2,-10,-2&quot;/&gt;
+                        &lt;GeometryModel3D&gt;
+
+                            &lt;!-- 立方体モデル --&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -2, 2, -2
+                                        2, 2, -2
+                                        2, 2, 2
+                                        -2, 2, 2
+                                        -2, -2, -2
+                                        2, -2, -2
+                                        2, -2, 2
+                                        -2, -2, 2
+                                    &lt;/MeshGeometry3D.Positions&gt;
+
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        &lt;!-- 底面 --&gt;
+                                        4,5,7
+                                        5,6,7
+                                        &lt;!-- 奥面 --&gt;
+                                        5,4,0
+                                        0,1,5
+                                        &lt;!-- 左面 --&gt;
+                                        3,0,4
+                                        4,7,3
+                                        &lt;!-- 右面 --&gt;
+                                        1,2,5
+                                        2,6,5
+                                        &lt;!-- 上面 --&gt;
+                                        0,2,1
+                                        2,0,3
+                                        &lt;!-- 前面 --&gt;
+                                        2,3,6
+                                        3,7,6
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;DiffuseMaterial Brush=&quot;LightBlue&quot;/&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial Brush=&quot;LightGray&quot;/&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+        &lt;/Viewport3D&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2><a name="2._上面と他の色を変える（複数の_GeometryModel3D_でモデルを作る）">2. 上面と他の色を変える（複数の &quot;GeometryModel3D&quot; でモデルを作る）</a></h2>
+<p>
+&lt;GeometryModel3D&gt; を複数登録することで、部分ごとに異なる色を塗れるようにします。</p>
+<p>
+環境：</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+&nbsp;</p>
+<p>
+[実行結果]</p>
+<p>
+<img alt="" src="Qube/img12.jpg"></p>
+<p>&nbsp;</p>
+[<span class="table_title">プログラムソース &quot;MainWindow.xaml&quot;</span>]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;Qube_2.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:Qube_2&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Viewport3D Margin=&quot;10&quot;&gt;
+
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-4,4,9&quot; LookDirection=&quot;4,-4,-9&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;50&quot;/&gt;
+            &lt;/Viewport3D.Camera&gt;
+
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;Model3DGroup&gt;
+                        &lt;!-- 光源 --&gt;
+                        &lt;DirectionalLight Direction=&quot;2,-10,-2&quot;/&gt;
+
+                        &lt;!-- 箱、上面以外 --&gt;
+                        &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -2, 2, -2
+                                        2, 2, -2
+                                        2, 2, 2
+                                        -2, 2, 2
+                                        -2, -2, -2
+                                        2, -2, -2
+                                        2, -2, 2
+                                        -2, -2, 2
+                                    &lt;/MeshGeometry3D.Positions&gt;
+
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        &lt;!-- 底面 --&gt;
+                                        4,5,7
+                                        5,6,7
+                                        &lt;!-- 奥面 --&gt;
+                                        5,4,0
+                                        0,1,5
+                                        &lt;!-- 左面 --&gt;
+                                        3,0,4
+                                        4,7,3
+                                        &lt;!-- 右面 --&gt;
+                                        1,2,5
+                                        2,6,5
+                                        &lt;!-- 前面 --&gt;
+                                        2,3,6
+                                        3,7,6
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;DiffuseMaterial Brush=&quot;Cyan&quot;/&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial Brush=&quot;LightGray&quot;/&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                        &lt;/GeometryModel3D&gt;
+
+                        &lt;!-- 箱の上面 --&gt;
+                        &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -2, 2, -2
+                                        2, 2, -2
+                                        2, 2, 2
+                                        -2, 2, 2
+                                    &lt;/MeshGeometry3D.Positions&gt;
+
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        &lt;!-- 上面 --&gt;
+                                        0,2,1
+                                        2,0,3
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;DiffuseMaterial Brush=&quot;Yellow&quot;/&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial Brush=&quot;LightGray&quot;/&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+
+        &lt;/Viewport3D&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+	
+&nbsp;</p>
+<h2>
+	
+<a name="3._ModelUIElement3Dで立方体を作る">3. &lt;ModelUIElement3D&gt;で立方体を作る</a></h2>
+<p>
+	
+.NET3.5以降で使用できる&lt;ModelUIElement3D&gt;で前述のモデルをXAMLで表記してみます。<br>内容は同じ内容で作成します。<br>
+&lt;ModelUIElement3D&gt;はマウスクリックによる3Dモデル操作などを行う際に必要となります。<br>
+この表記方法を標準とした方が何かと都合が良いかもしれません。</p>
+<p>
+	
+全く同じなので、実行時の画像は掲載を省略します。</p>
+[プログラムソース "MainWindow.xaml"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;Qube_3.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:Qube_3&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Viewport3D Margin=&quot;10&quot;&gt;
+
+            &lt;!-- カメラ --&gt;
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-4,4,9&quot; LookDirection=&quot;4,-4,-9&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;50&quot;/&gt;
+            &lt;/Viewport3D.Camera&gt;
+
+            &lt;!-- ライト --&gt;
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;DirectionalLight Direction=&quot;2,-10,-2&quot;/&gt;
+                    &lt;!--
+                    &lt;AmbientLight Color=&quot;White&quot;/&gt;
+                    --&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+
+            &lt;!-- モデル --&gt;
+            <span class="auto-style8">&lt;ContainerUIElement3D&gt;</span>
+                <span class="auto-style8">&lt;ModelUIElement3D&gt;</span>
+                    <span class="auto-style8">&lt;ModelUIElement3D.Model&gt;</span>
+                        &lt;Model3DGroup&gt;
+                            &lt;!-- 箱、上面以外 --&gt;
+                            &lt;GeometryModel3D&gt;
+                                &lt;GeometryModel3D.Geometry&gt;
+                                    &lt;MeshGeometry3D&gt;
+                                        &lt;MeshGeometry3D.Positions&gt;
+                                            -2, 2, -2
+                                            2, 2, -2
+                                            2, 2, 2
+                                            -2, 2, 2
+                                            -2, -2, -2
+                                            2, -2, -2
+                                            2, -2, 2
+                                            -2, -2, 2
+                                        &lt;/MeshGeometry3D.Positions&gt;
+                                        
+                                        &lt;MeshGeometry3D.TriangleIndices&gt;
+                                            &lt;!-- 底面 --&gt;
+                                            4,5,7
+                                            5,6,7
+                                            &lt;!-- 奥面 --&gt;
+                                            5,4,0
+                                            0,1,5
+                                            &lt;!-- 左面 --&gt;
+                                            3,0,4
+                                            4,7,3
+                                            &lt;!-- 右面 --&gt;
+                                            1,2,5
+                                            2,6,5
+                                            &lt;!-- 前面 --&gt;
+                                            2,3,6
+                                            3,7,6
+                                        &lt;/MeshGeometry3D.TriangleIndices&gt;
+                                    &lt;/MeshGeometry3D&gt;
+                                &lt;/GeometryModel3D.Geometry&gt;
+                                &lt;GeometryModel3D.Material&gt;
+                                    &lt;DiffuseMaterial Brush=&quot;Cyan&quot;/&gt;
+                                &lt;/GeometryModel3D.Material&gt;
+                                &lt;GeometryModel3D.BackMaterial&gt;
+                                    &lt;DiffuseMaterial Brush=&quot;LightGray&quot;/&gt;
+                                &lt;/GeometryModel3D.BackMaterial&gt;
+                            &lt;/GeometryModel3D&gt;
+                            &lt;!-- 箱の上面 --&gt;
+                            &lt;GeometryModel3D&gt;
+                                &lt;GeometryModel3D.Geometry&gt;
+                                    &lt;MeshGeometry3D&gt;
+                                        &lt;MeshGeometry3D.Positions&gt;
+                                            -2, 2, -2
+                                            2, 2, -2
+                                            2, 2, 2
+                                            -2, 2, 2
+                                        &lt;/MeshGeometry3D.Positions&gt;
+                                        &lt;MeshGeometry3D.TriangleIndices&gt;
+                                            &lt;!-- 上面 --&gt;
+                                            0,2,1
+                                            2,0,3
+                                        &lt;/MeshGeometry3D.TriangleIndices&gt;
+                                    &lt;/MeshGeometry3D&gt;
+                                &lt;/GeometryModel3D.Geometry&gt;
+                                &lt;GeometryModel3D.Material&gt;
+                                    &lt;DiffuseMaterial Brush=&quot;Yellow&quot;/&gt;
+                                &lt;/GeometryModel3D.Material&gt;
+                                &lt;GeometryModel3D.BackMaterial&gt;
+                                    &lt;DiffuseMaterial Brush=&quot;LightGray&quot;/&gt;
+                                &lt;/GeometryModel3D.BackMaterial&gt;
+                            &lt;/GeometryModel3D&gt;
+                        &lt;/Model3DGroup&gt;
+                    <span class="auto-style8">&lt;/ModelUIElement3D.Model&gt;</span>
+                <span class="auto-style8">&lt;/ModelUIElement3D&gt;</span>
+            <span class="auto-style8">&lt;/ContainerUIElement3D&gt;</span>
+
+        &lt;/Viewport3D&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+	
+<br>
+</p>
+<h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>書籍「プログラミングWPF C#編」 第10章 3Dグラフィックス</li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年08月06日 木下英俊<br>
+</font></p>
+</body>
+</html>

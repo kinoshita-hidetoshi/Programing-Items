@@ -1,0 +1,128 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[MahApps.Metro] はじめに</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+［Material Design In XAML Toolkit］はじめに</h1>
+
+<p> 「Material Design In XAML Toolkit」 は、WPF や UWP(Universal Windows 
+Platform)アプリで Androidなどの米Googleのプロダクトで採用されているマテリアルデザインを実現するものです。<br>
+使用ライセンスは「MIT License」です。このライセンスは、いくつかの条件を守れば、商用／非商用にかかわらず無償使用できるものです。</p>
+<h2> 目次</h2>
+<p> <a href="#1._ライブラリを取得する">1. ライブラリを取得する</a><br><a href="#2._デモアプリを動かす">2. デモアプリを動かす</a><br>
+<br><a href="#参考URL">参考URL</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._ライブラリを取得する">1. ライブラリを取得する</a></h2>
+<p> 「Material Design In XAML Toolkit」 は、以下の方法で取得可能です。</p>
+<h3> GitGub</h3>
+<p> 下記より入手できます。<br>
+<a href="https://github.com/ButchersBoy/MaterialDesignInXamlToolkit" target="_blank">
+https://github.com/ButchersBoy/MaterialDesignInXamlToolkit</a></p>
+<p> 画面右側にある 「Download ZIP」 ボタンをクリックしてZIPファイルを入手します。</p>
+<p> <img alt="" src="abstract/img11.jpg"></p>
+<p> &nbsp;</p>
+<h3> NuGet</h3>
+<p> NuGet 
+パッケージマネージャーを開き、「MaterialDesignThemes」で検索します。「MaterialDesignInXamlToolkit」ではない点に注意してください。</p>
+<p> （2016/2/27時点 のバージョンは 1.4.1.485 でした。.NET4.5で作られており、.NET4.0以下では使用できなさそうです。）</p>
+<p> 私は「パッケージマネージャーコンソール」から下記のコマンドを入力してインストールしました。<br>「install-package 
+MaterialDesignThemes」</p>
+<p> <img alt="" src="abstract/imgE.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="2._デモアプリを動かす">2. デモアプリを動かす</a></h2>
+<p> [概要]</p>
+<p> &quot;<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit" target="_blank">https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit</a>&quot; 
+から入手したソースをビルドして、まずはデモアプリを動かしてみます。</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.5 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p> &nbsp;</p>
+<p> (1) 画面右上の「Clone or download」をクリックして「Download ZIP」することで、ソースコード一式を入手します。</p>
+<p> <img alt="" src="abstract/img6.jpg"></p>
+<p> &nbsp;</p>
+<p> (2) Visual Studio で &quot;MaterialDesignToolkit.Wpf.sln&quot; を開きます。</p>
+<p> (3) ソリューション &quot;MaterialDesignTookkit.Wpf&quot; をリビルドします。</p>
+<p> (4) ビルドされた &quot;MainDemo.Wpf&quot; フォルダ内を確認し、”MaterialDesignDemo.exe” を実行します。</p>
+<p> <img alt="" src="abstract/imgA.jpg" class="auto-style8"></p>
+<p> すると、こんなアプリが起動します。<br>画面左上の 三 (ハンバーガーメニュー) でいろんな画面へ切り替えられます。</p>
+<p> <img alt="" src="abstract/imgD.jpg"></p>
+<p> (5) あとはいろいろ触ってみましょう。</p>
+<p> <img alt="" src="abstract/img10.jpg"></p>
+<p> &nbsp;</p>
+<p> ■Buttons</p>
+<p> <img alt="" src="abstract/img12.jpg"></p>
+<p> &nbsp;</p>
+<p> ■Color tools</p>
+<p> <img alt="" src="abstract/img13.jpg"></p>
+<p> &nbsp;</p>
+<p> ■Fields</p>
+<p> <img alt="" src="abstract/img14.jpg"></p>
+<p> <img alt="" src="abstract/img18.jpg"></p>
+<p> &nbsp;</p>
+<p> このデモアプリを見ながら使いたい部品を選んで、自分が作るアプリへ組み込んでいきます。</p>
+<p> &nbsp;</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考URL">参考URL</a></h2>
+<ul>
+	<li>日経ソフトウェア2016年１月号 「基礎からわかる C# デスクトップアプリ開発： 第7回 外部のライブラリを使ってモダンな外観を作成しよう」</li>
+	<li>Material Design In Xaml<br>
+	<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit" target="_blank">
+	https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit</a></li>
+	<li><a href="http://neue.cc/2015/09/10_515.html" target="_blank">
+	http://neue.cc/2015/09/10_515.html</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2020年02月23日&nbsp; 「2. デモアプリを動かす」を追加<br>2016年02月27日 
+新規作成</font></p>
+</body>
+</html>

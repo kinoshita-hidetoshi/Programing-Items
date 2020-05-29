@@ -1,0 +1,483 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Windows バージョン情報の取得方法</title>
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	border-collapse: collapse;
+	text-align: justify;
+	font-size: 10.0pt;
+	font-family: Century;
+	border: 1.0pt solid windowtext;
+}
+.auto-style9 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+Counter (C#、Form)</h1>
+<p class="auto-style7">
+職場の若手向けお勉強テーマとして作成しました。C#(Form) で下記の機能を実現しなさい、という内容です。<br>
+カウンタ表示部と、内部変数、をデータバインディングします。</p>
+<h2>
+１．要求仕様</h2>
+<h3>
+1.1. 機能</h3>
+<ul>
+	<li>アプリケーションはカウンタの値を表示する機能を持つ。</li>
+	<li>アプリケーション起動時のカウンタ初期値を０とする。</li>
+	<li>ボタンAを押すと、カウンタの値を１加算する。</li>
+	<li>ボタンBを押すと、カウンタの値を1減算する。</li>
+	<li>ボタンCを押すと、カウンタの値を０にクリアする。</li>
+	<li>
+	ボタンDを押すと、終了確認ダイアログを表示し、はい(またはYes)を押下したらアプリケーションを終了する。いいえ（またはNo）を押下した場合はアプリケーションを終了せずに動作を継続する。</li>
+	<li>カウンタの値範囲を０～１０とする。</li>
+	<li>カウンタが0のとき、”-”ボタンを無効化すること。</li>
+	<li>カウンタが 10 のとき、”+”ボタンを無効化すること。</li>
+</ul>
+<h3><![if !supportLists]><span style="mso-list:Ignore">
+<span style="font-family:
+&quot;Meiryo UI&quot;">1.2. </span></span><![endif]>
+<span style="font-family:&quot;Meiryo UI&quot;">画面仕様<span lang="EN-US"><o:p></o:p></span></span></h3>
+<p class="MsoNormal"><span style="font-family:&quot;Meiryo UI&quot;">
+画面仕様は以下の通り。記載事項以外は自由に設計のこと。<span lang="EN-US"><o:p></o:p></span></span></p>
+<ul>
+	<li>
+	<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">フォント：<span lang="EN-US"> 
+	Arial<o:p></o:p></span></span></p>
+	</li>
+</ul>
+<p class="MsoNormal">
+<o:p><img alt="" height="348" src="Images/clip_image001.gif" width="564"></o:p></p>
+<p>
+<table border="1" cellpadding="0" cellspacing="0" class="auto-style8" style="mso-border-alt: solid windowtext .5pt; mso-yfti-tbllook: 480; mso-padding-alt: 0mm 5.4pt 0mm 5.4pt; mso-border-insideh: .5pt solid windowtext; mso-border-insidev: .5pt solid windowtext; text-justify: inter-ideograph;">
+	<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="54">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">項番<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-left: none; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="150">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">概要<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 51.3pt; border: solid windowtext 1.0pt; border-left: none; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="86">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		ｺﾝﾄﾛｰﾙ<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 52pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		ﾀﾌﾞ<o:p>ｵｰﾀﾞｰ</o:p></span></p>
+		</td>
+		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 148pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		文字列、文字種別、他<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 171pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">他<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 1">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">1<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;"><o:p>&nbsp;</o:p></span></p>
+		</td>
+		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">-<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;"><o:p>&nbsp;</o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">“Counter”<o:p></o:p></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Window</span><span style="font-family: &quot;Meiryo UI&quot;">サイズ：<span lang="EN-US">800</span>×<span lang="EN-US">600</span>以内<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 2">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">2<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		値表示部<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">TextBox<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">(*1)<o:p></o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Number,
+		</span><span style="font-family: &quot;Meiryo UI&quot;">値範囲<span lang="EN-US">:0</span>～<span lang="EN-US">10<o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		フォントサイズ：<span lang="EN-US">36pt<o:p></o:p></span></span></p>
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		センター表示<span lang="EN-US"><o:p></o:p></span></span></p>
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">ReadOnly<o:p></o:p></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 3">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">3<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">+1<o:p></o:p></span></p>
+		</td>
+		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Button<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">1<o:p></o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">“+”<o:p></o:p></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		フォントサイズ：<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 4">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">4<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">-1<o:p></o:p></span></p>
+		</td>
+		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Button<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">2<o:p></o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">“-“<o:p></o:p></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		フォントサイズ：<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 5">
+		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">5<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">0</span><span style="font-family: &quot;Meiryo UI&quot;">クリア<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Button<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">3<o:p></o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">“Clear”<o:p></o:p></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		フォントサイズ：<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		</td>
+	</tr>
+	<tr style="mso-yfti-irow: 6; mso-yfti-lastrow: yes">
+		<td style="border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 32.4pt; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="54">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">6<o:p></o:p></span></p>
+		</td>
+		<td style="width: 90.0pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="150">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		プログラム<span lang="EN-US"><o:p></o:p></span></span></p>
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		終了ボタン<span lang="EN-US"><o:p></o:p></span></span></p>
+		</td>
+		<td style="width: 51.3pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="86">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Button<o:p></o:p></span></p>
+		</td>
+		<td style="width: 52pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">0<o:p></o:p></span></p>
+		</td>
+		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal">
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">“Quit”<o:p></o:p></span></p>
+		</td>
+		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
+		フォントサイズ：<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		</td>
+	</tr>
+</table>
+</p>
+<p>
+<span lang="EN-US" style="font-size: 10.5pt; mso-bidi-font-size: 12.0pt; font-family: &quot;Meiryo UI&quot;; mso-font-kerning: 1.0pt; mso-ansi-language: EN-US; mso-fareast-language: JA; mso-bidi-language: AR-SA">
+(*1) TabStop </span>
+<span style="font-size: 10.5pt; mso-bidi-font-size: 12.0pt; font-family: &quot;Meiryo UI&quot;; mso-font-kerning: 1.0pt; mso-ansi-language: EN-US; mso-fareast-language: JA; mso-bidi-language: AR-SA">
+を<span lang="EN-US"> False </span>に設定</span></p>
+<p class="MsoNormal"><![if !supportLists]>
+<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">
+<span style="mso-list: Ignore">1.<span lang="ja">3</span>.<span style="font: 7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style="font-family: &quot;Meiryo UI&quot;">
+実装仕様（<span lang="EN-US">C#</span>）<span lang="EN-US"><o:p></o:p></span></span></p>
+<ul>
+	<li>アプリケーション内部に画面表示と独立のカウンタクラス<span lang="EN-US">( class Counter )</span>を持つこと。</li>
+	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
+</span>は単独のクラスライブラリとして作成し、<span lang="EN-US">DLL</span>として作成のこと。</li>
+	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
+</span>は パブリックメソッドとして、<span lang="EN-US">(1) Increment, (2) Decrement, (3) Clear
+</span>を持つこと。</li>
+	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
+</span>はパブリックプロパティとしてカウンタの値を示す <span lang="EN-US">countValue </span>を持つこと。</li>
+	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
+</span>は値範囲の上限値<span lang="EN-US">(10)</span>、下限値<span lang="EN-US">(0)</span>、を示すパブリックメンバ変数を持つこと。</li>
+	<li>表示部の値<span lang="EN-US">(</span>①<span lang="EN-US">)</span>と、前述のcountValueはデータバインディングにより接続し、表示部の値<span lang="EN-US">(</span>①<span lang="EN-US">)</span>をプログラムにより表示変更する実装を行わないこと。（ヒント：<span lang="EN-US">INotyfiyPropertyChanged</span>）<span lang="EN-US"><o:p></o:p></span></li>
+</ul>
+<p class="MsoNormal"><![if !supportLists]>
+<![endif]></p>
+<p class="MsoNormal"><![if !supportLists]>
+<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">
+<span style="mso-list: Ignore">1.<span lang="ja">4</span>.<span style="font: 7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style="font-family: &quot;Meiryo UI&quot;">
+動作環境、開発環境<span lang="EN-US"><o:p></o:p></span></span></p>
+<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">動作環境：<span lang="EN-US"> 
+Windows XP </span>または<span lang="EN-US"> Windows7<o:p><br></o:p>
+</span>開発環境：<span lang="EN-US"> Visual Studio 2008 </span>以降<span lang="EN-US"><o:p><br></o:p>
+</span>開発言語：<span lang="EN-US"> </span>C#(Form)</span></p>
+<p>&nbsp;</p>
+<p>実際に私が作成したプログラムの画面は下図の通り。</p>
+<p><img alt="" height="306" src="Images/Counter_Form.png" width="446"></p>
+<p>&nbsp;</p>
+<p><span class="table_title">[プログラムソース (Form1.cs)]</span></p>
+
+<table style="border: medium double #C0C0C0; width: 800px">
+	<tr>
+		<td>
+		<pre><code>
+</code><code>using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+using CounterDll;
+
+[assembly: CLSCompliant(true)]  // CA1014
+namespace CounerForm
+{
+    public partial class Form1 : Form
+    {
+        private Counter _counter = new Counter();
+
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            <span class="auto-style9">textBox1.DataBindings.Add(&quot;Text&quot;, _counter, &quot;CountValue&quot;);</span>
+
+            btnClear_Click(this, new EventArgs());
+        }
+
+        private void btnIncrement_Click(object sender, EventArgs e)
+        {
+            _counter.Increment();
+
+            if (_counter.CountValue != _counter.CountMin)
+            {
+                btnDecrement.Enabled = true;
+            }
+            if (_counter.CountValue == _counter.CountMax)
+            {
+                btnIncrement.Enabled = false;
+            }
+        }
+
+        private void btnDecrement_Click(object sender, EventArgs e)
+        {
+            _counter.Decrement();
+
+            if (_counter.CountValue == _counter.CountMin)
+            {
+                btnDecrement.Enabled = false;
+            }
+            if (_counter.CountValue != _counter.CountMax)
+            {
+                btnIncrement.Enabled = true;
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            _counter.Clear();
+            btnIncrement.Enabled = true;
+            btnDecrement.Enabled = false;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show(<span class="string">&quot;プログラムを終了してよろしいですか？&quot;</span>, <span class="string">&quot;終了確認&quot;</span>, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0) == DialogResult.Yes)
+            {
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+    }
+}
+</pre>
+		</code>
+		</td>
+	</tr>
+</table>
+
+<br>
+<p> <span class="table_title">[プログラムソース (Counter.cs)]</span></p>
+
+<table style="border: medium double #C0C0C0; width: 800px">
+	<tr>
+		<td>
+		<pre>
+<code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+<span class="auto-style9">using System.ComponentModel;</span> // INotifyPropertyChanged
+
+
+[assembly: CLSCompliant(true)]  // CA1014
+namespace CounterDll
+{
+    public class Counter : <span class="auto-style9">INotifyPropertyChanged</span>
+    {
+
+        private int _countValue ;
+        public int CountValue
+        {
+            get
+            {
+                return _countValue;
+            }
+            set
+            {
+                _countValue = value;
+                <span class="auto-style9">NotifyPropertyChanged(&quot;CountValue&quot;);</span>
+            }
+        }
+
+        private readonly int _CountMax = 10;
+        public int CountMax
+        {
+            get
+            {
+                return _CountMax;
+            }
+        }
+
+        private readonly int _CountMin = 0;     <span class="comment">// CS0649 対応版 ; FxCopの指摘 CA1805 が残るが、まぁ特に問題ないでしょう。</span>
+//      private readonly int _CountMin;         <span class="comment">// CA1805 対応版 ; WARNING CS0649 が残るが、まぁ特に問題はないでしょう。</span>
+        public int CountMin
+        {
+            get
+            {
+                return _CountMin;
+            }
+        }
+    
+        public void Increment()
+        {
+            if (_countValue &lt; _CountMax)
+            {
+                CountValue++;
+            }
+        }
+
+        public void Decrement()
+        {
+            if (_countValue &gt; _CountMin)
+            {
+                CountValue--;
+            }
+        }
+
+        public void Clear()
+        {
+            CountValue = 0;
+        }
+
+
+<span class="auto-style9">        #region INotifyPropertyChanged</span>
+
+<span class="auto-style9">        public event PropertyChangedEventHandler PropertyChanged;</span>
+
+<span class="auto-style9">        void NotifyPropertyChanged(string info)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">            if (PropertyChanged != null)</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                PropertyChanged(this, new PropertyChangedEventArgs(info));</span>
+<span class="auto-style9">            }</span>
+<span class="auto-style9">        }</span>
+
+<span class="auto-style9">        #endregion // INotifyPropertyChanged</span>
+
+    }
+}</code><code>
+</code></pre>
+		</td>
+	</tr>
+</table>
+
+<p> <a href="DownloadFiles/Counter_Form.zip">サンプルプログラム ダウンロード</a></p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2012年5月16日 木下英俊<br>
+</font></p>
+</body>
+</html>

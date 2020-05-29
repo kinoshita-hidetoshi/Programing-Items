@@ -1,0 +1,420 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>［WPF］MouseDragElementBehavior</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	border: 1px solid #808080;
+}
+.auto-style10 {
+	background-color: #FFFF00;
+}
+.auto-style11 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+［WPF］MouseDragElementBehavior</h1>
+
+<p>&quot;MouseDragElementBehavior&quot; は Blend SDK と呼ばれる機能の一つです。<br>
+これを使うと、画面上での要素のドラッグ機能を簡単に追加することができます。</p>
+<h2> 目次</h2>
+<p> <a href="#1. 四角形をドラッグするプログラムを作る">1. 四角形をドラッグするプログラムを作る</a><br>2. ***<br>3. ***</p>
+<p> &nbsp;</p>
+<h2> <a name="1. 四角形をドラッグするプログラムを作る">1. 四角形をドラッグするプログラムを作る</a></h2>
+<h3> [概要]</h3>
+<p> 四角形(Rectangle)２つを MouseDragElementBehavior を使ってドラッグするプログラムを作成してみます。<br>
+ついでに、2つの四角形の重なり率を求めて画面へ表示するようにします。</p>
+<p> &nbsp;</p>
+<h3>[環境]</h3>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> [memo] Blend SDK を使用する場合、.NET Framework を 4.5 
+以降にしてビルドする必要があるようです。4.0でビルドしたらエラーになりました。</p>
+<p> &nbsp;</p>
+
+<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="MouseDragElementBehavior/SampleMovie01.mp4">
+				<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p>&nbsp;</p>
+<h3>[手順１] 画面作成</h3>
+<p>(1) Rectangle を３つ(rect1, rect2, rect3)、Label を２つ(label1, label2)、画面に並べます。<br>(2) ２つのRectangle (rect1, rect2) 
+に、&quot;MouseDragElementBehavior&quot; をドロップします。</p>
+<p>rect3 は rect1 と rect2 の重なっている部分を表現するために使用します。ドラッグ操作できるのは rect1 と rect2 の２つです。<br>(2) は Blend を使って行ってください。Visual Studio ではドラッグ操作で登録できません。<br>
+ここまでの実装だけで rect1 と rect2 をドラッグ操作することができます。</p>
+<p><img alt="" src="MouseDragElementBehavior/img2D.jpg"></p>
+
+<p>[&quot;MainWindow.xaml&quot;]</p>
+<p>Blend SDK を使用するために、下記２つの名前空間を登録する必要があります。Blendで作業すれば自動的に挿入されるはずです。<br>- &quot;<a href="http://schemas.microsoft.com/expression/2010/interactivity">http://schemas.microsoft.com/expression/2010/interactivity</a>&quot;<br>
+- &quot;<a href="http://schemas.microsoft.com/expression/2010/interactions">http://schemas.microsoft.com/expression/2010/interactions</a>&quot;</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;test_MouseDragElementBehavior.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:test_MouseDragElementBehavior&quot;
+<span class="auto-style10">        xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot; </span>
+<span class="auto-style10">        xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot; </span>
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;test_MouseDragElementBehavior&quot; Height=&quot;450&quot; Width=&quot;800&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Label x:Name=&quot;label1&quot; Content=&quot;Label&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;235&quot;/&gt;
+        &lt;Label x:Name=&quot;label2&quot; Content=&quot;Label&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,41,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;235&quot;/&gt;
+        &lt;Rectangle x:Name=&quot;rect1&quot; Fill=&quot;#CC7575DE&quot; Margin=&quot;195,99,0,0&quot; Stroke=&quot;Black&quot; Height=&quot;150&quot; Width=&quot;200&quot;&gt;
+            &lt;i:Interaction.Behaviors&gt;
+                &lt;ei:MouseDragElementBehavior x:Name=&quot;dragElementBehavior1&quot;/&gt;
+            &lt;/i:Interaction.Behaviors&gt;
+        &lt;/Rectangle&gt;
+        &lt;Rectangle x:Name=&quot;rect2&quot; Fill=&quot;#CC9AFF9F&quot; Margin=&quot;416,185,0,0&quot; Stroke=&quot;Black&quot; Height=&quot;100&quot; Width=&quot;100&quot;&gt;
+            &lt;i:Interaction.Behaviors&gt;
+                &lt;ei:MouseDragElementBehavior x:Name=&quot;dragElementBehavior2&quot;/&gt;
+            &lt;/i:Interaction.Behaviors&gt;
+        &lt;/Rectangle&gt;
+        &lt;Rectangle x:Name=&quot;rect3&quot; Fill=&quot;#CCFF9A9A&quot; Height=&quot;100&quot; Margin=&quot;257,260,0,0&quot; Stroke=&quot;Red&quot; Width=&quot;100&quot;/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>&nbsp;</p>
+<p>[参照]</p>
+<p>プログラムの参照へ &quot;Microsoft.Expression.Interactions&quot; を設定している必要があります。<br>Blend 
+を使っていれば自動的に挿入されるはずですが、一応意識したほうがよいでしょう。このモジュールは通常下記に保存されています。<br>&quot;C:\Program 
+Files (x86)\Microsoft 
+SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll&quot;</p>
+<p><img alt="" src="MouseDragElementBehavior/img42.gif" class="auto-style11"></p>
+<p>&nbsp;</p>
+<p>ここまでの実装だけで rect1, rect2 をドラッグ操作することができます。<br>いったんここまででビルドして確認してみてください。</p>
+<p>&nbsp;</p>
+<h3>[手順２]</h3>
+<p>２つの四角系の重なり部分を rect3 として表示、重なり率をラベル表示、するための実装を以下に示します。<br>主に MouseDragElementBehavior 
+のイベントを使って実装します。</p>
+<p>(1) 四角形(Rectangle)をクリック、ドラッグしたときの動作をコードビハインドで実装します。<br>(2) 
+MouseDragElementBehavior に 「ConstrainToParentBounds=&quot;True&quot;」 
+を設定することで、領域外へドラッグできなくします。<br>(3) rect3, label1, label2 に 「IsHitTestVisible=&quot;False&quot;」を設定し、マウスクリック時のヒットテスト対象外とします。<br>
+(4) label1, label2 のZオーダーを3に設定することで最前面の表示にします。（Panel.ZIndex=&quot;3&quot;）<br>
+(5) rect3 のZオーダーを2に設定することで、rect1, rect2 より前に表示するようにします。（Panel.ZIndex=&quot;2&quot;）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+rect1, rect2 はコードビハインドで 0 または 1 を設定します。<br>(6) label1, label2 
+のフォント種別およびフォントサイズを適当に設定します。（下記プログラムでは 「FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot;」 
+を設定）</p>
+<p>&nbsp;</p>
+
+<p>[&quot;MainWindow.xaml.cs&quot;]</p>
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+
+namespace test_MouseDragElementBehavior
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        private Point rect1_point;
+        private Point rect2_point;
+        private Rect rect3_information;
+
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // MouseDragElementBehavior のイベントハンドラーを登録
+            {
+                //dragElementBehavior1.Changed += DragElementBehavior1_Changed;
+                dragElementBehavior1.Dragging += DragElementBehavior1_Dragging;
+                dragElementBehavior1.DragFinished += DragElementBehavior1_DragFinished;
+
+                //dragElementBehavior2.Changed += DragElementBehavior2_Changed;
+                dragElementBehavior2.Dragging += DragElementBehavior2_Dragging;
+                dragElementBehavior2.DragFinished += DragElementBehavior2_DragFinished;
+            }
+
+            // rect3 を消す
+            rect3.Visibility = Visibility.Collapsed;
+
+            // 一回でも操作しないとこれらの値が NaN みたいなので、強制代入
+            // X,Y プロパティを使用しないように修正したので、コメントアウト
+            {
+                //dragElementBehavior1.X = rect1.Margin.Left;
+                //dragElementBehavior1.Y = rect1.Margin.Top;
+                //dragElementBehavior2.X = rect2.Margin.Left;
+                //dragElementBehavior2.Y = rect2.Margin.Top;
+            }
+
+            // label 更新
+            Update_RectangularOverlapRate();
+        }
+
+
+        private void Rect1_TouchDown(object sender, TouchEventArgs e)
+        {
+            Rect1_SetActive();
+        }
+
+        private void Rect2_TouchDown(object sender, TouchEventArgs e)
+        {
+            Rect2_SetActive();
+        }
+
+        private void Rect1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Rect1_SetActive();
+        }
+
+        private void Rect2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Rect2_SetActive();
+        }
+
+        private void Rect1_SetActive()
+        {
+            // ref: https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.panel.zindex?view=netframework-4.8
+            Panel.SetZIndex(rect1, 1);
+            Panel.SetZIndex(rect2, 0);
+        }
+
+        private void Rect2_SetActive()
+        {
+            // ref: https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.panel.zindex?view=netframework-4.8
+            Panel.SetZIndex(rect1, 0);
+            Panel.SetZIndex(rect2, 1);
+        }
+
+        private void DragElementBehavior1_Changed(object sender, EventArgs e)
+        {
+            // Dragging, DragFinished の２つのイベントだけで十分だったためコメントアウト
+            //DragElementBehavior1_DragAction(dragElementBehavior1);
+            //DragElementBehavior2_DragAction(dragElementBehavior2);
+        }
+
+        private void DragElementBehavior1_Dragging(object sender, MouseEventArgs e)
+        {
+            DragElementBehavior1_DragAction(dragElementBehavior1);
+            DragElementBehavior2_DragAction(dragElementBehavior2);
+            Update_RectangularOverlapRate();
+        }
+
+        private void DragElementBehavior1_DragFinished(object sender, MouseEventArgs e)
+        {
+            DragElementBehavior1_DragAction(dragElementBehavior1);
+            DragElementBehavior2_DragAction(dragElementBehavior2);
+            Update_RectangularOverlapRate();
+        }
+
+        private void DragElementBehavior1_DragAction(object sender)
+        {
+#if false
+            // この方法ではマウス操作を勢いよく行うとX,Yプロパティの値が正しくない場合があったため廃案。
+            // ref: https://stackoverflow.com/questions/7295353/position-of-draggeddropped-element-mousedragelementbehavior
+            rect1_point = new Point(((MouseDragElementBehavior)sender).X, ((MouseDragElementBehavior)sender).Y);
+
+            if (double.IsNaN(rect1_point.X) || double.IsNaN(rect1_point.Y))
+            {
+                dragElementBehavior1.X = rect1.Margin.Left;
+                dragElementBehavior1.Y = rect1.Margin.Top;
+            }
+#else
+            rect1_point = new Point(rect1.Margin.Left + rect1.RenderTransform.Value.OffsetX, rect1.Margin.Top + rect1.RenderTransform.Value.OffsetY);
+#endif
+            UpdateRect3();
+        }
+
+        private void DragElementBehavior2_Changed(object sender, EventArgs e)
+        {
+            // Dragging, DragFinished の２つのイベントだけで十分だったためコメントアウト
+            //DragElementBehavior1_DragAction(dragElementBehavior1);
+            //DragElementBehavior2_DragAction(dragElementBehavior2);
+        }
+
+        private void DragElementBehavior2_Dragging(object sender, MouseEventArgs e)
+        {
+            DragElementBehavior1_DragAction(dragElementBehavior1);
+            DragElementBehavior2_DragAction(dragElementBehavior2);
+            Update_RectangularOverlapRate();
+        }
+
+        private void DragElementBehavior2_DragFinished(object sender, MouseEventArgs e)
+        {
+            DragElementBehavior1_DragAction(dragElementBehavior1);
+            DragElementBehavior2_DragAction(dragElementBehavior2);
+            Update_RectangularOverlapRate();
+        }
+
+        private void DragElementBehavior2_DragAction(object sender)
+        {
+#if false
+            // この方法ではマウス操作を勢いよく行うとX,Yプロパティの値が正しくない場合があったため廃案。
+            // ref: https://stackoverflow.com/questions/7295353/position-of-draggeddropped-element-mousedragelementbehavior
+            rect2_point = new Point(((MouseDragElementBehavior)sender).X, ((MouseDragElementBehavior)sender).Y);
+
+            if ( double.IsNaN(rect2_point.X) || double.IsNaN(rect2_point.Y))
+            {
+                dragElementBehavior2.X = rect2.Margin.Left;
+                dragElementBehavior2.Y = rect2.Margin.Top;
+            }
+#else
+            rect2_point = new Point(rect2.Margin.Left + rect2.RenderTransform.Value.OffsetX, rect2.Margin.Top + rect2.RenderTransform.Value.OffsetY);
+#endif
+
+            UpdateRect3();
+        }
+
+        private void UpdateRect3()
+        {
+            // rect3 を算出
+            var left = Math.Max(rect1_point.X, rect2_point.X);
+            var top = Math.Max(rect1_point.Y, rect2_point.Y);
+            var right = Math.Min(rect1_point.X + rect1.Width, rect2_point.X + rect2.Width);
+            var bottom = Math.Min(rect1_point.Y + rect1.Height, rect2_point.Y + rect2.Height);
+
+            var width = right - left;
+            var height = bottom - top;
+
+            if ( width &gt; 0.0 &amp;&amp; height &gt; 0.0)
+            {
+                // Update rect3
+                {
+                    rect3.Visibility = Visibility.Visible;
+                    rect3.Margin = new Thickness(left, top, 0, 0);
+                    rect3.Width = width;
+                    rect3.Height = height;
+                }
+
+                // Update rect3_information
+                {
+                    rect3_information.X = left;
+                    rect3_information.Y = top;
+                    rect3_information.Width = width;
+                    rect3_information.Height = height;
+                }
+            }
+            else
+            {
+                // Update rect3
+                rect3.Visibility = Visibility.Hidden;
+
+                // Update rect3_information
+                {
+                    rect3_information.X = 0;
+                    rect3_information.Y = 0;
+                    rect3_information.Width = 0;
+                    rect3_information.Height = 0;
+                }
+            }
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            DragElementBehavior1_DragAction(dragElementBehavior1);
+            DragElementBehavior2_DragAction(dragElementBehavior2);
+        }
+
+        private void Update_RectangularOverlapRate()
+        {
+            double rect1_area = rect1.Width * rect1.Height;
+            double rect2_area = rect2.Width * rect2.Height;
+            double rect3_area = rect3_information.Width * rect3_information.Height;
+
+            label1.Content = &quot;rect1: &quot; + (int)(100 * rect3_area / rect1_area) + &quot; [%]&quot;;
+            label2.Content = &quot;rect2: &quot; + (int)(100 * rect3_area / rect2_area) + &quot; [%]&quot;;
+        }
+    }
+}
+</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>[&quot;MainWindow.xaml&quot;]</p>
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;test_MouseDragElementBehavior.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:test_MouseDragElementBehavior&quot;
+        xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot; 
+        xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot; 
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;test_MouseDragElementBehavior&quot; Height=&quot;450&quot; Width=&quot;800&quot; ResizeMode=&quot;CanResizeWithGrip&quot; Loaded=&quot;Window_Loaded&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Label x:Name=&quot;label1&quot; Content=&quot;Label&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;235&quot; <span class="auto-style10">IsHitTestVisible=&quot;False&quot;</span> <span class="auto-style10">Panel.ZIndex=&quot;3&quot;</span> FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot;/&gt;
+        &lt;Label x:Name=&quot;label2&quot; Content=&quot;Label&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,41,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;235&quot; <span class="auto-style10">IsHitTestVisible=&quot;False&quot;</span> <span class="auto-style10">Panel.ZIndex=&quot;3&quot;</span> FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot;/&gt;
+        &lt;Rectangle x:Name=&quot;rect1&quot; Fill=&quot;#CC7575DE&quot; Margin=&quot;195,99,0,0&quot; Stroke=&quot;Black&quot; TouchDown=&quot;Rect1_TouchDown&quot; Panel.ZIndex=&quot;1&quot; Height=&quot;150&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;200&quot; MouseLeftButtonDown=&quot;Rect1_MouseLeftButtonDown&quot;&gt;
+            &lt;i:Interaction.Behaviors&gt;
+                &lt;ei:MouseDragElementBehavior x:Name=&quot;dragElementBehavior1&quot; <span class="auto-style10">ConstrainToParentBounds=&quot;True&quot;</span>/&gt;
+            &lt;/i:Interaction.Behaviors&gt;
+        &lt;/Rectangle&gt;
+        &lt;Rectangle x:Name=&quot;rect2&quot; Fill=&quot;#CC9AFF9F&quot; Margin=&quot;416,185,0,0&quot; Stroke=&quot;Black&quot; Height=&quot;100&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;100&quot; TouchDown=&quot;Rect2_TouchDown&quot; MouseLeftButtonDown=&quot;Rect2_MouseLeftButtonDown&quot;&gt;
+            &lt;i:Interaction.Behaviors&gt;
+                &lt;ei:MouseDragElementBehavior x:Name=&quot;dragElementBehavior2&quot; <span class="auto-style10">ConstrainToParentBounds=&quot;True&quot;</span>/&gt;
+            &lt;/i:Interaction.Behaviors&gt;
+        &lt;/Rectangle&gt;
+        &lt;Rectangle x:Name=&quot;rect3&quot; Fill=&quot;#CCFF9A9A&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;257,260,0,0&quot; Stroke=&quot;Red&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; <span class="auto-style10">Panel.ZIndex=&quot;2&quot;</span> <span class="auto-style10">IsHitTestVisible=&quot;False&quot;</span>/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>以上で完成です。</p>
+<p>&nbsp;</p>
+<h3>
+サンプルプログラム</h3>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li><a href="https://github.com/microsoft/XamlBehaviorsWpf" target="_blank">
+	https://github.com/microsoft/XamlBehaviorsWpf</a></li>
+	<li><a href="https://thinkit.co.jp/story/2011/01/24/1954" target="_blank">
+	https://thinkit.co.jp/story/2011/01/24/1954</a></li>
+	<li><a href="http://pro.art55.jp/?eid=1303847" target="_blank">
+	http://pro.art55.jp/?eid=1303847</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2019年08月20日 新規作成、 木下英俊</font></p>
+</body>
+</html>

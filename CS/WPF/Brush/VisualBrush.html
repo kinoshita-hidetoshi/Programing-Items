@@ -1,0 +1,138 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>WPF - TreeView コントロール</title>
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+*{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important;}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+WPF : VisualBrush</h1>
+<h2>
+内容一覧：</h2>
+<ol>
+	<li><a href="#1._鏡像を作成する">鏡像を作成する</a></li>
+</ol>
+<p>
+&nbsp;</p>
+<p class="auto-style7">
+<a name="1._鏡像を作成する">1. 鏡像を作成する</a></p>
+<p class="auto-style7">
+下記のMicrosoftホームページ内資料に従って作成したものをベースにちょっと修正したプログラムを作成してみました。</p>
+<p class="auto-style7">
+<a href="http://msdn.microsoft.com/ja-jp/library/ms749021(VS.80).aspx" target="_blank">http://msdn.microsoft.com/ja-jp/library/ms749021(VS.80).aspx</a></p>
+<p class="auto-style7">
+作製したプログラムの画面は下記の通りです。<br>開発は Blend for Visual Studio 2013 のみで作成。</p>
+<p class="auto-style7">
+環境：<br>・Blend for Visual Studio 2013<br>・.NET4.5.1<br>・Windows8.1</p>
+<p class="auto-style7">
+Microsoftオリジナルからの変化点は下記の通り。<br>・Eclipse に MouseDragElementBehavior を加えた。<br>→ 
+(注意)ConstrainToParentBounds=&quot;True&quot; にしないと円を領域外までドラッグできてしまう。<br>
+・TextBlock を TextBox へ変更してテキストを変更可能にした。<br>・その他、もろもろ。</p>
+<p class="auto-style7">
+<img alt="" height="450" src="VisualBrush/img6.jpg" width="545"></p>
+<p class="auto-style7">
+<img alt="" height="431" src="VisualBrush/img11.jpg" width="830"></p>
+
+[MainWindow.xaml]
+<table style="border: medium solid #808080; width: 100%" title="[MainWindow.xaml]">
+	<tr title="[MainWindow.xaml]">
+		<td>
+		<pre>&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot; xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot; x:Class=&quot;testVisualBrush.MainWindow&quot;
+        Title=&quot;Visual Brush のテスト&quot; Height=&quot;585.5&quot; Width=&quot;629&quot; Background=&quot;Black&quot;&gt;
+    &lt;Window.Resources&gt;
+        &lt;VisualBrush x:Key=&quot;ReflectedVisual&quot; Visual=&quot;{Binding ElementName=ReflectedVisual}&quot;/&gt;
+    &lt;/Window.Resources&gt;
+    &lt;StackPanel Margin=&quot;0,50,0,0&quot;&gt;
+
+<span>        <span class="comment">&lt;!-- The object to reflect. --&gt;</span></span>
+        &lt;Border x:Name=&quot;ReflectedVisual&quot; BorderThickness=&quot;1&quot; Width=&quot;400&quot; Margin=&quot;10,0&quot; HorizontalAlignment=&quot;Center&quot;&gt;
+            &lt;Border.Background&gt;
+                &lt;LinearGradientBrush EndPoint=&quot;1.004,0.515&quot; StartPoint=&quot;-0.002,0.519&quot;&gt;
+                    &lt;GradientStop Color=&quot;#FFAAF7FF&quot; Offset=&quot;0&quot;/&gt;
+                    &lt;GradientStop Color=&quot;White&quot; Offset=&quot;1&quot;/&gt;
+                &lt;/LinearGradientBrush&gt;
+            &lt;/Border.Background&gt;
+            &lt;StackPanel Orientation=&quot;Horizontal&quot; Margin=&quot;10&quot; Height=&quot;211&quot;&gt;
+                &lt;TextBox Width=&quot;200&quot; TextWrapping=&quot;Wrap&quot; Foreground=&quot;Black&quot; Text=&quot;Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse vel ante. Donec luctus tortor sit amet est. Nullam pulvinar odio et wisi. Pellentesque quis magna. Sed pellentesque. Nulla euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.&quot; Background=&quot;{x:Null}&quot;/&gt;
+                &lt;StackPanel Width=&quot;173&quot;&gt;
+                    &lt;Ellipse Fill=&quot;Black&quot; Height=&quot;50&quot; Stroke=&quot;Black&quot; Width=&quot;50&quot; Margin=&quot;10&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+                        &lt;i:Interaction.Behaviors&gt;
+                            &lt;ei:MouseDragElementBehavior ConstrainToParentBounds=&quot;True&quot;/&gt;
+                        &lt;/i:Interaction.Behaviors&gt;
+                    &lt;/Ellipse&gt;
+                    &lt;Ellipse Fill=&quot;Black&quot; Height=&quot;50&quot; Stroke=&quot;Black&quot; Width=&quot;50&quot; Margin=&quot;10&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+                        &lt;i:Interaction.Behaviors&gt;
+                            &lt;ei:MouseDragElementBehavior ConstrainToParentBounds=&quot;True&quot;/&gt;
+                        &lt;/i:Interaction.Behaviors&gt;
+                    &lt;/Ellipse&gt;
+                    &lt;Ellipse Fill=&quot;Black&quot; Height=&quot;50&quot; Stroke=&quot;Black&quot; Width=&quot;50&quot; Margin=&quot;10&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+                        &lt;i:Interaction.Behaviors&gt;
+                            &lt;ei:MouseDragElementBehavior ConstrainToParentBounds=&quot;True&quot;/&gt;
+                        &lt;/i:Interaction.Behaviors&gt;
+                    &lt;/Ellipse&gt;
+                &lt;/StackPanel&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Border&gt;
+
+        &lt;Rectangle x:Name=&quot;rectangle&quot; Fill=&quot;Gray&quot; Height=&quot;1&quot; Stroke=&quot;Gray&quot;/&gt;
+
+        &lt;!-- The object to contain the reflection.--&gt;
+<span class="auto-style8">        &lt;Rectangle Stroke=&quot;Gray&quot; Width=&quot;{Binding ActualWidth, ElementName=ReflectedVisual}&quot; RenderTransformOrigin=&quot;0.5,0.5&quot; Opacity=&quot;0.75&quot; Margin=&quot;{Binding Margin, ElementName=ReflectedVisual}&quot; Height=&quot;{Binding ActualHeight, ElementName=ReflectedVisual}&quot;&gt;</span>
+<span class="auto-style8">            &lt;Rectangle.Fill&gt;</span>
+<span class="auto-style8">                &lt;!-- Creates the reflection. --&gt;</span>
+<span class="auto-style8">                &lt;VisualBrush Visual=&quot;{Binding ElementName=ReflectedVisual}&quot;&gt;</span>
+<span class="auto-style8">                    &lt;VisualBrush.RelativeTransform&gt;</span>
+<span class="auto-style8">                        &lt;!-- Flip the reflection. --&gt;</span>
+<span class="auto-style8">                        &lt;TransformGroup&gt;</span>
+<span class="auto-style8">                            &lt;ScaleTransform ScaleY=&quot;-1&quot; ScaleX=&quot;1&quot;/&gt;</span>
+<span class="auto-style8">                            &lt;SkewTransform AngleY=&quot;0&quot; AngleX=&quot;0&quot;/&gt;</span>
+<span class="auto-style8">                            &lt;RotateTransform Angle=&quot;0&quot;/&gt;</span>
+<span class="auto-style8">                            &lt;TranslateTransform Y=&quot;1&quot;/&gt;</span>
+<span class="auto-style8">                        &lt;/TransformGroup&gt;</span>
+<span class="auto-style8">                    &lt;/VisualBrush.RelativeTransform&gt;</span>
+<span class="auto-style8">                &lt;/VisualBrush&gt;</span>
+<span class="auto-style8">            &lt;/Rectangle.Fill&gt;</span>
+<span class="auto-style8">            &lt;Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">                &lt;LinearGradientBrush EndPoint=&quot;0.496,0&quot; StartPoint=&quot;0.504,0.995&quot;&gt;</span>
+<span class="auto-style8">                    &lt;GradientStop Offset=&quot;0.2&quot; Color=&quot;#00000000&quot;/&gt;</span>
+<span class="auto-style8">                    &lt;GradientStop Color=&quot;Black&quot; Offset=&quot;1&quot;/&gt;</span>
+<span class="auto-style8">                    &lt;GradientStop Color=&quot;#33FFFFFF&quot; Offset=&quot;0.5&quot;/&gt;</span>
+<span class="auto-style8">                &lt;/LinearGradientBrush&gt;</span>
+<span class="auto-style8">            &lt;/Rectangle.OpacityMask&gt;</span>
+<span class="auto-style8">            &lt;Rectangle.Effect&gt;</span>
+<span class="auto-style8">                &lt;BlurEffect Radius=&quot;1.5&quot; RenderingBias=&quot;Quality&quot;/&gt;</span>
+<span class="auto-style8">            &lt;/Rectangle.Effect&gt;</span>
+<span class="auto-style8">        &lt;/Rectangle&gt;</span>
+
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p class="auto-style7">
+&nbsp;</p>
+<p class="auto-style7">
+VisualBrush のリソースへの登録は下図の通り行います。<br>(1) 最初にオブジェクトを選択します。<br>(2) 
+メニューから「VisualBrush リソースの作成(V)」を洗濯します。</p>
+<p class="auto-style7">
+<img alt="" src="VisualBrush/img15.jpg"></p>
+<p class="auto-style7">
+サンプルプログラム： <a href="VisualBrush/testVisualBrush.zip">ダウンロード</a></p>
+<p class="auto-style7">
+&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2014年04月28日 木下英俊</font></p>
+</body>
+</html>

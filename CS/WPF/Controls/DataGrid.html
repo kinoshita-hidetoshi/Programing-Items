@@ -1,0 +1,194 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>［タイトルを記載します］</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+WPF : DataGrid コントロール</h1>
+
+<p> WPF標準の DataGrid コントロールについて記載します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._単純なDataGridの使い方">1. 単純なDataGridの使い方</a><br>
+<a href="#2._FrozenColumnCount_プロパティで表示列を固定する">2. FrozenColumnCount プロパティで表示列を固定する</a><br>3. ***</p>
+<p> &nbsp;</p>
+<h2> <a name="1._単純なDataGridの使い方">1. 単純なDataGridの使い方</a></h2>
+<p> [概要]</p>
+<p> まずは単純にDataGridコントロールを使ってみます。<br>下図のようなアプリケーションを作成してみます。</p>
+<p> 
+<img alt="" src="DataGrid/img15.jpg"></p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> [手順概要]</p>
+<p>(1) WPFアプリケーションを新規作成します。</p>
+<p>(2) 画面上に”DataGrid”コントロールをドロップ後、位置や大きさを適当に成形します。</p>
+<p>(3) 表示するデータを準備します。<br>
+ここではBlendの機能を使ってサンプルデータを生成し、これをBlend上でDataGridへドロップしました。</p>
+<p><img alt="" src="DataGrid/img1E.jpg"></p>
+<p>(4) 表示順序 他 を調整します。</p>
+<p>&nbsp;</p>
+
+[プログラムソース &quot;MainWindow.xaml&quot;]
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;test_01.MainWindow&quot;
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+    xmlns:local=&quot;clr-namespace:test_01&quot;
+    mc:Ignorable=&quot;d&quot;
+    Title=&quot;MainWindow&quot; Height=&quot;400&quot; Width=&quot;600&quot; ResizeMode=&quot;CanResizeWithGrip&quot; Loaded=&quot;Window_Loaded&quot;&gt;
+    
+    &lt;Window.Resources&gt;
+        &lt;DataTemplate x:Key=&quot;imageTemplate&quot;&gt;
+            &lt;StackPanel&gt;
+                &lt;Image Source=&quot;{Binding image}&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;64&quot; Width=&quot;64&quot;/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/Window.Resources&gt;
+    &lt;Grid DataContext=&quot;{Binding Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;<span class="auto-style8">DataGrid</span> x:Name=&quot;dataGrid&quot; Margin=&quot;10&quot; AutoGenerateColumns=&quot;False&quot; ItemsSource=&quot;{Binding Collection}&quot; CanUserAddRows=&quot;False&quot; CanUserDeleteRows=&quot;False&quot; CanUserResizeRows=&quot;False&quot;&gt;
+            &lt;DataGrid.Columns&gt;
+                &lt;DataGridCheckBoxColumn Binding=&quot;{Binding check}&quot; Header=&quot;check&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding name}&quot; Header=&quot;name&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding mail}&quot; Header=&quot;mail&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding company}&quot; Header=&quot;company&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding sample_string}&quot; Header=&quot;sample string&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTemplateColumn CellTemplate=&quot;{StaticResource imageTemplate}&quot; Header=&quot;image&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding sample_string}&quot; Header=&quot;sample string&quot; IsReadOnly=&quot;True&quot;/&gt;
+                &lt;DataGridTextColumn Binding=&quot;{Binding sample_string}&quot; Header=&quot;sample string&quot; IsReadOnly=&quot;True&quot;/&gt;
+            &lt;/DataGrid.Columns&gt;
+        &lt;/<span class="auto-style8">DataGrid</span>&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+	
+[プログラムソース &quot;MainWindow.xaml.cs&quot;]
+<pre class="prettyprint linenums">
+using System.Windows;
+
+namespace test_01
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}</pre>
+
+[プログラムソース &quot;App.xaml&quot;]
+<pre class="prettyprint linenums">
+&lt;Application
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:local=&quot;clr-namespace:test_01&quot;
+    xmlns:SampleData=&quot;clr-namespace:Expression.Blend.SampleData.SampleDataSource&quot; xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; mc:Ignorable=&quot;d&quot; x:Class=&quot;test_01.App&quot;
+    StartupUri=&quot;MainWindow.xaml&quot;&gt;
+
+    &lt;Application.Resources&gt;
+        &lt;SampleData:SampleDataSource x:Key=&quot;SampleDataSource&quot; d:IsDataSource=&quot;True&quot;/&gt;
+    &lt;/Application.Resources&gt;
+
+&lt;/Application&gt;</pre>
+
+
+[プログラムソース &quot;SampleDataSource.xaml.cs&quot;]
+<pre class="prettyprint linenums">
+&lt;SampleData:SampleDataSource xmlns:SampleData=&quot;clr-namespace:Expression.Blend.SampleData.SampleDataSource&quot;&gt;
+    &lt;SampleData:SampleDataSource.Collection&gt;
+        &lt;SampleData:Item name=&quot;Aaberg, Jesper&quot; check=&quot;True&quot; mail=&quot;someone@example.com&quot; sample_string=&quot;Nam class cras&quot; image=&quot;SampleDataSource_Files\image01.png&quot; company=&quot;A. Datum Corporation&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Adams, Ellen&quot; check=&quot;False&quot; mail=&quot;user@adventure-works.com&quot; sample_string=&quot;Aliquam sed duis&quot; image=&quot;SampleDataSource_Files\image02.png&quot; company=&quot;Adventure Works&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Adams, Terry&quot; check=&quot;True&quot; mail=&quot;someone@adventure-works.com&quot; sample_string=&quot;Nunc curae dis&quot; image=&quot;SampleDataSource_Files\image03.png&quot; company=&quot;Adventure Works&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Adams, Terry&quot; check=&quot;False&quot; mail=&quot;user@example.com&quot; sample_string=&quot;Integer aenean amet quisque&quot; image=&quot;SampleDataSource_Files\image04.png&quot; company=&quot;Alpine Ski House&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Pfeiffer, Michael&quot; check=&quot;True&quot; mail=&quot;user-3@fabrikam.com&quot; sample_string=&quot;Ante vivamus mauris&quot; image=&quot;SampleDataSource_Files\image05.png&quot; company=&quot;Blue Yonder Airlines&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Philips, Carol&quot; check=&quot;False&quot; mail=&quot;user-4@fabrikam.com&quot; sample_string=&quot;Est arcu hac aliquam&quot; image=&quot;SampleDataSource_Files\image01.png&quot; company=&quot;City Power &amp;amp; Light&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Poe, Toni&quot; check=&quot;True&quot; mail=&quot;user-5@fabrikam.com&quot; sample_string=&quot;Donec diam&quot; image=&quot;SampleDataSource_Files\image02.png&quot; company=&quot;Coho Vineyard&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Hicks, Cassie&quot; check=&quot;False&quot; mail=&quot;user-6@fabrikam.com&quot; sample_string=&quot;Nullam etiam eget leo&quot; image=&quot;SampleDataSource_Files\image03.png&quot; company=&quot;Coho Winery&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Argentiero, Luca&quot; check=&quot;True&quot; mail=&quot;user-7@fabrikam.com&quot; sample_string=&quot;Elit aptent maecenas fusce&quot; image=&quot;SampleDataSource_Files\image04.png&quot; company=&quot;Coho Vineyard &amp;amp; Winery&quot;/&gt;
+        &lt;SampleData:Item name=&quot;Perry, Brian&quot; check=&quot;False&quot; mail=&quot;user-8@fabrikam.com&quot; sample_string=&quot;Praesent lorem&quot; image=&quot;SampleDataSource_Files\image05.png&quot; company=&quot;Contoso, Ltd&quot;/&gt;
+    &lt;/SampleData:SampleDataSource.Collection&gt;
+&lt;/SampleData:SampleDataSource&gt;</pre>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> <a name="2._FrozenColumnCount_プロパティで表示列を固定する">2. FrozenColumnCount プロパティで表示列を固定する</a></h2>
+<p> [概要]<br>&quot;FrozenColumnCount&quot; を使って表示列の一部を固定する方法を提示します。<br>前述のプログラムに一部を変更することで行います。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+
+[プログラムソース &quot;MainWindow.xaml.cs&quot;]
+<pre class="prettyprint linenums">
+namespace test_01
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // DataGrid の列を一部(2列)固定する
+            // 詳細は下記URLを参照
+            // https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx
+            <span class="auto-style8">dataGrid.FrozenColumnCount = 2;</span>
+        }
+    }
+}</pre>
+	
+上記ソースの例では、左側の２列を固定してそれ以外のみを左右スクロールの対象とすることができます。<br>
+<img alt="" src="DataGrid/img23.jpg"><br>
+	
+<br>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム <a href="DataGrid/test_DataGrid.zip">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考URL</h2>
+<ol>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx" target="_blank" title="https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx">
+	https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx</a>
+	</li>
+	<li>
+	<a href="http://pro.art55.jp/?eid=982264" target="_blank" title="http://pro.art55.jp/?eid=982264">
+	http://pro.art55.jp/?eid=982264</a> </li>
+</ol>
+<hr>
+<p> <font face="Meiryo UI">記載： 2017年03月21日 木下英俊</font></p>
+</body>
+</html>

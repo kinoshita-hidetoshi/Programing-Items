@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>［タイトルを記載します］</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../prettify.css" rel="stylesheet" type="text/css">
+<script src="../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+［ImageMagick］コマンド集</h1>
+
+<p> ImageMagick を使ったコマンド集を記載します。<br>
+特に情報の少ないやつを記載します。基本的な操作は、「参考URL」に記載の情報から探してください。</p>
+<h2> 目次</h2>
+<p> <a href="#1._マルチアイコンを作る">1. マルチアイコンを作る</a><br>
+<a href="#2._svg_ファイルを_png_へ変換">2. svg ファイルを png へ変換</a><br><a href="#参考URL">
+参考URL</a></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="1._マルチアイコンを作る">1. マルチアイコンを作る</a></h2>
+<p> [概要]</p>
+<p> 自分でアイコン(ico)ファイルを作成するのは結構面倒です。ImageMagickを使うことでPNGファイルからマルチアイコンを作成できるので便利です。<br>
+PNGをベースにするのは透過アイコンを作成するには元ファイルに透過属性がないとできないからです。JPEGからアイコンを作成することももちろん可能ですが、JPEGには透過属性がないので、アイコン背景を透過することができません。</p>
+<p> [コマンド]</p>
+<p><span class="cpp-source">magick convert ico.png -define icon:auto-resize 
+icon.ico</span></p>
+<p>&nbsp;</p>
+<h2> <a name="2._svg_ファイルを_png_へ変換">2. svg ファイルを png へ変換</a></h2>
+<p> [概要]</p>
+<p> 世の中ベクター画像が増えてきました。svg形式の画像もその代表例の一つです。<br>Microsoft が提供する ImageLibrary 
+中の映像にも svg ファイルが多数入っています。<br>先の ico ファイルを svg から作成するために、一旦 svg ファイルを png 
+へ変換する必要がありました。<br>で、調べた結果がこれです。</p>
+<font face="Meiryo UI">
+<p>[コマンド]</p>
+</font>
+<p><span class="cpp-source">magick convert -density 1200 -resize 200x200 
+ConvertArrow_16x.svg ico.png</span></p>
+<p>&nbsp;</p>
+<h2><a name="参考URL">参考URL</a></h2>
+<ul>
+	<li>ImageMagick<br>
+	<a href="https://imagemagick.org/index.php" target="_blank">
+	https://imagemagick.org/index.php</a></li>
+	<li>ImageMagick の使い方 日本語マニュアル<br>
+	<a href="https://imagemagick.biz/" target="_blank">https://imagemagick.biz/</a></li>
+	<li>ImageMagick の使用例 － 基本編<br>
+	<a href="https://qiita.com/mtakizawa/items/a74bd91f7b3835976461" target="_blank">
+	https://qiita.com/mtakizawa/items/a74bd91f7b3835976461</a></li>
+	<li>ImageMagickでマルチアイコンを簡単に作る<br>
+	<a href="https://www.regentechlog.com/2014/04/03/imagemagick-multisize-ico/" target="_blank">
+	https://www.regentechlog.com/2014/04/03/imagemagick-multisize-ico/</a></li>
+	<li>How to convert a SVG to a PNG with ImageMagick?<br>
+	<a href="https://stackoverflow.com/questions/9853325/how-to-convert-a-svg-to-a-png-with-imagemagick" target="_blank">
+	https://stackoverflow.com/questions/9853325/how-to-convert-a-svg-to-a-png-with-imagemagick</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2020/05/01 新規作成</font></p>
+</body>
+</html>

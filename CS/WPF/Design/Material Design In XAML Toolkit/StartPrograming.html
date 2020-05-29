@@ -1,0 +1,423 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[WPF] MaterialDesignInXAML</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+［WPF］Material Design In XAML - プログラミングしてみる</h1>
+
+<p> オープンソース &quot;Material Design In XAML&quot; を使ってプログラミングをしてみます。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._”Super_Quick_Start”">1. &quot;Super Quick Start&quot;</a><br>
+<a href="#2._buttons">2. buttons</a><br></p>
+<p> &nbsp;</p>
+<h2> <a name="1._”Super_Quick_Start”">1. ”Super Quick Start”</a></h2>
+<p> [概要]</p>
+<p> まずは ”<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start" target="_blank">https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start</a>” 
+に記載されているサンプルプログラム &quot;Super Quick Start&quot; を動かしてみます。</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.5 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>PF: </td>
+		<td>MaterialDesignThemes,</td>
+		<td>v3.0.1 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>&nbsp;</td>
+		<td>MaterialDesignColors,</td>
+		<td>v1.2.2 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>(1) WPF プロジェクトを新規作成します。ここでは &quot;.NET Framework 4.6.1&quot; で作成しています。</p>
+<p><img alt="" src="StartPrograming/img27.jpg"></p>
+<p>&nbsp;</p>
+<p>(2) プロジェクトへ NuGet で ”MaterialDesignThemes” を追加します。</p>
+<p>本稿を記載時は v3.0.1 でした。</p>
+<p><img alt="" src="StartPrograming/img29.jpg"></p>
+<p>&nbsp;</p>
+<p>「変更のプレビュー」を表示したら「OK」ボタンをクリックします。</p>
+<p><img alt="" src="StartPrograming/img2A.jpg"></p>
+<p>&nbsp;</p>
+<p>(3) &quot;App.xaml&quot; を編集</p>
+<p>
+<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start" target="_blank">下記記事</a>に従って、&quot;App.xaml&quot; を編集します。</p>
+<p>
+<img alt="" src="StartPrograming/img2C.jpg" class="auto-style9"></p>
+<p>&nbsp;</p>
+<p>[&quot;App.xaml&quot;]</p>
+
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>&lt;Application x:Class=&quot;QuickStart.App&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             xmlns:local=&quot;clr-namespace:QuickStart&quot;
+             StartupUri=&quot;MainWindow.xaml&quot;&gt;
+    &lt;Application.Resources&gt;
+        &lt;ResourceDictionary&gt;
+<span class="auto-style8">            &lt;ResourceDictionary.MergedDictionaries&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml&quot; /&gt;</span>
+<span class="auto-style8">                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml&quot; /&gt;</span>
+<span class="auto-style8">            &lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+        &lt;/ResourceDictionary&gt;
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+
+<p>&nbsp;</p>
+<p>(4) &quot;MainWindow.xaml&quot; を編集</p>
+<p>
+<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start" target="_blank">下記記事</a>に従って、&quot;MainWindow.xaml&quot; を編集します。</p>
+<p><img alt="" class="auto-style9" src="StartPrograming/img2F.jpg"></p>
+<p>&nbsp;</p>
+<p>[&quot;MainWindow.xaml&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>&lt;Window x:Class=&quot;QuickStart.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:QuickStart&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;
+        
+<span class="auto-style8">        xmlns:materialDesign=&quot;http://materialdesigninxaml.net/winfx/xaml/themes&quot;   </span>
+<span class="auto-style8">        TextElement.Foreground=&quot;{DynamicResource MaterialDesignBody}&quot;</span>
+<span class="auto-style8">        TextElement.FontWeight=&quot;Regular&quot;</span>
+<span class="auto-style8">        TextElement.FontSize=&quot;13&quot;</span>
+<span class="auto-style8">        TextOptions.TextFormattingMode=&quot;Ideal&quot; </span>
+<span class="auto-style8">        TextOptions.TextRenderingMode=&quot;Auto&quot;        </span>
+<span class="auto-style8">        Background=&quot;{DynamicResource MaterialDesignPaper}&quot;</span>
+<span class="auto-style8">        FontFamily=&quot;{DynamicResource MaterialDesignFont}&quot;   </span>     
+        &gt;
+    &lt;Grid&gt;
+<span class="auto-style8">        &lt;materialDesign:Card Padding=&quot;32&quot; Margin=&quot;16&quot;&gt;</span>
+<span class="auto-style8">            &lt;!--&lt;TextBlock Style=&quot;{StaticResource MaterialDesignTitleTextBlock}&quot;&gt;My First Material Design App&lt;/TextBlock&gt;--&gt;</span>
+<span class="auto-style8">            &lt;TextBlock Style=&quot;{DynamicResource MaterialDesignBody1TextBlock}&quot;&gt;My First Material Design App&lt;/TextBlock&gt;</span>
+<span class="auto-style8">        &lt;/materialDesign:Card&gt;</span>
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[注意]</p>
+<p>元のコード <span class="cpp-source">{DynamicResource MaterialDesignTitleTextBlock}</span> 
+はエラーになってしまいました。<br>ここを &quot;MaterialDesignBody1TextBlock&quot; へ変更したらビルドできるようになったので、この 
+Style 名称がなくなったのか、または上記設定では何か足りないのか、あたりだと思います。</p>
+<p>&nbsp;</p>
+<p>[実行画面]</p>
+<p><img alt="" src="StartPrograming/img35.jpg"></p>
+<p>・・・&nbsp;&nbsp; んー、なんか微妙にホームページの画面と違う。まぁ、動いたから一旦良しとしましょう。</p>
+<p>[参考] ホームページ上にあった動作時の画面は以下の通り。</p>
+<p><img alt="" class="auto-style9" src="StartPrograming/img36.jpg"></p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>MaterialDesignInXAML - Super-Quick-Start<br>
+	<a href="https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start" target="_blank">
+	https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/wiki/Super-Quick-Start</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> <a name="2._buttons">2. buttons</a></h2>
+<p> [概要]</p>
+<p> &quot;MaterialDesignDemo.exe&quot; の &quot;buttons&quot; をまねてボタンを並べてみます。</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.5 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>PF: </td>
+		<td>MaterialDesignThemes,</td>
+		<td>v3.0.1 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>&nbsp;</td>
+		<td>MaterialDesignColors,</td>
+		<td>v1.2.2 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>[&quot;App.xaml&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>&lt;Application x:Class=&quot;Buttons.App&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             xmlns:local=&quot;clr-namespace:Buttons&quot;
+             StartupUri=&quot;MainWindow.xaml&quot;&gt;
+    &lt;Application.Resources&gt;
+        &lt;ResourceDictionary&gt;
+            &lt;ResourceDictionary.MergedDictionaries&gt;
+                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.<span class="auto-style8">Light</span>.xaml&quot; /&gt;
+                &lt;!--&lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.<span class="auto-style8">Dark</span>.xaml&quot; /&gt;--&gt;
+                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml&quot; /&gt;
+                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.<span class="auto-style8">DeepPurple</span>.xaml&quot; /&gt;
+                &lt;!--&lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.<span class="auto-style8">Indigo</span>.xaml&quot; /&gt;--&gt;
+                &lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.<span class="auto-style8">Lime</span>.xaml&quot; /&gt;
+                &lt;!--&lt;ResourceDictionary Source=&quot;pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml&quot; /&gt;--&gt;
+            &lt;/ResourceDictionary.MergedDictionaries&gt;
+        &lt;/ResourceDictionary&gt;         
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[&quot;MainWindow.xaml&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums"><code>&lt;Window x:Class=&quot;Buttons.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:Buttons&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;186.612&quot; Width=&quot;653.91&quot;
+        
+        xmlns:materialDesign=&quot;http://materialdesigninxaml.net/winfx/xaml/themes&quot;   
+        TextElement.Foreground=&quot;{DynamicResource MaterialDesignBody}&quot;
+        TextElement.FontWeight=&quot;Regular&quot;
+        TextElement.FontSize=&quot;13&quot;
+        TextOptions.TextFormattingMode=&quot;Ideal&quot; 
+        TextOptions.TextRenderingMode=&quot;Auto&quot;        
+        Background=&quot;{DynamicResource MaterialDesignPaper}&quot;
+        FontFamily=&quot;{DynamicResource MaterialDesignFont}&quot;           
+        &gt;
+    &lt;Grid&gt;
+        &lt;Button <span class="auto-style8">Style=&quot;{StaticResource MaterialDesignRaisedLightButton}&quot;</span> Width=&quot;100&quot; Margin=&quot;46,51,0,0&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot;&gt;
+            LIGHT
+        &lt;/Button&gt;
+        &lt;Button <span class="auto-style8">Style=&quot;{StaticResource MaterialDesignRaisedButton}&quot;</span> Width=&quot;100&quot; Margin=&quot;188,51,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+            MID
+        &lt;/Button&gt;
+        &lt;Button <span class="auto-style8">Style=&quot;{StaticResource MaterialDesignRaisedDarkButton}&quot;</span> Width=&quot;100&quot; Margin=&quot;333,51,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+            DARK
+        &lt;/Button&gt;
+        &lt;Button <span class="auto-style8">Style=&quot;{StaticResource MaterialDesignRaisedAccentButton}&quot;</span> Width=&quot;100&quot; ToolTip=&quot;Resource name: MaterialDesignRaisedAccentButton&quot; Margin=&quot;477,51,0,0&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot;&gt;
+            ACCENT
+        &lt;/Button&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p>Theme を &quot;Light&quot;、Primary を &quot;DeepPurple&quot;、Accent を &quot;Lime&quot; にそれぞれ設定。<!-- End for 'google-code-prettify' --></p>
+<p><img alt="" src="StartPrograming/img43.jpg"></p>
+<p>&nbsp;</p>
+<p>Theme を &quot;Light&quot;、Primary を &quot;Indigo&quot;、Accent を &quot;Indigo&quot; にそれぞれ設定。<!-- End for 'google-code-prettify' --></p>
+<p><img alt="" src="StartPrograming/img44.jpg"></p>
+<p>&nbsp;</p>
+<p>Theme を &quot;Dark&quot;、Primary を &quot;DeepPurple&quot;、Accent を &quot;Lime&quot; にそれぞれ設定。<!-- End for 'google-code-prettify' --></p>
+<p><img alt="" src="StartPrograming/img46.jpg"></p>
+<p>&nbsp;</p>
+<p>色の組み合わせなどは &quot;MaterialDesignDemo.exe&quot; で試せます。<br>いろいろと試してみてください。</p>
+<p><img alt="" src="StartPrograming/img57.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>3. ＊＊＊＊</p>
+<p> [概要]</p>
+<p> MaterialDesignInXaml で ＊＊＊ を作ってみます。</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.5 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>PF: </td>
+		<td>MaterialDesignThemes,</td>
+		<td>v3.0.1 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>&nbsp;</td>
+		<td>MaterialDesignColors,</td>
+		<td>v1.2.2 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>ソースコードからの引用は <span class="cpp-source">#include &lt;iostream&gt;</span> こんな感じで書けます。</p>
+<p> &nbsp;</p>
+
+<p>[動画例]</p>
+<table style="clip: rect(auto, auto, auto, auto);">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="../../../../****/****.mp4">
+				<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<br>
+	
+<br>
+<h4>
+サンプルプログラム</h4>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>(例) http://www.****.com</li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2020/02/23 新規作成<br></font></p>
+</body>
+</html>

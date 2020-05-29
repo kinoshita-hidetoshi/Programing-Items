@@ -1,0 +1,642 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[WPF]テクスチャへイメージの貼り付け</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	margin-bottom: 0px;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+[WPF] テクスチャへイメージの貼り付け</h1>
+
+<p> ３Ｄモデルの面に、テクスチャでイメージを貼り付けすることができます。</p>
+<h2> 目次</h2>
+<p> <a href="#1._３Ｄ平面へイメージを貼り付ける">1. ３Ｄ平面へイメージを貼り付ける</a><br>
+<a href="#2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a><br>
+<a href="#3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a><br>
+<a href="#4._３Ｄグラフィックスをマウスドラッグで操作する">4. ３Ｄグラフィックスをマウスドラッグで操作する</a><br><br>
+<a href="#サンプルプログラム">サンプルプログラム</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._３Ｄ平面へイメージを貼り付ける">1. ３Ｄ平面へイメージを貼り付ける</a></h2>
+<p>
+まずはシンプルな四角形へイメージを貼り付けてみます。</p>
+<p>
+[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+[実行結果]<br>
+</p>
+<p>
+<img alt="" src="PasteImage/img24.jpg"></p>
+<span class="table_title"><br>[&quot;MainWindow.xaml&quot;]<br>・３Ｄの画角は 
+PersectiveCamera の設定で定義しています。</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;_3D_Texture_Image.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:_3D_Texture_Image&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    &lt;Grid&gt;
+
+        &lt;Viewport3D&gt;
+            &lt;!-- カメラ  --&gt;
+            &lt;Viewport3D.Camera&gt;
+<span class="auto-style8">                &lt;PerspectiveCamera Position=&quot;-3,3,7&quot; LookDirection=&quot;3,-3,-7&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;45&quot;/&gt;</span>
+            &lt;/Viewport3D.Camera&gt;
+            
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;Model3DGroup&gt;
+                        &lt;!-- ライト --&gt;
+                        &lt;DirectionalLight Color=&quot;White&quot; Direction=&quot;0,-1,-1&quot;/&gt;
+
+                        &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -1,1,0
+                                        1,1,0
+                                        -1,-1,0
+                                        1,-1,0
+                                    &lt;/MeshGeometry3D.Positions&gt;
+                                    
+                                    &lt;!-- テクスチャ --&gt;
+                                    &lt;MeshGeometry3D.TextureCoordinates&gt;
+                                        0,0 1,0 0,1 1,1
+                                    &lt;/MeshGeometry3D.TextureCoordinates&gt;
+                                    
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        0,2,3
+                                        0,3,1
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;DiffuseMaterial&gt;
+<span class="auto-style8">                                    &lt;DiffuseMaterial.Brush&gt;</span>
+<span class="auto-style8">                                        <strong>&lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;</strong></span>
+<span class="auto-style8">                                    &lt;/DiffuseMaterial.Brush&gt;</span>
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        Green
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+        &lt;/Viewport3D&gt;        
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2>
+<a name="2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a></h2>
+<p>
+Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラフィックスを回転させてみます。</p>
+<p>
+[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>[実行結果]<br>連続写真を張ります。わかりますかね？</p>
+<p>
+<img alt="" height="174" src="PasteImage/img2A.jpg" width="237">
+<img alt="" height="175" src="PasteImage/img2B.jpg" width="239"><br>
+<img alt="" height="178" src="PasteImage/img2C.jpg" width="237">
+<img alt="" height="178" src="PasteImage/img2D.gif" width="238"></p>
+
+<p>要点：<br>・回転させるために必要な 修正/追加 の部分を”黄色”でマーキングします。<br>
+・回転は、カメラをＹ軸を中心に回転させることで実現しています。&quot;PersectiveCamera.Transform&quot; で設定しています。<br>
+・回転の動画は、ViewPort3D.Triggers の中で定義しています。Storyboard の定義でアニメーションの内容を具体化します。</p>
+
+["MainWindow.xaml"]&nbsp;<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;_3D_Texture_Image.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:_3D_Texture_Image&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    &lt;Grid&gt;
+
+        &lt;Viewport3D&gt;
+            &lt;!-- カメラ --&gt;
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-3,3,7&quot; LookDirection=&quot;3,-3,-7&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;45&quot;&gt;
+<span class="auto-style8">                    &lt;PerspectiveCamera.Transform&gt;</span>
+<span class="auto-style8">                        &lt;RotateTransform3D&gt;</span>
+<span class="auto-style8">                            &lt;RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                                &lt;AxisAngleRotation3D x:Name=&quot;RotateCamera&quot; Axis=&quot;0,1,0&quot;/&gt;</span>
+<span class="auto-style8">                            &lt;/RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                        &lt;/RotateTransform3D&gt;</span>
+<span class="auto-style8">                    &lt;/PerspectiveCamera.Transform&gt;</span>
+                &lt;/PerspectiveCamera&gt;
+            &lt;/Viewport3D.Camera&gt;
+            
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;Model3DGroup&gt;
+                        &lt;!-- ライト --&gt;
+                        &lt;!--
+                        &lt;DirectionalLight Color=&quot;White&quot; Direction=&quot;0,-1,-1&quot;/&gt;
+                        --&gt;
+                        &lt;AmbientLight Color=&quot;White&quot;/&gt;
+
+                            &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -1,1,0
+                                        1,1,0
+                                        -1,-1,0
+                                        1,-1,0
+                                    &lt;/MeshGeometry3D.Positions&gt;
+                                    
+                                    &lt;!-- テクスチャ --&gt;
+                                    &lt;MeshGeometry3D.TextureCoordinates&gt;
+                                        0,0 1,0 0,1 1,1
+                                    &lt;/MeshGeometry3D.TextureCoordinates&gt;
+                                    
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        0,2,3
+                                        0,3,1
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+
+                                    &lt;!--
+                                    &lt;MeshGeometry3D.Normals&gt;
+                                        0,0,1 0,0,1 0,0,1 0,0,1 0,0,1
+                                    &lt;/MeshGeometry3D.Normals&gt;
+                                    --&gt;
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        &lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        Green
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                            
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+
+<span class="auto-style8">            &lt;Viewport3D.Triggers&gt;</span>
+<span class="auto-style8">                &lt;EventTrigger RoutedEvent=&quot;Viewport3D.Loaded&quot;&gt;</span>
+<span class="auto-style8">                    &lt;BeginStoryboard&gt;</span>
+<span class="auto-style8">                        &lt;Storyboard x:Name=&quot;myStoryboard&quot;&gt;</span>
+<span class="auto-style8">                            &lt;DoubleAnimation Storyboard.TargetName=&quot;RotateCamera&quot; Storyboard.TargetProperty=&quot;Angle&quot;</span>
+<span class="auto-style8">                                RepeatBehavior=&quot;Forever&quot; From=&quot;0&quot; To=&quot;360&quot; Duration=&quot;0:0:10&quot;/&gt;</span>
+<span class="auto-style8">                        &lt;/Storyboard&gt;</span>
+<span class="auto-style8">                    &lt;/BeginStoryboard&gt;</span>
+<span class="auto-style8">                &lt;/EventTrigger&gt;</span>
+<span class="auto-style8">            &lt;/Viewport3D.Triggers&gt;</span>
+        &lt;/Viewport3D&gt;
+        
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+	
+&nbsp;</p>
+<h2>
+	
+<a name="3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a></h2>
+<p>
+	
+画面上に Slider を２つ付けて、これをマウスで操作することで３Ｄグラフィックスを回転制御できるようにします。</p>
+<p>
+[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+	
+[実行結果]</p>
+<p>
+	
+画面上と画面左のスライダーで回転を手動制御します。</p>
+<p>
+	
+<img alt="" src="PasteImage/img13.jpg" class="auto-style9"></p>
+<p>
+	
+&nbsp;</p>
+<p>要点：<br>・手動制御のために修正した部分を”黄色”でマーキングします。<br>
+・&lt;DockPanel&gt;へ変更して、&lt;Slider&gt;を画面の上と左に貼り付けています。<br>
+・AxisAngleRotation3D の axis とスライダーをデータバインディングします。<br>
+・複数の変換を同時に登録するには&lt;Transform3DGroup&gt;を使う必要があります。</p>
+<br>
+[&quot;MainWindow.xaml&quot;]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;_3D_Texture_Image_02.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:_3D_Texture_Image_02&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;&gt;
+    
+    &lt;DockPanel&gt;
+
+<span class="auto-style8">        &lt;!-- 水平スライダー --&gt;</span>
+<span class="auto-style8">        &lt;Slider Name=&quot;slider_holizontal&quot; DockPanel.Dock=&quot;Top&quot; Margin=&quot;35,5,30,5&quot; Maximum=&quot;180&quot; Minimum=&quot;-180&quot;</span>
+<span class="auto-style8">            SmallChange=&quot;1&quot; TickFrequency=&quot;30&quot; TickPlacement=&quot;TopLeft&quot; LargeChange=&quot;30&quot;/&gt;</span>
+<span class="auto-style8">        &lt;!-- 垂直スライダー --&gt;</span>
+<span class="auto-style8">        &lt;Slider x:Name=&quot;slider_vertical&quot; DockPanel.Dock=&quot;Left&quot; Orientation=&quot;Vertical&quot; Margin=&quot;5,0,5,30&quot;</span>
+<span class="auto-style8">            Maximum=&quot;180&quot; Minimum=&quot;-180&quot; SmallChange=&quot;1&quot; TickFrequency=&quot;30&quot; TickPlacement=&quot;TopLeft&quot; LargeChange=&quot;30&quot;/&gt;</span>
+
+        &lt;Viewport3D&gt;
+            &lt;!-- カメラ --&gt;
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-3,3,7&quot; LookDirection=&quot;3,-3,-7&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;45&quot;&gt;
+                    &lt;PerspectiveCamera.Transform&gt;
+<span class="auto-style8">                        &lt;Transform3DGroup&gt;</span>
+<span class="auto-style8">                            &lt;RotateTransform3D&gt;</span>
+<span class="auto-style8">                                &lt;RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                                    &lt;AxisAngleRotation3D Axis=&quot;0,1,0&quot;</span>
+<span class="auto-style8">                                        Angle=&quot;{Binding ElementName=slider_holizontal, Path=Value}&quot;/&gt;</span>
+<span class="auto-style8">                                &lt;/RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                            &lt;/RotateTransform3D&gt;</span>
+<span class="auto-style8">                            </span>
+<span class="auto-style8">                            &lt;RotateTransform3D&gt;</span>
+<span class="auto-style8">                                &lt;RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                                    &lt;AxisAngleRotation3D Axis=&quot;1,0,0&quot;</span>
+<span class="auto-style8">                                        Angle=&quot;{Binding ElementName=slider_vertical, Path=Value}&quot;/&gt;</span>
+<span class="auto-style8">                                &lt;/RotateTransform3D.Rotation&gt;</span>
+<span class="auto-style8">                            &lt;/RotateTransform3D&gt;</span>
+<span class="auto-style8">                        &lt;/Transform3DGroup&gt;</span>
+                    &lt;/PerspectiveCamera.Transform&gt;
+                &lt;/PerspectiveCamera&gt;
+            &lt;/Viewport3D.Camera&gt;
+
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;Model3DGroup&gt;
+                        &lt;!-- ライト --&gt;
+                        &lt;!--
+                        &lt;DirectionalLight Color=&quot;White&quot; Direction=&quot;0,-1,-1&quot;/&gt;
+                        --&gt;
+                        &lt;AmbientLight Color=&quot;White&quot;/&gt;
+
+                        &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        -1,1,0
+                                        1,1,0
+                                        -1,-1,0
+                                        1,-1,0
+                                    &lt;/MeshGeometry3D.Positions&gt;
+
+                                    &lt;!-- テクスチャ --&gt;
+                                    &lt;MeshGeometry3D.TextureCoordinates&gt;
+                                        0,0 1,0 0,1 1,1
+                                    &lt;/MeshGeometry3D.TextureCoordinates&gt;
+
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        0,2,3
+                                        0,3,1
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;!--
+                                &lt;DiffuseMaterial Brush=&quot;Red&quot;/&gt;
+                                --&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        &lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        &lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+        &lt;/Viewport3D&gt;
+
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+	
+&nbsp;</p>
+<h2>
+	
+4.<a name="4._３Ｄグラフィックスをマウスドラッグで操作する"> ３Ｄグラフィックスをマウスドラッグで操作する</a></h2>
+<p>
+	
+「ModelUIElement3D」を使用して、3Dグラフィックスを画面上でマウスドラッグすることで回転操作します。</p>
+<p>
+[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+[実行結果]<br>動かないとよくわからないと思いますが、それでも一応張っておきます。<br>
+「画像をマウスでドラッグして見てください。」のメッセージだけ追加してみました。</p>
+<p>
+	
+<img alt="" src="PasteImage/img3.jpg"></p>
+<p>
+	
+&nbsp;</p>
+<p>
+	
+要点：<br>・マウスの左ボタンダウンは、3D画像上でのみ受け付けます。&lt;ModelUIElement3D ・・・ MouseLeftButtonDown=&quot;ModelUIElement3D_MouseLeftButtonDown&quot;&gt;<br>
+がこれを意味します。<br>・マウスの移動、左ボタンアップは、ウィンドウ全体が受け付けます。<br>&lt;Window ・・・ 
+MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_MouseMove&quot;&gt;<br>
+がこれを意味します。<br>・他、 Mouse.Capture() の命令によりドラッグ中にマウスがウィンドウがいに出た場合の処理も実装しています。</p>
+<p>
+	
+&nbsp;</p>
+["MainWindow.xaml"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;_3D_Texture_Image_03.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:_3D_Texture_Image_03&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;480&quot; Width=&quot;640&quot;
+            <span class="auto-style8">MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_MouseMove&quot;</span> ResizeMode=&quot;NoResize&quot;&gt;
+
+    &lt;DockPanel&gt;
+
+        &lt;TextBlock x:Name=&quot;textBlock&quot; DockPanel.Dock=&quot;Top&quot; Height=&quot;24&quot; TextWrapping=&quot;Wrap&quot;
+            Text=&quot;画像をマウスでドラッグしてみてください。&quot; VerticalAlignment=&quot;Top&quot; FontSize=&quot;16&quot;/&gt;
+
+        &lt;Viewport3D&gt;
+            &lt;!-- カメラ --&gt;
+            &lt;Viewport3D.Camera&gt;
+                &lt;PerspectiveCamera Position=&quot;-3,3,7&quot; LookDirection=&quot;3,-3,-7&quot; UpDirection=&quot;0,1,0&quot; FieldOfView=&quot;45&quot;&gt;
+                    &lt;PerspectiveCamera.Transform&gt;
+                        &lt;Transform3DGroup&gt;
+                            &lt;RotateTransform3D&gt;
+                                &lt;RotateTransform3D.Rotation&gt;
+                                    <span class="auto-style8">&lt;AxisAngleRotation3D x:Name=&quot;vertical_transform&quot; Axis=&quot;0,1,0&quot; Angle=&quot;0&quot;/&gt;</span>
+                                &lt;/RotateTransform3D.Rotation&gt;
+                            &lt;/RotateTransform3D&gt;
+
+                            &lt;RotateTransform3D&gt;
+                                &lt;RotateTransform3D.Rotation&gt;
+                                    <span class="auto-style8">&lt;AxisAngleRotation3D x:Name=&quot;holizontal_transform&quot; Axis=&quot;1,0,0&quot; Angle=&quot;0&quot;/&gt;</span>
+                                &lt;/RotateTransform3D.Rotation&gt;
+                            &lt;/RotateTransform3D&gt;
+                        &lt;/Transform3DGroup&gt;
+                    &lt;/PerspectiveCamera.Transform&gt;
+                &lt;/PerspectiveCamera&gt;
+            &lt;/Viewport3D.Camera&gt;
+
+            &lt;!-- ライト --&gt;
+            &lt;ModelVisual3D&gt;
+                &lt;ModelVisual3D.Content&gt;
+                    &lt;AmbientLight Color=&quot;White&quot;/&gt;
+                &lt;/ModelVisual3D.Content&gt;
+            &lt;/ModelVisual3D&gt;
+
+            &lt;!-- モデル --&gt;
+            &lt;ContainerUIElement3D&gt;
+                <span class="auto-style8">&lt;ModelUIElement3D MouseLeftButtonDown=&quot;ModelUIElement3D_MouseLeftButtonDown&quot;&gt;</span>
+                    &lt;Model3DGroup&gt;
+                        &lt;GeometryModel3D&gt;
+                            &lt;GeometryModel3D.Geometry&gt;
+                                &lt;MeshGeometry3D&gt;
+
+                                    &lt;!-- 頂点 --&gt;
+                                    &lt;MeshGeometry3D.Positions&gt;
+                                        &lt;Point3DCollection&gt;-1,1,0 1,1,0 -1,-1,0 1,-1,0&lt;/Point3DCollection&gt;
+                                    &lt;/MeshGeometry3D.Positions&gt;
+
+                                    &lt;!-- テクスチャ --&gt;
+                                    &lt;MeshGeometry3D.TextureCoordinates&gt;
+                                        &lt;PointCollection&gt;0,0 1,0 0,1 1,1&lt;/PointCollection&gt;
+                                    &lt;/MeshGeometry3D.TextureCoordinates&gt;
+
+                                    &lt;!-- 三角形 --&gt;
+                                    &lt;MeshGeometry3D.TriangleIndices&gt;
+                                        &lt;Int32Collection&gt;0,2,3 0,3,1&lt;/Int32Collection&gt;
+                                    &lt;/MeshGeometry3D.TriangleIndices&gt;
+
+                                &lt;/MeshGeometry3D&gt;
+                            &lt;/GeometryModel3D.Geometry&gt;
+
+                            &lt;!-- マテリアル --&gt;
+                            &lt;GeometryModel3D.Material&gt;
+                                &lt;!--
+                                &lt;DiffuseMaterial Brush=&quot;Red&quot;/&gt;
+                                --&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        &lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.Material&gt;
+                            &lt;GeometryModel3D.BackMaterial&gt;
+                                &lt;DiffuseMaterial&gt;
+                                    &lt;!--
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        Green
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                    --&gt;
+                                    &lt;DiffuseMaterial.Brush&gt;
+                                        &lt;ImageBrush ImageSource=&quot;P1040735.jpg&quot;/&gt;
+                                    &lt;/DiffuseMaterial.Brush&gt;
+                                &lt;/DiffuseMaterial&gt;
+                            &lt;/GeometryModel3D.BackMaterial&gt;
+                        &lt;/GeometryModel3D&gt;
+                    &lt;/Model3DGroup&gt;
+                &lt;/ModelUIElement3D&gt;
+            &lt;/ContainerUIElement3D&gt;
+        &lt;/Viewport3D&gt;
+    &lt;/DockPanel&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+	
+&nbsp;</p>
+<p>
+
+[MainWindow.xaml.cs]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+		<pre class="prettyprint linenums">
+using System.Windows;
+using System.Windows.Input;
+
+namespace _3D_Texture_Image_03
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        private bool _isDrag = false;       // ドラッグ中フラグ true: ドラッグ中、false：ドラッグ中でない
+        private Point _Offset;              // ドラッグ開始時点のマウス座標
+        private double _oldAngleV;          // ドラッグ開始時点の3D画像回転角（垂直）
+        private double _oldAngleH;          // ドラッグ開始時点の3D画像回転角（水平）
+
+
+        private void <span class="auto-style8">ModelUIElement3D_MouseLeftButtonDown</span>(object sender, MouseButtonEventArgs e)
+        {
+            // ドラッグ中にする
+            _isDrag = true;
+
+            // 3D画像の回転角を取得
+            _oldAngleH = holizontal_transform.Angle;
+            _oldAngleV = vertical_transform.Angle;
+
+            // マウスの場所を取得
+            _Offset = e.GetPosition(this);
+
+            // マウスキャプチャーを取得
+            Mouse.Capture(this);
+        }
+
+        private void <span class="auto-style8">Window_MouseLeftButtonUp</span>(object sender, MouseButtonEventArgs e)
+        {
+            // ドラッグ中を解除
+            _isDrag = false;
+
+            // マウスキャプチャーを解放
+            Mouse.Capture(null);
+        }
+
+        private void <span class="auto-style8">Window_MouseMove</span>(object sender, MouseEventArgs e)
+        {
+            // ドラッグ中ならば3D画像を回転
+            if (_isDrag == true)
+            {
+                // マウスの場所を取得
+                Point pt = e.GetPosition(this);
+
+<span class="auto-style8">                // 3D画像の回転角を更新</span>
+<span class="auto-style8">                vertical_transform.Angle = (-pt.X + _Offset.X) / 1.0 + _oldAngleV;</span>
+<span class="auto-style8">                holizontal_transform.Angle = (-pt.Y + _Offset.Y) / 1.0 + _oldAngleH;</span>
+            }
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+</p>
+<p>
+	
+<br>
+</p>
+<h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>
+サンプルプログラムのダウンロードは <a href="PasteImage/PasteImage_sample.zip">こちら</a>。</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>書籍「プログラミングWPF C#編」 第10章 3Dグラフィックス</li>
+	<li>WPFを使ったC#プログラミング：<a href="http://ex.osaka-kyoiku.ac.jp/~fujii/WPF/3D.html" target="_blank">http://ex.osaka-kyoiku.ac.jp/~fujii/WPF/3D.html</a></li>
+	<li>3Dでのイベントの処理のサンプル：<a href="https://msdn.microsoft.com/ja-jp/library/bb913901(v=vs.90).aspx" target="_blank">https://msdn.microsoft.com/ja-jp/library/bb913901(v=vs.90).aspx</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年08月06日 木下英俊</font></p>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Boost のコンパイル、インストール方法</title>
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<link href="../design.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+boost library のコンパイル、インストール方法</h1>
+<p class="auto-style7">
+boost library を、ソース一式取得からコンパイル、インストールする方法をメモします。<br>いずれも Windows 
+環境において確認した方法です。<br>bjam.exe と b2.exe による方法を記載しますが、公式ホームページでは b2.exe 
+により説明が記載されているため、b2.exe でビルドすることをここでは推奨します。</p>
+<h2>
+目次</h2>
+<p>
+<a href="#1._bjam_によるビルド方法">1. bjam.exe によるビルド方法</a><br><a href="#2._b2_によるビルド方法">2. 
+b2.exe によるビルド方法</a></p>
+<p class="auto-style7">
+&nbsp;</p>
+<h2>
+<a name="1._bjam_によるビルド方法">1. bjam.exe によるビルド方法</a></h2>
+<p class="auto-style7">
+確認
+環境：</p>
+<ul>
+	<li>boost library バージョン：1.54.0</li>
+	<li>コンパイラ：VS2012</li>
+</ul>
+<hr>
+<p>以下、boost library をx86,x64 用の２つセットアップする方法として記載します。</p>
+<ol>
+	<li>boost library をサイトからダウンロード <br>最新バージョンは以下からダウンロードできます。<br>
+	<a href="http://www.boost.org/users/download/#live" target="_blank">
+	http://www.boost.org/users/download/#live</a></li>
+	<li>適当な場所に展開（今回は c:\boost\boost_1_54_0 へ展開） </li>
+	<li>VS2012のコマンドプロンプト(32ビット)を開く。 </li>
+	<li>展開先へ移動します。<pre><code>&gt; cd c:\boost\boost_1_54_0</code></pre>
+	</li>
+	<li>以下のコマンドを実行します。<pre><code>&gt; bootstrap.bat</code><code></code></pre>
+&nbsp;これで実行可能ファイルの bjam および b2 が生成されます。<br></li>
+	<li>（以下x86用）</li>
+	<li>以下のコマンドを実行します。&quot;-j 2&quot; は２つのCPUを使ってビルドすることを意味します。<pre><code>&gt; bjam.exe --build-dir=build\<strong>x86</strong> --stagedir=stage\<strong>x86</strong> address-model=<strong>32</strong> &#8211;j 2</code></pre>
+	</li>
+	<li>（以下x64用）</li>
+	<li>以下のコマンドを実行します。&quot;-j 2&quot; は２つのCPUを使ってビルドすることを意味します。<pre><code>&gt; bjam.exe --build-dir=build\<strong>x64</strong> --stagedir=stage\<strong>x64</strong> address-model=<strong>64</strong> &#8211;j 2</code></pre>
+	</li>
+	<li>あとはVS2012でヘッダとライブラリの所在を設定してお終い。</li>
+</ol>
+<p>&nbsp;</p>
+<h2><a name="2._b2_によるビルド方法">2. b2.exe によるビルド方法</a></h2>
+<p>1.47.0 から bjam だけでなく、b2も生成されるようになりました。また公式が bjam から b2 での説明に切り替わっています。<br>
+なので、こちらの b2.exe による方法を使ってビルドするのが正解かもしれません。</p>
+<p class="auto-style7">
+確認
+環境：</p>
+<ul>
+	<li>boost library バージョン：1.66.0, 1.69.0</li>
+	<li>コンパイラ：VS2017 v15.9.4</li>
+</ul>
+<hr>
+<ol>
+	<li>boost library をサイトからダウンロード <br>最新バージョンは以下からダウンロードできます。<br>
+	<a href="http://www.boost.org/users/download/#live" target="_blank">
+	http://www.boost.org/users/download/#live</a></li>
+	<li>適当な場所に展開します。</li>
+	<li>”Developper Command Prompt for VS 20**” を開き、解凍したディレクトリへ移動します。<br>
+	<pre><code>&gt; cd [解凍したディレクトリ]</code></pre>
+	</li>
+	<li>以下のコマンドを実行します。<br>
+	<pre>&gt;<code> bootstrap.bat</code></pre>
+	これで実行可能ファイルの bjam.exe および b2.exe が生成されます。<br></li>
+	<li> 単に何の指定もないビルドでは以下のように指定して b2.exe を実行します。<br>- &quot;-j 8&quot; 
+	は8つのCPUを使ってビルドすることを意味します。<br>- 無指定の場合、32ビット 用にビルドさせます。
+	<pre>&gt;<code> b2.exe install -j 8 --prefix=[インストールしたいディレクトリ]</code></pre>
+	(例) &quot;b2.exe install -j 8 --prefix=c:\boost\boost_1_69_0&quot;<br><br>これでビルドが始まりますので、後はインストール完了を待つだけです。
+	 
+	 
+	<br>
+	 
+	<br>
+	</li>
+	<li> （以下x86用）</li>
+	<li> 以下のコマンドを順に実行し、CRTとのリンク方法を静的リンク(static)と動的リンク(shared)の２種類でビルドします。<br>&quot;-j 
+	8&quot; は8つのCPUを使ってビルドすることを意味します。<br>
+	<pre><code>&gt; b2 toolset=msvc threading=multi variant=debug,release link=<strong>static</strong> runtime-link=<strong>static</strong> address-model=<strong>32</strong> --stagedir=stage/<strong>x86</strong> -j 8
+&gt; b2 toolset=msvc threading=multi variant=debug,release link=<strong>shared</strong> runtime-link=<strong>shared</strong> address-model=<strong>32</strong> --stagedir=stage/<strong>x86</strong> -j 8</code></pre>
+	<br></li>
+	<li> （以下x64用）</li>
+	<li> 
+	以下のコマンドを順に実行し、CRTとのリンク方法を静的リンク(static)と動的リンク(shared)の２種類でビルドします。<br>&quot;-j 8&quot; 
+	は8つのCPUを使ってビルドすることを意味します。<pre><code>&gt; b2 toolset=msvc threading=multi variant=debug,release link=<strong>static</strong> runtime-link=<strong>static</strong> address-model=<strong>64</strong> --stagedir=stage/<strong>x64</strong> -j 8
+&gt; b2 toolset=msvc threading=multi variant=debug,release link=<strong>shared</strong> runtime-link=<strong>shared</strong> address-model=<strong>64</strong> --stagedir=stage/<strong>x64</strong> -j 8</code></pre>
+	</li>
+</ol>
+<p>&nbsp;</p>
+<p>参照URL：<br>
+<a href="https://boostjp.github.io/howtobuild.html" target="_blank">
+Boostライブラリのビルド方法</a><br>
+<a href="https://qiita.com/softgate/items/75f123f01ccdee6d36d0" target="_blank">
+https://qiita.com/softgate/items/75f123f01ccdee6d36d0</a><br><br>
+<a href="https://www.boost.org/" target="_blank">https://www.boost.org/</a><br>
+<a href="https://www.boost.org/users/download/#live" target="_blank">https://www.boost.org/users/download/#live</a><br>
+<a href="https://boostjp.github.io/" target="_blank">https://boostjp.github.io/</a></p>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2013年8月25日 新規作成<br>2018年3月11日 b2.exe 
+の記載を追記<br>2018年12月23日 b2.exe の記述に x86/x64 のビルド方法記述を追記</font></p>
+</body>
+</html>

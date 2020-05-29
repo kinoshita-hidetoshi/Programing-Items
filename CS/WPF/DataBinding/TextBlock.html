@@ -1,0 +1,362 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[WPF] DataBinding - TextBlock</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	border: 1px solid #808080;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+［WPF］TextBlock をデータバインディングする</h1>
+
+<p> TextBlock をデータバインディングする方法について記載します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._基本的な例">1. 基本的な例</a><br>
+<a href="#2._MVVM_(Model-View-ViewModel)_で実装">2. MVVM (Model-View-ViewModel) で実装</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._基本的な例">1. 基本的な例</a></h2>
+<p> [概要]</p>
+<p> まずは基本的な例を記載します。XAML中の TextBlock からデータバインディングする例です。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2019 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home Version 1903</li>
+</ul>
+<p> 
+[静止画例]</p>
+<p> 
+<img alt="" src="TextBlock/img6.jpg"></p>
+<p> 
+[動画例]</p>
+
+<table style="clip: rect(auto, auto, auto, auto);" class="auto-style9">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="TextBlock/TextBlock.mp4">
+				<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p>[プログラムソース &quot;MainWindow.xaml&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;TextBlock.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:TextBlock&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;225.727&quot; Width=&quot;347.545&quot; ResizeMode=&quot;NoResize&quot;&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock x:Name=&quot;TextBlock&quot;  <span class="auto-style8">Text=&quot;{Binding Path=textData.Text, UpdateSourceTrigger=PropertyChanged}&quot;</span> HorizontalAlignment=&quot;Left&quot; Margin=&quot;32,30,0,0&quot; TextWrapping=&quot;Wrap&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;Button x:Name=&quot;btnTextChange1&quot; Content=&quot;&amp;quot;test1&amp;quot;&quot; Margin=&quot;0,31,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Click=&quot;BtnTextChange1_Click&quot;/&gt;
+        &lt;Button x:Name=&quot;btnTextChange2&quot; Content=&quot;&amp;quot;test2&amp;quot;&quot; Margin=&quot;0,69,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Click=&quot;BtnTextChange2_Click&quot;/&gt;
+        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;終了&quot; Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot; Click=&quot;BtnQuit_Click&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p></p>
+<p>[プログラムソース &quot;MainWindow.xaml.cs&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System.Windows;
+<span class="auto-style8">using System.ComponentModel; // INotifyPropertyChanged</span>
+
+namespace TextBlock
+{
+    public partial class MainWindow : Window
+    {
+        private TextData _textData = new TextData();
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+<span class="auto-style8">            DataContext = new</span>
+<span class="auto-style8">            {</span>
+<span class="auto-style8">                textData = _textData,</span>
+<span class="auto-style8">            };</span>
+        }
+
+        private void BtnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void BtnTextChange1_Click(object sender, RoutedEventArgs e)
+        {
+            _textData.Text = "test1";
+        }
+
+        private void BtnTextChange2_Click(object sender, RoutedEventArgs e)
+        {
+            _textData.Text = "test2";
+        }
+    }
+
+    public class TextData : <span class="auto-style8">INotifyPropertyChanged</span>
+    {
+        private string _text = "初期値";
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
+            set
+            {
+                _text = value;
+                <span class="auto-style8">NotifyPropertyChanged</span>("Text");
+            }
+        }
+
+        #region INotifyPropertyChanged
+<span class="auto-style8">        public event PropertyChangedEventHandler PropertyChanged;</span>
+
+<span class="auto-style8">        void NotifyPropertyChanged(string info)</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            if (PropertyChanged != null)</span>
+<span class="auto-style8">            {</span>
+<span class="auto-style8">                PropertyChanged(this, new PropertyChangedEventArgs(info));</span>
+<span class="auto-style8">            }</span>
+<span class="auto-style8">        }</span>
+        #endregion // INotifyPropertyChanged
+    }
+}
+</pre>
+<!-- End for 'google-code-prettify' -->
+<p>
+	
+<br>
+</p>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム <a href="TextBlock/TextBlock_DataBinding.zip">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>
+	<a href="https://www.atmarkit.co.jp/ait/articles/1010/08/news123.html" target="_blank">
+	@IT 連載：WPF入門：第5回　WPFの「データ・バインディング」を理解する</a></li>
+</ul>
+<p>&nbsp;</p>
+<h2><a name="2._MVVM_(Model-View-ViewModel)_で実装">2. MVVM (Model-View-ViewModel) 
+で実装</a></h2>
+<p>同じ内容を今度は MVVM (Model-View-ViewModel) で作成してみます。<br>実行結果は全く同じなので省略。</p>
+<p>[ViewModelBase.cs]</p>
+<p>ViewModel の基本クラス (ViewModelBase) の実装です。</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System.ComponentModel; // INotifyPropertyChanged
+using System.Runtime.CompilerServices; // CallerMemberName: .net Framework 4.5 以降
+
+namespace TextBlockMvvm
+{
+    class ViewModelBase : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+}</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[DelegateCommand.cs]</p>
+<p>DelegateCommand の実装です。</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System;
+using System.Windows.Input; // ICommand
+
+namespace TextBlockMvvm
+{
+    class DelegateCommand : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        private readonly Action _execute;
+        private readonly Func&lt;bool&gt; _canExecute;
+
+        public DelegateCommand(Action execute)
+            : this(execute, () =&gt; true)
+        {
+        }
+
+        public DelegateCommand(Action execute, Func&lt;bool&gt; canExecute)
+        {
+            this._execute = execute;
+            this._canExecute = canExecute;
+        }
+
+        public void Execute(object parameter)
+        {
+            this._execute();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return this._canExecute();
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+}</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[MainWindowViewModel.cs]</p>
+<p>アプリの ViewModel の実装です。</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System.Windows.Input; // ICommand
+
+namespace TextBlockMvvm
+{
+    class MainWindowViewModel : ViewModelBase
+    {
+        private string _text = &quot;初期値&quot;;
+        private MainWindow _mwnd;
+
+        public ICommand QuitCommand { get; private set; }
+        public ICommand ChangeTextType1Command { get; private set; }
+        public ICommand ChangeTextType2Command { get; private set; }
+
+        public string TextSample
+        {
+            set
+            {
+                _text = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return _text;
+            }
+        }
+
+        public MainWindowViewModel() : this(null)
+        { }
+
+        public MainWindowViewModel(MainWindow mwnd)
+        {
+            _mwnd = mwnd;
+            this.QuitCommand = new DelegateCommand(() =&gt; { _mwnd?.Close(); });
+            this.ChangeTextType1Command = new DelegateCommand(() =&gt; { TextSample = &quot;test1&quot;; });
+            this.ChangeTextType2Command = new DelegateCommand(() =&gt; { TextSample = &quot;test2&quot;; });
+        }
+    }
+}</pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>[MainWindow.xaml]</p>
+<p>アプリの View の実装です。<br>こちらでコメントアウトしている DataContext 部分を有効化して 後述の MainWindow() 中の 
+DataContext 部分をコメントアウトしても動作します。<br>ただしこの場合 [終了] ボタンをクリックしてもアプリを終了できなくなります。</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;TextBlockMvvm.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:TextBlockMvvm&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;225.727&quot; Width=&quot;347.545&quot; ResizeMode=&quot;NoResize&quot;&gt;
+    &lt;!--&lt;Window.DataContext&gt;
+        &lt;local:MainWindowViewModel/&gt;
+    &lt;/Window.DataContext&gt;--&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock x:Name=&quot;TextBlock&quot;  Text=&quot;{Binding TextSample, UpdateSourceTrigger=PropertyChanged}&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;32,30,0,0&quot; TextWrapping=&quot;Wrap&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;Button x:Name=&quot;btnTextChange1&quot; Content=&quot;&amp;quot;test1&amp;quot;&quot; Command=&quot;{Binding ChangeTextType1Command}&quot; Margin=&quot;0,31,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;
+        &lt;Button x:Name=&quot;btnTextChange2&quot; Content=&quot;&amp;quot;test2&amp;quot;&quot; Command=&quot;{Binding ChangeTextType2Command}&quot; Margin=&quot;0,69,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;
+        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;終了&quot; Command=&quot;{Binding QuitCommand}&quot;  Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>&nbsp;</p>
+<p>[MainWindow.xaml.cs]</p>
+<p>new MainWindowViewModel() の引数に this を指定しているのは、MainWindowViewModel.cs 中で 
+Close() を実行できるようにするために行っています。</p>
+<!-- End for 'google-code-prettify' -->
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+using System.Windows;
+
+namespace TextBlockMvvm
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = new MainWindowViewModel(this);
+        }
+    }
+}</pre>
+<p>&nbsp;</p>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム <a href="TextBlock/TextBlockMvvm.zip">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>
+	<a href="https://www.atmarkit.co.jp/ait/articles/1010/08/news123.html" target="_blank">
+	@IT 連載：WPF入門：第5回　WPFの「データ・バインディング」を理解する</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p><font face="Meiryo UI">変更履歴： </font></p>
+<ul>
+	<li>2019年07月08日 「2. MVVM(Model-View-ViewModel)で実装」を追加</li>
+	<li><font face="Meiryo UI">2019年07月05日 新規作成、木下英俊 </font></li>
+</ul>
+</body>
+</html>

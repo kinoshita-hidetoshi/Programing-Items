@@ -1,0 +1,178 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[Win32] Semaphore</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+[win32] Semaphore</h1>
+
+<p> Windows の win32 における代表的な同期処理には以下の３つの手法があります。<br>ここでは下記から「3. 
+Semaphore」について記載します。</p>
+<ol>
+	<li>Critical Section<ul>
+		<li>1つのプロセスの中で複数のスレッド間の相互排他性を実現するために使われる。</li>
+		<li>カーネルオブジェクトの中ではなくローカルオブジェクトである。</li>
+		<li>高速で効率が良い。</li>
+		<li>欠点： スレッドによって放棄されたかどうかを判定することができない。例えば、クリティカルセクション中のスレッドが 
+		CriticalSection を開放しないまま異常終了してもOSはクリーンアップしない。これが問題となる場合は後述の Mutex を使用する。</li>
+	</ul>
+	</li>
+	<li>Mutex<ul>
+		<li>異なるプロセスに属するスレッドも含めて、複数のスレッド間の相互排他性を実現するための仕組みである。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有しているスレッドが終了すると ”放棄された” ことを示すエラーを生成する。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>それを所有するスレッドだけが解放できる。 </li>
+	</ul>
+	</li>
+	<li>Semaphore<ul>
+		<li>有限なリソースを追跡管理するために使用する。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有者がいない。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>任意のスレッドから解放できる。</li>
+	</ul>
+	</li>
+</ol>
+<p>&nbsp;</p>
+<h2> 目次</h2>
+<p> 1. ***<br>2. ***<br>3. ***</p>
+<p> &nbsp;</p>
+<h2> 1. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p> &nbsp;</p>
+
+
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<p>&nbsp;</p>
+<h4>
+サンプルプログラム</h4>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>(例) http://www.****.com</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> 2. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<br>
+	
+<br>
+<h4>
+サンプルプログラム</h4>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>(例) http://www.****.com</li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載：</font></p>
+<ul>
+	<li><font face="Meiryo UI">2019年MM月DD日 新規作成、木下英俊<br></font></li>
+</ul>
+</body>
+</html>

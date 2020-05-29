@@ -1,0 +1,164 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>アプリケーションの位置、サイズを保存する</title>
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-right: 2px solid #C0C0C0;
+	border-top-style: solid;
+	border-top-width: 2px;
+	border-bottom: 2px solid #C0C0C0;
+}
+.auto-style9 {
+	background-color: #FFFF00;
+}
+.auto-style10 {
+	border: 2px solid #D5D5D5;
+}
+.auto-style11 {
+	border: 1px solid #D5D5D5;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+アプリケーションの位置、サイズを保存する</h1>
+
+<p> バインディングを使ってWPFアプリケーションの位置、サイズをアプリケーション終了時に保存する方法を示します。<br>様々な方法がりますが、ここでは 
+Properties.Settings.Default により設定を保存する方法を示します。この方法を応用して様々な属性を保存することが簡単にできます。</p>
+<p>開発環境：<br>以下の開発環境で作成します。ただしWPF環境であれば恐らくすべて同じ方法で実現できると思います。</p>
+<ul>
+	<li>Expression Blend 4</li>
+	<li>Visual Studio 2012</li>
+	<li>.NET4</li>
+</ul>
+<p>参考URL：</p>
+<ul>
+	<li>
+	<a href="http://csfun.blog49.fc2.com/blog-entry-102.html" target="_blank">http://csfun.blog49.fc2.com/blog-entry-102.html</a></li>
+</ul>
+<p>目次：<br><a href="#1._新規プロジェクトを作成">1. 新規プロジェクトを作成</a><br><a href="#2._設定_を作成">
+2. 設定作成</a><br><a href="#3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a><br>
+<a href="#4._保存">4. 保存</a></p>
+<p>&nbsp;</p>
+<p><a name="1._新規プロジェクトを作成">1. 新規プロジェクトを作成</a></p>
+<p>新規WPFアプリケーションプロジェクトを作成します。ここでは”SaveWpfAttribute”という名称でプロジェクトを作成しました。<br>最終的に 
+(a)Window位置、(b)Windowサイズ、を保存するので、Windowのプロパティを下記の通りにしておきます。新規プロジェクトを作成したままにしておけば良いはずです。<br>
+あとWindowサイズをとりあえず 320×240 へ変更しておきました。</p>
+<ul>
+	<li>ResizeMode： &quot;CanResize&quot;</li>
+	<li>WindowStartup： &quot;Manual&quot;</li>
+</ul>
+<p>Visual Studio のこのときの画面状態です。<br>
+<img alt="" height="407" src="SaveWpfAttribute/imgC.jpg" width="761"></p>
+<p>XAMLの全コードを以下に記載します。当然ながらすかすかです。<br>
+<img alt="" src="SaveWpfAttribute/img8.jpg"></p>
+<p>&nbsp;</p>
+<p><a name="2._設定_を作成">2. 設定 を作成</a></p>
+<p>Visual Studio でプロジェクトのプロパティを開き、[設定]タブから下記の通り４つの名前を作成します。<br>posX と posY 
+がWindowの位置、width と height がWindowのサイズ情報を扱います。<br>
+スコープは必ず”ユーザ”にします。”アプリケーション”にした場合は設定の保存を行えず、読み取り専用になります。<br>
+<img alt="" src="SaveWpfAttribute/img1B.jpg"></p>
+<p>&nbsp;</p>
+<p><a name="3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a></p>
+<p>XAMLの属性 と 設定 をバインディングします。<br>「xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;」の部分の”<strong>SaveWpfAttribute</strong>”は、プロジェクトの名前空間です。ここはそれぞれのプロジェクトの内容に合わせて変更します。</p>
+<table class="auto-style8" style="width: 100%">
+	<tr>
+		<td>
+		<pre>&lt;Window
+    xmlns=&quot;<a href="http://schemas.microsoft.com/winfx/2006/xaml/presentation">http://schemas.microsoft.com/winfx/2006/xaml/presentation</a>&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    <span class="auto-style9">xmlns:p=&quot;clr-namespace:<strong>SaveWpfAttribute</strong>.Properties&quot;</span>
+    x:Class=&quot;SaveWpfAttribute.MainWindow&quot;
+    x:Name=&quot;Window&quot;
+    Title=&quot;MainWindow&quot;
+    <span class="auto-style9">Width=&quot;{Binding Source={x:Static p:Settings.Default}, Path=width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;</span>
+    <span class="auto-style9">Height=&quot;{Binding Source={x:Static p:Settings.Default}, Path=height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;</span>
+    <span class="auto-style9">Left=&quot;{Binding Source={x:Static p:Settings.Default}, Path=posX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;</span>
+    <span class="auto-style9">Top=&quot;{Binding Source={x:Static p:Settings.Default}, Path=posY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;</span>
+    &gt;
+
+    &lt;Grid x:Name=&quot;LayoutRoot&quot;/&gt;
+
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p><a name="4._保存">4. 保存</a></p>
+<p>プログラムを終了するときに現在の属性を保存します。<br>アプリケーションの Closed イベント発生時に 
+Properties.Setting.Default.Save() を行うことで実施します。保存先は下記の通りです。<br>
+&quot;C:\Users\%USENAME%\AppData\Local\SaveWpfAttribute\・・・\user.config&quot;<br>
+ちなみに今回は実装しませんが、規定値へ強制的に戻すには Properties.Setting.Default.Reset() で行います。</p>
+[MainWindow.xaml]
+<table class="auto-style10" style="width: 100%" title="aaaa">
+	<tr>
+		<td>
+		<pre>&lt;Window
+    xmlns=&quot;<a href="http://schemas.microsoft.com/winfx/2006/xaml/presentation">http://schemas.microsoft.com/winfx/2006/xaml/presentation</a>&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;
+    x:Class=&quot;SaveWpfAttribute.MainWindow&quot;
+    x:Name=&quot;Window&quot;
+    Title=&quot;MainWindow&quot;
+    Width=&quot;{Binding Source={x:Static p:Settings.Default}, Path=width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+    Height=&quot;{Binding Source={x:Static p:Settings.Default}, Path=height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+    Left=&quot;{Binding Source={x:Static p:Settings.Default}, Path=posX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+    Top=&quot;{Binding Source={x:Static p:Settings.Default}, Path=posY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;
+    <span class="auto-style9">Closed=&quot;Window_Closed&quot;</span>
+    &gt;
+
+    &lt;Grid x:Name=&quot;LayoutRoot&quot;/&gt;
+
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+<br>
+[MainWindow.xaml.cs]
+<table class="auto-style11" style="border-width: 2px; border-color: #D5D5D5; width: 100%">
+	<tr>
+		<td>
+		<pre>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace SaveWpfAttribute
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            this.InitializeComponent();
+        }
+
+<span class="auto-style9">        private void Window_Closed(object sender, System.EventArgs e)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">            Properties.Settings.Default.Save();</span>
+<span class="auto-style9">        }</span>
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p>サンプルプログラム：<a href="SaveWpfAttribute/SaveWpfAttribute.zip">ダウンロード</a><br>&nbsp;&nbsp;&nbsp; 
+作成： Visual Studio 2012</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2012年12月23日 木下英俊</font></p>
+</body>
+</html>

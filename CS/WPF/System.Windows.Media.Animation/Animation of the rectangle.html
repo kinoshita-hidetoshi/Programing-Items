@@ -1,0 +1,943 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Rectangle をアニメーションする</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	text-decoration: underline;
+}
+.auto-style9 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
+
+<p> WPF と Blend を使うことで、かっこいいアニメーションを伴うプログラムを比較的楽に実現することができるようになりました。<br>本ページでは、WPFを使ってアニメーションを実現する方法の基本的な手法について記載してみます。</p>
+<h2> 目次</h2>
+<p> <a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a><br>
+<a href="#2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a><br>
+<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a><br>
+<a href="#4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅(Width)と高さ(Height)をアニメーションする － コードビハインド(code-behind)版</a><br>
+<a href="#5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a><br>
+<a href="#6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a><br>
+<a href="#7._Rectangle_の色を変える_">7. Rectangle の色を変える</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></h2>
+<p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
+ここでは画面上のボタンをクリックすると Rectangle の幅を１秒の時間をかけてアニメーションすることを例に記載します。</p>
+<p> [仕様]<br>- ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
+プログラム起動時、Rectangleの幅を100とします。<br>- ボタン［幅を 200 
+にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで200にします。<br>- ボタン［幅を 100 
+にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで100にします。<br>- 
+アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
+<p> <img alt="" src="Animation%20of%20the%20rectangle/img11.jpg">
+<img alt="" src="Animation%20of%20the%20rectangle/img14.jpg"><br>図： (左)起動時および 
+[幅を 100 にする] ボタン押下時、 (右) [幅を 200 にする] ボタン押下時</p>
+<p> &nbsp;</p>
+<table style="border-style: solid; border-color: #808080; width: 300px; clip: rect(auto, auto, auto, auto);">
+	<tr>
+		<td>
+<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangleWidth.mp4">
+<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+</video>
+		</td>
+	</tr>
+</table>
+
+<p> 動画： Rectangle の幅を 100 と 200 に変更するアニメーション処理</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p> [作成手順]</p>
+<p><span class="auto-style8">手順１：</span><br>・新規プロジェクトを作成後、２つのボタンと１つのRectangleを画面上に配置します。<br>
+・ボタンとRectangleに名前を付けて、位置と大きさを整えます。</p>
+<p> <span class="auto-style8">手順２：</span><br>・Blend を使って下記２つのストーリーボードを作成します。<br>&nbsp; 
+今回の内容の場合は 1秒後の状態 のみを定めればよいです。0秒時点の状態は未定義にします。<br>&nbsp; (1) Rectangle の幅を 100 
+にするストーリーボード (x:Key=&quot;ChangeToWidth100&quot;)<br>&nbsp; (2) Rectangle の幅を 200 
+にするストーリーボード (x:Key=&quot;ChangeToWidth200&quot;)</p>
+<p> 
+<img alt="" src="Animation%20of%20the%20rectangle/img1A.jpg" width="1000"></p>
+<p> &nbsp;</p>
+<p> <span class="auto-style8">手順３：</span><br>・作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>&nbsp; 
+下記例では EasingFunction として「Power InOut」を設定しています。</p>
+<p> 
+<img alt="" src="Animation%20of%20the%20rectangle/img1B.jpg" width="1000"></p>
+<p> &nbsp;</p>
+<p> <span class="auto-style8">手順４：</span><br>・2つのボタンにビヘイビアーから &quot;ControlStoryboardAction&quot; をドラッグで設定します。 <br>・各 
+&quot;ControlStoryboardAction&quot; のプロパティ設定にて以下を設定します。<br>&nbsp; (1) EventName: ”Click” 
+を選択します。<br>&nbsp; (2) Storyboard: ボタンクリック時に期待する動作となるストーリーボードを選択します。</p>
+<p> 
+<img alt="" src="Animation%20of%20the%20rectangle/img1C.jpg" width="1000"></p>
+<p>&nbsp;</p>
+<p>これで完成です。コードビハインドによる実装はありません。<br>以上の手順で作成したXAMLを以下に示します。</p>
+[&quot;MainWindow.xaml&quot;]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_02&quot;
+        xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;
+        xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;
+        x:Class=&quot;MoveRectangle_02.MainWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Window.Resources&gt;
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ChangeToWidth100&quot;&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Width)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;100&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ChangeWidthTo200&quot;&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Width)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;200&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+    &lt;/Window.Resources&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Width=&quot;100&quot; Height=&quot;100&quot;  Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot;
+            Margin=&quot;30,30,0,0&quot; Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅を 100 にする&quot; Width=&quot;100&quot; Height=&quot;20&quot;
+            HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;30,215.828,0,0&quot; d:LayoutOverrides=&quot;HorizontalAlignment&quot;&gt;
+            &lt;i:Interaction.Triggers&gt;
+                &lt;i:EventTrigger EventName=&quot;Click&quot;&gt;
+                    <span class="auto-style9">&lt;ei:ControlStoryboardAction Storyboard=&quot;{StaticResource ChangeToWidth100}&quot;/&gt;</span>
+                &lt;/i:EventTrigger&gt;
+            &lt;/i:Interaction.Triggers&gt;
+        &lt;/Button&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅を 200 にする&quot; Width=&quot;100&quot; Height=&quot;20&quot;
+            Margin=&quot;190.662,215.828,0,0&quot; VerticalAlignment=&quot;Top&quot; d:LayoutOverrides=&quot;Width&quot; HorizontalAlignment=&quot;Left&quot;&gt;
+            &lt;i:Interaction.Triggers&gt;
+                &lt;i:EventTrigger EventName=&quot;Click&quot;&gt;
+                    <span class="auto-style9">&lt;ei:ControlStoryboardAction Storyboard=&quot;{StaticResource ChangeWidthTo200}&quot;/&gt;</span>
+                &lt;/i:EventTrigger&gt;
+            &lt;/i:Interaction.Triggers&gt;
+        &lt;/Button&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+	
+<p>&nbsp;</p>
+<h2> <a name="2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></h2>
+<p> [概要]<br>「<a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a>」 
+で作成したXAML版と同じ内容を、今度は コードビハインド(code-behind)による実装で実現してみます。<br><br>
+プロパティの変化先を動的に変化させたい場合はコードビハインドで作成する必要を生じるため、このテクニックを必要とします。<br>
+逆にXAMLで作成できる場合は詳細なプロパティ設定を Blend で行える場面が多いため、楽に確実に実装することができるように感じます。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p> [作成手順]</p>
+<p> <span class="auto-style8">手順１： XAML定義</span><br>
+アニメーションはコードビハインドで作成しますが、基本的な画面まではXAMLで作成します。<br>以下に記載します。</p>
+[&quot;MainWindow.xaml&quot;]<br>
+<pre class="prettyprint linenums"><code>&lt;Window x:Class=&quot;MoveRectangle_03.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_03&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Grid&gt;
+<span class="auto-style9">        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;</span>
+<span class="auto-style9">            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;</span>
+
+<span class="auto-style9">        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅を 100 にする&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,215.828,0,0&quot;</span>
+<span class="auto-style9">            VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;HorizontalAlignment&quot; Height=&quot;20&quot;/&gt;</span>
+
+<span class="auto-style9">        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅を 200 にする&quot; Margin=&quot;190.662,215.828,0,0&quot; VerticalAlignment=&quot;Top&quot;</span>
+<span class="auto-style9">            Width=&quot;100&quot; Height=&quot;20&quot; d:LayoutOverrides=&quot;Width&quot; HorizontalAlignment=&quot;Left&quot;/&gt;</span>
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+
+
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順２： ボタンクリック時のイベントアクションを定義</span><br class="auto-style8">
+下記２つのボタンをクリックしたときのアクションを定義します。<br>- btnToWidth100<br>- btnToWidth200</p>
+<p>
+<img alt="" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
+<p>この状態でのコードの状況を以下に示します。</p>
+<p>[&quot;MainWindow.xaml.cs&quot;]</p>
+<pre class="prettyprint linenums">
+<code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MoveRectangle_03
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+<span class="auto-style9">        private void btnToWidth100_Click(object sender, RoutedEventArgs e)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">        }</span>
+
+<span class="auto-style9">        private void btnToWidth200_Click(object sender, RoutedEventArgs e)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">        }</span>
+    }
+}</code>
+</pre>
+<p>&nbsp;</p>
+<p>このときの XAML は以下の通りです。</p>
+<p>[&quot;MainWindow.xaml&quot;]</p>
+<pre class="prettyprint linenums">
+<code>&lt;Window x:Class=&quot;MoveRectangle_03.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_03&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;
+            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅を 100 にする&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,215.828,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;HorizontalAlignment&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToWidth100_Click&quot;</span>/&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅を 200 にする&quot; Margin=&quot;190.662,215.828,0,0&quot; VerticalAlignment=&quot;Top&quot;
+            Width=&quot;100&quot; Height=&quot;20&quot; d:LayoutOverrides=&quot;Width&quot; HorizontalAlignment=&quot;Left&quot; <span class="auto-style9">Click=&quot;btnToWidth200_Click&quot;</span>/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code>
+</pre>
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順３： アニメーション処理を実装</span><br>コードビハインドによりアニメーション処理を実装します。以下に記載します。</p>
+<pre class="prettyprint linenums">
+<code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+using System.Windows.Media.Animation;
+
+
+namespace MoveRectangle_03
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnToWidth100_Click(object sender, RoutedEventArgs e)
+        {
+<span class="auto-style9">            var storyBoard = new Storyboard();</span>
+
+<span class="auto-style9">            var widthAnimation = new DoubleAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Width,</span>
+<span class="auto-style9">                To = 100,</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+<span class="auto-style9">            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(&quot;Width&quot;));</span>
+
+<span class="auto-style9">            storyBoard.Children.Add(widthAnimation);</span>
+
+<span class="auto-style9">            myRect.BeginStoryboard(storyBoard);</span>
+        }
+
+        private void btnToWidth200_Click(object sender, RoutedEventArgs e)
+        {
+<span class="auto-style9">            var storyBoard = new Storyboard();</span>
+
+<span class="auto-style9">            var widthAnimation = new DoubleAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Width,</span>
+<span class="auto-style9">                To = 200,</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+<span class="auto-style9">            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(&quot;Width&quot;));</span>
+
+<span class="auto-style9">            storyBoard.Children.Add(widthAnimation);</span>
+
+<span class="auto-style9">            myRect.BeginStoryboard(storyBoard);</span>
+        }
+    }
+}</code>
+</pre>
+<br>
+<p></p>
+<h2><a name="3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></h2>
+<p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
+ここでは画面上のボタンをクリックすると Rectangle の幅と高さを１秒の時間をかけてアニメーションすることを例に記載します。<br>
+前章までの内容との違いは、<span class="auto-style8">複数のプロパティを同時にアニメーションする</span>、という部分です。</p>
+<p> [仕様]<br>- ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
+プログラム起動時、Rectangleの幅と高さを100にします。<br>- ボタン［幅と高さを 200 
+にする］をクリックすると、Rectangleの幅と高さを１秒間のアニメーションで200にします。<br>- ボタン［幅と高さを 100 
+にする］をクリックすると、Rectangleの幅と高さを１秒間のアニメーションで100にします。<br>- 
+アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
+<p>[完成イメージ]<br>動作イメージを以下に示します。</p>
+<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_WidthAndHeight.mp4">
+<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+</video>
+
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順１：</span><br>・新規プロジェクトを作成後、２つのボタンと１つのRectangleを画面上に配置します。<br>
+・ボタンとRectangleに名前を付けて、位置と大きさを整えます。</p>
+<p><span class="auto-style8">手順２：</span><br>・Blend を使って下記２つのストーリーボードを作成します。<br>&nbsp; 
+今回は「トリガー」を使ってアニメーションしてみます。<br>&nbsp; ２つのボタンのそれぞれをクリックしたときのストーリーボードを Blend 
+を使って指定します。<br>&nbsp; 
+1秒後の状態 のみを定めて、0秒時点の状態を未定義にします。<br>&nbsp; (1) Rectangle の幅・高さを 100 
+にするストーリーボード (&quot;ChangeTo100&quot;)<br>&nbsp; (2) Rectangle の幅・高さを 200 
+にするストーリーボード (&quot;ChangeTo200&quot;)</p>
+<p>
+<img alt="" src="Animation%20of%20the%20rectangle/img1B1.jpg" height="538" width="1000"></p>
+<p>&nbsp;</p>
+<p> <span class="auto-style8">手順３：</span><br>・作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>&nbsp; 
+Width, Height をそれぞれ設定しても良いですし、２つをまとめて設定することもできます。<br>&nbsp; 
+まとめて設定する場合は、[Shift]を押しながらマウスでクリックすれば複数のプロパティを選択可能です。<br>&nbsp; 
+下記例では EasingFunction として「Power InOut」を、Power(次数)として 2 を、それぞれ設定しています。</p>
+<p>
+<img alt="" height="538" src="Animation%20of%20the%20rectangle/img28.jpg" width="1000"></p>
+<p>以上で完成です。わかってしまえばとても簡単です。</p>
+<p>出来上がった XAML コードは以下の通りです。<br>１つの Storyboard に対して２つの 
+DoubleAnimationUsingKeyFrames が登録されていることがわかります。</p>
+<pre class="prettyprint linenums">
+<code>&lt;Window x:Class=&quot;MoveRectangle_04.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_04&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+<span class="auto-style9">    &lt;Window.Resources&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ChangeTo100&quot;&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Width)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;100&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Height)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;100&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ChangeTo200&quot;&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Width)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;200&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Height)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;200&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">    &lt;/Window.Resources&gt;</span>
+<span class="auto-style9">    &lt;Window.Triggers&gt;</span>
+<span class="auto-style9">        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToWidth100&quot;&gt;</span>
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ChangeTo100_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ChangeTo100}&quot;/&gt;</span>
+<span class="auto-style9">        &lt;/EventTrigger&gt;</span>
+<span class="auto-style9">        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToWidth200&quot;&gt;</span>
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ChangeTo200_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ChangeTo200}&quot;/&gt;</span>
+<span class="auto-style9">        &lt;/EventTrigger&gt;</span>
+<span class="auto-style9">    &lt;/Window.Triggers&gt;</span>
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;
+            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅と高さを 100 にする&quot; Margin=&quot;30,215.828,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅と高さを 200 にする&quot; Margin=&quot;190.662,215.828,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅と高さをアニメーションする － コードビハインド(code-behind)版</a></h2>
+<p> [概要]<br>「<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅と高さをアニメーションする － XAML版</a>」 で作成したXAML版と同じ内容を、今度は コードビハインド(code-behind)による実装で実現してみます。<br><br>
+プロパティの変化先を動的に変化させたい場合はコードビハインドで作成する必要を生じるため、このテクニックを必要とします。<br>
+逆にXAMLで作成できる場合は詳細なプロパティ設定を Blend で行える場面が多いため、楽に確実に実装することができるように感じます。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p> [作成手順]</p>
+<p> <span class="auto-style8">手順１： XAML定義</span><br>
+アニメーションはコードビハインドで作成しますが、基本的な画面まではXAMLで作成します。<br>以下に記載します。</p>
+[&quot;MainWindow.xaml&quot;]<br>
+<pre class="prettyprint linenums"><code>&lt;Window x:Class=&quot;MoveRectangle_03.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_03&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Grid&gt;
+<span class="auto-style9">        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;</span>
+<span class="auto-style9">            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;</span>
+
+<span class="auto-style9">        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅を 100 にする&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,215.828,0,0&quot;</span>
+<span class="auto-style9">            VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;HorizontalAlignment&quot; Height=&quot;20&quot;/&gt;</span>
+
+<span class="auto-style9">        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅を 200 にする&quot; Margin=&quot;190.662,215.828,0,0&quot; VerticalAlignment=&quot;Top&quot;</span>
+<span class="auto-style9">            Width=&quot;100&quot; Height=&quot;20&quot; d:LayoutOverrides=&quot;Width&quot; HorizontalAlignment=&quot;Left&quot;/&gt;</span>
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code></pre>
+
+
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順２： ボタンクリック時のイベントアクションを定義</span><br class="auto-style8">
+下記２つのボタンをクリックしたときのアクションを定義します。<br>- btnToWidth100<br>- btnToWidth200</p>
+<p>
+<img alt="" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
+<p>&nbsp;</p>
+<p>この状態でのコードの状況を以下に示します。</p>
+<p>[&quot;MainWindow.xaml.cs&quot;]</p>
+<pre class="prettyprint linenums">
+<code>using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MoveRectangle_03
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+<span class="auto-style9">        private void btnToWidth100_Click(object sender, RoutedEventArgs e)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">        }</span>
+
+<span class="auto-style9">        private void btnToWidth200_Click(object sender, RoutedEventArgs e)</span>
+<span class="auto-style9">        {</span>
+<span class="auto-style9">        }</span>
+    }
+}</code>
+</pre>
+<p>&nbsp;</p>
+<p>このときの XAML は以下の通りです。</p>
+<p>[&quot;MainWindow.xaml&quot;]</p>
+<pre class="prettyprint linenums">
+<code>&lt;Window x:Class=&quot;MoveRectangle_03.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_03&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;
+            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth100&quot; Content=&quot;幅を 100 にする&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,215.828,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;HorizontalAlignment&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToWidth100_Click&quot;</span>/&gt;
+
+        &lt;Button x:Name=&quot;btnToWidth200&quot; Content=&quot;幅を 200 にする&quot; Margin=&quot;190.662,215.828,0,0&quot; VerticalAlignment=&quot;Top&quot;
+            Width=&quot;100&quot; Height=&quot;20&quot; d:LayoutOverrides=&quot;Width&quot; HorizontalAlignment=&quot;Left&quot; <span class="auto-style9">Click=&quot;btnToWidth200_Click&quot;</span>/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</code>
+</pre>
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順３： アニメーション処理を実装</span><br>コードビハインドによりアニメーション処理を実装します。以下に記載します。<br>
+Height 用のアニメーション指示を追加してStoryboardに追加する、というような実装になります。</p>
+<pre class="prettyprint linenums"><code>using System;
+using System.Windows;
+using System.Windows.Media.Animation;   // Storyboard, DoubleAnimation, PowerEase, EasingMode
+
+namespace MoveRectangle_05
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnToWidth100_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(&quot;[btnToWidth100_Click]&quot;);
+
+            var storyBoard = new Storyboard();
+
+            var widthAnimation = new DoubleAnimation
+            {
+                From = myRect.Width,
+                To = 100,
+                Duration = TimeSpan.FromSeconds(1.0),
+                EasingFunction = new PowerEase
+                {
+                    EasingMode = EasingMode.EaseInOut
+                }
+            };
+<span class="auto-style9">            var heightAnimation = new DoubleAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Height,</span>
+<span class="auto-style9">                To = 100,</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(&quot;Width&quot;));
+<span class="auto-style9">            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(&quot;Height&quot;));</span>
+
+            storyBoard.Children.Add(widthAnimation);
+<span class="auto-style9">            storyBoard.Children.Add(heightAnimation);</span>
+
+            myRect.BeginStoryboard(storyBoard);
+        }
+
+        private void btnToWidth200_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(&quot;[btnToWidth200_Click]&quot;);
+
+            var storyBoard = new Storyboard();
+
+            var widthAnimation = new DoubleAnimation
+            {
+                From = myRect.Width,
+                To = 200,
+                Duration = TimeSpan.FromSeconds(1.0),
+                EasingFunction = new PowerEase
+                {
+                    EasingMode = EasingMode.EaseInOut
+                }
+            };
+<span class="auto-style9">            var heightAnimation = new DoubleAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Height,</span>
+<span class="auto-style9">                To = 200,</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+
+            Storyboard.SetTargetProperty(widthAnimation, new PropertyPath(&quot;Width&quot;));
+<span class="auto-style9">            Storyboard.SetTargetProperty(heightAnimation, new PropertyPath(&quot;Height&quot;));</span>
+
+            storyBoard.Children.Add(widthAnimation);
+<span class="auto-style9">            storyBoard.Children.Add(heightAnimation);</span>
+
+            myRect.BeginStoryboard(storyBoard);
+        }
+    }
+}</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a></h2>
+<p> [概要]<br>「<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅と高さをアニメーションする － XAML版</a>」 で作成したXAML版と同じ内容を元に、イベントトリガーで実現していた部分だけをコードビハインドで実現します。コードビハインドでは、XAMLで定義したStoryboardを指定して実行します。<br>
+Blendを使うとタイムライン機能でエディットできるのがメリットですよね。EventTriggerを使うと条件ごとに分岐できないのがデメリット。<br>だからStoryboardはBlendで作っておいて、必要に応じてコードビハインドで分岐して実行するStoryboardを選ぶ、っている選択肢はありかな、と思います。</p>
+<p> 以下では記載を省略、コード部分のみを記載します。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>&nbsp;</p>
+<pre class="prettyprint linenums">
+<code>using System.Windows;
+using System.Windows.Media.Animation;
+
+namespace MoveRectangle_06
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnToWidth100_Click(object sender, RoutedEventArgs e)
+        {
+            <span class="auto-style9">(this.Resources[&quot;ChangeTo100&quot;] as Storyboard).Begin();</span>
+        }
+
+        private void btnToWidth200_Click(object sender, RoutedEventArgs e)
+        {
+            <span class="auto-style9">(this.Resources[&quot;ChangeTo200&quot;] as Storyboard).Begin();</span>
+        }
+    }
+}</code>
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a></h2>
+<p> [概要]</p>
+<p> 四角形の移動をアニメーションで実現します。<br>四角形の Margin プロパティを操作することで実現します。<br>以下で示すプログラムでは、XAMLでEventTriggerによる実装と、コードビハインドでの実装を、まとめて提示します。</p>
+<p> [環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRecangle_Margin.mp4">
+<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+</video><p>[MainWindow.xaml]</p>
+&nbsp;
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;MoveRectangle_07.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_07&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;300&quot; Width=&quot;400&quot;&gt;
+    &lt;Window.Resources&gt;
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ToPos1&quot;&gt;</span>
+<span class="auto-style9">            &lt;ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Margin)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingThicknessKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;30,30,0,0&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingThicknessKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingThicknessKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingThicknessKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/ThicknessAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ToPos2&quot;&gt;</span>
+<span class="auto-style9">            &lt;ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(FrameworkElement.Margin)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingThicknessKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;200,70,0,0&quot;&gt;</span>
+<span class="auto-style9">                    &lt;EasingThicknessKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode=&quot;EaseInOut&quot;/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingThicknessKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingThicknessKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/ThicknessAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+    &lt;/Window.Resources&gt;
+    &lt;Window.Triggers&gt;
+<span class="auto-style9">        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToPos1_xaml&quot;&gt;</span>
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ToPos1_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ToPos1}&quot;/&gt;</span>
+<span class="auto-style9">        &lt;/EventTrigger&gt;</span>
+<span class="auto-style9">        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToPos2_xaml&quot;&gt;</span>
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ToPos2_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ToPos2}&quot;/&gt;</span>
+<span class="auto-style9">        &lt;/EventTrigger&gt;</span>
+    &lt;/Window.Triggers&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot;
+            Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToPos1_xaml&quot; Content=&quot;位置１へ移動する&quot; Margin=&quot;30,179.858,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToPos2_xaml&quot; Content=&quot;位置２へ移動する&quot; Margin=&quot;198.662,179.858,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToPos1_code&quot; Content=&quot;位置１へ移動する&quot; Margin=&quot;30,235.818,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToPos1_code_Click&quot;</span>/&gt;
+        &lt;Button x:Name=&quot;btnToPos2_code&quot; Content=&quot;位置２へ移動する&quot; Margin=&quot;198.662,235.818,0,0&quot;
+            VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToPos2_code_Click&quot;</span>/&gt;
+        &lt;Label Content=&quot;XAML&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,0,0,89.142&quot; VerticalAlignment=&quot;Bottom&quot;/&gt;
+        &lt;Label Content=&quot;Code behind&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,0,0,33.182&quot; VerticalAlignment=&quot;Bottom&quot;/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>&nbsp;</p>
+<p>[MainWindow.xaml.cs]</p>
+<pre class="prettyprint linenums">
+using System;
+using System.Windows;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+
+namespace MoveRectangle_07
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnToPos1_code_Click(object sender, RoutedEventArgs e)
+        {
+<span class="auto-style9">            var animation = new ThicknessAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Margin,</span>
+<span class="auto-style9">                To = new Thickness(30, 30, 0, 0),</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+
+<span class="auto-style9">            myRect.BeginAnimation(Rectangle.MarginProperty, animation);</span>
+        }
+
+        private void btnToPos2_code_Click(object sender, RoutedEventArgs e)
+        {
+<span class="auto-style9">            var animation = new ThicknessAnimation</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                From = myRect.Margin,</span>
+<span class="auto-style9">                To = new Thickness(200, 70, 0, 0),</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1.0),</span>
+<span class="auto-style9">                EasingFunction = new PowerEase</span>
+<span class="auto-style9">                {</span>
+<span class="auto-style9">                    EasingMode = EasingMode.EaseInOut</span>
+<span class="auto-style9">                }</span>
+<span class="auto-style9">            };</span>
+
+<span class="auto-style9">            myRect.BeginAnimation(Rectangle.MarginProperty, animation);</span>
+        }
+    }
+}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="7._Rectangle_の色を変える_">7. Rectangle の色を変える</a></h2>
+<p> [概要]</p>
+<p> 四角形の色を変えるアニメーションを実現します。<br>ColorAnimationUsingKeyFrames 
+を使って実現します。<br>以下で示すプログラムでは、XAMLでEventTriggerによる実装と、コードビハインドでの実装を、まとめて提示します。</p>
+<p> [環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>&nbsp;</p>
+<p>
+<img alt="" src="Animation%20of%20the%20rectangle/img2.jpg"></p>
+<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_Color.mp4">
+<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
+</video>
+<p>&nbsp;</p>
+<p>[MainWindow.xaml]</p>
+<pre class="prettyprint linenums"><code>&lt;Window x:Class=&quot;MoveRectangle_08.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MoveRectangle_08&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;301&quot; Width=&quot;400&quot; ResizeMode=&quot;NoResize&quot;&gt;
+    &lt;Window.Resources&gt;
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ToColor1&quot;&gt;</span>
+<span class="auto-style9">            &lt;ColorAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(Shape.Fill).(SolidColorBrush.Color)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingColorKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;#FFF0F0FF&quot;/&gt;</span>
+<span class="auto-style9">            &lt;/ColorAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key=&quot;ToColor2&quot;&gt;</span>
+<span class="auto-style9">            &lt;ColorAnimationUsingKeyFrames Storyboard.TargetProperty=&quot;(Shape.Fill).(SolidColorBrush.Color)&quot; Storyboard.TargetName=&quot;myRect&quot;&gt;</span>
+<span class="auto-style9">                &lt;EasingColorKeyFrame KeyTime=&quot;0:0:1&quot; Value=&quot;#FF8080FF&quot;/&gt;</span>
+<span class="auto-style9">            &lt;/ColorAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+    &lt;/Window.Resources&gt;
+    &lt;Window.Triggers&gt;
+        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToColor1_xaml&quot;&gt;
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ToColor1_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ToColor1}&quot;/&gt;</span>
+        &lt;/EventTrigger&gt;
+        &lt;EventTrigger RoutedEvent=&quot;ButtonBase.Click&quot; SourceName=&quot;btnToColor2_xaml&quot;&gt;
+<span class="auto-style9">            &lt;BeginStoryboard x:Name=&quot;ToColor2_BeginStoryboard&quot; Storyboard=&quot;{StaticResource ToColor2}&quot;/&gt;</span>
+        &lt;/EventTrigger&gt;
+    &lt;/Window.Triggers&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name=&quot;myRect&quot; Fill=&quot;#FFF4F4F5&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;100&quot; Margin=&quot;30,30,0,0&quot; Stroke=&quot;Black&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;100&quot; d:LayoutOverrides=&quot;VerticalAlignment&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToColor1_xaml&quot; Content=&quot;色１ へ変更&quot; Margin=&quot;30,175.162,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToColor2_xaml&quot; Content=&quot;色２ へ変更&quot; Margin=&quot;193.662,175.162,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot;/&gt;
+        &lt;Label Content=&quot;XAML&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,149.202,0,0&quot; RenderTransformOrigin=&quot;0.404,-0.239&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;Label Content=&quot;Code behind&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;30,201.374,0,0&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;Button x:Name=&quot;btnToColor1_code&quot; Content=&quot;色１ へ変更&quot; Margin=&quot;30,227.334,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToColor1_code_Click&quot;</span>/&gt;
+        &lt;Button x:Name=&quot;btnToColor2_code&quot; Content=&quot;色２ へ変更&quot; Margin=&quot;193.662,227.334,0,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Left&quot; Width=&quot;130&quot; Height=&quot;20&quot; <span class="auto-style9">Click=&quot;btnToColor2_code_Click&quot;</span>/&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</code></pre>
+<p>&nbsp;</p>
+
+
+	
+<p>[MainWindow.xaml.cs]</p>
+<pre class="prettyprint linenums"><code>using System;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+
+namespace MoveRectangle_08
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void btnToColor1_code_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(&quot;[btnToColor1_code_Click]&quot;);
+
+<span class="auto-style9">            var storyBoard = new Storyboard();</span>
+
+<span class="auto-style9">            // 参照元  https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/graphics-multimedia/how-to-animate-color-by-using-key-frames</span>
+<span class="auto-style9">            var colorAnimation = new ColorAnimationUsingKeyFrames</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1)             </span>
+<span class="auto-style9">            };</span>
+
+<span class="auto-style9">            colorAnimation.KeyFrames.Add(</span>
+<span class="auto-style9">                new LinearColorKeyFrame(</span>
+<span class="auto-style9">                    Color.FromRgb(0xf0, 0xf0, 0xff),</span>
+<span class="auto-style9">                    KeyTime.FromTimeSpan(TimeSpan.FromSeconds(1))</span>
+<span class="auto-style9">                )</span>
+<span class="auto-style9">            );</span>
+
+<span class="auto-style9">            Storyboard.SetTargetProperty(colorAnimation, new PropertyPath(&quot;(Shape.Fill).(SolidColorBrush.Color)&quot;));</span>
+<span class="auto-style9">            storyBoard.Children.Add(colorAnimation);</span>
+
+<span class="auto-style9">            myRect.BeginStoryboard(storyBoard);</span>
+        }
+
+        private void btnToColor2_code_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine(&quot;[btnToColor2_code_Click]&quot;);
+
+<span class="auto-style9">            var storyBoard = new Storyboard();</span>
+
+<span class="auto-style9">            // 参照元  https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/graphics-multimedia/how-to-animate-color-by-using-key-frames</span>
+<span class="auto-style9">            var colorAnimation = new ColorAnimationUsingKeyFrames</span>
+<span class="auto-style9">            {</span>
+<span class="auto-style9">                Duration = TimeSpan.FromSeconds(1)</span>
+<span class="auto-style9">            };</span>
+
+<span class="auto-style9">            colorAnimation.KeyFrames.Add(</span>
+<span class="auto-style9">                new LinearColorKeyFrame(</span>
+<span class="auto-style9">                    Color.FromRgb(0x80, 0x80, 0xff),</span>
+<span class="auto-style9">                    KeyTime.FromTimeSpan(TimeSpan.FromSeconds(1))</span>
+<span class="auto-style9">                )</span>
+<span class="auto-style9">            );</span>
+
+<span class="auto-style9">            Storyboard.SetTargetProperty(colorAnimation, new PropertyPath(&quot;(Shape.Fill).(SolidColorBrush.Color)&quot;));</span>
+<span class="auto-style9">            storyBoard.Children.Add(colorAnimation);</span>
+
+<span class="auto-style9">            myRect.BeginStoryboard(storyBoard);</span>
+        }
+    }
+}</code></pre>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>
+	<a href="https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/graphics-multimedia/key-frame-animations-overview" target="_parent">
+	キーフレームアニメーションの概要</a></li>
+	<li>
+	<a href="https://docs.microsoft.com/en-us/dotnet/framework/wpf/graphics-multimedia/how-to-animate-color-by-using-key-frames" target="_blank">How to: Animate Color by Using Key Frames</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">変更履歴<br>2018年04月07日 4～7章を追加<br>2018年03月11日 
+「3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版」 を追加<br>2018年02月24日 新規作成<br>記載： 木下英俊</font></p>
+</body>
+</html>

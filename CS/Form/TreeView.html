@@ -1,0 +1,112 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Form - TreeView コントロール</title>
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	font-size: small;
+	border: medium solid #000000;
+}
+.auto-style9 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+Form : TreeView コントロール</h1>
+<h2>
+内容一覧：</h2>
+<p>
+&nbsp;</p>
+<h2>
+<a name="1._Simple_TreeView">1. Simple TreeView</a></h2>
+<table class="auto-style8" style="border: thin solid #C0C0C0; width: 569px">
+	<tr>
+		<td>評価環境：<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Windows8 64bit<br>&nbsp;&nbsp;&nbsp; コンパイラ：&nbsp;&nbsp; Visual Studio 2012 
+Update2、 C#、 .NET 4</td>
+	</tr>
+</table>
+<p class="auto-style7">
+最初にシンプルなTreeViewアプリを作成します。<br>Formアプリケーションとして新規にプロジェクトを作成し、画面上に TreeView 
+をドロップ（？ドラック）します。<br>で、適当にNodeを編集して以下のように作成。</p>
+<p class="auto-style7">
+<img alt="" src="TreeView/img2A.jpg"></p>
+<p class="auto-style7">
+これを[F5]実行すると数の通り。</p>
+<p class="auto-style7">
+<img alt="" src="TreeView/img2B.gif"></p>
+<p class="auto-style7">
+んー、プログラム起動時点からTreeViewをすべて開いてほしいので、プログラム起動時に treeview1.ExpandAll() を追加。</p>
+
+<table style="border: medium double #C0C0C0; width: 800px;">
+	<tr>
+		<td>
+		<pre><code>using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace test_TreeView1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+
+            <span class="auto-style9">treeView1.ExpandAll();</span>
+        }
+    }
+}</code></pre>
+		</td>
+	</tr>
+</table>
+
+<p>[F5]実行するとこんな感じ。<br><img alt="" src="TreeView/img2E.gif"></p>
+<p>&nbsp;</p>
+<h2>
+2. アイコン付き TreeView</h2>
+<table class="auto-style8" style="border: thin solid #C0C0C0; width: 569px">
+	<tr>
+		<td>評価環境：<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Windows8 64bit<br>&nbsp;&nbsp;&nbsp; コンパイラ：&nbsp;&nbsp; Visual Studio 2012 
+Update2、 C#、 .NET 4</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>
+3. CheckBox 付き TreeView</h2>
+<p>
+3-1.</p>
+<p class="auto-style7">
+参考URL：<br><a href="http://clikington-saito.com/CheckedTreeView/TreeView.html">
+http://clikington-saito.com/CheckedTreeView/TreeView.html</a></p>
+<p class="auto-style7">
+&nbsp;</p>
+<p class="auto-style7">
+3-2. 3ステート CheckBox</p>
+<p class="auto-style7">
+&nbsp;</p>
+<h2>
+4. TreeViewのノードのテキストをユーザーが編集できるようにする</h2>
+<p class="auto-style7">
+参考URL：<br><a href="http://dobon.net/vb/dotnet/control/tvlabeledit.html">
+http://dobon.net/vb/dotnet/control/tvlabeledit.html</a>&nbsp;</p>
+<p class="auto-style7">
+&nbsp;</p>
+
+<hr>
+<p> <font face="Meiryo UI">記載： 2013年05月06日 木下英俊</font></p>
+</body>
+</html>

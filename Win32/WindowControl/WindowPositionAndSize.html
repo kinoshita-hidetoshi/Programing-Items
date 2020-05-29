@@ -1,0 +1,216 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[Win32] ウィンドウ位置の取得方法</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+［Win32］ウィンドウの位置とサイズの取得方法</h1>
+
+<p> ウィンドウの位置とサイズの取得方法について記載します。<br>Windows Vista 
+以降のエアロ環境で動作する場合、正しく実装しないと誤差を生じるので注意が必要です。</p>
+<h2> 目次</h2>
+<p> <a href="#1._GetWindowRect_による方法">1. GetWindowRect による方法</a><br>
+<a href="#2._DwmGetWindowAttribute_による方法">2. DwmGetWindowAttribute による方法</a><br>
+<a href="#3._テストプログラム">3. テストプログラム</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._GetWindowRect_による方法">1. GetWindowRect による方法</a></h2>
+<p> Window95以降で使用可能な伝統的手法です。</p>
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+RECT    rect;
+BOOL    result;
+
+result = GetWindowRect( hWnd, &amp;rect);</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>上記処理で RECT 情報を取得することで、ウィンドウの位置およびサイズを以下のように確認できます。</p>
+<p>LEFT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rect.left<br>TOP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+rect.top<br>WIDTH:&nbsp;&nbsp;&nbsp;&nbsp; rect.right - rect.left<br>HEIGHT:&nbsp;&nbsp;&nbsp; 
+rect.bottom - rect.top</p>
+<p>&nbsp;</p>
+<h2><a name="2._DwmGetWindowAttribute_による方法">2. DwmGetWindowAttribute による方法</a></h2>
+<p>Windows Vista 以降で採用されたエアロ環境（ウィンドウマネージャ― DWM を動作している環境）では、前述の GetWindowRect 
+で取得した情報は実際のウィンドウ位置およびサイズと差異が生じます。特に Windows10環境では誤差が大きくなるため注意が必要です。<br>エアロ環境で正しくウィンドウ位置およびサイズを取得するためには、 API 
+DwmGetWindowAttribute を &quot;DWMWA_EXTENDED_FRAME_BOUNDS&quot; の属性を使って情報を取得する必要があります。</p>
+<p>注意：<br>・DwmGetWindowAttribute は Vista 以降のみサポートのAPIです。<br>・Vista/7 
+ではエアロをON/OFFできます。エアロのON/OFFをチェックして、エアロがONのときのみ DwmGetWindowAttribute 
+を使用する必要があります。OFFの時は従来のウィンドウサイズ取得を使用します。これをしないとまた誤差を生じます。<br>・Form 
+にて使用する場合、ウィンドウの Load イベント中で DwmGetWindowAttribute 
+を使用したら正しく値を取得できませんでした。ウィンドウの起動完了から一定の時間が経過した後に情報を取得する必要がある可能性があります。</p>
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+RECT    rect;
+HRESULT hResult;
+BOOL    bResult;
+BOOL    bDwmEnable;
+
+hResult = DwmIsCompositionEnable( &amp;bDwmEnable );
+if ( S_OK == hResult ){
+    if ( bDwmEnable ){
+        // エアロ環境
+        hResult = <span class="auto-style8">DwmGetWindowAttribute</span>( hWnd, <span class="auto-style8">DWMWA_EXTENDED_FRAME_BOUNDS</span>, &amp;rect, sizeof(rect));
+    }
+    else{
+        // 非エアロ環境
+        bResult = GetWindowRect( hWnd, &amp;rect);        
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>上記処理で RECT 情報を取得することで、ウィンドウの位置およびサイズを以下のように確認できます。</p>
+<p>LEFT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rect.left<br>TOP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+rect.top<br>WIDTH:&nbsp;&nbsp;&nbsp;&nbsp; rect.right - rect.left<br>HEIGHT:&nbsp;&nbsp;&nbsp; 
+rect.bottom - rect.top</p>
+	
+<p>&nbsp;</p>
+<h2><a name="3._テストプログラム">3. テストプログラム</a></h2>
+<p>Windows10 環境にて、GetWindowRect と DwmGetWindowAttribute で得られる情報の差異を実際に確認してみます。<br>
+シンプルに Win32 のプロジェクトとして作成してみます。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>
+[実行結果]</p>
+<p>
+実行結果は下図の通りです。<br>”DwmGetWindowAttribute” で取得した値が正しい情報です。<br>左右でそれぞれ 7画素、下に 
+7画素、誤差があることがわかります。</p>
+<p><img alt="" src="WindowPositionAndSize/img1D.gif"></p>
+<p>&nbsp;</p>
+<p>[プログラムソース]<br>プロシージャコールを抜粋で記載します。<br>全体については、サンプルダウンロードから取得して確認してください。</p>
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_MOVE:
+        InvalidateRect(hWnd, NULL, FALSE);
+        break;
+
+    case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &amp;ps);
+            RECT    rect1;
+            RECT    rect2;
+            BOOL    result1;
+            HRESULT result2;
+
+            // TODO: HDC を使用する描画コードをここに追加してください...
+
+            // ウィンドウサイズを取得
+            {
+                // GetWindowRect で取得
+                {
+                    result1 = <span class="auto-style8">GetWindowRect</span>(hWnd, &amp;rect1);
+                }
+
+                // DwmGetWindowAttribute で取得
+                {
+                    BOOL    bDwmEnable;
+
+                    result2 = <span class="auto-style8">DwmIsCompositionEnabled</span>(&amp;bDwmEnable);
+                    if (S_OK == result2) {
+                        if (bDwmEnable) {
+                            <span class="auto-style8">DwmGetWindowAttribute</span>( hWnd, DWMWA_EXTENDED_FRAME_BOUNDS, &amp;rect2, sizeof(rect2));
+                        }
+                    }
+                }
+            }
+
+            // 画面にウィンドウサイズを書く
+            {
+                TCHAR str[256];
+                TCHAR* title1 = _T(&quot;[GetWindowRect]&quot;);
+                TCHAR* title2 = _T(&quot;[DwmGetWindowAttribute]&quot;);
+
+                if (TRUE == result1) {
+                    _stprintf_s(str, _T(&quot;left = %d, top = %d, width = %d, height = %d&quot;), 
+                        rect1.left, rect1.top, rect1.right - rect1.left, rect1.bottom - rect1.top);
+                    TextOut(hdc, 10, 10, title1, _tcslen(title1));
+                    TextOut(hdc, 10, 30, str, _tcslen(str));
+                }
+
+                if (S_OK == result2) {
+                    _stprintf_s(str, _T(&quot;left = %d, top = %d, width = %d, height = %d&quot;),
+                        rect2.left, rect2.top, rect2.right - rect2.left, rect2.bottom - rect1.top);
+                    TextOut(hdc, 10, 60, title2, _tcslen(title2));
+                    TextOut(hdc, 10, 80, str, _tcslen(str));
+                }
+            }
+            EndPaint(hWnd, &amp;ps);
+        }
+        break;
+
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム <a href="WindowPositionAndSize/WindowControlSample.zip">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/Cc364769.aspx?f=255&amp;MSPPError=-2147217396" target="_blank">MSDN：GetWindowRect</a></li>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969518(v=vs.85).aspx" target="_blank">MSDN：DwmIsCompositionEnable</a></li>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969515(v=vs.85).aspx" target="_blank">MSDN：DwmGetWindowAttribute</a></li>
+	<li>
+	<a href="https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja" target="_blank">https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja</a></li>
+	<li>
+	<a href="http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border" target="_blank">http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border</a></li>
+	<li><a href="http://m.srad.jp/~shuichi/journal/594973" target="_blank">http://m.srad.jp/~shuichi/journal/594973</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年08月29日 木下英俊<br>
+</font></p>
+</body>
+</html>

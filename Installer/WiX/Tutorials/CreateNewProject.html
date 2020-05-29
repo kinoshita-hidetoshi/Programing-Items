@@ -1,0 +1,173 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>WiX プロジェクトを新規作成する</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+［WiX］WiXプロジェクトを新規作成する</h1>
+
+<p> WiXプロジェクトを新規作成する手順を記載します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._準備">1. 準備</a><br><a href="#2._WiX_プロジェクトを新規作成する">2. 
+WiXプロジェクトを新規作成する</a><br><a href="#2-1._Visual_Studio_「新しいプロジェクトの追加」">2-1. Visual Studio 「新規プロジェクトの追加」</a><br>
+<a href="#2-2._WixEdit_で新規プロジェクトを作成">2-2. WixEdit で新規プロジェクトを作成</a><br>
+<a href="#参考">参考</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._準備">1. 準備</a></h2>
+<p> このホームページでは以下の環境を使用します。</p>
+<p> (1) WiX Toolset</p>
+<p> Visual Studio の「拡張機能と更新プログラム」から「WiX Toolset」を選ぶことでダウンロードできます。<br>
+この文章を記載時点で、バージョンは 3.10.3 です。</p>
+<p> <img alt="" src="CreateNewProject/img4.jpg"></p>
+<p> &nbsp;</p>
+<p> または下記URLから取得可能です。</p>
+<p> 
+<a href="https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE">
+https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE</a></p>
+<p> &nbsp;</p>
+<p> (2) WixEdit</p>
+<p> 以下のホームページから WixEdit を入手します。</p>
+<p> <a href="http://wixedit.sourceforge.net/" target="_blank">
+http://wixedit.sourceforge.net/</a></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="2._WiX_プロジェクトを新規作成する">2. WiX プロジェクトを新規作成する</a></h2>
+<h3> <a name="2-1._Visual_Studio_「新しいプロジェクトの追加」">2-1. Visual Studio 「新しいプロジェクトの追加」</a></h3>
+<p> Visual Studio の「新しいプロジェクトの追加」から「Setup Project」を選ぶことで、WiX プロジェクトを新規作成してみます。</p>
+<p> 下図に従って「Setup Project」を選択後、［OK］をクリックします。</p>
+<p> &nbsp;</p>
+<p> <img alt="" src="CreateNewProject/img9.jpg"></p>
+<p> 生成された *.wxs ファイルは以下の通りです。</p>
+<span class="table_title">[&quot;Product.wxs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
+  &lt;Product Id=&quot;*&quot; Name=&quot;Setup_maze_wix1&quot; Language=&quot;1033&quot; Version=&quot;1.0.0.0&quot; Manufacturer=&quot;&quot; UpgradeCode=&quot;c97ab7e8-20bc-4563-a87e-51e174b02b1f&quot;&gt;
+    &lt;Package InstallerVersion=&quot;200&quot; Compressed=&quot;yes&quot; InstallScope=&quot;perMachine&quot; /&gt;
+
+      &lt;MajorUpgrade DowngradeErrorMessage=&quot;A newer version of [ProductName] is already installed.&quot; /&gt;
+      &lt;MediaTemplate /&gt;
+
+    &lt;Feature Id=&quot;ProductFeature&quot; Title=&quot;Setup_maze_wix1&quot; Level=&quot;1&quot;&gt;
+      &lt;ComponentGroupRef Id=&quot;ProductComponents&quot; /&gt;
+    &lt;/Feature&gt;
+  &lt;/Product&gt;
+
+  &lt;Fragment&gt;
+    &lt;Directory Id=&quot;TARGETDIR&quot; Name=&quot;SourceDir&quot;&gt;
+      &lt;Directory Id=&quot;ProgramFilesFolder&quot;&gt;
+        &lt;Directory Id=&quot;INSTALLFOLDER&quot; Name=&quot;Setup_maze_wix1&quot; /&gt;
+      &lt;/Directory&gt;
+    &lt;/Directory&gt;
+  &lt;/Fragment&gt;
+
+  &lt;Fragment&gt;
+    &lt;ComponentGroup Id=&quot;ProductComponents&quot; Directory=&quot;INSTALLFOLDER&quot;&gt;
+      &lt;!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. --&gt;
+      &lt;!-- &lt;Component Id=&quot;ProductComponent&quot;&gt; --&gt;
+      &lt;!-- TODO: Insert files, registry keys, and other resources here. --&gt;
+      &lt;!-- &lt;/Component&gt; --&gt;
+    &lt;/ComponentGroup&gt;
+  &lt;/Fragment&gt;
+&lt;/Wix&gt;
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+	
+<p> &nbsp;</p>
+<h3> <a name="2-2._WixEdit_で新規プロジェクトを作成">2-2. WixEdit で新規プロジェクトを作成</a> </h3>
+<p> 
+続いてWixEditを使って新規プロジェクトを作成してみます。<br>
+WixEditのウィザードで様々なことができますが、まずはデフォルト状態のプロジェクトを確認してみましょう。</p>
+<p> WixEdit を起動します。</p>
+<p> 
+<img alt="" src="CreateNewProject/imgE.gif"></p>
+<p> File → New を選択します。</p>
+<p> 
+<img alt="" src="CreateNewProject/img10.jpg"></p>
+<p> ［Next］をクリックします。</p>
+<p> 
+<img alt="" src="CreateNewProject/img15.gif"></p>
+<p> 
+<img alt="" src="CreateNewProject/img17.gif"></p>
+<p> ［Next］をクリックします。</p>
+<p> 
+<img alt="" src="CreateNewProject/img19.gif"></p>
+<p> ［Finish］をクリックします。</p>
+<p> 
+<img alt="" src="CreateNewProject/img1B.gif"></p>
+<p> 下図のような画面を表示するので、［Done］をクリック。</p>
+<p> 
+<img alt="" src="CreateNewProject/img1D.jpg"></p>
+<p> 以上の結果で生成された *.wxs ファイルは以下の通りです。</p>
+<span class="table_title">[&quot;Product.wxs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
+    &lt;Product Id=&quot;C07F51BD-C097-42B4-A122-F09C12583A0A&quot; Name=&quot;TestProduct&quot; Language=&quot;1033&quot; Version=&quot;0.0.0.1&quot; Manufacturer=&quot;WixEdit&quot; UpgradeCode=&quot;241A53F5-3107-440C-95A9-37ABA0BBAE00&quot;&gt;
+        &lt;Package Description=&quot;Test file in a Product&quot; Comments=&quot;Simple test&quot; InstallerVersion=&quot;200&quot; Compressed=&quot;yes&quot; /&gt;
+        &lt;Media Id=&quot;1&quot; Cabinet=&quot;simple.cab&quot; EmbedCab=&quot;yes&quot; /&gt;
+        &lt;Directory Id=&quot;TARGETDIR&quot; Name=&quot;SourceDir&quot;&gt;
+            &lt;Directory Id=&quot;ProgramFilesFolder&quot; Name=&quot;PFiles&quot; /&gt;
+        &lt;/Directory&gt;
+        &lt;Feature Id=&quot;DefaultFeature&quot; Title=&quot;Main Feature&quot; Level=&quot;1&quot;&gt;
+        &lt;/Feature&gt;
+        &lt;UI /&gt;
+    &lt;/Product&gt;
+&lt;/Wix&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+	
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考">参考</a></h2>
+<ul>
+	<li>WiX チュートリアル 日本語訳<br>
+	<a href="http://wix-tutorial-ja.github.io/" target="_blank">
+	http://wix-tutorial-ja.github.io/</a></li>
+	<li>WiX Toolset Tutorial<br>
+	<a href="https://www.firegiant.com/wix/tutorial/" target="_blank">
+	https://www.firegiant.com/wix/tutorial/</a></li>
+	<li>WiX Toolset<br>
+	<a href="https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE" target="_blank">
+	https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE</a></li>
+	<li>WixEdit<br><a href="http://wixedit.sourceforge.net/" target="_blank">
+	http://wixedit.sourceforge.net/</a></li>
+	<li>Windows上で WiX および WixEdit を使ったインストーラ作成<br>
+	<a href="http://www.02.246.ne.jp/~torutk/windows/wixandwixedit.html" target="_blank">
+	http://www.02.246.ne.jp/~torutk/windows/wixandwixedit.html</a></li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2016年08月19日 木下英俊<br>
+</font></p>
+</body>
+</html>

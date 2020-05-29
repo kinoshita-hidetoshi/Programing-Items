@@ -1,0 +1,364 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[Win32] Mutex</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+[win32] Mutex</h1>
+
+<p> Windows の win32 における代表的な同期処理には以下の３つの手法があります。<br>ここでは下記から「2. Mutex」について記載します。</p>
+<ol>
+	<li>Critical Section<ul>
+		<li>1つのプロセスの中で複数のスレッド間の相互排他性を実現するために使われる。</li>
+		<li>カーネルオブジェクトの中ではなくローカルオブジェクトである。</li>
+		<li>高速で効率が良い。</li>
+		<li>欠点： スレッドによって放棄されたかどうかを判定することができない。例えば、クリティカルセクション中のスレッドが 
+		CriticalSection を開放しないまま異常終了してもOSはクリーンアップしない。これが問題となる場合は後述の Mutex を使用する。</li>
+	</ul>
+	</li>
+	<li>Mutex<ul>
+		<li>異なるプロセスに属するスレッドも含めて、複数のスレッド間の相互排他性を実現するための仕組みである。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有しているスレッドが終了すると ”放棄された” ことを示すエラーを生成する。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>それを所有するスレッドだけが解放できる。 </li>
+	</ul>
+	</li>
+	<li>Semaphore<ul>
+		<li>有限なリソースを追跡管理するために使用する。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有者がいない。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>任意のスレッドから解放できる。</li>
+	</ul>
+	</li>
+</ol>
+<p>&nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._Mutex_をつかってみる">1. Mutex をつかってみる</a><br>
+<a href="#2._Mutex_を使ってプロセス間の同期を行う">2. Mutex を使ってプロセス間の同期を行う</a><br>3. ***</p>
+<p> &nbsp;</p>
+<h2> <a name="1._Mutex_をつかってみる">1. Mutex をつかってみる</a></h2>
+<p> [概要]</p>
+<p> まずは Mutex を使用するシンプルな例を示します。</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.5 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>最初に、うまく動かない例を示します。そして次に、Mutexを使用することで意図通りに動作する例を示します。</p>
+<p>こちら、BadExample.cpp はうまく動かない例です。<br>4つのスレッドがそれぞれ25,000回のインクリメントをするので、最後に count 
+は100,000になることを期待するプログラムです。しかし同期処理がないために意図する動作をしない、という例です。</p>
+<p>[BadExample.cpp]</p>
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;tchar.h&gt;      // _tmain
+#include &lt;thread&gt;       // std::thread
+
+// グローバル変数
+volatile long           count = 0;
+
+void CountThread(const size_t iterations)
+{
+    int x;
+
+    for (size_t i = 0; i &lt; iterations; ++i)
+    {
+        x = count;
+        // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+//      std::this_thread::yield();      // スレッドの処理明け渡し。c++11。
+        x++;
+        count = x;
+    }
+}
+
+
+int _tmain(int argc, char* argv[])
+{
+    const size_t    numThreads = 4;
+    std::thread     countThreads[numThreads];
+
+    /*========*/
+    /* 処理部 */
+    /*========*/
+    // スレッドを４つ作成
+    for (size_t i = 0; i &lt; numThreads; ++i)
+    {
+        countThreads[i] = std::thread(CountThread, 25000);
+    }
+
+    // ４つのスレッドが終わるのを待つ
+    for (size_t i = 0; i &lt; numThreads; ++i)
+    {
+        countThreads[i].join();
+    }
+
+    // ４つのスレッドが終了したのちの count の値をチェック
+    std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
+    
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    // [Enter]キー 入力待ち
+    {
+        std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
+        int ch = getchar();
+    }
+
+    return EXIT_SUCCESS;
+}</code></pre>
+<p>&nbsp;</p>
+[実行結果]
+<p><img alt="" src="Mutex/img18.jpg"></p>
+<p>期待する 100,000 に対して 65,703 までしかカウントアップできませんでした。これはうまく動作しない例です。<br>この値はプログラムを実行するたびに代わります。</p>
+<p> &nbsp;</p>
+<p> 次に Mutex により同期処理を加えた例を示します。</p>
+<p> &nbsp;</p>
+
+
+<p>[プログラムソース &quot;test_mutex_01.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;tchar.h&gt;      // _tmain
+#include &lt;thread&gt;       // std::thread
+#include &lt;Windows.h&gt;    // HANDLE, CreateMutex, OpenMutex, WaitForSingleObject, ReleaseMutex, CloseHandle,
+
+
+// グローバル変数
+volatile long           count = 0;
+LPCTSTR                 MutexName = _T(&quot;test_mutex&quot;);
+
+
+void CountThread(const size_t iterations)
+{
+    int x;
+    HANDLE      mutex = nullptr;
+
+    mutex = <span class="auto-style8">OpenMutex</span>(MUTEX_ALL_ACCESS, FALSE, MutexName);
+
+    if (mutex != nullptr) {
+        for (size_t i = 0; i &lt; iterations; ++i)
+        {
+            DWORD ret = <span class="auto-style8">WaitForSingleObject</span>(mutex, 500);
+
+            switch (ret) {
+            case WAIT_OBJECT_0:             // シグナル取得
+                x = count;
+                // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+                //std::this_thread::yield();        // スレッドの処理明け渡し。c++11。
+                x++;
+                count = x;
+                break;
+
+            case WAIT_TIMEOUT:              // タイムアウト
+                std::cout &lt;&lt; &quot;WAIT_TIMEOUT happend.&quot; &lt;&lt; std::endl;
+                break;
+
+            case WAIT_ABANDONED:            // 他のオーナースレッド消失
+                std::cout &lt;&lt; &quot;WAIT_ABANDONED happend.&quot; &lt;&lt; std::endl;
+                break;
+
+            case WAIT_FAILED:               // 関数を失敗。原因は GetLastError で取得。
+                std::cout &lt;&lt; &quot;WAIT_FAILED happend.&quot; &lt;&lt; std::endl;
+                std::cout &lt;&lt; &quot;GetLastError() : &quot; &lt;&lt; GetLastError() &lt;&lt; std::endl;
+                break;
+
+            default:                        // タイムアウト、他
+                // タイムアウト、異常発生、など
+                std::cout &lt;&lt; &quot;Any other error happend.&quot; &lt;&lt; std::endl;
+                break;
+            }
+
+            <span class="auto-style8">ReleaseMutex</span>(mutex);
+        }
+    }
+}
+
+
+int _tmain(int argc, char* argv[])
+{
+    const size_t    numThreads = 4;
+    std::thread     countThreads[numThreads];
+
+
+    /*========*/
+    /* 処理部 */
+    /*========*/
+
+    // Mutex を生成
+    HANDLE      mutex = nullptr;
+    mutex = <span class="auto-style8">CreateMutex</span>(0, FALSE, MutexName);
+
+    // スレッドを４つ作成
+    for (size_t i = 0; i &lt; numThreads; ++i)
+    {
+        countThreads[i] = std::thread(CountThread, 25000);
+    }
+
+    // ４つのスレッドが終わるのを待つ
+    for (size_t i = 0; i &lt; numThreads; ++i)
+    {
+        countThreads[i].join();
+    }
+
+    // ４つのスレッドが終了したのちの count の値をチェック
+    std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
+
+    // Mutex を開放
+    if (mutex != nullptr) {
+        if (<span class="auto-style8">CloseHandle</span>(mutex) == TRUE) {
+            mutex = nullptr;
+        }
+    }
+
+
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    // [Enter]キー 入力待ち
+    {
+        std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
+        int ch = getchar();
+    }
+
+    return EXIT_SUCCESS;
+}</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+[実行結果]
+<p>
+<img alt="" src="Mutex/img1F.jpg"></p>
+<p>&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>CreateMutexA<br>
+	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-createmutexa" target="_blank">
+	https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-createmutexa</a></li>
+	<li>CreateMutexW<br>
+	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-createmutexw" target="_blank">
+	https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-createmutexw</a></li>
+	<li>OpenMutexW<br>
+	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-openmutexw" target="_blank">
+	https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-openmutexw</a></li>
+	<li>WaitForSingleObject<br>
+	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject" target="_blank">
+	https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject</a></li>
+	<li>ReleaseMutex<br>
+	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-releasemutex" target="_blank">
+	https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-releasemutex</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> <a name="2._Mutex_を使ってプロセス間の同期を行う">2. Mutex を使ってプロセス間の同期を行う</a></h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<font face="Meiryo UI">
+<p>[評価環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.4.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+</font>
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<br>
+	
+<br>
+<h4>
+サンプルプログラム</h4>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h4>
+参考</h4>
+<ul>
+	<li>(例) http://www.****.com</li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載：</font></p>
+<ul>
+	<li><font face="Meiryo UI">2019年MM月DD日 新規作成、木下英俊<br></font></li>
+</ul>
+</body>
+</html>

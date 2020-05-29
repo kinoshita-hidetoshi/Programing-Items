@@ -1,0 +1,340 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>C# でジョイスティックを使う方法</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+C# でジョイスティックを使う方法</h1>
+
+<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
+<p> ［概要を記載します］</p>
+<h2> 目次</h2>
+<p> <a href="#1._まずは動かしてみる">1. まずは動かしてみる</a><br>2. ***<br>3. ***<br>
+<a href="#参考">参考</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._まずは動かしてみる">1. まずは動かしてみる</a></h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p> 
+<img alt="" src="HowToUseJoystick/img4A.gif"></p>
+<p> &nbsp;</p>
+<p>[&quot;Joystick.cs&quot;]</p>
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
+
+namespace JoyStickController
+{
+    public enum JOYSTICK_ID
+    {
+        JOYSTICKID1 = 0,
+        JOYSTICKID2 = 1,
+        JOYSTICKID3 = 2,
+        JOYSTICKID4 = 3,
+        JOYSTICKID5 = 4,
+        JOYSTICKID6 = 5,
+        JOYSTICKID7 = 6,
+        JOYSTICKID8 = 7,
+        JOYSTICKID9 = 8,
+        JOYSTICKID10 = 9,
+        JOYSTICKID11 = 10,
+        JOYSTICKID12 = 11,
+        JOYSTICKID13 = 12,
+        JOYSTICKID14 = 13,
+        JOYSTICKID15 = 14,
+        JOYSTICKID16 = 15
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+<span class="auto-style8">    public struct JOYINFO</span>
+<span class="auto-style8">    {</span>
+<span class="auto-style8">        public uint dwXpos;</span>
+<span class="auto-style8">        public uint dwYpos;</span>
+<span class="auto-style8">        public uint dwZpos;</span>
+<span class="auto-style8">        public uint dwButtons;</span>
+<span class="auto-style8">    }</span>
+
+    [StructLayout(LayoutKind.Sequential)]
+<span class="auto-style8">    public struct JOYINFOEX</span>
+<span class="auto-style8">    {</span>
+<span class="auto-style8">        public uint dwSize;</span>
+<span class="auto-style8">        public uint dwFlags;</span>
+<span class="auto-style8">        public uint dwXpos;</span>
+<span class="auto-style8">        public uint dwYpos;</span>
+<span class="auto-style8">        public uint dwZpos;</span>
+<span class="auto-style8">        public uint dwRpos;</span>
+<span class="auto-style8">        public uint dwUpos;</span>
+<span class="auto-style8">        public uint dwVpos;</span>
+<span class="auto-style8">        public uint dwButtons;</span>
+<span class="auto-style8">        public uint dwButtonNumber;</span>
+<span class="auto-style8">        public uint dwPOV;</span>
+<span class="auto-style8">        public uint dwReserved1;</span>
+<span class="auto-style8">        public uint dwReserved2;</span>
+<span class="auto-style8">    }</span>
+
+<span class="auto-style8">    public enum MMRESULT : uint</span>
+<span class="auto-style8">    {</span>
+<span class="auto-style8">        JOYERR_NOERROR = 0,</span>
+<span class="auto-style8">        MMSYSERR_NOERROR = 0,</span>
+<span class="auto-style8">        MMSYSERR_ERROR = 1,</span>
+<span class="auto-style8">        MMSYSERR_BADDEVICEID = 2,</span>
+<span class="auto-style8">        MMSYSERR_NOTENABLED = 3,</span>
+<span class="auto-style8">        MMSYSERR_ALLOCATED = 4,</span>
+<span class="auto-style8">        MMSYSERR_INVALHANDLE = 5,</span>
+<span class="auto-style8">        MMSYSERR_NODRIVER = 6,</span>
+<span class="auto-style8">        MMSYSERR_NOMEM = 7,</span>
+<span class="auto-style8">        MMSYSERR_NOTSUPPORTED = 8,</span>
+<span class="auto-style8">        MMSYSERR_BADERRNUM = 9,</span>
+<span class="auto-style8">        MMSYSERR_INVALFLAG = 10,</span>
+<span class="auto-style8">        MMSYSERR_INVALPARAM = 11,</span>
+<span class="auto-style8">        MMSYSERR_HANDLEBUSY = 12,</span>
+<span class="auto-style8">        MMSYSERR_INVALIDALIAS = 13,</span>
+<span class="auto-style8">        MMSYSERR_BADDB = 14,</span>
+<span class="auto-style8">        MMSYSERR_KEYNOTFOUND = 15,</span>
+<span class="auto-style8">        MMSYSERR_READERROR = 16,</span>
+<span class="auto-style8">        MMSYSERR_WRITEERROR = 17,</span>
+<span class="auto-style8">        MMSYSERR_DELETEERROR = 18,</span>
+<span class="auto-style8">        MMSYSERR_VALNOTFOUND = 19,</span>
+<span class="auto-style8">        MMSYSERR_NODRIVERCB = 20,</span>
+<span class="auto-style8">        WAVERR_BADFORMAT = 32,</span>
+<span class="auto-style8">        WAVERR_STILLPLAYING = 33,</span>
+<span class="auto-style8">        WAVERR_UNPREPARED = 34,</span>
+
+<span class="auto-style8">        JOYERR_PARMS = NativeMethods.JOYERR_PARMS,          //!&lt; 165: 指定されたジョイスティックＩＤは無効</span>
+<span class="auto-style8">        JOYERR_UNPLUGGED = NativeMethods.JOYERR_UNPLUGGED   //!&lt; 167: 指定されたジョイスティックが接続されていない</span>
+<span class="auto-style8">    }</span>
+
+    public class JoyStick
+    {
+        private JOYINFO _pji;
+        private JOYINFOEX _pjiex;
+        private MMRESULT _mmresult;
+
+        public JoyStick(JOYSTICK_ID joystick_id)
+        {
+            _pji = new JOYINFO();
+            _pjiex = new JOYINFOEX();
+            JoystickId = joystick_id;
+        }
+
+        public JOYSTICK_ID JoystickId { get; }
+
+<span class="auto-style8">        private MMRESULT GetPos(uint uJoyID, ref JOYINFO pji)</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            return NativeMethods.joyGetPos(uJoyID, ref pji);</span>
+<span class="auto-style8">        }</span>
+
+<span class="auto-style8">        private MMRESULT GetPosEx(uint uJoyID, ref JOYINFOEX pjiex)</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            return NativeMethods.joyGetPosEx(uJoyID, ref pjiex);</span>
+<span class="auto-style8">        }</span>
+
+<span class="auto-style8">        public JOYINFO GetPos()</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            _mmresult = GetPos((uint)JoystickId, ref _pji);</span>
+<span class="auto-style8">            return _pji;</span>
+<span class="auto-style8">        }</span>
+
+<span class="auto-style8">        public JOYINFOEX GetPosEx()</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            _pjiex.dwSize = (uint)Marshal.SizeOf(_pjiex);</span>
+<span class="auto-style8">            _pjiex.dwFlags = NativeMethods.JOY_RETURNALL;</span>
+<span class="auto-style8">            _mmresult = GetPosEx((uint)JoystickId, ref _pjiex);</span>
+<span class="auto-style8">            return _pjiex;</span>
+<span class="auto-style8">        }</span>
+
+<span class="auto-style8">        public static MMRESULT JoyConfigChanged()</span>
+<span class="auto-style8">        {</span>
+<span class="auto-style8">            return NativeMethods.joyConfigChanged(0);</span>
+<span class="auto-style8">        }</span>
+
+        public MMRESULT GetMMRESULT()
+        {
+            return _mmresult;
+        }
+    }
+
+    internal static class NativeMethods
+    {
+#pragma warning disable IDE1006 // 命名スタイル
+<span class="auto-style8">        [DllImport(&quot;winmm.dll&quot;)]</span>
+<span class="auto-style8">        public static extern uint joyGetNumDevs();</span>
+<span class="auto-style8">        [DllImport(&quot;winmm.dll&quot;)]</span>
+<span class="auto-style8">        public static extern MMRESULT joyGetPos(uint uJoyID, ref JOYINFO pji);</span>
+<span class="auto-style8">        [DllImport(&quot;winmm.dll&quot;), System.Security.SuppressUnmanagedCodeSecurity]</span>
+<span class="auto-style8">        public static extern MMRESULT joyGetPosEx(uint uJoyID, ref JOYINFOEX pjiex);</span>
+<span class="auto-style8">        [DllImport(&quot;winmm.dll&quot;)]</span>
+<span class="auto-style8">        public static extern MMRESULT joyConfigChanged(uint dwFlags);</span>
+#pragma warning restore IDE1006 // 命名スタイル
+
+        public static UInt32 JOY_RETURNX = 0x00000001;
+        public static UInt32 JOY_RETURNY = 0x00000002;
+        public static UInt32 JOY_RETURNZ = 0x00000004;
+        public static UInt32 JOY_RETURNR = 0x00000008;
+        public static UInt32 JOY_RETURNU = 0x00000010;
+        public static UInt32 JOY_RETURNV = 0x00000020;
+        public static UInt32 JOY_RETURNPOV = 0x00000040;
+        public static UInt32 JOY_RETURNBUTTONS = 0x00000080;
+        public static UInt32 JOY_RETURNALL = (JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR | JOY_RETURNU | JOY_RETURNV | JOY_RETURNPOV | JOY_RETURNBUTTONS);
+
+        public const int JOYERR_BASE = 160;
+        public const int JOYERR_PARMS = (JOYERR_BASE + 5);              //!&lt; 指定されたジョイスティックＩＤは無効
+        public const int JOYERR_UNPLUGGED = (JOYERR_BASE + 7);          //!&lt; 指定されたジョイスティックが接続されていない
+        public const int MMSYSERR_BASE = 0;
+        public const int MMSYSERR_BADDEVICEID = (MMSYSERR_BASE + 2);
+        public const int MMSYSERR_INVALPARAM = (MMSYSERR_BASE + 11);
+    }
+}</pre>
+<p>&nbsp;</p>
+<p>[&quot;Form1.cs&quot;]</p>
+<pre class="prettyprint linenums">
+using JoyStickController;
+using System;
+using System.Windows.Forms;
+
+namespace test_JoyStick
+{
+    public partial class Form1 : Form
+    {
+        private JoyStick _joyStick1 = new JoyStick(JOYSTICK_ID.JOYSTICKID1);
+        private JoyStick _joyStick2 = new JoyStick(JOYSTICK_ID.JOYSTICKID2);
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            // JoyStick 1
+            {
+                <span class="auto-style8">JOYINFOEX joyInfoEx1 = _joyStick1.GetPosEx();</span>
+
+                if (_joyStick1.GetMMRESULT() == MMRESULT.JOYERR_NOERROR) {
+                    tb_x_1.Text = joyInfoEx1.dwXpos.ToString();
+                    tb_y_1.Text = joyInfoEx1.dwYpos.ToString();
+                    tb_z_1.Text = joyInfoEx1.dwZpos.ToString();
+                    tb_buttons_1.Text = joyInfoEx1.dwButtons.ToString(&quot;X8&quot;);
+                    tb_JoyStick1_ID.Text = (_joyStick1.JoystickId).ToString();
+                }
+                else
+                {
+                    if (tb_x_1.Text != &quot;&quot;)
+                    {
+                        <span class="auto-style8">JoyStick.JoyConfigChanged();</span>
+                    }
+                    tb_x_1.Text = &quot;&quot;;
+                    tb_y_1.Text = &quot;&quot;;
+                    tb_z_1.Text = &quot;&quot;;
+                    tb_buttons_1.Text = &quot;&quot;;
+                    tb_JoyStick1_ID.Text = &quot;&quot;;
+                }
+            }
+
+            // JoyStick 2
+            {
+                <span class="auto-style8">JOYINFOEX joyInfoEx2 = _joyStick2.GetPosEx();</span>
+
+                if (_joyStick2.GetMMRESULT() == MMRESULT.JOYERR_NOERROR)
+                {
+                    tb_x_2.Text = joyInfoEx2.dwXpos.ToString();
+                    tb_y_2.Text = joyInfoEx2.dwYpos.ToString();
+                    tb_z_2.Text = joyInfoEx2.dwZpos.ToString();
+                    tb_buttons_2.Text = joyInfoEx2.dwButtons.ToString(&quot;X8&quot;);
+                    tb_JoyStick2_ID.Text = (_joyStick2.JoystickId).ToString();
+                }
+                else
+                {
+                    if (tb_x_2.Text != &quot;&quot;)
+                    {
+                        <span class="auto-style8">JoyStick.JoyConfigChanged();</span>
+                    }
+                    tb_x_2.Text = &quot;&quot;;
+                    tb_y_2.Text = &quot;&quot;;
+                    tb_z_2.Text = &quot;&quot;;
+                    tb_buttons_2.Text = &quot;&quot;;
+                    tb_JoyStick2_ID.Text = &quot;&quot;;
+                }
+            }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
+}</pre>
+<p>&nbsp;</p>
+<h3>ダウンロード</h3>
+<p>サンプルプログラム <a href="HowToUseJoystick/Joystick.zip">ダウンロード</a></p>
+<p>&nbsp;</p>
+<h2> 2. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+<pre class="prettyprint linenums">
+</pre>
+	
+<br>
+	
+<br>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考">参考</a></h2>
+<ul>
+	<li>joyGetPos 関数<br>
+	<a href="../../Win32/Multimedia/Joystick/joyGetPos.html">プログラミングアイテム 
+	joyGetPos</a></li>
+	<li>joyGetPosEx 関数<br>
+	<a href="../../Win32/Multimedia/Joystick/joyGetPosEx.html">プログラミングアイテム joyGetPosEx</a></li>
+	<li>joyGetPos 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx</a></li>
+	<li>joyGetPosEx 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx</a></li>
+	<li>joyConfigChanged 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx</a></li>
+	<li>JOYINFO 構造体<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx</a></li>
+	<li>JOYINFOEX 構造体<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載：<br>2018年05月19日 新規作成、木下英俊</font></p>
+</body>
+</html>

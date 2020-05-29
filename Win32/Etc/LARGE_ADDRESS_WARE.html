@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Large Address Ware</title>
+<link href="../../design.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Large Address Aware</h1>
+<p>Win7 64bit（WoW64） ではプロセスあたり最大4GBを使用できます。<br>Win7 32bit ではプロセスあたり最大2GBを使用できます。<br>
+これはMicrosoftの正式見解です。<br><br>ただし、最大４GBで動作するには若干条件があるようです。<br>
+「IMAGE_FILE_LARGE_ADDRESS_AWARE 指定あり」でコンパイルした32bit exe だと最大4GB 
+ということらしいです。.NET（C#)の場合はコンパイルオプションでの指定はできず、editbin という外部ツールでこのフラグを後付するそうです。<br>
+&quot;editbin /LARGEADDRESSAWARE&quot;<br>
+評価環境やコンパイル環境などの情報があまり記載されていないので、いずれにせよテストプログラム等による確認が必要。ひょっとすると比較的新しい開発環境ではデフォルトで上記オプションが有効化されていたりする場合もあると思います。</p>
+<p>Visual Studio 2012 Update3 と C++ を使ってテストプログラムを作成してみたので、以下結果報告。<br>評価環境は以下の通り。<br>
+========================<br>OS：Windows8 64bit<br>開発環境： Visual Studio 2012 
+Update3<br>言語： Win32、C++<br>========================</p>
+<p>&nbsp;</p>
+<p>1. x86 + LARGEADDRESSAWARE</p>
+<p>こんなテストプログラムを作成。<br><img alt="" src="LARGE_ADDRESS_WARE/img3.gif"></p>
+<p>約3.5GBのメモリを確保できました。&quot;LARGEADDRESSAWARE&quot;無しだと1.3GBぐらいまでしかメモリ確保できませんでした。<br>
+<img alt="" src="LARGE_ADDRESS_WARE/img5.gif"></p>
+<p>&nbsp;</p>
+<p>2. x64</p>
+<p>同様に x64 コンパイルして実験。上限を確認してもきりがないので、メモリ取得サイズは8GBにて。<br>
+<img alt="" src="LARGE_ADDRESS_WARE/img7.gif"></p>
+<p>x64 だとやっぱり8GBなんて楽勝に取得できるみたいです。<br>
+<img alt="" src="LARGE_ADDRESS_WARE/img9.gif"></p>
+<p>&nbsp;</p>
+<p>3. サンプルプログラム</p>
+<p>上記のテストプログラムを以下からダウンロードできるようにしておきます。<br>プログラムはWin32プロジェクトとして作成していますので、Visual 
+Studio 以外の環境へも移植が容易でしょう。&nbsp;<br><a href="LARGE_ADDRESS_WARE/testLargeWare.zip">
+ダウンロード</a></p>
+<p>補足説明１：<br>なお、ソースプログラム中にある以下の記述は Windows XP 
+以降のコモンコントロールを使用するための記述です。マニュフェストでコモンコントロールのバージョン情報を記載する必要があるそうで、VS2005から加わった 
+#pragma の記述だそうです。コモンコントロールのバージョンを 6.0.0.0 
+で指定します。このマニュフェストが無いとビジュアル的に古い感じのダイアログになってしまいます。</p>
+<table style="border: medium solid #C0C0C0; width: 100%">
+	<tr>
+		<td>
+		<pre>#if defined _M_IX86 
+#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#elif defined _M_IA64 
+#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#elif defined _M_X64 
+#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#else 
+#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#endif </pre>
+		</td>
+	</tr>
+</table>
+<p>補足説明２：<br>
+マニュフェストファイルを別ファイル指定してコンパイルしています。実行ファイルと同じ場所にあるマニュフェストファイルを消さないでください。</p>
+<p>補足説明３：<br>
+(謎)x86の実行ファイルをデスクトップで実行した場合に、何故か上記補足説明１で有効化したはずのビジュアルスタイルが有効化されずに古いダイアログ形式で表示されました。謎です。</p>
+<p>&nbsp;</p>
+<p>4. 参考URL</p>
+<p>以下、参考URLです。<br>古い記事が大分混ざっているので、Win7やWin8など使用するターゲット環境で再確認のうえでやってみてください。</p>
+<p>参考URL：</p>
+<ul>
+	<li>
+	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop" target="_blank">
+	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop</a></li>
+	<li>
+	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/" target="_blank">
+	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/</a></li>
+	<li>
+	<a href="http://ascii.jp/elem/000/000/480/480200/index-2.html" target="_blank">
+	http://ascii.jp/elem/000/000/480/480200/index-2.html</a></li>
+	<li>
+	<a href="http://www.geocities.jp/hpt_user99/address.html#address_limits" target="_blank">
+	http://www.geocities.jp/hpt_user99/address.html#address_limits</a></li>
+	<li>
+	<a href="http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram" target="_blank">
+	http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram</a></li>
+	<li>
+	<a href="http://www.syuhitu.org/other/memory32/memory32.html" target="_blank">
+	http://www.syuhitu.org/other/memory32/memory32.html</a></li>
+</ul>
+<hr>
+<p><font face="Meiryo UI">記載： 2013年5月12日 木下英俊</font></p>
+</body>
+</html>

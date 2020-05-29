@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Counter (C#、WPF)</title>
+<link rel="stylesheet" href="../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+a,
+a:link,
+a:active,
+a:visited {
+    color: #990000;
+}
+
+</style>
+</head>
+<body>
+<h1 class="auto-style7">
+カレントパス を取得する方法</h1>
+<p>バッチファイル、って普通に実行する場合と管理者として実行する場合でカレントフォルダが変わってしまいます。</p>
+<p>普通に実行する場合、カレントフォルダはファイルの所在。 <br>一方、管理者として実行するとカントフォルダは &quot;c:\Windows\system32&quot; 
+になります。</p>
+<p>今回困った事象は、DirectShowのフィルタをインストールするバッチファイルの書き方。regsrv32.exe 
+を使ってDirectShow関連のモジュールをインストールするためには当然ながら管理者としてバッチを実行する必要がある。が、関連するファイルがあるのでカレントフォルダが移動してしまうので、いったんバッチファイルがある所在へ 
+cd する必要がある。どうやって書いたらよいのでしょう？ という問題。</p>
+<p>結果からすると <br>”cd /d %~dp0” <br>と書けばよい。</p>
+<p>さて、調べた結果詳細を以下に記載します。説明は書きませんが必要な人は持って行ってください。</p>
+<p>test.bat <br>============================ <br>@echo off <br>cd <br>cd /d 
+%~dp0 <br>echo %~dp0 <br>echo %~dpn0 <br>echo %~dpnx0 <br>pause <br>
+============================</p>
+<p>実行結果（通常実行） <br>============================ <br>C:\Users\英俊\Desktop <br>
+C:\Users\英俊\Desktop\ <br>C:\Users\英俊\Desktop\test <br>
+C:\Users\英俊\Desktop\test.bat <br>続行するには何かキーを押してください . . . <br>
+============================</p>
+<p>実行結果（管理者として実行） <br>============================ <br>C:\Windows\system32 <br>
+C:\Users\英俊\Desktop\ <br>C:\Users\英俊\Desktop\test <br>
+C:\Users\英俊\Desktop\test.bat <br>続行するには何かキーを押してください . . . <br>
+============================</p>
+<p>評価環境： <br>・Windows7、Windows8</p>
+<p>注意事項： <br>・“cd 
+/d”しないと正常動作しない場合がある。ファイル所在がカレントドライブと違うとき、つまり上記の場合はｂａｔファイルがｃドライブ以外にある場合はうまく動作しない。テスト環境でbatファイルがｃドライブ下ならば 
+/d が無くても動いてしまうので注意。</p>
+<p>参考URL： <br><a href="http://d.hatena.ne.jp/fuzzhead/20080930/p1">
+http://d.hatena.ne.jp/fuzzhead/20080930/p1</a></p>
+<hr>
+<p> <font face="Meiryo UI">記載： 2013年7月6日 木下英俊</font></p>
+</body>
+</html>

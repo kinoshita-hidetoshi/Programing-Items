@@ -1,0 +1,737 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Windows バージョン情報の取得方法</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+Windows バージョン情報の取得方法
+</h1>
+
+<p> <font face="Meiryo UI">Windows のOSバージョン情報取得方法を以下に記載します。</font></p>
+<p> 動作確認済みのOSは以下の通り。ただし過去に評価したことがある、というだけで最新情報で全て確認済みというわけではありません。</p>
+<ul>
+	<li>Windows 10</li>
+	<li>Windows 8.1</li>
+	<li>Windows 8</li>
+	<li>Windows 7</li>
+	<li>Windows XP</li>
+	<li>Windows 2000</li>
+	<li>Windows 98</li>
+	<li>Windows 95</li>
+</ul>
+<h2>最新評価環境</h2>
+<ul>
+	<li>OS： Windows 10 64bit</li>
+	<li>コンパイラ： VC++2017</li>
+	<li>他：<ul>
+		<li>_UNICODE、_MBCS、両方のコンパイルでOK。</li>
+	</ul>
+	</li>
+</ul>
+<p><a href="HowToGetWindowsVersion/GetWindowsVersion.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<p>&nbsp;</p>
+
+[プログラムソース &quot;GetSystemInformation.h&quot;]<br>
+<code>
+<pre class="prettyprint linenums">
+#ifndef		GET_SYSTEM_INFORMATIONS_H
+#define		GET_SYSTEM_INFORMATIONS_H
+
+#include &lt;windows.h&gt;
+#include &lt;tchar.h&gt;		// TCHAR
+
+/*==================*/
+/* プロトタイプ宣言 */
+/*==================*/
+#ifdef __cplusplus
+extern &quot;C&quot;{
+#endif
+
+//! Windows情報取得
+BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, size_t nVersion, TCHAR* build, size_t nBuild );
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif // GET_SYSTEM_INFORMATIONS_H</pre>
+</code>
+<br><br></span>
+[プログラムソース &quot;GetSystemInformations.cpp&quot;]<br><code>
+<pre class="prettyprint linenums">
+/*=========================================================*/
+/*! @file
+    @brief  PCの各種ｼｽﾃﾑ情報を取得するための関数
+
+    GetSystemInformations.c というファイル名で記載されています。
+    対応するヘッダファイルは GetSystemInformations.h です。
+
+    @author 木下英俊
+    @date   2005-06-05 新規作成
+    @date   2012-03-11 &quot;Windows 7&quot;, &quot;Windows 2008 Server R2&quot;, 他, に対応
+    @date   2012-03-11 locGetProductInfo を追加
+    @date   2012-11-24 &quot;Windows 8&quot;, &quot;Windows Server 2012&quot; に対応
+    @date   2013-10-28 &quot;Windows 8.1&quot;, &quot;Windows Server 2012 R2&quot; に対応
+    @date   2017-02-22 &quot;Windows 10&quot;, &quot;Windows Server 2016&quot; に対応
+    */
+/*=========================================================*/
+
+#include &lt;windows.h&gt;                    // LoadLibrary, FreeLibrary
+#include &lt;tchar.h&gt;                      // _T(&quot;&quot;), TCHAR, _tcsncpy_s
+#include &lt;string&gt;                       // string, wstring
+
+#include &quot;GetSystemInformations.h&quot;      // 自分自身のヘッダファイル
+
+
+namespace {
+/*=========================================================*/
+/*!
+    Windowsに関する プロダクト情報 を取得する。
+    
+    @param[out]     cProductInfo    プロダクト情報 格納用変数
+    @param[in]      dwProductInfo   cProductInfo に格納可能なデータサイズ
+    @retval         TRUE            正常終了
+    @retval         FALSE           異常終了
+    @author         木下英俊
+    @date           2012-03-11 新規作成
+    @date           2012-11-24 PRODUCT_CORE_* の5種類を追加。Windows8対応の一環。
+
+    @note{
+    下記ページを参照 \n
+    https://msdn.microsoft.com/en-us/library/windows/desktop/ms724358(v=vs.85).aspx
+    }
+*/
+/*=========================================================*/
+BOOL GetProductInfo( TCHAR* cProductInfo, size_t dwProductInfo )
+{
+    HMODULE         hModule ;
+    BOOL            ret = FALSE ;
+    DWORD           dwType = 0 ;
+#ifdef _UNICODE
+    std::wstring    strMessage ;
+#else
+    std::string     strMessage ;
+#endif
+    
+
+
+    BOOL (WINAPI * pfnGetProductInfo)(DWORD dwOSMajorVersion, DWORD dwOSMinorVersion, DWORD dwSpMajorVersion, DWORD dwSpMinorVersion, PDWORD pdwReturnedProductType );
+    
+
+    hModule = ::LoadLibrary(_T(&quot;kernel32.dll&quot;));
+    if (hModule == NULL){
+        return  false;
+    }
+    
+    (*(FARPROC*)&amp;pfnGetProductInfo) = ::GetProcAddress(hModule, &quot;GetProductInfo&quot;);
+
+    if ( pfnGetProductInfo != NULL ){
+        OSVERSIONINFOEX sInfoEx;
+
+        ::ZeroMemory(&amp;sInfoEx,sizeof(OSVERSIONINFOEX));
+        sInfoEx.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+        ret = ::GetVersionEx((LPOSVERSIONINFO)&amp;sInfoEx);
+
+        if ( ret ){
+            ret = pfnGetProductInfo(sInfoEx.dwMajorVersion,sInfoEx.dwMinorVersion, sInfoEx.wServicePackMajor, sInfoEx.wServicePackMinor, &amp;dwType);
+        }
+    }
+
+    if (ret){
+        switch(dwType){
+        case    PRODUCT_BUSINESS:
+            strMessage = _T(&quot;PRODUCT_BUSINESS&quot;);
+            break;
+
+        case    PRODUCT_BUSINESS_N:
+            strMessage = _T(&quot;PRODUCT_BUSINESS_N&quot;);
+            break;
+
+        case    PRODUCT_CLUSTER_SERVER:
+            strMessage = _T(&quot;PRODUCT_CLUSTER_SERVER&quot;);
+            break;
+
+        /* &lt;= Windows8 対応で追加 */
+
+        case    PRODUCT_CORE_ARM:
+            strMessage = _T(&quot;PRODUCT_CORE_ARM&quot;);
+            break;
+
+        case    PRODUCT_CORE_N:
+            strMessage = _T(&quot;PRODUCT_CORE_N&quot;);
+            break;
+
+        case    PRODUCT_CORE_COUNTRYSPECIFIC:
+            strMessage = _T(&quot;PRODUCT_CORE_COUNTRYSPECIFIC&quot;);
+            break;
+
+        case    PRODUCT_CORE_SINGLELANGUAGE:
+            strMessage = _T(&quot;PRODUCT_CORE_SINGLELANGUAGE&quot;);
+            break;
+
+        case    PRODUCT_CORE:
+            //strMessage = _T(&quot;PRODUCT_CORE&quot;);
+            strMessage = _T(&quot;Home&quot;);
+            break;
+
+        /* Windows8 対応で追加 =&gt; */
+
+        case    PRODUCT_DATACENTER_SERVER:
+            strMessage = _T(&quot;PRODUCT_DATACENTER_SERVER&quot;);
+            break;
+
+        case    PRODUCT_DATACENTER_SERVER_CORE:
+            strMessage = _T(&quot;PRODUCT_DATACENTER_SERVER_CORE&quot;);
+            break;
+
+        case    PRODUCT_DATACENTER_SERVER_CORE_V:
+            strMessage = _T(&quot;PRODUCT_DATACENTER_SERVER_CORE_V&quot;);
+            break;
+
+        case    PRODUCT_DATACENTER_SERVER_V:
+            strMessage = _T(&quot;PRODUCT_DATACENTER_SERVER_V&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_E:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_E&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_N:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_N&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_SERVER:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_SERVER&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_SERVER_CORE:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_SERVER_CORE&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_SERVER_CORE_V:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_SERVER_CORE_V&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_SERVER_IA64:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_SERVER_IA64&quot;);
+            break;
+
+        case    PRODUCT_ENTERPRISE_SERVER_V:
+            strMessage = _T(&quot;PRODUCT_ENTERPRISE_SERVER_V&quot;);
+            break;
+
+        case    PRODUCT_HOME_BASIC:
+            strMessage = _T(&quot;PRODUCT_HOME_BASIC&quot;);
+            break;
+
+        case    PRODUCT_HOME_BASIC_E:
+            strMessage = _T(&quot;PRODUCT_HOME_BASIC_E&quot;);
+            break;
+
+        case    PRODUCT_HOME_BASIC_N:
+            strMessage = _T(&quot;PRODUCT_HOME_BASIC_N&quot;);
+            break;
+
+        case    PRODUCT_HOME_PREMIUM:
+            strMessage = _T(&quot;PRODUCT_HOME_PREMIUM&quot;);
+            break;
+
+        case    PRODUCT_HOME_PREMIUM_E:
+            strMessage = _T(&quot;PRODUCT_HOME_PREMIUM_E&quot;);
+            break;
+
+        case    PRODUCT_HOME_PREMIUM_N:
+            strMessage = _T(&quot;PRODUCT_HOME_PREMIUM_N&quot;);
+            break;
+
+        case    PRODUCT_HOME_SERVER:
+            strMessage = _T(&quot;PRODUCT_HOME_SERVER&quot;);
+            break;
+
+        case    PRODUCT_HYPERV:
+            strMessage = _T(&quot;PRODUCT_HYPERV&quot;);
+            break;
+
+        case    PRODUCT_MEDIUMBUSINESS_SERVER_MANAGEMENT:
+            strMessage = _T(&quot;PRODUCT_MEDIUMBUSINESS_SERVER_MANAGEMENT&quot;);
+            break;
+
+        case    PRODUCT_MEDIUMBUSINESS_SERVER_MESSAGING:
+            strMessage = _T(&quot;PRODUCT_MEDIUMBUSINESS_SERVER_MESSAGING&quot;);
+            break;
+
+        case    PRODUCT_MEDIUMBUSINESS_SERVER_SECURITY:
+            strMessage = _T(&quot;PRODUCT_MEDIUMBUSINESS_SERVER_SECURITY&quot;);
+            break;
+
+        case    PRODUCT_PROFESSIONAL:
+            strMessage = _T(&quot;PRODUCT_PROFESSIONAL&quot;);
+            break;
+
+        case    PRODUCT_PROFESSIONAL_E:
+            strMessage = _T(&quot;PRODUCT_PROFESSIONAL_E&quot;);
+            break;
+
+        case    PRODUCT_PROFESSIONAL_N:
+            strMessage = _T(&quot;PRODUCT_PROFESSIONAL_N&quot;);
+            break;
+
+        case    PRODUCT_SERVER_FOR_SMALLBUSINESS:
+            strMessage = _T(&quot;PRODUCT_SERVER_FOR_SMALLBUSINESS&quot;);
+            break;
+
+        case    PRODUCT_SERVER_FOR_SMALLBUSINESS_V:
+            strMessage = _T(&quot;PRODUCT_SERVER_FOR_SMALLBUSINESS_V&quot;);
+            break;
+
+        case    PRODUCT_SERVER_FOUNDATION:
+            strMessage = _T(&quot;PRODUCT_SERVER_FOUNDATION&quot;);
+            break;
+
+        case    PRODUCT_SMALLBUSINESS_SERVER:
+            strMessage = _T(&quot;PRODUCT_SMALLBUSINESS_SERVER&quot;);
+            break;
+
+        case    PRODUCT_SMALLBUSINESS_SERVER_PREMIUM:
+            strMessage = _T(&quot;PRODUCT_SMALLBUSINESS_SERVER_PREMIUM&quot;);
+            break;
+
+        case    PRODUCT_STANDARD_SERVER:
+            strMessage = _T(&quot;PRODUCT_STANDARD_SERVER&quot;);
+            break;
+
+        case    PRODUCT_STANDARD_SERVER_CORE:
+            strMessage = _T(&quot;PRODUCT_STANDARD_SERVER_CORE&quot;);
+            break;
+
+        case    PRODUCT_STANDARD_SERVER_CORE_V:
+            strMessage = _T(&quot;PRODUCT_STANDARD_SERVER_CORE_V&quot;);
+            break;
+
+        case    PRODUCT_STANDARD_SERVER_V:
+            strMessage = _T(&quot;PRODUCT_STANDARD_SERVER_V&quot;);
+            break;
+
+        case    PRODUCT_STARTER:
+            strMessage = _T(&quot;PRODUCT_STARTER&quot;);
+            break;
+
+        case    PRODUCT_STARTER_E:
+            strMessage = _T(&quot;PRODUCT_STARTER_E&quot;);
+            break;
+
+        case    PRODUCT_STARTER_N:
+            strMessage = _T(&quot;PRODUCT_STARTER_N&quot;);
+            break;
+
+        case    PRODUCT_STORAGE_ENTERPRISE_SERVER:
+            strMessage = _T(&quot;PRODUCT_STORAGE_ENTERPRISE_SERVER&quot;);
+            break;
+
+        case    PRODUCT_STORAGE_EXPRESS_SERVER:
+            strMessage = _T(&quot;PRODUCT_STORAGE_EXPRESS_SERVER&quot;);
+            break;
+
+        case    PRODUCT_STORAGE_STANDARD_SERVER:
+            strMessage = _T(&quot;PRODUCT_STORAGE_STANDARD_SERVER&quot;);
+            break;
+
+        case    PRODUCT_STORAGE_WORKGROUP_SERVER:
+            strMessage = _T(&quot;PRODUCT_STORAGE_WORKGROUP_SERVER&quot;);
+            break;
+
+        case    PRODUCT_UNDEFINED:
+            strMessage = _T(&quot;PRODUCT_UNDEFINED&quot;);
+            break;
+
+        case    PRODUCT_ULTIMATE:
+            strMessage = _T(&quot;PRODUCT_ULTIMATE&quot;);
+            break;
+
+        case    PRODUCT_ULTIMATE_E:
+            strMessage = _T(&quot;PRODUCT_ULTIMATE_E&quot;);
+            break;
+
+        case    PRODUCT_ULTIMATE_N:
+            strMessage = _T(&quot;PRODUCT_ULTIMATE_N&quot;);
+            break;
+
+        case    PRODUCT_WEB_SERVER:
+            strMessage = _T(&quot;PRODUCT_WEB_SERVER&quot;);
+            break;
+
+        case    PRODUCT_WEB_SERVER_CORE:
+            strMessage = _T(&quot;PRODUCT_WEB_SERVER_CORE&quot;);
+            break;
+
+        default:
+            strMessage = _T(&quot;Unknown Type&quot;);
+            break;
+        }
+    }
+
+    ::FreeLibrary(hModule);
+
+    _tcsncpy_s( cProductInfo, dwProductInfo, strMessage.c_str(), _TRUNCATE );
+
+    return  true;
+}
+
+} // namespace
+
+
+/*===============================================================================*/
+/*!
+    Windowsに関するプラットフォーム、バージョン番号、ビルド番号などを取得する。
+    
+    @param[out]     windows         プラットフォーム名 格納用変数
+    @param[in]      nWindows        windows の変数サイズ
+    @param[out]     version         バージョン番号 格納用変数
+    @param[in]      nVersion        cVersion の変数サイズ
+    @param[out]     build           ビルド番号 格納用変数
+    @param[in]      nuild           cBuild の変数サイズ
+    @retval         TRUE            正常終了
+    @retval         FALSE           異常終了
+    @author         木下英俊
+    @date   2005-06-05 新規作成
+    @date   2012-03-11 Windows7, 2008ServerR2, 他, に対応
+    @date   2012-03-11 locGetProductInfo を追加
+    @date   2012-11-24 &quot;Windows 8&quot;, &quot;Windows Server 2012&quot; に対応
+    @date   2013-10-28 &quot;Windows 8.1&quot;, &quot;Windows Server 2012 R2&quot; に対応
+    @date   2017-02-22 &quot;Windows 10&quot;, &quot;Windows Server 2016&quot; に対応
+*/
+/*===============================================================================*/
+BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, size_t nVersion, TCHAR* build, size_t nBuild )
+{
+    BOOL            bRet = FALSE ;
+    OSVERSIONINFOEX VersionInformationEx ;
+    
+    
+    /*========*/
+    /* 前処理 */
+    /*========*/
+    ZeroMemory(&amp;VersionInformationEx, sizeof(OSVERSIONINFOEX));
+    VersionInformationEx.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+
+    
+    /*========*/
+    /* 処理部 */
+    /*========*/
+    if (!GetVersionEx((LPOSVERSIONINFO)&amp;VersionInformationEx)){
+        // GetVersionEx 失敗
+        MessageBox( NULL, _T(&quot;API GetVersionEx() に失敗しました。&quot;), _T(&quot;ERROR 情報&quot;), MB_OK|MB_ICONWARNING);
+        bRet = FALSE ;
+    }
+    else{
+        // GetVersionEx 成功
+        bRet = TRUE ;
+
+        // ﾌﾟﾗｯﾄﾌｫｰﾑ情報(他) 取得
+        switch (VersionInformationEx.dwPlatformId){
+        case VER_PLATFORM_WIN32s:
+            _tcsncpy_s( windows, nWindows, _T(&quot;Win32s on Windows 3.1&quot;), _TRUNCATE);
+            break ;
+
+        case VER_PLATFORM_WIN32_WINDOWS:
+            switch ( VersionInformationEx.dwMinorVersion ){
+            case 0:
+                // Windows 95
+                _tcsncpy_s(windows, nWindows, _T(&quot;Windows 95&quot;), _TRUNCATE);
+                break ;
+            case 10:
+                // Windows 98
+                _tcsncpy_s(windows, nWindows, _T(&quot;Windows 98&quot;), _TRUNCATE);
+                break ;
+            case 90:
+                // Windows Me
+                _tcsncpy_s(windows, nWindows, _T(&quot;Windows Me&quot;), _TRUNCATE);
+                break ;
+            default:
+                // Unknown Windows 95 family
+                _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows 95 family&quot;), _TRUNCATE);
+                break ;
+            }
+            break ;
+
+        case VER_PLATFORM_WIN32_NT:
+            switch (VersionInformationEx.dwMajorVersion){
+            case 3:
+            case 4:
+                // Windows NT
+                _tcsncpy_s(windows, nWindows, _T(&quot;Windows NT&quot;), _TRUNCATE);
+                break ;
+
+            case 5:
+                switch (VersionInformationEx.dwMinorVersion){
+                case 0:
+                    // Windows 2000
+                    _tcsncpy_s(windows, nWindows, _T(&quot;Windows 2000&quot;), _TRUNCATE);
+                    break ;
+                case 1:
+                    // Windows XP
+                    _tcsncpy_s(windows, nWindows, _T(&quot;Windows XP&quot;), _TRUNCATE);
+                    if ( (VersionInformationEx.wSuiteMask &amp; VER_SUITE_PERSONAL)==VER_SUITE_PERSONAL ){
+                        _tcsncpy_s(windows, nWindows, _T(&quot; Home edition&quot;), _TRUNCATE);
+                    }
+                    else{
+                        _tcsncpy_s(windows, nWindows, _T(&quot; Professional&quot;), _TRUNCATE);
+                    }
+                    break ;
+                case 2:
+                    // Windows Server 2003 family
+                    _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server 2003 family&quot;), _TRUNCATE);
+                    break ;
+                default:
+                    // Unknown Windows NT family
+                    _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows NT family&quot;), _TRUNCATE);
+                    break ;
+                }
+                break ;
+
+            case 6:
+                switch (VersionInformationEx.dwMinorVersion){
+                case 0:
+                    if( VersionInformationEx.wProductType == VER_NT_WORKSTATION ){
+                        // Windows Vista
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Vista&quot;), _TRUNCATE);
+                    }
+                    else{
+                        // Windows Server 2008
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server 2008&quot;), _TRUNCATE);
+                    }
+                    break ;
+                case 1:
+                    if( VersionInformationEx.wProductType == VER_NT_WORKSTATION ){
+                        // Windows 7
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows 7&quot;), _TRUNCATE);
+                    }
+                    else{
+                        // Windows Server 2008 R2
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server 2008 R2&quot;), _TRUNCATE);
+                    }
+                    break ;
+                case 2:
+                    if( VersionInformationEx.wProductType == VER_NT_WORKSTATION ){
+                        // Windows 8
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows 8&quot;), _TRUNCATE);
+                    }
+                    else{
+                        // Windows Server 2012
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server 2012&quot;), _TRUNCATE);
+                    }
+                    break ;
+                case 3:
+                    if( VersionInformationEx.wProductType == VER_NT_WORKSTATION ){
+                        // Windows 8.1
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows 8.1&quot;), _TRUNCATE);
+                    }
+                    else{
+                        // Windows Server 2012 R2
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server 2012 R2&quot;), _TRUNCATE);
+                    }
+                    break;
+                default:
+                    if( VersionInformationEx.wProductType == VER_NT_WORKSTATION ){
+                        // Unknown Windows family
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows family&quot;), _TRUNCATE);
+                    }
+                    else{
+                        // Unknown Windows Server family
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows Server family&quot;), _TRUNCATE);
+                    }
+                    break ;
+                }
+
+                // Product Information を取得
+                {
+                    TCHAR   cProductInfo[1024] = _T(&quot;&quot;);
+                    GetProductInfo( cProductInfo, (sizeof(cProductInfo)/sizeof(cProductInfo[0])) );
+                    _tcsncat_s( windows, nWindows, _T(&quot; &quot;), _TRUNCATE );
+                    _tcsncat_s( windows, nWindows, cProductInfo, _TRUNCATE );
+                }
+                break ;
+
+            case 10:
+                switch (VersionInformationEx.dwMinorVersion) {
+                case 0:
+                    if (VersionInformationEx.wProductType == VER_NT_WORKSTATION) {
+                        // Windows 10
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows 10&quot;), _TRUNCATE);
+                    }
+                    else {
+                        // Windows Server 2016
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server&nbsp;2016&quot;), _TRUNCATE);
+                    }
+                    break;
+                default:
+                    if (VersionInformationEx.wProductType == VER_NT_WORKSTATION) {
+                        // Unknown Windows family
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows family&quot;), _TRUNCATE);
+                    }
+                    else {
+                        // Unknown Windows Server family
+                        _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows Server family&quot;), _TRUNCATE);
+                    }
+                    break;
+                }
+
+                // Product Information を取得
+                {
+                    TCHAR   cProductInfo[1024] = _T(&quot;&quot;);
+                    GetProductInfo(cProductInfo, (sizeof(cProductInfo) / sizeof(cProductInfo[0])));
+                    _tcsncat_s(windows, nWindows, _T(&quot; &quot;), _TRUNCATE);
+                    _tcsncat_s(windows, nWindows, cProductInfo, _TRUNCATE);
+                }
+                break;
+
+            default:
+                // Unknown Windows NT family
+                _tcsncpy_s(windows, nWindows, _T(&quot;Unknown Windows NT family&quot;), _TRUNCATE);
+                break ;
+            }
+            break ;
+
+        default:
+            // No Windows
+            _tcsncpy_s( windows, nWindows, _T(&quot;No Windows&quot;), _TRUNCATE);
+            break ;
+        }
+
+        // Version情報 取得
+        _stprintf_s( version, nVersion, _T(&quot;Version %d.%d %s&quot;),
+            VersionInformationEx.dwMajorVersion,
+            VersionInformationEx.dwMinorVersion,
+            VersionInformationEx.szCSDVersion) ;
+        
+        // Build情報 取得
+        _stprintf_s( build, nBuild, _T(&quot;Build %d&quot;), VersionInformationEx.dwBuildNumber) ;
+    }
+    
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    return bRet ;
+}</pre>
+<br>
+</code><br>
+
+[プログラムソース &quot;GetWindowsVersion.cpp&quot;]<br>
+<code>
+<pre class="prettyprint linenums">
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;tchar.h&gt;      // TCHAR
+
+#include &quot;GetSystemInformations.h&quot;
+
+
+using namespace std;
+
+
+int main(int argc, char* argv[])
+{
+    const size_t    LEN = 1024 ;
+    TCHAR           windows[LEN];
+    const size_t    nWindows = LEN ;
+    TCHAR           version[LEN] ;
+    const size_t    nVersion = LEN ;
+    TCHAR           build[LEN] ;
+    const size_t    nBuild = LEN ;
+
+
+    /*========*/
+    /* 前処理 */
+    /*========*/
+
+    /*========*/
+    /* 処理部 */
+    /*========*/
+    GetWindowsInformations( windows, nWindows, version, nVersion, build, nBuild );
+#ifdef _UNICODE
+    wcout &lt;&lt; windows &lt;&lt; &quot;, &quot; &lt;&lt; version &lt;&lt; &quot;, &quot; &lt;&lt; build &lt;&lt; endl;
+#else
+    cout &lt;&lt; windows &lt;&lt; &quot;, &quot; &lt;&lt; version &lt;&lt; &quot;, &quot; &lt;&lt; build &lt;&lt; endl;
+#endif
+
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    {
+        string  str ;
+        cout &lt;&lt; &quot;======================&quot; &lt;&lt; endl;
+        cout &lt;&lt; &quot;  HIT [Enter] KEY !!  &quot;;
+        getline( std::cin, str );
+    }
+    return EXIT_SUCCESS;
+}</pre>
+</code>
+<br><br>
+
+<br><br>あと、Windows8.1以降に対応するには manifest ファイルにおまじないが必要。以下の通り。<br>これが無いと 
+Windows8.1 以降にもかかわらず Windows8 に見えてしまう。<br><br>
+
+[GetWindowsVersion.exe.manifest]<br>
+<pre class="prettyprint linenums">
+&lt;assembly&gt;
+  &lt;compatibility xmlns=&quot;urn:schemas-microsoft-com:compatibility.v1&quot;&gt;
+    &lt;application&gt;
+      &lt;!-- Windows 7 --&gt;
+      &lt;supportedOS Id=&quot;{35138b9a-5d96-4fbd-8e2d-a2440225f93a}&quot;/&gt;
+      &lt;!-- Windows 8 --&gt;
+      &lt;supportedOS Id=&quot;{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}&quot;/&gt;
+      &lt;!-- Windows 8.1 --&gt;
+      &lt;supportedOS Id=&quot;{1f676c76-80e1-4239-95bb-83d0f6d0da78}&quot;/&gt;
+      &lt;!-- Windows 10 --&gt;
+      &lt;supportedOS Id=&quot;{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}&quot; /&gt;
+    &lt;/application&gt;
+  &lt;/compatibility&gt;
+&lt;/assembly&gt;</pre>
+<br>参考URL<br>
+<a href="http://d.hatena.ne.jp/chi-bd/20130915/1379207754" target="_blank">http://d.hatena.ne.jp/chi-bd/20130915/1379207754</a><br><br>
+
+<br>
+<span class="table_title">[実行結果]<br>
+<img alt="" src="HowToGetWindowsVersion/img2.gif"><br>
+図： Windows10 の例<br><br>
+<img alt="" src="HowToGetWindowsVersion/img5.gif"><br>図：Windows8.1 の例<br><br>
+<img alt="" src="HowToGetWindowsVersion/img8.gif"><br>図：Windows8 の例<br><br></span>
+
+<table style="border: medium double #C0C0C0; width: 800px" title="Windows7 の例">
+	<tr>
+		<td>
+		<code>
+		<pre>
+
+Windows 7 PRODUCT_PROFESSIONAL, Version 6.1 Service Pack 1, Build 7601
+======================
+  HIT [Enter] KEY !!
+
+</pre>
+		</code>
+		</td>
+	</tr>
+</table>
+図：Windows7 の例<br>&nbsp;<hr>
+<p> <font face="Meiryo UI">記載：<br>2017年09月30日 木下英俊<br>・Windows10, Windows Server 
+2016, に対応<br><br>2013年01月09日 木下英俊<br>・Windows8.1 に対応<br><br>2012年11月24日 木下英俊<br>・Windows8 に対応<br><br>2012年 3月11日 木下英俊<br>
+・新規作成</font></p>
+</body>
+</html>

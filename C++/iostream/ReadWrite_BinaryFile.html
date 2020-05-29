@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title></title>
+<link href="../../design.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>バイナリファイル 
+読み書き</h1>
+<p><font face="Meiryo UI">C++ 標準のみでバイナリファイルの読み書きを行います。<br>
+バイナリデータはコンテナ（vector, 
+list）への格納します。<br>
+<br>
+参考、というかそのまま使わせていただいたのは下記のURLです。<br></font><a title="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx" href="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx"><font color="#0066a7" face="Meiryo UI">http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx</font></a><br>
+<br>
+<font face="Meiryo UI">コードは以下のとおり。</font></p>
+
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <font face="Meiryo UI"><code><span class="comment">//<br>
+// ostreambuf_iterator.cpp : コンソール 
+      アプリケーションのエントリ ポイントを定義します。<br>
+// </span> <br>
+<br>
+#include &lt;fstream&gt; // 
+      [io]fstream<br>
+#include &lt;algorithm&gt; // copy, equal<br>
+#include 
+      &lt;vector&gt; // vector<br>
+#include &lt;list&gt; // list<br>
+#include 
+      &lt;iterator&gt; // [io]streambuf_iterator<br>
+#include &lt;cstdlib&gt; // 
+      rand<br>
+#include &lt;cassert&gt; // assert using namespace std;<br><br>int main(int argc, char* 
+      argv[])<br>
+{<br>
+&nbsp;&nbsp;&nbsp; vector&lt;char&gt;&nbsp;&nbsp;&nbsp; 
+      src ;<br><br>&nbsp;&nbsp;&nbsp; // 
+      とりあえず５万文字ほどテキトーに埋める<br>
+&nbsp;&nbsp;&nbsp; for ( int i=0; i&lt;50000; ++i 
+      ){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      src.push_back(static_cast&lt;char&gt;(rand()));<br>
+&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp;&nbsp; // 
+      ファイルへバイナリ書き込み<br>
+&nbsp;&nbsp;&nbsp; ofstream&nbsp;&nbsp;&nbsp; 
+      ostrm("test.dat", ios::binary);<br>
+&nbsp;&nbsp;&nbsp; copy( src.begin(), 
+      src.end(), ostreambuf_iterator&lt;char&gt;(ostrm) );<br>
+&nbsp;&nbsp;&nbsp; 
+      ostrm.close();<br><br>&nbsp;&nbsp;&nbsp; // 
+      さっき書いたバイナリファイルを開いて<br>
+&nbsp;&nbsp;&nbsp; ifstream&nbsp;&nbsp;&nbsp; 
+      istrm("test.dat", ios::binary);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;// istreambuf から直接 
+      list&lt;char&gt; を生成してしまう。<br>
+&nbsp;&nbsp;&nbsp; 
+      std::list&lt;char&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      dest((istreambuf_iterator&lt;char&gt;(istrm)), 
+      (istreambuf_iterator&lt;char&gt;()));<br><br>&nbsp;&nbsp;&nbsp; // 
+      ファイルを閉じる<br>
+&nbsp;&nbsp;&nbsp; istrm.close();<br><br>&nbsp;&nbsp;&nbsp; // 
+      うまくいったか、確認<br>
+&nbsp;&nbsp;&nbsp; assert( src.size() == dest.size() 
+      );<br>
+&nbsp;&nbsp;&nbsp; assert( equal( src.begin(), src.end(), 
+      dest.begin() ) );<br><br>&nbsp;&nbsp;&nbsp; return 
+      EXIT_SUCCESS;<br>
+}</code></font><br>
+	  </td></tr></table>
+
+<p><font face="Meiryo UI">うまく動作したけれども、いまだにちょっと理解不能なのが</font></p>
+<p><font face="Meiryo UI">std::list&lt;char&gt;&nbsp;&nbsp;dest((istreambuf_iterator&lt;char&gt;(istrm)), 
+(istreambuf_iterator&lt;char&gt;()));</font></p>
+<p><font face="Meiryo UI">の部分。各引数部分の括弧をとって</font></p>
+<p><font face="Meiryo UI">std::list&lt;char&gt;&nbsp;&nbsp;dest(istreambuf_iterator&lt;char&gt;(istrm), 
+istreambuf_iterator&lt;char&gt;());</font></p>
+<p><font face="Meiryo UI">と書くとエラーになってしまう。理解不能です。<br>
+気持ち的にはどっちも同じ動作をしてほしいのですけれども。</font></p>
+<p><font face="Meiryo UI">ちなみに評価環境は、VC++2008 SP1 です。OSは Windows7 64ビット 
+なり。</font></p>
+<hr>
+<p><font face="Meiryo UI">記載： 2009年12月20日 木下英俊</font></p>
+</body>
+</html>

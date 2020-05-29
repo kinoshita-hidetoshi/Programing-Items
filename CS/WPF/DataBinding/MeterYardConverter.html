@@ -1,0 +1,402 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[WPF] メートル法とヤード・ポンド法の値変換プログラム</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+[WPF] メートル法 と ヤード・ポンド法 の値変換プログラム</h1>
+
+<p> メートル法 と ヤード・ポンド法 の値変換プログラムを、WPF の データバインディングを使って作成します。<br>
+ここに記載のプログラムは、全て「日経ソフトウェア 2015年9月号」中の「基礎からわかる C# デスクトップアプリ開発 第3回」からの引用です。</p>
+<p>
+&nbsp;</p>
+<h2>
+目次</h2>
+<p>
+<a href="#1._画面を作る">1. 画面を作る</a><br><a href="#2._モデルの基本クラス（ViewModel）を実装">2. 
+モデルの基本クラス（ViewModel）を実装</a><br><a href="#3._コマンドの基本クラス（DelegateCommand）を実装">3. 
+コマンドの基本クラス（DelegateCommand）を実装</a><br><a href="#4._モデルの実装（DistanceUnit.cs）">4. 
+モデルの実装（DistanceUnit.cs）</a><br><a href="#5._ビューモデルの実装（MainWindowViewModel.cs）">
+5. アプリのビューモデルの実装（MainWindowViewModel.cs）</a><br>
+<a href="#6._ビュー_と_モデル_をデータバインディング">6. ビュー と モデル をデータバインディング</a><br>
+<a href="#7._最終結果">7. 最終結果</a><br><br><a href="#サンプルプログラム">サンプルプログラム</a></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="1._画面を作る">1. 画面を作る</a></h2>
+<p>
+最初にアプリ画面を作成します。</p>
+<p>
+こんな感じです。画面要素だけで動作にかかわる実装は一切ありません。</p>
+<p>
+<img alt="" src="MeterYardConverter/img7.jpg"></p>
+<p>
+&nbsp;</p>
+
+[プログラムソース "MainWindow.xaml"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;MeterYardConverter.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MeterYardConverter&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;Meter/Yard Converter&quot; FontSize=&quot;26.667&quot; FontFamily=&quot;Segoe UI Light&quot;
+             SizeToContent=&quot;WidthAndHeight&quot; ResizeMode=&quot;NoResize&quot;&gt;
+    &lt;StackPanel Margin=&quot;4&quot;&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;TextBox TextWrapping=&quot;Wrap&quot; Text=&quot;TextBox&quot; Width=&quot;100&quot; Margin=&quot;4&quot;/&gt;
+            &lt;ComboBox Width=&quot;80&quot; Margin=&quot;4&quot;/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; HorizontalAlignment=&quot;Center&quot;&gt;
+            &lt;Button Content=&quot;▲&quot; Width=&quot;40&quot; Margin=&quot;4&quot;/&gt;
+            &lt;Button Content=&quot;▼&quot; Width=&quot;40&quot; Margin=&quot;4&quot;/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;TextBox TextWrapping=&quot;Wrap&quot; Text=&quot;TextBox&quot; Width=&quot;100&quot; Margin=&quot;4&quot;/&gt;
+            &lt;ComboBox Width=&quot;80&quot; Margin=&quot;4&quot;/&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+&nbsp;</p>
+<h2>
+<a name="2._モデルの基本クラス（ViewModel）を実装">2. モデルの基本クラス（ViewModel）を実装</a></h2>
+<p>
+データバインディングを実装するために、 INotifyPropertyChanged を継承した ViewModel を作成します。</p>
+<p>
+注意：<br>・[CallerMemberName] は .NET4.5 以降で使用できます。</p>
+
+
+[プログラムソース "ViewModel.cs"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+			<pre class="prettyprint linenums">
+using System.ComponentModel;                // INotifyPropertyChanged
+using System.Runtime.CompilerServices;      // CallerMemberName
+
+namespace MeterYardConverter
+{
+    public class ViewModel : <span class="auto-style8">INotifyPropertyChanged</span>
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+&nbsp;</p>
+<h2>
+<a name="3._コマンドの基本クラス（DelegateCommand）を実装">3. コマンドの基本クラス（DelegateCommand）を実装</a></h2>
+<p>
+データバインディングを実装するために、 ICommand を継承した DelegateCommand を作成します。</p>
+
+
+[プログラムソース "DelegateCommand.cs"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System;
+using System.Windows.Input;         // ICommand
+
+namespace MeterYardConverter
+{
+    public class DelegateCommand : <span class="auto-style8">ICommand</span>
+    {
+        private readonly Action execute;
+        private readonly Func&lt;bool&gt; canExecute;
+
+
+        public DelegateCommand(Action execute)
+            : this(execute, () =&gt; true)
+        { }
+
+        public DelegateCommand(Action execute, Func&lt;bool&gt; canExecute)
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
+
+        public void Execute(object parameter)
+        {
+            this.execute();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return this.canExecute();
+        }
+
+        // 以下は今回のプログラムでは使用しませんが、参考記載。
+        public event EventHandler CanExecuteChanged;
+        public void NotifyCanExcuteChanged()
+        {
+            if ( CanExecuteChanged != null )
+            {
+                CanExecuteChanged( this, EventArgs.Empty);
+            }
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2><a name="4._モデルの実装（DistanceUnit.cs）">4. モデルの実装（DistanceUnit.cs）</a></h2>
+<p>モデルの実装を行います。<br>各単位の宣言と、単位間の変換を行うめっそっどの実装を行います。</p>
+
+[プログラムソース "DistanceUnit.cs"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System.Collections.Generic;
+
+namespace MeterYardConverter
+{
+    public class DistanceUnit
+    {
+        public string Name { get; set; }
+        public double Coefficient { get; set; }
+        public override string ToString()
+        {
+            return this.Name;
+        }
+    }
+
+
+    /// &lt;summary&gt;
+    /// メートル単位を表すクラス
+    /// &lt;/summary&gt;
+    public class MetricUnit : DistanceUnit
+    {
+        private static List&lt;MetricUnit&gt; _units = new List&lt;MetricUnit&gt;
+        {
+            new MetricUnit {Name=&quot;mm&quot;, Coefficient=1, },
+            new MetricUnit {Name=&quot;cm&quot;, Coefficient=10, },
+            new MetricUnit {Name=&quot;m&quot;, Coefficient=10*100, },
+            new MetricUnit {Name=&quot;km&quot;, Coefficient=10*100*1000, },
+        };
+
+        public static ICollection&lt;MetricUnit&gt; Units { get { return _units; } }
+
+        public double FromImperialUnit(ImperialUnit unit, double value)
+        {
+            return (value * unit.Coefficient) * 25.4 / this.Coefficient;
+        }
+    }
+
+
+    /// &lt;summary&gt;
+    /// ヤード単位を表すクラス
+    /// &lt;/summary&gt;
+    public class ImperialUnit : DistanceUnit
+    {
+        private static List&lt;ImperialUnit&gt; _units = new List&lt;ImperialUnit&gt;
+        {
+            new ImperialUnit {Name=&quot;in&quot;, Coefficient=1, },            // インチ
+            new ImperialUnit {Name=&quot;ft&quot;, Coefficient=12, },           // フィート
+            new ImperialUnit {Name=&quot;yd&quot;, Coefficient=12*3, },         // ヤード
+            new ImperialUnit {Name=&quot;ml&quot;, Coefficient=12*3*1760, },    // マイル
+        };
+
+        public static ICollection&lt;ImperialUnit&gt; Units { get { return _units; } }
+
+        public double FromMetricUnit(MetricUnit unit, double value)
+        {
+            return (value * unit.Coefficient) / 25.4 / this.Coefficient;
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2><a name="5._ビューモデルの実装（MainWindowViewModel.cs）">5. ビューモデルの実装（MainWindowViewModel.cs）</a></h2>
+<p>ビューモデルを実装します。</p>
+
+[プログラムソース "MainWindowViewModel.cs"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System.Windows.Input;         // ICommand
+
+
+namespace MeterYardConverter
+{
+    class MainWindowVIewModel : ViewModel
+    {
+        // 上のTextBoxで入力されている値
+        private double _metricValue;
+        // 下のTextBoxで入力されている値
+        private double _imperialValue;
+
+        // ▲ボタンで呼ばれるコマンド
+        public ICommand ImperialUnitToMetricUnit { get; private set; }
+        // ▼ボタンで呼ばれるコマンド
+        public ICommand MetricUnitToImperialUnit { get; private set; }
+
+        // 上のComboBoxで選択されている単位
+        public MetricUnit CurrentMetricUnit { get; private set; }
+        // 下のComboBoxで選択されている単位
+        public ImperialUnit CurrentImperialUnit { get; private set; }
+
+
+        public double MetricValue
+        {
+            get { return this._metricValue; }
+            set
+            {
+                this._metricValue = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public double ImperialValue
+        {
+            get { return this._imperialValue; }
+            set
+            {
+                this._imperialValue = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public MainWindowVIewModel()
+        {
+            // CurrnetMetricUnit の初期化
+            this.CurrentMetricUnit = MetricUnit.Units.First();
+            // CurrentImperialUnit の初期化
+            this.CurrentImperialUnit = ImperialUnit.Units.First();
+
+            // ICommand MetricUnitToImperialUnit の初期化
+            this.MetricUnitToImperialUnit = new DelegateCommand(() =&gt;
+            {
+                this.ImperialValue = this.CurrentImperialUnit.FromMetricUnit(this.CurrentMetricUnit, this.MetricValue);
+            });
+
+            // ICommand ImperialUnitToMetricUnit の初期化
+            this.ImperialUnitToMetricUnit = new DelegateCommand(()=&gt; {
+                this.MetricValue = this.CurrentMetricUnit.FromImperialUnit(this.CurrentImperialUnit, this.ImperialValue);
+            });
+        }
+    }
+}</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2><a name="6._ビュー_と_モデル_をデータバインディング">6. ビュー と モデル をデータバインディング</a></h2>
+<p>ここまでに作成してきたモデルをビューに対してバインディングします。<br>下のソースを見てもらうとわかる通り、簡単ですね。</p>
+
+[プログラムソース "MainWindows.xaml"]
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;MeterYardConverter.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:MeterYardConverter&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;Meter/Yard Converter&quot; FontSize=&quot;26.667&quot; FontFamily=&quot;Segoe UI Light&quot; SizeToContent=&quot;WidthAndHeight&quot; ResizeMode=&quot;NoResize&quot;&gt;
+    &lt;Window.DataContext&gt;
+        <span class="auto-style8">&lt;local:MainWindowVIewModel/&gt;</span>
+    &lt;/Window.DataContext&gt;
+    &lt;StackPanel Margin=&quot;4&quot;&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;TextBox TextWrapping=&quot;Wrap&quot; <span class="auto-style8">Text=&quot;{Binding MetricValue, StringFormat=\{0:N3\}}&quot;</span> Width=&quot;100&quot; Margin=&quot;4&quot;/&gt;
+            &lt;ComboBox Width=&quot;80&quot; Margin=&quot;4&quot; <span class="auto-style8">ItemsSource=&quot;{Binding Source={x:Static local:MetricUnit.Units}}&quot;</span> <span class="auto-style8">SelectedItem=&quot;{Binding CurrentMetricUnit}&quot;</span>/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; HorizontalAlignment=&quot;Center&quot;&gt;
+            &lt;Button Content=&quot;▲&quot; Width=&quot;40&quot; Margin=&quot;4&quot; <span class="auto-style8">Command=&quot;{Binding ImperialUnitToMetricUnit, Mode=OneWay}&quot;</span>/&gt;
+            &lt;Button Content=&quot;▼&quot; Width=&quot;40&quot; Margin=&quot;4&quot; <span class="auto-style8">Command=&quot;{Binding MetricUnitToImperialUnit, Mode=OneWay}&quot;</span>/&gt;
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+            &lt;TextBox TextWrapping=&quot;Wrap&quot; <span class="auto-style8">Text=&quot;{Binding ImperialValue, StringFormat=\{0:N3\}}&quot;</span> Width=&quot;100&quot; Margin=&quot;4&quot;/&gt;
+            &lt;ComboBox Width=&quot;80&quot; Margin=&quot;4&quot; <span class="auto-style8">ItemsSource=&quot;{Binding Source={x:Static local:ImperialUnit.Units}}&quot;</span> <span class="auto-style8">SelectedItem=&quot;{Binding CurrentImperialUnit}&quot;</span>/&gt;
+        &lt;/StackPanel&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>&nbsp;</p>
+<h2><a name="7._最終結果">7. 最終結果</a></h2>
+<p>最終的に完成したアプリケーションは以下の通りです。</p>
+<p>
+<img alt="" src="MeterYardConverter/img29.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+	
+<br>
+<h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>
+サンプルプログラム <a href="MeterYardConverter/MeterYardConverter.zip">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>日経ソフトウェア 2015年9月号 内の記事「C#デスクトップアプリ開発 第3回 WPFの要であるデータバインディングを体験しよう」<br>
+	注意：雑誌記事のままだとバグがあってうまく動きません。出版社へ連絡済み。</li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2015年08月25日 木下英俊<br>
+</font></p>
+</body>
+</html>

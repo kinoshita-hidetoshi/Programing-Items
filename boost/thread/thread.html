@@ -1,0 +1,248 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title></title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link href="../../design.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.auto-style3 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1>boost::thread<br></h1>
+<p>boost::thread を使って以下の４つのスレッド起動を行ってみます。</p>
+<h3>内容：</h3>
+<ol>
+	<li><a href="#１．引数無し関数をマルチスレッドで実行">引数無し関数をマルチスレッドで実行 
+   
+	</a> 
+   
+	<li><a href="#２．引数付き関数をマルチスレッドで実行">引数付き関数をマルチスレッドで実行 
+   
+	</a> 
+   
+	<li><a href="#３．メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
+    </a> 
+    <li><a href="#４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)">メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></li>
+</ol>
+<p>boost::thread 
+は環境依存の実装を吸収してくれるだけでなく、使い勝手も良いです。特にメソッドを起動する際、_beginthreadを使用した場合は static 
+なメソッドなどをいったん間にかませる必要があるのですが、これが不要で一発起動できて便利です。</p>
+<p>&nbsp;</p>
+<h2><a name="１．引数無し関数をマルチスレッドで実行">１．引数無し関数をマルチスレッドで実行</a></h2>
+<h3>評価環境：</h3>
+<ul>
+	<li>boost： Ver. 1.47.0</li>
+	<li>コンパイラ： VS2008sp1 (VC++2008sp1)</li>
+	<li>OS： Windows7 64bit</li>
+</ul>
+
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;         // std::cout, std::endl
+#include &lt;<span class="auto-style3">boost/thread.hpp</span>&gt; // boost::thread
+
+using namespace std;
+//using namespace boost;
+
+void PrintHello()<br>
+{
+    const size_t RepeatCount = 5 ;
+    for ( size_t i=0; i&lt;RepeatCount; ++i ){
+        cout &lt;&lt; "Hello " &lt;&lt; endl;
+        Sleep(500);
+    }
+} 
+
+void PrintWorld()
+{
+    const size_t RepeatCount = 5 ;
+    for ( size_t i=0; i&lt;RepeatCount; ++i ){
+        cout &lt;&lt; "World! " &lt;&lt; endl;
+        Sleep(500);
+    }
+} 
+
+int main(int argc, char* argv[])
+{
+    // 引数無し関数をマルチスレッドで実行
+    {
+        <span class="auto-style3">boost::thread</span> thr_hello(&amp;PrintHello);
+        <span class="auto-style3">boost::thread</span> thr_world(&amp;PrintWorld);
+
+        thr_hello.<span class="auto-style3">join()</span>;
+        thr_world.<span class="auto-style3">join()</span>;
+    }
+}</code></pre>
+
+<p>&nbsp;</p>
+<h2>
+<a name="２．引数付き関数をマルチスレッドで実行">２．引数付き関数をマルチスレッドで実行</a></h2>
+<h3>評価環境：</h3>
+<ul>
+	<li>boost： Ver. 1.47</li>
+	<li>コンパイラ： VS2008sp1 (VC++2008sp1)</li>
+	<li>OS： Windows7 64bit</li>
+</ul>
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;         // std::cout, std::endl
+#include &lt;<span class="auto-style3">boost/thread.hpp</span>&gt; // boost::thread
+#include &lt;boost/bind.hpp&gt;   // boost::bind
+
+using namespace std;
+//using namespace boost;
+
+void PrintString( const char* str )
+{
+    const size_t RepeatCount = 5 ;
+    for ( size_t i=0; i&lt;RepeatCount; ++i ){
+        cout &lt;&lt; str &lt;&lt; endl;
+        Sleep(500);
+    }
+}
+
+
+int main(int argc, char* argv[])
+{
+    // 引数付き関数をマルチスレッドで実行
+    {
+        <span class="auto-style3">boost::thread</span> thr_hello(&amp;PrintString, <span class="string">&quot;Hello &quot;</span>);
+        <span class="auto-style3">boost::thread</span> thr_world(&amp;PrintString, <span class="string">&quot;World! &quot;</span>);
+        <span class="auto-style3">boost::thread</span> thr_space( bind(&amp;PrintString, <span class="string">&quot;Space &quot;</span>) );
+
+        thr_hello.join();
+        thr_world.join();
+        thr_space.join();
+    }
+}</code></pre>
+<p>
+&nbsp;</p>
+<h2>
+<a name="３．メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">３．メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
+    </a></h2>
+<h3>クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは &amp;hello, 
+&amp;world を引数で渡しています。</h3>
+<h3>評価環境：</h3>
+<ul>
+	<li>boost： Ver. 1.47</li>
+	<li>コンパイラ： VS2008sp1 (VC++2008sp1)</li>
+	<li>OS： Windows7 64bit</li>
+</ul>
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;         // std::cout, std::endl
+#include &lt;<span class="auto-style3">boost/thread.hpp</span>&gt; // boost::thread
+#include &lt;boost/bind.hpp&gt;   // boost::bind
+
+using namespace std;
+//using namespace boost;
+
+class PrintMessage {
+private:
+    const string strMessage_ ;
+
+public:
+    PrintMessage( string strMessage ) : strMessage_(strMessage)
+    {
+    }
+
+    void run()
+    {
+        const size_t RepeatCount = 5 ;
+        for ( size_t i=0; i&lt;RepeatCount; ++i ){
+            cout &lt;&lt; strMessage_ &lt;&lt; endl;
+            Sleep(500);
+        }
+    }
+};
+
+int main(int argc, char* argv[])<br>{
+    // メンバ関数をマルチスレッドで実行(クラス外部からの起動)
+    {
+        PrintMessage hello(<span class="string">&quot;Hello &quot;</span>);
+        PrintMessage world(<span class="string">&quot;World! &quot;</span>);
+
+        <span class="auto-style3">boost::thread</span> thr_hello( bind( &amp;PrintMessage::run, &amp;hello ) );
+        <span class="auto-style3">boost::thread</span> thr_world( bind( &amp;PrintMessage::run, &amp;world ) );
+
+        thr_hello.join();
+        thr_world.join(); 
+    }
+}</code></pre>
+<p>
+&nbsp;</p>
+<h2>
+<a name="４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)">４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></h2>
+<p>
+&nbsp;&nbsp; クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは 
+this を引数で渡しています。<br>&nbsp; ここに記載の方法は私自身のオリジナルです。どこがオリジナルかというと、 swap で boost::thread 
+のメンバ変数を交換しているところです。どこかから引用したわけではないので落とし穴があるかもしれません。逆にもっと美しい実現方法があるのかもしれません。まずは動作した、というだけの代物です。&nbsp;</p>
+<h3>評価環境：</h3>
+<ul>
+	<li>boost： Ver. 1.47</li>
+	<li>コンパイラ： VS2008sp1 (VC++2008sp1)</li>
+	<li>OS： Windows7 64bit</li>
+</ul>
+<pre class="prettyprint linenums">
+<code>#include &lt;iostream&gt;         // std::cout, std::endl
+#include &lt;<span class="auto-style3">boost/thread.hpp</span>&gt; // boost::thread
+#include &lt;boost/bind.hpp&gt;   // boost::bind
+
+using namespace std;
+//using namespace boost;
+
+class PrintMessage {
+private:
+    const string strMessage_ ;
+    <span class="auto-style3">boost::thread</span> thr_ ;
+
+public:
+    PrintMessage( string strMessage ) : strMessage_(strMessage)
+    {
+        <span class="auto-style3">boost::thread</span> thr( bind(&amp;PrintMessage::run, this) );
+        thr_.swap( thr ) ;
+    }
+
+    void run()
+    {
+        const size_t RepeatCount = 5 ;
+        for ( size_t i=0; i&lt;RepeatCount; ++i ){
+            cout &lt;&lt; strMessage_ &lt;&lt; endl;
+            Sleep(500);
+        }
+    } 
+    void join()
+    {
+        thr_.join(); 
+    } 
+};
+
+
+int main(int argc, char* argv[])<br>{
+    <span class="comment">// メンバ関数をマルチスレッドで実行(クラス内部からの起動)</span>
+    {
+        PrintMessage hello(<span class="string">&quot;Hello  &quot;</span>);
+        PrintMessage world(<span class="string">&quot;World! &quot;</span>); 
+
+        hello.join();
+        world.join(); 
+    }
+}
+</code></pre>
+<br>
+<font face="Meiryo UI">
+<hr>
+<p>記載： 2010年3月14日 初版<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2012年3月4日 説明など追記<br></p>
+</font>
+</body>
+</html>

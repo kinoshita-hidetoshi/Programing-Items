@@ -1,0 +1,584 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>WPF - ListView コントロール</title>
+
+<!-- for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- for 'google-code-prettify' -->
+
+<!-- for 'design.css' -->
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	text-decoration: underline;
+}
+.auto-style10 {
+	background-color: #00FFFF;
+}
+</style>
+</head>
+
+<body onload="prettyPrint();">
+
+<h1 class="auto-style7">
+WPF : ListView コントロール</h1>
+<h2>
+内容一覧：</h2>
+<p>
+<a href="#1._Simple_な_ListView">１．Simple な ListView</a><br>
+<a href="#2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment_を設定する）">２．ヘッダの文字列を左寄せにする（HorizontalContentAlignment を設定する）</a><br>
+<a href="#3._イメージを表示する">３．イメージを表示する</a><br>
+<a href="#4．Image_と_TextBlock_を一緒に表示する">４．Image と TextBlock を一緒に表示する</a><br>
+<a href="#5. タイル表示する">５．タイル表示する</a><br><a href="#6. GridView_のスタイルをカスタマイズ">
+６．GridView のスタイルをカスタマイズ</a></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="1._Simple_な_ListView">1. Simple な ListView</a></h2>
+<p>
+極力 Blendを使って ListView を使ったシンプルなアプリを作ってみます。<br>こんな画面のプログラムを作ります。</p>
+<p>
+<img alt="" src="ListView/img25.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+(1) まずはWPFのプロジェクトを新規作成します。</p>
+<p>
+<img alt="" height="457" src="ListView/img7.jpg" width="826"></p>
+<p>
+(2) ListViewコントロールを全面にして貼り付けます。</p>
+<p>
+<img alt="" src="ListView/img9.jpg"></p>
+<p>
+(3) サンプルデータを作ります。ここでは Name と Address の２つの文字列データをサンプルデータとして作成します。</p>
+<p>
+<img alt="" src="ListView/img19.jpg"></p>
+<p>
+(4) このサンプルデータを Grid の DataContext にバインドします。</p>
+<p>
+ここでは”StaticResource”から”SampleDataSource”を選択します。</p>
+<p>
+<img alt="" src="ListView/img28.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+(5) 次に ListView の ItemsSource へ 先に設定した SampleDataSource の Collection を設定します。</p>
+<p>
+<img alt="" src="ListView/img21.jpg"></p>
+<p>
+(6) 続けて、ListView の GridViewColumn の設定を行います。</p>
+<p>
+ここでは、”Name” と ”Address” の２つの列を作成してみます。</p>
+<p>
+<img alt="" src="ListView/img22.jpg"></p>
+<p>
+<img alt="" src="ListView/img23.jpg"></p>
+<p>
+各 DisplayMemberBinding は ”データコンテキスト” の対応するアイテムを選択します。<br>
+<img alt="" src="ListView/img24.jpg"></p>
+<p>
+以上で完成です。</p>
+<p>
+(7) 動かしてみよう</p>
+<p>
+[F5]でプログラムを動かしてみます。こんな感じです。</p>
+<p>
+<img alt="" src="ListView/img25.jpg"></p>
+<p>
+この時点の XAML は以下の通り。動いてしまえば簡単ですね。</p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;ListViewSimple_2.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Grid DataContext=&quot;{Binding Mode=OneWay, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView ItemsSource=&quot;{Binding Collection}&quot;&gt;
+            &lt;ListView.View&gt;
+                &lt;GridView&gt;
+                   &lt;GridViewColumn Header=&quot;Name&quot; DisplayMemberBinding=&quot;{Binding Name}&quot;/&gt;
+                   &lt;GridViewColumn Header=&quot;Address&quot; DisplayMemberBinding=&quot;{Binding Address}&quot;/&gt;
+                &lt;/GridView&gt;
+            &lt;/ListView.View&gt;
+        &lt;/ListView&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+&nbsp;</p>
+<h2>
+<a name="2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment_を設定する）">2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment を設定する）</a></h2>
+<p>
+先ほど作ったプログラムの実行画面を見てみましょう。ヘッダ部分だけ中央に寄っています。<br>ヘッダの部分も左寄せにしてみたいですね。というわけで、ヘッダ部分も文字を左寄せにしてみます。<br>実は、少々面倒です。Blendでは設定できませんでした。XAMLの直接修正で実現します。</p>
+<p>
+<img alt="" src="ListView/img25.jpg"></p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        mc:Ignorable=&quot;d&quot; x:Class=&quot;ListViewSimple.MainWindow&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Grid DataContext=&quot;{Binding Mode=oneway, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView ItemsSource=&quot;{Binding Collection}&quot;&gt;
+            &lt;ListView.View&gt;
+                &lt;GridView&gt;
+                    &lt;!--
+                    &lt;GridViewColumn Header=&quot;Name&quot; DisplayMemberBinding=&quot;{Binding Name}&quot;/&gt;
+                    --&gt;
+                    &lt;GridViewColumn DisplayMemberBinding=&quot;{Binding Name}&quot;&gt;
+<span class="auto-style8">                        &lt;GridViewColumn.Header&gt;</span>
+<span class="auto-style8">                            &lt;GridViewColumnHeader Content=&quot;Name&quot; HorizontalContentAlignment=&quot;Left&quot;/&gt;</span>
+<span class="auto-style8">                        &lt;/GridViewColumn.Header&gt;</span>
+                    &lt;/GridViewColumn&gt;
+                    &lt;!--
+                    &lt;GridViewColumn Header=&quot;Address&quot; DisplayMemberBinding=&quot;{Binding Address}&quot;/&gt;
+                    --&gt;
+                    &lt;GridViewColumn DisplayMemberBinding=&quot;{Binding Address}&quot;&gt;
+<span class="auto-style8">                        &lt;GridViewColumn.Header&gt;</span>
+<span class="auto-style8">                            &lt;GridViewColumnHeader Content=&quot;Address&quot; HorizontalContentAlignment=&quot;Left&quot;/&gt;</span>
+<span class="auto-style8">                        &lt;/GridViewColumn.Header&gt;</span>
+                    &lt;/GridViewColumn&gt;
+                &lt;/GridView&gt;
+            &lt;/ListView.View&gt;
+        &lt;/ListView&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+修正したXAMLでコンパイルしたプログラムの実行結果は下記の通りです。<br>ちゃんと左寄せ(Left)になりました。同様に Right 
+を設定すれば右寄せにもできます。</p>
+<p>
+<img alt="" src="ListView/img34.jpg"></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="3._イメージを表示する">3. イメージを表示する</a></h2>
+<p>
+１行目にイメージを表示するように変更します。</p>
+<p>
+まず最初にすることは画像データをSampleDataに加えることです。<br>Images という名称で下記のようにサンプルに加えました。</p>
+<p>
+<img alt="" src="ListView/img10.jpg"></p>
+<p>
+作成したプログラムは下記の通り。</p>
+<p>
+<img alt="" src="ListView/img6.jpg"></p>
+<p>
+作成したXAMLは下記の通り。<br>StackPanel は無くても良いのですが、後述の説明の都合で入れてあります。</p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008</a>&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        mc:Ignorable=&quot;d&quot; x:Class=&quot;ListViewSimple.MainWindow&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Grid DataContext=&quot;{Binding Mode=oneway, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView ItemsSource=&quot;{Binding Collection}&quot;&gt;
+            &lt;ListView.View&gt;
+                &lt;GridView&gt;
+<span class="auto-style8">                    &lt;GridViewColumn Header=&quot;Images&quot;&gt;</span>
+<span class="auto-style8">                        &lt;GridViewColumn.CellTemplate&gt;</span>
+<span class="auto-style8">                            &lt;DataTemplate&gt;</span>
+<span class="auto-style8">                                &lt;StackPanel&gt;</span>
+<span class="auto-style8">                                    &lt;Image Source=&quot;{Binding Path=Images}&quot; Width=&quot;64&quot;&gt;&lt;/Image&gt;</span>
+<span class="auto-style8">                                &lt;/StackPanel&gt;</span>
+<span class="auto-style8">                            &lt;/DataTemplate&gt;</span>
+<span class="auto-style8">                        &lt;/GridViewColumn.CellTemplate&gt;</span>
+<span class="auto-style8">                    &lt;/GridViewColumn&gt;</span>
+                    &lt;GridViewColumn Header=&quot;Name&quot; DisplayMemberBinding=&quot;{Binding Name}&quot;/&gt;
+                    &lt;GridViewColumn Header=&quot;Address&quot; DisplayMemberBinding=&quot;{Binding Address}&quot;/&gt;
+                &lt;/GridView&gt;
+            &lt;/ListView.View&gt;
+        &lt;/ListView&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+&nbsp;</p>
+<h2>
+<a name="4．Image_と_TextBlock_を一緒に表示する">4．Image と TextBlock を一緒に表示する</a></h2>
+<p>
+１行目に表示していたイメージと、２行目に表示していた名前、の２つを１つのセルに融合して表示します。</p>
+<p>
+<img alt="" src="ListView/imgA.jpg"></p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        mc:Ignorable=&quot;d&quot; x:Class=&quot;ListViewSimple.MainWindow&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Grid DataContext=&quot;{Binding Mode=oneway, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView ItemsSource=&quot;{Binding Collection}&quot;&gt;
+            &lt;ListView.View&gt;
+                &lt;GridView&gt;
+                    &lt;GridViewColumn Header=&quot;Name&quot;&gt;
+                        &lt;GridViewColumn.CellTemplate&gt;
+                            &lt;DataTemplate&gt;
+                                &lt;StackPanel&gt;
+<span class="auto-style8">                                    &lt;Image Source=&quot;{Binding Path=Images}&quot; Width=&quot;64&quot;&gt;&lt;/Image&gt;</span>
+<span class="auto-style8">                                    &lt;TextBlock Text=&quot;{Binding Path=Name}&quot;/&gt;</span>
+                                &lt;/StackPanel&gt;
+                            &lt;/DataTemplate&gt;
+                        &lt;/GridViewColumn.CellTemplate&gt;
+                    &lt;/GridViewColumn&gt;
+                    &lt;GridViewColumn Header=&quot;Address&quot; DisplayMemberBinding=&quot;{Binding Address}&quot;/&gt;
+                &lt;/GridView&gt;
+            &lt;/ListView.View&gt;
+        &lt;/ListView&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+&nbsp;</p>
+<h2>
+<a name="5. タイル表示する">５．タイル表示する</a></h2>
+<p>
+だんだん難しくなってきます。<br>ここでは、
+ListView を使って下図のようなタイル表示を行う方法を記載します。</p>
+<p>
+「Pro WPF 4.5 in C#」の本で、Chapter 22 にて&quot;Creating a Custum View&quot;として紹介されている内容です。<br>
+ほとんど本に記載のままですが、若干独自の処理を加えています。</p>
+<p>
+<img alt="" src="ListView/img8.jpg"></p>
+<p>
+(1) まず、次の２つのソースファイル（TileView.cs、Generic.xaml）をプロジェクトへ追加します。</p>
+
+[TileView.cs]
+<pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace  <span class="auto-style8">ListViewStyle</span>
+{
+    public class <span class="auto-style8">TileView</span> : ViewBase
+    {
+        private DataTemplate itemTemplate;
+        public DataTemplate ItemTemplate
+        {
+            get { return itemTemplate; }
+            set { itemTemplate = value; }
+        }
+
+        private Brush selectedBackground = Brushes.Transparent;
+        public Brush <span class="auto-style10">SelectedBackground</span>
+        {
+            get { return selectedBackground; }
+            set { selectedBackground = value; }
+        }
+
+        private Brush selectedBorderBrush = Brushes.Black;
+        public Brush <span class="auto-style10">SelectedBorderBrush</span>
+        {
+            get { return selectedBorderBrush; }
+            set { selectedBorderBrush = value; }
+        }
+
+        private int selectedBorderThickness = 1;
+        public int <span class="auto-style10">SelectedBorderThickness</span>
+        {
+            get { return selectedBorderThickness; }
+            set { selectedBorderThickness = value; }
+        }
+
+        private int selectedCornerRadius = 3;
+        public int <span class="auto-style10">SelectedCornerRadius</span>
+        {
+            get { return selectedCornerRadius; }
+            set { selectedCornerRadius = value; }
+        }
+
+        protected override object DefaultStyleKey
+        {
+            get { return new ComponentResourceKey(GetType(), &quot;TileView&quot;); }
+        }
+
+        protected override object ItemContainerDefaultStyleKey
+        {
+            get { return new ComponentResourceKey(GetType(), &quot;TileViewItem&quot;); }
+        }       
+    }
+}</pre>
+
+
+<p>[Themes / Generic.xaml]<br><strong>[重要1]</strong> <span class="auto-style9">”Generic.xaml” のファイルは必ず”Themes”フォルダの下に保存してください。</span>詳細は不明。<br>
+<strong>[重要2]</strong> <span class="auto-style9">”Generic.xaml” の &quot;ビルドアクション&quot; を 
+&quot;Page&quot; にすること。</span> </p>
+<pre class="prettyprint linenums">
+&lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    <span class="auto-style8">xmlns:local=&quot;clr-namespace:ListViewStyle&quot;</span>&gt;
+    
+  &lt;Style x:Key=&quot;{ComponentResourceKey TypeInTargetAssembly={x:Type local:<span class="auto-style8">TileView</span>},
+         ResourceId=<span class="auto-style8">TileView</span>}&quot;
+         TargetType=&quot;{x:Type ListView}&quot; BasedOn=&quot;{StaticResource {x:Type ListBox}}&quot;&gt;
+    &lt;Setter Property=&quot;BorderBrush&quot; Value=&quot;Black&quot;&gt;&lt;/Setter&gt;
+    &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;0.5&quot;&gt;&lt;/Setter&gt;
+    &lt;Setter Property=&quot;Grid.IsSharedSizeScope&quot; Value=&quot;True&quot;&gt;&lt;/Setter&gt;
+
+    &lt;Setter Property=&quot;ItemsPanel&quot;&gt;
+      &lt;Setter.Value&gt;
+        &lt;ItemsPanelTemplate&gt;
+          &lt;WrapPanel Width=&quot;{Binding (FrameworkElement.ActualWidth),
+            RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}&quot;
+          &gt;&lt;/WrapPanel&gt;
+        &lt;/ItemsPanelTemplate&gt;
+      &lt;/Setter.Value&gt;
+    &lt;/Setter&gt;
+  &lt;/Style&gt;
+
+  &lt;Style x:Key=&quot;{ComponentResourceKey TypeInTargetAssembly={x:Type local:<span class="auto-style8">TileView</span>},
+         ResourceId=<span class="auto-style8">TileViewItem</span>}&quot;
+         TargetType=&quot;{x:Type ListViewItem}&quot; BasedOn=&quot;{StaticResource {x:Type ListBoxItem}}&quot;&gt;
+    &lt;Setter Property=&quot;Padding&quot; Value=&quot;3&quot;/&gt;
+    &lt;Setter Property=&quot;HorizontalContentAlignment&quot; Value=&quot;Center&quot;&gt;&lt;/Setter&gt;
+    &lt;Setter Property=&quot;ContentTemplate&quot; Value=&quot;{Binding Path=View.ItemTemplate,
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}&quot;&gt;&lt;/Setter&gt;
+
+    &lt;Setter Property=&quot;Template&quot;&gt;
+      &lt;Setter.Value&gt;
+        &lt;ControlTemplate TargetType=&quot;{x:Type ListBoxItem}&quot;&gt;
+&lt;!-- 値を直接指定する場合はこんな感じで
+          &lt;Border Name=&quot;Border&quot; BorderThickness=&quot;1&quot; CornerRadius=&quot;3&quot; &gt;
+--&gt;
+          &lt;Border Name=&quot;Border&quot;
+            BorderThickness=&quot;{Binding Path=View.<span class="auto-style10">SelectedBorderThickness</span>,
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}&quot;
+            CornerRadius=&quot;{Binding Path=View.<span class="auto-style10">SelectedCornerRadius</span>,
+            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}&quot;&gt;
+              &lt;ContentPresenter /&gt;
+          &lt;/Border&gt;
+          &lt;ControlTemplate.Triggers&gt;            
+            &lt;Trigger Property=&quot;IsSelected&quot; Value=&quot;True&quot;&gt;
+                &lt;Setter TargetName=&quot;Border&quot; Property=&quot;BorderBrush&quot;
+                    Value=&quot;{Binding Path=View.<span class="auto-style10">SelectedBorderBrush</span>,
+                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}&quot;&gt;&lt;/Setter&gt;
+                &lt;Setter TargetName=&quot;Border&quot; Property=&quot;Background&quot;
+                    Value=&quot;{Binding Path=View.<span class="auto-style10">SelectedBackground</span>,
+                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}&quot;&gt;&lt;/Setter&gt;
+            &lt;/Trigger&gt;
+          &lt;/ControlTemplate.Triggers&gt;
+        &lt;/ControlTemplate&gt;
+      &lt;/Setter.Value&gt;
+    &lt;/Setter&gt;
+  &lt;/Style&gt;
+&lt;/ResourceDictionary&gt;</pre>
+<p>
+<img alt="" src="ListView/img5.jpg" height="312" width="391" style="border:solid 3px #888888"><br>
+図： &quot;Generic.xaml&quot; のビルドアクション</p>
+<p>
+&nbsp;</p>
+<p>
+(2) 次に MainWindow.xaml を以下のように修正します。</p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        mc:Ignorable=&quot;d&quot; x:Class=&quot;ListViewSimple.MainWindow&quot;
+        <span class="auto-style8">xmlns:local=&quot;clr-namespace:ListViewStyle&quot;</span>
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+
+    &lt;Window.Resources&gt;
+        &lt;local:<span class="auto-style8">TileView</span> x:Key=&quot;<span class="auto-style8">ImageView</span>&quot; <span class="auto-style10">SelectedBackground=&quot;LightSteelBlue&quot; SelectedBorderBrush=&quot;BlueViolet&quot; SelectedBorderThickness=&quot;5&quot; SelectedCornerRadius=&quot;10&quot;</span>&gt;
+            &lt;local:TileView.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel Width=&quot;128&quot; VerticalAlignment=&quot;Top&quot;&gt;
+                        &lt;Image Source=&quot;{Binding Path=Images}&quot;&gt;&lt;/Image&gt;
+                        &lt;TextBlock TextWrapping=&quot;Wrap&quot; HorizontalAlignment=&quot;Center&quot;  Text=&quot;{Binding Path=Name}&quot; &gt;&lt;/TextBlock&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/local:TileView.ItemTemplate&gt;
+        &lt;/local:TileView&gt;
+
+        &lt;local:<span class="auto-style8">TileView</span> x:Key=&quot;<span class="auto-style8">ImageDetailView</span>&quot; <span class="auto-style10">SelectedBackground=&quot;LightSteelBlue&quot;</span>&gt;
+            &lt;local:TileView.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;Grid&gt;
+                        &lt;Grid.ColumnDefinitions&gt;
+                            &lt;ColumnDefinition Width=&quot;Auto&quot;&gt;&lt;/ColumnDefinition&gt;
+                            &lt;ColumnDefinition Width=&quot;Auto&quot; SharedSizeGroup=&quot;Col2&quot;&gt;&lt;/ColumnDefinition&gt;
+                        &lt;/Grid.ColumnDefinitions&gt;
+            
+                        &lt;Image Margin=&quot;5&quot; Grid.Column=&quot;0&quot;  Width=&quot;100&quot; Source=&quot;{Binding Path=Images}&quot;&gt;&lt;/Image&gt;
+                        &lt;StackPanel Grid.Column=&quot;1&quot; VerticalAlignment=&quot;Center&quot;&gt;
+                            &lt;TextBlock FontWeight=&quot;Bold&quot; Text=&quot;{Binding Path=Name}&quot;&gt;&lt;/TextBlock&gt;
+                            &lt;TextBlock Text=&quot;{Binding Path=Address}&quot;&gt;&lt;/TextBlock&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/Grid&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/local:TileView.ItemTemplate&gt;
+        &lt;/local:TileView&gt;
+
+        &lt;GridView x:Key=&quot;<span class="auto-style8">GridView</span>&quot;&gt;
+            &lt;GridView.Columns&gt;
+                &lt;GridViewColumn Header=&quot;Name&quot;&gt;
+                    &lt;GridViewColumn.CellTemplate&gt;
+                        &lt;DataTemplate&gt;
+                            &lt;StackPanel&gt;
+                                &lt;Image Source=&quot;{Binding Path=Images}&quot; Width=&quot;64&quot;&gt;&lt;/Image&gt;
+                                &lt;TextBlock Text=&quot;{Binding Path=Name}&quot;/&gt;
+                            &lt;/StackPanel&gt;
+                        &lt;/DataTemplate&gt;
+                    &lt;/GridViewColumn.CellTemplate&gt;                      
+                &lt;/GridViewColumn&gt;
+                &lt;GridViewColumn Header=&quot;Address&quot; DisplayMemberBinding=&quot;{Binding Address}&quot;/&gt;
+            &lt;/GridView.Columns&gt;
+        &lt;/GridView&gt;
+    &lt;/Window.Resources&gt;
+
+    &lt;Grid DataContext=&quot;{Binding Mode=oneway, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView <span class="auto-style8">View=&quot;{StaticResource ImageView}&quot;</span> ItemsSource=&quot;{Binding Collection}&quot; <span class="auto-style10">BorderBrush=&quot;Black&quot; BorderThickness=&quot;0.5&quot; Foreground=&quot;Black&quot;</span>/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+&nbsp;</p>
+<p>
+このまま実行すると、下図のようになります。</p>
+<p>
+<img alt="" src="ListView/img16.jpg"></p>
+<p>
+「View=&quot;{StaticResource ImageView}&quot;」 を「View=&quot;{StaticResource
+<span class="auto-style8">ImageDetailView</span>}&quot;」へ変えると、下図の通り。</p>
+<p>
+<img alt="" src="ListView/img17.jpg"></p>
+<p>
+「View=&quot;{StaticResource ImageView}&quot;」 を「View=&quot;{StaticResource
+<span class="auto-style8">GridView</span>}&quot;」へ変えると、下図の通り。</p>
+<p>
+<img alt="" src="ListView/img18.jpg"></p>
+<p>
+これらをベースにして微修正していけば、多くのバリエーションに対応できそうです。</p>
+<p>
+アイテム選択時のセルの色や枠の太さ、角、色、などのカスタマイズは、上記ソース中の水色部分を参考に修正を行ってください。</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="6. GridView_のスタイルをカスタマイズ">6．GridView のスタイルをカスタマイズ</a></h2>
+<p>
+”GridView” のスタイルをカスタマイズしたい場合は、下記のような感じでスタイル指定にて。</p>
+
+[MainWindow.xaml]
+<pre class="prettyprint linenums">
+&lt;Window
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; mc:Ignorable=&quot;d&quot; x:Class=&quot;ListViewSimple_2.MainWindow&quot;
+        xmlns:local=&quot;clr-namespace:ListViewSimple_2&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+
+    &lt;Window.Resources&gt;
+        &lt;local:TileView x:Key=&quot;ImageView&quot; SelectedBorderBrush=&quot;BlueViolet&quot; SelectedBorderThickness=&quot;5&quot; SelectedCornerRadius=&quot;10&quot;&gt;
+            &lt;local:TileView.SelectedBackground&gt;
+                &lt;LinearGradientBrush EndPoint=&quot;0.5,1&quot; StartPoint=&quot;0.5,0&quot;&gt;
+                    &lt;GradientStop Color=&quot;#FF1B6576&quot; Offset=&quot;1&quot;/&gt;
+                    &lt;GradientStop Color=&quot;White&quot;/&gt;
+                    &lt;GradientStop Color=&quot;#FF9FD2DE&quot; Offset=&quot;0.237&quot;/&gt;
+                &lt;/LinearGradientBrush&gt;
+            &lt;/local:TileView.SelectedBackground&gt;
+            
+            &lt;local:TileView.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel Width=&quot;128&quot; VerticalAlignment=&quot;Top&quot;&gt;
+                        &lt;Image Source=&quot;{Binding Path=Images}&quot;&gt;&lt;/Image&gt;
+                        &lt;TextBlock TextWrapping=&quot;Wrap&quot; HorizontalAlignment=&quot;Center&quot;  Text=&quot;{Binding Path=Name}&quot; &gt;&lt;/TextBlock&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/local:TileView.ItemTemplate&gt;
+        &lt;/local:TileView&gt;
+
+        &lt;local:TileView x:Key=&quot;ImageDetailView&quot; SelectedBackground=&quot;LightSteelBlue&quot;&gt;
+            &lt;local:TileView.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;Grid&gt;
+                        &lt;Grid.ColumnDefinitions&gt;
+                            &lt;ColumnDefinition Width=&quot;Auto&quot;&gt;&lt;/ColumnDefinition&gt;
+                            &lt;ColumnDefinition Width=&quot;Auto&quot; SharedSizeGroup=&quot;Col2&quot;&gt;&lt;/ColumnDefinition&gt;
+                        &lt;/Grid.ColumnDefinitions&gt;
+            
+                        &lt;Image Margin=&quot;5&quot; Grid.Column=&quot;0&quot;  Width=&quot;100&quot; Source=&quot;{Binding Path=Images}&quot;&gt;&lt;/Image&gt;
+                        &lt;StackPanel Grid.Column=&quot;1&quot; VerticalAlignment=&quot;Center&quot;&gt;
+                            &lt;TextBlock FontWeight=&quot;Bold&quot; Text=&quot;{Binding Path=Name}&quot;&gt;&lt;/TextBlock&gt;
+                            &lt;TextBlock Text=&quot;{Binding Path=Address}&quot;&gt;&lt;/TextBlock&gt;
+                        &lt;/StackPanel&gt;
+                    &lt;/Grid&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/local:TileView.ItemTemplate&gt;
+        &lt;/local:TileView&gt;
+
+        &lt;GridView x:Key=&quot;GridView&quot;&gt;
+            &lt;GridView.Columns&gt;
+                &lt;GridViewColumn Header=&quot;Name&quot;&gt;
+                    &lt;GridViewColumn.CellTemplate&gt;
+                        &lt;DataTemplate&gt;
+                            &lt;StackPanel&gt;
+                                &lt;Image Source=&quot;{Binding Path=Images}&quot; Width=&quot;64&quot;&gt;&lt;/Image&gt;
+                                &lt;TextBlock Text=&quot;{Binding Path=Name}&quot; TextWrapping=&quot;Wrap&quot;/&gt;
+                            &lt;/StackPanel&gt;
+                        &lt;/DataTemplate&gt;
+                    &lt;/GridViewColumn.CellTemplate&gt;                      
+                &lt;/GridViewColumn&gt;
+                &lt;GridViewColumn Header=&quot;Address&quot;&gt;
+                    &lt;GridViewColumn.CellTemplate&gt;
+                        &lt;DataTemplate&gt;
+                            &lt;TextBlock Text=&quot;{Binding Path=Address}&quot; TextWrapping=&quot;Wrap&quot;/&gt;
+                        &lt;/DataTemplate&gt;
+                    &lt;/GridViewColumn.CellTemplate&gt;
+                &lt;/GridViewColumn&gt;
+            &lt;/GridView.Columns&gt;
+        &lt;/GridView&gt;
+
+<span class="auto-style8">        &lt;Style x:Key=&quot;MyStyle&quot; TargetType=&quot;ListViewItem&quot;&gt;</span>
+<span class="auto-style8">            &lt;Style.Triggers&gt;</span>
+<span class="auto-style8">                &lt;Trigger Property=&quot;IsSelected&quot; Value=&quot;True&quot;&gt;</span>
+<span class="auto-style8">                    &lt;Setter Property=&quot;Background&quot; Value=&quot;Bisque&quot;/&gt;</span>
+<span class="auto-style8">                &lt;/Trigger&gt;</span>
+<span class="auto-style8">            &lt;/Style.Triggers&gt;</span>
+<span class="auto-style8">        &lt;/Style&gt;</span>
+        
+    &lt;/Window.Resources&gt;
+
+    &lt;Grid DataContext=&quot;{Binding Mode=oneway, Source={StaticResource SampleDataSource}}&quot;&gt;
+        &lt;ListView <span class="auto-style8">ItemContainerStyle=&quot;{StaticResource MyStyle}&quot;</span> ItemsSource=&quot;{Binding Collection}&quot; View=&quot;{StaticResource GridView}&quot; BorderBrush=&quot;Black&quot; BorderThickness=&quot;0.5&quot; Foreground=&quot;Black&quot; Background=&quot;White&quot;/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+<p>
+選択時のセルの色を変えられました。</p>
+<p>
+<img alt="" src="ListView/img1E.jpg"></p>
+<p>
+&nbsp;</p>
+<hr>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2014年09月08日： 新規作成<br>2018年09月08日： 
+&quot;Generic.xaml&quot; のビルドアクションに関する記述を追記</font></p>
+</body>
+</html>

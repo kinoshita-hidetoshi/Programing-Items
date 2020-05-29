@@ -1,0 +1,369 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>[Dragablz] はじめに</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	background-color: #00FFFF;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+［Dragablz］はじめに</h1>
+
+<p> 「Dragablz」 は、WPFアプリで使用できるドラッグ可能でタブを分離可能にするオープンソースライブラリです。Dragablzを使用することでとても簡単にドッキング可能なWindowsアプリケーションを作成可能です。</p>
+<p> 使用ライセンスは「Ms-PL」（<a href="https://msdn.microsoft.com/ja-jp/library/gg592960.aspx" target="_blank">https://msdn.microsoft.com/ja-jp/library/gg592960.aspx</a>）です。このライセンスは、いくつかの条件を守れば、商用／非商用にかかわらず無償使用できるものです。</p>
+<h2> 目次</h2>
+<p> <a href="#1._ライブラリを取得する">1. ライブラリを取得する</a><br><a href="#2._まずはやってみよう">2. 
+まずはやってみよう</a><br><a href="#2-1._Dragablz_入手">2-1. Dragablz 入手</a><br>
+<a href="#2-2._タブをドラッグ移動可能にする">2-2. Tabをドラッグ移動可能にする</a><br>
+<a href="#2-3._タブを分離可能にする">2-3. Tabを分離可能にする</a><br>
+<a href="#2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更を可能にする</a><br><a href="#3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a><br>
+<br><a href="#参考URL">参考URL</a><br><a href="#関連ページ">関連ページ</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._ライブラリを取得する">1. ライブラリを取得する</a></h2>
+<p> 「Dragablz」 は、以下の方法で取得可能です。</p>
+<h3> GitGub</h3>
+<p> 下記より入手できます。<br><a href="https://github.com/ButchersBoy/Dragablz">
+https://github.com/ButchersBoy/Dragablz</a></p>
+<p> &nbsp;</p>
+<h3> NuGet</h3>
+<p> 下記より入手できます。<br><a href="https://www.nuget.org/packages/Dragablz/">
+https://www.nuget.org/packages/Dragablz/</a></p>
+<p> &nbsp;</p>
+<h2> <a name="2._まずはやってみよう">2. まずはやってみよう</a></h2>
+<p> まずはWPFで TabControl を使ったシンプルなプログラムを作ってみます。<br>これをリファレンスにして Dragablz 
+を使って少しずつ改造していきます。</p>
+<p> 画面です。</p>
+<p> 
+<img alt="" src="abstract/imgB.jpg"></p>
+<p> 
+このソースコード(xaml)です。</p>
+<span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;simpleWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        xmlns:local=&quot;clr-namespace:simpleWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot; ResizeMode=&quot;CanResizeWithGrip&quot;&gt;
+    &lt;Grid&gt;
+        &lt;TabControl x:Name=&quot;tabControl&quot; Margin=&quot;10&quot;&gt;
+            &lt;TabItem Header=&quot;Tab No.1&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Hello world.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.2&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock1&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;This is No.2 tab.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.3&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+        &lt;/TabControl&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>ではこれを改造してきます。</p>
+<p>&nbsp;</p>
+<h3><a name="2-1._Dragablz_入手">2-1. Dragablz 入手</a></h3>
+<p>最初に NuGet で Dragablz を入手します。<br>この文章を書いているときのバージョンは v0.0.3.160 です。</p>
+<p> 
+<img alt="" src="abstract/imgA.jpg"></p>
+<p> 
+&nbsp;</p>
+<h3> 
+<a name="2-2._タブをドラッグ移動可能にする">2-2. 
+タブをドラッグ移動可能にする</a></h3>
+<span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;simpleWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006</a>&quot;
+        <span class="auto-style8">xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;</span>
+        xmlns:local=&quot;clr-namespace:simpleWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot; ResizeMode=&quot;CanResizeWithGrip&quot;&gt;
+    &lt;Grid&gt;
+        &lt;<span class="auto-style8">dragablz:TabablzControl</span> Margin=&quot;10&quot;&gt;
+            &lt;TabItem Header=&quot;Tab No.1&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Hello world.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.2&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock1&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;This is No.2 tab.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.3&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+        &lt;/TabControl&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+これだけでタブをドラッグ移動可能になりました。</p>
+<p>
+<img alt="" src="abstract/img15.jpg"></p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="2-3._タブを分離可能にする">2-3.
+タブを分離可能にする</a></h3>
+<p>
+もう少し改造してタブを分離可能にします。</p>
+<p>
+<img alt="" src="abstract/img19.jpg"></p>
+<p>
+&nbsp;</p>
+<span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;simpleWindow.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006</a>&quot;
+        <span class="auto-style9">xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;</span>
+        xmlns:local=&quot;clr-namespace:simpleWindow&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot; ResizeMode=&quot;CanResizeWithGrip&quot;&gt;
+    &lt;Grid&gt;
+        &lt;<span class="auto-style9">dragablz:TabablzControl</span> Margin=&quot;10&quot;&gt;
+<span class="auto-style8">            &lt;dragablz:TabablzControl.InterTabController&gt;</span>
+<span class="auto-style8">                &lt;dragablz:InterTabController /&gt;</span>
+<span class="auto-style8">            &lt;/dragablz:TabablzControl.InterTabController&gt;</span>
+            &lt;TabItem Header=&quot;Tab No.1&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Hello world.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.2&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock1&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;This is No.2 tab.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+            &lt;TabItem Header=&quot;Tab No.3&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;0&quot;&gt;
+                &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                    &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                &lt;/Grid&gt;
+            &lt;/TabItem&gt;
+        &lt;/TabControl&gt;
+
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+数行追加するだけで簡単に分離ウィンドウを作成できるようになりました。すばらしい。<br>欠点は上記の変更をするとタブ内の編集を Visual Studio 
+のGUI上で行えなくなることです。これについては少しずつ改善策を考えて行きましょう。</p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更 を可能にする</a></h3>
+<p>
+続いて、タブ部分をドラッグ操作することで下図のようなレイアウト変更を行えるようにします。</p>
+<p>
+<img alt="" src="abstract/imgA1.jpg"></p>
+<p>
+<img alt="" src="abstract/imgC.jpg"></p>
+<p>
+<img alt="" src="abstract/imgD.jpg"></p>
+<p>
+<img alt="" src="abstract/imgE.jpg"></p>
+<p>
+ソースコードは以下の通りです。<br>黄色部分が追加したところです。水色部分はこれまでに既に追加した部分です。</p>
+<p>・&quot;Partition&quot; として指定しているキーワードは何でもよいようですが、これが一致しているタブのみをレイアウトとして取り込めるようです。</p>
+<span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;WithDragablz.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        <span class="auto-style9">xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;</span>
+        <span class="auto-style8">xmlns:dockablz=&quot;clr-namespace:Dragablz.Dockablz;assembly=Dragablz&quot;</span>
+        <span class="auto-style8">xmlns:system=&quot;clr-namespace:System;assembly=mscorlib&quot;</span>
+        xmlns:local=&quot;clr-namespace:WithDragablz&quot;
+        mc:Ignorable=&quot;d&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    
+    &lt;Window.Resources&gt;
+        <span class="auto-style8">&lt;system:String x:Key=&quot;Partition&quot;&gt;Beginning&lt;/system:String&gt;</span>
+    &lt;/Window.Resources&gt;
+    
+    &lt;Grid&gt;
+        <span class="auto-style8">&lt;dockablz:Layout Partition=&quot;{StaticResource Partition}&quot;&gt;</span>
+            <span class="auto-style9">&lt;dragablz:TabablzControl Margin=&quot;10&quot; &gt;</span>
+                <span class="auto-style9">&lt;dragablz:TabablzControl.InterTabController&gt;</span>
+                    <span class="auto-style9">&lt;dragablz:InterTabController</span> <span class="auto-style8">Partition=&quot;{StaticResource Partition}&quot;</span>/&gt;
+                <span class="auto-style9">&lt;/dragablz:TabablzControl.InterTabController&gt;</span>
+            
+                &lt;TabItem x:Name=&quot;tabItem01&quot; Header=&quot;Tab No.1&quot; Margin=&quot;0&quot;&gt;
+                    &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                        &lt;TextBlock x:Name=&quot;textBlock0&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Hello world.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                    &lt;/Grid&gt;
+                &lt;/TabItem&gt;
+                &lt;TabItem x:Name=&quot;tabItem02&quot; Header=&quot;Tab No.2&quot; Margin=&quot;0&quot;&gt;
+                    &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                        &lt;TextBlock x:Name=&quot;textBlock1&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;This is No.2 tab.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                    &lt;/Grid&gt;
+                &lt;/TabItem&gt;
+                &lt;TabItem Header=&quot;Tab No.3&quot; HorizontalAlignment=&quot;Left&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;0&quot;&gt;
+                    &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
+                        &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+                    &lt;/Grid&gt;
+                &lt;/TabItem&gt;
+            <span class="auto-style9">&lt;/dragablz:TabablzControl&gt;</span>
+        <span class="auto-style8">&lt;/dockablz:Layout&gt;</span>
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+こんなに簡単にできてしまいました。恐るべし、Dragablz !!</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a></h2>
+<h3>ConsolidateOrphanedItems</h3>
+<p>・”True” ： 分離したタブをCloseした場合、残ったウィンドウにこのタブが集約されるようになります。<br>・”False” ： 
+分離したタブをCloseした場合、そのタブは消えてしまいます。</p>
+<h3>&nbsp;</h3>
+<h3>ShowDefaultCloseButton</h3>
+
+<h3>
+ShowDefaultAddButton</h3>
+<h3>
+&nbsp;</h3>
+<h3>
+FixedHeaderCount</h3>
+<p>
+固定タブ（ドラッグを許さず、またデフォルトの Close ボタンを表示しない）とするタブの数です。<br>この値は画面左側からのタブの数です。<br>
+この値はプログラム動作中に動的に変更可能です。</p>
+<p>
+Allows a the first adjacent tabs to be fixed (no dragging, and default close 
+button will not show).</p>
+<p>
+&nbsp;</p>
+<h3>DissallowDragDrop</h3>
+<p>Issue #18 に記載されているプロパティなのですが、Dragablz Ver. 0.0.3.165 のソース中にコードを確認できません。</p>
+<h3>&nbsp;</h3>
+<h3>DissallowDragOut</h3>
+<p>Issue #18 に記載されているプロパティなのですが、Dragablz Ver. 0.0.3.165 のソース中にコードを確認できません。</p>
+<h3>&nbsp;</h3>
+<h3>
+ItemContainerStyle</h3>
+<p>
+&nbsp;</p>
+<span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+&lt;Window x:Class=&quot;WpfApplication.MainWindow&quot;
+        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;
+        Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot;&gt;
+    &lt;Window.Resources&gt;
+        &lt;ResourceDictionary&gt;
+            &lt;ResourceDictionary.MergedDictionaries&gt;
+                &lt;ResourceDictionary Source=&quot;pack://application:,,,/Dragablz;component/Themes/Generic.xaml&quot; /&gt;
+            &lt;/ResourceDictionary.MergedDictionaries&gt;
+        &lt;/ResourceDictionary&gt;
+    &lt;/Window.Resources&gt;
+    &lt;dragablz:TabablzControl <span class="auto-style8">ShowDefaultCloseButton=&quot;True&quot;</span>
+                             <span class="auto-style8">ShowDefaultAddButton=&quot;True&quot;</span>
+                             <span class="auto-style8">ItemContainerStyle=&quot;{StaticResource TrapezoidDragableTabItemStyle}&quot;</span>
+                             AdjacentHeaderItemOffset=&quot;-10&quot;&gt;
+        &lt;TabItem Header=&quot;One&quot;&gt;Content One&lt;/TabItem&gt;
+        &lt;TabItem Header=&quot;Two&quot;&gt;Content Two&lt;/TabItem&gt;
+        &lt;TabItem Header=&quot;Three&quot;&gt;Content Three&lt;/TabItem&gt;
+    &lt;/dragablz:TabablzControl&gt;
+&lt;/Window&gt;
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考URL">参考URL</a></h2>
+<ul>
+	<li><a href="https://dragablz.net/" target="_blank">https://dragablz.net/</a></li>
+	<li><a href="https://github.com/ButchersBoy/Dragablz" target="_blank">
+	https://github.com/ButchersBoy/Dragablz</a></li>
+	<li><a href="https://www.nuget.org/packages/Dragablz/" target="_blank">
+	https://www.nuget.org/packages/Dragablz/</a></li>
+	<li>
+	<a href="https://dragablz.net/2014/11/18/getting-started-with-dragablz-tabablzcontrol/" target="_blank">
+	Gettting Started With Dragablz TabablzControl</a></li>
+	<li>
+	<a href="https://dragablz.net/2015/02/09/how-to-use-the-material-design-theme-with-dragablz-tab-controlgithub/" target="_blank">
+	How to use the Material Design theme with Dragablz Tab Control</a></li>
+	<li>
+	<a href="https://dragablz.net/2015/02/11/dragablz-meets-mahapps-pt-ii/" target="_blank">
+	Dragablz Meets MahApps, pt II.</a></li>
+	<li>
+	<a href="http://redino.net/blog/tag/wpf/" target="_blank">
+	http://redino.net/blog/tag/wpf/</a></li>
+	<li>
+	<a href="https://github.com/ButchersBoy/Dragablz/blob/master/Dragablz/TabablzControl.cs" target="_blank">
+	https://github.com/ButchersBoy/Dragablz/blob/master/Dragablz/TabablzControl.cs</a><br>→TabablzControl のプロパティを調べるならこれ。</li>
+	<li>
+	Disallow/Disable Drag &amp; Drop/Drag out #18<br>
+	<a href="https://github.com/ButchersBoy/Dragablz/issues/18" target="_blank">
+	https://github.com/ButchersBoy/Dragablz/issues/18</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2016年04月16日 木下英俊<br>
+</font></p>
+</body>
+</html>

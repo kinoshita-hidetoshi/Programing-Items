@@ -1,0 +1,775 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>SIMD命令のサポート状況確認方法</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	margin-left: 40px;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+SIMD命令のサポート状況確認方法</h1>
+
+<p> SIMD命令のサポート状況を確認する方法を以下に記載します。CPUID命令により行います。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._方法１">１．方法１</a><br><a href="#2._方法２">２．方法２</a><br><a href="#参考">
+参考</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._方法１">1. 方法１</a></h2>
+<span class="table_title">[実行結果]</span><p>
+<img alt="" src="ExtInstCheck/img8.gif"></p>
+<p>
+&nbsp;</p>
+<span class="table_title">[プログラムソース &quot;ExtInstCheck.cpp&quot;]</span>
+<pre class="prettyprint linenums">
+//
+// _cpuid による SIMDサポート状況確認
+//
+
+
+#include &lt;stdio.h&gt;
+#include &lt;tchar.h&gt;
+#include &lt;windows.h&gt;
+#include &lt;intrin.h&gt;
+
+
+
+#if 1800 &lt;= _MSC_VER    //  Visual C++ 2013以上 
+#include &lt;VersionHelpers.h&gt;
+#else
+#ifndef _WIN32_WINNT_WIN7
+#define _WIN32_WINNT_WIN7 0x0601
+#endif
+inline bool IsWindowsVersionOrGreater(WORD wMajorVersion, WORD wMinorVersion, WORD wServicePackMajor){
+    OSVERSIONINFOEXW osvi = { sizeof(osvi), 0, 0, 0, 0, { 0 }, 0, 0 };
+    DWORDLONG        const dwlConditionMask = VerSetConditionMask(
+        VerSetConditionMask(
+        VerSetConditionMask(
+        0, VER_MAJORVERSION, VER_GREATER_EQUAL),
+        VER_MINORVERSION, VER_GREATER_EQUAL),
+        VER_SERVICEPACKMAJOR, VER_GREATER_EQUAL);
+
+    osvi.dwMajorVersion = wMajorVersion;
+    osvi.dwMinorVersion = wMinorVersion;
+    osvi.wServicePackMajor = wServicePackMajor;
+
+    return VerifyVersionInfoW(&amp;osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_SERVICEPACKMAJOR, dwlConditionMask) != FALSE;
+}
+
+inline bool IsWindows7SP1OrGreater(void){
+    return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WIN7), LOBYTE(_WIN32_WINNT_WIN7), 1);
+}
+#endif
+
+
+//  CPUID 1 EDX
+#define IA64_READY (1&lt;&lt;30)
+#define HTT_READY (1&lt;&lt;8)
+#define SSE2_READY (1&lt;&lt;26)
+#define SSE_READY (1&lt;&lt;25)
+#define MMX_READY (1&lt;&lt;23)
+#define FPU_READY (1)
+
+//  CPUID 1 ECX
+#define AVX_READY (1&lt;&lt;28)
+#define AES_READY (1&lt;&lt;25)
+#define SSE42_READY (1&lt;&lt;20)
+#define SSE41_READY (1&lt;&lt;19)
+#define FMA_READY (1&lt;&lt;12)
+#define SSSE3_READY (1&lt;&lt;9)
+#define SSE3_READY (1)
+
+//  CPUID 1 EBX
+#define AVX512CD_READY (1&lt;&lt;28)
+#define AVX512ER_READY (1&lt;&lt;27)
+#define AVX512PF_READY (1&lt;&lt;26)
+#define AVX512F_READY (1&lt;&lt;16)
+#define AVX2_READY (1&lt;&lt;5)
+
+// MSC バージョンチェック
+inline int _MSC_CVER(void) {
+    int cver = 0;
+#if _MSC_VER==1400
+    cver = 2005;
+#endif
+#if _MSC_VER==1500
+    cver = 2008;
+#endif
+#if _MSC_VER==1600
+    cver = 2010;
+#endif
+#if _MSC_VER==1700
+    cver = 2012;
+#endif
+#if _MSC_VER==1800
+    cver = 2013;
+#endif
+#if _MSC_VER==1900
+    cver = 2015;
+#endif
+#if _MSC_VER==1910
+    cver = 2017;
+#endif
+
+    return cver;
+}
+
+
+int WINAPI WinMain(
+    _In_ HINSTANCE hInstance,
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPSTR lpCmdLine,
+    _In_ int nShowCmd
+    )
+{
+    UNREFERENCED_PARAMETER(hInstance);
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(nShowCmd);
+
+    TCHAR   cpuname[4 * 4 * 4];
+    TCHAR   inst[256];
+    TCHAR   buf[256];
+    int     cver = 0;
+    TCHAR   *project;
+    TCHAR   *win;
+    TCHAR   *dll;
+
+
+    // Debug ? Release
+#ifdef _DEBUG
+    project = _TEXT(&quot;Debug&quot;);
+#else
+    project = _TEXT(&quot;Release&quot;);
+#endif
+
+    // x64 ? Win32
+#ifdef _WIN64
+    win = _TEXT(&quot;x64&quot;);
+#else
+    win = _TEXT(&quot;Win32&quot;);
+#endif
+
+    // Multi
+#if defined _MT
+    #if defined _DLL
+    dll = _TEXT(&quot;Dynamic Link (DLL)&quot;);
+    #else
+    dll = _TEXT(&quot;Static MultiThread&quot;);
+    #endif
+#endif
+
+    // MSC Version
+    cver = _MSC_CVER();
+    _stprintf_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;Build: Visual C++ %i %s %s %s\r\n&quot;), cver, project, win, dll);
+
+
+    // CPU information
+    {
+        inst[0] = 0;
+        cpuname[0] = 0;
+
+        int CPUInfo[4];
+
+
+        // CPU vendor ID
+        {
+            TCHAR   vendorID[12 + 1];
+            int     cpuInfo[4];
+
+            // &quot;CPU vendor ID&quot; の取得
+            __cpuid(cpuInfo, 0);                    // EAX=0: ベンダIDの取得
+
+            // EBX
+            char* p = (char*)&amp;cpuInfo[1];
+            for (int j = 0; j &lt; 4; ++j){
+                vendorID[0 + j] = *p++;
+            }
+            // EDX
+            p = (char*)&amp;cpuInfo[3];
+            for (int j = 0; j &lt; 4; ++j){
+                vendorID[4 + j] = *p++;
+            }
+            // EDC
+            p = (char*)&amp;cpuInfo[2];
+            for (int j = 0; j &lt; 4; ++j){
+                vendorID[8 + j] = *p++;
+            }
+            vendorID[12] = 0;
+
+            _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _T(&quot;Vendor ID: &quot;));
+            _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), vendorID);
+            _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;\r\n&quot;));
+        }
+
+
+        // CPU processor information
+        {
+            __cpuid(CPUInfo, 0x80000000);           // EAX=80000000h: サポートする最大拡張機能番号の取得
+            if (0x80000004 &lt;= CPUInfo[0]){          // プロセッサブランド文字列の取得が可能である
+                int CPUInfoV[3][4];
+                __cpuid(CPUInfoV[0], 0x80000002);   // EAX=80000002h,80000003h,80000004h: プロセッサブランド文字列
+                __cpuid(CPUInfoV[1], 0x80000003);
+                __cpuid(CPUInfoV[2], 0x80000004);
+                char* p = (char*)CPUInfoV;
+                for (int n = 0; n &lt; 4 * 4 * 3; n++){
+                    cpuname[n] = *p++;
+                }
+                _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), cpuname);
+                _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;\r\n&quot;));
+            }
+        }
+
+
+        // CPU supports ...
+        {
+            // CPUID 1 EDX
+            __cpuid(CPUInfo, 1);                    // EAX=1: プロセッサ情報とプロセッサの機能
+            if (CPUInfo[3] &amp; MMX_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;MMX &quot;));
+            }
+            if (CPUInfo[3] &amp; SSE_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSE &quot;));
+            }
+            if (CPUInfo[3] &amp; SSE2_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSE2 &quot;));
+            }
+
+
+            // CPUID 1 ECX
+            if (CPUInfo[2] &amp; SSE3_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSE3 &quot;));
+            }
+            if (CPUInfo[2] &amp; SSSE3_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSSE3 &quot;));
+            }
+            if (CPUInfo[2] &amp; SSE41_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSE4.1 &quot;));
+            }
+            if (CPUInfo[2] &amp; SSE42_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;SSE4.2 &quot;));
+            }
+            if (CPUInfo[2] &amp; AES_READY) {
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AES &quot;));
+            }            
+            if (CPUInfo[2] &amp; AVX_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX &quot;));
+            }
+
+
+            // CPUID 7 EBX
+            __cpuid(CPUInfo, 7);
+
+	   if (CPUInfo[1] &amp; AVX2_READY){
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX2 &quot;));
+            }
+            if (CPUInfo[1] &amp; AVX512F_READY) {
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX512F &quot;));
+            }
+            if (CPUInfo[1] &amp; AVX512PF_READY) {
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX512PF &quot;));
+            }
+            if (CPUInfo[1] &amp; AVX512ER_READY) {
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX512ER &quot;));
+            }
+            if (CPUInfo[1] &amp; AVX512CD_READY) {
+                _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;AVX512CD &quot;));
+            }
+
+
+            if (inst[0]){
+                _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;CPU support: &quot;));
+                _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), inst);
+                _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;\r\n&quot;));
+            }
+        }
+    }
+
+
+    // OS supports AVX ?
+    if (IsWindows7SP1OrGreater()){
+        _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;OS: AVX Suport&quot;));
+    }
+    else{
+        _tcscat_s(buf, sizeof(buf) / sizeof(TCHAR), _TEXT(&quot;OS: AVX Not Suport&quot;));
+    }
+
+
+    // 結果表示
+    MessageBox(0, buf, _TEXT(&quot;システムのSIMD命令のサポート状況&quot;), MB_OK);
+
+
+    return (int)0;
+}</pre>
+	
+<br>
+<h3>
+サンプルプログラム</h3>
+<p>
+<a href="ExtInstCheck/ExtInstCheck.zip">サンプルプログラム ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="2._方法２">2. 方法２</a></h2>
+<p>
+Microsoft のホームページ上に紹介されていたコードを紹介します。<br>他のアプリで使いやすいように、*.cpp と *.h 
+へのファイル分割だけ独自に実施しています。<br>SIMD を使用する場合に便利そうなモジュールです。</p>
+<p>
+■評価環境</p>
+<p class="auto-style8">
+開発環境： Visual Studio 2017 Pro.<br>OS： Windows10 home 1607</p>
+<p>
+■実行結果</p>
+<p>
+<img alt="" src="ExtInstCheck/img1B.gif"></p>
+<p>
+&nbsp;</p>
+<p>
+■ソースコード</p>
+<p>
+[ InstructionSet.h ]</p>
+
+<pre class="prettyprint linenums">
+//
+// _cpuid による SIMDサポート状況確認
+//
+// Refferences:
+//   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
+//
+
+#pragma once
+
+#include &lt;array&gt;
+#include &lt;bitset&gt;
+#include &lt;vector&gt;
+
+
+namespace hide {
+
+class InstructionSet
+{
+    // forward declarations  
+    //class InstructionSet_Internal;
+
+public:
+    // getters  
+    static std::string Vendor(void);
+    static std::string Brand(void);
+
+    static bool SSE3(void);
+    static bool PCLMULQDQ(void);
+    static bool MONITOR(void);
+    static bool SSSE3(void);
+    static bool FMA(void);
+    static bool CMPXCHG16B(void);
+    static bool SSE41(void);
+    static bool SSE42(void);
+    static bool MOVBE(void);
+    static bool POPCNT(void);
+    static bool AES(void);
+    static bool XSAVE(void);
+    static bool OSXSAVE(void);
+    static bool AVX(void);
+    static bool F16C(void);
+    static bool RDRAND(void);
+
+    static bool MSR(void);
+    static bool CX8(void);
+    static bool SEP(void);
+    static bool CMOV(void);
+    static bool CLFSH(void);
+    static bool MMX(void);
+    static bool FXSR(void);
+    static bool SSE(void);
+    static bool SSE2(void);
+
+    static bool FSGSBASE(void);
+    static bool BMI1(void);
+    static bool HLE(void);
+    static bool AVX2(void);
+    static bool BMI2(void);
+    static bool ERMS(void);
+    static bool INVPCID(void);
+    static bool RTM(void);
+    static bool AVX512F(void);
+    static bool RDSEED(void);
+    static bool ADX(void);
+    static bool AVX512PF(void);
+    static bool AVX512ER(void);
+    static bool AVX512CD(void);
+    static bool SHA(void);
+
+    static bool PREFETCHWT1(void);
+
+    static bool LAHF(void);
+    static bool LZCNT(void);
+    static bool ABM(void);
+    static bool SSE4a(void);
+    static bool XOP(void);
+    static bool TBM(void);
+    
+    static bool SYSCALL(void);
+    static bool MMXEXT(void);
+    static bool RDTSCP(void);
+    static bool _3DNOWEXT(void);
+    static bool _3DNOW(void);
+    
+private:
+    class InstructionSet_Internal
+    {
+    public:
+        InstructionSet_Internal();          // Ctor
+
+        int nIds_;
+        int nExIds_;
+        std::string vendor_;
+        std::string brand_;
+        bool isIntel_;
+        bool isAMD_;
+        std::bitset&lt;32&gt; f_1_ECX_;
+        std::bitset&lt;32&gt; f_1_EDX_;
+        std::bitset&lt;32&gt; f_7_EBX_;
+        std::bitset&lt;32&gt; f_7_ECX_;
+        std::bitset&lt;32&gt; f_81_ECX_;
+        std::bitset&lt;32&gt; f_81_EDX_;
+        std::vector&lt;std::array&lt;int, 4&gt;&gt; data_;
+        std::vector&lt;std::array&lt;int, 4&gt;&gt; extdata_;
+    };
+
+    static const InstructionSet_Internal CPU_Rep;
+};
+
+}</pre>
+
+
+
+<p>&nbsp;</p>
+<p>[InstructionSet.cpp]</p>
+<pre class="prettyprint linenums">
+//
+// _cpuid による SIMDサポート状況確認
+//
+// Refferences:
+//   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
+//
+
+#include &quot;stdafx.h&quot;
+
+
+// InstructionSet.cpp   
+// Compile by using: cl /EHsc /W4 InstructionSet.cpp  
+// processor: x86, x64  
+// Uses the __cpuid intrinsic to get information about   
+// CPU extended instruction set support.  
+
+#include &lt;iostream&gt;  
+#include &lt;string&gt;  
+#include &lt;intrin.h&gt;  
+
+
+#include &quot;InstructionSet.h&quot;
+
+
+namespace hide {
+
+    // getters  
+    std::string InstructionSet::Vendor(void) { return CPU_Rep.vendor_; }
+    std::string InstructionSet::Brand(void) { return CPU_Rep.brand_; }
+
+    bool InstructionSet::SSE3(void) { return CPU_Rep.f_1_ECX_[0]; }
+    bool InstructionSet::PCLMULQDQ(void) { return CPU_Rep.f_1_ECX_[1]; }
+    bool InstructionSet::MONITOR(void) { return CPU_Rep.f_1_ECX_[3]; }
+    bool InstructionSet::SSSE3(void) { return CPU_Rep.f_1_ECX_[9]; }
+    bool InstructionSet::FMA(void) { return CPU_Rep.f_1_ECX_[12]; }
+    bool InstructionSet::CMPXCHG16B(void) { return CPU_Rep.f_1_ECX_[13]; }
+    bool InstructionSet::SSE41(void) { return CPU_Rep.f_1_ECX_[19]; }
+    bool InstructionSet::SSE42(void) { return CPU_Rep.f_1_ECX_[20]; }
+    bool InstructionSet::MOVBE(void) { return CPU_Rep.f_1_ECX_[22]; }
+    bool InstructionSet::POPCNT(void) { return CPU_Rep.f_1_ECX_[23]; }
+    bool InstructionSet::AES(void) { return CPU_Rep.f_1_ECX_[25]; }
+    bool InstructionSet::XSAVE(void) { return CPU_Rep.f_1_ECX_[26]; }
+    bool InstructionSet::OSXSAVE(void) { return CPU_Rep.f_1_ECX_[27]; }
+    bool InstructionSet::AVX(void) { return CPU_Rep.f_1_ECX_[28]; }
+    bool InstructionSet::F16C(void) { return CPU_Rep.f_1_ECX_[29]; }
+    bool InstructionSet::RDRAND(void) { return CPU_Rep.f_1_ECX_[30]; }
+
+    bool InstructionSet::MSR(void) { return CPU_Rep.f_1_EDX_[5]; }
+    bool InstructionSet::CX8(void) { return CPU_Rep.f_1_EDX_[8]; }
+    bool InstructionSet::SEP(void) { return CPU_Rep.f_1_EDX_[11]; }
+    bool InstructionSet::CMOV(void) { return CPU_Rep.f_1_EDX_[15]; }
+    bool InstructionSet::CLFSH(void) { return CPU_Rep.f_1_EDX_[19]; }
+    bool InstructionSet::MMX(void) { return CPU_Rep.f_1_EDX_[23]; }
+    bool InstructionSet::FXSR(void) { return CPU_Rep.f_1_EDX_[24]; }
+    bool InstructionSet::SSE(void) { return CPU_Rep.f_1_EDX_[25]; }
+    bool InstructionSet::SSE2(void) { return CPU_Rep.f_1_EDX_[26]; }
+
+    bool InstructionSet::FSGSBASE(void) { return CPU_Rep.f_7_EBX_[0]; }
+    bool InstructionSet::BMI1(void) { return CPU_Rep.f_7_EBX_[3]; }
+    bool InstructionSet::HLE(void) { return CPU_Rep.isIntel_ &amp;&amp; CPU_Rep.f_7_EBX_[4]; }
+    bool InstructionSet::AVX2(void) { return CPU_Rep.f_7_EBX_[5]; }
+    bool InstructionSet::BMI2(void) { return CPU_Rep.f_7_EBX_[8]; }
+    bool InstructionSet::ERMS(void) { return CPU_Rep.f_7_EBX_[9]; }
+    bool InstructionSet::INVPCID(void) { return CPU_Rep.f_7_EBX_[10]; }
+    bool InstructionSet::RTM(void) { return CPU_Rep.isIntel_ &amp;&amp; CPU_Rep.f_7_EBX_[11]; }
+    bool InstructionSet::AVX512F(void) { return CPU_Rep.f_7_EBX_[16]; }
+    bool InstructionSet::RDSEED(void) { return CPU_Rep.f_7_EBX_[18]; }
+    bool InstructionSet::ADX(void) { return CPU_Rep.f_7_EBX_[19]; }
+    bool InstructionSet::AVX512PF(void) { return CPU_Rep.f_7_EBX_[26]; }
+    bool InstructionSet::AVX512ER(void) { return CPU_Rep.f_7_EBX_[27]; }
+    bool InstructionSet::AVX512CD(void) { return CPU_Rep.f_7_EBX_[28]; }
+    bool InstructionSet::SHA(void) { return CPU_Rep.f_7_EBX_[29]; }
+
+    bool InstructionSet::PREFETCHWT1(void) { return CPU_Rep.f_7_ECX_[0]; }
+
+    bool InstructionSet::LAHF(void) { return CPU_Rep.f_81_ECX_[0]; }
+    bool InstructionSet::LZCNT(void) { return CPU_Rep.isIntel_ &amp;&amp; CPU_Rep.f_81_ECX_[5]; }
+    bool InstructionSet::ABM(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_ECX_[5]; }
+    bool InstructionSet::SSE4a(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_ECX_[6]; }
+    bool InstructionSet::XOP(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_ECX_[11]; }
+    bool InstructionSet::TBM(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_ECX_[21]; }
+
+    bool InstructionSet::SYSCALL(void) { return CPU_Rep.isIntel_ &amp;&amp; CPU_Rep.f_81_EDX_[11]; }
+    bool InstructionSet::MMXEXT(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_EDX_[22]; }
+    bool InstructionSet::RDTSCP(void) { return CPU_Rep.isIntel_ &amp;&amp; CPU_Rep.f_81_EDX_[27]; }
+    bool InstructionSet::_3DNOWEXT(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_EDX_[30]; }
+    bool InstructionSet::_3DNOW(void) { return CPU_Rep.isAMD_ &amp;&amp; CPU_Rep.f_81_EDX_[31]; }
+
+
+    InstructionSet::InstructionSet_Internal::InstructionSet_Internal()
+        : nIds_{ 0 },
+        nExIds_{ 0 },
+        isIntel_{ false },
+        isAMD_{ false },
+        f_1_ECX_{ 0 },
+        f_1_EDX_{ 0 },
+        f_7_EBX_{ 0 },
+        f_7_ECX_{ 0 },
+        f_81_ECX_{ 0 },
+        f_81_EDX_{ 0 },
+        data_{},
+        extdata_{}
+    {
+        //int cpuInfo[4] = {-1};  
+        std::array&lt;int, 4&gt; cpui;
+
+        // Calling __cpuid with 0x0 as the function_id argument  
+        // gets the number of the highest valid function ID.  
+        __cpuid(cpui.data(), 0);
+        nIds_ = cpui[0];
+
+        for (int i = 0; i &lt;= nIds_; ++i)
+        {
+            __cpuidex(cpui.data(), i, 0);
+            data_.push_back(cpui);
+        }
+
+        // Capture vendor string  
+        char vendor[0x20];
+        memset(vendor, 0, sizeof(vendor));
+        *reinterpret_cast&lt;int*&gt;(vendor) = data_[0][1];
+        *reinterpret_cast&lt;int*&gt;(vendor + 4) = data_[0][3];
+        *reinterpret_cast&lt;int*&gt;(vendor + 8) = data_[0][2];
+        vendor_ = vendor;
+        if (vendor_ == &quot;GenuineIntel&quot;)
+        {
+            isIntel_ = true;
+        }
+        else if (vendor_ == &quot;AuthenticAMD&quot;)
+        {
+            isAMD_ = true;
+        }
+
+        // load bitset with flags for function 0x00000001  
+        if (nIds_ &gt;= 1)
+        {
+            f_1_ECX_ = data_[1][2];
+            f_1_EDX_ = data_[1][3];
+        }
+
+        // load bitset with flags for function 0x00000007  
+        if (nIds_ &gt;= 7)
+        {
+            f_7_EBX_ = data_[7][1];
+            f_7_ECX_ = data_[7][2];
+        }
+
+        // Calling __cpuid with 0x80000000 as the function_id argument  
+        // gets the number of the highest valid extended ID.  
+        __cpuid(cpui.data(), 0x80000000);
+        nExIds_ = cpui[0];
+
+        char brand[0x40];
+        memset(brand, 0, sizeof(brand));
+
+        for (int i = 0x80000000; i &lt;= nExIds_; ++i)
+        {
+            __cpuidex(cpui.data(), i, 0);
+            extdata_.push_back(cpui);
+        }
+
+        // load bitset with flags for function 0x80000001  
+        if (nExIds_ &gt;= 0x80000001)
+        {
+            f_81_ECX_ = extdata_[1][2];
+            f_81_EDX_ = extdata_[1][3];
+        }
+
+        // Interpret CPU brand string if reported  
+        if (nExIds_ &gt;= 0x80000004)
+        {
+            memcpy(brand, extdata_[2].data(), sizeof(cpui));
+            memcpy(brand + 16, extdata_[3].data(), sizeof(cpui));
+            memcpy(brand + 32, extdata_[4].data(), sizeof(cpui));
+            brand_ = brand;
+        }
+    };
+
+    const InstructionSet::InstructionSet_Internal InstructionSet::CPU_Rep;
+
+}</pre>
+
+
+<p>&nbsp;</p>
+<p>[ MainApp.cpp ]</p>
+<pre class="prettyprint linenums">
+//
+// _cpuid による SIMDサポート状況確認
+//
+// Refferences:
+//   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
+//
+
+#include &quot;stdafx.h&quot;
+
+// InstructionSet.cpp   
+// Compile by using: cl /EHsc /W4 InstructionSet.cpp  
+// processor: x86, x64  
+// Uses the __cpuid intrinsic to get information about   
+// CPU extended instruction set support.  
+
+
+#include &lt;iostream&gt;  
+#include &lt;string&gt;
+
+#include &quot;InstructionSet.h&quot;
+
+
+using namespace hide;
+
+
+// Print out supported instruction set extensions  
+int main()
+{
+    auto&amp; outstream = std::cout;
+
+    auto support_message = [&amp;outstream](std::string isa_feature, bool is_supported) {
+        outstream &lt;&lt; isa_feature &lt;&lt; (is_supported ? &quot; supported&quot; : &quot; not supported&quot;) &lt;&lt; std::endl;
+    };
+
+    std::cout &lt;&lt; InstructionSet::Vendor() &lt;&lt; std::endl;
+    std::cout &lt;&lt; InstructionSet::Brand() &lt;&lt; std::endl;
+
+    support_message(&quot;3DNOW&quot;, InstructionSet::_3DNOW());
+    support_message(&quot;3DNOWEXT&quot;, InstructionSet::_3DNOWEXT());
+    support_message(&quot;ABM&quot;, InstructionSet::ABM());
+    support_message(&quot;ADX&quot;, InstructionSet::ADX());
+    support_message(&quot;AES&quot;, InstructionSet::AES());
+    support_message(&quot;AVX&quot;, InstructionSet::AVX());
+    support_message(&quot;AVX2&quot;, InstructionSet::AVX2());
+    support_message(&quot;AVX512CD&quot;, InstructionSet::AVX512CD());
+    support_message(&quot;AVX512ER&quot;, InstructionSet::AVX512ER());
+    support_message(&quot;AVX512F&quot;, InstructionSet::AVX512F());
+    support_message(&quot;AVX512PF&quot;, InstructionSet::AVX512PF());
+    support_message(&quot;BMI1&quot;, InstructionSet::BMI1());
+    support_message(&quot;BMI2&quot;, InstructionSet::BMI2());
+    support_message(&quot;CLFSH&quot;, InstructionSet::CLFSH());
+    support_message(&quot;CMPXCHG16B&quot;, InstructionSet::CMPXCHG16B());
+    support_message(&quot;CX8&quot;, InstructionSet::CX8());
+    support_message(&quot;ERMS&quot;, InstructionSet::ERMS());
+    support_message(&quot;F16C&quot;, InstructionSet::F16C());
+    support_message(&quot;FMA&quot;, InstructionSet::FMA());
+    support_message(&quot;FSGSBASE&quot;, InstructionSet::FSGSBASE());
+    support_message(&quot;FXSR&quot;, InstructionSet::FXSR());
+    support_message(&quot;HLE&quot;, InstructionSet::HLE());
+    support_message(&quot;INVPCID&quot;, InstructionSet::INVPCID());
+    support_message(&quot;LAHF&quot;, InstructionSet::LAHF());
+    support_message(&quot;LZCNT&quot;, InstructionSet::LZCNT());
+    support_message(&quot;MMX&quot;, InstructionSet::MMX());
+    support_message(&quot;MMXEXT&quot;, InstructionSet::MMXEXT());
+    support_message(&quot;MONITOR&quot;, InstructionSet::MONITOR());
+    support_message(&quot;MOVBE&quot;, InstructionSet::MOVBE());
+    support_message(&quot;MSR&quot;, InstructionSet::MSR());
+    support_message(&quot;OSXSAVE&quot;, InstructionSet::OSXSAVE());
+    support_message(&quot;PCLMULQDQ&quot;, InstructionSet::PCLMULQDQ());
+    support_message(&quot;POPCNT&quot;, InstructionSet::POPCNT());
+    support_message(&quot;PREFETCHWT1&quot;, InstructionSet::PREFETCHWT1());
+    support_message(&quot;RDRAND&quot;, InstructionSet::RDRAND());
+    support_message(&quot;RDSEED&quot;, InstructionSet::RDSEED());
+    support_message(&quot;RDTSCP&quot;, InstructionSet::RDTSCP());
+    support_message(&quot;RTM&quot;, InstructionSet::RTM());
+    support_message(&quot;SEP&quot;, InstructionSet::SEP());
+    support_message(&quot;SHA&quot;, InstructionSet::SHA());
+    support_message(&quot;SSE&quot;, InstructionSet::SSE());
+    support_message(&quot;SSE2&quot;, InstructionSet::SSE2());
+    support_message(&quot;SSE3&quot;, InstructionSet::SSE3());
+    support_message(&quot;SSE4.1&quot;, InstructionSet::SSE41());
+    support_message(&quot;SSE4.2&quot;, InstructionSet::SSE42());
+    support_message(&quot;SSE4a&quot;, InstructionSet::SSE4a());
+    support_message(&quot;SSSE3&quot;, InstructionSet::SSSE3());
+    support_message(&quot;SYSCALL&quot;, InstructionSet::SYSCALL());
+    support_message(&quot;TBM&quot;, InstructionSet::TBM());
+    support_message(&quot;XOP&quot;, InstructionSet::XOP());
+    support_message(&quot;XSAVE&quot;, InstructionSet::XSAVE());
+
+
+    //
+    // 後処理
+    //
+    getchar();
+
+    return EXIT_SUCCESS;
+}</pre>
+
+<p>
+&nbsp;</p>
+■サンプルプログラム<p>
+<a href="ExtInstCheck/ExtInstCheck.zip">サンプルプログラム ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<p>
+&nbsp;</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考">参考</a></h2>
+<ol>
+	<li>
+	<a href="http://www.yamatyuu.net/computer/program/vc2013/extinstchk/index.html#wix" target="_blank">http://www.yamatyuu.net/computer/program/vc2013/extinstchk/index.html#wix</a></li>
+	<li><a href="http://ja.wikipedia.org/wiki/CPUID" target="_blank">http://ja.wikipedia.org/wiki/CPUID</a></li>
+	<li>
+	<a href="https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx" target="_blank">
+	https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx</a></li>
+</ol>
+<hr>
+<p> <font face="Meiryo UI">記載：</font></p>
+<p> <font face="Meiryo UI">2015年03月22日 新規登録、木下英俊<br>
+</font>2017年05月09日<br>・方法２ を追加<br>・方法１ を各種更新</p>
+</body>
+</html>

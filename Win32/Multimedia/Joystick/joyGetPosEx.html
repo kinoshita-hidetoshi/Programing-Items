@@ -1,0 +1,272 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>Win32 joyGetPosEx の使い方</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../../design.css" type="text/css">
+<style type="text/css">
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+</style>
+</head>
+
+<!-- Start for 'google-code-prettify' -->
+<body onload="prettyPrint();">
+<!-- End for 'google-code-prettify' -->
+
+<h1 class="auto-style7">
+Win32： joyGetPosEx 関数</h1>
+
+<p> ジョイパッドによる操作を行えるようにすることを目的に、Win32 api の joyGetPosEx 関数を使う方法を以下にまとめます。</p>
+<h2> 目次</h2>
+<p> <a href="#1._まずは動かしてみる">1. まずは動かしてみる</a><br>2. ***<br>3. ***<br>
+<a href="#参考">参考</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._まずは動かしてみる">1. まずは動かしてみる</a></h2>
+<p> [概要]</p>
+<p> joyGetPos 関数を使って、まずはジョイスティックの操作を読めるようにプログラムを動かしてみます。<br>
+ジョイスティックを検出して、上下左右、各種ボタンの押下状態、をコンソールへ出力するプログラムを作成してみます。<br>以下の４つの要素として情報を取得できます。<br>
+<br>- wXpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 無操作状態で 32511 を表示しました。<br>- wYpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+: 無操作状態で 32511 を表示しました。 <br>- wZpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Zpos 
+を変更できる入力装置がないためか、今回のテストでは常に０でした。 <br>- wButtons : 無操作状態で 0、各ボタン押下により対応するビットが 1 
+になるようです。 <br></p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C++</li>
+	<li>Windows SDK バージョン： 10.0.17134.0</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> <img alt="" src="JoyGetPosEx/img39.gif"></p>
+<p> [&quot;stdafx.h&quot;]</p>
+<pre class="prettyprint linenums">
+#pragma once
+
+#define WINVER          0x0601    // Windows7 をミニマム動作対象とする
+#define _WIN32_WINNT    0x0601    // Windows7 をミニマム動作対象とする
+
+#include &quot;targetver.h&quot;
+
+#include &lt;stdio.h&gt;
+#include &lt;tchar.h&gt;
+
+// TODO: プログラムに必要な追加ヘッダーをここで参照してください
+#include &lt;Windows.h&gt;
+#include &lt;mmsystem.h&gt;             // joyGetPosEx, JOYINFOEX, JOYSTICKID1
+
+#include &lt;iostream&gt;               // cout, endl
+#include &lt;string&gt;</pre>
+<p> &nbsp;</p>
+<p>[&quot;testJoyGetPos.cpp&quot;]</p>
+
+<pre class="prettyprint linenums">
+#include &quot;stdafx.h&quot;
+
+#pragma comment(lib, &quot;winmm.lib&quot;)
+
+using namespace std;
+
+namespace console {
+
+    // カーソル位置指定 for Windows Console
+    void setCursorPos(int x, int y)
+    {
+        HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD   pos;
+
+        pos.X = x;
+        pos.Y = y;
+        SetConsoleCursorPosition(hConsole, pos);
+    }
+
+    // カーソル位置取得
+    void getCursorPos(int&amp; x, int&amp;y) {
+        HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        CONSOLE_SCREEN_BUFFER_INFO  consoleScreenBufferInfo;
+
+        GetConsoleScreenBufferInfo(hConsole, &amp;consoleScreenBufferInfo);
+
+        x = consoleScreenBufferInfo.dwCursorPosition.X;
+        y = consoleScreenBufferInfo.dwCursorPosition.Y;
+    }
+
+    // カーソル表示状態取得
+    bool getConsoleCursorVisible() {
+        HANDLE                  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        CONSOLE_CURSOR_INFO     consoleCursorInfo;
+
+        GetConsoleCursorInfo(hConsole, &amp;consoleCursorInfo);
+
+        return consoleCursorInfo.bVisible;
+    }
+
+    // カーソル表示状態設定
+    void setConsoleCursorVisible(bool bVisible)
+    {
+        HANDLE                  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        CONSOLE_CURSOR_INFO     consoleCursorInfo;
+
+        GetConsoleCursorInfo(hConsole, &amp;consoleCursorInfo);
+        consoleCursorInfo.bVisible = bVisible;
+        SetConsoleCursorInfo(hConsole, &amp;consoleCursorInfo);
+    }
+
+} // console
+
+
+int main()
+{
+    <span class="auto-style8">JOYINFOEX   joyInfoEx;</span>          // ジョイスティックの情報を格納する変数
+    bool        bConnected = false;
+    bool        bLoop = true;       // true の間だけ処理をループ。false になったらプログラムを終了。
+
+    cout &lt;&lt; &quot;Finish to hit [Enter] key !! &quot; &lt;&lt; endl;
+
+    while (bLoop) {
+        // ジョイスティック 情報取得処理
+        {
+<span class="auto-style8">            joyInfoEx.dwSize = sizeof(joyInfoEx);</span>
+<span class="auto-style8">            joyInfoEx.dwFlags = JOY_RETURNALL;</span>
+<span class="auto-style8">            MMRESULT result = joyGetPosEx(JOYSTICKID1, &amp;joyInfoEx);</span>
+
+            if (result == JOYERR_NOERROR) {
+                console::setConsoleCursorVisible(false);
+
+                // JOYSTICKID1 と接続できた
+                if (bConnected == true) {
+                    // 表示位置を5行上へ移動
+                    int x, y;
+                    console::getCursorPos(x, y);
+                    console::setCursorPos(x, y - 5);
+                }
+                else {
+                    // 水平線を挿入
+                    cout &lt;&lt; &quot;-------------------------------&quot; &lt;&lt; endl;
+                }
+                bConnected = true;
+
+                // ジョイスティック情報をコンソールへ出力
+<span class="auto-style8">                cout &lt;&lt; &quot;dwXpos    = &quot; &lt;&lt; joyInfoEx.dwXpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
+<span class="auto-style8">                cout &lt;&lt; &quot;dwYpos    = &quot; &lt;&lt; joyInfoEx.dwYpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
+<span class="auto-style8">                cout &lt;&lt; &quot;dwZpos    = &quot; &lt;&lt; joyInfoEx.dwZpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
+<span class="auto-style8">                cout &lt;&lt; &quot;dwButtons = &quot; &lt;&lt; joyInfoEx.dwButtons &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
+                cout &lt;&lt; &quot;-------------------------------&quot;    &lt;&lt; endl;
+
+                console::setConsoleCursorVisible(true);
+            }
+            else {
+                if (bConnected == true) {
+                    // ジョイスティックの接続が変わったことを通知
+                    // この処理をやらないと異なるUSBポートへ再接続したときに
+                    // ジョイスティックが動かなくなる。
+                    <span class="auto-style8">joyConfigChanged(0);</span>
+                }
+                bConnected = false;
+
+                switch (result) {
+                case MMSYSERR_BADDEVICEID:      // 2
+                    cout &lt;&lt; &quot;result code = MMSYSERR_BADDEVICEID&quot; &lt;&lt; endl;
+                    break;
+                    
+                case MMSYSERR_NODRIVER:         // 6
+                    cout &lt;&lt; &quot;result code = MMSYSERR_NODRIVER&quot; &lt;&lt; endl;
+                    break;
+
+                case MMSYSERR_INVALPARAM:       // 11
+                    cout &lt;&lt; &quot;result code = MMSYSERR_INVALPARAM&quot; &lt;&lt; endl;
+                    break;
+
+                case JOYERR_PARMS:              // 165: bad parameters
+                    cout &lt;&lt; &quot;result code = JOYERR_PARMS&quot; &lt;&lt; endl;
+                    break;
+
+                case JOYERR_NOCANDO:            // 166: request not completed
+                    cout &lt;&lt; &quot;result code = JOYERR_NOCANDO&quot; &lt;&lt; endl;
+                    break;
+
+                case JOYERR_UNPLUGGED:          // 167: joystick is unplugged
+                    cout &lt;&lt; &quot;result code = JOYERR_UNPLUGGED&quot; &lt;&lt; endl;
+                    break;
+
+                default:
+                    cout &lt;&lt; &quot;result code = &quot; &lt;&lt; result &lt;&lt; endl;
+                    break;
+                }
+            }
+        }
+
+        // [Enter] キーを押されたらプログラム終了
+        if (GetAsyncKeyState(VK_RETURN)) {
+            cout &lt;&lt; endl &lt;&lt; &quot;Finish this program.&quot;;
+            bLoop = false;
+            Sleep(2000);
+        }
+
+        // 一定時間待機
+        if (bConnected == true) {
+            // 短時間の待機
+            Sleep(100);
+        }
+        else {
+            // 長めの待機
+            Sleep(500);
+        }
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h2> 2. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+</pre>
+<!-- End for 'google-code-prettify' -->
+	
+<br>
+	
+<br>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考">参考</a></h2>
+<ul>
+	<li>joyGetPos 関数<br><a href="joyGetPos.html">プログラミングアイテム joyGetPos</a></li>
+	<li>joyGetPos 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx</a></li>
+	<li>joyGetPosEx 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx</a></li>
+	<li>joyConfigChanged 関数<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx</a></li>
+	<li>JOYINFO 構造体<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx</a></li>
+	<li>JOYINFOEX 構造体<br>
+	<a href="https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx</a></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載：<br>2018年05月19日 新規作成、木下英俊</font></p>
+</body>
+</html>

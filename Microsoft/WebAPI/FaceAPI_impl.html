@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Checker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            /*======================================*/
+            /* 表示するファイルを選択したときの処理 */
+            /*======================================*/
+            $("#uploadFile").change(function () {
+                $("#log").html("");
+                $("#information").html("... sending data ...");
+                var file = this.files[0];
+                var image = new Image();
+                var reader = new FileReader();
+
+                /*======================*/
+                /* reader - onload 処理 */
+                /*======================*/
+                reader.onload = function (evt) {
+
+                    /*=====================*/
+                    /* image - onload 処理 */
+                    /*=====================*/
+                    image.onload = function () {
+
+                        // canvas へ読み取りした画像を表示
+                        $("canvas").attr("width", image.width);
+                        $("canvas").attr("height", image.height);
+                        var canvas = $("#canvas");
+
+                        var ctx = canvas[0].getContext("2d");
+                        ctx.drawImage(image, 0, 0);
+
+
+                        /*===================*/
+                        /* 顔認識処理 ・・・ */
+                        /*===================*/
+                        var colors = ["#F66", "#6F6", "#FF6", "#66F", "#F6F", "#6FF"];
+                        var base64 = canvas[0].toDataURL('image/jpeg');
+                        var bin = atob(base64.replace(/^.*,/, ''));
+                        var buffer = new Uint8Array(bin.length);
+                        for (var i = 0; i < bin.length; i++) { buffer[i] = bin.charCodeAt(i); }
+                        var bytesArray = buffer;
+
+                        $.ajax({
+                            url: "https://westus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceLandmarks=false&returnFaceAttributes=age,gender,smile", type: 'POST',
+                            headers: { "Ocp-Apim-Subscription-Key": "0781569dc02e42ccbb4b22700c322a36" },
+                            contentType: 'application/octet-stream',
+                            data: bytesArray,
+                            dataType: "json",
+                            processData: false,
+                            success: function (data) {
+                                addLog("response", data);
+                                $("#information").html("");
+                                var info = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    var json = data[i];
+                                    var rect = json.faceRectangle;
+                                    if (rect != null) {
+                                        ctx.strokeStyle = colors[i % 6];
+                                        ctx.lineWidth = 10;
+                                        ctx.beginPath();
+                                        ctx.moveTo(rect.left, rect.top);
+                                        ctx.lineTo(rect.left + rect.width, rect.top);
+                                        ctx.lineTo(rect.left + rect.width, rect.top + rect.height);
+                                        ctx.lineTo(rect.left, rect.top + rect.height);
+                                        ctx.lineTo(rect.left, rect.top);
+                                        ctx.closePath(); ctx.stroke();
+                                    }
+
+                                    var attr = json.faceAttributes;
+                                    info += '<span style="color:'
+                                        + colors[i % 6] + '">&#9632;&#9632;&#9632;</span><br>'
+                                        + 'smile:' + attr.smile + "<br>"
+                                        + ' gender:' + attr.gender + "<br>"
+                                        + ' age:' + attr.age + '<br><br>';
+                                }
+
+                                $("#information").html(info);
+                            },
+                            error: function (xhr, status, error) {
+                                alert(status);
+                                alert(error);
+                            }
+                        });
+                    }
+
+                    // image へ readerの読み取り結果をデータバインド
+                    image.src = evt.target.result;
+                }
+
+                // 選択した画像ファイルの読み取り処理
+                reader.readAsDataURL(file);
+            });
+        });
+        function addLog(title, data) {
+            $("#log").html($("#log").html() + "<pre>" + title + "\n" + JSON.stringify(data, null, "  ") + "</pre>");
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h2>Face Checker</h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                <canvas id="canvas" style="width:100%"></canvas>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+                <div id="information" style="font-size:x-large"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <input id="uploadFile" name="image" type="file" />
+        </div>
+        <div class="row" style="height:20px;"></div>
+    </div>
+    <div id="log"></div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<title>［タイトルを記載します］</title>
+
+<!-- Start for 'google-code-prettify' -->
+<link href="../../prettify.css" rel="stylesheet" type="text/css">
+<script src="../../prettify.js" type="text/javascript"></script>
+<!-- End for 'google-code-prettify' -->
+
+<link rel="stylesheet" href="../../design.css" type="text/css">
+<style type="text/css">
+.auto-style4 {
+	border-width: 0px;
+	width:800px;
+}
+.auto-style7 {
+	font-weight: normal;
+}
+.auto-style8 {
+	background-color: #FFFF00;
+}
+.auto-style9 {
+	border-collapse: collapse;
+	border: 2px solid #C0C0C0;
+}
+.auto-style10 {
+	border: 1px solid #C0C0C0;
+}
+.auto-style11 {
+	border-left: 1px solid #C0C0C0;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-top: 1px solid #C0C0C0;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+</style>
+</head>
+<body onload="prettyPrint();">
+<h1 class="auto-style7">
+Intrinsic</h1>
+
+<p> SIMD 命令などを Intrinsic で表記して高速な実行を実現する方法について記載します。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._4バイト整数(int)の加算">1. 4バイト整数(int)の加算</a><br>2. ***<br>3. ***</p>
+<p> &nbsp;</p>
+<h2> <a name="1._4バイト整数(int)の加算">1. 4バイト整数(int)の加算</a></h2>
+<p> [概要]<br>４バイト整数(int)の加算を、標準的な方法、SSE2、AVX2、の３つの方法で作成してみます。</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2017 pro., C++</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p>&nbsp;</p>
+<h3>[方式１] 標準<code>的な方法</code></h3>
+&nbsp;<p>[stdafx.h]</p>
+<pre class="prettyprint linenums">
+#pragma once
+
+#include &quot;targetver.h&quot;
+
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;tchar.h&gt;
+
+// tstring
+typedef std::basic_string&lt;TCHAR&gt; tstring;
+
+// tcout
+#if defined(UNICODE) || defined(_UNICODE)
+#define tcout std::wcout
+#define tcin std::wcin
+#else
+#define tcout std::cout
+#define tcin std::cin
+#endif</pre>
+<p>[Intrinsic_add_01.cpp]</p>
+<pre class="prettyprint linenums">
+#include &quot;stdafx.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;Windows.h&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    const size_t    n = 130000000;
+
+    static INT32    a[n];
+    static INT32    b[n];
+    static INT32    c[n];
+    DWORD    dwStartCount = GetTickCount();
+
+    for (int i = 0; i &lt; n; ++i) {
+        <span class="auto-style8">a[i] = b[i] + c[i];</span>
+    }
+
+    tcout &lt;&lt; _T(&quot;(Execute time [ms]) &quot;) &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; _T(&quot;[ms]&quot;) &lt;&lt; endl;
+
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    {
+        tstring str;
+
+        tcout &lt;&lt; _T(&quot;HIT [Enter] KEY !! &quot;);
+        getline(tcin, str);
+    }
+
+    return EXIT_SUCCESS;
+}
+</pre>
+	
+<p>&nbsp;</p>
+<h3>[方式２] SSE2</h3>
+<p>[stdafx.h]</p>
+<pre class="prettyprint linenums">
+#pragma once
+
+#include &quot;targetver.h&quot;
+
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &lt;tchar.h&gt;
+
+// tstring
+typedef std::basic_string&lt;TCHAR&gt; tstring;
+
+// tcout
+#if defined(UNICODE) || defined(_UNICODE)
+#define tcout std::wcout
+#define tcin std::wcin
+#else
+#define tcout std::cout
+#define tcin std::cin
+#endif
+</pre>
+
+<p>[Intrinsic_add_02.cpp]</p>
+<pre class="prettyprint linenums">
+#include &quot;stdafx.h&quot;
+#include &lt;stdio.h&gt;
+#include &lt;Windows.h&gt;
+#include &lt;string&gt;
+
+<span class="auto-style8">#include &lt;emmintrin.h&gt;      // for SSE2</span>
+
+using namespace std;
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    const size_t    n = 130000000;
+
+    __declspec(align(256)) static volatile INT32    a[n];
+    __declspec(align(256)) static volatile INT32    b[n];
+    __declspec(align(256)) static volatile INT32    c[n];
+
+    // SIMD - _mm_add_epi32
+    __m128i ma;
+    __m128i mb;
+    __m128i mc;
+
+    DWORD    dwStartCount = GetTickCount();
+
+    for (int i = 0; i &lt; n; <span class="auto-style8">i+=4</span>) {
+        mb = _mm_load_si128((__m128i*)&amp;b[i]);       // load - SSE2
+        mc = _mm_load_si128((__m128i*)&amp;c[i]);       // load - SSE2
+
+        <span class="auto-style8">ma = _mm_add_epi32(mb, mc);                 // add - SSE2</span>
+
+        _mm_store_si128((__m128i*)a, ma);           // store - SSE2
+    }
+
+    cout &lt;&lt; &quot;(Execute time [ms]) &quot; &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; &quot;[ms]&quot; &lt;&lt; endl;
+
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    {
+        string str;
+
+        cout &lt;&lt; &quot;HIT [Enter] KEY !! &quot;;
+        getline(cin, str);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+<p>&nbsp;</p>
+<h3>[方式3] AVX2</h3>
+<pre class="prettyprint linenums">
+#include &lt;stdio.h&gt;
+#include &lt;Windows.h&gt;
+#include &lt;tchar.h&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+<span class="auto-style8">#include &lt;immintrin.h&gt;      // for AVX2</span>
+
+
+using namespace std;
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    const size_t    n = 130000000;
+
+    __declspec(align(256)) static volatile INT32    a[n];
+    __declspec(align(256)) static volatile INT32    b[n];
+    __declspec(align(256)) static volatile INT32    c[n];
+
+    // SIMD - _mm_add_epi32
+    __m256i ma;
+    __m256i mb;
+    __m256i mc;
+
+    DWORD    dwStartCount = GetTickCount();
+
+    for (int i = 0; i &lt; n; <span class="auto-style8">i+=8</span>) {
+        mb = _mm256_load_si256((__m256i*)&b[i]);    // load - AVX
+        mc = _mm256_load_si256((__m256i*)&c[i]);    // load - AVX
+
+        <span class="auto-style8">ma = _mm256_add_epi32(mb, mc);              // add - AVX2</span>
+
+        _mm256_store_si256((__m256i*)a, ma);        // store - AVX    }
+
+    cout &lt;&lt; &quot;(Execute time [ms]) &quot; &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; &quot;[ms]&quot; &lt;&lt; endl;
+
+    /*========*/
+    /* 後処理 */
+    /*========*/
+    {
+        string str;
+
+        cout &lt;&lt; &quot;HIT [Enter] KEY !! &quot;;
+        getline(cin, str);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+<p>&nbsp;</p>
+<p>上記の３つについて、私のPC環境での実行時間は以下のような結果となりました。<br>AVX2 の速度が SSE2 
+と変わらなかったことが不思議です。継続調査して AVX2 の性能を正しく出せるようにするノウハウを蓄積したいと思います。</p>
+<table class="auto-style9" style="width: 300; height: 100;">
+	<tr>
+		<td class="auto-style11">方式</td>
+		<td class="auto-style11">実行時間 [ms]</td>
+	</tr>
+	<tr>
+		<td class="auto-style11">標準的な方法</td>
+		<td class="auto-style11">約 1390ms</td>
+	</tr>
+	<tr>
+		<td class="auto-style11">SSE2</td>
+		<td class="auto-style11">約 890ms</td>
+	</tr>
+	<tr>
+		<td class="auto-style11">AVX2</td>
+		<td bordercolordark="#808080" class="auto-style10">約 890ms</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<h2> 2. ***</h2>
+<p> [概要]</p>
+<p> &nbsp;</p>
+<p>[環境]</p>
+<ul>
+	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>OS: Windows10 home</li>
+</ul>
+<p> &nbsp;</p>
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span>
+<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+	<tr>
+		<td>
+<pre class="prettyprint linenums">
+</pre>
+		</td>
+	</tr>
+</table>
+	
+<br>
+	
+<br>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>
+	<a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/#">
+	Intel Intrinsics Guide</a></li>
+	<li></li>
+</ul>
+<hr>
+<p> <font face="Meiryo UI">記載： 2017年09月30日 木下英俊：新規作成<br>
+</font></p>
+</body>
+</html>
