@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>Form - CheckBox �R���g���[��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Form - CheckBox コントロール</title>
 <link rel="stylesheet" href="../../design.css" type="text/css">
 <style type="text/css">
 .auto-style7 {
@@ -15,13 +15,13 @@
 </head>
 <body>
 <h1 class="auto-style7">
-Form : CheckBox �R���g���[��</h1>
+Form : CheckBox コントロール</h1>
 <h2>
-���e�ꗗ�F</h2>
+内容一覧：</h2>
 <p>
 <a href="#1._Simple_CheckBox">1. Simple CheckBox</a><br>
-<a href="#2._3���CheckBox">2. 3���CheckBox</a><br>
-<a href="#3._CheckBox_�̏�Ԏ擾">3. CheckBox �̏�Ԏ擾</a></p>
+<a href="#2._3状態CheckBox">2. 3状態CheckBox</a><br>
+<a href="#3._CheckBox_の状態取得">3. CheckBox の状態取得</a></p>
 <p>
 &nbsp;</p>
 <h2>
@@ -29,48 +29,48 @@ Form : CheckBox �R���g���[��</h1>
 <p>
 <table class="auto-style8" style="border: thin solid #C0C0C0; width: 569px">
 	<tr>
-		<td>�]�����F<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-Windows8 64bit<br>&nbsp;&nbsp;&nbsp; �R���p�C���F&nbsp;&nbsp; Visual Studio 2012 
-Update2�A C#�A .NET 4</td>
+		<td>評価環境：<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Windows8 64bit<br>&nbsp;&nbsp;&nbsp; コンパイラ：&nbsp;&nbsp; Visual Studio 2012 
+Update2、 C#、 .NET 4</td>
 	</tr>
 </table>
 </p>
 <p>
-�܂��̓V���v���� CheckBox ���g���Ă݂܂��B<br>�V�����v���W�F�N�g���쐬��ɒP���� CheckBox 
-���P�����z�u�B�v���p�e�B�͑S�ăf�t�H���g�̂܂܂ɂ��܂��B</p>
+まずはシンプルな CheckBox を使ってみます。<br>新しいプロジェクトを作成後に単純に CheckBox 
+を１つだけ配置。プロパティは全てデフォルトのままにします。</p>
 <p class="auto-style7">
 <img alt="" src="CheckBox/img20.jpg"></p>
 <p class="auto-style7">
-[F5] ���s����ƂQ�̏�Ԃ�J�ڂł��� CheckBox ���쐬�ł��܂����B<br>
+[F5] 実行すると２つの状態を遷移できる CheckBox を作成できました。<br>
 <img alt="" src="CheckBox/img25.gif"> <img alt="" src="CheckBox/img27.gif"></p>
 <p class="auto-style7">
 &nbsp;</p>
 <p class="auto-style7">
-<a name="2._3���CheckBox">2. 3���CheckBox</a></p>
+<a name="2._3状態CheckBox">2. 3状態CheckBox</a></p>
 <p class="auto-style7">
-�����ĂR���CheckBox�B�v���p�e�B�� TreeState �� False ���� True �֕ύX���܂��B<br>
+続いて３状態CheckBox。プロパティの TreeState を False から True へ変更します。<br>
 <img alt="" src="CheckBox/img2C.jpg"><br><br>
-�����[F5]���s����ƁA���ԏ��(Interminate)���܂ނR��Ԃ�I�Ԃ��Ƃ��ł��܂����B<br>
+これで[F5]実行すると、中間状態(Interminate)を含む３状態を選ぶことができました。<br>
 <img alt="" src="CheckBox/img30.gif"></p>
 <p class="auto-style7">
 &nbsp;</p>
 <h2>
-<a name="3._CheckBox_�̏�Ԏ擾">3. CheckBox �̏�Ԏ擾</a></h2>
+<a name="3._CheckBox_の状態取得">3. CheckBox の状態取得</a></h2>
 <table class="auto-style8" style="border: thin solid #C0C0C0; width: 569px">
 	<tr>
-		<td>�]�����F<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-Windows8 64bit<br>&nbsp;&nbsp;&nbsp; �R���p�C���F&nbsp;&nbsp; Visual Studio 2012 
-Update2�A C#�A .NET 4</td>
+		<td>評価環境：<br>&nbsp;&nbsp;&nbsp; OS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Windows8 64bit<br>&nbsp;&nbsp;&nbsp; コンパイラ：&nbsp;&nbsp; Visual Studio 2012 
+Update2、 C#、 .NET 4</td>
 	</tr>
 </table>
 <p class="auto-style7">
-�����āA�`�F�b�N�{�b�N�X�̏�Ԃ��ς�������Ƃ��C�x���g�擾���ĉ�ʂ̕������ύX����A�Ƃ����������s���Ă݂܂��B</p>
+続いて、チェックボックスの状態が変わったことをイベント取得して画面の文字列を変更する、という処理を行ってみます。</p>
 <p class="auto-style7">
-���߂ɁA������\���p�̃��x�����P�ǉ����܂��B</p>
+初めに、文字列表示用のラベルを１つ追加します。</p>
 <p class="auto-style7">
 <img alt="" src="CheckBox/imgD.jpg"></p>
 <p class="auto-style7">
-CheckStateChanged �̃C�x���g�������������܂��B<br>
+CheckStateChanged のイベント処理を実装します。<br>
 <img alt="" src="CheckBox/img11.jpg"></p>
 <p class="auto-style7">
 &nbsp;</p>
@@ -95,7 +95,7 @@ CheckStateChanged �̃C�x���g�������������܂��B<br>
         {
             InitializeComponent();
 
-            <span class="comment">// �v���O�����N������ label1 �̕\��������������B</span>
+            <span class="comment">// プログラム起動時に label1 の表示を初期化する。</span>
             checkBox1_CheckStateChanged(this, new EventArgs());
         }
 
@@ -123,12 +123,12 @@ CheckStateChanged �̃C�x���g�������������܂��B<br>
 </table>
 
 <p class="auto-style7">
-[F5]���s����ƈȉ��̂悤�ȉ�ʂ��\������A�R�̏�Ԃ�\���ł��܂����B<br><img alt="" src="CheckBox/img17.gif">
+[F5]実行すると以下のような画面が表示され、３つの状態を表示できました。<br><img alt="" src="CheckBox/img17.gif">
 <img alt="" src="CheckBox/img19.gif"> <img alt="" src="CheckBox/img1B.gif"></p>
 <p class="auto-style7">
 <a href="CheckBox/test_CheckBox.zip">Sample program downlowd</a></p>
 
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2013�N05��11�� �؉��p�r</font></p>
+<p> <font face="Meiryo UI">記載： 2013年05月11日 木下英俊</font></p>
 </body>
 </html>

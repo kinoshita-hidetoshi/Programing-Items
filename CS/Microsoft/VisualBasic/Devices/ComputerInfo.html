@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>class ComputerInfo</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -27,66 +27,66 @@ td {
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-ComputerInfo �N���X</h1>
+ComputerInfo クラス</h1>
 
-<p> �R���s���[�^�[�̃������A�ǂ݂��܂�Ă���A�Z���u���A�R���s���[�^�[���A�I�y���[�e�B���O�V�X�e���ȂǂɊւ�������擾���邽�߂̃v���p�e�B��񋟂��܂��B</p>
-<h2> 1. �T�v</h2>
-<p> �p���K�w<br>System.Object<br>&nbsp; Microsoft.VisualBasic.Devices.ComputerInfo</p>
-<p> ���O���: Microsoft.VisualBasic.Devices</p>
-<p> �A�Z���u���F Microsoft.VisualBasic (Microsoft.VisualBasic.dll ��)</p>
-<h2> 2. �v���p�e�B</h2>
+<p> コンピューターのメモリ、読みこまれているアセンブリ、コンピューター名、オペレーティングシステムなどに関する情報を取得するためのプロパティを提供します。</p>
+<h2> 1. 概要</h2>
+<p> 継承階層<br>System.Object<br>&nbsp; Microsoft.VisualBasic.Devices.ComputerInfo</p>
+<p> 名前空間: Microsoft.VisualBasic.Devices</p>
+<p> アセンブリ： Microsoft.VisualBasic (Microsoft.VisualBasic.dll 内)</p>
+<h2> 2. プロパティ</h2>
 <table class="auto-style8" style="width: 100%">
 	<tr>
 		<td style="width: 64px; height: 24px"></td>
-		<td style="width: 100px; height: 24px">���O</td>
-		<td style="width: 400px; height: 24px">����</td>
+		<td style="width: 100px; height: 24px">名前</td>
+		<td style="width: 400px; height: 24px">説明</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>AvailablePhysicalMemory</td>
-		<td>�R���s���[�^�[�̋󂫕����������̍��v�T�C�Y���擾���܂��B</td>
+		<td>コンピューターの空き物理メモリの合計サイズを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>AvailableVirtualMemory</td>
-		<td>�R���s���[�^�[�̋󂫉��z�A�h���X��Ԃ̍��v�A�h���X���擾���܂��B</td>
+		<td>コンピューターの空き仮想アドレス空間の合計アドレスを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>InstalledUICulture</td>
-		<td>�I�y���[�e�B���O�V�X�e���ɃC���X�g�[�����ꂽ���݂�UI�J���`���[���擾���܂��B</td>
+		<td>オペレーティングシステムにインストールされた現在のUIカルチャーを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>OSFullName</td>
-		<td>�I�y���[�e�B���O�V�X�e���̊��S�����擾���܂��B</td>
+		<td>オペレーティングシステムの完全名を取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>OSPlatform</td>
-		<td>�R���s���[�^�[�Ŏg�p����Ă���I�y���[�e�B���O�V�X�e���̃v���b�g�t�H�[��ID���擾���܂��B</td>
+		<td>コンピューターで使用されているオペレーティングシステムのプラットフォームIDを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>OSVersion</td>
-		<td>�R���s���[�^�[�Ŏg�p����Ă���I�y���[�e�B���O�V�X�e���̃o�[�W�������擾���܂��B</td>
+		<td>コンピューターで使用されているオペレーティングシステムのバージョンを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>TotalPhysicalMemory</td>
-		<td>�R���s���[�^�[�̕����������̍��v�T�C�Y���擾���܂��B</td>
+		<td>コンピューターの物理メモリの合計サイズを取得します。</td>
 	</tr>
 	<tr>
 		<td>public</td>
 		<td>TotalVirtualMmory</td>
-		<td>�R���s���[�^�[�̉��z�A�h���X��Ԃ̍��v�T�C�Y���擾���܂��B</td>
+		<td>コンピューターの仮想アドレス空間の合計サイズを取得します。</td>
 	</tr>
 </table>
 <p>&nbsp;</p>
-<h2>3. �T���v���v���O����</h2>
-<p>���F<br>&nbsp;&nbsp;&nbsp; �J�����F Visual Studio 2013, C#, 
-.NET 4.0<br>&nbsp;&nbsp;&nbsp; �n�r�F Windows8.1</p>
-<span class="table_title">[�v���O�����\�[�X &quot;Program.cs&quot;]</span><table style="font-family: FixedSys;" width="800px">
+<h2>3. サンプルプログラム</h2>
+<p>環境：<br>&nbsp;&nbsp;&nbsp; 開発環境： Visual Studio 2013, C#, 
+.NET 4.0<br>&nbsp;&nbsp;&nbsp; ＯＳ： Windows8.1</p>
+<span class="table_title">[プログラムソース &quot;Program.cs&quot;]</span><table style="font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 		<pre  class="prettyprint linenums">
@@ -126,7 +126,7 @@ namespace ComputerInfo
 </table>
 	
 <br>
-<br>�}�j���t�F�X�g�t�@�C���͂���Ȋ����ŁB��������Ȃ���Windows8.1�̃o�[�W�����𐳂����F���ł��܂���B<br><br>
+<br>マニュフェストファイルはこんな感じで。これをしないとWindows8.1のバージョンを正しく認識できません。<br><br>
 
 [app.manifest]
 <table style="font-family: FixedSys;" width="800px">
@@ -138,17 +138,17 @@ namespace ComputerInfo
   &lt;trustInfo xmlns=&quot;urn:schemas-microsoft-com:asm.v2&quot;&gt;
     &lt;security&gt;
       &lt;requestedPrivileges xmlns=&quot;urn:schemas-microsoft-com:asm.v3&quot;&gt;
-        &lt;!-- UAC �}�j�t�F�X�g �I�v�V����
-            Windows �̃��[�U�[ �A�J�E���g����̃��x����ύX����ɂ́A
-            requestedExecutionLevel �m�[�h���ȉ��̂����ꂩ�Œu�����܂��B
+        &lt;!-- UAC マニフェスト オプション
+            Windows のユーザー アカウント制御のレベルを変更するには、
+            requestedExecutionLevel ノードを以下のいずれかで置換します。
 
         &lt;requestedExecutionLevel  level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;
         &lt;requestedExecutionLevel  level=&quot;requireAdministrator&quot; uiAccess=&quot;false&quot; /&gt;
         &lt;requestedExecutionLevel  level=&quot;highestAvailable&quot; uiAccess=&quot;false&quot; /&gt;
 
-            requestedExecutionLevel �m�[�h���w�肷��ƁA�t�@�C������у��W�X�g���̉��z���͖����ɂȂ�܂��B
-            ���o�[�W�����Ƃ̌݊����̂��߂Ƀt�@�C������у��W�X�g���̉��z����
-            �g�p����ꍇ�́ArequestedExecutionLevel �m�[�h���폜���܂��B
+            requestedExecutionLevel ノードを指定すると、ファイルおよびレジストリの仮想化は無効になります。
+            旧バージョンとの互換性のためにファイルおよびレジストリの仮想化を
+            使用する場合は、requestedExecutionLevel ノードを削除します。
         --&gt;
         &lt;requestedExecutionLevel level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;
       &lt;/requestedPrivileges&gt;
@@ -157,19 +157,19 @@ namespace ComputerInfo
 
   &lt;compatibility xmlns=&quot;urn:schemas-microsoft-com:compatibility.v1&quot;&gt;
     &lt;application&gt;
-      &lt;!--���̃A�v���P�[�V���������삷��悤�ɐ݌v����Ă���AWindows �̂��ׂẴo�[�W�����̈ꗗ�B
-      Windows �͍ł��݊����̍������������I�ɑI�����܂��B--&gt;
+      &lt;!--このアプリケーションが動作するように設計されている、Windows のすべてのバージョンの一覧。
+      Windows は最も互換性の高い環境を自動的に選択します。--&gt;
 
-      &lt;!--�A�v���P�[�V������ Windows Vista �œ��삷��悤�ɐ݌v����Ă���ꍇ�́A���� supportedOS �m�[�h�̃R�����g���������܂�--&gt;
+      &lt;!--アプリケーションが Windows Vista で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します--&gt;
       &lt;supportedOS Id=&quot;{e2011457-1546-43c5-a5fe-008deee3d3f0}&quot;&gt;&lt;/supportedOS&gt;
 
-      &lt;!-- �A�v���P�[�V������ Windows 7 �œ��삷��悤�ɐ݌v����Ă���ꍇ�́A���� supportedOS �m�[�h�̃R�����g���������܂��B--&gt;
+      &lt;!-- アプリケーションが Windows 7 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します。--&gt;
       &lt;supportedOS Id=&quot;{35138b9a-5d96-4fbd-8e2d-a2440225f93a}&quot;/&gt;
 
-      &lt;!--�A�v���P�[�V������ Windows 8 �œ��삷��悤�ɐ݌v����Ă���ꍇ�́A���� supportedOS �m�[�h�̃R�����g���������܂�--&gt;
+      &lt;!--アプリケーションが Windows 8 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除します--&gt;
       &lt;supportedOS Id=&quot;{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}&quot;&gt;&lt;/supportedOS&gt;
 
-      &lt;!-- �A�v���P�[�V������ Windows 8.1 �œ��삷��悤�ɐ݌v����Ă���ꍇ�́A���� supportedOS �m�[�h�̃R�����g���������Ă�������--&gt;
+      &lt;!-- アプリケーションが Windows 8.1 で動作するように設計されている場合は、次の supportedOS ノードのコメントを解除してください--&gt;
       &lt;supportedOS Id=&quot;{1f676c76-80e1-4239-95bb-83d0f6d0da78}&quot;/&gt;
 
     &lt;/application&gt;
@@ -180,16 +180,16 @@ namespace ComputerInfo
 	</tr>
 </table>
 	
-<span class="table_title"><br>[���s����]<br>
-<br><img alt="" src="ComputerInfo/imgD.gif"></span><p>�T���v���v���O����  
-<a href="ComputerInfo/GetTotalPhysicalMemory.zip">�_�E�����[�h</a></p>
+<span class="table_title"><br>[実行結果]<br>
+<br><img alt="" src="ComputerInfo/imgD.gif"></span><p>サンプルプログラム  
+<a href="ComputerInfo/GetTotalPhysicalMemory.zip">ダウンロード</a></p>
 <p>&nbsp;</p>
-<h2>�Q��</h2>
+<h2>参照</h2>
 <p>
 <a href="https://msdn.microsoft.com/ja-jp/library/microsoft.visualbasic.devices.computerinfo(v=vs.100).aspx">
 https://msdn.microsoft.com/ja-jp/library/microsoft.visualbasic.devices.computerinfo(v=vs.100).aspx</a></p>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2015�N5��16�� �؉��p�r</font></p>
+<p> <font face="Meiryo UI">記載： 2015年5月16日 木下英俊</font></p>
 </body>
 </html>
