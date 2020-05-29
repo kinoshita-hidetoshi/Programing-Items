@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -21,31 +21,31 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1>boost::thread<br></h1>
-<p>boost::thread ‚ðŽg‚Á‚ÄˆÈ‰º‚Ì‚S‚Â‚ÌƒXƒŒƒbƒh‹N“®‚ðs‚Á‚Ä‚Ý‚Ü‚·B</p>
-<h3>“à—eF</h3>
+<p>boost::thread ã‚’ä½¿ã£ã¦ä»¥ä¸‹ã®ï¼”ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã‚’è¡Œã£ã¦ã¿ã¾ã™ã€‚</p>
+<h3>å†…å®¹ï¼š</h3>
 <ol>
-	<li><a href="#‚PDˆø”–³‚µŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs">ˆø”–³‚µŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs 
+	<li><a href="#ï¼‘ï¼Žå¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ 
    
 	</a> 
    
-	<li><a href="#‚QDˆø”•t‚«ŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs">ˆø”•t‚«ŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs 
+	<li><a href="#ï¼’ï¼Žå¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ 
    
 	</a> 
    
-	<li><a href="#‚RDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)_">ƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®) 
+	<li><a href="#ï¼“ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)_">ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•) 
     </a> 
-    <li><a href="#‚SDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)">ƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</a></li>
+    <li><a href="#ï¼”ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)">ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</a></li>
 </ol>
 <p>boost::thread 
-‚ÍŠÂ‹«ˆË‘¶‚ÌŽÀ‘•‚ð‹zŽû‚µ‚Ä‚­‚ê‚é‚¾‚¯‚Å‚È‚­AŽg‚¢ŸŽè‚à—Ç‚¢‚Å‚·B“Á‚Éƒƒ\ƒbƒh‚ð‹N“®‚·‚éÛA_beginthread‚ðŽg—p‚µ‚½ê‡‚Í static 
-‚Èƒƒ\ƒbƒh‚È‚Ç‚ð‚¢‚Á‚½‚ñŠÔ‚É‚©‚Ü‚¹‚é•K—v‚ª‚ ‚é‚Ì‚Å‚·‚ªA‚±‚ê‚ª•s—v‚Åˆê”­‹N“®‚Å‚«‚Ä•Ö—˜‚Å‚·B</p>
+ã¯ç’°å¢ƒä¾å­˜ã®å®Ÿè£…ã‚’å¸åŽã—ã¦ãã‚Œã‚‹ã ã‘ã§ãªãã€ä½¿ã„å‹æ‰‹ã‚‚è‰¯ã„ã§ã™ã€‚ç‰¹ã«ãƒ¡ã‚½ãƒƒãƒ‰ã‚’èµ·å‹•ã™ã‚‹éš›ã€_beginthreadã‚’ä½¿ç”¨ã—ãŸå ´åˆã¯ static 
+ãªãƒ¡ã‚½ãƒƒãƒ‰ãªã©ã‚’ã„ã£ãŸã‚“é–“ã«ã‹ã¾ã›ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã™ãŒã€ã“ã‚ŒãŒä¸è¦ã§ä¸€ç™ºèµ·å‹•ã§ãã¦ä¾¿åˆ©ã§ã™ã€‚</p>
 <p>&nbsp;</p>
-<h2><a name="‚PDˆø”–³‚µŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs">‚PDˆø”–³‚µŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs</a></h2>
-<h3>•]‰¿ŠÂ‹«F</h3>
+<h2><a name="ï¼‘ï¼Žå¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">ï¼‘ï¼Žå¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a></h2>
+<h3>è©•ä¾¡ç’°å¢ƒï¼š</h3>
 <ul>
-	<li>boostF Ver. 1.47.0</li>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2008sp1 (VC++2008sp1)</li>
-	<li>OSF Windows7 64bit</li>
+	<li>boostï¼š Ver. 1.47.0</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2008sp1 (VC++2008sp1)</li>
+	<li>OSï¼š Windows7 64bit</li>
 </ul>
 
 <pre class="prettyprint linenums">
@@ -75,7 +75,7 @@ void PrintWorld()
 
 int main(int argc, char* argv[])
 {
-    // ˆø”–³‚µŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs
+    // å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ
     {
         <span class="auto-style3">boost::thread</span> thr_hello(&amp;PrintHello);
         <span class="auto-style3">boost::thread</span> thr_world(&amp;PrintWorld);
@@ -87,12 +87,12 @@ int main(int argc, char* argv[])
 
 <p>&nbsp;</p>
 <h2>
-<a name="‚QDˆø”•t‚«ŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs">‚QDˆø”•t‚«ŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs</a></h2>
-<h3>•]‰¿ŠÂ‹«F</h3>
+<a name="ï¼’ï¼Žå¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">ï¼’ï¼Žå¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a></h2>
+<h3>è©•ä¾¡ç’°å¢ƒï¼š</h3>
 <ul>
-	<li>boostF Ver. 1.47</li>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2008sp1 (VC++2008sp1)</li>
-	<li>OSF Windows7 64bit</li>
+	<li>boostï¼š Ver. 1.47</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2008sp1 (VC++2008sp1)</li>
+	<li>OSï¼š Windows7 64bit</li>
 </ul>
 <pre class="prettyprint linenums">
 <code>#include &lt;iostream&gt;         // std::cout, std::endl
@@ -114,7 +114,7 @@ void PrintString( const char* str )
 
 int main(int argc, char* argv[])
 {
-    // ˆø”•t‚«ŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs
+    // å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ
     {
         <span class="auto-style3">boost::thread</span> thr_hello(&amp;PrintString, <span class="string">&quot;Hello &quot;</span>);
         <span class="auto-style3">boost::thread</span> thr_world(&amp;PrintString, <span class="string">&quot;World! &quot;</span>);
@@ -128,15 +128,15 @@ int main(int argc, char* argv[])
 <p>
 &nbsp;</p>
 <h2>
-<a name="‚RDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)_">‚RDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®) 
+<a name="ï¼“ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)_">ï¼“ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•) 
     </a></h2>
-<h3>ƒNƒ‰ƒXƒƒ“ƒoŠÖ”‚ðƒXƒŒƒbƒh‹N“®‚·‚é•û–@‚Å‚·BƒNƒ‰ƒXƒƒ\ƒbƒh‚È‚Ì‚Å‘æˆêˆø”‚ÉƒCƒ“ƒXƒ^ƒ“ƒX(this)‚ª•K—v‚Å‚·B‚±‚Ì‚½‚ß‰º‹LƒTƒ“ƒvƒ‹‚Å‚Í &amp;hello, 
-&amp;world ‚ðˆø”‚Å“n‚µ‚Ä‚¢‚Ü‚·B</h3>
-<h3>•]‰¿ŠÂ‹«F</h3>
+<h3>ã‚¯ãƒ©ã‚¹ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã™ã‚‹æ–¹æ³•ã§ã™ã€‚ã‚¯ãƒ©ã‚¹ãƒ¡ã‚½ãƒƒãƒ‰ãªã®ã§ç¬¬ä¸€å¼•æ•°ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(this)ãŒå¿…è¦ã§ã™ã€‚ã“ã®ãŸã‚ä¸‹è¨˜ã‚µãƒ³ãƒ—ãƒ«ã§ã¯ &amp;hello, 
+&amp;world ã‚’å¼•æ•°ã§æ¸¡ã—ã¦ã„ã¾ã™ã€‚</h3>
+<h3>è©•ä¾¡ç’°å¢ƒï¼š</h3>
 <ul>
-	<li>boostF Ver. 1.47</li>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2008sp1 (VC++2008sp1)</li>
-	<li>OSF Windows7 64bit</li>
+	<li>boostï¼š Ver. 1.47</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2008sp1 (VC++2008sp1)</li>
+	<li>OSï¼š Windows7 64bit</li>
 </ul>
 <pre class="prettyprint linenums">
 <code>#include &lt;iostream&gt;         // std::cout, std::endl
@@ -166,7 +166,7 @@ public:
 };
 
 int main(int argc, char* argv[])<br>{
-    // ƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)
+    // ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)
     {
         PrintMessage hello(<span class="string">&quot;Hello &quot;</span>);
         PrintMessage world(<span class="string">&quot;World! &quot;</span>);
@@ -181,16 +181,16 @@ int main(int argc, char* argv[])<br>{
 <p>
 &nbsp;</p>
 <h2>
-<a name="‚SDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)">‚SDƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</a></h2>
+<a name="ï¼”ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)">ï¼”ï¼Žãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</a></h2>
 <p>
-&nbsp;&nbsp; ƒNƒ‰ƒXƒƒ“ƒoŠÖ”‚ðƒXƒŒƒbƒh‹N“®‚·‚é•û–@‚Å‚·BƒNƒ‰ƒXƒƒ\ƒbƒh‚È‚Ì‚Å‘æˆêˆø”‚ÉƒCƒ“ƒXƒ^ƒ“ƒX(this)‚ª•K—v‚Å‚·B‚±‚Ì‚½‚ß‰º‹LƒTƒ“ƒvƒ‹‚Å‚Í 
-this ‚ðˆø”‚Å“n‚µ‚Ä‚¢‚Ü‚·B<br>&nbsp; ‚±‚±‚É‹LÚ‚Ì•û–@‚ÍŽ„Ž©g‚ÌƒIƒŠƒWƒiƒ‹‚Å‚·B‚Ç‚±‚ªƒIƒŠƒWƒiƒ‹‚©‚Æ‚¢‚¤‚ÆA swap ‚Å boost::thread 
-‚Ìƒƒ“ƒo•Ï”‚ðŒðŠ·‚µ‚Ä‚¢‚é‚Æ‚±‚ë‚Å‚·B‚Ç‚±‚©‚©‚çˆø—p‚µ‚½‚í‚¯‚Å‚Í‚È‚¢‚Ì‚Å—Ž‚Æ‚µŒŠ‚ª‚ ‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB‹t‚É‚à‚Á‚Æ”ü‚µ‚¢ŽÀŒ»•û–@‚ª‚ ‚é‚Ì‚©‚à‚µ‚ê‚Ü‚¹‚ñB‚Ü‚¸‚Í“®ì‚µ‚½A‚Æ‚¢‚¤‚¾‚¯‚Ì‘ã•¨‚Å‚·B&nbsp;</p>
-<h3>•]‰¿ŠÂ‹«F</h3>
+&nbsp;&nbsp; ã‚¯ãƒ©ã‚¹ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã™ã‚‹æ–¹æ³•ã§ã™ã€‚ã‚¯ãƒ©ã‚¹ãƒ¡ã‚½ãƒƒãƒ‰ãªã®ã§ç¬¬ä¸€å¼•æ•°ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(this)ãŒå¿…è¦ã§ã™ã€‚ã“ã®ãŸã‚ä¸‹è¨˜ã‚µãƒ³ãƒ—ãƒ«ã§ã¯ 
+this ã‚’å¼•æ•°ã§æ¸¡ã—ã¦ã„ã¾ã™ã€‚<br>&nbsp; ã“ã“ã«è¨˜è¼‰ã®æ–¹æ³•ã¯ç§è‡ªèº«ã®ã‚ªãƒªã‚¸ãƒŠãƒ«ã§ã™ã€‚ã©ã“ãŒã‚ªãƒªã‚¸ãƒŠãƒ«ã‹ã¨ã„ã†ã¨ã€ swap ã§ boost::thread 
+ã®ãƒ¡ãƒ³ãƒå¤‰æ•°ã‚’äº¤æ›ã—ã¦ã„ã‚‹ã¨ã“ã‚ã§ã™ã€‚ã©ã“ã‹ã‹ã‚‰å¼•ç”¨ã—ãŸã‚ã‘ã§ã¯ãªã„ã®ã§è½ã¨ã—ç©´ãŒã‚ã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚é€†ã«ã‚‚ã£ã¨ç¾Žã—ã„å®Ÿç¾æ–¹æ³•ãŒã‚ã‚‹ã®ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚ã¾ãšã¯å‹•ä½œã—ãŸã€ã¨ã„ã†ã ã‘ã®ä»£ç‰©ã§ã™ã€‚&nbsp;</p>
+<h3>è©•ä¾¡ç’°å¢ƒï¼š</h3>
 <ul>
-	<li>boostF Ver. 1.47</li>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2008sp1 (VC++2008sp1)</li>
-	<li>OSF Windows7 64bit</li>
+	<li>boostï¼š Ver. 1.47</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2008sp1 (VC++2008sp1)</li>
+	<li>OSï¼š Windows7 64bit</li>
 </ul>
 <pre class="prettyprint linenums">
 <code>#include &lt;iostream&gt;         // std::cout, std::endl
@@ -228,7 +228,7 @@ public:
 
 
 int main(int argc, char* argv[])<br>{
-    <span class="comment">// ƒƒ“ƒoŠÖ”‚ðƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅŽÀs(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</span>
+    <span class="comment">// ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒžãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</span>
     {
         PrintMessage hello(<span class="string">&quot;Hello  &quot;</span>);
         PrintMessage world(<span class="string">&quot;World! &quot;</span>); 
@@ -241,8 +241,8 @@ int main(int argc, char* argv[])<br>{
 <br>
 <font face="Meiryo UI">
 <hr>
-<p>‹LÚF 2010”N3ŒŽ14“ú ‰”Å<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-2012”N3ŒŽ4“ú à–¾‚È‚Ç’Ç‹L<br></p>
+<p>è¨˜è¼‰ï¼š 2010å¹´3æœˆ14æ—¥ åˆç‰ˆ<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2012å¹´3æœˆ4æ—¥ èª¬æ˜Žãªã©è¿½è¨˜<br></p>
 </font>
 </body>
 </html>

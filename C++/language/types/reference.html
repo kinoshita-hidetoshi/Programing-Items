@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�Q�� �| ���Ӓl�Q�ƁA�E�Ӓl�Q��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>参照 － 左辺値参照、右辺値参照</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -40,23 +40,23 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-�Q�� �| ���Ӓl�Q�ƁA�E�Ӓl�Q��</h1>
+参照 － 左辺値参照、右辺値参照</h1>
 
-<p> �Q�� (���Ӓl�Q��) �́A�I�u�W�F�N�g�̕ʖ��̂悤�ɐU�镑���܂��B<br>�Ⴆ�Ί֐��̉��������Q�Ƃɂ��邱�ƂŁA���ʂȃR�s�[���������܂���B����͓��ɑ傫�ȃI�u�W�F�N�g���֐��֓n���ꍇ�ɁA�R�s�[�ɂ�郁���������}�����A�����ɃR�s�[�����ɂ�鎞�Ԃ�������Ȃ����ߗL���ł��B</p>
-<p> c++11 �ŁA�E�Ӓl�Q�Ƃƃ��[�u�Z�}���e�B�N�X�A�Ƃ����@�\���ǉ��ɂȂ�܂����B<br>�E�Ӓl�Q�Ƃ� &quot;�ꎞ�I�u�W�F�N�g&quot; 
-���Q�Ƃ��邱�Ƃ��ł���悤�ɂȂ�A�傫�ȃR�s�[�R�X�g���C�ɂ��邱�ƂȂ��������Ƃ��ł��܂��B</p>
-<p> �����Q�Ƌ@�\��L���Ɋ��p�ł���悤�ɂȂ邱�ƂŁA��R�X�g�ŗL���ȃv���O�������쐬�ł���悤�ɂȂ�܂��傤�B</p>
+<p> 参照 (左辺値参照) は、オブジェクトの別名のように振る舞います。<br>例えば関数の仮引数を参照にすることで、無駄なコピーが発生しません。これは特に大きなオブジェクトを関数へ渡す場合に、コピーによるメモリ消費を抑えられ、同時にコピー処理による時間もかからないため有効です。</p>
+<p> c++11 で、右辺値参照とムーブセマンティクス、という機能が追加になりました。<br>右辺値参照は &quot;一時オブジェクト&quot; 
+を参照することができるようになり、大きなコピーコストを気にすることなく扱うことができます。</p>
+<p> これら参照機能を有効に活用できるようになることで、低コストで有効なプログラムを作成できるようになりましょう。</p>
 <p> &nbsp;</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._�\��">1. �\��</a><br><a href="#2._���Ӓl�Q��">2. ���Ӓl�Q��</a><br>&nbsp;
-<a href="#2-1._���Ӓl�Q�ƂƂ�">2-1. ���Ӓl�Q�ƂƂ�</a><br>&nbsp; 
-<a href="#2-2._�֐��̉������Ŏg��">2-2. �֐��̉������Ŏg��</a><br>&nbsp;
-<a href="#2-3._�֐��̖߂�l�Ŏg��">2-3. �֐��̖߂�l�Ŏg��</a><br>
-<a href="#3._�E�Ӓl�Q�� (c++11)">3._�E�Ӓl�Q�� (c++11)</a><br>&nbsp;
-<a href="#3-1._�E�Ӓl�Q�ƂƂ�">3-1. �E�Ӓl�Q�ƂƂ�</a></p>
+<h2> 目次</h2>
+<p> <a href="#1._構文">1. 構文</a><br><a href="#2._左辺値参照">2. 左辺値参照</a><br>&nbsp;
+<a href="#2-1._左辺値参照とは">2-1. 左辺値参照とは</a><br>&nbsp; 
+<a href="#2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a><br>&nbsp;
+<a href="#2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a><br>
+<a href="#3._右辺値参照 (c++11)">3._右辺値参照 (c++11)</a><br>&nbsp;
+<a href="#3-1._右辺値参照とは">3-1. 右辺値参照とは</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._�\��">1. �\��</a></h2>
-<p> �Q�ƕϐ��錾�́A�錾�q���ȉ��̌`�������P���錾�ł��B</p>
+<h2> <a name="1._構文">1. 構文</a></h2>
+<p> 参照変数宣言は、宣言子が以下の形式を持つ単純宣言です。</p>
 <table>
 <tbody>
 	<tr>
@@ -64,8 +64,8 @@
 	</tr>
 	
 	<tr>
-		<td><span class="auto-style8">&lt;cv�C���q&gt; �^��</span> <code><b>&amp; </b></code><span class="auto-style8"><em>attr<span class="comment">(�I�v�V����) </span>declarator 
-		= �������q;</em></span></td>
+		<td><span class="auto-style8">&lt;cv修飾子&gt; 型名</span> <code><b>&amp; </b></code><span class="auto-style8"><em>attr<span class="comment">(オプション) </span>declarator 
+		= 初期化子;</em></span></td>
 		<td>(1)</td>
 		<td></td>
 	</tr>
@@ -75,8 +75,8 @@
 	</tr>
 	
 	<tr>
-		<td><span class="auto-style8">&lt;cv�C���q&gt; �^��</span><code> <b>&amp;&amp; </b></code><span class="auto-style8"><em>attr</em></span><span class="comment">(�I�v�V����)</span><span class="auto-style8"><em> declarator 
-		= �������q;</em></span> </td>
+		<td><span class="auto-style8">&lt;cv修飾子&gt; 型名</span><code> <b>&amp;&amp; </b></code><span class="auto-style8"><em>attr</em></span><span class="comment">(オプション)</span><span class="auto-style8"><em> declarator 
+		= 初期化子;</em></span> </td>
 		<td>(2)</td>
 		<td class="comment">(c++11)</td>
 	</tr>
@@ -86,31 +86,31 @@
 	</tr>
 </tbody>
 </table>
-<p class="auto-style9"> (1) ���Ӓl�Q�Ɛ錾�q �| �錾
-<span class="cpp-source">S&amp; D;</span>&nbsp;�� S �ɂ���Č��肳���^�ւ̍��Ӓl�Q�ƂƂ��� D 
-��錾���܂��B</p>
-<p class="auto-style9"> (2) �E�Ӓl�Q�Ɛ錾�q �| �錾
-<span class="cpp-source"> S&amp;&amp; D;</span>&nbsp;�� S �ɂ���Č��肳���^�ւ̉E�Ӓl�Q�ƂƂ��� D ��錾���܂��B</p>
-<p> declarator - �ʂ̎Q�Ɛ錾�q�������C�ӂ̐錾�q�B</p>
-<p> attr(c++11) - �I�v�V���i����<a href="https://ja.cppreference.com/w/cpp/language/attributes" target="_blank">����</a>�̃��X�g�B</p>
+<p class="auto-style9"> (1) 左辺値参照宣言子 － 宣言
+<span class="cpp-source">S&amp; D;</span>&nbsp;は S によって決定される型への左辺値参照として D 
+を宣言します。</p>
+<p class="auto-style9"> (2) 右辺値参照宣言子 － 宣言
+<span class="cpp-source"> S&amp;&amp; D;</span>&nbsp;は S によって決定される型への右辺値参照として D を宣言します。</p>
+<p> declarator - 別の参照宣言子を除く任意の宣言子。</p>
+<p> attr(c++11) - オプショナルな<a href="https://ja.cppreference.com/w/cpp/language/attributes" target="_blank">属性</a>のリスト。</p>
 <p> &nbsp;</p>
-<p> �⑫�ł��B</p>
+<p> 補足です。</p>
 <ul>
-	<li>�Q�Ƃ̓I�u�W�F�N�g�ł͂���܂���B�Q�Ƃ͋L���̈���߂�Ƃ͌���܂���B</li>
-	<li>�Q�Ƃ̓I�u�W�F�N�g�ł͂Ȃ����߁A�Q�Ƃ̔z��A�Q�Ƃւ̃|�C���^�A�Q�Ƃւ̎Q�ƁA�͂���܂���B�ȉ��̂悤�ɃG���[�ɂȂ�܂��B</li>
+	<li>参照はオブジェクトではありません。参照は記憶領域を占めるとは限りません。</li>
+	<li>参照はオブジェクトではないため、参照の配列、参照へのポインタ、参照への参照、はありません。以下のようにエラーになります。</li>
 </ul>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
-int&amp; a[3];    // �G���[
-int&amp;* p;      // �G���[
-int&amp; &amp;r;      // �G���[</pre>
+int&amp; a[3];    // エラー
+int&amp;* p;      // エラー
+int&amp; &amp;r;      // エラー</pre>
 <!-- End for 'google-code-prettify' -->
 
 <p>
 &nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
@@ -118,18 +118,18 @@ int&amp; &amp;r;      // �G���[</pre>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="2._���Ӓl�Q��">2. ���Ӓl�Q��</a></h2>
-<h3> <a name="2-1._���Ӓl�Q�ƂƂ�">2-1. ���Ӓl�Q�ƂƂ�</a></h3>
-<p> ���Ӓl�Q�ƂƂ́A�����̃I�u�W�F�N�g���G�C���A�X���邽�߂Ɏg�p�ł��܂��B<br>
-C++03�ł́A�Q�ƂƂ����΂��̍��Ӓl�Q�Ƃł��������Ӓl�Q�ƂƂ������t���̂������Ȃ������悤�ɋL�����܂��BC++11�Ō�q��<a href="#3._�E�Ӓl�Q�� (c++11)">�E�Ӓl�Q��</a>���o�ꂵ�����ƂŁA����Ƌ�ʂ��邽�߂ɋ��炭���Ӓl�Q�ƂƂ������t����`���ꂽ�̂ł͂Ȃ����Ɛ��@���܂��B</p>
-<p> �܂��͍��Ӓl�Q�Ƃ��ȒP�Ɏg�p���Ă݂܂��B<br>��{�I�ȕϐ����G�C���A�X����g�����̗���ȉ��Ɏ����܂��B</p>
-<p>[��]</p>
+<h2> <a name="2._左辺値参照">2. 左辺値参照</a></h2>
+<h3> <a name="2-1._左辺値参照とは">2-1. 左辺値参照とは</a></h3>
+<p> 左辺値参照とは、既存のオブジェクトをエイリアスするために使用できます。<br>
+C++03では、参照といえばこの左辺値参照でしたし左辺値参照という言葉自体も当時なかったように記憶します。C++11で後述の<a href="#3._右辺値参照 (c++11)">右辺値参照</a>が登場したことで、これと区別するために恐らく左辺値参照という言葉が定義されたのではないかと推察します。</p>
+<p> まずは左辺値参照を簡単に使用してみます。<br>基本的な変数をエイリアスする使い方の例を以下に示します。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;test_reference_01.cpp&quot;]</p>
+<p>[プログラムソース &quot;test_reference_01.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -137,16 +137,16 @@ C++03�ł́A�Q�ƂƂ����΂��̍��Ӓl�Q�Ƃł��������Ӓl�Q�ƂƂ������t���̂������Ȃ��
 int main()
 {
     int     a = 10;
-    <span class="auto-style10">int&amp;</span>    b = a;      // b �� a �̎Q��
-    //int&amp;  c;          // �G���[�B�Q�Ƃ͕K������������˂΂Ȃ�Ȃ�
+    <span class="auto-style10">int&amp;</span>    b = a;      // b は a の参照
+    //int&amp;  c;          // エラー。参照は必ず初期化されねばならない
 
     int     d = 30;
     std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
 
-    b = 20;             // a �̒l�� 20 �ɂȂ�
+    b = 20;             // a の値は 20 になる
     std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
 
-    b = d;              // �Q�Ɛ�͕ύX�ł��Ȃ��Bd �̒l�� b,a �ɑ������Aa �̒l�� 30 �ɂȂ�B
+    b = d;              // 参照先は変更できない。d の値が b,a に代入され、a の値は 30 になる。
     std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; std::endl;
 }</code>
 </pre>
@@ -155,28 +155,28 @@ int main()
 <p>
 &nbsp;</p>
 <p>
-[���s����]<br><img alt="" src="reference/img7.gif"></p>
+[実行結果]<br><img alt="" src="reference/img7.gif"></p>
 <p>
 &nbsp;</p>
 	
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
 	https://ja.cppreference.com/w/cpp/language/reference</a></li>
 </ul>
 <p>&nbsp;</p>
-<h3> <a name="2-2._�֐��̉������Ŏg��">2-2. �֐��̉������Ŏg��</a></h3>
-<p> �Q�Ƃ́A�֐��̉������ł��g�p�ł��܂��B<br>
-�֐��̉��������Q�Ƃɂ��邱�ƂŁA���ʂȃR�s�[�𔭐����܂���B����͓��ɑ傫�ȃI�u�W�F�N�g���֐��֓n���ꍇ�ɃR�s�[�ɂ�郁���������}�����A�R�s�[�����ɂ�鎞�Ԃ�������Ȃ����߁A�ƂĂ��L���ł��B</p>
-<p>[��]</p>
+<h3> <a name="2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a></h3>
+<p> 参照は、関数の仮引数でも使用できます。<br>
+関数の仮引数を参照にすることで、無駄なコピーを発生しません。これは特に大きなオブジェクトを関数へ渡す場合にコピーによるメモリ消費を抑えられ、コピー処理による時間もかからないため、とても有効です。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;test_reference_02.cpp&quot;]</p>
+<p>[プログラムソース &quot;test_reference_02.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -184,13 +184,13 @@ int main()
 #include &lt;string&gt;
 
 void double_string(<span class="auto-style10">std::string&amp;</span> str) {
-    std::cout &lt;&lt; &quot;(2) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // �ϐ� str �̃A�h���X���o��
+    std::cout &lt;&lt; &quot;(2) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // 変数 str のアドレスを出力
     str += str;
 }
 int main()
 {
     std::string str = &quot;Test&quot;;
-    std::cout &lt;&lt; &quot;(1) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // �ϐ� str �̃A�h���X���o��
+    std::cout &lt;&lt; &quot;(1) &amp;str = &quot; &lt;&lt; &amp;str &lt;&lt; std::endl;          // 変数 str のアドレスを出力
 
     std::cout &lt;&lt; &quot;str = &quot; &lt;&lt; str &lt;&lt; std::endl;
     double_string(str);
@@ -199,11 +199,11 @@ int main()
 </pre>
 
 <p>&nbsp;</p>
-<p>[���s����]</p>
+<p>[実行結果]</p>
 <p><img alt="" src="reference/img18.jpg"></p>
 <p>&nbsp;</p>
-<p>�Q�Ƃ́A�|�C���^�ƈႢ�A�ꎞ�I�u�W�F�N�g��萔�� const �Q�Ƃ֓n�����Ƃ��ł��܂��B</p>
-<p>[�v���O�����\�[�X &quot;test_reference_03.cpp&quot;]</p>
+<p>参照は、ポインタと違い、一時オブジェクトや定数も const 参照へ渡すことができます。</p>
+<p>[プログラムソース &quot;test_reference_03.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -246,31 +246,31 @@ int main()
 
     fr(s);
     fr(a);
-    //fr(S());          // �G���[�B�ꎞ�I�u�W�F�N�g���Q�Ƃœn�����Ƃ͂ł��Ȃ��B
-    //fr(42);           // �G���[�B�������e�������Q�Ƃœn�����Ƃ͂ł��Ȃ��B
-    <span class="auto-style10">fcr(S());</span>           // OK�B�ꎞ�I�u�W�F�N�g�� const �Q�Ƃœn�����Ƃ͂ł���B
-    <span class="auto-style10">fcr(42);</span>            // OK�B�������e������ const �Q�Ƃœn�����Ƃ͂ł���B
+    //fr(S());          // エラー。一時オブジェクトを参照で渡すことはできない。
+    //fr(42);           // エラー。整数リテラルを参照で渡すことはできない。
+    <span class="auto-style10">fcr(S());</span>           // OK。一時オブジェクトを const 参照で渡すことはできる。
+    <span class="auto-style10">fcr(42);</span>            // OK。整数リテラルを const 参照で渡すことはできる。
 
-    fp(&amp;s);             // OK�B
-    //fp(&amp;S());         // �G���[�B�ꎞ�I�u�W�F�N�g�̃A�h���X�͎擾�ł��Ȃ��B
-    //fp(&amp;42);          // �G���[�B�������e�����̃A�h���X�͎擾�ł��Ȃ��B
+    fp(&amp;s);             // OK。
+    //fp(&amp;S());         // エラー。一時オブジェクトのアドレスは取得できない。
+    //fp(&amp;42);          // エラー。整数リテラルのアドレスは取得できない。
 }</code>
 </pre>
 <!-- End for 'google-code-prettify' -->
 	
 <p>&nbsp;</p>
-<p>[���s����]</p>
+<p>[実行結果]</p>
 <p><img alt="" src="reference/img1D.gif"></p>
 <p>&nbsp;</p>
-<p>�Q�Ƃ́A���L�̂悤�ȕ\�L�ŌŒ蒷�z���n�����Ƃ��ł��܂��B<br>
-�|�C���^�n���ƈقȂ�A�z�񒷂��s��v�̎��ɃR���p�C�����G���[�ɂ��邱�ƁA�f�o�b�K�Ńu���[�N�����Ƃ��ɔz��̒��g���{�����₷�����ƁA�Ȃǂ������b�g�ł��B�ÓI��̓c�[���ŃG���[�������₷���Ȃ邱�Ƃ��ǂ��_�ł��B</p>
-<p>[��]</p>
+<p>参照は、下記のような表記で固定長配列を渡すことができます。<br>
+ポインタ渡しと異なり、配列長が不一致の時にコンパイラがエラーにすること、デバッガでブレークしたときに配列の中身を閲覧しやすいこと、などがメリットです。静的解析ツールでエラーを見つけやすくなることも良い点です。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2019 Ver. 16.3.10, C++</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p>&nbsp;</p>
-<p>[�v���O�����\�[�X &quot;test_reference_04.cpp&quot;]</p>
+<p>[プログラムソース &quot;test_reference_04.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -294,7 +294,7 @@ int main()
 <!-- End for 'google-code-prettify' -->
 	
 <p>&nbsp;</p>
-<p>[���s����]</p>
+<p>[実行結果]</p>
 <p>
 <img alt="" src="reference/img24.jpg"></p>
 <p>
@@ -302,8 +302,8 @@ int main()
 &nbsp;</p>
 <p>
 	
-template ���g�����ƂŎ��̂悤�ɕ\�L���邱�Ƃ��ł��܂��B</p>
-<p>[�v���O�����\�[�X &quot;test_reference_04-2.cpp&quot;]</p>
+template を使うことで次のように表記することもできます。</p>
+<p>[プログラムソース &quot;test_reference_04-2.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
@@ -332,7 +332,7 @@ int main()
 &nbsp;</p>
 <p>
 	
-[���s����]</p>
+[実行結果]</p>
 <p>
 	
 <img alt="" src="reference/img2A.gif"></p>
@@ -341,11 +341,11 @@ int main()
 &nbsp;</p>
 <p>
 	
-[�f�o�b�K�Ńu���[�N�������̗l�q]</p>
+[デバッガでブレークした時の様子]</p>
 <p>
 	
-VS2019�Ńf�o�b�O���s���ɒ��f�������̗l�q�����}�Ɏ����܂��B<br>
-�z����֐��փ|�C���^�n�������ꍇ�A�����������ɕϐ����̓��e���m�F�ł��܂���B����ς�֗��ł��B</p>
+VS2019でデバッグ実行中に中断した時の様子を下図に示します。<br>
+配列を関数へポインタ渡しした場合、こういう風に変数中の内容を確認できません。やっぱり便利です。</p>
 <p>
 	
 <img alt="" src="reference/img31.jpg"></p>
@@ -354,7 +354,7 @@ VS2019�Ńf�o�b�O���s���ɒ��f�������̗l�q�����}�Ɏ����܂��B<br>
 &nbsp;</p>
 	
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
@@ -362,12 +362,12 @@ VS2019�Ńf�o�b�O���s���ɒ��f�������̗l�q�����}�Ɏ����܂��B<br>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3> <a name="2-3._�֐��̖߂�l�Ŏg��">2-3. �֐��̖߂�l�Ŏg��</a></h3>
-<p>�Q�Ƃ́A�֐��̖߂�l�ł��g�p�ł��܂��B�ȉ��ŗ�������܂��B<br>
-���l�̊��z�Ƃ��ẮA���̎�@��K�v�Ƃ���V�`���G�[�V�������v�����܂���B��p��i������悤�Ɏv��ꖳ���ɎQ�Ƃ��g�p����K�v�͂Ȃ��悤�Ɏv���܂��B</p>
+<h3> <a name="2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a></h3>
+<p>参照は、関数の戻り値でも使用できます。以下で例を示します。<br>
+私個人の感想としては、この手法を必要とするシチュエーションを思いつきません。代用手段があるように思われ無理に参照を使用する必要はないように思います。</p>
 <font face="Meiryo UI">
 <p>&nbsp;</p>
-<p>[�]����]</p>
+<p>[評価環境]</p>
 <table>
 <tbody>
 	<tr>
@@ -375,7 +375,7 @@ VS2019�Ńf�o�b�O���s���ɒ��f�������̗l�q�����}�Ɏ����܂��B<br>
 	</tr>
 	
 	<tr>
-		<td>�R���p�C�� :</td>
+		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -397,14 +397,14 @@ VS2019�Ńf�o�b�O���s���ɒ��f�������̗l�q�����}�Ɏ����܂��B<br>
 </table>
 </font>
 <p>&nbsp;</p>
-<p>[�v���O�����\�[�X &quot;test_reference_05.cpp&quot;]</p>
+<p>[プログラムソース &quot;test_reference_05.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
 <span class="auto-style10">char&amp;</span> char_number(std::string&amp; s, size_t n) {
-    return s.at(n);                 // string::at() �� char ��Ԃ��܂��B
+    return s.at(n);                 // string::at() は char を返します。
 }
 
 int main() {
@@ -412,7 +412,7 @@ int main() {
     std::string str = &quot;Test&quot;;
 
     std::cout &lt;&lt; str &lt;&lt; '\n';
-    char_number(str, 1) = 'a';      // ���̊֐��Ăяo���� str[1] ���������Ӓl�ł���A����ł��܂��B
+    char_number(str, 1) = 'a';      // この関数呼び出しは str[1] を示す左辺値であり、代入できます。
     std::cout &lt;&lt; str &lt;&lt; '\n';
 }</code></pre>
 <!-- End for 'google-code-prettify' -->
@@ -422,7 +422,7 @@ int main() {
 &nbsp;</p>
 <p>
 	
-[���s����]</p>
+[実行結果]</p>
 <p>
 	
 <img alt="" src="reference/imgE.gif"></p>
@@ -431,15 +431,15 @@ int main() {
 &nbsp;</p>
 <p>
 	
-�֐��̖߂�l�Ƃ��ĎQ�Ƃ��n�����̂ł����ɑ�����邱�Ƃ��ł���A�Ƃ�����ł����B</p>
+関数の戻り値として参照が渡されるのでここに代入することができる、という例でした。</p>
 <p>
 	
 &nbsp;</p>
 <p>
 	
-����A�߂�l�Ƃ��ēn�����Q�ƌ����֐����ō쐬����<span class="auto-style13">�ꎞ�ϐ�</span>�ł���ꍇ�A�֐�����߂�Ƃ��ɂ��̈ꎞ�ϐ����������Ă��܂����߂��܂��s���܂���B<br>
-�ȉ��ɂ��܂����삵�Ȃ���������܂��B�R���p�C���̓G���[�����Ɋ�������̂ł����A���s���� Access Violation �̗�O���X���[����܂��B<br>
-�i�Q�ƂŖ߂��Ӗ��̂Ȃ���ł������e�͂��������B���ʂɒl�ŕԂ��Ηǂ������̗�ł��B�j</p>
+一方、戻り値として渡される参照元が関数内で作成した<span class="auto-style13">一時変数</span>である場合、関数から戻るときにこの一時変数が解放されてしまうためうまく行きません。<br>
+以下にうまく動作しない例を示します。コンパイルはエラー無しに完了するのですが、実行時に Access Violation の例外がスローされます。<br>
+（参照で戻す意味のない例ですがご容赦ください。普通に値で返せば良いだけの例です。）</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
@@ -455,12 +455,12 @@ using namespace std;
 int main()
 {
     <span class="auto-style10">string&amp;</span> str = string_builder(&quot;a&quot;, &quot;b&quot;);
-    cout &lt;&lt; str &lt;&lt; endl;                       // <span class="auto-style12">&lt;- �����ŗ�O���� !!</span>
+    cout &lt;&lt; str &lt;&lt; endl;                       // <span class="auto-style12">&lt;- ここで例外発生 !!</span>
 }</code></pre>
 <p>
 	
-���̗�́A�R���p�C���͒ʂ�̂ł������s���ɗ�O���������܂��B0xC0000005 ��&quot;Access 
-Violation&quot;�ł��ˁB�m�ۂ���Ă��Ȃ��������̈�ւ̃A�N�Z�X�ɂ���O�����ł��B</p>
+この例は、コンパイルは通るのですが実行時に例外が発生します。0xC0000005 は&quot;Access 
+Violation&quot;ですね。確保されていないメモリ領域へのアクセスによる例外発生です。</p>
 <p>
 	
 <img alt="" src="reference/imgE.jpg"></p>
@@ -469,8 +469,8 @@ Violation&quot;�ł��ˁB�m�ۂ���Ă��Ȃ��������̈�ւ̃A�N�Z�X�ɂ���O�����ł��
 &nbsp;</p>
 <p>
 	
-���̂悤�Ȃ��Ƃ��s�������ꍇ�A�Ώۂ̕ϐ�(�����ł� str)�� static 
-�w�肷�邱�Ƃňꎞ�ϐ��ł͂Ȃ��Ȃ�֐����I��������̂��c��悤�ɂȂ�܂��B�֐������̕ϐ��̎Q�Ƃ��֐��̖߂�l�Ƃ��ĕԂ����Ƃ��ł���悤�ɂȂ�܂��B</p>
+このようなことを行いたい場合、対象の変数(ここでは str)を static 
+指定することで一時変数ではなくなり関数を終了後も実体が残るようになります。関数内部の変数の参照を関数の戻り値として返すことができるようになります。</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
@@ -497,7 +497,7 @@ int main()
 &nbsp;</p>
 <p>
 	
-[���s����]</p>
+[実行結果]</p>
 <p>
 	
 <img alt="" src="reference/img5.gif"></p>
@@ -508,7 +508,7 @@ int main()
 </p>
 	
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
@@ -516,32 +516,32 @@ int main()
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="3._�E�Ӓl�Q�� (c++11)">3. �E�Ӓl�Q��</a></h2>
-<h3> <a name="3-1._�E�Ӓl�Q�ƂƂ�">3-1. �E�Ӓl�Q�ƂƂ�</a></h3>
+<h2> <a name="3._右辺値参照 (c++11)">3. 右辺値参照</a></h2>
+<h3> <a name="3-1._右辺値参照とは">3-1. 右辺値参照とは</a></h3>
 <p> C++03 
-�܂ł́u�R�s�[�v�Ƃ����T�O�Ńf�[�^���Ǘ�����Ă��܂����B�ʏ�ua=b;�v�Ƃ������́ub��a�ɃR�s�[����v�Ƃ����Ӗ��������܂��B���̂Ƃ��Aa��b�͓����f�[�^���قȂ�̈�Ɏ����܂��B����͏������f�[�^�̏ꍇ�ɂ͖��ɂȂ�ɂ����ł����A�傫�ȃf�[�^�������ꍇ�ɃR�s�[�R�X�g�Ɠ����f�[�^���Q�ł��Ă��܂��R�X�g�����ƂȂ�ꍇ������܂��B<br>
-C++11����ǉ����ꂽ<span class="auto-style13">���[�u�Z�}���e�B�N�X</span>�Ƃ����T�O�ƁA���̌���@�\�ł���<span class="auto-style13">�E�Ӓl�Q��</span>���g�p���邱�Ƃŉ���(�H���P)�ł��܂��B</p>
-<p> �Ⴆ�Έȉ��̃P�[�X���l���Ă݂܂��傤�B</p>
+までは「コピー」という概念でデータが管理されていました。通常「a=b;」という式は「bをaにコピーする」という意味を持ちます。このとき、aとbは同じデータを異なる領域に持ちます。これは小さいデータの場合には問題になりにくいですが、大きなデータを扱う場合にコピーコストと同じデータが２つできてしまうコストが問題となる場合があります。<br>
+C++11から追加された<span class="auto-style13">ムーブセマンティクス</span>という概念と、その言語機能である<span class="auto-style13">右辺値参照</span>を使用することで解決(？改善)できます。</p>
+<p> 例えば以下のケースを考えてみましょう。</p>
 <pre class="prettyprint linenums"><code>vector&lt;X&gt; make_data() {
     vector&lt;X&gt; v;
-    �E�E�E��ʂ̃f�[�^�� v �֒ǉ�����E�E�E
+    ・・・大量のデータを v へ追加する・・・
     return v;
 }
 
 vector&lt;X&gt; v = make_data(); </code></pre>
-<p> &nbsp;&nbsp; �����ł͑傫�ȗv�f�������ϒ��z��I�u�W�F�N�g���֐��� return 
-���ŕԂ��A�����V���ȉϒ��z��I�u�W�F�N�g�Ŏ󂯎���Ă��܂��B<br>&nbsp; ���̍ہAmake_data()�֐����Ԃ��I�u�W�F�N�g����I�u�W�F�N�g v 
-�ւ̃R�s�[���������܂��Bmake_data()�֐��ɂ���ĕԂ��ꂽ�I�u�W�F�N�g�́A���̊֐����]�����ꂽ��͏����Ă��܂����Ƃ���<span class="auto-style13">�ꎞ�I�u�W�F�N�g</span>�ƌĂ΂�܂��B<br>&nbsp; 
-C++11����ǉ����ꂽ�@�\�ł���E�Ӓl�Q�Ƃ́A�ꎞ�I�u�W�F�N�g���Q�Ƃ���@�\�ł��BC++11�� std::vector 
-�N���X�ł́A�ꎞ�I�u�W�F�N�g���Q�Ƃ���R���X�g���N�^���ǉ�����Ă��܂��B�ȉ��ɋ^���������Љ�܂��B</p>
+<p> &nbsp;&nbsp; ここでは大きな要素数を持つ可変長配列オブジェクトを関数の return 
+文で返し、それを新たな可変長配列オブジェクトで受け取っています。<br>&nbsp; その際、make_data()関数が返すオブジェクトからオブジェクト v 
+へのコピーが発生します。make_data()関数によって返されたオブジェクトは、その関数が評価された後は消えてしまうことから<span class="auto-style13">一時オブジェクト</span>と呼ばれます。<br>&nbsp; 
+C++11から追加された機能である右辺値参照は、一時オブジェクトを参照する機能です。C++11の std::vector 
+クラスでは、一時オブジェクトを参照するコンストラクタが追加されています。以下に疑似実装を紹介します。</p>
 <pre class="prettyprint linenums">
 <code>template &lt;class T, class Allocator=allocator&lt;T&gt;&gt;
 class vector {
     T* data_;
     size_t size_;
 public:
-    ���
-    // �ꎞ�I�u�W�F�N�g���Q�Ƃ���R���X�g���N�^
+    ･･･
+    // 一時オブジェクトを参照するコンストラクタ
 <span class="auto-style10">    vector( vector&amp;&amp; rhd ){</span>
 <span class="auto-style10">        data_ = rhd.data_;</span>
 <span class="auto-style10">        size_ = rhd.size_;</span>
@@ -549,34 +549,34 @@ public:
 <span class="auto-style10">        rhd.size_ = 0; </span>
 <span class="auto-style10">    }</span>
 
-    // ����܂Œʂ�̃R�s�[�R���X�g���N�^
+    // これまで通りのコピーコンストラクタ
     vector( vector&amp; rhd ){
-        // rhd ���玩�g�փR�s�[���� ���
+        // rhd から自身へコピーする ･･･
     }
 };</code></pre>
 <p> 
-�ꎞ�I�u�W�F�N�g���Q�Ƃ���E�Ӓl�Q�Ƃɂ́A&amp;&amp;�Ƃ����L�����g�p���܂��B&amp;&amp;���t�������������󂯎��֐��́A���̌^�̈ꎞ�I�u�W�F�N�g���󂯎��܂��B�ꎞ�I�u�W�F�N�g�͕]�����ꂽ�炷���ɔj�������̂ŁA�����̏ꏊ�Ŕj�󂵂Ă��\��Ȃ����̂Ƃ��Ĉ����܂��B<br>
-std::vector �N���X�̉E�Ӓl�Q�Ƃ��󂯎��R���X�g���N�^�ł́A�ꎞ�I�u�W�F�N�g�����f�[�^�i�ϒ��z���\���|�C���^�A�T�C�Y�A���̑��̃f�[�^�j�� 
-*this �ɂȂ��ς������ƁA�ꎞ�I�u�W�F�N�g�����f�[�^�𖳌��ɂ��Ă��܂��B�������邱�Ƃő傫�ȃf�[�^�̃R�s�[�R�X�g���C�ɂ��邱�ƂȂ������܂��B</p>
+一時オブジェクトを参照する右辺値参照には、&amp;&amp;という記号を使用します。&amp;&amp;が付いた仮引数を受け取る関数は、その型の一時オブジェクトを受け取ります。一時オブジェクトは評価されたらすぐに破棄されるので、多くの場所で破壊しても構わないものとして扱えます。<br>
+std::vector クラスの右辺値参照を受け取るコンストラクタでは、一時オブジェクトが持つデータ（可変長配列を表すポインタ、サイズ、その他のデータ）を 
+*this につなぎ変えたあと、一時オブジェクトが持つデータを無効にしています。こうすることで大きなデータのコピーコストを気にすることなく扱えます。</p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
-	<li>[���p] �u�����ő�R�Łv C++�|�P�b�g���t�@�����X�A�Z�p�]�_�ЁA�������E�����q�F�E��˗D��E��c�^��E�������� 
-	���AISBN978-4-7741-9567-4</li>
+	<li>[引用] 「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
+	著、ISBN978-4-7741-9567-4</li>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
 	https://ja.cppreference.com/w/cpp/language/reference</a></li>
 </ul>
 <p>&nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -584,19 +584,19 @@ std::vector �N���X�̉E�Ӓl�Q�Ƃ��󂯎��R���X�g���N�^�ł́A�ꎞ�I�u�W�F�N�g����
 <p>
 &nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
-	<li>�u�����ő�R�Łv C++�|�P�b�g���t�@�����X�A�Z�p�]�_�ЁA�������E�����q�F�E��˗D��E��c�^��E�������� 
-	���AISBN978-4-7741-9567-4</li>
+	<li>「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
+	著、ISBN978-4-7741-9567-4</li>
 	<li>
 	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
 	https://ja.cppreference.com/w/cpp/language/reference</a></li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF</font></p>
+<p> <font face="Meiryo UI">記載：</font></p>
 <ul>
-	<li><font face="Meiryo UI">2019�N11��16�� �V�K�쐬�A�؉��p�r</font></li>
+	<li><font face="Meiryo UI">2019年11月16日 新規作成、木下英俊</font></li>
 </ul>
 </body>
 </html>

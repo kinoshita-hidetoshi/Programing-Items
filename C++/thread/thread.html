@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
 <link href="../../design.css" rel="stylesheet" type="text/css">
 
@@ -33,26 +33,26 @@
 
 <h1>std::thread (c++11)</h1>
 <p>std::thread 
-‚Í boost::thread ‚©‚ç•W€‚ÉÌ—p‚³‚ê‚½ƒ‰ƒCƒuƒ‰ƒŠ‚Å‚·BC++03 
-‚Å‚ÍƒXƒŒƒbƒhƒ‰ƒCƒuƒ‰ƒŠ‚ª‚È‚©‚Á‚½‚Ì‚ÅWin32‚âpthread‚ğg‚¤‚±‚Æ‚É‚È‚è‚Ü‚·BWin32‚Ì_beginthread‚ğg—p‚µ‚½ê‡‚ÍƒNƒ‰ƒX‚Ìƒƒ\ƒbƒh‚ğŒÄ‚Ôê‡‚É static 
-‚Èƒƒ\ƒbƒh‚È‚Ç‚ğ‚¢‚Á‚½‚ñŠÔ‚É‚©‚Ü‚¹‚é•K—v‚ª‚ ‚é‚Ì‚Å‚·‚ªAstd::thread‚Í‚±‚Ìè‡‚ª•s—v‚ÅƒNƒ‰ƒXƒƒ\ƒbƒh‚ğˆê”­‹N“®‚Å‚«‚Ä•Ö—˜‚Å‚·B</p>
-<p>—Ş—‚Ì‹@”\‚Æ‚µ‚Ä std::async ‚Æ‚¢‚¤‹@”\‚ª‚ ‚è‚Ü‚·BŒÂlŒ©‰ğ‚Æ‚µ‚Ä‚ÍAstd::thread ‚ğg‚í‚¸‚É std::async 
-‚Ö‚·‚×‚Ä“ˆê‚µ‚Äg—p‚·‚é‚Ù‚¤‚ª—Ç‚¢A‚Æl‚¦‚Ü‚·BÚ×‚Í std::async ‚ğQÆ‚­‚¾‚³‚¢B</p>
+ã¯ boost::thread ã‹ã‚‰æ¨™æº–ã«æ¡ç”¨ã•ã‚ŒãŸãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã™ã€‚C++03 
+ã§ã¯ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒãªã‹ã£ãŸã®ã§Win32ã‚„pthreadã‚’ä½¿ã†ã“ã¨ã«ãªã‚Šã¾ã™ã€‚Win32ã®_beginthreadã‚’ä½¿ç”¨ã—ãŸå ´åˆã¯ã‚¯ãƒ©ã‚¹ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã¶å ´åˆã« static 
+ãªãƒ¡ã‚½ãƒƒãƒ‰ãªã©ã‚’ã„ã£ãŸã‚“é–“ã«ã‹ã¾ã›ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã™ãŒã€std::threadã¯ã“ã®æ‰‹é †ãŒä¸è¦ã§ã‚¯ãƒ©ã‚¹ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä¸€ç™ºèµ·å‹•ã§ãã¦ä¾¿åˆ©ã§ã™ã€‚</p>
+<p>é¡ä¼¼ã®æ©Ÿèƒ½ã¨ã—ã¦ std::async ã¨ã„ã†æ©Ÿèƒ½ãŒã‚ã‚Šã¾ã™ã€‚å€‹äººè¦‹è§£ã¨ã—ã¦ã¯ã€std::thread ã‚’ä½¿ã‚ãšã« std::async 
+ã¸ã™ã¹ã¦çµ±ä¸€ã—ã¦ä½¿ç”¨ã™ã‚‹ã»ã†ãŒè‰¯ã„ã€ã¨è€ƒãˆã¾ã™ã€‚è©³ç´°ã¯ std::async ã‚’å‚ç…§ãã ã•ã„ã€‚</p>
 <h4>&nbsp;</h4>
-<h4>“à—eF</h4>
-<p><a href="#‚PDˆø”–³‚µŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs">1. ˆø”–³‚µŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</a><br>
-<a href="#‚QDˆø”•t‚«ŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs">2. ˆø”•t‚«ŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</a><br>
-<a href="#‚RDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)_">3. ƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®) 
-    </a><br><a href="#‚SDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)">4. ƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</a><br>
-<a href="#5._ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é">5. ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é</a></p>
+<h4>å†…å®¹ï¼š</h4>
+<p><a href="#ï¼‘ï¼å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">1. å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a><br>
+<a href="#ï¼’ï¼å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">2. å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a><br>
+<a href="#ï¼“ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)_">3. ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•) 
+    </a><br><a href="#ï¼”ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)">4. ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</a><br>
+<a href="#5._ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹">5. ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹</a></p>
 <p>&nbsp;</p>
-<h2><a name="‚PDˆø”–³‚µŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs">‚PDˆø”–³‚µŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</a></h2>
-<h4>•]‰¿ŠÂ‹«F</h4>
+<h2><a name="ï¼‘ï¼å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">ï¼‘ï¼å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a></h2>
+<h4>è©•ä¾¡ç’°å¢ƒï¼š</h4>
 <ul>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2012 Update3</li>
-	<li>OSF Windows8 64bit</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2012 Update3</li>
+	<li>OSï¼š Windows8 64bit</li>
 </ul>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹]</p>
 &nbsp;<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// EXIT_SUCCESS</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::milliseconds</span>
@@ -65,7 +65,7 @@ void PrintHello()
     const size_t RepeatCount = 5 ;
     for ( size_t i=0; i&lt;RepeatCount; ++i ){
         cout &lt;&lt; <span class="string">&quot;Hello &quot;</span> &lt;&lt; endl;
-        this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms ‘Ò‹@</span>
+        this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms å¾…æ©Ÿ</span>
     }
 } 
 
@@ -74,17 +74,17 @@ void PrintWorld()
     const size_t RepeatCount = 5 ;
     for ( size_t i=0; i&lt;RepeatCount; ++i ){
         cout &lt;&lt; <span class="string">&quot;World! &quot;</span> &lt;&lt; endl;
-        this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms ‘Ò‹@</span>
+        this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms å¾…æ©Ÿ</span>
     }
 } 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    <span class="comment">// ˆø”–³‚µŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</span>
+    <span class="comment">// å¼•æ•°ç„¡ã—é–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</span>
     <span class="auto-style5">thread</span> thr_hello(&amp;PrintHello);
     <span class="auto-style5">thread</span> thr_world(&amp;PrintWorld);
 
-    <span class="comment">// ƒXƒŒƒbƒhI—¹‘Ò‚¿</span>
+    <span class="comment">// ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡</span>
     thr_hello.join();
     thr_world.join(); 
 
@@ -92,17 +92,17 @@ int _tmain(int argc, _TCHAR* argv[])
 }</code></pre>
 <p>&nbsp;</p>
 <h2>
-<a name="‚QDˆø”•t‚«ŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs">‚QDˆø”•t‚«ŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</a></h2>
+<a name="ï¼’ï¼å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ">ï¼’ï¼å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</a></h2>
 <p>
-ˆø”•t‚«‚ÌŠÖ”Às‚ğ“¯‚¶‚­ std::thread ‚ğg‚Á‚½ƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs‚·‚é•û–@‚ğ‹LÚ‚µ‚Ü‚·B<br>thread 
-‚É‚ÍŠÖ”ƒ|ƒCƒ“ƒ^‚ğ“n‚·‚Ì‚Å‚·‚ªAƒI[ƒo[ƒ[ƒh‚µ‚½ŠÖ”‚ª‚ ‚éê‡‚Ì‹LÚ•û–@‚ª“ï‚µ‚¢‚Ì‚ÅA‚±‚ê‚É‚Â‚¢‚Ä‚à‡‚í‚¹‚Ä‹LÚ‚µ‚Ü‚·BŒ‹˜_‚©‚çŒ¾‚¤‚ÆƒLƒƒƒXƒg‚ÅŠÖ”Ú×î•ñ‚ğ‹LÚ‚·‚ê‚Î‚Å‚«‚é‚æ‚¤‚Å‚·B<br>
-“¯—l‚ÉAlambda®‚Å‚Ì‹NÂ‚à•¹‹L‚µ‚Ü‚·B</p>
-<h4>•]‰¿ŠÂ‹«F</h4>
+å¼•æ•°ä»˜ãã®é–¢æ•°å®Ÿè¡Œã‚’åŒã˜ã std::thread ã‚’ä½¿ã£ãŸãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œã™ã‚‹æ–¹æ³•ã‚’è¨˜è¼‰ã—ã¾ã™ã€‚<br>thread 
+ã«ã¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã‚’æ¸¡ã™ã®ã§ã™ãŒã€ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã—ãŸé–¢æ•°ãŒã‚ã‚‹å ´åˆã®è¨˜è¼‰æ–¹æ³•ãŒé›£ã—ã„ã®ã§ã€ã“ã‚Œã«ã¤ã„ã¦ã‚‚åˆã‚ã›ã¦è¨˜è¼‰ã—ã¾ã™ã€‚çµè«–ã‹ã‚‰è¨€ã†ã¨ã‚­ãƒ£ã‚¹ãƒˆã§é–¢æ•°è©³ç´°æƒ…å ±ã‚’è¨˜è¼‰ã™ã‚Œã°ã§ãã‚‹ã‚ˆã†ã§ã™ã€‚<br>
+åŒæ§˜ã«ã€lambdaå¼ã§ã®èµ·å‚µã‚‚ä½µè¨˜ã—ã¾ã™ã€‚</p>
+<h4>è©•ä¾¡ç’°å¢ƒï¼š</h4>
 <ul>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2012 Update3</li>
-	<li>OSF Windows8 64bit</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2012 Update3</li>
+	<li>OSï¼š Windows8 64bit</li>
 </ul>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹]</p>
 <pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// EXIT_SUCCESS</span>
 #include <span class="string">&lt;thread&gt;</span>       <span class="comment">// thread</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::milliseconds</span>
@@ -116,40 +116,40 @@ void PrintString( const char* str )
     const size_t RepeatCount = 5 ;
     for ( size_t i=0; i&lt;RepeatCount; ++i ){
         cout &lt;&lt; str &lt;&lt; endl;
-        this_thread::sleep_for( chrono::milliseconds(500) ); <span class="comment">// 500ms‘Ò‹@</span>
+        this_thread::sleep_for( chrono::milliseconds(500) ); <span class="comment">// 500mså¾…æ©Ÿ</span>
     }
 }
 
-<span class="command">#if 0 </span><span class="comment">// ŠÖ”ƒI[ƒo[ƒ[ƒh‚ÌÀsƒeƒXƒg‚ğ‚·‚é‚È‚ç 0¨1 ‚Ö•ÏX</span><span class="command">
-</span><span class="comment">// ŠÖ”ƒI[ƒo[ƒ[ƒh‚ÌŒ±—p‚ÉA“¯‚¶ŠÖ”–¼‚Åˆø”ˆá‚¢‚ÌŠÖ”‚ğ€”õ
+<span class="command">#if 0 </span><span class="comment">// é–¢æ•°ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã®å®Ÿè¡Œãƒ†ã‚¹ãƒˆã‚’ã™ã‚‹ãªã‚‰ 0â†’1 ã¸å¤‰æ›´</span><span class="command">
+</span><span class="comment">// é–¢æ•°ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã®è©¦é¨“ç”¨ã«ã€åŒã˜é–¢æ•°åã§å¼•æ•°é•ã„ã®é–¢æ•°ã‚’æº–å‚™
 </span>void PrintString( const string str )
 {
     const size_t RepeatCount = 5 ;
     for ( size_t i=0; i&lt;RepeatCount; ++i ){
         cout &lt;&lt; str &lt;&lt; endl;
-        this_thread::sleep_for( chrono::milliseconds(500) ); <span class="comment">// 500ms‘Ò‹@</span>
+        this_thread::sleep_for( chrono::milliseconds(500) ); <span class="comment">// 500mså¾…æ©Ÿ</span>
     }
 }
 <span class="command">#endif
 </span>
 int main(int argc, char* argv[])
 {
-    <span class="comment">// ˆø”•t‚«ŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs</span>
+    <span class="comment">// å¼•æ•°ä»˜ãé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ</span>
     {
-<span class="command">#if 1 </span><span class="comment">// ˆê”Ê“I‚È‹NÂ</span><span class="command">
+<span class="command">#if 1 </span><span class="comment">// ä¸€èˆ¬çš„ãªèµ·å‚µ</span><span class="command">
 </span>        thread  thr_hello( PrintString, <span class="string">&quot;Hello &quot;</span> );
         thread  thr_world( PrintString, <span class="string">&quot;World! &quot;</span>);
         thread  thr_space( PrintString, <span class="string">&quot;Space &quot;</span>) );
 <span class="command">#endif
 
-#if 0 </span><span class="comment">// ŠÖ”‚ğƒI[ƒo[ƒ[ƒh‚µ‚Ä‚¢‚éê‡BƒLƒƒƒXƒg‚É‚æ‚é‹ï‘Ìw¦‚ª•K—vB‹LÚ‚ª­X“ï‰ğB</span><span class="command">
+#if 0 </span><span class="comment">// é–¢æ•°ã‚’ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰ã—ã¦ã„ã‚‹å ´åˆã€‚ã‚­ãƒ£ã‚¹ãƒˆã«ã‚ˆã‚‹å…·ä½“æŒ‡ç¤ºãŒå¿…è¦ã€‚è¨˜è¼‰ãŒå°‘ã€…é›£è§£ã€‚</span><span class="command">
 </span>        thread  thr_hello( static_cast&lt;void(*)(const char*)&gt;(PrintString), <span class="string">&quot;Hello &quot;</span> );
         thread  thr_world( static_cast&lt;void(*)(const char*)&gt;(PrintString), <span class="string">&quot;World! &quot;</span>);
         thread  thr_hide ( static_cast&lt;void(*)(const string)&gt;(PrintString), string(<span class="string">&quot;hide&quot;</span>));
         thread  thr_space( std::bind(static_cast&lt;void(*)(const char*)&gt;(PrintString), <span class="string">&quot;Space &quot;</span>) );
 <span class="command">#endif
 
-#if 0 </span><span class="comment">// lambda®‚Å‹LÚ‚·‚éê‡BŠæ’£‚Á‚ÄƒLƒƒƒXƒg®‚ğ‘‚­‚æ‚è‚àA‚±‚Á‚¿‚Ì•û‚ªƒVƒ“ƒvƒ‹‚©‚àB</span><span class="command">
+#if 0 </span><span class="comment">// lambdaå¼ã§è¨˜è¼‰ã™ã‚‹å ´åˆã€‚é ‘å¼µã£ã¦ã‚­ãƒ£ã‚¹ãƒˆå¼ã‚’æ›¸ãã‚ˆã‚Šã‚‚ã€ã“ã£ã¡ã®æ–¹ãŒã‚·ãƒ³ãƒ—ãƒ«ã‹ã‚‚ã€‚</span><span class="command">
 </span>        thread  thr_hello([=]{
             PrintString(<span class="string">&quot;Hello &quot;</span>);
         });
@@ -172,17 +172,17 @@ int main(int argc, char* argv[])
 <p>
 &nbsp;</p>
 <h2>
-<a name="‚RDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)_">‚RDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®) 
+<a name="ï¼“ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)_">ï¼“ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•) 
     </a></h2>
-<p>ƒNƒ‰ƒXƒƒ“ƒoŠÖ”‚ğƒXƒŒƒbƒh‹N“®‚·‚é•û–@‚Å‚·BƒNƒ‰ƒXƒƒ\ƒbƒh‚È‚Ì‚Å‘æˆêˆø”‚ÉƒCƒ“ƒXƒ^ƒ“ƒX(this)‚ª•K—v‚Å‚·B‚±‚Ì‚½‚ß‰º‹LƒTƒ“ƒvƒ‹‚Å‚Í &amp;hello, 
-&amp;world ‚ğˆø”‚Å“n‚µ‚Ä‚¢‚Ü‚·B</p>
-<h4>•]‰¿ŠÂ‹«F</h4>
+<p>ã‚¯ãƒ©ã‚¹ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã™ã‚‹æ–¹æ³•ã§ã™ã€‚ã‚¯ãƒ©ã‚¹ãƒ¡ã‚½ãƒƒãƒ‰ãªã®ã§ç¬¬ä¸€å¼•æ•°ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(this)ãŒå¿…è¦ã§ã™ã€‚ã“ã®ãŸã‚ä¸‹è¨˜ã‚µãƒ³ãƒ—ãƒ«ã§ã¯ &amp;hello, 
+&amp;world ã‚’å¼•æ•°ã§æ¸¡ã—ã¦ã„ã¾ã™ã€‚</p>
+<h4>è©•ä¾¡ç’°å¢ƒï¼š</h4>
 <ul>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2012 Update3</li>
-	<li>OSF Windows8 64bit</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2012 Update3</li>
+	<li>OSï¼š Windows8 64bit</li>
 </ul>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹]</p>
 <pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// std::cout, std::endl</span>
 #include <span class="string">&lt;string&gt;</span>       <span class="comment">// string</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread, this_thread::sleep_for</span>
@@ -204,7 +204,7 @@ public:
         const size_t RepeatCount = 5 ;
         for ( size_t i=0; i&lt;RepeatCount; ++i ){
             std::cout &lt;&lt; strMessage_ &lt;&lt; endl;
-            this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms ‘Ò‹@</span>
+            this_thread::sleep_for( chrono::milliseconds(500) );    <span class="comment">// 500ms å¾…æ©Ÿ</span>
         }
     }
 };
@@ -212,7 +212,7 @@ public:
 
 int main(int argc, char* argv[])
 {
-    <span class="comment">// ƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒXŠO•”‚©‚ç‚Ì‹N“®)</span>
+    <span class="comment">// ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å¤–éƒ¨ã‹ã‚‰ã®èµ·å‹•)</span>
     {
         PrintMessage hello(<span class="string">&quot;Hello &quot;</span>);
         PrintMessage world(<span class="string">&quot;World! &quot;</span>);
@@ -229,17 +229,17 @@ int main(int argc, char* argv[])
 <p>
 &nbsp;</p>
 <h2>
-<a name="‚SDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)">‚SDƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚Å‹N“®(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</a></h2>
+<a name="ï¼”ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)">ï¼”ï¼ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§èµ·å‹•(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</a></h2>
 <p>
-&nbsp;&nbsp; ƒNƒ‰ƒXƒƒ“ƒoŠÖ”‚ğƒXƒŒƒbƒh‹N“®‚·‚é•û–@‚Å‚·BƒNƒ‰ƒXƒƒ\ƒbƒh‚È‚Ì‚Å‘æˆêˆø”‚ÉƒCƒ“ƒXƒ^ƒ“ƒX(this)‚ª•K—v‚Å‚·B‚±‚Ì‚½‚ß‰º‹LƒTƒ“ƒvƒ‹‚Å‚Í 
-this ‚ğˆø”‚Å“n‚µ‚Ä‚¢‚Ü‚·B<br></p>
-<h4>•]‰¿ŠÂ‹«F</h4>
+&nbsp;&nbsp; ã‚¯ãƒ©ã‚¹ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•ã™ã‚‹æ–¹æ³•ã§ã™ã€‚ã‚¯ãƒ©ã‚¹ãƒ¡ã‚½ãƒƒãƒ‰ãªã®ã§ç¬¬ä¸€å¼•æ•°ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹(this)ãŒå¿…è¦ã§ã™ã€‚ã“ã®ãŸã‚ä¸‹è¨˜ã‚µãƒ³ãƒ—ãƒ«ã§ã¯ 
+this ã‚’å¼•æ•°ã§æ¸¡ã—ã¦ã„ã¾ã™ã€‚<br></p>
+<h4>è©•ä¾¡ç’°å¢ƒï¼š</h4>
 <ul>
-	<li>ƒRƒ“ƒpƒCƒ‰F VS2012 Update3</li>
-	<li>OSF Windows8 64bit</li>
+	<li>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ï¼š VS2012 Update3</li>
+	<li>OSï¼š Windows8 64bit</li>
 </ul>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹]</p>
 <pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// cout, endl</span>
 #include <span class="string">&lt;string&gt;</span>       <span class="comment">// string</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread, this_thread::sleep_for</span>
@@ -276,7 +276,7 @@ public:
 
 int main(int argc, char* argv[])
 {
-    <span class="comment">// ƒƒ“ƒoŠÖ”‚ğƒ}ƒ‹ƒ`ƒXƒŒƒbƒh‚ÅÀs(ƒNƒ‰ƒX“à•”‚©‚ç‚Ì‹N“®)</span>
+    <span class="comment">// ãƒ¡ãƒ³ãƒé–¢æ•°ã‚’ãƒãƒ«ãƒã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œ(ã‚¯ãƒ©ã‚¹å†…éƒ¨ã‹ã‚‰ã®èµ·å‹•)</span>
     {
         PrintMessage hello(&quot;Hello  &quot;);
         PrintMessage world(&quot;World! &quot;); 
@@ -287,11 +287,11 @@ int main(int argc, char* argv[])
 }</code>
 </pre>
 <p>&nbsp;</p>
-<h2><a name="5._ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é">5. ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é</a></h2>
-<p>ˆê’â~ó‘Ô‚ÌƒVƒXƒeƒ€ƒXƒŒƒbƒh‚ğì¬‚µ‚Ä‚İ‚Ü‚·B<br>
-‚·‚È‚í‚¿AƒXƒŒƒbƒh‚Å‰½‚©‚ğˆ—‚·‚é‚ª—ˆ‚½‚ç‚·‚®‚ÉŠJn‚Å‚«‚é‚æ‚¤‚É‚ ‚ç‚©‚¶‚ßƒXƒŒƒbƒh‚ğì¬‚µ‚Ä‚¨‚«Aì¬‚ÌƒXƒŒƒbƒh‚ÌƒI[ƒo[ƒwƒbƒh‚É‚æ‚é’x‰„‚ğ‰ñ”ğ‚·‚é—á‚Å‚·B‚Ü‚½‚ÍAÀsŠJn‘O‚ÉƒXƒŒƒbƒh‚É‰½‚©‚µ‚ç‚Ì‚¹‚¦‚Á‚Ä‚¢‚ğs‚¤•K—v‚ª‚ ‚é‚½‚ßˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì¬‚·‚éê‡‚à‚ ‚é‚Å‚µ‚å‚¤B<br>
-ƒXƒŒƒbƒh‚ğˆê“x‚¾‚¯ˆê’â~ó‘Ô‚É‚µ‚½‚¢ê‡Avoid future ‚ğ—p‚¢‚é‚Ì‚ª‘Ã“–‚È‘I‘ğ‚Å‚·B‚±‚Ì‹Z–@‚Ì—v“_‚ğˆÈ‰º‚É¦‚µ‚Ü‚·B</p>
-<p>[•]‰¿ŠÂ‹«]</p>
+<h2><a name="5._ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹">5. ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹</a></h2>
+<p>ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚·ã‚¹ãƒ†ãƒ ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã—ã¦ã¿ã¾ã™ã€‚<br>
+ã™ãªã‚ã¡ã€ã‚¹ãƒ¬ãƒƒãƒ‰ã§ä½•ã‹ã‚’å‡¦ç†ã™ã‚‹æ™‚ãŒæ¥ãŸã‚‰ã™ãã«é–‹å§‹ã§ãã‚‹ã‚ˆã†ã«ã‚ã‚‰ã‹ã˜ã‚ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã—ã¦ãŠãã€ä½œæˆã®ã‚¹ãƒ¬ãƒƒãƒ‰ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ˜ãƒƒãƒ‰ã«ã‚ˆã‚‹é…å»¶ã‚’å›é¿ã™ã‚‹ä¾‹ã§ã™ã€‚ã¾ãŸã¯ã€å®Ÿè¡Œé–‹å§‹å‰ã«ã‚¹ãƒ¬ãƒƒãƒ‰ã«ä½•ã‹ã—ã‚‰ã®ã›ãˆã£ã¦ã„ã‚’è¡Œã†å¿…è¦ãŒã‚ã‚‹ãŸã‚ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã™ã‚‹å ´åˆã‚‚ã‚ã‚‹ã§ã—ã‚‡ã†ã€‚<br>
+ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä¸€åº¦ã ã‘ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã«ã—ãŸã„å ´åˆã€void future ã‚’ç”¨ã„ã‚‹ã®ãŒå¦¥å½“ãªé¸æŠã§ã™ã€‚ã“ã®æŠ€æ³•ã®è¦ç‚¹ã‚’ä»¥ä¸‹ã«ç¤ºã—ã¾ã™ã€‚</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -299,7 +299,7 @@ int main(int argc, char* argv[])
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ : </td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© : </td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.3.10 </td>
 	</tr>
@@ -320,7 +320,7 @@ int main(int argc, char* argv[])
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒXF &quot;test_thread_NN.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ï¼š &quot;test_thread_NN.cpp&quot;]</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;thread&gt;       // std::thread
 #include &lt;future&gt;       // std::async
@@ -344,32 +344,32 @@ int main()
 
     <span class="auto-style5">thread</span> t([=, &amp;p]
         {
-            <span class="auto-style5">p.get_future().wait(); </span>                         // p.set_value() ‚ÌÀs‚Ü‚Å‘Ò‹@
-            return react(wait_count);                       // react() ‚ğÀs
+            <span class="auto-style5">p.get_future().wait(); </span>                         // p.set_value() ã®å®Ÿè¡Œã¾ã§å¾…æ©Ÿ
+            return react(wait_count);                       // react() ã‚’å®Ÿè¡Œ
         });
 
-    this_thread::sleep_for(chrono::seconds(1));             // ‰½‚©EEE‚ğ‚µ‚Ä‚©‚çA
-    <span class="auto-style5">p.set_value();   </span>                                       // ƒXƒŒƒbƒh‚ğ‹N“®‚µ‚Ü‚·B
+    this_thread::sleep_for(chrono::seconds(1));             // ä½•ã‹ãƒ»ãƒ»ãƒ»ã‚’ã—ã¦ã‹ã‚‰ã€
+    <span class="auto-style5">p.set_value();   </span>                                       // ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’èµ·å‹•ã—ã¾ã™ã€‚
 
     cout &lt;&lt; &quot;Waiting...&quot; &lt;&lt; endl;
     t.join();
     cout &lt;&lt; &quot;Confirmed termination of react().&quot; &lt;&lt; endl;
 }</code></pre>
 <p>&nbsp;</p>
-<p>[ÀsŒ‹‰Ê]</p>
+<p>[å®Ÿè¡Œçµæœ]</p>
 <p>
 <img alt="" src="thread/img6.gif"></p>
 <p>
 &nbsp;</p>
 <h4>
-Ql</h4>
+å‚è€ƒ</h4>
 <ul>
-	<li>uEffective Modern C++v €–Ú39FƒCƒxƒ“ƒg‚ª‚P“xØ‚È‚ç‚Î void ‚È future ‚ğŒŸ“¢‚·‚é</li>
+	<li>ã€ŒEffective Modern C++ã€ é …ç›®39ï¼šã‚¤ãƒ™ãƒ³ãƒˆãŒï¼‘åº¦åˆ‡ãªã‚‰ã° void ãª future ã‚’æ¤œè¨ã™ã‚‹</li>
 	<li><a href="https://ja.cppreference.com/w/cpp/thread/thread">https://ja.cppreference.com/w/cpp/thread/thread</a></li>
 </ul>
 <p></p>
 <hr>
-<p>‹LÚF<br>2019”N11Œ20“ú: <font face="Meiryo UI">u2. ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚év‚ÌÍ‚ğ’Ç‰Á</font><br>2013”N9Œ1“ú: V‹Kì¬A–Ø‰º‰pr iboost::thread ‚Ì‹Lq‚ğƒx[ƒX‚ÉC³j</p>
+<p>è¨˜è¼‰ï¼š<br>2019å¹´11æœˆ20æ—¥: <font face="Meiryo UI">ã€Œ2. ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹ã€ã®ç« ã‚’è¿½åŠ </font><br>2013å¹´9æœˆ1æ—¥: æ–°è¦ä½œæˆã€æœ¨ä¸‹è‹±ä¿Š ï¼ˆboost::thread ã®è¨˜è¿°ã‚’ãƒ™ãƒ¼ã‚¹ã«ä¿®æ­£ï¼‰</p>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>std::async</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -21,21 +21,21 @@
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
 std::async (c++11)</h1>
-<p> c++11 ‚ÅƒXƒŒƒbƒhŠÖ˜A‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ª‘å•‚ÉŠg’£‚³‚ê‚Ü‚µ‚½B std::thread ‚Æ•À‚ñ‚Å‘ã•\“I‚È std::async ‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B<br>
-std::thread ‚Í promise, future 
-‚ğ•¹—p‚µ‚È‚¢‚ÆƒXƒŒƒbƒh‚©‚çŒÄ‚Ño‚µŒ³‚Ö’l‚ğ–ß‚·‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñB‚Ü‚½—áŠO‚ª”­¶‚µ‚½ê‡‚ğ“`‚¦‚é‚±‚Æ‚à‚Å‚«‚Ü‚¹‚ñB<br>std::async 
-‚Í“Á‚ÉˆÓ¯‚·‚é‚±‚Æ‚È‚­ƒXƒŒƒbƒh‚Ì‰‰ZŒ‹‰Ê‚ğŒÄ‚Ño‚µŒ³‚Ö–ß‚·‹@”\‚ğƒTƒ|[ƒg‚µ‚Ä‚¨‚èA—áŠO”­¶‚ÌÀ‘•‚à“¯—l‚Å‚·B<br>ŒÂl“I‚É‚Í std::thread 
-‚Í‚à‚Í‚âg—p‚¹‚¸‚É std::async ‚Ì‚İ‚Å—Ç‚¢‚Ì‚Å‚Í‚Æl‚¦‚Ü‚·B </p>
-<p> &quot;Effective Modern C++&quot; ‚Ì€–Ú35 ‚É‚àuƒXƒŒƒbƒhƒx[ƒX‚æ‚è‚àƒ^ƒXƒNƒx[ƒXƒvƒƒOƒ‰ƒ~ƒ“ƒO‚ğ—Dæ‚·‚év‚Á‚Ä‘‚¢‚Ä‚ ‚è‚Ü‚·‚µ‚ËB<br>
-‚±‚ê‚ÌˆÓ–¡‚Íustd::thread ‚æ‚è‚à std::async ‚ğg‚¢‚Ü‚µ‚å‚¤v‚Æ‚¢‚¤“à—e‚Å‚·B</p>
-<h2> –ÚŸ</h2>
-<p> <a href="#1._ƒVƒ“ƒvƒ‹‚È—á">1. ƒVƒ“ƒvƒ‹‚È—á</a><br><a href="#2._ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é">2. 
-ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é</a><br>3. ***</p>
+<p> c++11 ã§ã‚¹ãƒ¬ãƒƒãƒ‰é–¢é€£ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãŒå¤§å¹…ã«æ‹¡å¼µã•ã‚Œã¾ã—ãŸã€‚ std::thread ã¨ä¸¦ã‚“ã§ä»£è¡¨çš„ãª std::async ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚<br>
+std::thread ã¯ promise, future 
+ã‚’ä½µç”¨ã—ãªã„ã¨ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã³å‡ºã—å…ƒã¸å€¤ã‚’æˆ»ã™ã“ã¨ãŒã§ãã¾ã›ã‚“ã€‚ã¾ãŸä¾‹å¤–ãŒç™ºç”Ÿã—ãŸå ´åˆã‚’ä¼ãˆã‚‹ã“ã¨ã‚‚ã§ãã¾ã›ã‚“ã€‚<br>std::async 
+ã¯ç‰¹ã«æ„è­˜ã™ã‚‹ã“ã¨ãªãã‚¹ãƒ¬ãƒƒãƒ‰ã®æ¼”ç®—çµæœã‚’å‘¼ã³å‡ºã—å…ƒã¸æˆ»ã™æ©Ÿèƒ½ã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ãŠã‚Šã€ä¾‹å¤–ç™ºç”Ÿæ™‚ã®å®Ÿè£…ã‚‚åŒæ§˜ã§ã™ã€‚<br>å€‹äººçš„ã«ã¯ std::thread 
+ã¯ã‚‚ã¯ã‚„ä½¿ç”¨ã›ãšã« std::async ã®ã¿ã§è‰¯ã„ã®ã§ã¯ã¨è€ƒãˆã¾ã™ã€‚ </p>
+<p> &quot;Effective Modern C++&quot; ã®é …ç›®35 ã«ã‚‚ã€Œã‚¹ãƒ¬ãƒƒãƒ‰ãƒ™ãƒ¼ã‚¹ã‚ˆã‚Šã‚‚ã‚¿ã‚¹ã‚¯ãƒ™ãƒ¼ã‚¹ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°ã‚’å„ªå…ˆã™ã‚‹ã€ã£ã¦æ›¸ã„ã¦ã‚ã‚Šã¾ã™ã—ã­ã€‚<br>
+ã“ã‚Œã®æ„å‘³ã¯ã€Œstd::thread ã‚ˆã‚Šã‚‚ std::async ã‚’ä½¿ã„ã¾ã—ã‚‡ã†ã€ã¨ã„ã†å†…å®¹ã§ã™ã€‚</p>
+<h2> ç›®æ¬¡</h2>
+<p> <a href="#1._ã‚·ãƒ³ãƒ—ãƒ«ãªä¾‹">1. ã‚·ãƒ³ãƒ—ãƒ«ãªä¾‹</a><br><a href="#2._ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹">2. 
+ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹</a><br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._ƒVƒ“ƒvƒ‹‚È—á">1. ƒVƒ“ƒvƒ‹‚È—á</a></h2>
-<p> [ŠT—v]</p>
-<p> ‚Ü‚¸‚ÍƒVƒ“ƒvƒ‹‚ÈƒTƒ“ƒvƒ‹‚ğì‚Á‚Ä‚İ‚Ü‚·B<br>­‚µˆ—‚Ìd‚½‚¢ŠÖ” worker() ‚ğ€”õ‚µ‚ÄA‚±‚ê‚ğ std::async ‚ÅÀs‚µ‚Ü‚·B</p>
-<p>[•]‰¿ŠÂ‹«]</p>
+<h2> <a name="1._ã‚·ãƒ³ãƒ—ãƒ«ãªä¾‹">1. ã‚·ãƒ³ãƒ—ãƒ«ãªä¾‹</a></h2>
+<p> [æ¦‚è¦]</p>
+<p> ã¾ãšã¯ã‚·ãƒ³ãƒ—ãƒ«ãªã‚µãƒ³ãƒ—ãƒ«ã‚’ä½œã£ã¦ã¿ã¾ã™ã€‚<br>å°‘ã—å‡¦ç†ã®é‡ãŸã„é–¢æ•° worker() ã‚’æº–å‚™ã—ã¦ã€ã“ã‚Œã‚’ std::async ã§å®Ÿè¡Œã—ã¾ã™ã€‚</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -43,7 +43,7 @@ std::thread ‚Í promise, future
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2017 pro.,</td>
 		<td>Version 15.4.2 </td>
 	</tr>
@@ -64,7 +64,7 @@ std::thread ‚Í promise, future
 </tbody>
 </table>
 <p>&nbsp;</p>
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;async.cpp&quot;]<br>
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;async.cpp&quot;]<br>
 <pre class="prettyprint linenums"><code>#include &lt;stdio.h&gt;
 #include &lt;tchar.h&gt;
 #include &lt;iostream&gt;
@@ -79,7 +79,7 @@ int worker(const vector&lt;int&gt;&amp; data)
     int sum = 0;
 
     for (int i : data) {
-        // d‚½‚¢ˆ—
+        // é‡ãŸã„å‡¦ç†
         this_thread::sleep_for(chrono::milliseconds(2000));
         sum += i;
         cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum &lt;&lt; endl;
@@ -95,13 +95,13 @@ int main()
 {
     vector&lt;int&gt; data = { 1, 2, 3, 4, 5 };
 
-    // worker() ŠÖ”‚ğÀs‚·‚é
-    // ˆø”‚ª const ‚È‚Ì‚Å cref() ‚ğg—pB•ÏX‰Â”\‚Èê‡‚Í ref() ‚ÅQÆ“n‚µB 
-//  future&lt;int&gt; f = std::async( launch::async, worker, cref(data) );                     // ”ñ“¯ŠúÀs
-//  future&lt;int&gt; f = std::async( launch::deferred, worker, cref(data) );                  // “¯ŠúÀs
-//  future&lt;int&gt; f = std::async( launch::async | launch::deferred, worker, cref(data) );  // ”ñ“¯Šú/“¯Šú ‚Ç‚¿‚ç‚Å‚àOK
-//  future&lt;int&gt; f = std::async( worker, cref(data));                                     // ”ñ“¯Šú/“¯Šú ‚Ç‚¿‚ç‚Å‚àOK
-    auto <span class="auto-style8">f</span> = std::<span class="auto-style8">async</span>( launch::async, worker, cref(data));                             // auto ‚É‚æ‚é„§‚Ìg—p•û–@B”ñ“¯ŠúÀsB
+    // worker() é–¢æ•°ã‚’å®Ÿè¡Œã™ã‚‹
+    // å¼•æ•°ãŒ const ãªã®ã§ cref() ã‚’ä½¿ç”¨ã€‚å¤‰æ›´å¯èƒ½ãªå ´åˆã¯ ref() ã§å‚ç…§æ¸¡ã—ã€‚ 
+//  future&lt;int&gt; f = std::async( launch::async, worker, cref(data) );                     // éåŒæœŸå®Ÿè¡Œ
+//  future&lt;int&gt; f = std::async( launch::deferred, worker, cref(data) );                  // åŒæœŸå®Ÿè¡Œ
+//  future&lt;int&gt; f = std::async( launch::async | launch::deferred, worker, cref(data) );  // éåŒæœŸ/åŒæœŸ ã©ã¡ã‚‰ã§ã‚‚OK
+//  future&lt;int&gt; f = std::async( worker, cref(data));                                     // éåŒæœŸ/åŒæœŸ ã©ã¡ã‚‰ã§ã‚‚OK
+    auto <span class="auto-style8">f</span> = std::<span class="auto-style8">async</span>( launch::async, worker, cref(data));                             // auto ã«ã‚ˆã‚‹æ¨å¥¨ã®ä½¿ç”¨æ–¹æ³•ã€‚éåŒæœŸå®Ÿè¡Œã€‚
 
     try {
         if (f.wait_for(chrono::seconds(0)) == future_status::deferred) {
@@ -126,46 +126,46 @@ int main()
         OutputDebugString(errorMessage.c_str());
     }
     catch (...) {
-        // worker() ŠÖ”“à‚Å—áŠO‘no‚³‚ê‚½ê‡‚Ìˆ—
+        // worker() é–¢æ•°å†…ã§ä¾‹å¤–å‰µå‡ºã•ã‚ŒãŸå ´åˆã®å‡¦ç†
         OutputDebugString(_T(&quot;exception catched.&quot;));
     }
 
     return EXIT_SUCCESS;
 }</code>
 </pre>
-<p>m•â‘«à–¾n</p>
+<p>ï¼»è£œè¶³èª¬æ˜ï¼½</p>
 <ul>
-	<li>std::async ‚Ì‘æˆêˆø”‚É launch::async ‚ğw’è‚µ‚½ê‡A“à•”“I‚É‚ÍƒXƒŒƒbƒh‚ğ¶¬‚µ‚Ä‚Ì”ñ“¯Šú‚Ì“®ì‚ğs‚¢‚Ü‚·B<br>
-	launch::deferred ‚ğw’è‚µ‚½ê‡‚Í“¯ŠúÀs‚µ‚Ü‚·B’Êí‚ÌŠÖ”“®ì‚Æ‚¨l‚¦‰º‚³‚¢B<br>–³w’èA‚Ü‚½‚Í &quot;launch::async | 
-	launch::deferred&quot; ‚ğw’è‚µ‚½ê‡A‚Ç‚¿‚ç‚ÅÀs‚µ‚Ä‚à—Ç‚¢A‚Æ‚¢‚¤ˆÓ}‚É‚È‚è‚Ü‚·B<br>std::async 
-	‚ğg—p‚·‚é“_‚Å”ñ“¯ŠúÀs‚ğˆÓ}‚µ‚Ä‚¢‚é‚Í‚¸‚È‚Ì‚ÅA’Êí‚Í launch::async ‚ğ–¾¦“I‚Éw’è‚µ‚½•û‚ª—Ç‚¢‚Æl‚¦‚Ü‚·B</li>
-	<li>”ñ“¯ŠúÀs‚Ìê‡A‘ÎÛ‚Ìƒ^ƒXƒN‚ªI—¹‚µ‚Ä‚¢‚é‚©‚ğŠm”F‚µ‚Ä‚©‚çŒ‹‰Ê‚ğæ“¾‚µ‚Ü‚·B<br>ã‹L—á‚Å‚Í ã‹L—á‚Å‚Í 
-	uf.wait_for(chrono::milliseconds(500)) == std::future_status::readyv 
-	‚É‚æ‚èÅ‘å500ms‚ÌŠÔ‚¾‚¯ˆ—Š®—¹‚ğ‘Ò‚¿A f.get() ‚ğÀs‚·‚é‚±‚Æ‚Åˆ—Œ‹‰Ê‚ğæ“¾‚µ‚Ü‚·B</li>
-	<li>“¯ŠúÀs‚Å‚ ‚é‚±‚Æ‚ª–¾Šm‚Èê‡‚ÍAó‘Ô‚ğŠm”F‚·‚é•K—v‚ ‚è‚Ü‚¹‚ñB<br>f.get() ‚ğÀs‚·‚é‚Ü‚Åˆ—©‘Ì‚ªs‚í‚ê‚Ü‚¹‚ñB</li>
-	<li>‚Ç‚¿‚ç‚ÅÀs‚µ‚Ä‚¢‚é‚©‚ª‚í‚©‚ç‚È‚¢ê‡A—¼•û‚ğl—¶‚µ‚½À‘•‚ğs‚¤•K—v‚ª‚ ‚è‚Ü‚·B</li>
+	<li>std::async ã®ç¬¬ä¸€å¼•æ•°ã« launch::async ã‚’æŒ‡å®šã—ãŸå ´åˆã€å†…éƒ¨çš„ã«ã¯ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¦ã®éåŒæœŸã®å‹•ä½œã‚’è¡Œã„ã¾ã™ã€‚<br>
+	launch::deferred ã‚’æŒ‡å®šã—ãŸå ´åˆã¯åŒæœŸå®Ÿè¡Œã—ã¾ã™ã€‚é€šå¸¸ã®é–¢æ•°å‹•ä½œã¨ãŠè€ƒãˆä¸‹ã•ã„ã€‚<br>ç„¡æŒ‡å®šã€ã¾ãŸã¯ &quot;launch::async | 
+	launch::deferred&quot; ã‚’æŒ‡å®šã—ãŸå ´åˆã€ã©ã¡ã‚‰ã§å®Ÿè¡Œã—ã¦ã‚‚è‰¯ã„ã€ã¨ã„ã†æ„å›³ã«ãªã‚Šã¾ã™ã€‚<br>std::async 
+	ã‚’ä½¿ç”¨ã™ã‚‹æ™‚ç‚¹ã§éåŒæœŸå®Ÿè¡Œã‚’æ„å›³ã—ã¦ã„ã‚‹ã¯ãšãªã®ã§ã€é€šå¸¸ã¯ launch::async ã‚’æ˜ç¤ºçš„ã«æŒ‡å®šã—ãŸæ–¹ãŒè‰¯ã„ã¨è€ƒãˆã¾ã™ã€‚</li>
+	<li>éåŒæœŸå®Ÿè¡Œã®å ´åˆã€å¯¾è±¡ã®ã‚¿ã‚¹ã‚¯ãŒçµ‚äº†ã—ã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã—ã¦ã‹ã‚‰çµæœã‚’å–å¾—ã—ã¾ã™ã€‚<br>ä¸Šè¨˜ä¾‹ã§ã¯ ä¸Šè¨˜ä¾‹ã§ã¯ 
+	ã€Œf.wait_for(chrono::milliseconds(500)) == std::future_status::readyã€ 
+	ã«ã‚ˆã‚Šæœ€å¤§500msã®æ™‚é–“ã ã‘å‡¦ç†å®Œäº†ã‚’å¾…ã¡ã€ f.get() ã‚’å®Ÿè¡Œã™ã‚‹ã“ã¨ã§å‡¦ç†çµæœã‚’å–å¾—ã—ã¾ã™ã€‚</li>
+	<li>åŒæœŸå®Ÿè¡Œã§ã‚ã‚‹ã“ã¨ãŒæ˜ç¢ºãªå ´åˆã¯ã€çŠ¶æ…‹ã‚’ç¢ºèªã™ã‚‹å¿…è¦ã‚ã‚Šã¾ã›ã‚“ã€‚<br>f.get() ã‚’å®Ÿè¡Œã™ã‚‹ã¾ã§å‡¦ç†è‡ªä½“ãŒè¡Œã‚ã‚Œã¾ã›ã‚“ã€‚</li>
+	<li>ã©ã¡ã‚‰ã§å®Ÿè¡Œã—ã¦ã„ã‚‹ã‹ãŒã‚ã‹ã‚‰ãªã„å ´åˆã€ä¸¡æ–¹ã‚’è€ƒæ…®ã—ãŸå®Ÿè£…ã‚’è¡Œã†å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚</li>
 </ul>
 <br>
 	
 <br>
 <h4>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h4>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h4>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</p>
 <p>
 &nbsp;</p>
 <h4>
-QlURL</h4>
+å‚è€ƒURL</h4>
 <ul>
 	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
 	http://ja.cppreference.com/w/cpp/thread/async</a></li>
 </ul>
 <p>&nbsp;</p>
-<h2><a name="2._ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é">2. ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚é</a></h2>
-<p>ˆê’â~ó‘Ô‚ÌƒVƒXƒeƒ€ƒXƒŒƒbƒh‚ğì¬‚µ‚Ä‚İ‚Ü‚·B<br>
-‚·‚È‚í‚¿AƒXƒŒƒbƒh‚Å‰½‚©‚ğˆ—‚·‚é‚ª—ˆ‚½‚ç‚·‚®‚ÉŠJn‚Å‚«‚é‚æ‚¤‚É‚ ‚ç‚©‚¶‚ßƒXƒŒƒbƒh‚ğì¬‚µ‚Ä‚¨‚«Aì¬‚ÌƒXƒŒƒbƒh‚ÌƒI[ƒo[ƒwƒbƒh‚É‚æ‚é’x‰„‚ğ‰ñ”ğ‚·‚é—á‚Å‚·B‚Ü‚½‚ÍAÀsŠJn‘O‚ÉƒXƒŒƒbƒh‚É‰½‚©‚µ‚ç‚Ì‚¹‚¦‚Á‚Ä‚¢‚ğs‚¤•K—v‚ª‚ ‚é‚½‚ßˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì¬‚·‚éê‡‚à‚ ‚é‚Å‚µ‚å‚¤B<br>
-ƒXƒŒƒbƒh‚ğˆê“x‚¾‚¯ˆê’â~ó‘Ô‚É‚µ‚½‚¢ê‡Avoid future ‚ğ—p‚¢‚é‚Ì‚ª‘Ã“–‚È‘I‘ğ‚Å‚·B‚±‚Ì‹Z–@‚Ì—v“_‚ğˆÈ‰º‚É¦‚µ‚Ü‚·B</p>
-<p>[•]‰¿ŠÂ‹«]</p>
+<h2><a name="2._ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹">2. ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹</a></h2>
+<p>ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚·ã‚¹ãƒ†ãƒ ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã—ã¦ã¿ã¾ã™ã€‚<br>
+ã™ãªã‚ã¡ã€ã‚¹ãƒ¬ãƒƒãƒ‰ã§ä½•ã‹ã‚’å‡¦ç†ã™ã‚‹æ™‚ãŒæ¥ãŸã‚‰ã™ãã«é–‹å§‹ã§ãã‚‹ã‚ˆã†ã«ã‚ã‚‰ã‹ã˜ã‚ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã—ã¦ãŠãã€ä½œæˆã®ã‚¹ãƒ¬ãƒƒãƒ‰ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ˜ãƒƒãƒ‰ã«ã‚ˆã‚‹é…å»¶ã‚’å›é¿ã™ã‚‹ä¾‹ã§ã™ã€‚ã¾ãŸã¯ã€å®Ÿè¡Œé–‹å§‹å‰ã«ã‚¹ãƒ¬ãƒƒãƒ‰ã«ä½•ã‹ã—ã‚‰ã®ã›ãˆã£ã¦ã„ã‚’è¡Œã†å¿…è¦ãŒã‚ã‚‹ãŸã‚ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œæˆã™ã‚‹å ´åˆã‚‚ã‚ã‚‹ã§ã—ã‚‡ã†ã€‚<br>
+ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä¸€åº¦ã ã‘ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã«ã—ãŸã„å ´åˆã€void future ã‚’ç”¨ã„ã‚‹ã®ãŒå¦¥å½“ãªé¸æŠã§ã™ã€‚ã“ã®æŠ€æ³•ã®è¦ç‚¹ã‚’ä»¥ä¸‹ã«ç¤ºã—ã¾ã™ã€‚</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -173,7 +173,7 @@ int main()
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.3.10 </td>
 	</tr>
@@ -194,7 +194,7 @@ int main()
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒXF &quot;test_async_02.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ï¼š &quot;test_async_02.cpp&quot;]</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;future&gt;		// std::async
 
@@ -217,33 +217,33 @@ int main()
 
     future&lt;int&gt; f = async(launch::async, [=,&amp;p]
         {
-            <span class="auto-style8">p.get_future().wait();</span>                          // p.set_value() ‚ÌÀs‚Ü‚Å‘Ò‹@
-            return react(wait_count);                       // react() ‚ğÀs
+            <span class="auto-style8">p.get_future().wait();</span>                          // p.set_value() ã®å®Ÿè¡Œã¾ã§å¾…æ©Ÿ
+            return react(wait_count);                       // react() ã‚’å®Ÿè¡Œ
         } );
 
-    this_thread::sleep_for(chrono::seconds(1));             // ‰½‚©EEE‚ğ‚µ‚Ä‚©‚çA
-    <span class="auto-style8">p.set_value();</span>                                          // ƒXƒŒƒbƒh‚ğ‹N“®‚µ‚Ü‚·B
+    this_thread::sleep_for(chrono::seconds(1));             // ä½•ã‹ãƒ»ãƒ»ãƒ»ã‚’ã—ã¦ã‹ã‚‰ã€
+    <span class="auto-style8">p.set_value();</span>                                          // ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’èµ·å‹•ã—ã¾ã™ã€‚
 
-    cout &lt;&lt; &quot;f.get() = &quot; &lt;&lt; f.get() &lt;&lt; endl;                // react() ‚ÌŠ®—¹‚ğ‘Ò‚Á‚Ä–ß‚è’l‚ğæ“¾
+    cout &lt;&lt; &quot;f.get() = &quot; &lt;&lt; f.get() &lt;&lt; endl;                // react() ã®å®Œäº†ã‚’å¾…ã£ã¦æˆ»ã‚Šå€¤ã‚’å–å¾—
     cout &lt;&lt; &quot;Confirmed termination of react().&quot; &lt;&lt; endl;
 }</code></pre>
 <p>&nbsp;</p>
-<p>[ÀsŒ‹‰Ê]</p>
+<p>[å®Ÿè¡Œçµæœ]</p>
 <p>
 <img alt="" src="async/img5.gif"></p>
 <p>
 &nbsp;</p>
 <h4>
-Ql</h4>
+å‚è€ƒ</h4>
 <ul>
-	<li>uEffective Modern C++v €–Ú39FƒCƒxƒ“ƒg‚ª‚P“xØ‚È‚ç‚Î void ‚È future ‚ğŒŸ“¢‚·‚é</li>
+	<li>ã€ŒEffective Modern C++ã€ é …ç›®39ï¼šã‚¤ãƒ™ãƒ³ãƒˆãŒï¼‘åº¦åˆ‡ãªã‚‰ã° void ãª future ã‚’æ¤œè¨ã™ã‚‹</li>
 	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
 	http://ja.cppreference.com/w/cpp/thread/async</a></li>
 </ul>
 <p>
 &nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF <br>2017”N11Œ18“ú V‹Kì¬A–Ø‰º‰pr<br>
-2019”N11Œ27“ú u2. ˆê’â~ó‘Ô‚ÌƒXƒŒƒbƒh‚ğì‚év‚ÌÍ‚ğ’Ç‰Á</font></p>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š <br>2017å¹´11æœˆ18æ—¥ æ–°è¦ä½œæˆã€æœ¨ä¸‹è‹±ä¿Š<br>
+2019å¹´11æœˆ27æ—¥ ã€Œ2. ä¸€æ™‚åœæ­¢çŠ¶æ…‹ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ä½œã‚‹ã€ã®ç« ã‚’è¿½åŠ </font></p>
 </body>
 </html>
