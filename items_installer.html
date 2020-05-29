@@ -1,0 +1,203 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+<title></title>
+<style type="text/css">
+
+a.menu {
+	text-decoration: none;			/* 下線削除 */
+	border: 1px solid #8080ff;		/* 枠線 */
+	background-color: #ccccff;		/* 背景色 */
+	padding: 0px;					/* 内側余白 */
+}
+
+code{
+	font-size: small;
+	font-family: FixedSys;
+}
+
+ul {
+	font-size:small;
+	font-family:"Meiryo UI";
+}
+
+.t-tr-dropdown {
+	display:inline-block;
+	line-height:1em;
+	visibility:collapse;
+	width:0;
+	height:0;
+	position:relative 
+}
+
+.t-tr-dropdown > div{
+	opacity:0;transition:opacity 0.1s linear 0s;
+	-moz-transition:opacity 0.1s linear 0s;
+	-webkit-transition:opacity 0.1s linear 0s;
+	-o-transition:opacity 0.1s linear 0s;
+	top:0;
+	left:-110px;
+	position:absolute;
+	padding-top:12px
+}
+
+.t-tr-dropdown > div > div {
+	background-color:white;
+	border:1.5px solid silver;
+	font-size:0.9em;
+	padding:5px;
+	width:400px;
+	border-radius:5px;
+	box-shadow:0 0 3px #888888
+}
+
+.t-tr-dropdown-arrow-border	{
+	border-color:transparent transparent silver transparent ;
+	border-style:solid;
+	border-width:8px;
+	height:0;
+	width:0;
+	position:absolute;
+	top:-3px;
+	left:100px
+}
+
+.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
+
+</style>
+
+<script type="text/javascript">
+<!--
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+// -->
+</script>
+
+<script type="text/javascript">
+<!--
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+// -->
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<a href="items_top.html" target="_self">
+<img alt="" height="24" width="24" src="../images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
+
+<ul>
+	<li style="list-style-type: none"><a href="url" class="menu" onclick="sublist(this); return false;">WiX</a><ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Tutorials</a><ul>
+			<li><a href="Installer/WiX/Tutorials/CreateNewProject.html">&quot;WiX project&quot; を新規作成する</a></li>
+			<li>プロジェクトを設定する</li>
+			<li>インストーラにファイルを加える</li>
+			<li>スタートメニューにショートカットを作る</li>
+			<li>独自の &quot;license agreement&quot; を加える</li>
+			<li>インストーラアイコンを独自のアイコンにする</li>
+			<li>.NET Framework のバージョンを確認する</li>
+			<li>インストーラの&quot;メジャー・アップグレード(major upgrade)&quot;を実装する</li>
+			<li>独自の使用許諾を付ける</li>
+			<li>64bit インストーラを作成する</li>
+			<li>ディレクトリにアクセス権を設定する</li>
+			<li>環境変数を設定する</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Working in Visual Studio</a><ul>
+			<li>Project Templates</li>
+			<li>Item Templates</li>
+			<li>Project Property Pages</li>
+			<li>Reading the Default WiX Project Template</li>
+			<li>Creating a simple setup</li>
+			<li>Using Project References</li>
+		</ul>
+		</li>
+		<li>
+		<a href="url" class="menu" onclick="sublist(this); return false;">How To Guides</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Files, Sortcuts and Registry</a><ul>
+				<li>インストーラにファイルを加える</li>
+				<li>インストール中にファイルのバージョン番号を確認する</li>
+				<li>スタートメニューにショートカットを作る</li>
+				<li>Webページへのショートカットを作る</li>
+				<li>Uninstallショートカットを作る</li>
+				<li>インストール中にマネージド アセンブリ を NGen する</li>
+				<li>他のディレクトリ検索要素を定義する</li>
+				<li>ファイル検索の親ディレクトリを取得する</li>
+				<li>インストール中にレジストリ情報を読む</li>
+				<li>インストール中にレジストリ情報を書く</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Redistributables and Install Checks</a><ul>
+				<li>.NET Framework のバージョンを確認する</li>
+				<li>bootstrapper を使って .NET Framework をインストールする</li>
+				<li>DirectX 9.0 を一緒にインストールする</li>
+				<li>Visual C++ Redistributable を一緒にインストールする</li>
+				<li>OSバージョンに基づいてインストールをブロックする</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">User Interface and Localization</a><ul>
+				<li>インストーラのローカライズ版を作成する</li>
+				<li>インストーラをローカライズできるようにする</li>
+				<li>Setup 後にインストールされたアプリケーションを実行する</li>
+				<li>独自のインストーラ・アイコンをプログラムに加える/削除する</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Product Updates</a><ul>
+				<li>インストーラの&quot;メジャー・アップグレード(major upgrade)&quot;を実装する</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Other</a><ul>
+				<li>デバッグ用にインストールのログを取得する</li>
+				<li>Orcaツールを使ってMSIの内側を見る</li>
+				<li>GUIDを作成する</li>
+				<li>WiX Extension を使う</li>
+				<li>cabinet ファイルの作成を最適化する</li>
+				<li>ソースファイルの場所を指定する</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+	</ul>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>

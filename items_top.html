@@ -1,0 +1,263 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+<title></title>
+<style type="text/css">
+
+a.menu {
+	text-decoration: none;			/* 下線削除 */
+	border: 1px solid #8080ff;		/* 枠線 */
+	background-color: #ccccff;		/* 背景色 */
+	padding: 0px;					/* 内側余白 */
+}
+
+code{
+	font-size: small;
+	font-family: FixedSys;
+}
+
+ul {
+	font-size:small;
+	font-family:"Meiryo UI";
+}
+
+.auto-style3 {
+	list-style-type: circle;
+}
+
+.t-tr-dropdown {
+	display:inline-block;
+	line-height:1em;
+	visibility:collapse;
+	width:0;
+	height:0;
+	position:relative 
+}
+
+.t-tr-dropdown > div{
+	opacity:0;transition:opacity 0.1s linear 0s;
+	-moz-transition:opacity 0.1s linear 0s;
+	-webkit-transition:opacity 0.1s linear 0s;
+	-o-transition:opacity 0.1s linear 0s;
+	top:0;
+	left:-110px;
+	position:absolute;
+	padding-top:12px
+}
+
+.t-tr-dropdown > div > div {
+	background-color:white;
+	border:1.5px solid silver;
+	font-size:0.9em;
+	padding:5px;
+	width:400px;
+	border-radius:5px;
+	box-shadow:0 0 3px #888888
+}
+
+.t-tr-dropdown-arrow-border	{
+	border-color:transparent transparent silver transparent ;
+	border-style:solid;
+	border-width:8px;
+	height:0;
+	width:0;
+	position:absolute;
+	top:-3px;
+	left:100px
+}
+
+.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
+
+</style>
+
+<script type="text/javascript">
+<!--
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+// -->
+</script>
+
+<script type="text/javascript">
+<!--
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+// -->
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<ul>
+	<li  style="list-style-type:none">
+	<a href="items_csharp.html" target="_self">c#</a>
+	<li style="list-style-type: none">
+	<a href="items_csharp.html" target="_self">Form</a>
+	<li style="list-style-type: none">
+	<a href="items_csharp.html" target="_self">WPF</a>
+	<li class="auto-style3" style="list-style-type: none">
+	<a href="items_csharp.html" target="_self">他</a></li>
+</ul>
+<hr>
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_c_c++.html" target="_self">c</a>
+	</li>
+	<li style="list-style-type:none">
+	<a href="items_c_c++.html" target="_self">c++</a>
+	<li style="list-style-type:none">
+	<a href="items_c_c++.html" target="_self">boost(c++)</a>
+	</li>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_win32.html" target="_self">Win32 (VC++)</a>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_excel.html" target="_self">Excel VBA</a></li>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_opencl.html" target="_self">OpenCL</a>
+</ul>
+<hr>
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_database.html" target="_self">データベース</a></ul>
+
+<hr>
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_installer.html" target="_self">インストーラ</a></ul>
+	<hr>
+<ul>
+	<li style="list-style-type:none">
+	<a href="items_ai.html" target="_self">AI</a></ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">Microsoft</a><ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">.NET Framework</a><ul>
+			<li><a href="Microsoft/.NET%20framework/Download%20page.html">
+			ダウンロードページ</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Microsoft Visual Studio</a>
+		<ul>
+			<li>
+			<a href="Microsoft/Visual%20Studio/Development%20Tool%20And%20Language.html">開発ツールおよび開発言語</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">PowerShell</a><ul>
+			<li><a href="Microsoft/PowerShell/Download%20page.html">ダウンロードページ</a></li>
+			<li><a href="Microsoft/PowerShell/Windows%20app%20auto-test.html">
+			「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">KINECT</a><ul>
+			<li><a href="Microsoft/Kinect/Download%20sdk.html">SDK ダウンロードページ</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Web API</a><ul>
+			<li><a href="Microsoft/WebAPI/FaceAPI.html">Face API</a></li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">Web</a>
+	<ul>
+		<li>http://msdn.microsoft.com/en-us/library/bb249282.aspx</li>
+		<li>http://www.realstream.jp/lecture/2006/05/post_13.html</li>
+		<li>http://www.tohoho-web.com/wwwmmd2.htm</li>
+	</ul>
+	</li>
+</ul>
+
+<hr>
+
+<ul>
+	<a href="ImageMagick/commands.html">ImageMagick </a>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">Bat</a>
+	<ul>
+		<li><a href="bat/GetCurrentPath.html">batファイルがあるpathへ移動する方法</a></li>
+	</ul>
+	</li>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type: none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">分類外</a>
+	<ul>
+		<li><a href="Etc/Windows%20SDK.html">Windows SDK</a></li>
+	</ul>
+	</li>
+</ul>
+<hr>
+<ul>
+	<li style="list-style-type: none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a><ul>
+		<li><a href="Algorithm/levenshtein.html">レーベンシュタイン距離</a></li>
+	</ul>
+	</li>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>

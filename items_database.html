@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+<title></title>
+<style type="text/css">
+
+a.menu {
+	text-decoration: none;			/* 下線削除 */
+	border: 1px solid #8080ff;		/* 枠線 */
+	background-color: #ccccff;		/* 背景色 */
+	padding: 0px;					/* 内側余白 */
+}
+
+code{
+	font-size: small;
+	font-family: FixedSys;
+}
+
+ul {
+	font-size:small;
+	font-family:"Meiryo UI";
+}
+
+.t-tr-dropdown {
+	display:inline-block;
+	line-height:1em;
+	visibility:collapse;
+	width:0;
+	height:0;
+	position:relative 
+}
+
+.t-tr-dropdown > div{
+	opacity:0;transition:opacity 0.1s linear 0s;
+	-moz-transition:opacity 0.1s linear 0s;
+	-webkit-transition:opacity 0.1s linear 0s;
+	-o-transition:opacity 0.1s linear 0s;
+	top:0;
+	left:-110px;
+	position:absolute;
+	padding-top:12px
+}
+
+.t-tr-dropdown > div > div {
+	background-color:white;
+	border:1.5px solid silver;
+	font-size:0.9em;
+	padding:5px;
+	width:400px;
+	border-radius:5px;
+	box-shadow:0 0 3px #888888
+}
+
+.t-tr-dropdown-arrow-border	{
+	border-color:transparent transparent silver transparent ;
+	border-style:solid;
+	border-width:8px;
+	height:0;
+	width:0;
+	position:absolute;
+	top:-3px;
+	left:100px
+}
+
+.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
+
+</style>
+
+<script type="text/javascript">
+<!--
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+// -->
+</script>
+
+<script type="text/javascript">
+<!--
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+// -->
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<a href="items_top.html" target="_self">
+<img alt="" height="24" width="24" src="../images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">データベース</a>
+	<ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">SQL</a><ul>
+			<li>(empty)</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">SQL Server LocalDB</a><ul>
+			<li>(empty)</li>
+		</ul>
+		</li>
+	</ul>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>

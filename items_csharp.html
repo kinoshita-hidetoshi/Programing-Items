@@ -1,0 +1,537 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8">
+<title></title>
+<style type="text/css">
+
+a.menu {
+	text-decoration: none;			/* 下線削除 */
+	border: 1px solid #8080ff;		/* 枠線 */
+	background-color: #ccccff;		/* 背景色 */
+	padding: 0px;					/* 内側余白 */
+}
+
+code{
+	font-size: small;
+	font-family: FixedSys;
+}
+
+ul {
+	font-size:small;
+	font-family:"Meiryo UI";
+}
+
+.auto-style1 {
+	list-style-type: disc;
+}
+
+.auto-style3 {
+	list-style-type: circle;
+}
+
+.t-tr-dropdown {
+	display:inline-block;
+	line-height:1em;
+	visibility:collapse;
+	width:0;
+	height:0;
+	position:relative 
+}
+
+.t-tr-dropdown > div{
+	opacity:0;transition:opacity 0.1s linear 0s;
+	-moz-transition:opacity 0.1s linear 0s;
+	-webkit-transition:opacity 0.1s linear 0s;
+	-o-transition:opacity 0.1s linear 0s;
+	top:0;
+	left:-110px;
+	position:absolute;
+	padding-top:12px
+}
+
+.t-tr-dropdown > div > div {
+	background-color:white;
+	border:1.5px solid silver;
+	font-size:0.9em;
+	padding:5px;
+	width:400px;
+	border-radius:5px;
+	box-shadow:0 0 3px #888888
+}
+
+.t-tr-dropdown-arrow-border	{
+	border-color:transparent transparent silver transparent ;
+	border-style:solid;
+	border-width:8px;
+	height:0;
+	width:0;
+	position:absolute;
+	top:-3px;
+	left:100px
+}
+
+.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
+
+.auto-style4 {
+	border-width: 0px;
+}
+
+</style>
+
+<script type="text/javascript">
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+</script>
+
+
+<script type="text/javascript">
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<a href="items_top.html" target="_self">
+<img alt="" height="24" width="24" src="../images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
+
+<ul>
+	<a href="url" class="menu" onclick="sublist(this); return false;">c#</a>
+	<ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Delegate, 匿名メソッド、 ラムダ式</a>
+		<ul>
+			<li>delgate</li>
+			<li>匿名メソッド</li>
+			<li><a href="CS/Delegate%20and%20Event/lambda.html">ラムダ式</a></li>
+			<li>Action, Action&lt;T&gt;, Action&lt;T1,T2&gt;, ・・・</li>
+			<li>Func&lt;TResult&gt;, Func&lt;T,TResult&gt;, Func&lt;T1,T2,TResult&gt;,・・・</li>
+			<li>Predicate&lt;T&gt;</li>
+			<li>event</li>
+			<li>EventArgs</li>
+			<li>CancelEventArgs</li>
+		</ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">コレクション</a><ul>
+			<li>Dictionary&lt;TKey,TValue&gt;</li>
+			<li>List&lt;T&gt;</li>
+			<li>LinkedList&lt;T&gt;</li>
+			<li>Queue&lt;T&gt;</li>
+			<li>SortedList&lt;TKey, TValue&gt;</li>
+			<li>Stack&lt;T&gt;</li>
+		</ul>
+		</li>
+		<li><a href="CS/async_await/async_await.html">async／await 非同期メソッド</a></li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Microsoft.Speech</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Recognition</a><ul>
+				<li class="auto-style1">
+				<a href="CS/Microsoft/Speech/Recognition/Recognition.html">.NET デスクトップアプリと音声認識</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Synthesis</a><ul>
+				<li class="auto-style1">(empty)</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Microsoft.VisualBasic.Devices</a><ul>
+			<li><a href="CS/Microsoft/VisualBasic/Devices/ComputerInfo.html">ComputerInfo</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Runtime.Serialization</a><ul>
+			<li>
+			<a href="CS/System/Runtime/Serialization/DataContractSerialization.html">DataContractSerialization</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Security.Cryptography</a><ul>
+			<li>AesCryptoServiceProvider</li>
+			<li>SHA1</li>
+			<li>SHA224 : .net 未サポート</li>
+			<li>SHA256</li>
+			<li>SHA384</li>
+			<li>SHA512</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Speech</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Synthesis</a><ul>
+				<li class="auto-style1">
+				<a href="CS/System/Speech/Synthesis/Speech.html">Speech, SpeechAsync</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Threading</a>
+		<ul>
+			<li><a href="url" class="menu" onclick="sublist(this); return false;">Tasks</a>
+			<ul class="auto-style1">
+				<li>Parallel (.net4.0)
+				<ul class="auto-style1">
+					<li>Parallel.For</li>
+					<li>Pallarel.ForEach</li>
+					<li>Parallel.Invoke</li>
+				</ul>
+				</li>
+				<li>Task</li>
+				<li>TaskFactory</li>
+			</ul>
+			</li>
+			<li>Thread</li>
+			<li>ThreadPool</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Xml</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">XmlDocument</a>
+			<ul class="auto-style1">
+				<li><a href="CS/XML/SelectSingleNode.html" target="contents">SelectSingleNode</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Serialization</a>
+			<ul class="auto-style1">
+				<li>POD型 (int, string, 他)</li>
+				<li>Font</li>
+				<li>Color</li>
+				<li>Image (Bitmap)</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">グローバル対応</a>
+		<ul>
+			<li>Attribute(属性)</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">プロセス間通信</a><ul>
+			<li><a href="CS/Communication/anonymouse_pipe.html">匿名パイプ</a></li>
+			<li><a href="CS/Communication/named_pipe.html">名前付きパイプ</a></li>
+			<li><a href="CS/Communication/IpcChannel.html">IpcChannel</a></li>
+			<li><a href="CS/Communication/TcpChannel.html">TcpChannel</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">テスト手法</a><ul>
+			<li>ユニットテスト</li>
+			<li>ソースコードカバレッジ<ul class="auto-style1">
+				<li><a href="CS/TestMethod/SourceCodeCoverage/AxoCover.html">AxoCover</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
+			<li><a href="CS/Etc/HowToUseJoystick.html">C# でジョイスティックを使う方法</a></li>
+			<li><a href="CS/Etc/HowToUseSettings.html">アプリケーションの設定を保存する</a></li>
+			<li><a href="CS/Etc/ErrorMessage_01.html">「混合モード アセンブリはバージョン 'v2.0.50727' のランタイムに対して作成されており、追加の構成情報がないと 4.0 ランタイムでは読み込めません。」</a></li>
+			<li><a href="CS/Etc/MemoryLeakPrevention.html">メモリリーク / ハンドルリーク 
+			の発生例と対策</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">C# の新機能</a>
+		<ul>
+			<li><a href="CS/whats-new/csharp-7-1.html">C# 7.1 の新機能</a></li>
+			<li><a href="CS/whats-new/csharp-7.html">C# 7 の新機能</a></li>
+			<li><a href="CS/whats-new/csharp-6.html">C# 6 の新機能</a></li>
+		</ul>
+		</li>
+	</ul>
+	<li style="list-style-type: none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">Form</a>
+	<ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Window制御</a><ul>
+			<li><a href="Win32/WindowControl/AeroGlass.html">グラス フレーム (Aero Glass)</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">コントロール</a>
+		<ul>
+			<li><a href="CS/Form/CheckBox.html">CheckBox</a></li>
+			<li>ErrorProvider : http://www.labasp.net/CsharpNote/mControl/ErrorProvider/index.html</li>
+			<li>PropertyGrid</li>
+			<li><a href="CS/Form/TreeView.html">TreeView</a></li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">NumericUpDown</a><ul>
+				<li class="auto-style1">
+				<a href="CS/Form/NumericUpDown/DecimalPlaces.html">小数点を扱う</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">データバインディング</a>
+		<ul>
+			<li><a href="CS/DataBinding/DataBinding_01.html">DataBinding：まずはやってみよう</a></li>
+			<li><a href="CS/DataBinding/DataBinding_Format%20and%20Parse.html">DataBinding：Format and Parse</a></li>
+			<li><a href="CS/DataBinding/Counter.html">Counter</a></li>
+			<li><a href="CS/DataBinding/BindingList.html">BindingList</a></li>
+			<li><a href="CS/DataBinding/BindingSource.html">BindingSource</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">グローバル対応</a><ul>
+			<li><a href="CS/Globalize/HowToGlobalizeForm.html">多言語対応アプリ(Form)の作り方</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">ActiveX</a><ul>
+			<li><a href="CS/Form/ActiveX/Aximp_exe.html">Aximp.exe (Windows フォーム ActiveX コントロール インポーター)</a></li>
+			<li><a href="CS/Form/ActiveX/Reg-Free%20Com.html">Reg-Free COM</a></li>
+		</ul>
+		</li>
+	</ul>
+	<li style="list-style-type: none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">WPF</a>
+	<ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Window制御</a><ul>
+			<li><a href="Win32/WindowControl/AeroGlass.html">グラス フレーム (Aero Glass)</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Windows.Controls</a><ul>
+			<li>ファイル選択</li>
+			<li>フォルダ選択</li>
+			<li>CheckBox</li>
+			<li><a href="CS/WPF/Controls/DataGrid.html">DataGrid</a></li>
+			<li><a href="CS/WPF/Controls/ListView.html">ListView</a></li>
+			<li><a href="CS/WPF/Controls/TreeView.html">TreeView</a></li>
+			<li><a href="CS/WPF/Controls/GridSplitter.html">GridSplitter</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">System.Windows.Media.Animation</a><ul>
+			<li>
+			<a href="CS/WPF/System.Windows.Media.Animation/Animation%20method%20for%20Grid_ColumnDefinition.html">Grid.ColumnDefinition の Width をアニメーションで動かす</a></li>
+			<li>
+			<a href="CS/WPF/System.Windows.Media.Animation/Animation%20of%20the%20rectangle.html">
+			Rectangle を DoubleAnimation でアニメーションする</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">ブラシ</a><ul>
+			<li>ImageBrush</li>
+			<li><a href="CS/WPF/Brush/VisualBrush.html">VisualBrush</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">UI要素の再利用</a>
+		<ul>
+			<li><a href="CS/WPF/MethodForReuseUiElement/Resource.html">リソース</a></li>
+			<li><a href="CS/WPF/MethodForReuseUiElement/Style.html">スタイル</a></li>
+			<li><a href="CS/WPF/MethodForReuseUiElement/Template.html">テンプレート</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">アクション</a><ul>
+			<li>イベント</li>
+			<li>コマンド</li>
+			<li><a href="url" class="menu" onclick="sublist(this); return false;">トリガ</a><ul class="auto-style1">
+				<li>Trigger</li>
+				<li>MultiTrigger</li>
+				<li>DataTrigger</li>
+				<li>MultiDataTrigger</li>
+				<li>EventTrigger</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">データバインディング</a>
+		<ul>
+			<li><a href="CS/WPF/DataBinding/Counter.html">Counter</a></li>
+			<li><a href="CS/WPF/DataBinding/TextBlock.html">TextBlock</a></li>
+			<li><a href="CS/WPF/DataBinding/DataBinding01.html">CheckBox</a></li>
+			<li>DataGrid</li>
+			<li><a href="CS/WPF/DataBinding/DataBinding03.html">Binding.Converter</a></li>
+			<li><a href="CS/WPF/DataBinding/MeterYardConverter.html">メートル法 と 
+			ヤード・ポンド法 の値変換プログラム</a></li>
+			<li><a href="CS/WPF/DataBinding/Validates.html">データ検証</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">スレッドモデル</a>
+		<ul>
+			<li>Dispatcher.BeginInvoke</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">入力
+		</a>
+		<ul>
+			<li><a href="CS/WPF/Input/TouchApplication.html">タッチアプリケーション</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">3Dグラフィックス</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">モデル</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/3D%20Graphics/Model/Pyramid.html">ピラミッド</a></li>
+				<li class="auto-style1">
+				<a href="CS/WPF/3D%20Graphics/Model/Qube.html">立方体</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">マテリアル</a><ul>
+				<li class="auto-style1">DiffuseMaterial (拡散マテリアル)</li>
+				<li class="auto-style1">SpecularMaterial (反射マテリアル)</li>
+				<li class="auto-style1">EmissiveeMaterial (放射マテリアル)</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">ライト</a><ul>
+				<li class="auto-style1">DirectionalLight (指定方向への光源)</li>
+				<li class="auto-style1">AmbientLight (一様の光源)</li>
+				<li class="auto-style1">PointLight (指定座標から一様の光源)</li>
+				<li class="auto-style1">SpotLight (指定座標から指定方向への光源)</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">テクスチャ</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/3D%20Graphics/Texture/PasteImage.html">イメージを貼り付け</a></li>
+				<li class="auto-style1">
+				<a href="CS/WPF/3D%20Graphics/Texture/PasteMovie.html">動画を貼り付け</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">3Dカメラアニメーション</a><ul>
+				<li class="auto-style1">回転するピラミッド</li>
+				<li class="auto-style1">回転の合成</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/3D%20Graphics/Etc/SnowFall.html">雪を降らす</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">装飾</a><ul>
+			<li><a href="CS/WPF/Adorners/Abstract.html">概要</a></li>
+			<li><a href="CS/WPF/Adorners/SimpleAdorner.html">単純な装飾の実装</a></li>
+			<li><a href="CS/WPF/Adorners/AddRemoveAdorners.html">装飾の追加および削除</a></li>
+			<li><a href="CS/WPF/Adorners/ResizingAdorner.html">サイズ変更ハンドルの追加</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">デザイン</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">MahApps.Metro</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/MahApps.Metro/abstract.html">はじめに</a></li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/MahApps.Metro/CreateWindow.html">ウィンドウを作成</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">MahApps.Metro.IconPacks</a><ul>
+				<li>
+				<a href="CS/WPF/Design/MahApps.Metro.IconPacks/abstract.html">
+				MahApps.Metro.IconPacks を使ってみる</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Material Design In XAML Toolkit</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/Material%20Design%20In%20XAML%20Toolkit/abstract.html">はじめに</a></li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/Material%20Design%20In%20XAML%20Toolkit/StartPrograming.html">プログラミングしてみる</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">MahApps.Metro + Material Design</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/MahApps%20and%20Material-Design/abstract.html">はじめに</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">MetroRadiance</a><ul>
+				<li class="auto-style1">
+				<a href="CS/WPF/Design/MetroRadiance/abstract.html">はじめに</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">Dragablz</a><ul class="auto-style1">
+				<li><a href="CS/WPF/Design/Dragablz/abstract.html">はじめに</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Microsoft Blend</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">ビヘイビアー</a><ul>
+				<li class="auto-style1">ActivateStateAction</li>
+				<li class="auto-style1">CallMethodAction</li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Blend/Behavior/ChangePropertyAction.html">ChangePropertyAction</a></li>
+				<li class="auto-style1">ControlStoryboardAction</li>
+				<li class="auto-style1">DataStateBehavior</li>
+				<li class="auto-style1">FluidMoveBehavior</li>
+				<li class="auto-style1">FluidMoveSetTagBehavior</li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Blend/Behavior/GotoStateAction.html">GotoStateAction</a></li>
+				<li class="auto-style1">InvokeCommandAction</li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Blend/Behavior/LaunchUriOrFileAction.html">LaunchUriOrFileAction</a></li>
+				<li class="auto-style1">
+				<a href="CS/WPF/Blend/Behavior/MouseDragElementBehavior.html">MouseDragElementBehavior</a></li>
+				<li class="auto-style1">NavigateBackAction</li>
+				<li class="auto-style1">NavigateForwardAction</li>
+				<li class="auto-style1">NavigateToScreenAction</li>
+				<li class="auto-style1">NavigationMenuAction</li>
+				<li class="auto-style1">PlaySketchFlowAnimationAction</li>
+				<li class="auto-style1">PlaySoundAction</li>
+				<li class="auto-style1">RemoveElementAction</li>
+				<li class="auto-style1">RemoveItemInListBoxAction</li>
+				<li class="auto-style1">SetDataStoreValueAction</li>
+				<li class="auto-style1">TranslateZoomRotateBehavior</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Expression Design</a><ul>
+			<li>画像データを ResouceDictionary として保存する</li>
+			<li>Expression Design で保存した ResourceDictionary をWPFで使用する</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
+			<li><a href="CS/WPF/SaveWpfAttribute.html">アプリケーションの位置、サイズを保存する</a></li>
+			<li><a href="CS/WPF/WaveringTextBlock.html">ゆらゆら動く TextBlock</a></li>
+			<li><a href="CS/WPF/SplashScreen.html">スプラッシュ スクリーン をWPFへ追加する</a></li>
+			<li><a href="CS/WPF/ImageViewer.html">ImageViewer</a></li>
+			<li><a href="CS/WPF/WpfInterope01.html">FormからWPFウィンドウを起動</a></li>
+			<li><a href="CS/WPF/HowToMakeEasyIcon%20and%20Graphical%20App.html">手軽なアイコン作成で、よりグラフィカルに</a></li>
+			<li><a href="CS/WPF/Etc/GetScreenCapture.html">画面要素のスクリーンキャプチャーを取得する</a></li>
+		</ul>
+		</li>
+	</ul>
+	<li class="auto-style3" style="list-style-type: none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
+		<li class="auto-style3" style="list-style-type: circle">
+		<a href="CS/Etc/VisualStudioTemplate.html">Visual Studio テンプレート</a></li>
+	</ul>
+	</li>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+<title></title>
+<style type="text/css">
+
+a.menu {
+	text-decoration: none;			/* 下線削除 */
+	border: 1px solid #8080ff;		/* 枠線 */
+	background-color: #ccccff;		/* 背景色 */
+	padding: 0px;					/* 内側余白 */
+}
+
+code{
+	font-size: small;
+	font-family: FixedSys;
+}
+
+ul {
+	font-size:small;
+	font-family:"Meiryo UI";
+}
+
+.auto-style2 {
+	text-align: left;
+}
+
+.t-tr-dropdown {
+	display:inline-block;
+	line-height:1em;
+	visibility:collapse;
+	width:0;
+	height:0;
+	position:relative 
+}
+
+.t-tr-dropdown > div{
+	opacity:0;transition:opacity 0.1s linear 0s;
+	-moz-transition:opacity 0.1s linear 0s;
+	-webkit-transition:opacity 0.1s linear 0s;
+	-o-transition:opacity 0.1s linear 0s;
+	top:0;
+	left:-110px;
+	position:absolute;
+	padding-top:12px
+}
+
+.t-tr-dropdown > div > div {
+	background-color:white;
+	border:1.5px solid silver;
+	font-size:0.9em;
+	padding:5px;
+	width:400px;
+	border-radius:5px;
+	box-shadow:0 0 3px #888888
+}
+
+.t-tr-dropdown-arrow-border	{
+	border-color:transparent transparent silver transparent ;
+	border-style:solid;
+	border-width:8px;
+	height:0;
+	width:0;
+	position:absolute;
+	top:-3px;
+	left:100px
+}
+
+.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
+
+</style>
+
+<script type="text/javascript">
+<!--
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+// -->
+</script>
+
+<script type="text/javascript">
+<!--
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+// -->
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<a href="items_top.html" target="_self">
+<img alt="" height="24" width="24" src="../images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
+
+<ul>
+	<li style="list-style-type:none">
+	<a href="url" class="menu" onclick="sublist(this); return false;">Win32 (VC++)</a>
+	<ul>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">システム</a><ul>
+			<li><a href="Win32/System/HowToGetWindowsVersion.html">Windows バージョン情報の取得方法</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Window制御</a><ul>
+			<li><a href="Win32/WindowControl/WindowPositionAndSize.html">ウィンドウの位置とサイズを取得 (Windows10対応 を含む)</a></li>
+			<li><a href="Win32/WindowControl/AeroGlass.html">グラス フレーム (Aero Glass)</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチスレッド／マルチプロセス</a><ul>
+			<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチスレッド</a><ul>
+				<li>
+				<a href="Win32/MultiThreadAndProcess/_beginthread.html" target="contents">_beginthread, endthread</a></li>
+			</ul>
+			</li>
+			<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチプロセス</a><ul>
+				<li>(empty)</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">同期</a><ul>
+				<li><a href="Win32/MultiThreadAndProcess/CriticalSection.html">Critical Section</a></li>
+				<li><a href="Win32/MultiThreadAndProcess/Mutex.html">Mutex</a></li>
+				<li><a href="Win32/MultiThreadAndProcess/Semaphore.html">Semaphore</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">CryptAPI</a>
+		<ul>
+			<li>
+			<a href="Win32/CryptAPI/CryptEnumProviders.html" target="contents">CryptEnumProviders</a></li>
+			<li>
+			<a href="Win32/CryptAPI/CryptEnumProviderTypes.html" target="contents">CryptEnumProviderTypes</a></li>
+			<li><a href="Win32/CryptAPI/AES_by_CryptAPI.html" target="contents">AES</a></li>
+			<li>SHA-1</li>
+			<li>SHA224</li>
+			<li>SHA256</li>
+			<li>SHA384</li>
+			<li>SHA512</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Windows マルチメディア</a>
+		<ul>
+			<li><a href="Win32/Multimedia/Joystick/joyGetPos.html">joyGetPos</a></li>
+			<li><a href="Win32/Multimedia/Joystick/joyGetPosEx.html">joyGetPosEx</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">電力管理</a>
+		<ul>
+			<li><a href="Win32/PowerControl/PowerCreateRequest.html">PowerCreateRequest</a></li>
+			<li><a href="Win32/PowerControl/PowerSetRequest.html">PowerSetRequest</a></li>
+			<li><a href="Win32/PowerControl/SetThreadExecutionState.html">SetThreadExecutionState</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">複数モニター サポート</a>
+		<ul>
+			<li>EnumDisplayMonitors</li>
+			<li>GetMonitorInfo</li>
+			<li>MonitorEnumProc</li>
+			<li>MonitorFromPoint</li>
+			<li>MonitorFromRect</li>
+			<li>MonitorFromWindow</li>
+			<li>GetDpiForMonitor (Windows8.1以降)</li>
+			<li>MONITOR_DPI_TYPE</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">MMX/SIMD/SSE</a>
+		<ul>
+			<li><a href="Win32/SIMD/ExtInstCheck.html">SIMD命令のサポート状況確認方法</a></li>
+			<li><a href="Win32/SIMD/Intrinsic.html">Intrinsic</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">DirectX</a><ul>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">DirectX9</a><ul>
+				<li>(empty)</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">DirectX10</a><ul>
+				<li>(empty)</li>
+			</ul>
+			</li>
+			<li>
+			<a href="url" class="menu" onclick="sublist(this); return false;">DirectX11</a><ul>
+				<li>(empty)</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<!--
+	</ul>
+	</li>
+	<ul>
+	-->
+		<li class="auto-style2">
+		<a href="url" class="menu" onclick="sublist(this); return false;">VS2012 C++ 新機能</a><ul>
+			<li class="auto-style2"><a href="C++/Auto-Vectorizer.html">自動ベクタライザ (Auto-Vectorizer)</a></li>
+			<li class="auto-style2"><a href="C++/Auto-Parallelizer.html">自動パラレライザ (Auto-Parallelizer)</a></li>
+		</ul>
+		</li>
+		<li class="auto-style2">
+		<a href="url" class="menu" onclick="sublist(this); return false;">C++ AMP</a><ul>
+			<li class="auto-style2">http://msdn.microsoft.com/ja-jp/magazine/hh882446.aspx</li>
+			<li class="auto-style2">http://msdn.microsoft.com/ja-jp/library/vstudio/hh265137.aspx</li>
+		</ul>
+		</li>
+		<li class="auto-style2">
+		<a href="url" class="menu" onclick="sublist(this); return false;">分類外</a>
+		<ul>
+			<li class="auto-style2"><a href="Win32/Etc/Counter.html">Counter</a></li>
+			<li class="auto-style2">
+			<a href="Win32/Etc/VisualStudioTemplate.html">Visual Studio テンプレート</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/LARGE_ADDRESS_WARE.html">LARGEADDRESSAWARE</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/Globalization.html">国際化(多言語対応)</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/API_Hook.html">IAT書き換えによるAPIフック、DLLインジェクション</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/HowToCrtDbg.html">CRT 
+			ライブラリを使用したメモリリークの検出</a></li>
+		</ul>
+		</li>
+	</ul>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>
