@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>Counter (C#�AWPF)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Counter (C#、WPF)</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -22,19 +22,19 @@
 <body onload="prettyPrint();">
 
 <h1 class="auto-style7">
-�u�������[�h �A�Z���u���̓o�[�W���� 'v2.0.50727' �̃����^�C���ɑ΂��č쐬����Ă���A�ǉ��̍\����񂪂Ȃ��� 4.0 
-�����^�C���ł͓ǂݍ��߂܂���B�v</h1>
+「混合モード アセンブリはバージョン 'v2.0.50727' のランタイムに対して作成されており、追加の構成情報がないと 4.0 
+ランタイムでは読み込めません。」</h1>
 <p class="auto-style7">
-�^�C�g���L�ڂ̃G���[���b�Z�[�W���o���ꍇ�̑Ώ����@���ȉ��ɋL�ڂ��܂��B</p>
+タイトル記載のエラーメッセージが出た場合の対処方法を以下に記載します。</p>
 <h2>
-[����]</h2>
+[事象]</h2>
 <p>
-.NET4 �̊����� .NET2 �ō쐬���ꂽ�A�Z���u���𗘗p�����<br>�u�������[�h �A�Z���u���̓o�[�W���� 'v2.0.50727' 
-�̃����^�C���ɑ΂��č쐬����Ă���A�ǉ��̍\����񂪂Ȃ��� 4.0 �����^�C���ł͓ǂݍ��߂܂���B�v<br>�Ƃ�����O����������B</p>
+.NET4 の環境下で .NET2 で作成されたアセンブリを利用すると<br>「混合モード アセンブリはバージョン 'v2.0.50727' 
+のランタイムに対して作成されており、追加の構成情報がないと 4.0 ランタイムでは読み込めません。」<br>という例外が発生する。</p>
 <h2>
-[�������@]</h2>
+[解決方法]</h2>
 <p>
-app.config�Ɉȉ���ǉ����܂��B</p>
+app.configに以下を追加します。</p>
 
 <pre class="prettyprint linenums">
 <code>&lt;configuration&gt;
@@ -44,10 +44,10 @@ app.config�Ɉȉ���ǉ����܂��B</p>
 &lt;/configuration&gt;</code>
 </pre>
 
-<p> �Q�lURL�F<br><a href="http://d.hatena.ne.jp/JHashimoto/20110502/1305525532">
+<p> 参考URL：<br><a href="http://d.hatena.ne.jp/JHashimoto/20110502/1305525532">
 http://d.hatena.ne.jp/JHashimoto/20110502/1305525532</a></p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2012�N12��07�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2012年12月07日 木下英俊<br>
 </font></p>
 </body>
 </html>

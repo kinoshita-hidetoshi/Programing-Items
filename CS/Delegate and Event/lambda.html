@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>lambda expression (C#)</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -29,26 +29,26 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-�����_�� (C#)</h1>
+ラムダ式 (C#)</h1>
 <p class="auto-style7">
-C# 3.0 ���烉���_���𓱓����Ă��܂��B�������\�b�h�������͂��_��ɋ@�\����d�g�݂ł��B</p>
+C# 3.0 からラムダ式を導入しています。匿名メソッドよりも協力かつ柔軟に機能する仕組みです。</p>
 <h2>
-�ڎ�</h2>
+目次</h2>
 <p>
-<a href="#1._�����_���̊�{">1. �����_���̊�{</a><br><a href="#2._�f���Q�[�g�^�֊��蓖�ĂĎ��s">2. 
-�f���Q�[�g�^�֊��蓖�ĂĎ��s</a><br><a href="#3._���c���[�^�֊��蓖�ĂĎ��s">3. ���c���[�^�֊��蓖�ĂĎ��s</a></p>
+<a href="#1._ラムダ式の基本">1. ラムダ式の基本</a><br><a href="#2._デリゲート型へ割り当てて実行">2. 
+デリゲート型へ割り当てて実行</a><br><a href="#3._式ツリー型へ割り当てて実行">3. 式ツリー型へ割り当てて実行</a></p>
 <p class="auto-style7">
 &nbsp;</p>
 <h2>
-<a name="1._�����_���̊�{">1. �����_���̊�{</a></h2>
-<p>�����_���́A�Ȍ��Ɋ֐��I�u�W�F�N�g���L�q����@�\�ł��B<br>�ȉ��̂悤�ɋL�q���܂��B</p>
-<p class="auto-style8"><strong>( ���̓p�����[�^ ) =&gt; { �� �܂��� �X�e�[�g�����g�u���b�N }</strong></p>
+<a name="1._ラムダ式の基本">1. ラムダ式の基本</a></h2>
+<p>ラムダ式は、簡潔に関数オブジェクトを記述する機能です。<br>以下のように記述します。</p>
+<p class="auto-style8"><strong>( 入力パラメータ ) =&gt; { 式 または ステートメントブロック }</strong></p>
 <p class="auto-style7">
 &nbsp;</p>
 <h2>
-<a name="2._�f���Q�[�g�^�֊��蓖�ĂĎ��s">2. �f���Q�[�g�^�֊��蓖�ĂĎ��s</a></h2>
+<a name="2._デリゲート型へ割り当てて実行">2. デリゲート型へ割り当てて実行</a></h2>
 <p class="auto-style7">
-�f���Q�[�g�^�փ����_�������蓖�Ă����ȉ��ɋL�ڂ��܂��B</p>
+デリゲート型へラムダ式を割り当てる例を以下に記載します。</p>
 
 <pre class="prettyprint linenums">
 using System;
@@ -72,11 +72,11 @@ namespace lambda_test
 <p class="auto-style7">
 &nbsp;</p>
 <h2>
-<a name="3._���c���[�^�֊��蓖�ĂĎ��s">3. ���c���[�^�֊��蓖�ĂĎ��s</a></h2>
+<a name="3._式ツリー型へ割り当てて実行">3. 式ツリー型へ割り当てて実行</a></h2>
 <p class="auto-style7">
-���c���[�̃f�[�^�Ƃ��ă����_�������蓖�Ă����ȉ��Ɏ����܂��B<span id="mt47" class="sentence" data-guid="445bf621aa4416d7df8042ed263f94fa" data-source="It also demonstrates how to turn the expression tree back into executable code by using the &lt;span&gt;&lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;Compile&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; method." xml:space="preserve"><sentencetext xmlns="http://www.w3.org/1999/xhtml"><br>
-���̗�́A Compile ���\�b�h���g�p���āA���c���[�����s�\�R�[�h�ɖ߂����@�����킹�Ď����Ă��܂��B</sentencetext></span> <br>
-(��) Expression �� .NET3.5 �ȍ~�Ŏg�p�\�ł��B</p>
+式ツリーのデータとしてラムダ式を割り当てる例を以下に示します。<span id="mt47" class="sentence" data-guid="445bf621aa4416d7df8042ed263f94fa" data-source="It also demonstrates how to turn the expression tree back into executable code by using the &lt;span&gt;&lt;span class=&quot;mtpsTagOuterHtml&quot; &gt;&lt;span&gt;Compile&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; method." xml:space="preserve"><sentencetext xmlns="http://www.w3.org/1999/xhtml"><br>
+この例は、 Compile メソッドを使用して、式ツリーを実行可能コードに戻す方法も合わせて示しています。</sentencetext></span> <br>
+(注) Expression は .NET3.5 以降で使用可能です。</p>
 
 <pre class="prettyprint linenums">
 using System;
@@ -102,7 +102,7 @@ namespace lambda_test
 <p class="auto-style7">
 &nbsp;</p>
 <p class="auto-style7">
-�Q��URL�F</p>
+参照URL：</p>
 <ul>
 	<li>
 	<p class="auto-style7">
@@ -110,6 +110,6 @@ namespace lambda_test
 	</li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2015�N6��9�� �؉��p�r</font></p>
+<p> <font face="Meiryo UI">記載： 2015年6月9日 木下英俊</font></p>
 </body>
 </html>

@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>async/await �񓯊����\�b�h</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>async/await 非同期メソッド</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -26,29 +26,29 @@
 <body onload="prettyPrint();">
 
 <h1 class="auto-style7">
-async/await �񓯊����\�b�h</h1>
+async/await 非同期メソッド</h1>
 
-<p> .NET Framework 4.5 �ɑΉ����� C# 5.0 �� VB 11.0 
-�œ��ڂ��ꂽ�u�񓯊����\�b�h�v�i��async�C���q��await���Z�q�𗘗p�������\�b�h�j�ɂ��񓯊����������Z�p���Љ�܂��B<br>async/await 
-���g�����Ƃł���܂ŋ�J���Ă���UI�^�X�N�̐��䂪�ƂĂ��y�ɂȂ�̂ŁA���Њo���Ăق����e�N�j�b�N�ł��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._�P���ȃT���v��_�|_�{�^���N���b�N���烉�x���ύX">1. �P���ȃT���v�� �| �{�^���N���b�N���烉�x���ύX</a><br>
-<a href="#2._async/await_�ŗ�O����������ɂ�">2. async/await �ŗ�O����������ɂ�</a><br>3. ***<br>
-<a href="#�Q�l">�Q�l</a></p>
+<p> .NET Framework 4.5 に対応した C# 5.0 や VB 11.0 
+で搭載された「非同期メソッド」（＝async修飾子とawait演算子を利用したメソッド）による非同期処理実装技術を紹介します。<br>async/await 
+を使うことでこれまで苦労してきたUIタスクの制御がとても楽になるので、ぜひ覚えてほしいテクニックです。</p>
+<h2> 目次</h2>
+<p> <a href="#1._単純なサンプル_－_ボタンクリックからラベル変更">1. 単純なサンプル － ボタンクリックからラベル変更</a><br>
+<a href="#2._async/await_で例外を処理するには">2. async/await で例外を処理するには</a><br>3. ***<br>
+<a href="#参考">参考</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._�P���ȃT���v��_�|_�{�^���N���b�N���烉�x���ύX">1. �P���ȃT���v�� �| �{�^���N���b�N���烉�x���ύX</a></h2>
-<p> [�T�v]<br>��ʏ�̃{�^�����N���b�N����ƁA��ʏ�̃��x���̕������P�b������10�b�ԏ��������A�Ƃ����T���v�����ɋL�ڂ���B</p>
+<h2> <a name="1._単純なサンプル_－_ボタンクリックからラベル変更">1. 単純なサンプル － ボタンクリックからラベル変更</a></h2>
+<p> [概要]<br>画面上のボタンをクリックすると、画面上のラベルの文字が１秒周期で10秒間書き換わる、というサンプルを例に記載する。</p>
 <p> 
 <img alt="" src="figure/img4.jpg"></p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p>&nbsp;</p>
-<h3>�񓯊����g��Ȃ���i���܂�����ł��Ȃ���j</h3>
-<p>���������ɂ������T���v���R�[�h���ȉ��ɋL�ڂ��܂��B<br>
-�v���O�����R�[�h�͂ƂĂ��V���v���ɂȂ�܂����A�������̓E�B���h�E�̈ړ��⃊�T�C�Y�����삵�܂��񂵁A���x���̕\�������������s���Ă���̂ɍŌ�������Ă��ׂĖ�������܂��B���ۂɂ͎g�p�ł��Ȃ�������ł��B</p>
+<h3>非同期を使わない例（うまく動作できない例）</h3>
+<p>同期処理による実装サンプルコードを以下に記載します。<br>
+プログラムコードはとてもシンプルになりますが、処理中はウィンドウの移動やリサイズが動作しませんし、ラベルの表示をせっかく行っているのに最後を除いてすべて無視されます。実際には使用できない実装例です。</p>
 <code>
 <pre class="prettyprint linenums">
 using System.Windows;
@@ -56,7 +56,7 @@ using System.Windows;
 namespace Sample01
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml �̑��ݍ�p���W�b�N
+    /// MainWindow.xaml の相互作用ロジック
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -81,9 +81,9 @@ namespace Sample01
 }</pre>
 </code>
 <p>&nbsp;</p>
-<h3>Thread ���g������ (.NET1.1�ȍ~)</h3>
-<p>class Thread �ɂ�������ł��B<br>���҂��铮����������邱�Ƃ��ł��܂����A���x����{�^���𐧌䂷�邽�߂� 
-Dispatcher.Invoke �ɂ�閽�߂�K�v�Ƃ��܂��B�v���O�����R�[�h�͕��G�ɂȂ�܂��B</p>
+<h3>Thread を使った例 (.NET1.1以降)</h3>
+<p>class Thread による実装例です。<br>期待する動作を実現することができますが、ラベルやボタンを制御するために 
+Dispatcher.Invoke による命令を必要とします。プログラムコードは複雑になります。</p>
 <code>
 <pre class="prettyprint linenums">
 using System.Threading;         // Thread
@@ -93,7 +93,7 @@ using System.Windows;
 namespace Sample02
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml �̑��ݍ�p���W�b�N
+    /// MainWindow.xaml の相互作用ロジック
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -104,10 +104,10 @@ namespace Sample02
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // �{�^���𖳌���
+            // ボタンを無効化
             click_button.IsEnabled = false;
 
-            // ���[�J�[�X���b�h���쐬
+            // ワーカースレッドを作成
             var th = new <span class="auto-style8">Thread(</span>() =&gt;
             {
                 for ( int i=0; i&lt;=10; ++i)
@@ -116,7 +116,7 @@ namespace Sample02
                     {
                         this.<span class="auto-style8">Dispatcher.Invoke</span>(() =&gt;
                         {
-                            // UI�^�X�N�ցA���x���̕����ύX���w��
+                            // UIタスクへ、ラベルの文字変更を指示
                             counter_label.Content = i.ToString();
                         });
 
@@ -124,8 +124,8 @@ namespace Sample02
                     }
                     catch(TaskCanceledException)
                     {
-                        // �X���b�h���쒆�ɃA�v�����I�������ꍇ�ُ̈폈��
-                        // �����ł͗�O�𖳎�
+                        // スレッド動作中にアプリを終了した場合の異常処理
+                        // ここでは例外を無視
                         break;
                     }
                 }
@@ -134,28 +134,28 @@ namespace Sample02
                 {
                     this.<span class="auto-style8">Dispatcher.Invoke</span>(() =&gt;
                     {
-                        // UI�^�X�N�ցA�{�^���L�������w��
+                        // UIタスクへ、ボタン有効化を指示
                          click_button.IsEnabled = true;
                     });
                 }
                 catch(TaskCanceledException)
                 {
-                    // �X���b�h���쒆�ɃA�v�����I�������ꍇ�ُ̈폈��
-                    // �����ł͗�O�𖳎�
+                    // スレッド動作中にアプリを終了した場合の異常処理
+                    // ここでは例外を無視
                 }
             });
 
-            // ���[�J�[�X���b�h�����s
+            // ワーカースレッドを実行
             <span class="auto-style8">th.Start();</span>
         }
     }
 }</pre>
 </code>
 <p>&nbsp;</p>
-<h3>TaskFactory ���g������ (.NET4.0�ȍ~)</h3>
-<p>Task ����� TaskFactory �ɂ�������ł��B<br>���҂��铮����������邱�Ƃ��ł��܂����A���x���̕\���X�V�̂��߂� 
-Dispatcher.Invoke �ɂ�閽�߂�K�v�Ƃ��܂��B�v���O�����R�[�h�͕��G�ɂȂ�܂��B<br>Thread 
-���g������Ƃقړ������e�ɂȂ�܂��BTask ���I������̏������ȒP�Ɏ����ł��邱�Ƃ̓����b�g���Ǝv���܂��B</p>
+<h3>TaskFactory を使った例 (.NET4.0以降)</h3>
+<p>Task および TaskFactory による実装例です。<br>期待する動作を実現することができますが、ラベルの表示更新のために 
+Dispatcher.Invoke による命令を必要とします。プログラムコードは複雑になります。<br>Thread 
+を使った例とほぼ同じ内容になります。Task を終えた後の処理を簡単に実現できることはメリットかと思われます。</p>
 <code>
 <pre class="prettyprint linenums">
 using System.Threading;
@@ -165,7 +165,7 @@ using System.Windows;
 namespace Sample03
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml �̑��ݍ�p���W�b�N
+    /// MainWindow.xaml の相互作用ロジック
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -176,10 +176,10 @@ namespace Sample03
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // �{�^���𖳌���
+            // ボタンを無効化
             click_button.IsEnabled = false;
 
-            // ���[�J�[�X���b�h���쐬
+            // ワーカースレッドを作成
             var task = new <span class="auto-style8">TaskFactory().StartNew</span>(() =&gt; {
                 int i = 0;
                 for (i = 0; i &lt; 10; ++i)
@@ -188,7 +188,7 @@ namespace Sample03
                     {
                         this.<span class="auto-style8">Dispatcher.Invoke</span>(() =&gt;
                         {
-                            // UI�^�X�N�ցA���x���̕����ύX���w��
+                            // UIタスクへ、ラベルの文字変更を指示
                             counter_label.Content = i.ToString();
                         });
 
@@ -196,8 +196,8 @@ namespace Sample03
                     }
                     catch (TaskCanceledException)
                     {
-                        // �X���b�h���쒆�ɃA�v�����I�������ꍇ�ُ̈폈��
-                        // �����ł͗�O�𖳎�
+                        // スレッド動作中にアプリを終了した場合の異常処理
+                        // ここでは例外を無視
                         break;
                     }
                 }
@@ -205,24 +205,24 @@ namespace Sample03
                 return i;
             });
 
-            // ��̏������I������瑱���Ĉȉ��̏������s���܂��B
+            // 上の処理が終わったら続けて以下の処理を行います。
             task.ContinueWith((x) =&gt;
             {
                 try
                 {
                     this.<span class="auto-style8">Dispatcher.Invoke</span>(() =&gt;
                     {
-                        // Task.Result (int�ł�) ���g���ă��x�����ς��Ă݂܂��B
+                        // Task.Result (intです) を使ってラベルも変えてみます。
                         counter_label.Content = x.Result;
 
-                        // UI�^�X�N�ցA�{�^���L�������w��
+                        // UIタスクへ、ボタン有効化を指示
                         click_button.IsEnabled = true;
                     });
                 }
                 catch (TaskCanceledException)
                 {
-                    // �X���b�h���쒆�ɃA�v�����I�������ꍇ�ُ̈폈��
-                    // �����ł͗�O�𖳎�
+                    // スレッド動作中にアプリを終了した場合の異常処理
+                    // ここでは例外を無視
                 }
             });
         }
@@ -230,9 +230,9 @@ namespace Sample03
 }</pre>
 </code>
 <p>&nbsp;</p>
-<h3>async/await ���g������i���̂P�j(.NET4.5�ȍ~)</h3>
-<p>async/await ���g���ƁA�ȏ�Ő��������������ƂĂ��ȒP�ɋL�ڂł���悤�ɂȂ�܂��B<br>await 
-���̏����͎��ۂɂ͕ʃ^�X�N�Ƃ��ď��������̂ŁA����Ƃ��Ă͈ȏ�Ő������� Thread �� Task �ɂ�鏈���Ɠ����ł��B</p>
+<h3>async/await を使った例（その１）(.NET4.5以降)</h3>
+<p>async/await を使うと、以上で説明した処理をとても簡単に記載できるようになります。<br>await 
+内の処理は実際には別タスクとして処理されるので、動作としては以上で説明した Thread や Task による処理と同等です。</p>
 <code>
 <pre class="prettyprint linenums">
 using System.Threading;
@@ -242,7 +242,7 @@ using System.Windows;
 namespace Sample04
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml �̑��ݍ�p���W�b�N
+    /// MainWindow.xaml の相互作用ロジック
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -253,34 +253,34 @@ namespace Sample04
 
         private <span class="auto-style8">async</span> void Button_Click(object sender, RoutedEventArgs e)
         {
-            // �{�^���𖳌���
+            // ボタンを無効化
             click_button.IsEnabled = false;
 
             int i = 0;
             for ( i=0; i&lt;10; ++i)
             {
-                // label �X�V
+                // label 更新
                 counter_label.Content = i.ToString();
 
-                // �P�b�ҋ@
+                // １秒待機
                 <span class="auto-style8">await</span> Task.Run(() =&gt; {
                     Thread.Sleep(1000);
                 });
             }
 
-            // label �X�V
+            // label 更新
             counter_label.Content = i.ToString();
 
-            // �{�^����L����
+            // ボタンを有効化
             click_button.IsEnabled = true;
         }
     }
 }</pre>
 </code>
 <p>&nbsp;</p>
-<h3>async/await ���g������i���̂Q�j(.NET4.5�ȍ~)</h3>
-<p>async/await ���g����Ƃ��Ă��������L�ڂ��܂��B<br>
-(���̂P)�Ƃقړ����ł����ALambda���Ńf���Q�[�g����U�o�^��Ɏ��s���Ă���Ƃ������Ƃ��Ⴂ�ł��B</p>
+<h3>async/await を使った例（その２）(.NET4.5以降)</h3>
+<p>async/await を使う例としてもう一例を記載します。<br>
+(その１)とほぼ同じですが、Lambda式でデリゲートを一旦登録後に実行しているということが違いです。</p>
 <code>
 <pre class="prettyprint linenums">
 using System;
@@ -291,7 +291,7 @@ using System.Windows;
 namespace Sample05
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml �̑��ݍ�p���W�b�N
+    /// MainWindow.xaml の相互作用ロジック
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -304,26 +304,26 @@ namespace Sample05
         {
             Action func = <span class="auto-style8">async</span> () =&gt;
             {
-                // �{�^���𖳌���
+                // ボタンを無効化
                 click_button.IsEnabled = false;
 
                 int i = 0;
                 for (i = 0; i &lt; 10; i++)
                 {
-                    // label �X�V
+                    // label 更新
                     counter_label.Content = i.ToString();
 
-                    // �P�b�ҋ@
+                    // １秒待機
                     <span class="auto-style8">await</span> Task.Run(() =&gt;
                     {
                         Thread.Sleep(1000);
                     });
                 }
 
-                // label �X�V
+                // label 更新
                 counter_label.Content = i.ToString();
 
-                // �{�^����L����
+                // ボタンを有効化
                 click_button.IsEnabled = true;
             };
 
@@ -333,35 +333,35 @@ namespace Sample05
 }</pre>
 </code>
 <p>&nbsp;</p>
-<h3>�T���v���v���O����</h3>
-<p><a href="sample%20codes/AsyncMethod.zip">�_�E�����[�h</a></p>
+<h3>サンプルプログラム</h3>
+<p><a href="sample%20codes/AsyncMethod.zip">ダウンロード</a></p>
 	
 <p>&nbsp;</p>
-<h2> <a name="2._async/await_�ŗ�O����������ɂ�">2. async/await �ŗ�O����������ɂ�</a></h2>
-<p> [�T�v]</p>
-<p> async/await �ŗ�O����������ɂ́A�������������Ă����ׂ��_������܂��B</p>
+<h2> <a name="2._async/await_で例外を処理するには">2. async/await で例外を処理するには</a></h2>
+<p> [概要]</p>
+<p> async/await で例外を処理するには、いくつか押さえておくべき点があります。</p>
 <ol>
-	<li>await �͂��̂܂܂̗�O���AWait �� AggregateException ��O�Ƀ��b�v����āA���o����B</li>
-	<li>�Ԃ茌�������Ȃ��񓯊����\�b�h�� await 
-	�ł��Ȃ��B���̃��\�b�h�����O�𑗏o�����ƁA��O���L���b�`�ł����Ƀv���O�����ُ͈�I�����Ă��܂��B<br>�� 
-	�Ԃ�l�������Ȃ��񓯊����\�b�h�������Ƃ��́A�S�Ă̗�O�����\�b�h���ŏ�������悤�ɂ���K�v������B</li>
-	<li>�����̃^�X�N�������s�����ꍇ�ɔ����������ׂĂ̗�O��m��ɂ͍H�v���K�v�B</li>
+	<li>await はそのままの例外を、Wait は AggregateException 例外にラップされて、送出する。</li>
+	<li>返り血を持たない非同期メソッドは await 
+	できない。そのメソッドから例外を送出されると、例外をキャッチできずにプログラムは異常終了してしまう。<br>→ 
+	返り値を持たない非同期メソッドを書くときは、全ての例外をメソッド内で処理するようにする必要がある。</li>
+	<li>複数のタスクを並列実行した場合に発生したすべての例外を知るには工夫が必要。</li>
 </ol>
-<p> �������m�F���Ă����܂��傤�B</p>
+<p> これらを確認していきましょう。</p>
 <p> &nbsp;</p>
-<p> [�Q�l]</p>
+<p> [参考]</p>
 <ul>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/articles/1805/16/news018.html" target="_blank">
-	��IT - NET TIPS�F async/await �ŗ�O����������ɂ́H</a></li>
+	＠IT - NET TIPS： async/await で例外を処理するには？</a></li>
 </ul>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -373,21 +373,21 @@ namespace Sample05
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�l">�Q�l</a></h2>
+<a name="参考">参考</a></h2>
 <ul>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/subtop/features/dotnet/app/masterasync_index.html" target="_blank">
-	@IT - �A�ځFC# 5.0��VB 11.0�V�@�\�uasync�^await�񓯊����\�b�h�v����</a></li>
+	@IT - 連載：C# 5.0＆VB 11.0新機能「async／await非同期メソッド」入門</a></li>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/articles/1805/16/news018.html" target="_blank">
-	��IT - NET TIPS�F async/await �ŗ�O����������ɂ́H</a></li>
+	＠IT - NET TIPS： async/await で例外を処理するには？</a></li>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/hh191443(v=vs.110).aspx" target="_blank">
 	https://msdn.microsoft.com/ja-jp/library/hh191443(v=vs.110).aspx</a></li>
 	<li><a href="http://kimux.net/?p=902" target="_blank">
 	http://kimux.net/?p=902</a></li>
 	<li>
-	<a href="https://ufcpp.wordpress.com/2012/11/12/asyncawait�Ɠ������s����/" target="_blank">
+	<a href="https://ufcpp.wordpress.com/2012/11/12/asyncawaitと同時実行制御/" target="_blank">
 	https://ufcpp.wordpress.com/2012/11/12/asyncawait%e3%81%a8%e5%90%8c%e6%99%82%e5%ae%9f%e8%a1%8c%e5%88%b6%e5%be%a1/</a></li>
 	<li>
 	<a href="http://itkaeru.blogspot.jp/2012/11/c-async-await.html" target="_blank">
@@ -396,7 +396,7 @@ namespace Sample05
 	http://d.hatena.ne.jp/seraphy/20120901</a></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2017�N10��08�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2017年10月08日 木下英俊<br>
 </font></p>
 </body>
 </html>
