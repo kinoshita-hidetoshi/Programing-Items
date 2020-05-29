@@ -1,117 +1,53 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
-<title></title>
-<style type="text/css">
+	<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+	<title></title>
 
-a.menu {
-	text-decoration: none;			/* �����폜 */
-	border: 1px solid #8080ff;		/* �g�� */
-	background-color: #ccccff;		/* �w�i�F */
-	padding: 0px;					/* �����]�� */
-}
+	<link href="../../design_items.css" rel="stylesheet" type="text/css">
 
-code{
-	font-size: small;
-	font-family: FixedSys;
-}
+	<style type="text/css">
+	</style>
 
-ul {
-	font-size:small;
-	font-family:"Meiryo UI";
-}
-
-.t-tr-dropdown {
-	display:inline-block;
-	line-height:1em;
-	visibility:collapse;
-	width:0;
-	height:0;
-	position:relative 
-}
-
-.t-tr-dropdown > div{
-	opacity:0;transition:opacity 0.1s linear 0s;
-	-moz-transition:opacity 0.1s linear 0s;
-	-webkit-transition:opacity 0.1s linear 0s;
-	-o-transition:opacity 0.1s linear 0s;
-	top:0;
-	left:-110px;
-	position:absolute;
-	padding-top:12px
-}
-
-.t-tr-dropdown > div > div {
-	background-color:white;
-	border:1.5px solid silver;
-	font-size:0.9em;
-	padding:5px;
-	width:400px;
-	border-radius:5px;
-	box-shadow:0 0 3px #888888
-}
-
-.t-tr-dropdown-arrow-border	{
-	border-color:transparent transparent silver transparent ;
-	border-style:solid;
-	border-width:8px;
-	height:0;
-	width:0;
-	position:absolute;
-	top:-3px;
-	left:100px
-}
-
-.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
-
-</style>
-
-<script type="text/javascript">
-var ulShowHide = {
-	showHide: function(element) {
-		if (element.parentNode.childNodes.item(2)) {
-			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-				if (styleDisplay == 'block' || styleDisplay == '') {
-					element.parentNode.childNodes.item(2).style.display = "none";
+	<script type="text/javascript">
+		var ulShowHide = {
+			showHide: function(element) {
+				if (element.parentNode.childNodes.item(2)) {
+					if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+						var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+						if (styleDisplay == 'block' || styleDisplay == '') {
+							element.parentNode.childNodes.item(2).style.display = "none";
+						}
+						else {
+							element.parentNode.childNodes.item(2).style.display = "block";
+						}
+					}
 				}
-				else {
-					element.parentNode.childNodes.item(2).style.display = "block";
-				}
+				return false;
 			}
 		}
-		return false;
-	}
-}
-</script>
+	</script>
 
-<script type="text/javascript">
-<!--
-function sublist( target ) {
-   var TargetList = target.parentNode.getElementsByTagName('ul');
-   if ( TargetList[0].style.display == 'none' ) {
-      TargetList[0].style.display = 'block';
-   }
-   else {
-      TargetList[0].style.display = 'none';
-   }
-}
-// -->
-</script>
+	<script type="text/javascript">
+		function sublist( target ) {
+			var TargetList = target.parentNode.getElementsByTagName('ul');
+			if ( TargetList[0].style.display == 'none' ) {
+				TargetList[0].style.display = 'block';
+			}
+			else {
+				TargetList[0].style.display = 'none';
+			}
+		}
+	</script>
 
-
-<base target="contents">
-
-
-<link href="design_items.css" rel="stylesheet" type="text/css">
-
+	<base target="contents">
 
 </head>
+
 <body>
 
 <a href="items_top.html" target="_self">
-<img alt="" height="24" width="24" src="../images/to_upper_folder.png" align="middle" class="auto-style4"></a>
-<a href="items_top.html" target="_self">�߂�</a>
+<img alt="" height="24" width="24" src="./images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
 
 <ul>
 	<li style="list-style-type:none">
@@ -132,7 +68,7 @@ function sublist( target ) {
 
 <hr size="2">
 
-<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=�z�[���y�[�W���܂���">�R�����g�ȂǘA���͂������</a><br>
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
 </p>
 
 </body>
