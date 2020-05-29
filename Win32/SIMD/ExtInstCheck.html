@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>SIMD���߂̃T�|�[�g�󋵊m�F���@</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SIMD命令のサポート状況確認方法</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -24,23 +24,23 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-SIMD���߂̃T�|�[�g�󋵊m�F���@</h1>
+SIMD命令のサポート状況確認方法</h1>
 
-<p> SIMD���߂̃T�|�[�g�󋵂��m�F������@���ȉ��ɋL�ڂ��܂��BCPUID���߂ɂ��s���܂��B</p>
+<p> SIMD命令のサポート状況を確認する方法を以下に記載します。CPUID命令により行います。</p>
 <p> &nbsp;</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._���@�P">�P�D���@�P</a><br><a href="#2._���@�Q">�Q�D���@�Q</a><br><a href="#�Q�l">
-�Q�l</a></p>
+<h2> 目次</h2>
+<p> <a href="#1._方法１">１．方法１</a><br><a href="#2._方法２">２．方法２</a><br><a href="#参考">
+参考</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._���@�P">1. ���@�P</a></h2>
-<span class="table_title">[���s����]</span><p>
+<h2> <a name="1._方法１">1. 方法１</a></h2>
+<span class="table_title">[実行結果]</span><p>
 <img alt="" src="ExtInstCheck/img8.gif"></p>
 <p>
 &nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;ExtInstCheck.cpp&quot;]</span>
+<span class="table_title">[プログラムソース &quot;ExtInstCheck.cpp&quot;]</span>
 <pre class="prettyprint linenums">
 //
-// _cpuid �ɂ�� SIMD�T�|�[�g�󋵊m�F
+// _cpuid による SIMDサポート状況確認
 //
 
 
@@ -51,7 +51,7 @@ SIMD���߂̃T�|�[�g�󋵊m�F���@</h1>
 
 
 
-#if 1800 &lt;= _MSC_VER    //  Visual C++ 2013�ȏ� 
+#if 1800 &lt;= _MSC_VER    //  Visual C++ 2013以上 
 #include &lt;VersionHelpers.h&gt;
 #else
 #ifndef _WIN32_WINNT_WIN7
@@ -103,7 +103,7 @@ inline bool IsWindows7SP1OrGreater(void){
 #define AVX512F_READY (1&lt;&lt;16)
 #define AVX2_READY (1&lt;&lt;5)
 
-// MSC �o�[�W�����`�F�b�N
+// MSC バージョンチェック
 inline int _MSC_CVER(void) {
     int cver = 0;
 #if _MSC_VER==1400
@@ -194,8 +194,8 @@ int WINAPI WinMain(
             TCHAR   vendorID[12 + 1];
             int     cpuInfo[4];
 
-            // &quot;CPU vendor ID&quot; �̎擾
-            __cpuid(cpuInfo, 0);                    // EAX=0: �x���_ID�̎擾
+            // &quot;CPU vendor ID&quot; の取得
+            __cpuid(cpuInfo, 0);                    // EAX=0: ベンダIDの取得
 
             // EBX
             char* p = (char*)&amp;cpuInfo[1];
@@ -222,10 +222,10 @@ int WINAPI WinMain(
 
         // CPU processor information
         {
-            __cpuid(CPUInfo, 0x80000000);           // EAX=80000000h: �T�|�[�g����ő�g���@�\�ԍ��̎擾
-            if (0x80000004 &lt;= CPUInfo[0]){          // �v���Z�b�T�u�����h������̎擾���\�ł���
+            __cpuid(CPUInfo, 0x80000000);           // EAX=80000000h: サポートする最大拡張機能番号の取得
+            if (0x80000004 &lt;= CPUInfo[0]){          // プロセッサブランド文字列の取得が可能である
                 int CPUInfoV[3][4];
-                __cpuid(CPUInfoV[0], 0x80000002);   // EAX=80000002h,80000003h,80000004h: �v���Z�b�T�u�����h������
+                __cpuid(CPUInfoV[0], 0x80000002);   // EAX=80000002h,80000003h,80000004h: プロセッサブランド文字列
                 __cpuid(CPUInfoV[1], 0x80000003);
                 __cpuid(CPUInfoV[2], 0x80000004);
                 char* p = (char*)CPUInfoV;
@@ -241,7 +241,7 @@ int WINAPI WinMain(
         // CPU supports ...
         {
             // CPUID 1 EDX
-            __cpuid(CPUInfo, 1);                    // EAX=1: �v���Z�b�T���ƃv���Z�b�T�̋@�\
+            __cpuid(CPUInfo, 1);                    // EAX=1: プロセッサ情報とプロセッサの機能
             if (CPUInfo[3] &amp; MMX_READY){
                 _tcscat_s(inst, sizeof(inst) / sizeof(TCHAR), _TEXT(&quot;MMX &quot;));
             }
@@ -312,8 +312,8 @@ int WINAPI WinMain(
     }
 
 
-    // ���ʕ\��
-    MessageBox(0, buf, _TEXT(&quot;�V�X�e����SIMD���߂̃T�|�[�g��&quot;), MB_OK);
+    // 結果表示
+    MessageBox(0, buf, _TEXT(&quot;システムのSIMD命令のサポート状況&quot;), MB_OK);
 
 
     return (int)0;
@@ -321,34 +321,34 @@ int WINAPI WinMain(
 	
 <br>
 <h3>
-�T���v���v���O����</h3>
+サンプルプログラム</h3>
 <p>
-<a href="ExtInstCheck/ExtInstCheck.zip">�T���v���v���O���� �_�E�����[�h</a></p>
+<a href="ExtInstCheck/ExtInstCheck.zip">サンプルプログラム ダウンロード</a></p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="2._���@�Q">2. ���@�Q</a></h2>
+<a name="2._方法２">2. 方法２</a></h2>
 <p>
-Microsoft �̃z�[���y�[�W��ɏЉ��Ă����R�[�h���Љ�܂��B<br>���̃A�v���Ŏg���₷���悤�ɁA*.cpp �� *.h 
-�ւ̃t�@�C�����������Ǝ��Ɏ��{���Ă��܂��B<br>SIMD ���g�p����ꍇ�ɕ֗������ȃ��W���[���ł��B</p>
+Microsoft のホームページ上に紹介されていたコードを紹介します。<br>他のアプリで使いやすいように、*.cpp と *.h 
+へのファイル分割だけ独自に実施しています。<br>SIMD を使用する場合に便利そうなモジュールです。</p>
 <p>
-���]����</p>
+■評価環境</p>
 <p class="auto-style8">
-�J�����F Visual Studio 2017 Pro.<br>OS�F Windows10 home 1607</p>
+開発環境： Visual Studio 2017 Pro.<br>OS： Windows10 home 1607</p>
 <p>
-�����s����</p>
+■実行結果</p>
 <p>
 <img alt="" src="ExtInstCheck/img1B.gif"></p>
 <p>
 &nbsp;</p>
 <p>
-���\�[�X�R�[�h</p>
+■ソースコード</p>
 <p>
 [ InstructionSet.h ]</p>
 
 <pre class="prettyprint linenums">
 //
-// _cpuid �ɂ�� SIMD�T�|�[�g�󋵊m�F
+// _cpuid による SIMDサポート状況確認
 //
 // Refferences:
 //   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
@@ -464,7 +464,7 @@ private:
 <p>[InstructionSet.cpp]</p>
 <pre class="prettyprint linenums">
 //
-// _cpuid �ɂ�� SIMD�T�|�[�g�󋵊m�F
+// _cpuid による SIMDサポート状況確認
 //
 // Refferences:
 //   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
@@ -650,7 +650,7 @@ namespace hide {
 <p>[ MainApp.cpp ]</p>
 <pre class="prettyprint linenums">
 //
-// _cpuid �ɂ�� SIMD�T�|�[�g�󋵊m�F
+// _cpuid による SIMDサポート状況確認
 //
 // Refferences:
 //   https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx
@@ -740,7 +740,7 @@ int main()
 
 
     //
-    // �㏈��
+    // 後処理
     //
     getchar();
 
@@ -749,8 +749,8 @@ int main()
 
 <p>
 &nbsp;</p>
-���T���v���v���O����<p>
-<a href="ExtInstCheck/ExtInstCheck.zip">�T���v���v���O���� �_�E�����[�h</a></p>
+■サンプルプログラム<p>
+<a href="ExtInstCheck/ExtInstCheck.zip">サンプルプログラム ダウンロード</a></p>
 <p>
 &nbsp;</p>
 <p>
@@ -758,7 +758,7 @@ int main()
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�l">�Q�l</a></h2>
+<a name="参考">参考</a></h2>
 <ol>
 	<li>
 	<a href="http://www.yamatyuu.net/computer/program/vc2013/extinstchk/index.html#wix" target="_blank">http://www.yamatyuu.net/computer/program/vc2013/extinstchk/index.html#wix</a></li>
@@ -768,8 +768,8 @@ int main()
 	https://msdn.microsoft.com/ja-jp/library/hskdteyh.aspx</a></li>
 </ol>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF</font></p>
-<p> <font face="Meiryo UI">2015�N03��22�� �V�K�o�^�A�؉��p�r<br>
-</font>2017�N05��09��<br>�E���@�Q ��ǉ�<br>�E���@�P ���e��X�V</p>
+<p> <font face="Meiryo UI">記載：</font></p>
+<p> <font face="Meiryo UI">2015年03月22日 新規登録、木下英俊<br>
+</font>2017年05月09日<br>・方法２ を追加<br>・方法１ を各種更新</p>
 </body>
 </html>

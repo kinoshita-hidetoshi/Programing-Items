@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�m�^�C�g�����L�ڂ��܂��n</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>［タイトルを記載します］</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../prettify.css" rel="stylesheet" type="text/css">
@@ -21,46 +21,46 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-�mImageMagick�n�R�}���h�W</h1>
+［ImageMagick］コマンド集</h1>
 
-<p> ImageMagick ���g�����R�}���h�W���L�ڂ��܂��B<br>
-���ɏ��̏��Ȃ�����L�ڂ��܂��B��{�I�ȑ���́A�u�Q�lURL�v�ɋL�ڂ̏�񂩂�T���Ă��������B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._�}���`�A�C�R�������">1. �}���`�A�C�R�������</a><br>
-<a href="#2._svg_�t�@�C����_png_�֕ϊ�">2. svg �t�@�C���� png �֕ϊ�</a><br><a href="#�Q�lURL">
-�Q�lURL</a></p>
+<p> ImageMagick を使ったコマンド集を記載します。<br>
+特に情報の少ないやつを記載します。基本的な操作は、「参考URL」に記載の情報から探してください。</p>
+<h2> 目次</h2>
+<p> <a href="#1._マルチアイコンを作る">1. マルチアイコンを作る</a><br>
+<a href="#2._svg_ファイルを_png_へ変換">2. svg ファイルを png へ変換</a><br><a href="#参考URL">
+参考URL</a></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
-<h2> <a name="1._�}���`�A�C�R�������">1. �}���`�A�C�R�������</a></h2>
-<p> [�T�v]</p>
-<p> �����ŃA�C�R��(ico)�t�@�C�����쐬����̂͌��\�ʓ|�ł��BImageMagick���g�����Ƃ�PNG�t�@�C������}���`�A�C�R�����쐬�ł���̂ŕ֗��ł��B<br>
-PNG���x�[�X�ɂ���͓̂��߃A�C�R�����쐬����ɂ͌��t�@�C���ɓ��ߑ������Ȃ��Ƃł��Ȃ�����ł��BJPEG����A�C�R�����쐬���邱�Ƃ��������\�ł����AJPEG�ɂ͓��ߑ������Ȃ��̂ŁA�A�C�R���w�i�𓧉߂��邱�Ƃ��ł��܂���B</p>
-<p> [�R�}���h]</p>
+<h2> <a name="1._マルチアイコンを作る">1. マルチアイコンを作る</a></h2>
+<p> [概要]</p>
+<p> 自分でアイコン(ico)ファイルを作成するのは結構面倒です。ImageMagickを使うことでPNGファイルからマルチアイコンを作成できるので便利です。<br>
+PNGをベースにするのは透過アイコンを作成するには元ファイルに透過属性がないとできないからです。JPEGからアイコンを作成することももちろん可能ですが、JPEGには透過属性がないので、アイコン背景を透過することができません。</p>
+<p> [コマンド]</p>
 <p><span class="cpp-source">magick convert ico.png -define icon:auto-resize 
 icon.ico</span></p>
 <p>&nbsp;</p>
-<h2> <a name="2._svg_�t�@�C����_png_�֕ϊ�">2. svg �t�@�C���� png �֕ϊ�</a></h2>
-<p> [�T�v]</p>
-<p> ���̒��x�N�^�[�摜�������Ă��܂����Bsvg�`���̉摜�����̑�\��̈�ł��B<br>Microsoft ���񋟂��� ImageLibrary 
-���̉f���ɂ� svg �t�@�C�������������Ă��܂��B<br>��� ico �t�@�C���� svg ����쐬���邽�߂ɁA��U svg �t�@�C���� png 
-�֕ϊ�����K�v������܂����B<br>�ŁA���ׂ����ʂ�����ł��B</p>
+<h2> <a name="2._svg_ファイルを_png_へ変換">2. svg ファイルを png へ変換</a></h2>
+<p> [概要]</p>
+<p> 世の中ベクター画像が増えてきました。svg形式の画像もその代表例の一つです。<br>Microsoft が提供する ImageLibrary 
+中の映像にも svg ファイルが多数入っています。<br>先の ico ファイルを svg から作成するために、一旦 svg ファイルを png 
+へ変換する必要がありました。<br>で、調べた結果がこれです。</p>
 <font face="Meiryo UI">
-<p>[�R�}���h]</p>
+<p>[コマンド]</p>
 </font>
 <p><span class="cpp-source">magick convert -density 1200 -resize 200x200 
 ConvertArrow_16x.svg ico.png</span></p>
 <p>&nbsp;</p>
-<h2><a name="�Q�lURL">�Q�lURL</a></h2>
+<h2><a name="参考URL">参考URL</a></h2>
 <ul>
 	<li>ImageMagick<br>
 	<a href="https://imagemagick.org/index.php" target="_blank">
 	https://imagemagick.org/index.php</a></li>
-	<li>ImageMagick �̎g���� ���{��}�j���A��<br>
+	<li>ImageMagick の使い方 日本語マニュアル<br>
 	<a href="https://imagemagick.biz/" target="_blank">https://imagemagick.biz/</a></li>
-	<li>ImageMagick �̎g�p�� �| ��{��<br>
+	<li>ImageMagick の使用例 － 基本編<br>
 	<a href="https://qiita.com/mtakizawa/items/a74bd91f7b3835976461" target="_blank">
 	https://qiita.com/mtakizawa/items/a74bd91f7b3835976461</a></li>
-	<li>ImageMagick�Ń}���`�A�C�R�����ȒP�ɍ��<br>
+	<li>ImageMagickでマルチアイコンを簡単に作る<br>
 	<a href="https://www.regentechlog.com/2014/04/03/imagemagick-multisize-ico/" target="_blank">
 	https://www.regentechlog.com/2014/04/03/imagemagick-multisize-ico/</a></li>
 	<li>How to convert a SVG to a PNG with ImageMagick?<br>
@@ -69,6 +69,6 @@ ConvertArrow_16x.svg ico.png</span></p>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF �؉��p�r<br>2020/05/01 �V�K�쐬</font></p>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2020/05/01 新規作成</font></p>
 </body>
 </html>

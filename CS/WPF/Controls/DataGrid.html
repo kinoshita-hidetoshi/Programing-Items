@@ -1,7 +1,7 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>mƒ^ƒCƒgƒ‹‚ğ‹LÚ‚µ‚Ü‚·n</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ï¼»ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¨˜è¼‰ã—ã¾ã™ï¼½</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -20,33 +20,33 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-WPF : DataGrid ƒRƒ“ƒgƒ[ƒ‹</h1>
+WPF : DataGrid ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«</h1>
 
-<p> WPF•W€‚Ì DataGrid ƒRƒ“ƒgƒ[ƒ‹‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
-<h2> –ÚŸ</h2>
-<p> <a href="#1._’Pƒ‚ÈDataGrid‚Ìg‚¢•û">1. ’Pƒ‚ÈDataGrid‚Ìg‚¢•û</a><br>
-<a href="#2._FrozenColumnCount_ƒvƒƒpƒeƒB‚Å•\¦—ñ‚ğŒÅ’è‚·‚é">2. FrozenColumnCount ƒvƒƒpƒeƒB‚Å•\¦—ñ‚ğŒÅ’è‚·‚é</a><br>3. ***</p>
+<p> WPFæ¨™æº–ã® DataGrid ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚</p>
+<h2> ç›®æ¬¡</h2>
+<p> <a href="#1._å˜ç´”ãªDataGridã®ä½¿ã„æ–¹">1. å˜ç´”ãªDataGridã®ä½¿ã„æ–¹</a><br>
+<a href="#2._FrozenColumnCount_ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã§è¡¨ç¤ºåˆ—ã‚’å›ºå®šã™ã‚‹">2. FrozenColumnCount ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã§è¡¨ç¤ºåˆ—ã‚’å›ºå®šã™ã‚‹</a><br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._’Pƒ‚ÈDataGrid‚Ìg‚¢•û">1. ’Pƒ‚ÈDataGrid‚Ìg‚¢•û</a></h2>
-<p> [ŠT—v]</p>
-<p> ‚Ü‚¸‚Í’Pƒ‚ÉDataGridƒRƒ“ƒgƒ[ƒ‹‚ğg‚Á‚Ä‚İ‚Ü‚·B<br>‰º}‚Ì‚æ‚¤‚ÈƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğì¬‚µ‚Ä‚İ‚Ü‚·B</p>
+<h2> <a name="1._å˜ç´”ãªDataGridã®ä½¿ã„æ–¹">1. å˜ç´”ãªDataGridã®ä½¿ã„æ–¹</a></h2>
+<p> [æ¦‚è¦]</p>
+<p> ã¾ãšã¯å˜ç´”ã«DataGridã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’ä½¿ã£ã¦ã¿ã¾ã™ã€‚<br>ä¸‹å›³ã®ã‚ˆã†ãªã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä½œæˆã—ã¦ã¿ã¾ã™ã€‚</p>
 <p> 
 <img alt="" src="DataGrid/img15.jpg"></p>
-<p>[ŠÂ‹«]</p>
+<p>[ç’°å¢ƒ]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<p> [è‡ŠT—v]</p>
-<p>(1) WPFƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğV‹Kì¬‚µ‚Ü‚·B</p>
-<p>(2) ‰æ–Êã‚ÉhDataGridhƒRƒ“ƒgƒ[ƒ‹‚ğƒhƒƒbƒvŒãAˆÊ’u‚â‘å‚«‚³‚ğ“K“–‚É¬Œ`‚µ‚Ü‚·B</p>
-<p>(3) •\¦‚·‚éƒf[ƒ^‚ğ€”õ‚µ‚Ü‚·B<br>
-‚±‚±‚Å‚ÍBlend‚Ì‹@”\‚ğg‚Á‚ÄƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğ¶¬‚µA‚±‚ê‚ğBlendã‚ÅDataGrid‚Öƒhƒƒbƒv‚µ‚Ü‚µ‚½B</p>
+<p> [æ‰‹é †æ¦‚è¦]</p>
+<p>(1) WPFã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ–°è¦ä½œæˆã—ã¾ã™ã€‚</p>
+<p>(2) ç”»é¢ä¸Šã«â€DataGridâ€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’ãƒ‰ãƒ­ãƒƒãƒ—å¾Œã€ä½ç½®ã‚„å¤§ãã•ã‚’é©å½“ã«æˆå½¢ã—ã¾ã™ã€‚</p>
+<p>(3) è¡¨ç¤ºã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’æº–å‚™ã—ã¾ã™ã€‚<br>
+ã“ã“ã§ã¯Blendã®æ©Ÿèƒ½ã‚’ä½¿ã£ã¦ã‚µãƒ³ãƒ—ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã—ã€ã“ã‚Œã‚’Blendä¸Šã§DataGridã¸ãƒ‰ãƒ­ãƒƒãƒ—ã—ã¾ã—ãŸã€‚</p>
 <p><img alt="" src="DataGrid/img1E.jpg"></p>
-<p>(4) •\¦‡˜ ‘¼ ‚ğ’²®‚µ‚Ü‚·B</p>
+<p>(4) è¡¨ç¤ºé †åº ä»– ã‚’èª¿æ•´ã—ã¾ã™ã€‚</p>
 <p>&nbsp;</p>
 
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;MainWindow.xaml&quot;]
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;MainWindow.xaml&quot;]
 <pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;test_01.MainWindow&quot;
     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -81,14 +81,14 @@ WPF : DataGrid ƒRƒ“ƒgƒ[ƒ‹</h1>
 &lt;/Window&gt;
 </pre>
 	
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;MainWindow.xaml.cs&quot;]
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;MainWindow.xaml.cs&quot;]
 <pre class="prettyprint linenums">
 using System.Windows;
 
 namespace test_01
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml ‚Ì‘ŠŒİì—pƒƒWƒbƒN
+    /// MainWindow.xaml ã®ç›¸äº’ä½œç”¨ãƒ­ã‚¸ãƒƒã‚¯
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -99,7 +99,7 @@ namespace test_01
     }
 }</pre>
 
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;App.xaml&quot;]
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;App.xaml&quot;]
 <pre class="prettyprint linenums">
 &lt;Application
     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -115,7 +115,7 @@ namespace test_01
 &lt;/Application&gt;</pre>
 
 
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;SampleDataSource.xaml.cs&quot;]
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;SampleDataSource.xaml.cs&quot;]
 <pre class="prettyprint linenums">
 &lt;SampleData:SampleDataSource xmlns:SampleData=&quot;clr-namespace:Expression.Blend.SampleData.SampleDataSource&quot;&gt;
     &lt;SampleData:SampleDataSource.Collection&gt;
@@ -134,21 +134,21 @@ namespace test_01
 	
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="2._FrozenColumnCount_ƒvƒƒpƒeƒB‚Å•\¦—ñ‚ğŒÅ’è‚·‚é">2. FrozenColumnCount ƒvƒƒpƒeƒB‚Å•\¦—ñ‚ğŒÅ’è‚·‚é</a></h2>
-<p> [ŠT—v]<br>&quot;FrozenColumnCount&quot; ‚ğg‚Á‚Ä•\¦—ñ‚Ìˆê•”‚ğŒÅ’è‚·‚é•û–@‚ğ’ñ¦‚µ‚Ü‚·B<br>‘Oq‚ÌƒvƒƒOƒ‰ƒ€‚Éˆê•”‚ğ•ÏX‚·‚é‚±‚Æ‚Ås‚¢‚Ü‚·B</p>
-<p>[ŠÂ‹«]</p>
+<h2> <a name="2._FrozenColumnCount_ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã§è¡¨ç¤ºåˆ—ã‚’å›ºå®šã™ã‚‹">2. FrozenColumnCount ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã§è¡¨ç¤ºåˆ—ã‚’å›ºå®šã™ã‚‹</a></h2>
+<p> [æ¦‚è¦]<br>&quot;FrozenColumnCount&quot; ã‚’ä½¿ã£ã¦è¡¨ç¤ºåˆ—ã®ä¸€éƒ¨ã‚’å›ºå®šã™ã‚‹æ–¹æ³•ã‚’æç¤ºã—ã¾ã™ã€‚<br>å‰è¿°ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«ä¸€éƒ¨ã‚’å¤‰æ›´ã™ã‚‹ã“ã¨ã§è¡Œã„ã¾ã™ã€‚</p>
+<p>[ç’°å¢ƒ]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
 
-[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;MainWindow.xaml.cs&quot;]
+[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;MainWindow.xaml.cs&quot;]
 <pre class="prettyprint linenums">
 namespace test_01
 {
     /// &lt;summary&gt;
-    /// MainWindow.xaml ‚Ì‘ŠŒİì—pƒƒWƒbƒN
+    /// MainWindow.xaml ã®ç›¸äº’ä½œç”¨ãƒ­ã‚¸ãƒƒã‚¯
     /// &lt;/summary&gt;
     public partial class MainWindow : Window
     {
@@ -159,26 +159,26 @@ namespace test_01
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // DataGrid ‚Ì—ñ‚ğˆê•”(2—ñ)ŒÅ’è‚·‚é
-            // Ú×‚Í‰º‹LURL‚ğQÆ
+            // DataGrid ã®åˆ—ã‚’ä¸€éƒ¨(2åˆ—)å›ºå®šã™ã‚‹
+            // è©³ç´°ã¯ä¸‹è¨˜URLã‚’å‚ç…§
             // https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx
             <span class="auto-style8">dataGrid.FrozenColumnCount = 2;</span>
         }
     }
 }</pre>
 	
-ã‹Lƒ\[ƒX‚Ì—á‚Å‚ÍA¶‘¤‚Ì‚Q—ñ‚ğŒÅ’è‚µ‚Ä‚»‚êˆÈŠO‚Ì‚İ‚ğ¶‰EƒXƒNƒ[ƒ‹‚Ì‘ÎÛ‚Æ‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B<br>
+ä¸Šè¨˜ã‚½ãƒ¼ã‚¹ã®ä¾‹ã§ã¯ã€å·¦å´ã®ï¼’åˆ—ã‚’å›ºå®šã—ã¦ãã‚Œä»¥å¤–ã®ã¿ã‚’å·¦å³ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®å¯¾è±¡ã¨ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚<br>
 <img alt="" src="DataGrid/img23.jpg"><br>
 	
 <br>
 <h2>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h2>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h2>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ <a href="DataGrid/test_DataGrid.zip">ƒ_ƒEƒ“ƒ[ƒh</a></p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  <a href="DataGrid/test_DataGrid.zip">ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a></p>
 <p>
 &nbsp;</p>
 <h2>
-QlURL</h2>
+å‚è€ƒURL</h2>
 <ol>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx" target="_blank" title="https://msdn.microsoft.com/ja-jp/library/system.windows.controls.datagrid.frozencolumncount(v=vs.110).aspx">
@@ -189,6 +189,6 @@ namespace test_01
 	http://pro.art55.jp/?eid=982264</a> </li>
 </ol>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF 2017”N03Œ21“ú –Ø‰º‰pr</font></p>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š 2017å¹´03æœˆ21æ—¥ æœ¨ä¸‹è‹±ä¿Š</font></p>
 </body>
 </html>

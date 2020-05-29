@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>[Win32] Semaphore</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -23,43 +23,43 @@
 <h1 class="auto-style7">
 [win32] Semaphore</h1>
 
-<p> Windows ‚Ì win32 ‚É‚¨‚¯‚é‘ã•\“I‚È“¯Šúˆ—‚É‚ÍˆÈ‰º‚Ì‚R‚Â‚ÌŽè–@‚ª‚ ‚è‚Ü‚·B<br>‚±‚±‚Å‚Í‰º‹L‚©‚çu3. 
-Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
+<p> Windows ã® win32 ã«ãŠã‘ã‚‹ä»£è¡¨çš„ãªåŒæœŸå‡¦ç†ã«ã¯ä»¥ä¸‹ã®ï¼“ã¤ã®æ‰‹æ³•ãŒã‚ã‚Šã¾ã™ã€‚<br>ã“ã“ã§ã¯ä¸‹è¨˜ã‹ã‚‰ã€Œ3. 
+Semaphoreã€ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚</p>
 <ol>
 	<li>Critical Section<ul>
-		<li>1‚Â‚ÌƒvƒƒZƒX‚Ì’†‚Å•¡”‚ÌƒXƒŒƒbƒhŠÔ‚Ì‘ŠŒÝ”r‘¼«‚ðŽÀŒ»‚·‚é‚½‚ß‚ÉŽg‚í‚ê‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Ì’†‚Å‚Í‚È‚­ƒ[ƒJƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>‚‘¬‚ÅŒø—¦‚ª—Ç‚¢B</li>
-		<li>Œ‡“_F ƒXƒŒƒbƒh‚É‚æ‚Á‚Ä•úŠü‚³‚ê‚½‚©‚Ç‚¤‚©‚ð”»’è‚·‚é‚±‚Æ‚ª‚Å‚«‚È‚¢B—á‚¦‚ÎAƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“’†‚ÌƒXƒŒƒbƒh‚ª 
-		CriticalSection ‚ðŠJ•ú‚µ‚È‚¢‚Ü‚ÜˆÙíI—¹‚µ‚Ä‚àOS‚ÍƒNƒŠ[ƒ“ƒAƒbƒv‚µ‚È‚¢B‚±‚ê‚ª–â‘è‚Æ‚È‚éê‡‚ÍŒãq‚Ì Mutex ‚ðŽg—p‚·‚éB</li>
+		<li>1ã¤ã®ãƒ—ãƒ­ã‚»ã‚¹ã®ä¸­ã§è¤‡æ•°ã®ã‚¹ãƒ¬ãƒƒãƒ‰é–“ã®ç›¸äº’æŽ’ä»–æ€§ã‚’å®Ÿç¾ã™ã‚‹ãŸã‚ã«ä½¿ã‚ã‚Œã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸­ã§ã¯ãªããƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>é«˜é€Ÿã§åŠ¹çŽ‡ãŒè‰¯ã„ã€‚</li>
+		<li>æ¬ ç‚¹ï¼š ã‚¹ãƒ¬ãƒƒãƒ‰ã«ã‚ˆã£ã¦æ”¾æ£„ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹ã“ã¨ãŒã§ããªã„ã€‚ä¾‹ãˆã°ã€ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒ 
+		CriticalSection ã‚’é–‹æ”¾ã—ãªã„ã¾ã¾ç•°å¸¸çµ‚äº†ã—ã¦ã‚‚OSã¯ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã—ãªã„ã€‚ã“ã‚ŒãŒå•é¡Œã¨ãªã‚‹å ´åˆã¯å¾Œè¿°ã® Mutex ã‚’ä½¿ç”¨ã™ã‚‹ã€‚</li>
 	</ul>
 	</li>
 	<li>Mutex<ul>
-		<li>ˆÙ‚È‚éƒvƒƒZƒX‚É‘®‚·‚éƒXƒŒƒbƒh‚àŠÜ‚ß‚ÄA•¡”‚ÌƒXƒŒƒbƒhŠÔ‚Ì‘ŠŒÝ”r‘¼«‚ðŽÀŒ»‚·‚é‚½‚ß‚ÌŽd‘g‚Ý‚Å‚ ‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>Š—L‚µ‚Ä‚¢‚éƒXƒŒƒbƒh‚ªI—¹‚·‚é‚Æ h•úŠü‚³‚ê‚½h ‚±‚Æ‚ðŽ¦‚·ƒGƒ‰[‚ð¶¬‚·‚éB</li>
-		<li>–¼‘O‚ðŽ‚¿A•¡”‚ÌƒvƒƒZƒX‚©‚çƒI[ƒvƒ“‚Å‚«‚éB</li>
-		<li>‚»‚ê‚ðŠ—L‚·‚éƒXƒŒƒbƒh‚¾‚¯‚ª‰ð•ú‚Å‚«‚éB </li>
+		<li>ç•°ãªã‚‹ãƒ—ãƒ­ã‚»ã‚¹ã«å±žã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã‚‚å«ã‚ã¦ã€è¤‡æ•°ã®ã‚¹ãƒ¬ãƒƒãƒ‰é–“ã®ç›¸äº’æŽ’ä»–æ€§ã‚’å®Ÿç¾ã™ã‚‹ãŸã‚ã®ä»•çµ„ã¿ã§ã‚ã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>æ‰€æœ‰ã—ã¦ã„ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¨ â€æ”¾æ£„ã•ã‚ŒãŸâ€ ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚</li>
+		<li>åå‰ã‚’æŒã¡ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚»ã‚¹ã‹ã‚‰ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã‚‹ã€‚</li>
+		<li>ãã‚Œã‚’æ‰€æœ‰ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã ã‘ãŒè§£æ”¾ã§ãã‚‹ã€‚ </li>
 	</ul>
 	</li>
 	<li>Semaphore<ul>
-		<li>—LŒÀ‚ÈƒŠƒ\[ƒX‚ð’ÇÕŠÇ—‚·‚é‚½‚ß‚ÉŽg—p‚·‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>Š—LŽÒ‚ª‚¢‚È‚¢B</li>
-		<li>–¼‘O‚ðŽ‚¿A•¡”‚ÌƒvƒƒZƒX‚©‚çƒI[ƒvƒ“‚Å‚«‚éB</li>
-		<li>”CˆÓ‚ÌƒXƒŒƒbƒh‚©‚ç‰ð•ú‚Å‚«‚éB</li>
+		<li>æœ‰é™ãªãƒªã‚½ãƒ¼ã‚¹ã‚’è¿½è·¡ç®¡ç†ã™ã‚‹ãŸã‚ã«ä½¿ç”¨ã™ã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>æ‰€æœ‰è€…ãŒã„ãªã„ã€‚</li>
+		<li>åå‰ã‚’æŒã¡ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚»ã‚¹ã‹ã‚‰ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã‚‹ã€‚</li>
+		<li>ä»»æ„ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰è§£æ”¾ã§ãã‚‹ã€‚</li>
 	</ul>
 	</li>
 </ol>
 <p>&nbsp;</p>
-<h2> –ÚŽŸ</h2>
+<h2> ç›®æ¬¡</h2>
 <p> 1. ***<br>2. ***<br>3. ***</p>
 <p> &nbsp;</p>
 <h2> 1. ***</h2>
-<p> [ŠT—v]</p>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -67,7 +67,7 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -92,7 +92,7 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 <p> &nbsp;</p>
 
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;***.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -101,23 +101,23 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 	
 <p>&nbsp;</p>
 <h4>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h4>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h4>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</p>
 <p>
 &nbsp;</p>
 <h4>
-ŽQl</h4>
+å‚è€ƒ</h4>
 <ul>
-	<li>(—á) http://www.****.com</li>
+	<li>(ä¾‹) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [ŠT—v]</p>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -125,7 +125,7 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -147,7 +147,7 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 </table>
 </font>
 <p>&nbsp;</p>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;***.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -158,21 +158,21 @@ Semaphorev‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
 	
 <br>
 <h4>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h4>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h4>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</p>
 <p>
 &nbsp;</p>
 <h4>
-ŽQl</h4>
+å‚è€ƒ</h4>
 <ul>
-	<li>(—á) http://www.****.com</li>
+	<li>(ä¾‹) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF</font></p>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š</font></p>
 <ul>
-	<li><font face="Meiryo UI">2019”NMMŒŽDD“ú V‹Kì¬A–Ø‰º‰pr<br></font></li>
+	<li><font face="Meiryo UI">2019å¹´MMæœˆDDæ—¥ æ–°è¦ä½œæˆã€æœ¨ä¸‹è‹±ä¿Š<br></font></li>
 </ul>
 </body>
 </html>

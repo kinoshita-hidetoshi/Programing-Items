@@ -1,7 +1,7 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>[WPF] DataBinding - Counter (C#AWPF)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[WPF] DataBinding - Counter (C#ã€WPF)</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -27,53 +27,53 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-Counter (C#AWPF)</h1>
+Counter (C#ã€WPF)</h1>
 <p class="auto-style7">
-Eê‚ÌáèŒü‚¯‚¨•×‹­ƒe[ƒ}‚Æ‚µ‚Äì¬‚µ‚Ü‚µ‚½BC#(WPF) ‚Å‰º‹L‚Ì‹@”\‚ğÀŒ»‚µ‚È‚³‚¢A‚Æ‚¢‚¤“à—e‚Å‚·B<br>
-ƒJƒEƒ“ƒ^•\¦•”‚ÆA“à•”•Ï”A‚ğƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚µ‚Ü‚·B</p>
+è·å ´ã®è‹¥æ‰‹å‘ã‘ãŠå‹‰å¼·ãƒ†ãƒ¼ãƒã¨ã—ã¦ä½œæˆã—ã¾ã—ãŸã€‚C#(WPF) ã§ä¸‹è¨˜ã®æ©Ÿèƒ½ã‚’å®Ÿç¾ã—ãªã•ã„ã€ã¨ã„ã†å†…å®¹ã§ã™ã€‚<br>
+ã‚«ã‚¦ãƒ³ã‚¿è¡¨ç¤ºéƒ¨ã¨ã€å†…éƒ¨å¤‰æ•°ã€ã‚’ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã—ã¾ã™ã€‚</p>
 <h2>
-–ÚŸ</h2>
+ç›®æ¬¡</h2>
 <p>
-<a href="#1.—v‹d—l">1. —v‹d—l</a><br><a href="#1.1.‹@”\">1.1. ‹@”\</a><br><a href="#1.2._‰æ–Êd—l">1.2. ‰æ–Êd—l</a><br>
-<a href="#1.3.À‘•d—liCj">1.3. À‘•d—l</a><br>
-<a href="#1.4.“®ìŠÂ‹«AŠJ”­ŠÂ‹«">1.4. “®ìŠÂ‹«AŠJ”­ŠÂ‹«</a><br>
-<a href="#2._À‘•—ái‚»‚Ì‚PjF_TextBox_‚ğƒ‚ƒfƒ‹‚ÉŒ‹‚Ñ•t‚¯‚é">2. À‘•—ái‚»‚Ì‚PjF TextBox ‚ğƒ‚ƒfƒ‹‚ÉŒ‹‚Ñ•t‚¯‚é</a><br>
-<a href="#3._À‘•—ái‚»‚Ì‚QjFButton‚ğƒRƒ}ƒ“ƒh‚ÉŒ‹‚Ñ•t‚¯‚é">3. À‘•—ái‚»‚Ì‚QjF Button ‚ğƒRƒ}ƒ“ƒh‚ÉŒ‹‚Ñ•t‚¯‚é</a><br>
+<a href="#1.è¦æ±‚ä»•æ§˜">1. è¦æ±‚ä»•æ§˜</a><br><a href="#1.1.æ©Ÿèƒ½">1.1. æ©Ÿèƒ½</a><br><a href="#1.2._ç”»é¢ä»•æ§˜">1.2. ç”»é¢ä»•æ§˜</a><br>
+<a href="#1.3.å®Ÿè£…ä»•æ§˜ï¼ˆCï¼‰">1.3. å®Ÿè£…ä»•æ§˜</a><br>
+<a href="#1.4.å‹•ä½œç’°å¢ƒã€é–‹ç™ºç’°å¢ƒ">1.4. å‹•ä½œç’°å¢ƒã€é–‹ç™ºç’°å¢ƒ</a><br>
+<a href="#2._å®Ÿè£…ä¾‹ï¼ˆãã®ï¼‘ï¼‰ï¼š_TextBox_ã‚’ãƒ¢ãƒ‡ãƒ«ã«çµã³ä»˜ã‘ã‚‹">2. å®Ÿè£…ä¾‹ï¼ˆãã®ï¼‘ï¼‰ï¼š TextBox ã‚’ãƒ¢ãƒ‡ãƒ«ã«çµã³ä»˜ã‘ã‚‹</a><br>
+<a href="#3._å®Ÿè£…ä¾‹ï¼ˆãã®ï¼’ï¼‰ï¼šButtonã‚’ã‚³ãƒãƒ³ãƒ‰ã«çµã³ä»˜ã‘ã‚‹">3. å®Ÿè£…ä¾‹ï¼ˆãã®ï¼’ï¼‰ï¼š Button ã‚’ã‚³ãƒãƒ³ãƒ‰ã«çµã³ä»˜ã‘ã‚‹</a><br>
 <a href="#3.1._Counter.dll">3.1. Counter.dll</a><br>
 <a href="#3.2._CounterWPF.exe">3.2. CounterWPF.exe</a><br>
 <a href="#3.2.1._MainWindow.xaml.cs">3.2.1. MainWindow.xaml.cs</a><br>
-<a href="#3.2.2._Window_‚Ì_DataContext_‚É_Counter_‚ğV‹K“o˜^">3.2.2. Window ‚Ì DataContext ‚É Counter ‚ğV‹K“o˜^</a><br>
-<a href="#3.2.3._TextBox_‚Ì_Text_‚ğ_DataContext_‚Ì_Counter.CountValue_‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.3. TextBox ‚Ì Text ‚ğ DataContext ‚Ì Counter.CountValue ‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO</a><br>
-<a href="#3.2.4._u{vƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğ_Counter.IncrementCommand_‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.4. u{vƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğ Counter.IncrementCommand ‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO</a><br>
-<a href="#3.2.5._u|vAuClearvƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.5. u|vAuClearvƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğƒoƒCƒ“ƒfƒBƒ“ƒO</a>
+<a href="#3.2.2._Window_ã®_DataContext_ã«_Counter_ã‚’æ–°è¦ç™»éŒ²">3.2.2. Window ã® DataContext ã« Counter ã‚’æ–°è¦ç™»éŒ²</a><br>
+<a href="#3.2.3._TextBox_ã®_Text_ã‚’_DataContext_ã®_Counter.CountValue_ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.3. TextBox ã® Text ã‚’ DataContext ã® Counter.CountValue ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a><br>
+<a href="#3.2.4._ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’_Counter.IncrementCommand_ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.4. ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ Counter.IncrementCommand ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a><br>
+<a href="#3.2.5._ã€Œï¼ã€ã€ã€ŒClearã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.5. ã€Œï¼ã€ã€ã€ŒClearã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a>
 </p>
 <p class="auto-style7">
 &nbsp;</p>
 <h2>
-<a name="1.—v‹d—l">1. —v‹d—l/a></h2>
+<a name="1.è¦æ±‚ä»•æ§˜">1. è¦æ±‚ä»•æ§˜/a></h2>
 <h3>
-<a name="1.1.‹@”\">1.1.‹@”\</a></h3>
+<a name="1.1.æ©Ÿèƒ½">1.1.æ©Ÿèƒ½</a></h3>
 <ul>
-	<li>ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÍƒJƒEƒ“ƒ^‚Ì’l‚ğ•\¦‚·‚é‹@”\‚ğ‚ÂB</li>
-	<li>ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®‚ÌƒJƒEƒ“ƒ^‰Šú’l‚ğ‚O‚Æ‚·‚éB</li>
-	<li>ƒ{ƒ^ƒ“A‚ğ‰Ÿ‚·‚ÆAƒJƒEƒ“ƒ^‚Ì’l‚ğ‚P‰ÁZ‚·‚éB</li>
-	<li>ƒ{ƒ^ƒ“B‚ğ‰Ÿ‚·‚ÆAƒJƒEƒ“ƒ^‚Ì’l‚ğ1Œ¸Z‚·‚éB</li>
-	<li>ƒ{ƒ^ƒ“C‚ğ‰Ÿ‚·‚ÆAƒJƒEƒ“ƒ^‚Ì’l‚ğ‚O‚ÉƒNƒŠƒA‚·‚éB</li>
+	<li>ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¯ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’è¡¨ç¤ºã™ã‚‹æ©Ÿèƒ½ã‚’æŒã¤ã€‚</li>
+	<li>ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã®ã‚«ã‚¦ãƒ³ã‚¿åˆæœŸå€¤ã‚’ï¼ã¨ã™ã‚‹ã€‚</li>
+	<li>ãƒœã‚¿ãƒ³Aã‚’æŠ¼ã™ã¨ã€ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’ï¼‘åŠ ç®—ã™ã‚‹ã€‚</li>
+	<li>ãƒœã‚¿ãƒ³Bã‚’æŠ¼ã™ã¨ã€ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’1æ¸›ç®—ã™ã‚‹ã€‚</li>
+	<li>ãƒœã‚¿ãƒ³Cã‚’æŠ¼ã™ã¨ã€ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’ï¼ã«ã‚¯ãƒªã‚¢ã™ã‚‹ã€‚</li>
 	<li>
-	ƒ{ƒ^ƒ“D‚ğ‰Ÿ‚·‚ÆAI—¹Šm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚µA‚Í‚¢(‚Ü‚½‚ÍYes)‚ğ‰Ÿ‰º‚µ‚½‚çƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğI—¹‚·‚éB‚¢‚¢‚¦i‚Ü‚½‚ÍNoj‚ğ‰Ÿ‰º‚µ‚½ê‡‚ÍƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğI—¹‚¹‚¸‚É“®ì‚ğŒp‘±‚·‚éB</li>
-	<li>ƒJƒEƒ“ƒ^‚Ì’l”ÍˆÍ‚ğ‚O`‚P‚O‚Æ‚·‚éB</li>
-	<li>ƒJƒEƒ“ƒ^‚ª0‚Ì‚Æ‚«Ah-hƒ{ƒ^ƒ“‚ğ–³Œø‰»‚·‚é‚±‚ÆB</li>
-	<li>ƒJƒEƒ“ƒ^‚ª 10 ‚Ì‚Æ‚«Ah+hƒ{ƒ^ƒ“‚ğ–³Œø‰»‚·‚é‚±‚ÆB</li>
+	ãƒœã‚¿ãƒ³Dã‚’æŠ¼ã™ã¨ã€çµ‚äº†ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã—ã€ã¯ã„(ã¾ãŸã¯Yes)ã‚’æŠ¼ä¸‹ã—ãŸã‚‰ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã™ã‚‹ã€‚ã„ã„ãˆï¼ˆã¾ãŸã¯Noï¼‰ã‚’æŠ¼ä¸‹ã—ãŸå ´åˆã¯ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’çµ‚äº†ã›ãšã«å‹•ä½œã‚’ç¶™ç¶šã™ã‚‹ã€‚</li>
+	<li>ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ç¯„å›²ã‚’ï¼ï½ï¼‘ï¼ã¨ã™ã‚‹ã€‚</li>
+	<li>ã‚«ã‚¦ãƒ³ã‚¿ãŒ0ã®ã¨ãã€â€-â€ãƒœã‚¿ãƒ³ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã€‚</li>
+	<li>ã‚«ã‚¦ãƒ³ã‚¿ãŒ 10 ã®ã¨ãã€â€+â€ãƒœã‚¿ãƒ³ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã€‚</li>
 </ul>
-<h3><![if !supportLists]><a name="1.2._‰æ–Êd—l"><span style="mso-list:Ignore">
+<h3><![if !supportLists]><a name="1.2._ç”»é¢ä»•æ§˜"><span style="mso-list:Ignore">
 <span style="font-family:
 &quot;Meiryo UI&quot;">1.2. </span></span><![endif]>
-<span style="font-family:&quot;Meiryo UI&quot;">‰æ–Êd—l</span></a><span lang="EN-US"><o:p></o:p></span></h3>
+<span style="font-family:&quot;Meiryo UI&quot;">ç”»é¢ä»•æ§˜</span></a><span lang="EN-US"><o:p></o:p></span></h3>
 <p class="MsoNormal"><span style="font-family:&quot;Meiryo UI&quot;">
-‰æ–Êd—l‚ÍˆÈ‰º‚Ì’Ê‚èB‹LÚ–€ˆÈŠO‚Í©—R‚ÉİŒv‚Ì‚±‚ÆB<span lang="EN-US"><o:p></o:p></span></span></p>
+ç”»é¢ä»•æ§˜ã¯ä»¥ä¸‹ã®é€šã‚Šã€‚è¨˜è¼‰äº‹é …ä»¥å¤–ã¯è‡ªç”±ã«è¨­è¨ˆã®ã“ã¨ã€‚<span lang="EN-US"><o:p></o:p></span></span></p>
 <ul>
 	<li>
-	<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">ƒtƒHƒ“ƒgF<span lang="EN-US"> 
+	<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">ãƒ•ã‚©ãƒ³ãƒˆï¼š<span lang="EN-US"> 
 	Arial<o:p></o:p></span></span></p>
 	</li>
 </ul>
@@ -83,31 +83,31 @@ Counter (C#AWPF)</h1>
 <table border="1" cellpadding="0" cellspacing="0" class="auto-style8" style="mso-border-alt: solid windowtext .5pt; mso-yfti-tbllook: 480; mso-padding-alt: 0mm 5.4pt 0mm 5.4pt; mso-border-insideh: .5pt solid windowtext; mso-border-insidev: .5pt solid windowtext; text-justify: inter-ideograph;">
 	<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="54">
-		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">€”Ô<span lang="EN-US"><o:p></o:p></span></span></p>
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">é …ç•ª<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 90.0pt; border: solid windowtext 1.0pt; border-left: none; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="150">
-		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">ŠT—v<span lang="EN-US"><o:p></o:p></span></span></p>
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">æ¦‚è¦<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 51.3pt; border: solid windowtext 1.0pt; border-left: none; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" width="86">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ºİÄÛ°Ù<span lang="EN-US"><o:p></o:p></span></span></p>
+		ï½ºï¾ï¾„ï¾›ï½°ï¾™<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 52pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ÀÌŞ<o:p>µ°ÀŞ°</o:p></span></p>
+		ï¾€ï¾Œï¾<o:p>ï½µï½°ï¾€ï¾ï½°</o:p></span></p>
 		</td>
 		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 148pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		•¶š—ñA•¶ší•ÊA‘¼<span lang="EN-US"><o:p></o:p></span></span></p>
+		æ–‡å­—åˆ—ã€æ–‡å­—ç¨®åˆ¥ã€ä»–<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 171pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium;">
-		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">‘¼<span lang="EN-US"><o:p></o:p></span></span></p>
+		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">ä»–<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 	</tr>
 	<tr style="mso-yfti-irow: 1">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
 		<p class="MsoNormal">
-		‡@</p>
+		â‘ </p>
 		</td>
 		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
 		<p class="MsoNormal">
@@ -123,21 +123,21 @@ Counter (C#AWPF)</h1>
 		</td>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">gCounterh<o:p></o:p></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">â€œCounterâ€<o:p></o:p></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Window</span><span style="font-family: &quot;Meiryo UI&quot;">ƒTƒCƒYF<span lang="EN-US">800</span>~<span lang="EN-US">600</span>ˆÈ“à<span lang="EN-US"><o:p></o:p></span></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Window</span><span style="font-family: &quot;Meiryo UI&quot;">ã‚µã‚¤ã‚ºï¼š<span lang="EN-US">800</span>Ã—<span lang="EN-US">600</span>ä»¥å†…<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 	</tr>
 	<tr style="mso-yfti-irow: 2">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
 		<p class="MsoNormal">
-		‡A</p>
+		â‘¡</p>
 		</td>
 		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		’l•\¦•”<span lang="EN-US"><o:p></o:p></span></span></p>
+		å€¤è¡¨ç¤ºéƒ¨<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
 		<p class="MsoNormal">
@@ -150,13 +150,13 @@ Counter (C#AWPF)</h1>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
 		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">Number,
-		</span><span style="font-family: &quot;Meiryo UI&quot;">’l”ÍˆÍ<span lang="EN-US">:0</span>`<span lang="EN-US">10<o:p></o:p></span></span></p>
+		</span><span style="font-family: &quot;Meiryo UI&quot;">å€¤ç¯„å›²<span lang="EN-US">:0</span>ï½<span lang="EN-US">10<o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒtƒHƒ“ƒgƒTƒCƒYF<span lang="EN-US">36pt<o:p></o:p></span></span></p>
+		ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºï¼š<span lang="EN-US">36pt<o:p></o:p></span></span></p>
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒZƒ“ƒ^[•\¦<span lang="EN-US"><o:p></o:p></span></span></p>
+		ã‚»ãƒ³ã‚¿ãƒ¼è¡¨ç¤º<span lang="EN-US"><o:p></o:p></span></span></p>
 		<p class="MsoNormal">
 		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">ReadOnly<o:p></o:p></span></p>
 		</td>
@@ -164,7 +164,7 @@ Counter (C#AWPF)</h1>
 	<tr style="mso-yfti-irow: 3">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
 		<p class="MsoNormal">
-		‡B</p>
+		â‘¢</p>
 		</td>
 		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
 		<p class="MsoNormal">
@@ -180,17 +180,17 @@ Counter (C#AWPF)</h1>
 		</td>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">g+h<o:p></o:p></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">â€œ+â€<o:p></o:p></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒtƒHƒ“ƒgƒTƒCƒYF<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºï¼š<span lang="EN-US">12pt<o:p></o:p></span></span></p>
 		</td>
 	</tr>
 	<tr style="mso-yfti-irow: 4">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
 		<p class="MsoNormal">
-		‡C</p>
+		â‘£</p>
 		</td>
 		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
 		<p class="MsoNormal">
@@ -206,21 +206,21 @@ Counter (C#AWPF)</h1>
 		</td>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">g-g<o:p></o:p></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">â€œ-â€œ<o:p></o:p></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒtƒHƒ“ƒgƒTƒCƒYF<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºï¼š<span lang="EN-US">12pt<o:p></o:p></span></span></p>
 		</td>
 	</tr>
 	<tr style="mso-yfti-irow: 5">
 		<td style="width: 32.4pt; border: solid windowtext 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="54">
 		<p class="MsoNormal">
-		‡D</p>
+		â‘¤</p>
 		</td>
 		<td style="width: 90.0pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="150">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">0</span><span style="font-family: &quot;Meiryo UI&quot;">ƒNƒŠƒA<span lang="EN-US"><o:p></o:p></span></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">0</span><span style="font-family: &quot;Meiryo UI&quot;">ã‚¯ãƒªã‚¢<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 51.3pt; border-top: none; border-left: none; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt" valign="top" width="86">
 		<p class="MsoNormal">
@@ -232,23 +232,23 @@ Counter (C#AWPF)</h1>
 		</td>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">gClearh<o:p></o:p></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">â€œClearâ€<o:p></o:p></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒtƒHƒ“ƒgƒTƒCƒYF<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºï¼š<span lang="EN-US">12pt<o:p></o:p></span></span></p>
 		</td>
 	</tr>
 	<tr style="mso-yfti-irow: 6; mso-yfti-lastrow: yes">
 		<td style="border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; width: 32.4pt; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="54">
 		<p class="MsoNormal">
-		‡E</p>
+		â‘¥</p>
 		</td>
 		<td style="width: 90.0pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="150">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒvƒƒOƒ‰ƒ€<span lang="EN-US"><o:p></o:p></span></span></p>
+		ãƒ—ãƒ­ã‚°ãƒ©ãƒ <span lang="EN-US"><o:p></o:p></span></span></p>
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		I—¹ƒ{ƒ^ƒ“<span lang="EN-US"><o:p></o:p></span></span></p>
+		çµ‚äº†ãƒœã‚¿ãƒ³<span lang="EN-US"><o:p></o:p></span></span></p>
 		</td>
 		<td style="width: 51.3pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top" width="86">
 		<p class="MsoNormal">
@@ -260,48 +260,48 @@ Counter (C#AWPF)</h1>
 		</td>
 		<td style="width: 148pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal">
-		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">gQuith<o:p></o:p></span></p>
+		<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">â€œQuitâ€<o:p></o:p></span></p>
 		</td>
 		<td style="width: 171pt; border-bottom: solid windowtext 1.0pt; border-right: solid windowtext 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0mm 5.4pt 0mm 5.4pt; height: 69px; border-left-style: none; border-left-color: inherit; border-left-width: medium; border-top-style: none; border-top-color: inherit; border-top-width: medium;" valign="top">
 		<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">
-		ƒtƒHƒ“ƒgƒTƒCƒYF<span lang="EN-US">12pt<o:p></o:p></span></span></p>
+		ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºï¼š<span lang="EN-US">12pt<o:p></o:p></span></span></p>
 		</td>
 	</tr>
 </table>
 </p>
 <p>
-(*1) TabStop ‚ğ False ‚Éİ’è</p>
-<h3><a name="1.3.À‘•d—liCj">1.3.À‘•d—liC#j</a></h3>
+(*1) TabStop ã‚’ False ã«è¨­å®š</p>
+<h3><a name="1.3.å®Ÿè£…ä»•æ§˜ï¼ˆCï¼‰">1.3.å®Ÿè£…ä»•æ§˜ï¼ˆC#ï¼‰</a></h3>
 <ul>
-	<li>ƒAƒvƒŠƒP[ƒVƒ‡ƒ““à•”‚É‰æ–Ê•\¦‚Æ“Æ—§‚ÌƒJƒEƒ“ƒ^ƒNƒ‰ƒX<span lang="EN-US">( class Counter )</span>‚ğ‚Â‚±‚ÆB</li>
+	<li>ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³å†…éƒ¨ã«ç”»é¢è¡¨ç¤ºã¨ç‹¬ç«‹ã®ã‚«ã‚¦ãƒ³ã‚¿ã‚¯ãƒ©ã‚¹<span lang="EN-US">( class Counter )</span>ã‚’æŒã¤ã“ã¨ã€‚</li>
 	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
-</span>‚Í’P“Æ‚ÌƒNƒ‰ƒXƒ‰ƒCƒuƒ‰ƒŠ‚Æ‚µ‚Äì¬‚µA<span lang="EN-US">DLL</span>‚Æ‚µ‚Äì¬‚Ì‚±‚ÆB</li>
+</span>ã¯å˜ç‹¬ã®ã‚¯ãƒ©ã‚¹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¨ã—ã¦ä½œæˆã—ã€<span lang="EN-US">DLL</span>ã¨ã—ã¦ä½œæˆã®ã“ã¨ã€‚</li>
 	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
-</span>‚Í ƒpƒuƒŠƒbƒNƒƒ\ƒbƒh‚Æ‚µ‚ÄA<span lang="EN-US">(1) Increment, (2) Decrement, (3) Clear
-</span>‚ğ‚Â‚±‚ÆB</li>
+</span>ã¯ ãƒ‘ãƒ–ãƒªãƒƒã‚¯ãƒ¡ã‚½ãƒƒãƒ‰ã¨ã—ã¦ã€<span lang="EN-US">(1) Increment, (2) Decrement, (3) Clear
+</span>ã‚’æŒã¤ã“ã¨ã€‚</li>
 	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
-</span>‚ÍƒpƒuƒŠƒbƒNƒvƒƒpƒeƒB‚Æ‚µ‚ÄƒJƒEƒ“ƒ^‚Ì’l‚ğ¦‚· <span lang="EN-US">countValue </span>‚ğ‚Â‚±‚ÆB</li>
+</span>ã¯ãƒ‘ãƒ–ãƒªãƒƒã‚¯ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã¨ã—ã¦ã‚«ã‚¦ãƒ³ã‚¿ã®å€¤ã‚’ç¤ºã™ <span lang="EN-US">countValue </span>ã‚’æŒã¤ã“ã¨ã€‚</li>
 	<li><span lang="EN-US" style="font-family:&quot;Meiryo UI&quot;">class Counter
-</span>‚Í’l”ÍˆÍ‚ÌãŒÀ’l<span lang="EN-US">(10)</span>A‰ºŒÀ’l<span lang="EN-US">(0)</span>A‚ğ¦‚·ƒpƒuƒŠƒbƒNƒƒ“ƒo•Ï”‚ğ‚Â‚±‚ÆB</li>
-	<li>•\¦•”‚Ì’l<span lang="EN-US">(</span>‡@<span lang="EN-US">)</span>‚ÆA‘Oq‚ÌcountValue‚Íƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚É‚æ‚èÚ‘±‚µA•\¦•”‚Ì’l<span lang="EN-US">(</span>‡@<span lang="EN-US">)</span>‚ğƒvƒƒOƒ‰ƒ€‚É‚æ‚è•\¦•ÏX‚·‚éÀ‘•‚ğs‚í‚È‚¢‚±‚ÆBiƒqƒ“ƒgF<span lang="EN-US">INotyfiyPropertyChanged</span>j<span lang="EN-US"><o:p></o:p></span></li>
+</span>ã¯å€¤ç¯„å›²ã®ä¸Šé™å€¤<span lang="EN-US">(10)</span>ã€ä¸‹é™å€¤<span lang="EN-US">(0)</span>ã€ã‚’ç¤ºã™ãƒ‘ãƒ–ãƒªãƒƒã‚¯ãƒ¡ãƒ³ãƒå¤‰æ•°ã‚’æŒã¤ã“ã¨ã€‚</li>
+	<li>è¡¨ç¤ºéƒ¨ã®å€¤<span lang="EN-US">(</span>â‘ <span lang="EN-US">)</span>ã¨ã€å‰è¿°ã®countValueã¯ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã«ã‚ˆã‚Šæ¥ç¶šã—ã€è¡¨ç¤ºéƒ¨ã®å€¤<span lang="EN-US">(</span>â‘ <span lang="EN-US">)</span>ã‚’ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«ã‚ˆã‚Šè¡¨ç¤ºå¤‰æ›´ã™ã‚‹å®Ÿè£…ã‚’è¡Œã‚ãªã„ã“ã¨ã€‚ï¼ˆãƒ’ãƒ³ãƒˆï¼š<span lang="EN-US">INotyfiyPropertyChanged</span>ï¼‰<span lang="EN-US"><o:p></o:p></span></li>
 </ul>
 <p class="MsoNormal"><![if !supportLists]>
 <![endif]></p>
-<h3><a name="1.4.“®ìŠÂ‹«AŠJ”­ŠÂ‹«">1.4.“®ìŠÂ‹«AŠJ”­ŠÂ‹«</a></h3>
-<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">“®ìŠÂ‹«F<span lang="EN-US"> 
-Windows XP </span>‚Ü‚½‚Í<span lang="EN-US"> Windows7<o:p><br></o:p>
-</span>ŠJ”­ŠÂ‹«F<span lang="EN-US"> Visual Studio 2008 </span>ˆÈ~<span lang="EN-US"><o:p><br></o:p>
-</span>ŠJ”­Œ¾ŒêF<span lang="EN-US"> </span>C#(WPF)</span></p>
+<h3><a name="1.4.å‹•ä½œç’°å¢ƒã€é–‹ç™ºç’°å¢ƒ">1.4.å‹•ä½œç’°å¢ƒã€é–‹ç™ºç’°å¢ƒ</a></h3>
+<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">å‹•ä½œç’°å¢ƒï¼š<span lang="EN-US"> 
+Windows XP </span>ã¾ãŸã¯<span lang="EN-US"> Windows7<o:p><br></o:p>
+</span>é–‹ç™ºç’°å¢ƒï¼š<span lang="EN-US"> Visual Studio 2008 </span>ä»¥é™<span lang="EN-US"><o:p><br></o:p>
+</span>é–‹ç™ºè¨€èªï¼š<span lang="EN-US"> </span>C#(WPF)</span></p>
 <p>&nbsp;</p>
-<h2><a name="2._À‘•—ái‚»‚Ì‚PjF_TextBox_‚ğƒ‚ƒfƒ‹‚ÉŒ‹‚Ñ•t‚¯‚é">2. À‘•—ái‚»‚Ì‚PjF TextBox 
-‚ğƒ‚ƒfƒ‹‚ÉŒ‹‚Ñ•t‚¯‚é</a></h2>
-<p>ÀÛ‚É„‚ªì¬‚µ‚½ƒvƒƒOƒ‰ƒ€‚Ì‰æ–Ê‚Í‰º}‚Ì’Ê‚èB<br>TextBox‚Ì•”•ª‚¾‚¯ F‚Ã‚¯ 
-‚ğ—V‚ñ‚Å‚İ‚Ü‚µ‚½Bƒpƒlƒ‹‚ª‹È–Ê‚ğ•`‚¢‚Ä‚¢‚é‚æ‚¤‚ÉŒ©‚¦‚ê‚ÎK‚¢‚Å‚·B<br>Àì‹Æ‚Í Expression Blend 
-‚Ås‚¢‚Ü‚µ‚½BBlend‚ª–³‚¢‚ÆWPF‚ÌÀ‘•‚Í–Ê”’‚­‚È‚¢‚Å‚·‚ËB</p>
+<h2><a name="2._å®Ÿè£…ä¾‹ï¼ˆãã®ï¼‘ï¼‰ï¼š_TextBox_ã‚’ãƒ¢ãƒ‡ãƒ«ã«çµã³ä»˜ã‘ã‚‹">2. å®Ÿè£…ä¾‹ï¼ˆãã®ï¼‘ï¼‰ï¼š TextBox 
+ã‚’ãƒ¢ãƒ‡ãƒ«ã«çµã³ä»˜ã‘ã‚‹</a></h2>
+<p>å®Ÿéš›ã«ç§ãŒä½œæˆã—ãŸãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ç”»é¢ã¯ä¸‹å›³ã®é€šã‚Šã€‚<br>TextBoxã®éƒ¨åˆ†ã ã‘ è‰²ã¥ã‘ 
+ã‚’éŠã‚“ã§ã¿ã¾ã—ãŸã€‚ãƒ‘ãƒãƒ«ãŒæ›²é¢ã‚’æã„ã¦ã„ã‚‹ã‚ˆã†ã«è¦‹ãˆã‚Œã°å¹¸ã„ã§ã™ã€‚<br>å®Ÿä½œæ¥­ã¯ Expression Blend 
+ã§è¡Œã„ã¾ã—ãŸã€‚BlendãŒç„¡ã„ã¨WPFã®å®Ÿè£…ã¯é¢ç™½ããªã„ã§ã™ã­ã€‚</p>
 <p><img alt="" height="309" src="Counter/Counter_WPF.png" width="446"></p>
 <p> &nbsp;</p>
-<p> WPF ‚Å‚ÍAXAML‚ÆC#ƒR[ƒhŠÔ‚Ìƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚ğs‚¤‚½‚ß‚É &quot;DataContext&quot; ‚Æ‚¢‚¤ƒƒ“ƒo•Ï”‚ğ‰î‚µ‚Äs‚¤‚æ‚¤‚Å‚·B</p>
-<p> <span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX (Window1.xaml)]</span></p>
+<p> WPF ã§ã¯ã€XAMLã¨C#ã‚³ãƒ¼ãƒ‰é–“ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¡Œã†ãŸã‚ã« &quot;DataContext&quot; ã¨ã„ã†ãƒ¡ãƒ³ãƒå¤‰æ•°ã‚’ä»‹ã—ã¦è¡Œã†ã‚ˆã†ã§ã™ã€‚</p>
+<p> <span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ (Window1.xaml)]</span></p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
 	<tr>
@@ -320,12 +320,12 @@ Windows XP </span>‚Ü‚½‚Í<span lang="EN-US"> Windows7<o:p><br></o:p>
   &lt;Grid&gt;
     &lt;Button x:Name=&quot;Button_Quit&quot; HorizontalAlignment=&quot;Right&quot; Margin=&quot;8,0,8,8&quot; Width=&quot;100&quot;
       Content=&quot;Quit&quot; VerticalAlignment=&quot;Bottom&quot; Height=&quot;50&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot;
-      Click=&quot;Button_Click_Quit&quot; ToolTip=&quot;ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚Ü‚·B&quot; /&gt;
+      Click=&quot;Button_Click_Quit&quot; ToolTip=&quot;ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚&quot; /&gt;
 
     &lt;TextBox x:Name=&quot;TextBox_CounterView&quot; Margin=&quot;8,8,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;59&quot;
       TextWrapping=&quot;Wrap&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;48&quot; TextAlignment=&quot;Center&quot;
       <span class="auto-style9">Text=&quot;{Binding Path=counter.CountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}&quot;</span> 
-      IsReadOnly=&quot;True&quot; IsTabStop=&quot;False&quot; ToolTip=&quot;’l‚ğ•\¦‚µ‚Ü‚·B&quot;&gt;
+      IsReadOnly=&quot;True&quot; IsTabStop=&quot;False&quot; ToolTip=&quot;å€¤ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚&quot;&gt;
       &lt;TextBox.Background&gt;
         &lt;LinearGradientBrush EndPoint=&quot;0.496,0.022&quot; StartPoint=&quot;0.498,0.936&quot;&gt;
           &lt;GradientStop Color=&quot;#FF8392AD&quot; Offset=&quot;0.004&quot;/&gt;
@@ -339,13 +339,13 @@ Windows XP </span>‚Ü‚½‚Í<span lang="EN-US"> Windows7<o:p><br></o:p>
 
     &lt;Button x:Name=&quot;Button_Increment&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;8,80,0,0&quot; Width=&quot;100&quot;
       Content=&quot;+&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; Click=&quot;Button_Click_Increment&quot; 
-      ToolTip=&quot;’l‚ğ‚P‚Â‰ÁZ‚µ‚Ü‚·B&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot; /&gt;
+      ToolTip=&quot;å€¤ã‚’ï¼‘ã¤åŠ ç®—ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot; /&gt;
     &lt;Button x:Name=&quot;Button_Decrement&quot; Margin=&quot;0,80,0,0&quot; Content=&quot;-&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot;
-      Click=&quot;Button_Click_Decrement&quot; ToolTip=&quot;’l‚ğ‚P‚ÂŒ¸Z‚µ‚Ü‚·B&quot; Width=&quot;100&quot; 
+      Click=&quot;Button_Click_Decrement&quot; ToolTip=&quot;å€¤ã‚’ï¼‘ã¤æ¸›ç®—ã—ã¾ã™ã€‚&quot; Width=&quot;100&quot; 
       HorizontalAlignment=&quot;Center&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;50&quot; /&gt;
     &lt;Button x:Name=&quot;Button_Clear&quot; Margin=&quot;0,80,8,0&quot; Content=&quot;Clear&quot; HorizontalAlignment=&quot;Right&quot;
       Width=&quot;100&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; Click=&quot;Button_Click_Clear&quot; 
-      ToolTip=&quot;’l‚ğ‚O‚ÉƒNƒŠƒA‚µ‚Ü‚·B&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot; /&gt;
+      ToolTip=&quot;å€¤ã‚’ï¼ã«ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot; /&gt;
     &lt;Rectangle Fill=&quot;White&quot; Margin=&quot;8,14.6,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;13.6&quot; Opacity=&quot;0.85&quot;&gt;
       &lt;Rectangle.Effect&gt;
         &lt;BlurEffect Radius=&quot;10&quot;/&gt;
@@ -359,7 +359,7 @@ Windows XP </span>‚Ü‚½‚Í<span lang="EN-US"> Windows7<o:p><br></o:p>
 	</tr>
 </table>
 
-<p><span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX (Window1.xaml.cs)]</span></p>
+<p><span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ (Window1.xaml.cs)]</span></p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
 	<tr>
@@ -386,7 +386,7 @@ using CounterDll;
 namespace CounterWPF
 {
 <span class="comment">    /// &lt;summary&gt;
-    /// Window1.xaml ‚Ì‘ŠŒİì—pƒƒWƒbƒN
+    /// Window1.xaml ã®ç›¸äº’ä½œç”¨ãƒ­ã‚¸ãƒƒã‚¯
     /// &lt;/summary&gt;</span>
     public partial class Window1 : Window
     {
@@ -406,7 +406,7 @@ namespace CounterWPF
 
         private void Button_Click_Quit(object sender, System.Windows.RoutedEventArgs e)
         {
-            <span class="comment">// TODO: ‚±‚±‚ÉƒCƒxƒ“ƒg ƒnƒ“ƒhƒ‰[‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B</span>
+            <span class="comment">// TODO: ã“ã“ã«ã‚¤ãƒ™ãƒ³ãƒˆ ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚</span>
             Close();
         }
 
@@ -447,14 +447,14 @@ namespace CounterWPF
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show(<span class="string">&quot;ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H&quot;</span>, <span class="string">&quot;I—¹Šm”F&quot;</span>,
+            if (MessageBox.Show(<span class="string">&quot;ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ&quot;</span>, <span class="string">&quot;çµ‚äº†ç¢ºèª&quot;</span>,
                   MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                <span class="comment">// ƒvƒƒOƒ‰ƒ€‚ğI—¹‚·‚é</span>
+                <span class="comment">// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã™ã‚‹</span>
             }
             else
             {
-                <span class="comment">// ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚È‚¢</span>
+                <span class="comment">// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ãªã„</span>
                 e.Cancel = true;
             }
         }
@@ -467,7 +467,7 @@ namespace CounterWPF
 </table>
 
 <p> &nbsp;</p>
-<p> <span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX (Counter.cs)]</span></p>
+<p> <span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ (Counter.cs)]</span></p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
 	<tr>
@@ -564,13 +564,13 @@ namespace CounterDll
 	</tr>
 </table>
 
-<p> <a href="Counter/Counter_WPF.zip">ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</a></p>
+<p> <a href="Counter/Counter_WPF.zip">ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a></p>
 <p> &nbsp;</p>
-<h2><a name="3._À‘•—ái‚»‚Ì‚QjFButton‚ğƒRƒ}ƒ“ƒh‚ÉŒ‹‚Ñ•t‚¯‚é">3. À‘•—ái‚»‚Ì‚QjF Button ‚ğƒRƒ}ƒ“ƒh‚ÉŒ‹‚Ñ•t‚¯‚é</a></h2>
-<p>BUTTON ‚ÌƒRƒ}ƒ“ƒh‚ğƒ‚ƒfƒ‹•”‚ÉŒ‹‚Ñ•t‚¯‚Ü‚·B<br>
-‚±‚±‚Å‚Íi‚»‚Ì‚Pj‚©‚ç‚Ì‰ü‘¢‚Å‚Í‚È‚­‚ÄV‹Kì¬‚ÌƒCƒ[ƒW‚Åi‚ß‚Ü‚·B——R‚ÍA‚±‚Ìè‡‚Åi‚ß‚½ê‡‚É‚ÍƒRƒ“ƒgƒ[ƒ‹‚Ö‚Ìƒf[ƒ^EƒoƒCƒ“ƒfƒBƒ“ƒO‚ªVS‚©‚çGUI‚ÅÀ{‚µ‚â‚·‚­‚È‚é‚±‚Æ‚ğ¦‚·‚½‚ß‚Å‚·B<br>ˆÈ‰º‚ÉƒvƒƒOƒ‰ƒ€‚ğ‹LÚ‚µ‚Ü‚·B</p>
+<h2><a name="3._å®Ÿè£…ä¾‹ï¼ˆãã®ï¼’ï¼‰ï¼šButtonã‚’ã‚³ãƒãƒ³ãƒ‰ã«çµã³ä»˜ã‘ã‚‹">3. å®Ÿè£…ä¾‹ï¼ˆãã®ï¼’ï¼‰ï¼š Button ã‚’ã‚³ãƒãƒ³ãƒ‰ã«çµã³ä»˜ã‘ã‚‹</a></h2>
+<p>BUTTON ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒ¢ãƒ‡ãƒ«éƒ¨ã«çµã³ä»˜ã‘ã¾ã™ã€‚<br>
+ã“ã“ã§ã¯ï¼ˆãã®ï¼‘ï¼‰ã‹ã‚‰ã®æ”¹é€ ã§ã¯ãªãã¦æ–°è¦ä½œæˆã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã§é€²ã‚ã¾ã™ã€‚ç†ç”±ã¯ã€ã“ã®æ‰‹é †ã§é€²ã‚ãŸå ´åˆã«ã¯ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã¸ã®ãƒ‡ãƒ¼ã‚¿ãƒ»ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ãŒVSã‹ã‚‰GUIã§å®Ÿæ–½ã—ã‚„ã™ããªã‚‹ã“ã¨ã‚’ç¤ºã™ãŸã‚ã§ã™ã€‚<br>ä»¥ä¸‹ã«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’è¨˜è¼‰ã—ã¾ã™ã€‚</p>
 <h3><a name="3.1._Counter.dll">3.1. Counter.dll</a></h3>
-<p>class Counter ‚ğDLL‚Æ‚µ‚Äì¬‚µ‚Ü‚·B<br>DLL‚Å‚È‚­‚Ä‚à“®ì‚·‚é‚Í‚¸‚Å‚·B</p>
+<p>class Counter ã‚’DLLã¨ã—ã¦ä½œæˆã—ã¾ã™ã€‚<br>DLLã§ãªãã¦ã‚‚å‹•ä½œã™ã‚‹ã¯ãšã§ã™ã€‚</p>
 <p>[&quot;Counter.cs&quot;]</p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
@@ -586,13 +586,13 @@ namespace CounterDll
     public class Counter : ViewModel
     {
 <span class="auto-style9">        #region ICommands</span>
-<span class="auto-style9">        // +ƒ{ƒ^ƒ“‚ÅŒÄ‚Î‚ê‚éƒRƒ}ƒ“ƒh</span>
+<span class="auto-style9">        // +ãƒœã‚¿ãƒ³ã§å‘¼ã°ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰</span>
 <span class="auto-style9">        public DelegateCommand IncrementCommand { get; private set; }</span>
 
-<span class="auto-style9">        // -ƒ{ƒ^ƒ“‚ÅŒÄ‚Î‚ê‚éƒRƒ}ƒ“ƒh</span>
+<span class="auto-style9">        // -ãƒœã‚¿ãƒ³ã§å‘¼ã°ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰</span>
 <span class="auto-style9">        public DelegateCommand DecrementCommand { get; private set; }</span>
 
-<span class="auto-style9">        // Clearƒ{ƒ^ƒ“‚ÅŒÄ‚Î‚ê‚éƒRƒ}ƒ“ƒh</span>
+<span class="auto-style9">        // Clearãƒœã‚¿ãƒ³ã§å‘¼ã°ã‚Œã‚‹ã‚³ãƒãƒ³ãƒ‰</span>
 <span class="auto-style9">        public DelegateCommand ClearCommand { get; private set; }</span>
 <span class="auto-style9">        #endregion ICommand</span>
 
@@ -635,11 +635,11 @@ namespace CounterDll
 
 
         /// &lt;summary&gt;
-        /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+        /// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
         /// &lt;/summary&gt;
         public Counter()
         {
-<span class="auto-style9">            // + ƒRƒ}ƒ“ƒh‚ğÀ‘•</span>
+<span class="auto-style9">            // + ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè£…</span>
 <span class="auto-style9">            IncrementCommand = new DelegateCommand(</span>
 <span class="auto-style9">                () =&gt; {</span>
 <span class="auto-style9">                    Increment();</span>
@@ -656,7 +656,7 @@ namespace CounterDll
 <span class="auto-style9">                    return bCanExecute;</span>
 <span class="auto-style9">                });</span>
 
-<span class="auto-style9">            // - ƒRƒ}ƒ“ƒh‚ğÀ‘•</span>
+<span class="auto-style9">            // - ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè£…</span>
 <span class="auto-style9">            DecrementCommand = new DelegateCommand(</span>
 <span class="auto-style9">                () =&gt; {</span>
 <span class="auto-style9">                    Decrement();</span>
@@ -673,7 +673,7 @@ namespace CounterDll
 <span class="auto-style9">                    return bCanExecute;</span>
 <span class="auto-style9">                });</span>
 
-<span class="auto-style9">            // Clear ƒRƒ}ƒ“ƒh‚ğÀ‘•</span>
+<span class="auto-style9">            // Clear ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè£…</span>
 <span class="auto-style9">            ClearCommand = new DelegateCommand(</span>
 <span class="auto-style9">                () =&gt;</span>
 <span class="auto-style9">                {</span>
@@ -793,10 +793,10 @@ namespace CounterDll
 
 <p> &nbsp;</p>
 <h3> <a name="3.2._CounterWPF.exe">3.2. CounterWPF.exe</a></h3>
-<p> ‚Å‚Í–{‘ÌƒAƒvƒŠ‘¤‚ğC³‚µ‚Ü‚·B<br>æ‚Ù‚Çì¬‚µ‚½ Counter.dll ‚ğQÆİ’è‚µ‚Ä‚¨‚­‚Ì‚ğ–Y‚ê‚¸‚ÉB</p>
+<p> ã§ã¯æœ¬ä½“ã‚¢ãƒ—ãƒªå´ã‚’ä¿®æ­£ã—ã¾ã™ã€‚<br>å…ˆã»ã©ä½œæˆã—ãŸ Counter.dll ã‚’å‚ç…§è¨­å®šã—ã¦ãŠãã®ã‚’å¿˜ã‚Œãšã«ã€‚</p>
 <p> &nbsp;</p>
 <h4> <a name="3.2.1._MainWindow.xaml.cs">3.2.1. MainWindow.xaml.cs</a></h4>
-<p> MainWindow.xaml.cs ‚Å‚·B‚±‚¿‚çA‚Ù‚Æ‚ñ‚Ç‹ó‚Á‚Û‚É‚È‚è‚Ü‚µ‚½B</p>
+<p> MainWindow.xaml.cs ã§ã™ã€‚ã“ã¡ã‚‰ã€ã»ã¨ã‚“ã©ç©ºã£ã½ã«ãªã‚Šã¾ã—ãŸã€‚</p>
 <p> [MainWindow.xaml.cs]</p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
@@ -822,14 +822,14 @@ namespace CounterWPF
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show(&quot;ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H&quot;, &quot;I—¹Šm”F&quot;,
+            if (MessageBox.Show(&quot;ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ&quot;, &quot;çµ‚äº†ç¢ºèª&quot;,
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                // ƒvƒƒOƒ‰ƒ€‚ğI—¹‚·‚é
+                // ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã™ã‚‹
             }
             else
             {
-                // ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚È‚¢
+                // ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ãªã„
                 e.Cancel = true;
             }
         }
@@ -841,15 +841,15 @@ namespace CounterWPF
 </table>
 
 <p>&nbsp;</p>
-<h4><a name="3.2.2._Window_‚Ì_DataContext_‚É_Counter_‚ğV‹K“o˜^">3.2.2. Window ‚Ì DataContext ‚É Counter ‚ğV‹K“o˜^</a></h4>
-<p>Window ‚Ì DataContext ‚Ö Counter ‚ğV‹K“o˜^‚µ‚Ü‚·B<br>Window ‚ğ‘I‘ğŒãADataContext 
-‚Ì‰E‘¤‚É‚ ‚éuV‹Kì¬vƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢B </p>
+<h4><a name="3.2.2._Window_ã®_DataContext_ã«_Counter_ã‚’æ–°è¦ç™»éŒ²">3.2.2. Window ã® DataContext ã« Counter ã‚’æ–°è¦ç™»éŒ²</a></h4>
+<p>Window ã® DataContext ã¸ Counter ã‚’æ–°è¦ç™»éŒ²ã—ã¾ã™ã€‚<br>Window ã‚’é¸æŠå¾Œã€DataContext 
+ã®å³å´ã«ã‚ã‚‹ã€Œæ–°è¦ä½œæˆã€ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„ã€‚ </p>
 <p><img alt="" height="573" src="Counter/img1E.jpg" width="1066"></p>
 <p><img alt="" src="Counter/img1F.jpg"></p>
-<p>uƒIƒuƒWƒFƒNƒg‚Ì‘I‘ğv‰æ–Ê‚ğ•\¦‚·‚é‚Ì‚ÅA‚±‚±‚©‚ç CounterDll ‚©‚ç class Counter ‚ğ‘I‘ğŒãAuOKvƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚µ‚Ü‚·B</p>
+<p>ã€Œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é¸æŠã€ç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹ã®ã§ã€ã“ã“ã‹ã‚‰ CounterDll ã‹ã‚‰ class Counter ã‚’é¸æŠå¾Œã€ã€ŒOKã€ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¾ã™ã€‚</p>
 <p><img alt="" src="Counter/img23.jpg"></p>
-<p>‚±‚ê‚Å Window ‚Ì DataContext ‚Ö Counter ‚ğ“o˜^‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚µ‚½B</p>
-<p>‚±‚Ì“_‚Ì MainWindow.xaml.cs ‚ÍˆÈ‰º‚Ì’Ê‚è‚Å‚·B&nbsp;</p>
+<p>ã“ã‚Œã§ Window ã® DataContext ã¸ Counter ã‚’ç™»éŒ²ã™ã‚‹ã“ã¨ãŒã§ãã¾ã—ãŸã€‚</p>
+<p>ã“ã®æ™‚ç‚¹ã® MainWindow.xaml.cs ã¯ä»¥ä¸‹ã®é€šã‚Šã§ã™ã€‚&nbsp;</p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
 	<tr>
@@ -871,11 +871,11 @@ namespace CounterWPF
     &lt;Grid&gt;
         &lt;Button x:Name=&quot;Button_Quit&quot; HorizontalAlignment=&quot;Right&quot; Margin=&quot;8,0,8,8&quot; Width=&quot;100&quot; 
             Content=&quot;Quit&quot; VerticalAlignment=&quot;Bottom&quot; Height=&quot;50&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; 
-            Click=&quot;Button_Click_Quit&quot; ToolTip=&quot;ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚Ü‚·B&quot; /&gt;
+            Click=&quot;Button_Click_Quit&quot; ToolTip=&quot;ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚&quot; /&gt;
 
         &lt;TextBox x:Name=&quot;TextBox_CounterView&quot; Margin=&quot;8,8,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;59&quot;
             TextWrapping=&quot;Wrap&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;48&quot; TextAlignment=&quot;Center&quot; IsReadOnly=&quot;True&quot;
-            IsTabStop=&quot;False&quot; ToolTip=&quot;’l‚ğ•\¦‚µ‚Ü‚·B&quot;&gt;
+            IsTabStop=&quot;False&quot; ToolTip=&quot;å€¤ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚&quot;&gt;
 
             &lt;TextBox.Background&gt;
                 &lt;LinearGradientBrush EndPoint=&quot;0.496,0.022&quot; StartPoint=&quot;0.498,0.936&quot;&gt;
@@ -888,13 +888,13 @@ namespace CounterWPF
             &lt;/TextBox.Effect&gt;
         &lt;/TextBox&gt;
         &lt;Button x:Name=&quot;Button_Increment&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;8,80,0,0&quot; Width=&quot;100&quot; 
-            Content=&quot;+&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;’l‚ğ‚P‚Â‰ÁZ‚µ‚Ü‚·B&quot; Height=&quot;50&quot;
+            Content=&quot;+&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;å€¤ã‚’ï¼‘ã¤åŠ ç®—ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot;
             VerticalAlignment=&quot;Top&quot; /&gt;
         &lt;Button x:Name=&quot;Button_Decrement&quot; Margin=&quot;0,80,0,0&quot; <code>Width=&quot;100&quot; Height=&quot;50&quot;</code>
             Content=&quot;-&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; 
-            ToolTip=&quot;’l‚ğ‚P‚ÂŒ¸Z‚µ‚Ü‚·B&quot; HorizontalAlignment=&quot;Center&quot; VerticalAlignment=&quot;Top&quot;/&gt;
+            ToolTip=&quot;å€¤ã‚’ï¼‘ã¤æ¸›ç®—ã—ã¾ã™ã€‚&quot; HorizontalAlignment=&quot;Center&quot; VerticalAlignment=&quot;Top&quot;/&gt;
         &lt;Button x:Name=&quot;Button_Clear&quot; Margin=&quot;0,80,8,0&quot; Content=&quot;Clear&quot; HorizontalAlignment=&quot;Right&quot;
-            Width=&quot;100&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;’l‚ğ‚O‚ÉƒNƒŠƒA‚µ‚Ü‚·B&quot; Height=&quot;50&quot;
+            Width=&quot;100&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;å€¤ã‚’ï¼ã«ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot;
             VerticalAlignment=&quot;Top&quot; /&gt;
         &lt;Rectangle Fill=&quot;White&quot; Margin=&quot;8,14.6,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;13.6&quot; Opacity=&quot;0.85&quot;&gt;
             &lt;Rectangle.Effect&gt;
@@ -909,20 +909,20 @@ namespace CounterWPF
 </table>
 
 <p>&nbsp;</p>
-<h4><a name="3.2.3._TextBox_‚Ì_Text_‚ğ_DataContext_‚Ì_Counter.CountValue_‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.3. TextBox ‚Ì Text ‚ğ DataContext ‚Ì Counter.CountValue ‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO</a></h4>
-<p>TextBox ‚Ì Text ‚ğ DataContext ‚Ì Counter.CountValue ‚Öƒf[ƒ^EƒoƒCƒ“ƒfƒBƒ“ƒO‚µ‚Ü‚·B</p>
-<p>TextBox ‚ğ‘I‘ğŒãAText ‚Ì‰E‘¤‚É‚ ‚é ‚ğƒNƒŠƒbƒNAuƒf[ƒ^EƒoƒCƒ“ƒfƒBƒ“ƒO ‚Ìì¬...v‚ğ‘I‚Ñ‚Ü‚·B</p>
+<h4><a name="3.2.3._TextBox_ã®_Text_ã‚’_DataContext_ã®_Counter.CountValue_ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.3. TextBox ã® Text ã‚’ DataContext ã® Counter.CountValue ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a></h4>
+<p>TextBox ã® Text ã‚’ DataContext ã® Counter.CountValue ã¸ãƒ‡ãƒ¼ã‚¿ãƒ»ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã—ã¾ã™ã€‚</p>
+<p>TextBox ã‚’é¸æŠå¾Œã€Text ã®å³å´ã«ã‚ã‚‹â–¡ã‚’ã‚¯ãƒªãƒƒã‚¯ã€ã€Œãƒ‡ãƒ¼ã‚¿ãƒ»ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚° ã®ä½œæˆ...ã€ã‚’é¸ã³ã¾ã™ã€‚</p>
 <p><img alt="" height="563" src="Counter/img24.jpg" width="1056"></p>
 <p><img alt="" src="Counter/img27.jpg"></p>
-<p>uTextBox_CounterView.Text ‚Ìƒf[ƒ^ 
-ƒoƒCƒ“ƒfƒBƒ“ƒO‚ğì¬v‚Ì‰æ–Ê‚ğ•\¦‚·‚é‚Ì‚ÅAƒpƒX‚©‚çuCounterValuev‚ğ‘I‘ğ‚µ‚ÄuOKvƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ü‚·B</p>
+<p>ã€ŒTextBox_CounterView.Text ã®ãƒ‡ãƒ¼ã‚¿ 
+ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’ä½œæˆã€ã®ç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹ã®ã§ã€ãƒ‘ã‚¹ã‹ã‚‰ã€ŒCounterValueã€ã‚’é¸æŠã—ã¦ã€ŒOKã€ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¾ã™ã€‚</p>
 <p><img alt="" src="Counter/img29.jpg"></p>
-<p>‰º}‚Ì‰æ–Ê‚É‚È‚Á‚½‚ç¬Œ÷‚Å‚·BTextBox ‚Ì Text ‚ª CountValue ‚ÖŒ‹‚Ñ‚Â‚¢‚Ä &quot;0&quot; ‚ğ•\¦‚Å‚«‚é‚æ‚¤‚É‚È‚è‚Ü‚µ‚½B</p>
+<p>ä¸‹å›³ã®ç”»é¢ã«ãªã£ãŸã‚‰æˆåŠŸã§ã™ã€‚TextBox ã® Text ãŒ CountValue ã¸çµã³ã¤ã„ã¦ &quot;0&quot; ã‚’è¡¨ç¤ºã§ãã‚‹ã‚ˆã†ã«ãªã‚Šã¾ã—ãŸã€‚</p>
 <p><img alt="" height="558" src="Counter/img2A.jpg" width="1037"></p>
 <p>&nbsp;</p>
-<h4><a name="3.2.4._u{vƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğ_Counter.IncrementCommand_‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.4. u{vƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğ Counter.IncrementCommand ‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO</a></h4>
-<p>u{vƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğ Counter.IncrementCommand ‚ÖƒoƒCƒ“ƒfƒBƒ“ƒO‚µ‚Ü‚·B</p>
-<p>u{vƒ{ƒ^ƒ“‚ğ‘I‘ğŒãACommand ‚Ì‰E‘¤‚É‚ ‚é ‚ğƒNƒŠƒbƒNA</p>
+<h4><a name="3.2.4._ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’_Counter.IncrementCommand_ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.4. ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ Counter.IncrementCommand ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a></h4>
+<p>ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ Counter.IncrementCommand ã¸ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã—ã¾ã™ã€‚</p>
+<p>ã€Œï¼‹ã€ãƒœã‚¿ãƒ³ã‚’é¸æŠå¾Œã€Command ã®å³å´ã«ã‚ã‚‹â–¡ã‚’ã‚¯ãƒªãƒƒã‚¯ã€</p>
 <p>
 <img alt="" height="540" src="Counter/img31.jpg" width="1011"></p>
 <p>
@@ -932,13 +932,13 @@ namespace CounterWPF
 <p>
 <img alt="" src="Counter/img32.jpg"></p>
 <p>&nbsp;</p>
-<p>ƒpƒX‚©‚çuIncrementCommandv‚ğ‘I‘ğ‚µAuOKv‚ğƒNƒŠƒbƒN‚µ‚Ü‚·B</p>
+<p>ãƒ‘ã‚¹ã‹ã‚‰ã€ŒIncrementCommandã€ã‚’é¸æŠã—ã€ã€ŒOKã€ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¾ã™ã€‚</p>
 <p>
 <img alt="" src="Counter/img37.jpg"></p>
 <p>&nbsp;</p>
-<h4><a name="3.2.5._u|vAuClearvƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğƒoƒCƒ“ƒfƒBƒ“ƒO">3.2.5. u[vAuClearvƒ{ƒ^ƒ“‚ÌƒRƒ}ƒ“ƒh‚ğƒoƒCƒ“ƒfƒBƒ“ƒO</a></h4>
-<p>3.2.4. ‚Æ“¯—l‚Ìè‡‚Åu[vAuClearvƒ{ƒ^ƒ“‚ğƒoƒCƒ“ƒfƒBƒ“ƒO‚µ‚Ü‚·B</p>
-<p>‚±‚Ì“_‚Ì MainWindow.xaml.cs ‚ÍˆÈ‰º‚Ì’Ê‚è‚Å‚·B&nbsp;</p>
+<h4><a name="3.2.5._ã€Œï¼ã€ã€ã€ŒClearã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°">3.2.5. ã€Œãƒ¼ã€ã€ã€ŒClearã€ãƒœã‚¿ãƒ³ã®ã‚³ãƒãƒ³ãƒ‰ã‚’ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°</a></h4>
+<p>3.2.4. ã¨åŒæ§˜ã®æ‰‹é †ã§ã€Œãƒ¼ã€ã€ã€ŒClearã€ãƒœã‚¿ãƒ³ã‚’ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã—ã¾ã™ã€‚</p>
+<p>ã“ã®æ™‚ç‚¹ã® MainWindow.xaml.cs ã¯ä»¥ä¸‹ã®é€šã‚Šã§ã™ã€‚&nbsp;</p>
 
 <table style="border: medium double #C0C0C0; width: 800px">
 	<tr>
@@ -959,10 +959,10 @@ namespace CounterWPF
     &lt;Grid&gt;
         &lt;Button x:Name=&quot;Button_Quit&quot; HorizontalAlignment=&quot;Right&quot; Margin=&quot;8,0,8,8&quot; Width=&quot;100&quot; Content=&quot;Quit&quot;
             VerticalAlignment=&quot;Bottom&quot; Height=&quot;50&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; Click=&quot;Button_Click_Quit&quot;
-            ToolTip=&quot;ƒvƒƒOƒ‰ƒ€‚ğI—¹‚µ‚Ü‚·B&quot; /&gt;
+            ToolTip=&quot;ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’çµ‚äº†ã—ã¾ã™ã€‚&quot; /&gt;
         &lt;TextBox x:Name=&quot;TextBox_CounterView&quot; Margin=&quot;8,8,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;59&quot;
             TextWrapping=&quot;Wrap&quot; FontFamily=&quot;Arial&quot; FontSize=&quot;48&quot; TextAlignment=&quot;Center&quot; IsReadOnly=&quot;True&quot;
-            IsTabStop=&quot;False&quot; ToolTip=&quot;’l‚ğ•\¦‚µ‚Ü‚·B&quot; <span class="auto-style9">Text=&quot;{Binding CountValue}&quot;</span>&gt;
+            IsTabStop=&quot;False&quot; ToolTip=&quot;å€¤ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚&quot; <span class="auto-style9">Text=&quot;{Binding CountValue}&quot;</span>&gt;
             &lt;TextBox.Background&gt;
                 &lt;LinearGradientBrush EndPoint=&quot;0.496,0.022&quot; StartPoint=&quot;0.498,0.936&quot;&gt;
                     &lt;GradientStop Color=&quot;#FF8392AD&quot; Offset=&quot;0.004&quot;/&gt;
@@ -974,13 +974,13 @@ namespace CounterWPF
             &lt;/TextBox.Effect&gt;
         &lt;/TextBox&gt;
         &lt;Button x:Name=&quot;Button_Increment&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;8,80,0,0&quot; Width=&quot;100&quot; Content=&quot;+&quot; 
-            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;’l‚ğ‚P‚Â‰ÁZ‚µ‚Ü‚·B&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot;
+            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;å€¤ã‚’ï¼‘ã¤åŠ ç®—ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot;
             <span class="auto-style9">Command=&quot;{Binding IncrementCommand, Mode=OneWay}&quot;</span> /&gt;
         &lt;Button x:Name=&quot;Button_Decrement&quot; <code>HorizontalAlignment=&quot;Center&quot; </code>Margin=&quot;0,80,0,0&quot; Content=&quot;-&quot; <code>Width=&quot;100&quot;</code>
-            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;’l‚ğ‚P‚ÂŒ¸Z‚µ‚Ü‚·B&quot; VerticalAlignment=&quot;Top&quot; <code>Height=&quot;50&quot;</code>
+            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;å€¤ã‚’ï¼‘ã¤æ¸›ç®—ã—ã¾ã™ã€‚&quot; VerticalAlignment=&quot;Top&quot; <code>Height=&quot;50&quot;</code>
             <span class="auto-style9">Command=&quot;{Binding DecrementCommand, Mode=OneWay}&quot;</span> /&gt;
         &lt;Button x:Name=&quot;Button_Clear&quot; Margin=&quot;0,80,8,0&quot; Content=&quot;Clear&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;100&quot;
-            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;’l‚ğ‚O‚ÉƒNƒŠƒA‚µ‚Ü‚·B&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot;
+            FontFamily=&quot;Arial&quot; FontSize=&quot;16&quot; ToolTip=&quot;å€¤ã‚’ï¼ã«ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚&quot; Height=&quot;50&quot; VerticalAlignment=&quot;Top&quot;
             <span class="auto-style9">Command=&quot;{Binding ClearCommand, Mode=OneWay}&quot;</span> /&gt;
         &lt;Rectangle Fill=&quot;White&quot; Margin=&quot;8,14.6,8,0&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;13.6&quot; Opacity=&quot;0.85&quot;&gt;
             &lt;Rectangle.Effect&gt;
@@ -996,11 +996,11 @@ namespace CounterWPF
 </table>
 
 <p> &nbsp;</p>
-<p> ˆÈã‚ÅŠ®¬‚Å‚·B</p>
+<p> ä»¥ä¸Šã§å®Œæˆã§ã™ã€‚</p>
 <p> <img alt="" src="Counter/img3A.jpg"></p>
 <p> &nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF 2012”N5Œ16“ú –Ø‰º‰pr<br>XVF 2016”N5Œ3“ú –Ø‰º‰pr<br>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š 2012å¹´5æœˆ16æ—¥ æœ¨ä¸‹è‹±ä¿Š<br>æ›´æ–°ï¼š 2016å¹´5æœˆ3æ—¥ æœ¨ä¸‹è‹±ä¿Š<br>
 </font></p>
 </body>
 </html>

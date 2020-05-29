@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>CryptEnumProviders (CryptAPI)</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -36,12 +36,12 @@
 CryptEnumProviders (CryptAPI)
 </h1>
 
-<p> <font face="Meiryo UI">Windows���� AES �� SHA256 ��CryptAPI�Ŏg�p�������Ȃ�A���׎n�߂܂����B<br>
-.NET�ŊȒP�ɂł��邱�Ƃ��ACryptAPI�P�ƂŎ������悤�Ƃ���Ǝ葱�����ʓ|�ł��B�ł����XWin32�Ŏ�������K�v������ꍇ������̂ŁA�܂����Ƃ��ėL�Ӌ`�ł͂Ȃ����ƁB</font></p>
-<p> <span class="auto-style1">�܂��� CryptEnumProviders() 
-��CSP�ꗗ���擾������@�ł��BOS�ɂ���Ď�������Ă���CSP�ɍ��ق�����̂ŏd�v�ȏ��ł��B</span></p>
-<p> <a href="CryptEnumProviders/CryptEnumProviders.zip">�T���v���v���O�����ꎮ �_�E�����[�h�izip�`���j</a></p>
-<span class="table_title">[�v���O�����\�[�X]</span>
+<p> <font face="Meiryo UI">Windows環境で AES と SHA256 をCryptAPIで使用したくなり、調べ始めました。<br>
+.NETで簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</font></p>
+<p> <span class="auto-style1">まずは CryptEnumProviders() 
+でCSP一覧を取得する方法です。OSによって実装されているCSPに差異があるので重要な情報です。</span></p>
+<p> <a href="CryptEnumProviders/CryptEnumProviders.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<span class="table_title">[プログラムソース]</span>
 
 <code>
 <pre class="prettyprint linenums">
@@ -67,12 +67,12 @@ CryptEnumProviders (CryptAPI)
     dwIndex = 0;
 
     <span class="command">while</span>( <strong><span class="auto-style6">CryptEnumProviders</span></strong> (
-                        dwIndex,        <span class="comment">// �C���f�b�N�X�ԍ�</span>
-                        NULL,           <span class="comment">// �\��</span>
-                        0,              <span class="comment">// �\��</span>
-                        &amp;dwType,        <span class="comment">// CSP�̃^�C�v</span>
-                        pszName,        <span class="comment">// CSP�̖���</span>
-                        &amp;cbName))       <span class="comment">// ���̂̃X�g�����O��</span>
+                        dwIndex,        <span class="comment">// インデックス番号</span>
+                        NULL,           <span class="comment">// 予約</span>
+                        0,              <span class="comment">// 予約</span>
+                        &amp;dwType,        <span class="comment">// CSPのタイプ</span>
+                        pszName,        <span class="comment">// CSPの名称</span>
+                        &amp;cbName))       <span class="comment">// 名称のストリング長</span>
     {
         _tprintf(_T("%2d %s\n"), dwType, pszName);
         dwIndex++;
@@ -89,7 +89,7 @@ CryptEnumProviders (CryptAPI)
 </code>
 	
 <br>
-<span class="table_title">[���s����]</span>
+<span class="table_title">[実行結果]</span>
 
 <pre class="prettyprint linenums">
 Enamerate CSP(Cryptographic Service Provider).
@@ -109,12 +109,12 @@ HIT [enter] KEY !!
 </pre>
 </code>
 
-<p> �ŏ��ɋL�ڂ���Ă���l�� ProviderType �������l�ŁA�g�p�ł���A���S���Y���������܂��B<br>�ڍׂ� 
+<p> 最初に記載されている値は ProviderType を示す値で、使用できるアルゴリズムを示します。<br>詳細は 
 <a href="CryptEnumProviderTypes.html" target="_self">CryptEnumProviderTypes.html</a> 
-���Q�ƁB</p>
-<p> OS: Windows7 64bit Proffesional<br>�쐬�F VC++2008 sp1�A32bit�R���p�C���A/MT(d)</p>
+を参照。</p>
+<p> OS: Windows7 64bit Proffesional<br>作成： VC++2008 sp1、32bitコンパイル、/MT(d)</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2012�N1��28�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2012年1月28日 木下英俊<br>
 </font></p>
 </body>
 </html>

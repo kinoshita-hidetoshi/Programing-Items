@@ -1,7 +1,7 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>[VBA] •¡”‚ÌƒV[ƒg‚ğ‘€ì‚·‚é</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[VBA] è¤‡æ•°ã®ã‚·ãƒ¼ãƒˆã‚’æ“ä½œã™ã‚‹</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../prettify.css" rel="stylesheet" type="text/css">
@@ -21,27 +21,27 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-[Excel VBA] •¡”‚ÌƒV[ƒg‚ğ‘€ì‚·‚é</h1>
+[Excel VBA] è¤‡æ•°ã®ã‚·ãƒ¼ãƒˆã‚’æ“ä½œã™ã‚‹</h1>
 
-<p>•¡”‚ÌƒV[ƒg‚ğ‘€ì‚·‚éVBA‚ğì¬‚µ‚Ü‚·B</p>
-<p>QlEˆø—pŒ³‹L–F “úŒoƒ\ƒtƒgƒEƒFƒA 2019”N9Œ† uƒrƒWƒlƒXƒp[ƒ\ƒ“‚Ì Excel VBA Ä“ü–å ‘æ4‰ñ •¡”‚ÌƒV[ƒg‚ğ‘€ì‚µ‚æ‚¤v</p>
+<p>è¤‡æ•°ã®ã‚·ãƒ¼ãƒˆã‚’æ“ä½œã™ã‚‹VBAã‚’ä½œæˆã—ã¾ã™ã€‚</p>
+<p>å‚è€ƒãƒ»å¼•ç”¨å…ƒè¨˜äº‹ï¼š æ—¥çµŒã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ 2019å¹´9æœˆå· ã€Œãƒ“ã‚¸ãƒã‚¹ãƒ‘ãƒ¼ã‚½ãƒ³ã® Excel VBA å†å…¥é–€ ç¬¬4å› è¤‡æ•°ã®ã‚·ãƒ¼ãƒˆã‚’æ“ä½œã—ã‚ˆã†ã€</p>
 <p>&nbsp;</p>
 
-<h2> –ÚŸ</h2>
+<h2> ç›®æ¬¡</h2>
 
-<p> <a href="#1._ì‹Æ“ú‚É‚æ‚èAŒ‚²‚Æ‚ÉƒV[ƒg‚ğ•ªŠ„‚·‚é">1. ì‹Æ“ú‚É‚æ‚èAŒ‚²‚Æ‚ÉƒV[ƒg‚ğ•ªŠ„‚·‚é</a><br>
-<a href="#2._ˆê——ˆÈŠO‚ÌƒV[ƒg‚ğ‚·‚×‚Äíœ‚·‚é">2. ˆê——ˆÈŠO‚ÌƒV[ƒg‚ğ‚·‚×‚Äíœ‚·‚é</a><br>
-<a href="#3._hƒV[ƒgˆê——h_ƒV[ƒg‚ğì¬‚·‚é">3. hƒV[ƒgˆê——h_ƒV[ƒg‚ğì¬‚·‚é</a><br>
-<a href="#4._‘Sƒ\[ƒXƒR[ƒh">4. ‘Sƒ\[ƒXƒR[ƒh</a><br>
-<a href="#ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€">ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</a><br>
-<a href="#Ql">Ql</a></p>
+<p> <a href="#1._ä½œæ¥­æ—¥ã«ã‚ˆã‚Šã€æœˆã”ã¨ã«ã‚·ãƒ¼ãƒˆã‚’åˆ†å‰²ã™ã‚‹">1. ä½œæ¥­æ—¥ã«ã‚ˆã‚Šã€æœˆã”ã¨ã«ã‚·ãƒ¼ãƒˆã‚’åˆ†å‰²ã™ã‚‹</a><br>
+<a href="#2._ä¸€è¦§ä»¥å¤–ã®ã‚·ãƒ¼ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹">2. ä¸€è¦§ä»¥å¤–ã®ã‚·ãƒ¼ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹</a><br>
+<a href="#3._â€ã‚·ãƒ¼ãƒˆä¸€è¦§â€_ã‚·ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹">3. â€ã‚·ãƒ¼ãƒˆä¸€è¦§â€_ã‚·ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹</a><br>
+<a href="#4._å…¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰">4. å…¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰</a><br>
+<a href="#ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ">ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </a><br>
+<a href="#å‚è€ƒ">å‚è€ƒ</a></p>
 
 <p> &nbsp;</p>
-<h2> <a name="1._ì‹Æ“ú‚É‚æ‚èAŒ‚²‚Æ‚ÉƒV[ƒg‚ğ•ªŠ„‚·‚é">1. ì‹Æ“ú‚É‚æ‚èAŒ‚²‚Æ‚ÉƒV[ƒg‚ğ•ªŠ„‚·‚é</a></h2>
-<p> [ŠT—v]</p>
+<h2> <a name="1._ä½œæ¥­æ—¥ã«ã‚ˆã‚Šã€æœˆã”ã¨ã«ã‚·ãƒ¼ãƒˆã‚’åˆ†å‰²ã™ã‚‹">1. ä½œæ¥­æ—¥ã«ã‚ˆã‚Šã€æœˆã”ã¨ã«ã‚·ãƒ¼ãƒˆã‚’åˆ†å‰²ã™ã‚‹</a></h2>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -80,30 +80,30 @@
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;sample.xlsm&quot; - Module1]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;sample.xlsm&quot; - Module1]</p>
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 <code>'
-' &quot;ˆê——&quot;ƒV[ƒg‚©‚çì‹Æ“ú‚ğŠm”F‚µ‚ÄAì‹Æ“ú‚ª2ŒA3ŒA4ŒA‚Ì‚à‚Ì‚ğ&quot;2Œ•ª&quot;A&quot;3Œ•ª&quot;A&quot;4Œ•ª&quot;‚ÌƒV[ƒg‚ÖƒRƒs[‚·‚é
+' &quot;ä¸€è¦§&quot;ã‚·ãƒ¼ãƒˆã‹ã‚‰ä½œæ¥­æ—¥ã‚’ç¢ºèªã—ã¦ã€ä½œæ¥­æ—¥ãŒ2æœˆã€3æœˆã€4æœˆã€ã®ã‚‚ã®ã‚’&quot;2æœˆåˆ†&quot;ã€&quot;3æœˆåˆ†&quot;ã€&quot;4æœˆåˆ†&quot;ã®ã‚·ãƒ¼ãƒˆã¸ã‚³ãƒ”ãƒ¼ã™ã‚‹
 '
-Sub Œ•ªŠ„()
+Sub æœˆåˆ†å‰²()
     Dim i
        
     For i = 2 To 4
-        ' 2Œ‚©‚ç4Œ‚ÅƒtƒBƒ‹ƒ^
-        Worksheets(&quot;ˆê——&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic
+        ' 2æœˆã‹ã‚‰4æœˆã§ãƒ•ã‚£ãƒ«ã‚¿
+        Worksheets(&quot;ä¸€è¦§&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic
         
         Worksheets.Add after:=Worksheets(Worksheets.Count)
-        ActiveSheet.Name = i &amp; &quot;Œ•ª&quot;
-        Worksheets(&quot;ˆê——&quot;).UsedRange.Copy
+        ActiveSheet.Name = i &amp; &quot;æœˆåˆ†&quot;
+        Worksheets(&quot;ä¸€è¦§&quot;).UsedRange.Copy
         
-        With Worksheets(i &amp; &quot;Œ•ª&quot;).Range(&quot;A1&quot;)
+        With Worksheets(i &amp; &quot;æœˆåˆ†&quot;).Range(&quot;A1&quot;)
             .PasteSpecial xlPasteColumnWidths
             .PasteSpecial xlPasteAll
         End With
     Next i
     
-    With Worksheets(&quot;ˆê——&quot;)
+    With Worksheets(&quot;ä¸€è¦§&quot;)
         .Select
         .ShowAllData
     End With
@@ -112,11 +112,11 @@ End Sub</code></pre>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="2._ˆê——ˆÈŠO‚ÌƒV[ƒg‚ğ‚·‚×‚Äíœ‚·‚é">2. &quot;ˆê——&quot;ˆÈŠO‚ÌƒV[ƒg‚ğ‚·‚×‚Äíœ‚·‚é</a></h2>
-<p> [ŠT—v]</p>
+<h2> <a name="2._ä¸€è¦§ä»¥å¤–ã®ã‚·ãƒ¼ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹">2. &quot;ä¸€è¦§&quot;ä»¥å¤–ã®ã‚·ãƒ¼ãƒˆã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹</a></h2>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -150,19 +150,19 @@ End Sub</code></pre>
 <p><img alt="" src="Work_with_multiple_sheets/img14.gif"></p>
 <p>&nbsp;</p>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;sample.xlsm&quot; - Module1]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;sample.xlsm&quot; - Module1]</p>
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 <code>'
-' ƒV[ƒg–¼ &quot;ˆê——&quot; ˆÈŠO‚ÌƒV[ƒg‚ğíœ‚·‚é
+' ã‚·ãƒ¼ãƒˆå &quot;ä¸€è¦§&quot; ä»¥å¤–ã®ã‚·ãƒ¼ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 '
-Sub ƒV[ƒgíœ()
+Sub ã‚·ãƒ¼ãƒˆå‰Šé™¤()
     Dim sht
     
     Application.DisplayAlerts = False
     
     For Each sht In Worksheets
-        If sht.Name &lt;&gt; &quot;ˆê——&quot; Then
+        If sht.Name &lt;&gt; &quot;ä¸€è¦§&quot; Then
             sht.Delete
         End If
     Next sht
@@ -171,11 +171,11 @@ End Sub</code></pre>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="3._hƒV[ƒgˆê——h_ƒV[ƒg‚ğì¬‚·‚é">3. hƒV[ƒgˆê——h ƒV[ƒg‚ğì¬‚·‚é</a></h2>
-<p> [ŠT—v]</p>
+<h2> <a name="3._â€ã‚·ãƒ¼ãƒˆä¸€è¦§â€_ã‚·ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹">3. â€ã‚·ãƒ¼ãƒˆä¸€è¦§â€ ã‚·ãƒ¼ãƒˆã‚’ä½œæˆã™ã‚‹</a></h2>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -213,31 +213,31 @@ End Sub</code></pre>
 <p> <img alt="" src="Work_with_multiple_sheets/img11.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
-<h2> <a name="4._‘Sƒ\[ƒXƒR[ƒh">4. ‘Sƒ\[ƒXƒR[ƒh</a></h2>
+<h2> <a name="4._å…¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰">4. å…¨ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰</a></h2>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;sample.xlsm&quot; - Module1]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;sample.xlsm&quot; - Module1]</p>
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 <code>'
-' &quot;ƒV[ƒgˆê——&quot; ‚ğì¬‚·‚é
+' &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚’ä½œæˆã™ã‚‹
 '
-Sub ƒV[ƒgˆê——()
+Sub ã‚·ãƒ¼ãƒˆä¸€è¦§()
     Dim i
     
     Application.DisplayAlerts = False
     
-    ' ‚à‚µ &quot;ƒV[ƒgˆê——&quot; ƒV[ƒg‚ª‚ ‚Á‚½‚çíœ
-    If IsExistSheet_Object(&quot;ƒV[ƒgˆê——&quot;) = True Then
-        ' &quot;ƒV[ƒgˆê——&quot; ƒV[ƒg‚ª‚ ‚é‚Ì‚Åíœ
-        Worksheets(&quot;ƒV[ƒgˆê——&quot;).Delete
+    ' ã‚‚ã— &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚·ãƒ¼ãƒˆãŒã‚ã£ãŸã‚‰å‰Šé™¤
+    If IsExistSheet_Object(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;) = True Then
+        ' &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚·ãƒ¼ãƒˆãŒã‚ã‚‹ã®ã§å‰Šé™¤
+        Worksheets(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;).Delete
     End If
     
     Worksheets.Add before:=Worksheets(1)
-    ActiveSheet.Name = &quot;ƒV[ƒgˆê——&quot;
+    ActiveSheet.Name = &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;
     
-    With Worksheets(&quot;ƒV[ƒgˆê——&quot;)
-        .Cells(1, &quot;A&quot;) = &quot;”Ô†&quot;
-        .Cells(1, &quot;B&quot;) = &quot;ƒV[ƒg–¼&quot;
+    With Worksheets(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;)
+        .Cells(1, &quot;A&quot;) = &quot;ç•ªå·&quot;
+        .Cells(1, &quot;B&quot;) = &quot;ã‚·ãƒ¼ãƒˆå&quot;
         
         For i = 1 To Worksheets.Count
             .Cells(i + 1, &quot;A&quot;) = i
@@ -255,34 +255,34 @@ End Sub
 
 
 '
-' &quot;w’è‚µ‚½ƒV[ƒg–¼&quot; ‚ÌƒV[ƒg‚Ì—L–³‚ğŠm”F‚·‚é
-' True   : ‚ ‚é
-' False  : ‚È‚¢
+' &quot;æŒ‡å®šã—ãŸã‚·ãƒ¼ãƒˆå&quot; ã®ã‚·ãƒ¼ãƒˆã®æœ‰ç„¡ã‚’ç¢ºèªã™ã‚‹
+' True   : ã‚ã‚‹
+' False  : ãªã„
 '
 'Public Function IsExistSheet_Object(checkBookNm As String, checkSheetNm As String) As Boolean
 Public Function IsExistSheet_Object(checkSheetNm As String) As Boolean
  
-    Dim targetSheet As Worksheet    '‘ÎÛƒV[ƒg‚ğƒZƒbƒg‚·‚é•Ï”
-    Dim ret         As Boolean      'ƒ`ƒFƒbƒNŒ‹‰Ê
+    Dim targetSheet As Worksheet    'å¯¾è±¡ã‚·ãƒ¼ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹å¤‰æ•°
+    Dim ret         As Boolean      'ãƒã‚§ãƒƒã‚¯çµæœ
     
-    'ƒGƒ‰[–³‹
+    'ã‚¨ãƒ©ãƒ¼ç„¡è¦–
     On Error Resume Next
     
-    'ƒIƒuƒWƒFƒNƒg•Ï”‚ÉA‘ÎÛƒV[ƒg‚ğƒZƒbƒg‚·‚é
+    'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå¤‰æ•°ã«ã€å¯¾è±¡ã‚·ãƒ¼ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     'Set targetSheet = Workbooks(checkBookNm).Worksheets(checkSheetNm)
     Set targetSheet = Worksheets(checkSheetNm)
     
-    'ƒGƒ‰[–³‹‚ğ‰ğœ
+    'ã‚¨ãƒ©ãƒ¼ç„¡è¦–ã‚’è§£é™¤
     On Error GoTo 0
     
-    'ƒIƒuƒWƒFƒNƒg•Ï”‚ÉAƒV[ƒg‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Å‘¶İ‚ğ”»’è
+    'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå¤‰æ•°ã«ã€ã‚·ãƒ¼ãƒˆãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã§å­˜åœ¨ã‚’åˆ¤å®š
     If targetSheet Is Nothing Then
         ret = False
     Else
         ret = True
     End If
  
-    '‘¶İƒ`ƒFƒbƒN‚ÌŒ‹‰Ê‚ğ•Ô‚·
+    'å­˜åœ¨ãƒã‚§ãƒƒã‚¯ã®çµæœã‚’è¿”ã™
     IsExistSheet_Object = ret
     
 End Function</code></pre>
@@ -293,30 +293,30 @@ End Function</code></pre>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;sample.xlsm&quot; - ‘S‘Ì]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;sample.xlsm&quot; - å…¨ä½“]</p>
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 <code>'
-' &quot;ˆê——&quot;ƒV[ƒg‚©‚çì‹Æ“ú‚ğŠm”F‚µ‚ÄAì‹Æ“ú‚ª2ŒA3ŒA4ŒA‚Ì‚à‚Ì‚ğ&quot;2Œ•ª&quot;A&quot;3Œ•ª&quot;A&quot;4Œ•ª&quot;‚ÌƒV[ƒg‚ÖƒRƒs[‚·‚é
+' &quot;ä¸€è¦§&quot;ã‚·ãƒ¼ãƒˆã‹ã‚‰ä½œæ¥­æ—¥ã‚’ç¢ºèªã—ã¦ã€ä½œæ¥­æ—¥ãŒ2æœˆã€3æœˆã€4æœˆã€ã®ã‚‚ã®ã‚’&quot;2æœˆåˆ†&quot;ã€&quot;3æœˆåˆ†&quot;ã€&quot;4æœˆåˆ†&quot;ã®ã‚·ãƒ¼ãƒˆã¸ã‚³ãƒ”ãƒ¼ã™ã‚‹
 '
-Sub Œ•ªŠ„()
+Sub æœˆåˆ†å‰²()
     Dim i
        
     For i = 2 To 4
-        ' 2Œ‚©‚ç4Œ‚ÅƒtƒBƒ‹ƒ^
-        Worksheets(&quot;ˆê——&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic
+        ' 2æœˆã‹ã‚‰4æœˆã§ãƒ•ã‚£ãƒ«ã‚¿
+        Worksheets(&quot;ä¸€è¦§&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic
         
         Worksheets.Add after:=Worksheets(Worksheets.Count)
-        ActiveSheet.Name = i &amp; &quot;Œ•ª&quot;
-        Worksheets(&quot;ˆê——&quot;).UsedRange.Copy
+        ActiveSheet.Name = i &amp; &quot;æœˆåˆ†&quot;
+        Worksheets(&quot;ä¸€è¦§&quot;).UsedRange.Copy
         
-        With Worksheets(i &amp; &quot;Œ•ª&quot;).Range(&quot;A1&quot;)
+        With Worksheets(i &amp; &quot;æœˆåˆ†&quot;).Range(&quot;A1&quot;)
             .PasteSpecial xlPasteColumnWidths
             .PasteSpecial xlPasteAll
         End With
     Next i
     
-    With Worksheets(&quot;ˆê——&quot;)
+    With Worksheets(&quot;ä¸€è¦§&quot;)
         .Select
         .ShowAllData
     End With
@@ -324,15 +324,15 @@ End Sub
 
 
 '
-' ƒV[ƒg–¼ &quot;2Œ•ª&quot;A&quot;3Œ•ª&quot;A&quot;4Œ•ª&quot; ‚Ì‚R‚Â‚ÌƒV[ƒg‚ğíœ‚·‚é
+' ã‚·ãƒ¼ãƒˆå &quot;2æœˆåˆ†&quot;ã€&quot;3æœˆåˆ†&quot;ã€&quot;4æœˆåˆ†&quot; ã®ï¼“ã¤ã®ã‚·ãƒ¼ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 '
-Sub ƒV[ƒgíœ()
+Sub ã‚·ãƒ¼ãƒˆå‰Šé™¤()
     Dim sht
     
     Application.DisplayAlerts = False
     
     For Each sht In Worksheets
-        If sht.Name &lt;&gt; &quot;ˆê——&quot; Then
+        If sht.Name &lt;&gt; &quot;ä¸€è¦§&quot; Then
             sht.Delete
         End If
     Next sht
@@ -340,25 +340,25 @@ End Sub
 
 
 '
-' &quot;ƒV[ƒgˆê——&quot; ‚ğì¬‚·‚é
+' &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚’ä½œæˆã™ã‚‹
 '
-Sub ƒV[ƒgˆê——()
+Sub ã‚·ãƒ¼ãƒˆä¸€è¦§()
     Dim i
     
     Application.DisplayAlerts = False
     
-    ' ‚à‚µ &quot;ƒV[ƒgˆê——&quot; ƒV[ƒg‚ª‚ ‚Á‚½‚çíœ
-    If IsExistSheet_Object(&quot;ƒV[ƒgˆê——&quot;) = True Then
-        ' &quot;ƒV[ƒgˆê——&quot; ƒV[ƒg‚ª‚ ‚é‚Ì‚Åíœ
-        Worksheets(&quot;ƒV[ƒgˆê——&quot;).Delete
+    ' ã‚‚ã— &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚·ãƒ¼ãƒˆãŒã‚ã£ãŸã‚‰å‰Šé™¤
+    If IsExistSheet_Object(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;) = True Then
+        ' &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot; ã‚·ãƒ¼ãƒˆãŒã‚ã‚‹ã®ã§å‰Šé™¤
+        Worksheets(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;).Delete
     End If
     
     Worksheets.Add before:=Worksheets(1)
-    ActiveSheet.Name = &quot;ƒV[ƒgˆê——&quot;
+    ActiveSheet.Name = &quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;
     
-    With Worksheets(&quot;ƒV[ƒgˆê——&quot;)
-        .Cells(1, &quot;A&quot;) = &quot;”Ô†&quot;
-        .Cells(1, &quot;B&quot;) = &quot;ƒV[ƒg–¼&quot;
+    With Worksheets(&quot;ã‚·ãƒ¼ãƒˆä¸€è¦§&quot;)
+        .Cells(1, &quot;A&quot;) = &quot;ç•ªå·&quot;
+        .Cells(1, &quot;B&quot;) = &quot;ã‚·ãƒ¼ãƒˆå&quot;
         
         For i = 1 To Worksheets.Count
             .Cells(i + 1, &quot;A&quot;) = i
@@ -376,34 +376,34 @@ End Sub
 
 
 '
-' &quot;w’è‚µ‚½ƒV[ƒg–¼&quot; ‚ÌƒV[ƒg‚Ì—L–³‚ğŠm”F‚·‚é
-' True   : ‚ ‚é
-' False  : ‚È‚¢
+' &quot;æŒ‡å®šã—ãŸã‚·ãƒ¼ãƒˆå&quot; ã®ã‚·ãƒ¼ãƒˆã®æœ‰ç„¡ã‚’ç¢ºèªã™ã‚‹
+' True   : ã‚ã‚‹
+' False  : ãªã„
 '
 'Public Function IsExistSheet_Object(checkBookNm As String, checkSheetNm As String) As Boolean
 Public Function IsExistSheet_Object(checkSheetNm As String) As Boolean
  
-    Dim targetSheet As Worksheet    '‘ÎÛƒV[ƒg‚ğƒZƒbƒg‚·‚é•Ï”
-    Dim ret         As Boolean      'ƒ`ƒFƒbƒNŒ‹‰Ê
+    Dim targetSheet As Worksheet    'å¯¾è±¡ã‚·ãƒ¼ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹å¤‰æ•°
+    Dim ret         As Boolean      'ãƒã‚§ãƒƒã‚¯çµæœ
     
-    'ƒGƒ‰[–³‹
+    'ã‚¨ãƒ©ãƒ¼ç„¡è¦–
     On Error Resume Next
     
-    'ƒIƒuƒWƒFƒNƒg•Ï”‚ÉA‘ÎÛƒV[ƒg‚ğƒZƒbƒg‚·‚é
+    'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå¤‰æ•°ã«ã€å¯¾è±¡ã‚·ãƒ¼ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     'Set targetSheet = Workbooks(checkBookNm).Worksheets(checkSheetNm)
     Set targetSheet = Worksheets(checkSheetNm)
     
-    'ƒGƒ‰[–³‹‚ğ‰ğœ
+    'ã‚¨ãƒ©ãƒ¼ç„¡è¦–ã‚’è§£é™¤
     On Error GoTo 0
     
-    'ƒIƒuƒWƒFƒNƒg•Ï”‚ÉAƒV[ƒg‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Å‘¶İ‚ğ”»’è
+    'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå¤‰æ•°ã«ã€ã‚·ãƒ¼ãƒˆãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹ã§å­˜åœ¨ã‚’åˆ¤å®š
     If targetSheet Is Nothing Then
         ret = False
     Else
         ret = True
     End If
  
-    '‘¶İƒ`ƒFƒbƒN‚ÌŒ‹‰Ê‚ğ•Ô‚·
+    'å­˜åœ¨ãƒã‚§ãƒƒã‚¯ã®çµæœã‚’è¿”ã™
     IsExistSheet_Object = ret
     
 End Function</code>
@@ -413,19 +413,19 @@ End Function</code>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2>
-<a name="ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€">ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</a></h2>
+<a name="ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ">ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </a></h2>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ <a href="Work_with_multiple_sheets/sample.xlsm">ƒ_ƒEƒ“ƒ[ƒh</a></p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  <a href="Work_with_multiple_sheets/sample.xlsm">ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a></p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="Ql">Ql</a></h2>
+<a name="å‚è€ƒ">å‚è€ƒ</a></h2>
 <ul>
-	<li>(—á) http://www.****.com</li>
+	<li>(ä¾‹) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF –Ø‰º‰pr<br>2020/05/05 V‹Kì¬</font></p>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š æœ¨ä¸‹è‹±ä¿Š<br>2020/05/05 æ–°è¦ä½œæˆ</font></p>
 </body>
 </html>

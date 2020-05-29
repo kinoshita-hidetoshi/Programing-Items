@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>[WPF] DataBinding - TextBlock</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -27,39 +27,39 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-mWPFnTextBlock ‚ğƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚·‚é</h1>
+ï¼»WPFï¼½TextBlock ã‚’ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã™ã‚‹</h1>
 
-<p> TextBlock ‚ğƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚·‚é•û–@‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
-<h2> –ÚŸ</h2>
-<p> <a href="#1._Šî–{“I‚È—á">1. Šî–{“I‚È—á</a><br>
-<a href="#2._MVVM_(Model-View-ViewModel)_‚ÅÀ‘•">2. MVVM (Model-View-ViewModel) ‚ÅÀ‘•</a></p>
+<p> TextBlock ã‚’ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã™ã‚‹æ–¹æ³•ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚</p>
+<h2> ç›®æ¬¡</h2>
+<p> <a href="#1._åŸºæœ¬çš„ãªä¾‹">1. åŸºæœ¬çš„ãªä¾‹</a><br>
+<a href="#2._MVVM_(Model-View-ViewModel)_ã§å®Ÿè£…">2. MVVM (Model-View-ViewModel) ã§å®Ÿè£…</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._Šî–{“I‚È—á">1. Šî–{“I‚È—á</a></h2>
-<p> [ŠT—v]</p>
-<p> ‚Ü‚¸‚ÍŠî–{“I‚È—á‚ğ‹LÚ‚µ‚Ü‚·BXAML’†‚Ì TextBlock ‚©‚çƒf[ƒ^ƒoƒCƒ“ƒfƒBƒ“ƒO‚·‚é—á‚Å‚·B</p>
-<p>[ŠÂ‹«]</p>
+<h2> <a name="1._åŸºæœ¬çš„ãªä¾‹">1. åŸºæœ¬çš„ãªä¾‹</a></h2>
+<p> [æ¦‚è¦]</p>
+<p> ã¾ãšã¯åŸºæœ¬çš„ãªä¾‹ã‚’è¨˜è¼‰ã—ã¾ã™ã€‚XAMLä¸­ã® TextBlock ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã™ã‚‹ä¾‹ã§ã™ã€‚</p>
+<p>[ç’°å¢ƒ]</p>
 <ul>
 	<li>Visual Studio 2019 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home Version 1903</li>
 </ul>
 <p> 
-[Ã~‰æ—á]</p>
+[é™æ­¢ç”»ä¾‹]</p>
 <p> 
 <img alt="" src="TextBlock/img6.jpg"></p>
 <p> 
-[“®‰æ—á]</p>
+[å‹•ç”»ä¾‹]</p>
 
 <table style="clip: rect(auto, auto, auto, auto);" class="auto-style9">
 	<tr>
 		<td>
 			<video controls autoplay="y" loop="y" src="TextBlock/TextBlock.mp4">
-				<p>“®‰æ‚ğÄ¶‚·‚é‚É‚Ívideoƒ^ƒO‚ğƒTƒ|[ƒg‚µ‚½ƒuƒ‰ƒEƒU‚ª•K—v‚Å‚·B</p>
+				<p>å‹•ç”»ã‚’å†ç”Ÿã™ã‚‹ã«ã¯videoã‚¿ã‚°ã‚’ã‚µãƒãƒ¼ãƒˆã—ãŸãƒ–ãƒ©ã‚¦ã‚¶ãŒå¿…è¦ã§ã™ã€‚</p>
 			</video>
 		</td>
 	</tr>
 </table>
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;MainWindow.xaml&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;MainWindow.xaml&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -75,14 +75,14 @@
         &lt;TextBlock x:Name=&quot;TextBlock&quot;  <span class="auto-style8">Text=&quot;{Binding Path=textData.Text, UpdateSourceTrigger=PropertyChanged}&quot;</span> HorizontalAlignment=&quot;Left&quot; Margin=&quot;32,30,0,0&quot; TextWrapping=&quot;Wrap&quot; VerticalAlignment=&quot;Top&quot;/&gt;
         &lt;Button x:Name=&quot;btnTextChange1&quot; Content=&quot;&amp;quot;test1&amp;quot;&quot; Margin=&quot;0,31,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Click=&quot;BtnTextChange1_Click&quot;/&gt;
         &lt;Button x:Name=&quot;btnTextChange2&quot; Content=&quot;&amp;quot;test2&amp;quot;&quot; Margin=&quot;0,69,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Click=&quot;BtnTextChange2_Click&quot;/&gt;
-        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;I—¹&quot; Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot; Click=&quot;BtnQuit_Click&quot;/&gt;
+        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;çµ‚äº†&quot; Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot; Click=&quot;BtnQuit_Click&quot;/&gt;
     &lt;/Grid&gt;
 &lt;/Window&gt;
 </pre>
 <!-- End for 'google-code-prettify' -->
 
 <p></p>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;MainWindow.xaml.cs&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;MainWindow.xaml.cs&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -123,7 +123,7 @@ namespace TextBlock
 
     public class TextData : <span class="auto-style8">INotifyPropertyChanged</span>
     {
-        private string _text = "‰Šú’l";
+        private string _text = "åˆæœŸå€¤";
         public string Text
         {
             get
@@ -157,29 +157,29 @@ namespace TextBlock
 <br>
 </p>
 <h2>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h2>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h2>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ <a href="TextBlock/TextBlock_DataBinding.zip">ƒ_ƒEƒ“ƒ[ƒh</a></p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  <a href="TextBlock/TextBlock_DataBinding.zip">ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a></p>
 <p>
 &nbsp;</p>
 <h2>
-Ql</h2>
+å‚è€ƒ</h2>
 <ul>
 	<li>
 	<a href="https://www.atmarkit.co.jp/ait/articles/1010/08/news123.html" target="_blank">
-	@IT ˜AÚFWPF“ü–åF‘æ5‰ñ@WPF‚Ìuƒf[ƒ^EƒoƒCƒ“ƒfƒBƒ“ƒOv‚ğ—‰ğ‚·‚é</a></li>
+	@IT é€£è¼‰ï¼šWPFå…¥é–€ï¼šç¬¬5å›ã€€WPFã®ã€Œãƒ‡ãƒ¼ã‚¿ãƒ»ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã€ã‚’ç†è§£ã™ã‚‹</a></li>
 </ul>
 <p>&nbsp;</p>
-<h2><a name="2._MVVM_(Model-View-ViewModel)_‚ÅÀ‘•">2. MVVM (Model-View-ViewModel) 
-‚ÅÀ‘•</a></h2>
-<p>“¯‚¶“à—e‚ğ¡“x‚Í MVVM (Model-View-ViewModel) ‚Åì¬‚µ‚Ä‚İ‚Ü‚·B<br>ÀsŒ‹‰Ê‚Í‘S‚­“¯‚¶‚È‚Ì‚ÅÈ—ªB</p>
+<h2><a name="2._MVVM_(Model-View-ViewModel)_ã§å®Ÿè£…">2. MVVM (Model-View-ViewModel) 
+ã§å®Ÿè£…</a></h2>
+<p>åŒã˜å†…å®¹ã‚’ä»Šåº¦ã¯ MVVM (Model-View-ViewModel) ã§ä½œæˆã—ã¦ã¿ã¾ã™ã€‚<br>å®Ÿè¡Œçµæœã¯å…¨ãåŒã˜ãªã®ã§çœç•¥ã€‚</p>
 <p>[ViewModelBase.cs]</p>
-<p>ViewModel ‚ÌŠî–{ƒNƒ‰ƒX (ViewModelBase) ‚ÌÀ‘•‚Å‚·B</p>
+<p>ViewModel ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹ (ViewModelBase) ã®å®Ÿè£…ã§ã™ã€‚</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 using System.ComponentModel; // INotifyPropertyChanged
-using System.Runtime.CompilerServices; // CallerMemberName: .net Framework 4.5 ˆÈ~
+using System.Runtime.CompilerServices; // CallerMemberName: .net Framework 4.5 ä»¥é™
 
 namespace TextBlockMvvm
 {
@@ -200,7 +200,7 @@ namespace TextBlockMvvm
 
 <p>&nbsp;</p>
 <p>[DelegateCommand.cs]</p>
-<p>DelegateCommand ‚ÌÀ‘•‚Å‚·B</p>
+<p>DelegateCommand ã®å®Ÿè£…ã§ã™ã€‚</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -247,7 +247,7 @@ namespace TextBlockMvvm
 
 <p>&nbsp;</p>
 <p>[MainWindowViewModel.cs]</p>
-<p>ƒAƒvƒŠ‚Ì ViewModel ‚ÌÀ‘•‚Å‚·B</p>
+<p>ã‚¢ãƒ—ãƒªã® ViewModel ã®å®Ÿè£…ã§ã™ã€‚</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -257,7 +257,7 @@ namespace TextBlockMvvm
 {
     class MainWindowViewModel : ViewModelBase
     {
-        private string _text = &quot;‰Šú’l&quot;;
+        private string _text = &quot;åˆæœŸå€¤&quot;;
         private MainWindow _mwnd;
 
         public ICommand QuitCommand { get; private set; }
@@ -293,8 +293,8 @@ namespace TextBlockMvvm
 
 <p>&nbsp;</p>
 <p>[MainWindow.xaml]</p>
-<p>ƒAƒvƒŠ‚Ì View ‚ÌÀ‘•‚Å‚·B<br>‚±‚¿‚ç‚ÅƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚¢‚é DataContext •”•ª‚ğ—LŒø‰»‚µ‚Ä Œãq‚Ì MainWindow() ’†‚Ì 
-DataContext •”•ª‚ğƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚à“®ì‚µ‚Ü‚·B<br>‚½‚¾‚µ‚±‚Ìê‡ [I—¹] ƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚µ‚Ä‚àƒAƒvƒŠ‚ğI—¹‚Å‚«‚È‚­‚È‚è‚Ü‚·B</p>
+<p>ã‚¢ãƒ—ãƒªã® View ã®å®Ÿè£…ã§ã™ã€‚<br>ã“ã¡ã‚‰ã§ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ã‚‹ DataContext éƒ¨åˆ†ã‚’æœ‰åŠ¹åŒ–ã—ã¦ å¾Œè¿°ã® MainWindow() ä¸­ã® 
+DataContext éƒ¨åˆ†ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã‚‚å‹•ä½œã—ã¾ã™ã€‚<br>ãŸã ã—ã“ã®å ´åˆ [çµ‚äº†] ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ã‚‚ã‚¢ãƒ—ãƒªã‚’çµ‚äº†ã§ããªããªã‚Šã¾ã™ã€‚</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -313,13 +313,13 @@ DataContext •”•ª‚ğƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚à“®ì‚µ‚Ü‚·B<br>‚½‚¾‚µ‚±‚Ìê‡ [I—¹] ƒ{ƒ^
         &lt;TextBlock x:Name=&quot;TextBlock&quot;  Text=&quot;{Binding TextSample, UpdateSourceTrigger=PropertyChanged}&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;32,30,0,0&quot; TextWrapping=&quot;Wrap&quot; VerticalAlignment=&quot;Top&quot;/&gt;
         &lt;Button x:Name=&quot;btnTextChange1&quot; Content=&quot;&amp;quot;test1&amp;quot;&quot; Command=&quot;{Binding ChangeTextType1Command}&quot; Margin=&quot;0,31,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;
         &lt;Button x:Name=&quot;btnTextChange2&quot; Content=&quot;&amp;quot;test2&amp;quot;&quot; Command=&quot;{Binding ChangeTextType2Command}&quot; Margin=&quot;0,69,10,0&quot; VerticalAlignment=&quot;Top&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;
-        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;I—¹&quot; Command=&quot;{Binding QuitCommand}&quot;  Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot;/&gt;
+        &lt;Button x:Name=&quot;btnQuit&quot; Content=&quot;çµ‚äº†&quot; Command=&quot;{Binding QuitCommand}&quot;  Margin=&quot;0,0,10,10&quot; RenderTransformOrigin=&quot;0.707,-0.15&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot; Height=&quot;20&quot; VerticalAlignment=&quot;Bottom&quot;/&gt;
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 <p>&nbsp;</p>
 <p>[MainWindow.xaml.cs]</p>
-<p>new MainWindowViewModel() ‚Ìˆø”‚É this ‚ğw’è‚µ‚Ä‚¢‚é‚Ì‚ÍAMainWindowViewModel.cs ’†‚Å 
-Close() ‚ğÀs‚Å‚«‚é‚æ‚¤‚É‚·‚é‚½‚ß‚És‚Á‚Ä‚¢‚Ü‚·B</p>
+<p>new MainWindowViewModel() ã®å¼•æ•°ã« this ã‚’æŒ‡å®šã—ã¦ã„ã‚‹ã®ã¯ã€MainWindowViewModel.cs ä¸­ã§ 
+Close() ã‚’å®Ÿè¡Œã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã«è¡Œã£ã¦ã„ã¾ã™ã€‚</p>
 <!-- End for 'google-code-prettify' -->
 
 <!-- Start for 'google-code-prettify' -->
@@ -339,24 +339,24 @@ namespace TextBlockMvvm
 }</pre>
 <p>&nbsp;</p>
 <h2>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h2>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h2>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ <a href="TextBlock/TextBlockMvvm.zip">ƒ_ƒEƒ“ƒ[ƒh</a></p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  <a href="TextBlock/TextBlockMvvm.zip">ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</a></p>
 <p>
 &nbsp;</p>
 <h2>
-Ql</h2>
+å‚è€ƒ</h2>
 <ul>
 	<li>
 	<a href="https://www.atmarkit.co.jp/ait/articles/1010/08/news123.html" target="_blank">
-	@IT ˜AÚFWPF“ü–åF‘æ5‰ñ@WPF‚Ìuƒf[ƒ^EƒoƒCƒ“ƒfƒBƒ“ƒOv‚ğ—‰ğ‚·‚é</a></li>
+	@IT é€£è¼‰ï¼šWPFå…¥é–€ï¼šç¬¬5å›ã€€WPFã®ã€Œãƒ‡ãƒ¼ã‚¿ãƒ»ãƒã‚¤ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã€ã‚’ç†è§£ã™ã‚‹</a></li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p><font face="Meiryo UI">•ÏX—š—ğF </font></p>
+<p><font face="Meiryo UI">å¤‰æ›´å±¥æ­´ï¼š </font></p>
 <ul>
-	<li>2019”N07Œ08“ú u2. MVVM(Model-View-ViewModel)‚ÅÀ‘•v‚ğ’Ç‰Á</li>
-	<li><font face="Meiryo UI">2019”N07Œ05“ú V‹Kì¬A–Ø‰º‰pr </font></li>
+	<li>2019å¹´07æœˆ08æ—¥ ã€Œ2. MVVM(Model-View-ViewModel)ã§å®Ÿè£…ã€ã‚’è¿½åŠ </li>
+	<li><font face="Meiryo UI">2019å¹´07æœˆ05æ—¥ æ–°è¦ä½œæˆã€æœ¨ä¸‹è‹±ä¿Š </font></li>
 </ul>
 </body>
 </html>

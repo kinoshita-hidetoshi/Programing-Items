@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�mMahApp.Metro�n�E�B���h�E���쐬</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>［MahApp.Metro］ウィンドウを作成</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../../prettify.css" rel="stylesheet" type="text/css">
@@ -43,50 +43,50 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-�mMahApp.Metro�n�E�B���h�E���쐬</h1>
+［MahApp.Metro］ウィンドウを作成</h1>
 
-<p> MahApp.Metro ���g����WPF�A�v�������_���ȃE�B���h�E�f�U�C���ɂ��Ă݂܂��B</p>
-<h2> �ڎ�</h2>
+<p> MahApp.Metro を使ってWPFアプリをモダンなウィンドウデザインにしてみます。</p>
+<h2> 目次</h2>
 <p>
-<a href="#1._MahApps.Metro_���g���ăE�B���h�E���쐬���Ă݂�">1. MahApps.Metro ���g���ăE�B���h�E���쐬���Ă݂�</a><br>
+<a href="#1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro を使ってウィンドウを作成してみる</a><br>
 <a href="#2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a><br>
-<a href="#3._�E�B���h�E�̉����w��">3. �E�B���h�E�̉����w��</a><br>
-<a href="#4._���̑��̃E�B���h�E����">4. ���̑��̃E�B���h�E����</a><br>
-<a href="#4.1._�E�B���h�E�̈ʒu�A�T�C�Y�A�������ۑ� (SaveWindowPosition)">4.1. �E�B���h�E�̈ʒu�A�T�C�Y�A�������ۑ� (SaveWindowPosition)</a><br>
-<a href="#4.2._�E�B���h�E��\������Ƃ��X���C�h����̂��I�t�ɂ��� (WindowTransitionEnabled)">4.2. �E�B���h�E��\������Ƃ��X���C�h����̂��I�t�ɂ��� (WindowTransitionEnabled)</a><br>
-<a href="#4.3._�E�B���h�E�^�C�g����啶���ɂ���_(TitleCaps)">4.3. �E�B���h�E�^�C�g����啶���ɂ��� (TitleCaps)</a><br><br>
-<a href="#�Q�lURL">�Q�lURL</a><br><a href="#�֘A�y�[�W">�֘A�y�[�W</a></p>
+<a href="#3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a><br>
+<a href="#4._その他のウィンドウ属性">4. その他のウィンドウ属性</a><br>
+<a href="#4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a><br>
+<a href="#4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)</a><br>
+<a href="#4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a><br><br>
+<a href="#参考URL">参考URL</a><br><a href="#関連ページ">関連ページ</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._MahApps.Metro_���g���ăE�B���h�E���쐬���Ă݂�">1. MahApps.Metro 
-���g���ăE�B���h�E���쐬���Ă݂�</a></h2>
-<p> MahApp.Metro �́u<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>�v�ɏ]���āA�܂��̓E�B���h�E���쐬����Ƃ��납��n�߂Ă݂܂��傤�B</p>
-<p>[��]</p>
+<h2> <a name="1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro 
+を使ってウィンドウを作成してみる</a></h2>
+<p> MahApp.Metro の「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」に従って、まずはウィンドウを作成するところから始めてみましょう。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>MahApps.Metro: Ver. 1.2.4.</li>
-	<li>OS: Windows10 64bit home ���{��</li>
+	<li>OS: Windows10 64bit home 日本語</li>
 </ul>
 <p> &nbsp;</p>
-<p> Visual Studio �ō쐬�����f�t�H���g��WPF�A�v���P�[�V�����͈ȉ��̒ʂ�ł��B<br>��������X�^�[�g�ŉ������Ă����܂��B</p>
+<p> Visual Studio で作成したデフォルトのWPFアプリケーションは以下の通りです。<br>ここからスタートで改造していきます。</p>
 <p> 
 <img alt="" src="CreateWindow/imgB.jpg"></p>
 <p> 
 &nbsp;</p>
 <p> 
-�菇���ȉ��ɋL�ڂ��܂��B</p>
+手順を以下に記載します。</p>
 <h3> 
-1.1. NuGet ���烉�C�u�����擾</h3>
+1.1. NuGet からライブラリ取得</h3>
 <p> 
-�\�����[�V�����G�N�X�v���[���[�Ń\�����[�V�������E�N���b�N���A�u�\�����[�V������NuGet�p�b�P�[�W�̊Ǘ��v��I�����܂��B�p�b�P�[�W�}�l�[�W���[���J���̂ŁA����̃p�b�P�[�W�\�[�X���unuget.org�v�ɂȂ��Ă��邱�Ƃ��m�F���A�����{�b�N�X�ɁuMahApps.Metro�v�Ɠ��͂��āuEnter�v�L�[�������܂��BMahApps.Metro��I�����āu�C���X�g�[���v�{�^���������ăA�v���ɑg�ݍ��݂܂��B</p>
+ソリューションエクスプローラーでソリューションを右クリックし、「ソリューションのNuGetパッケージの管理」を選択します。パッケージマネージャーが開くので、左上のパッケージソースが「nuget.org」になっていることを確認し、検索ボックスに「MahApps.Metro」と入力して「Enter」キーを押します。MahApps.Metroを選択して「インストール」ボタンを押してアプリに組み込みます。</p>
 <p> 
 <img alt="" src="CreateWindow/img2.jpg"></p>
 <h3> 
 &nbsp;</h3>
 <h3> 
-1.2. �\�[�X�C��</h3>
+1.2. ソース修正</h3>
 <p> 
-�ȉ��A��L�̕ύX���s�����߂ɍs�����\�[�X�C���ł��B</p>
-<span class="table_title">[�v���O�����\�[�X &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+以下、上記の変更を行うために行ったソース修正です。</p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -109,7 +109,7 @@
 </table>
 	
 <p>&nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;MainWindow.xaml.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -133,7 +133,7 @@ using System.Windows.Shapes;
 namespace ModernWindow
 {
 	/// &lt;summary&gt;
-	/// MainWindow.xaml �̑��ݍ�p���W�b�N
+	/// MainWindow.xaml の相互作用ロジック
 	/// &lt;/summary&gt;
 	public partial class MainWindow : <span class="auto-style8">MetroWindow</span>
 	{
@@ -148,11 +148,11 @@ namespace ModernWindow
 	</tr>
 </table>
 	
-<p>�����܂ł̃v���O�����C���ŉ��}�̂悤�ȉ�ʂ�\������悤�ɂȂ�܂��B<br>�u<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>�v�Ƃ�����ƈႤ�݂����ł����A�܂���������ǂ��Ƃ��܂��傤�B</p>
+<p>ここまでのプログラム修正で下図のような画面を表示するようになります。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」とちょっと違うみたいですが、まぁいったん良しとしましょう。</p>
 <p><img alt="" src="CreateWindow/img4.gif"></p>
 <p>&nbsp;</p>
-<p>�����āuApp.xaml�v�� &lt;ResourceDictionary&gt; ��ǉ����܂��B<br>�ȉ��̒ʂ�B</p>
-<span class="table_title">[�v���O�����\�[�X &quot;App.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<p>続いて「App.xaml」に &lt;ResourceDictionary&gt; を追加します。<br>以下の通り。</p>
+<span class="table_title">[プログラムソース &quot;App.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -180,26 +180,26 @@ namespace ModernWindow
 </table>
 	
 <p>&nbsp;</p>
-<p>�ȏ�̌��ʁA���}�̉�ʂɂȂ�܂��B</p>
+<p>以上の結果、下図の画面になります。</p>
 <p> 
 <img alt="" src="CreateWindow/img9.jpg"></p>
 <p>&nbsp;</p>
-<h3>1.3. Window Icon ��ǉ�</h3>
-<p>�A�v���ɃA�C�R����ǉ����܂��B</p>
-<p>�A�C�R���͉����g���Ă��ǂ��̂ł����A�u<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>�v�Ɠ����ɂ��邱�Ƃɂ�������� MahApp.Metro �̃f���A�v���Ɏg�p���Ă���A�C�R�����v���W�F�N�g�ɒǉ����܂��B<br>�A�C�R�� 
-�hmahapps.metro.logo2.ico�h ��MahApps.Metro�̃v���W�F�N�g����R�s�[���A�쐬���̃v���W�F�N�g���̃t�H���_ Resources 
-���ɕۑ����܂��B</p>
+<h3>1.3. Window Icon を追加</h3>
+<p>アプリにアイコンを追加します。</p>
+<p>アイコンは何を使っても良いのですが、「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」と同じにすることにこだわって MahApp.Metro のデモアプリに使用しているアイコンをプロジェクトに追加します。<br>アイコン 
+”mahapps.metro.logo2.ico” をMahApps.Metroのプロジェクトからコピーし、作成中のプロジェクト中のフォルダ Resources 
+中に保存します。</p>
 <table class="auto-style10" style="width: 100%">
 	<tr>
-		<td>�Q�l�F<br>�X�^�e�B�b�N �A�C�R�� �̑���� �ŏ���/�ő剻/���� 
-		�̃A�C�R���́A�X�^�e�B�b�N�A�C�R���ł͂Ȃ�&quot;Marlett&quot;�ƌĂ΂��t�H���g���g���Ă��܂��B�ڂ����� 
+		<td>参考：<br>スタティック アイコン の代わりに 最小化/最大化/閉じる 
+		のアイコンは、スタティックアイコンではなく&quot;Marlett&quot;と呼ばれるフォントを使っています。詳しくは 
 		<a href="https://en.wikipedia.org/wiki/Marlett" target="_blank">the 
-		Wikipedia article</a> ���Q�ƁB</td>
+		Wikipedia article</a> を参照。</td>
 	</tr>
 </table>
 <p><img alt="" src="CreateWindow/img8.jpg"></p>
-<p>������VS�܂���Blend���GUI����A�C�R����ݒ肷��A��������XAML�𒼐ڏC�����ăA�C�R����ݒ肵�܂��B</p>
-<span class="table_title">[�v���O�����\�[�X &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<p>そしてVSまたはBlend上のGUIからアイコンを設定する、もしくはXAMLを直接修正してアイコンを設定します。</p>
+<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -222,55 +222,55 @@ namespace ModernWindow
 	</tr>
 </table>
 	
-<p>�ȏ�ɂ�肱��Ȋ����ɂȂ�܂����B</p>
+<p>以上によりこんな感じになりました。</p>
 <p><img alt="" src="CreateWindow/img6.gif"></p>
 <p>&nbsp;</p>
-<h3>1.4. TitleBar �̕\��/��\��</h3>
+<h3>1.4. TitleBar の表示/非表示</h3>
 <p>ShowTitleBar=&quot;True|False&quot;</p>
-<p>�hFalse�h �ɐݒ肵���牺�}�̂悤�Ƀ^�C�g���o�[�������Ȃ�܂����B</p>
+<p>”False” に設定したら下図のようにタイトルバーが無くなりました。</p>
 <p><img alt="" src="CreateWindow/img32.jpg"></p>
 <p>&nbsp;</p>
 <h3>1.5. Resize Grip</h3>
-<p>&quot;Resize Grip&quot; �������Ƃ� MetroWindow �����T�C�Y������@�͂���܂��B&quot;Resize Grip&quot; 
-�������Ă��E�B���h�E�̑S�Ẳ��Ɗp������Ń��T�C�Y���邱�Ƃ��ł��܂��B<br>�������Ȃ��� 
-MetroWindow�����T�C�Y�\�ł��邱�Ƃ��������Ƃ��ł��Ȃ��̂ŁA���̃E�B���h�E�����T�C�Y�\�ł��邱�Ƃ����[�U�[�֎����̂� &quot;Resize Grip&quot; 
-�͗L���ȕ��@�ł��B</p>
+<p>&quot;Resize Grip&quot; が無くとも MetroWindow をリサイズする方法はあります。&quot;Resize Grip&quot; 
+が無くてもウィンドウの全ての縁と角をつかんでリサイズすることができます。<br>しかしながら 
+MetroWindowがリサイズ可能であることを示すことができないので、このウィンドウがリサイズ可能であることをユーザーへ示すのに &quot;Resize Grip&quot; 
+は有効な方法です。</p>
 <ul>
-	<li>ResizeMode=&quot;CanResizeWithGrip&quot; ; &quot;Resize Grip&quot; ��\������B</li>
-	<li>ResizeMode=&quot;CanResize&quot; ; &quot;Resize Grip&quot; ��\�����Ȃ��B</li>
+	<li>ResizeMode=&quot;CanResizeWithGrip&quot; ; &quot;Resize Grip&quot; を表示する。</li>
+	<li>ResizeMode=&quot;CanResize&quot; ; &quot;Resize Grip&quot; を表示しない。</li>
 </ul>
 <p><img alt="" src="CreateWindow/img30.jpg"></p>
 <h3>&nbsp;</h3>
-<h3>1.6. �^�C�g���o�[��̃A�C�R���\��/��\��</h3>
+<h3>1.6. タイトルバー上のアイコン表示/非表示</h3>
 <p>ShowIconOnTitleBar=&quot;True|False&quot;</p>
-<p>�hFalse�h�ɐݒ肵���牺�}�̂悤�ɂȂ�܂����B</p>
+<p>”False”に設定したら下図のようになりました。</p>
 <p><img alt="" src="CreateWindow/img33.jpg"></p>
 <p>&nbsp;</p>
 <h3>1.7. WindowButtonCommands</h3>
-<p>&quot;WindowButtonCommands&quot; �� �ő剻/�ŏ���/����A��3�̃{�^���������܂��B���Ȃ��͂����̃{�^�����B�����Ƃ��ł��܂��B</p>
+<p>&quot;WindowButtonCommands&quot; は 最大化/最小化/閉じる、の3つのボタンを持ちます。あなたはこれらのボタンを隠すことができます。</p>
 <ul>
 	<li>ShowMinButton=&quot;True|False&quot;</li>
 	<li>ShowMaxRestoreButton=&quot;True|False&quot;</li>
 	<li>ShowCloseButton=&quot;True|False&quot;</li>
 </ul>
-<p>���l�ɁA�ő剻/�ŏ����A��Visibility�� ResizeMode �v���p�e�B�̐ݒ�ɂ��ύX�ł��܂��B</p>
+<p>同様に、最大化/最小化、のVisibilityを ResizeMode プロパティの設定により変更できます。</p>
 <ul>
-	<li>ResizeMode=&quot;NoResize&quot; ; �ő剻/�ŏ��� �̃{�^���𖳌���</li>
-	<li>ResizeMode=&quot;CanMinimize&quot; ; �ő剻 �̃{�^���𖳌���</li>
+	<li>ResizeMode=&quot;NoResize&quot; ; 最大化/最小化 のボタンを無効化</li>
+	<li>ResizeMode=&quot;CanMinimize&quot; ; 最大化 のボタンを無効化</li>
 </ul>
 <p>&nbsp;</p>
 <h2><a name="2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a></h2>
-<p>MahApp.Metro �E�B���h�E�̓����̈�ł��� &quot;LeftWindowsCommand&quot; �܂��� &quot;RightWindowsCommands&quot; ��  
-�E�B���h�̃^�C�g���o�[�ɓƎ��̃{�^���Ȃǂ�ǉ����邱�Ƃ��ł���@�\�ł��B<br>�u<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>�v�ɏ]���Ă�����������Ă݂܂��B</p>
+<p>MahApp.Metro ウィンドウの特徴の一つである &quot;LeftWindowsCommand&quot; または &quot;RightWindowsCommands&quot; は  
+ウィンドのタイトルバーに独自のボタンなどを追加することができる機能です。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」に従ってこれを実装してみます。</p>
 <p><img alt="" src="CreateWindow/imgF.jpg"></p>
 <h3>&nbsp;</h3>
 <h3>2.1. RightWindowCommands</h3>
-<p>&quot;RightWindowCommands&quot; �Ƃ��ĂQ�̃{�^����ǉ����܂��B</p>
+<p>&quot;RightWindowCommands&quot; として２つのボタンを追加します。</p>
 <ul>
-	<li>�P�ڂ́A������ &quot;setting&quot; ��\������{�^���ł��B</li>
-	<li>�Q�ڂ́A�A�C�R���ƕ�����&quot;deploy cupcakes&quot;�̂Q�� StackPanel �ň�̉��������{�^���ł��B</li>
+	<li>１つ目は、文字列 &quot;setting&quot; を表示するボタンです。</li>
+	<li>２つ目は、アイコンと文字列&quot;deploy cupcakes&quot;の２つを StackPanel で一体化させたボタンです。</li>
 </ul>
-<span class="table_title">�ŏ��� &quot;MainWindow.xaml&quot; �ɉ��L�̃\�[�X��ǉ����܂��B<br><br>[�v���O�����\�[�X &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">最初に &quot;MainWindow.xaml&quot; に下記のソースを追加します。<br><br>[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -325,23 +325,23 @@ MetroWindow�����T�C�Y�\�ł��邱�Ƃ��������Ƃ��ł��Ȃ��̂ŁA���̃E�B���h�E�����
 	</tr>
 </table>
 	
-<p>��L�̃\�[�X�̂܂܂ł� �uVisual = &quot;{StaticResource appbar_cupcake}&quot;�v �̕����ŃG���[�ɂȂ�܂��B<br>
-&quot;appbar_cupcake&quot; �̃A�C�R����񂪖������߂̃G���[�ł��B����́hMahApps.Metro.Resources�h�Ɋ܂܂��XAML�A�C�R���ł��B</p>
-<p>NuGet �� MahApp.Metro.Resource ��ǉ����܂��B</p>
+<p>上記のソースのままでは 「Visual = &quot;{StaticResource appbar_cupcake}&quot;」 の部分でエラーになります。<br>
+&quot;appbar_cupcake&quot; のアイコン情報が無いためのエラーです。これは”MahApps.Metro.Resources”に含まれるXAMLアイコンです。</p>
+<p>NuGet で MahApp.Metro.Resource を追加します。</p>
 <p><img alt="" src="CreateWindow/imgB1.jpg"></p>
-<p>�\�����[�V�����G�N�X�v���[���[�Ŋm�F����ƁA�ȉ��̂S�̃t�@�C�����ǉ�����܂��B<br>- Entrypo-license.txt<br>- 
+<p>ソリューションエクスプローラーで確認すると、以下の４つのファイルが追加されます。<br>- Entrypo-license.txt<br>- 
 Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 <p><img alt="" src="CreateWindow/imgD.jpg"></p>
 <p>&nbsp;</p>
-<p>&quot;Icons.xaml&quot; �̃v���p�e�B���m�F���܂��B�f�t�H���g�̂܂܂ŏC���s�v�̂͂��ł����A�ȉ��̒ʂ�ł��B</p>
+<p>&quot;Icons.xaml&quot; のプロパティを確認します。デフォルトのままで修正不要のはずですが、以下の通りです。</p>
 <p><img alt="" src="CreateWindow/img11.jpg"></p>
 <p>&nbsp;</p>
-<p>�����܂ŏC�������i�K�ŃR���p�C�����Ď��s����ƁA�ȉ��悤�ȃE�B���h�E��\���ł���悤�ɂȂ�܂��B<br>
-�i�{�^�����������������ŃA�N�V�����̎��������Ă��Ȃ��̂ŁA�{�^���������Ă������N����܂���B�j</p>
+<p>ここまで修正した段階でコンパイルして実行すると、以下ようなウィンドウを表示できるようになります。<br>
+（ボタンを実装しただけでアクションの実装をしていないので、ボタンを押しても何も起こりません。）</p>
 <p><img alt="" src="CreateWindow/imgF.jpg"></p>
 <p>&nbsp;</p>
 <h3>2.2. LeftWindowCommands</h3>
-<p>&quot;LeftWindowCommands&quot; �������܂��B<br>�{�^���̓��e�́hRightWindowCommands�h�Ɠ������̂�K�p���܂��B</p>
+<p>&quot;LeftWindowCommands&quot; を加えます。<br>ボタンの内容は”RightWindowCommands”と同じものを適用します。</p>
 <table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -384,44 +384,44 @@ Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 </table>
 	
 <p>
-�E�B���h�E�^�C�g�� �hMAINWINDOW�h �̍����Ƀ{�^�����ǉ�����܂����B</p>
+ウィンドウタイトル ”MAINWINDOW” の左側にボタンが追加されました。</p>
 <p>
 <img alt="" src="CreateWindow/img1C.jpg"></p>
 <p>&nbsp;</p>
-<h2> <a name="3._�E�B���h�E�̉����w��">3. �E�B���h�E�̉����w��</a></h2>
-<p> �E�B���h�E�̉��̕\�����w�肵�܂��B<br>�f�t�H���g��Ԃł� BorderThickness=&quot;0&quot; �ŁAGlowBrush�̎w�������Ė����悤�ł��B<br>
-�ȉ��̂ǂꂩ���w�肵�Ă����Ȃ��ƁA�E�B���h�E�w�i�ɂ���Ă̓E�B���h�E��������Ă��܂����ꂪ���肻���ł��B<br>�����̎w��͂��܂��傤�B</p>
+<h2> <a name="3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a></h2>
+<p> ウィンドウの縁の表現を指定します。<br>デフォルト状態では BorderThickness=&quot;0&quot; で、GlowBrushの指定もされて無いようです。<br>
+以下のどれかを指定しておかないと、ウィンドウ背景によってはウィンドウが埋もれてしまう恐れがありそうです。<br>何かの指定はしましょう。</p>
 <h3> 3.1. Border</h3>
 <p class="auto-style9"> BorderBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
 BorderThickness=&quot;1&quot;</p>
 <p> <img alt="" src="CreateWindow/img28.jpg"></p>
-<h3> 3.2. Glow (�ڂ���Ƃ���)</h3>
+<h3> 3.2. Glow (ぼやっとする)</h3>
 <p class="auto-style9"> GlowBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
 BorderThickness=&quot;1&quot;</p>
 <p> <img alt="" src="CreateWindow/img26.jpg"></p>
-<h3> 3.3. DropShadow (�e������)</h3>
+<h3> 3.3. DropShadow (影をつける)</h3>
 <p class="auto-style9"> EnableDWMDropShadow=&quot;True&quot;<br>GlowBrush=&quot;Black&quot;<br>BorderThickness=&quot;0&quot;</p>
 <p> <img alt="" src="CreateWindow/img2C.jpg"></p>
 <p> &nbsp;</p>
-<h2> <a name="4._���̑��̃E�B���h�E����">4. ���̑��̃E�B���h�E����</a></h2>
-<h3><a name="4.1._�E�B���h�E�̈ʒu�A�T�C�Y�A�������ۑ� (SaveWindowPosition)">4.1. �E�B���h�E�̈ʒu�A�T�C�Y�A�������ۑ� (SaveWindowPosition)</a></h3>
-<p> ���ɋN�������Ƃ��ɃE�B���h�E�ʒu�ƃT�C�Y�𕜋A����B</p>
+<h2> <a name="4._その他のウィンドウ属性">4. その他のウィンドウ属性</a></h2>
+<h3><a name="4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a></h3>
+<p> 次に起動したときにウィンドウ位置とサイズを復帰する。</p>
 <p class="auto-style9"> SaveWindowPosition=&quot;True&quot;</p>
 <p> &nbsp;</p>
-<h3><a name="4.2._�E�B���h�E��\������Ƃ��X���C�h����̂��I�t�ɂ��� (WindowTransitionEnabled)">4.2. �E�B���h�E��\������Ƃ��X���C�h����̂��I�t�ɂ��� (WindowTransitionsEnabled)</a></h3>
-<p> �f�t�H���g�� True</p>
+<h3><a name="4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionsEnabled)</a></h3>
+<p> デフォルトは True</p>
 <p class="auto-style9"> WindowTransitionsEnabled = &quot;False&quot;</p>
 <p>
 &nbsp;</p>
 <h3>
-<a name="4.3._�E�B���h�E�^�C�g����啶���ɂ���_(TitleCaps)">4.3. �E�B���h�E�^�C�g����啶���ɂ��� (TitleCaps)</a></h3>
+<a name="4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a></h3>
 <p>
-�E�B���h�E�^�C�g����啶���\�L�ɂ��܂��B<br>�f�t�H���g�� True�B</p>
+ウィンドウタイトルを大文字表記にします。<br>デフォルトは True。</p>
 <p class="auto-style9">
 TitleCaps = &quot;True&quot; or &quot;False&quot;</p>
 <p>
 &nbsp;</p>
-<h2><a name="�Q�lURL">�Q�lURL</a></h2>
+<h2><a name="参考URL">参考URL</a></h2>
 <ul>
 	<li>
 	<a href="http://mahapps.com/guides/quick-start.html" target="_blank">
@@ -431,23 +431,23 @@ TitleCaps = &quot;True&quot; or &quot;False&quot;</p>
 	MahApps.Metro - Guides - Quick Start</a></li>
 	<li>
 	<a href="http://qiita.com/kabosu/items/bc09f68aaa0a80a37ad8" target="_blank">
-	WPF �uMahApps.Metro�v MetroWindow �v���p�e�B �悭�g�������</a></li>
+	WPF 「MahApps.Metro」 MetroWindow プロパティ よく使うやつメモ</a></li>
 	<li>
-	MahApps.Metro ���g���Ă݂�<br>
+	MahApps.Metro を使ってみた<br>
 	<a href="http://sourcechord.hatenablog.com/entry/2016/02/23/012511" target="_blank">
 	http://sourcechord.hatenablog.com/entry/2016/02/23/012511</a></li>
 </ul>
-<h2><a name="�֘A�y�[�W">�֘A�y�[�W</a></h2>
+<h2><a name="関連ページ">関連ページ</a></h2>
 <ul>
 	<li>MahApp.Metro<ul>
-		<li><a href="abstract.html">���߂�</a></li>
-		<li><a href="CreateWindow.html">�E�B���h�E���쐬</a></li>
+		<li><a href="abstract.html">初めに</a></li>
+		<li><a href="CreateWindow.html">ウィンドウを作成</a></li>
 	</ul>
 	</li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF �؉��p�r<br>
-2016/11/24 ��A�C���F (��)WindowTransitionsEnabled �� (��)WindowTransitionsEnable
-<br>2016/03/13 �V�K�쐬</font><br></p>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>
+2016/11/24 誤植修正： (正)WindowTransitionsEnabled ← (誤)WindowTransitionsEnable
+<br>2016/03/13 新規作成</font><br></p>
 </body>
 </html>

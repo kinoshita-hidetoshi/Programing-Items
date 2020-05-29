@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>[Win32] CriticalSetction</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -26,44 +26,44 @@
 <h1 class="auto-style7">
 [win32] Critical Section</h1>
 
-<p> Windows �� win32 �ɂ������\�I�ȓ��������ɂ͈ȉ��̂R�̎�@������܂��B<br>�����ł͉��L����u1. Critical 
-Section�v�ɂ��ċL�ڂ��܂��B</p>
+<p> Windows の win32 における代表的な同期処理には以下の３つの手法があります。<br>ここでは下記から「1. Critical 
+Section」について記載します。</p>
 <ol>
 	<li>Critical Section<ul>
-		<li>1�̃v���Z�X�̒��ŕ����̃X���b�h�Ԃ̑��ݔr�������������邽�߂Ɏg����B</li>
-		<li>�J�[�l���I�u�W�F�N�g�̒��ł͂Ȃ����[�J���I�u�W�F�N�g�ł���B</li>
-		<li>�����Ō������ǂ��B</li>
-		<li>���_�F �X���b�h�ɂ���ĕ������ꂽ���ǂ����𔻒肷�邱�Ƃ��ł��Ȃ��B�Ⴆ�΁A�N���e�B�J���Z�N�V�������̃X���b�h�� 
-		CriticalSection ���J�����Ȃ��܂܈ُ�I�����Ă�OS�̓N���[���A�b�v���Ȃ��B���ꂪ���ƂȂ�ꍇ�͌�q�� Mutex ���g�p����B</li>
+		<li>1つのプロセスの中で複数のスレッド間の相互排他性を実現するために使われる。</li>
+		<li>カーネルオブジェクトの中ではなくローカルオブジェクトである。</li>
+		<li>高速で効率が良い。</li>
+		<li>欠点： スレッドによって放棄されたかどうかを判定することができない。例えば、クリティカルセクション中のスレッドが 
+		CriticalSection を開放しないまま異常終了してもOSはクリーンアップしない。これが問題となる場合は後述の Mutex を使用する。</li>
 	</ul>
 	</li>
 	<li>Mutex<ul>
-		<li>�قȂ�v���Z�X�ɑ�����X���b�h���܂߂āA�����̃X���b�h�Ԃ̑��ݔr�������������邽�߂̎d�g�݂ł���B</li>
-		<li>�J�[�l���I�u�W�F�N�g�ł���B</li>
-		<li>���L���Ă���X���b�h���I������� �h�������ꂽ�h ���Ƃ������G���[�𐶐�����B</li>
-		<li>���O�������A�����̃v���Z�X����I�[�v���ł���B</li>
-		<li>��������L����X���b�h����������ł���B </li>
+		<li>異なるプロセスに属するスレッドも含めて、複数のスレッド間の相互排他性を実現するための仕組みである。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有しているスレッドが終了すると ”放棄された” ことを示すエラーを生成する。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>それを所有するスレッドだけが解放できる。 </li>
 	</ul>
 	</li>
 	<li>Semaphore<ul>
-		<li>�L���ȃ��\�[�X��ǐՊǗ����邽�߂Ɏg�p����B</li>
-		<li>�J�[�l���I�u�W�F�N�g�ł���B</li>
-		<li>���L�҂����Ȃ��B</li>
-		<li>���O�������A�����̃v���Z�X����I�[�v���ł���B</li>
-		<li>�C�ӂ̃X���b�h�������ł���B</li>
+		<li>有限なリソースを追跡管理するために使用する。</li>
+		<li>カーネルオブジェクトである。</li>
+		<li>所有者がいない。</li>
+		<li>名前を持ち、複数のプロセスからオープンできる。</li>
+		<li>任意のスレッドから解放できる。</li>
 	</ul>
 	</li>
 </ol>
 <p> &nbsp;</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._CriticalSection_���g���Ă݂�">1. CriticalSection ���g���Ă݂�</a><br>2. ***<br>3. ***</p>
+<h2> 目次</h2>
+<p> <a href="#1._CriticalSection_を使ってみる">1. CriticalSection を使ってみる</a><br>2. ***<br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._CriticalSection_���g���Ă݂�">1. CriticalSection ���g���Ă݂�</a></h2>
-<p> [�T�v]</p>
-<p> �܂��� CriticalSection ���g�p����V���v���ȗ�������܂��B</p>
+<h2> <a name="1._CriticalSection_を使ってみる">1. CriticalSection を使ってみる</a></h2>
+<p> [概要]</p>
+<p> まずは CriticalSection を使用するシンプルな例を示します。</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[�]����]</p>
+<p>[評価環境]</p>
 <table>
 <tbody>
 	<tr>
@@ -71,7 +71,7 @@ Section�v�ɂ��ċL�ڂ��܂��B</p>
 	</tr>
 	
 	<tr>
-		<td>�R���p�C�� :</td>
+		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.4 </td>
 	</tr>
@@ -93,16 +93,16 @@ Section�v�ɂ��ċL�ڂ��܂��B</p>
 </table>
 </font>
 <p>&nbsp;</p>
-<p>�ŏ��ɁA���܂������Ȃ���������܂��B�����Ď��ɁACriticalSection���g�p���邱�ƂňӐ}�ʂ�ɓ��삷���������܂��B</p>
-<p>������ABadExample.cpp �͂��܂������Ȃ���ł��B<br>4�̃X���b�h�����ꂼ��25,000��̃C���N�������g������̂ŁA�Ō�� count 
-��100,000�ɂȂ邱�Ƃ����҂���v���O�����ł��B�����������������Ȃ����߂ɈӐ}���铮������Ȃ��A�Ƃ�����ł��B</p>
+<p>最初に、うまく動かない例を示します。そして次に、CriticalSectionを使用することで意図通りに動作する例を示します。</p>
+<p>こちら、BadExample.cpp はうまく動かない例です。<br>4つのスレッドがそれぞれ25,000回のインクリメントをするので、最後に count 
+は100,000になることを期待するプログラムです。しかし同期処理がないために意図する動作をしない、という例です。</p>
 <p>[BadExample.cpp]</p>
 <pre class="prettyprint linenums">
 <code>#include &lt;iostream&gt;     // std::cout, std::endl
 #include &lt;tchar.h&gt;      // _tmain
 #include &lt;thread&gt;       // std::thread
 
-// �O���[�o���ϐ�
+// グローバル変数
 volatile long           count = 0;
 
 void CountThread(const size_t iterations)
@@ -112,8 +112,8 @@ void CountThread(const size_t iterations)
     for (size_t i = 0; i &lt; iterations; ++i)
     {
         x = count;
-        // ���𔭐������ɂ����ꍇ�͎��̍s�̃R�����g�A�E�g���O���Ă��������B
-//      std::this_thread::yield();      // �X���b�h�̏��������n���Bc++11�B
+        // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+//      std::this_thread::yield();      // スレッドの処理明け渡し。c++11。
         x++;
         count = x;
     }
@@ -126,27 +126,27 @@ int _tmain(int argc, char* argv[])
     std::thread     countThreads[numThreads];
 
     /*========*/
-    /* ������ */
+    /* 処理部 */
     /*========*/
-    // �X���b�h���S�쐬
+    // スレッドを４つ作成
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i] = std::thread(CountThread, 25000);
     }
 
-    // �S�̃X���b�h���I���̂�҂�
+    // ４つのスレッドが終わるのを待つ
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i].join();
     }
 
-    // �S�̃X���b�h���I�������̂��� count �̒l���`�F�b�N
+    // ４つのスレッドが終了したのちの count の値をチェック
     std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
     
     /*========*/
-    /* �㏈�� */
+    /* 後処理 */
     /*========*/
-    // [Enter]�L�[ ���͑҂�
+    // [Enter]キー 入力待ち
     {
         std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
         int ch = getchar();
@@ -156,9 +156,9 @@ int _tmain(int argc, char* argv[])
 }</code></pre>
 <p>&nbsp;</p>
 <p><img alt="" src="CriticalSection/img18.jpg"></p>
-<p>���҂��� 100,000 �ɑ΂��� 65,703 �܂ł����J�E���g�A�b�v�ł��܂���ł����B����͂��܂����삵�Ȃ���ł��B<br>���̒l�̓v���O���������s���邽�тɑ���܂��B</p>
+<p>期待する 100,000 に対して 65,703 までしかカウントアップできませんでした。これはうまく動作しない例です。<br>この値はプログラムを実行するたびに代わります。</p>
 <p> &nbsp;</p>
-<p> ���� CriticalSection �ɂ�蓯����������������������܂��B</p>
+<p> 次に CriticalSection により同期処理を加えた例を示します。</p>
 <p> &nbsp;</p>
 
 <pre class="prettyprint linenums">
@@ -168,7 +168,7 @@ int _tmain(int argc, char* argv[])
 #include &lt;thread&gt;       // std::thread
 #include &lt;atomic&gt;       // std::atomoic
 
-// �O���[�o���ϐ�
+// グローバル変数
 volatile long           count = 0;
 <span class="auto-style8">CRITICAL_SECTION</span>        critSec;
 
@@ -196,26 +196,26 @@ int _tmain(int argc, char* argv[])
     <span class="auto-style8">InitializeCriticalSection(&amp;critSec);</span>
 
     {
-        // �X���b�h���S�쐬
+        // スレッドを４つ作成
         for (size_t i = 0; i &lt; numThreads; ++i)
         {
             countThreads[i] = std::thread(CountThread, 25000);
         }
 
-        // �S�̃X���b�h���I���̂�҂�
+        // ４つのスレッドが終わるのを待つ
         for (size_t i = 0; i &lt; numThreads; ++i)
         {
             countThreads[i].join();
         }
 
-        // �S�̃X���b�h���I�������̂��� count �̒l���`�F�b�N
+        // ４つのスレッドが終了したのちの count の値をチェック
         std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
     }
 
     <span class="auto-style8">DeleteCriticalSection(&amp;critSec);</span>
 
     /*========*/
-    /* �㏈�� */
+    /* 後処理 */
     /*========*/
     {
         std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
@@ -226,11 +226,11 @@ int _tmain(int argc, char* argv[])
 }</code></pre>
 <p> &nbsp;</p>
 <p> <img alt="" src="CriticalSection/img20.jpg"></p>
-<p> ���x�͂����� 100,000 �ɂȂ�܂����B</p>
+<p> 今度はちゃんと 100,000 になりました。</p>
 <h4>
 &nbsp;</h4>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
 	<li>Using Critical Section Objects<br>
 	<a href="https://docs.microsoft.com/ja-jp/windows/win32/sync/using-critical-section-objects" target="_blank">
@@ -245,10 +245,10 @@ int _tmain(int argc, char* argv[])
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[�]����]</p>
+<p>[評価環境]</p>
 <table>
 <tbody>
 	<tr>
@@ -256,7 +256,7 @@ int _tmain(int argc, char* argv[])
 	</tr>
 	
 	<tr>
-		<td>�R���p�C�� :</td>
+		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -278,7 +278,7 @@ int _tmain(int argc, char* argv[])
 </table>
 </font>
 <p>&nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -289,21 +289,21 @@ int _tmain(int argc, char* argv[])
 	
 <br>
 <h4>
-�T���v���v���O����</h4>
+サンプルプログラム</h4>
 <p>
-�T���v���v���O���� �_�E�����[�h</p>
+サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
-	<li>(��) http://www.****.com</li>
+	<li>(例) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF</font></p>
+<p> <font face="Meiryo UI">記載：</font></p>
 <ul>
-	<li><font face="Meiryo UI">2019�NMM��DD�� �V�K�쐬�A�؉��p�r<br></font></li>
+	<li><font face="Meiryo UI">2019年MM月DD日 新規作成、木下英俊<br></font></li>
 </ul>
 </body>
 </html>

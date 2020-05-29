@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>CryptEnumProviderTypes (CryptAPI)</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -40,12 +40,12 @@
 CryptEnumProviderTypes (CryptAPI)
 </h1>
 
-<p> <font face="Meiryo UI">Windows���� AES �� SHA256 ��CryptAPI�Ŏg�p�������Ȃ�A���׎n�߂܂����B<br>
-.NET�ŊȒP�ɂł��邱�Ƃ��ACryptAPI�P�ƂŎ������悤�Ƃ���Ǝ葱�����ʓ|�ł��B�ł����XWin32�Ŏ�������K�v������ꍇ������̂ŁA�܂����Ƃ��ėL�Ӌ`�ł͂Ȃ����ƁB</font></p>
-<p> <span class="auto-style1">�܂��� CryptEnumProviderTypes() 
-��CSP�^�C�v�ꗗ���擾������@�ł��BOS�ɂ���Ď�������Ă���CSP�^�C�v�ɍ��ق�����̂ŏd�v�ȏ��ł��B</span></p>
-<p> <a href="CryptEnumProviderTypes/EnamerateProviderTypes.zip">�T���v���v���O�����ꎮ �_�E�����[�h�izip�`���j</a></p>
-<span class="table_title">[�v���O�����\�[�X]</span>
+<p> <font face="Meiryo UI">Windows環境で AES と SHA256 をCryptAPIで使用したくなり、調べ始めました。<br>
+.NETで簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</font></p>
+<p> <span class="auto-style1">まずは CryptEnumProviderTypes() 
+でCSPタイプ一覧を取得する方法です。OSによって実装されているCSPタイプに差異があるので重要な情報です。</span></p>
+<p> <a href="CryptEnumProviderTypes/EnamerateProviderTypes.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<span class="table_title">[プログラムソース]</span>
 
 <code>
 <pre class="prettyprint linenums">
@@ -72,12 +72,12 @@ CryptEnumProviderTypes (CryptAPI)
     cbTypeName = BUF_SIZE;
 
     <span class="command">while</span>( <strong><span class="auto-style6">CryptEnumProviderTypes</span></strong> (
-                      dwIndex,      <span class="comment">// �C���f�b�N�X�ԍ�</span>
-                      NULL,         <span class="comment">// �\��</span>
-                      0,            <span class="comment">// �\��</span>
-                      &amp;dwProvType,  <span class="comment">// CSP�^�C�v</span>
-                      pszTypeName,  <span class="comment">// CSP�^�C�v��</span>
-                      &amp;cbTypeName)) <span class="comment">// �T�C�Y</span>
+                      dwIndex,      <span class="comment">// インデックス番号</span>
+                      NULL,         <span class="comment">// 予約</span>
+                      0,            <span class="comment">// 予約</span>
+                      &amp;dwProvType,  <span class="comment">// CSPタイプ</span>
+                      pszTypeName,  <span class="comment">// CSPタイプ名</span>
+                      &amp;cbTypeName)) <span class="comment">// サイズ</span>
     {
         _tprintf(_T(<span class="string">"%2d - %s\n"</span>), dwProvType, pszTypeName);
         dwIndex++;
@@ -94,7 +94,7 @@ CryptEnumProviderTypes (CryptAPI)
 </code>
 	
 <br>
-<span class="table_title">[���s����]</span>
+<span class="table_title">[実行結果]</span>
 		<code>
 <pre class="prettyprint linenums">
 Enamerate CSP(Cryptographic Service Provider) types.
@@ -109,16 +109,16 @@ Enamerate CSP(Cryptographic Service Provider) types.
 HIT [enter] KEY !!
 </pre>
 </code>
-<p> OS: Windows7 64bit Proffesional<br>�쐬�F VC++2008 sp1�A32bit�R���p�C���A/MT(d)</p>
-<p> ���āA���͏�L���ꂼ���CSP�^�C�v�Ŏg�p�ł���ڍ׃A���S���Y���B����ɂ��Ă͈ȉ��̒ʂ�B</p>
+<p> OS: Windows7 64bit Proffesional<br>作成： VC++2008 sp1、32bitコンパイル、/MT(d)</p>
+<p> さて、問題は上記それぞれのCSPタイプで使用できる詳細アルゴリズム。これについては以下の通り。</p>
 <table class="auto-style8" cellspacing="0" cellpadding="5" width="800px">
 	<tr>
-		<td class="auto-style9" style="width: 135px">CSP�̃^�C�v</td>
-		<td class="auto-style9" style="width: 38px">�l</td>
-		<td class="auto-style9" style="width: 102px">������</td>
-		<td class="auto-style9" style="width: 120px">�d�q����</td>
-		<td class="auto-style9" style="width: 132px">�Í���</td>
-		<td class="auto-style9" style="width: 149px">�n�b�V���v�Z</td>
+		<td class="auto-style9" style="width: 135px">CSPのタイプ</td>
+		<td class="auto-style9" style="width: 38px">値</td>
+		<td class="auto-style9" style="width: 102px">鍵交換</td>
+		<td class="auto-style9" style="width: 120px">電子署名</td>
+		<td class="auto-style9" style="width: 132px">暗号化</td>
+		<td class="auto-style9" style="width: 149px">ハッシュ計算</td>
 	</tr>
 	<tr>
 		<td class="auto-style9" style="width: 135px">PROV_RSA_FULL</td>
@@ -202,12 +202,12 @@ HIT [enter] KEY !!
 		<td class="auto-style9" style="width: 149px">Varies</td>
 	</tr>
 </table>
-<p> (*1) Windows Vista, Windows 7 �ȍ~ �ł̂ݎg�p�\</p>
-<p> �Q�lURL�F 
+<p> (*1) Windows Vista, Windows 7 以降 でのみ使用可能</p>
+<p> 参考URL： 
 <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx" target="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx">
 http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx</a></p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2012�N1��28�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2012年1月28日 木下英俊<br>
 </font></p>
 </body>
 </html>

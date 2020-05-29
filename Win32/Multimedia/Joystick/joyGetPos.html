@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>Win32 joyGetPos �̎g����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Win32 joyGetPos の使い方</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -24,24 +24,24 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-Win32�F joyGetPos �֐�</h1>
+Win32： joyGetPos 関数</h1>
 
-<p> �W���C�p�b�h�ɂ�鑀����s����悤�ɂ��邱�Ƃ�ړI�ɁAWin32 api �� joyGetPos �֐����g�����@���ȉ��ɂ܂Ƃ߂܂��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._�܂��͓������Ă݂�">1. �܂��͓������Ă݂�</a><br>2. ***<br>3. ***<br><a href="#�Q�l">�Q�l</a></p>
+<p> ジョイパッドによる操作を行えるようにすることを目的に、Win32 api の joyGetPos 関数を使う方法を以下にまとめます。</p>
+<h2> 目次</h2>
+<p> <a href="#1._まずは動かしてみる">1. まずは動かしてみる</a><br>2. ***<br>3. ***<br><a href="#参考">参考</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._�܂��͓������Ă݂�">1. �܂��͓������Ă݂�</a> </h2>
-<p> [�T�v]</p>
-<p> joyGetPos �֐����g���āA�܂��̓W���C�X�e�B�b�N�̑����ǂ߂�悤�Ƀv���O�����𓮂����Ă݂܂��B<br>
-�W���C�X�e�B�b�N�����o���āA�㉺���E�A�e��{�^���̉�����ԁA���R���\�[���֏o�͂���v���O�������쐬���Ă݂܂��B<br>
-�ȉ��̂S�̗v�f�Ƃ��ď����擾�ł��܂��B<br><br>- wXpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : �������Ԃ� 
-32511 ��\�����܂����B<br>- wYpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : �������Ԃ� 32511 ��\�����܂����B <br>- 
-wZpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Zpos ��ύX�ł�����͑��u���Ȃ����߂��A����̃e�X�g�ł͏�ɂO�ł����B <br>
-- wButtons : �������Ԃ� 0�A�e�{�^�������ɂ��Ή�����r�b�g�� 1 �ɂȂ�悤�ł��B <br></p>
-<p>[��]</p>
+<h2> <a name="1._まずは動かしてみる">1. まずは動かしてみる</a> </h2>
+<p> [概要]</p>
+<p> joyGetPos 関数を使って、まずはジョイスティックの操作を読めるようにプログラムを動かしてみます。<br>
+ジョイスティックを検出して、上下左右、各種ボタンの押下状態、をコンソールへ出力するプログラムを作成してみます。<br>
+以下の４つの要素として情報を取得できます。<br><br>- wXpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 無操作状態で 
+32511 を表示しました。<br>- wYpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 無操作状態で 32511 を表示しました。 <br>- 
+wZpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Zpos を変更できる入力装置がないためか、今回のテストでは常に０でした。 <br>
+- wButtons : 無操作状態で 0、各ボタン押下により対応するビットが 1 になるようです。 <br></p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C++</li>
-	<li>Windows SDK �o�[�W�����F 10.0.17134.0</li>
+	<li>Windows SDK バージョン： 10.0.17134.0</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p><img alt="" src="JoyGetPos/img29.gif"></p>
@@ -49,15 +49,15 @@ wZpos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Zpos ��ύX�ł�����͑��u���Ȃ����߂��A���
 <pre class="prettyprint linenums">
 #pragma once
 
-#define WINVER          0x0601    // Windows7 ���~�j�}������ΏۂƂ���
-#define _WIN32_WINNT    0x0601    // Windows7 ���~�j�}������ΏۂƂ���
+#define WINVER          0x0601    // Windows7 をミニマム動作対象とする
+#define _WIN32_WINNT    0x0601    // Windows7 をミニマム動作対象とする
 
 #include &quot;targetver.h&quot;
 
 #include &lt;stdio.h&gt;
 #include &lt;tchar.h&gt;
 
-// TODO: �v���O�����ɕK�v�Ȓǉ��w�b�_�[�������ŎQ�Ƃ��Ă�������
+// TODO: プログラムに必要な追加ヘッダーをここで参照してください
 #include &lt;Windows.h&gt;
 #include &lt;mmsystem.h&gt;             // joyGetPos, JOYINFO, JOYSTICKID1
 
@@ -74,7 +74,7 @@ using namespace std;
 
 namespace console {
 
-// �J�[�\���ʒu�w�� for Windows Console
+// カーソル位置指定 for Windows Console
 void setCursorPos(int x, int y)
 {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -85,7 +85,7 @@ void setCursorPos(int x, int y)
     SetConsoleCursorPosition(hConsole, pos);
 }
 
-// �J�[�\���ʒu�擾
+// カーソル位置取得
 void getCursorPos(int&amp; x, int&amp;y) {
     HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO  consoleScreenBufferInfo;
@@ -96,7 +96,7 @@ void getCursorPos(int&amp; x, int&amp;y) {
     y = consoleScreenBufferInfo.dwCursorPosition.Y;
 }
 
-// �J�[�\���\����Ԏ擾
+// カーソル表示状態取得
 bool getConsoleCursorVisible()
 {
     HANDLE                  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -107,7 +107,7 @@ bool getConsoleCursorVisible()
     return consoleCursorInfo.bVisible;
 }
 
-// �J�[�\���\����Ԑݒ�
+// カーソル表示状態設定
 void setConsoleCursorVisible( bool bVisible ) 
 {
     HANDLE                  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -123,34 +123,34 @@ void setConsoleCursorVisible( bool bVisible )
 
 int main()
 {
-    <span class="auto-style8">JOYINFO     joyInfo;</span>            // �W���C�X�e�B�b�N�̏����i�[����ϐ�
+    <span class="auto-style8">JOYINFO     joyInfo;</span>            // ジョイスティックの情報を格納する変数
     bool        bConnected = false;
-    bool        bLoop = true;       // true �̊Ԃ������������[�v�Bfalse �ɂȂ�����v���O�������I���B
+    bool        bLoop = true;       // true の間だけ処理をループ。false になったらプログラムを終了。
 
     cout &lt;&lt; &quot;Finish to hit [Enter] key !! &quot; &lt;&lt; endl;
 
     while (bLoop) {
-        // �W���C�X�e�B�b�N ���擾����
+        // ジョイスティック 情報取得処理
         {
             MMRESULT result = <span class="auto-style8">joyGetPos(JOYSTICKID1, &amp;joyInfo);</span>
 
             if (result == <span class="auto-style8">JOYERR_NOERROR</span>) {
                 console::setConsoleCursorVisible(false);
 
-                // JOYSTICKID1 �Ɛڑ��ł���
+                // JOYSTICKID1 と接続できた
                 if (bConnected == true) {
-                    // �\���ʒu��5�s��ֈړ�
+                    // 表示位置を5行上へ移動
                     int x, y;
                     console::getCursorPos(x, y);
                     console::setCursorPos(x, y - 5);
                 }
                 else {
-                    // ��������}��
+                    // 水平線を挿入
                     cout &lt;&lt; &quot;-------------------------------&quot; &lt;&lt; endl;
                 }
                 bConnected = true;
 
-                // �W���C�X�e�B�b�N�����R���\�[���֏o��
+                // ジョイスティック情報をコンソールへ出力
 <span class="auto-style8">                cout &lt;&lt; &quot;wXpos    = &quot; &lt;&lt; joyInfo.wXpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
 <span class="auto-style8">                cout &lt;&lt; &quot;wYpos    = &quot; &lt;&lt; joyInfo.wYpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
 <span class="auto-style8">                cout &lt;&lt; &quot;wZpos    = &quot; &lt;&lt; joyInfo.wZpos    &lt;&lt; &quot;     &quot; &lt;&lt; endl;</span>
@@ -161,9 +161,9 @@ int main()
             }
             else {
                 if (bConnected == true) {
-                    // �W���C�X�e�B�b�N�̐ڑ����ς�������Ƃ�ʒm
-                    // ���̏��������Ȃ��ƈقȂ�USB�|�[�g�֍Đڑ������Ƃ���
-                    // �W���C�X�e�B�b�N�������Ȃ��Ȃ�B
+                    // ジョイスティックの接続が変わったことを通知
+                    // この処理をやらないと異なるUSBポートへ再接続したときに
+                    // ジョイスティックが動かなくなる。
                     <span class="auto-style8">joyConfigChanged(0);</span>
                 }
                 bConnected = false;
@@ -200,20 +200,20 @@ int main()
             }
         }
 
-        // [Enter] �L�[�������ꂽ��v���O�����I��
+        // [Enter] キーを押されたらプログラム終了
         if (GetAsyncKeyState(VK_RETURN)) {
             cout &lt;&lt; endl &lt;&lt; &quot;Finish this program.&quot;;
             bLoop = false;
             Sleep(2000);
         }
 
-        // ��莞�ԑҋ@
+        // 一定時間待機
         if (bConnected == true) {
-            // �Z���Ԃ̑ҋ@
+            // 短時間の待機
             Sleep(100);
         }
         else {
-            // ���߂̑ҋ@
+            // 長めの待機
             Sleep(500);
         }
     }
@@ -224,15 +224,15 @@ int main()
 
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -244,27 +244,27 @@ int main()
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�l">�Q�l</a></h2>
+<a name="参考">参考</a></h2>
 <ul>
-	<li>joyGetPosEx �֐�<br><a href="joyGetPosEx.html">�v���O���~���O�A�C�e�� joyGetPosEx</a></li>
-	<li>joyGetPos �֐�<br>
+	<li>joyGetPosEx 関数<br><a href="joyGetPosEx.html">プログラミングアイテム joyGetPosEx</a></li>
+	<li>joyGetPos 関数<br>
 	<a href="https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx">
 	https://msdn.microsoft.com/en-us/library/dd757107(v=vs.85).aspx</a></li>
-	<li>joyGetPosEx �֐�<br>
+	<li>joyGetPosEx 関数<br>
 	<a href="https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx">
 	https://msdn.microsoft.com/en-us/library/dd757108(v=vs.85).aspx</a></li>
-	<li>joyConfigChanged �֐�<br>
+	<li>joyConfigChanged 関数<br>
 	<a href="https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx">
 	https://msdn.microsoft.com/en-us/library/dd757104(v=vs.85).aspx</a></li>
-	<li>JOYINFO �\����<br>
+	<li>JOYINFO 構造体<br>
 	<a href="https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx">
 	https://msdn.microsoft.com/en-us/library/dd757110(v=vs.85).aspx</a></li>
-	<li>JOYINFOEX �\����<br>
+	<li>JOYINFOEX 構造体<br>
 	<a href="https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx">
 	https://msdn.microsoft.com/en-us/library/dd757112(v=vs.85).aspx</a></li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF<br>2018�N05��19�� �V�K�쐬�A�؉��p�r</font></p>
+<p> <font face="Meiryo UI">記載：<br>2018年05月19日 新規作成、木下英俊</font></p>
 </body>
 </html>

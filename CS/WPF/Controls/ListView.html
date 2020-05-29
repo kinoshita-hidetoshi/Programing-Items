@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>WPF - ListView �R���g���[��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WPF - ListView コントロール</title>
 
 <!-- for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -30,71 +30,71 @@
 <body onload="prettyPrint();">
 
 <h1 class="auto-style7">
-WPF : ListView �R���g���[��</h1>
+WPF : ListView コントロール</h1>
 <h2>
-���e�ꗗ�F</h2>
+内容一覧：</h2>
 <p>
-<a href="#1._Simple_��_ListView">�P�DSimple �� ListView</a><br>
-<a href="#2. �w�b�_�̕���������񂹂ɂ���iHorizontalContentAlignment_��ݒ肷��j">�Q�D�w�b�_�̕���������񂹂ɂ���iHorizontalContentAlignment ��ݒ肷��j</a><br>
-<a href="#3._�C���[�W��\������">�R�D�C���[�W��\������</a><br>
-<a href="#4�DImage_��_TextBlock_���ꏏ�ɕ\������">�S�DImage �� TextBlock ���ꏏ�ɕ\������</a><br>
-<a href="#5. �^�C���\������">�T�D�^�C���\������</a><br><a href="#6. GridView_�̃X�^�C�����J�X�^�}�C�Y">
-�U�DGridView �̃X�^�C�����J�X�^�}�C�Y</a></p>
+<a href="#1._Simple_な_ListView">１．Simple な ListView</a><br>
+<a href="#2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment_を設定する）">２．ヘッダの文字列を左寄せにする（HorizontalContentAlignment を設定する）</a><br>
+<a href="#3._イメージを表示する">３．イメージを表示する</a><br>
+<a href="#4．Image_と_TextBlock_を一緒に表示する">４．Image と TextBlock を一緒に表示する</a><br>
+<a href="#5. タイル表示する">５．タイル表示する</a><br><a href="#6. GridView_のスタイルをカスタマイズ">
+６．GridView のスタイルをカスタマイズ</a></p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="1._Simple_��_ListView">1. Simple �� ListView</a></h2>
+<a name="1._Simple_な_ListView">1. Simple な ListView</a></h2>
 <p>
-�ɗ� Blend���g���� ListView ���g�����V���v���ȃA�v��������Ă݂܂��B<br>����ȉ�ʂ̃v���O���������܂��B</p>
+極力 Blendを使って ListView を使ったシンプルなアプリを作ってみます。<br>こんな画面のプログラムを作ります。</p>
 <p>
 <img alt="" src="ListView/img25.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
-(1) �܂���WPF�̃v���W�F�N�g��V�K�쐬���܂��B</p>
+(1) まずはWPFのプロジェクトを新規作成します。</p>
 <p>
 <img alt="" height="457" src="ListView/img7.jpg" width="826"></p>
 <p>
-(2) ListView�R���g���[����S�ʂɂ��ē\��t���܂��B</p>
+(2) ListViewコントロールを全面にして貼り付けます。</p>
 <p>
 <img alt="" src="ListView/img9.jpg"></p>
 <p>
-(3) �T���v���f�[�^�����܂��B�����ł� Name �� Address �̂Q�̕�����f�[�^���T���v���f�[�^�Ƃ��č쐬���܂��B</p>
+(3) サンプルデータを作ります。ここでは Name と Address の２つの文字列データをサンプルデータとして作成します。</p>
 <p>
 <img alt="" src="ListView/img19.jpg"></p>
 <p>
-(4) ���̃T���v���f�[�^�� Grid �� DataContext �Ƀo�C���h���܂��B</p>
+(4) このサンプルデータを Grid の DataContext にバインドします。</p>
 <p>
-�����ł́hStaticResource�h����hSampleDataSource�h��I�����܂��B</p>
+ここでは”StaticResource”から”SampleDataSource”を選択します。</p>
 <p>
 <img alt="" src="ListView/img28.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
-(5) ���� ListView �� ItemsSource �� ��ɐݒ肵�� SampleDataSource �� Collection ��ݒ肵�܂��B</p>
+(5) 次に ListView の ItemsSource へ 先に設定した SampleDataSource の Collection を設定します。</p>
 <p>
 <img alt="" src="ListView/img21.jpg"></p>
 <p>
-(6) �����āAListView �� GridViewColumn �̐ݒ���s���܂��B</p>
+(6) 続けて、ListView の GridViewColumn の設定を行います。</p>
 <p>
-�����ł́A�hName�h �� �hAddress�h �̂Q�̗���쐬���Ă݂܂��B</p>
+ここでは、”Name” と ”Address” の２つの列を作成してみます。</p>
 <p>
 <img alt="" src="ListView/img22.jpg"></p>
 <p>
 <img alt="" src="ListView/img23.jpg"></p>
 <p>
-�e DisplayMemberBinding �� �h�f�[�^�R���e�L�X�g�h �̑Ή�����A�C�e����I�����܂��B<br>
+各 DisplayMemberBinding は ”データコンテキスト” の対応するアイテムを選択します。<br>
 <img alt="" src="ListView/img24.jpg"></p>
 <p>
-�ȏ�Ŋ����ł��B</p>
+以上で完成です。</p>
 <p>
-(7) �������Ă݂悤</p>
+(7) 動かしてみよう</p>
 <p>
-[F5]�Ńv���O�����𓮂����Ă݂܂��B����Ȋ����ł��B</p>
+[F5]でプログラムを動かしてみます。こんな感じです。</p>
 <p>
 <img alt="" src="ListView/img25.jpg"></p>
 <p>
-���̎��_�� XAML �͈ȉ��̒ʂ�B�����Ă��܂��ΊȒP�ł��ˁB</p>
+この時点の XAML は以下の通り。動いてしまえば簡単ですね。</p>
 
 [MainWindow.xaml]
 <pre class="prettyprint linenums">
@@ -116,9 +116,9 @@ WPF : ListView �R���g���[��</h1>
 <p>
 &nbsp;</p>
 <h2>
-<a name="2. �w�b�_�̕���������񂹂ɂ���iHorizontalContentAlignment_��ݒ肷��j">2. �w�b�_�̕���������񂹂ɂ���iHorizontalContentAlignment ��ݒ肷��j</a></h2>
+<a name="2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment_を設定する）">2. ヘッダの文字列を左寄せにする（HorizontalContentAlignment を設定する）</a></h2>
 <p>
-��قǍ�����v���O�����̎��s��ʂ����Ă݂܂��傤�B�w�b�_�������������Ɋ���Ă��܂��B<br>�w�b�_�̕��������񂹂ɂ��Ă݂����ł��ˁB�Ƃ����킯�ŁA�w�b�_���������������񂹂ɂ��Ă݂܂��B<br>���́A���X�ʓ|�ł��BBlend�ł͐ݒ�ł��܂���ł����BXAML�̒��ڏC���Ŏ������܂��B</p>
+先ほど作ったプログラムの実行画面を見てみましょう。ヘッダ部分だけ中央に寄っています。<br>ヘッダの部分も左寄せにしてみたいですね。というわけで、ヘッダ部分も文字を左寄せにしてみます。<br>実は、少々面倒です。Blendでは設定できませんでした。XAMLの直接修正で実現します。</p>
 <p>
 <img alt="" src="ListView/img25.jpg"></p>
 
@@ -157,26 +157,26 @@ WPF : ListView �R���g���[��</h1>
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 <p>
-�C������XAML�ŃR���p�C�������v���O�����̎��s���ʂ͉��L�̒ʂ�ł��B<br>�����ƍ���(Left)�ɂȂ�܂����B���l�� Right 
-��ݒ肷��ΉE�񂹂ɂ��ł��܂��B</p>
+修正したXAMLでコンパイルしたプログラムの実行結果は下記の通りです。<br>ちゃんと左寄せ(Left)になりました。同様に Right 
+を設定すれば右寄せにもできます。</p>
 <p>
 <img alt="" src="ListView/img34.jpg"></p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="3._�C���[�W��\������">3. �C���[�W��\������</a></h2>
+<a name="3._イメージを表示する">3. イメージを表示する</a></h2>
 <p>
-�P�s�ڂɃC���[�W��\������悤�ɕύX���܂��B</p>
+１行目にイメージを表示するように変更します。</p>
 <p>
-�܂��ŏ��ɂ��邱�Ƃ͉摜�f�[�^��SampleData�ɉ����邱�Ƃł��B<br>Images �Ƃ������̂ŉ��L�̂悤�ɃT���v���ɉ����܂����B</p>
+まず最初にすることは画像データをSampleDataに加えることです。<br>Images という名称で下記のようにサンプルに加えました。</p>
 <p>
 <img alt="" src="ListView/img10.jpg"></p>
 <p>
-�쐬�����v���O�����͉��L�̒ʂ�B</p>
+作成したプログラムは下記の通り。</p>
 <p>
 <img alt="" src="ListView/img6.jpg"></p>
 <p>
-�쐬����XAML�͉��L�̒ʂ�B<br>StackPanel �͖����Ă��ǂ��̂ł����A��q�̐����̓s���œ���Ă���܂��B</p>
+作成したXAMLは下記の通り。<br>StackPanel は無くても良いのですが、後述の説明の都合で入れてあります。</p>
 
 [MainWindow.xaml]
 <pre class="prettyprint linenums">
@@ -210,9 +210,9 @@ WPF : ListView �R���g���[��</h1>
 <p>
 &nbsp;</p>
 <h2>
-<a name="4�DImage_��_TextBlock_���ꏏ�ɕ\������">4�DImage �� TextBlock ���ꏏ�ɕ\������</a></h2>
+<a name="4．Image_と_TextBlock_を一緒に表示する">4．Image と TextBlock を一緒に表示する</a></h2>
 <p>
-�P�s�ڂɕ\�����Ă����C���[�W�ƁA�Q�s�ڂɕ\�����Ă������O�A�̂Q���P�̃Z���ɗZ�����ĕ\�����܂��B</p>
+１行目に表示していたイメージと、２行目に表示していた名前、の２つを１つのセルに融合して表示します。</p>
 <p>
 <img alt="" src="ListView/imgA.jpg"></p>
 
@@ -248,17 +248,17 @@ WPF : ListView �R���g���[��</h1>
 <p>
 &nbsp;</p>
 <h2>
-<a name="5. �^�C���\������">�T�D�^�C���\������</a></h2>
+<a name="5. タイル表示する">５．タイル表示する</a></h2>
 <p>
-���񂾂����Ȃ��Ă��܂��B<br>�����ł́A
-ListView ���g���ĉ��}�̂悤�ȃ^�C���\�����s�����@���L�ڂ��܂��B</p>
+だんだん難しくなってきます。<br>ここでは、
+ListView を使って下図のようなタイル表示を行う方法を記載します。</p>
 <p>
-�uPro WPF 4.5 in C#�v�̖{�ŁAChapter 22 �ɂ�&quot;Creating a Custum View&quot;�Ƃ��ďЉ��Ă�����e�ł��B<br>
-�قƂ�ǖ{�ɋL�ڂ̂܂܂ł����A�኱�Ǝ��̏����������Ă��܂��B</p>
+「Pro WPF 4.5 in C#」の本で、Chapter 22 にて&quot;Creating a Custum View&quot;として紹介されている内容です。<br>
+ほとんど本に記載のままですが、若干独自の処理を加えています。</p>
 <p>
 <img alt="" src="ListView/img8.jpg"></p>
 <p>
-(1) �܂��A���̂Q�̃\�[�X�t�@�C���iTileView.cs�AGeneric.xaml�j���v���W�F�N�g�֒ǉ����܂��B</p>
+(1) まず、次の２つのソースファイル（TileView.cs、Generic.xaml）をプロジェクトへ追加します。</p>
 
 [TileView.cs]
 <pre class="prettyprint linenums">
@@ -326,9 +326,9 @@ namespace  <span class="auto-style8">ListViewStyle</span>
 }</pre>
 
 
-<p>[Themes / Generic.xaml]<br><strong>[�d�v1]</strong> <span class="auto-style9">�hGeneric.xaml�h �̃t�@�C���͕K���hThemes�h�t�H���_�̉��ɕۑ����Ă��������B</span>�ڍׂ͕s���B<br>
-<strong>[�d�v2]</strong> <span class="auto-style9">�hGeneric.xaml�h �� &quot;�r���h�A�N�V����&quot; �� 
-&quot;Page&quot; �ɂ��邱�ƁB</span> </p>
+<p>[Themes / Generic.xaml]<br><strong>[重要1]</strong> <span class="auto-style9">”Generic.xaml” のファイルは必ず”Themes”フォルダの下に保存してください。</span>詳細は不明。<br>
+<strong>[重要2]</strong> <span class="auto-style9">”Generic.xaml” の &quot;ビルドアクション&quot; を 
+&quot;Page&quot; にすること。</span> </p>
 <pre class="prettyprint linenums">
 &lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -363,7 +363,7 @@ namespace  <span class="auto-style8">ListViewStyle</span>
     &lt;Setter Property=&quot;Template&quot;&gt;
       &lt;Setter.Value&gt;
         &lt;ControlTemplate TargetType=&quot;{x:Type ListBoxItem}&quot;&gt;
-&lt;!-- �l�𒼐ڎw�肷��ꍇ�͂���Ȋ�����
+&lt;!-- 値を直接指定する場合はこんな感じで
           &lt;Border Name=&quot;Border&quot; BorderThickness=&quot;1&quot; CornerRadius=&quot;3&quot; &gt;
 --&gt;
           &lt;Border Name=&quot;Border&quot;
@@ -390,11 +390,11 @@ namespace  <span class="auto-style8">ListViewStyle</span>
 &lt;/ResourceDictionary&gt;</pre>
 <p>
 <img alt="" src="ListView/img5.jpg" height="312" width="391" style="border:solid 3px #888888"><br>
-�}�F &quot;Generic.xaml&quot; �̃r���h�A�N�V����</p>
+図： &quot;Generic.xaml&quot; のビルドアクション</p>
 <p>
 &nbsp;</p>
 <p>
-(2) ���� MainWindow.xaml ���ȉ��̂悤�ɏC�����܂��B</p>
+(2) 次に MainWindow.xaml を以下のように修正します。</p>
 
 [MainWindow.xaml]
 <pre class="prettyprint linenums">
@@ -462,29 +462,29 @@ namespace  <span class="auto-style8">ListViewStyle</span>
 <p>
 &nbsp;</p>
 <p>
-���̂܂܎��s����ƁA���}�̂悤�ɂȂ�܂��B</p>
+このまま実行すると、下図のようになります。</p>
 <p>
 <img alt="" src="ListView/img16.jpg"></p>
 <p>
-�uView=&quot;{StaticResource ImageView}&quot;�v ���uView=&quot;{StaticResource
-<span class="auto-style8">ImageDetailView</span>}&quot;�v�֕ς���ƁA���}�̒ʂ�B</p>
+「View=&quot;{StaticResource ImageView}&quot;」 を「View=&quot;{StaticResource
+<span class="auto-style8">ImageDetailView</span>}&quot;」へ変えると、下図の通り。</p>
 <p>
 <img alt="" src="ListView/img17.jpg"></p>
 <p>
-�uView=&quot;{StaticResource ImageView}&quot;�v ���uView=&quot;{StaticResource
-<span class="auto-style8">GridView</span>}&quot;�v�֕ς���ƁA���}�̒ʂ�B</p>
+「View=&quot;{StaticResource ImageView}&quot;」 を「View=&quot;{StaticResource
+<span class="auto-style8">GridView</span>}&quot;」へ変えると、下図の通り。</p>
 <p>
 <img alt="" src="ListView/img18.jpg"></p>
 <p>
-�������x�[�X�ɂ��Ĕ��C�����Ă����΁A�����̃o���G�[�V�����ɑΉ��ł������ł��B</p>
+これらをベースにして微修正していけば、多くのバリエーションに対応できそうです。</p>
 <p>
-�A�C�e���I�����̃Z���̐F��g�̑����A�p�A�F�A�Ȃǂ̃J�X�^�}�C�Y�́A��L�\�[�X���̐��F�������Q�l�ɏC�����s���Ă��������B</p>
+アイテム選択時のセルの色や枠の太さ、角、色、などのカスタマイズは、上記ソース中の水色部分を参考に修正を行ってください。</p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="6. GridView_�̃X�^�C�����J�X�^�}�C�Y">6�DGridView �̃X�^�C�����J�X�^�}�C�Y</a></h2>
+<a name="6. GridView_のスタイルをカスタマイズ">6．GridView のスタイルをカスタマイズ</a></h2>
 <p>
-�hGridView�h �̃X�^�C�����J�X�^�}�C�Y�������ꍇ�́A���L�̂悤�Ȋ����ŃX�^�C���w��ɂāB</p>
+”GridView” のスタイルをカスタマイズしたい場合は、下記のような感じでスタイル指定にて。</p>
 
 [MainWindow.xaml]
 <pre class="prettyprint linenums">
@@ -572,13 +572,13 @@ namespace  <span class="auto-style8">ListViewStyle</span>
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 <p>
-�I�����̃Z���̐F��ς����܂����B</p>
+選択時のセルの色を変えられました。</p>
 <p>
 <img alt="" src="ListView/img1E.jpg"></p>
 <p>
 &nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF �؉��p�r<br>2014�N09��08���F �V�K�쐬<br>2018�N09��08���F 
-&quot;Generic.xaml&quot; �̃r���h�A�N�V�����Ɋւ���L�q��ǋL</font></p>
+<p> <font face="Meiryo UI">記載： 木下英俊<br>2014年09月08日： 新規作成<br>2018年09月08日： 
+&quot;Generic.xaml&quot; のビルドアクションに関する記述を追記</font></p>
 </body>
 </html>

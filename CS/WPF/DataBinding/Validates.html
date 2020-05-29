@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>[WPF] �f�[�^�o�C���f�B���O�ɂ�����f�[�^����</title>
+<title>[WPF] データバインディングにおけるデータ検証</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -21,23 +21,23 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-�mWPF�n�f�[�^�o�C���f�B���O�ɂ�����f�[�^����</h1>
+［WPF］データバインディングにおけるデータ検証</h1>
 
-<p> WPF�̃f�[�^�o�C���f�B���O�ɂ�����f�[�^���؂ɂ��ċL�ڂ��܂��B</p>
-<p> Binding�}�[�N�A�b�v�g���ł́A�G���h�E���[�U�[������͂��ꂽ�f�[�^�̌��؂��s�����߂ɁA�ȉ���3�̃v���p�e�B�𗘗p����B</p>
+<p> WPFのデータバインディングにおけるデータ検証について記載します。</p>
+<p> Bindingマークアップ拡張では、エンド・ユーザーから入力されたデータの検証を行うために、以下の3つのプロパティを利用する。</p>
 <ul>
-	<li><strong>ValidationRules</strong>�FValidationRule�N���X�iSystem.Windows.Controls���O��ԁj���p������N���X���g���āA�����I�Ɍ��؃��[����ǉ�����B</li>
-	<li><strong>ValidatesOnExceptions</strong>�F 
-	�uTrue�v�ɐݒ肳��Ă���ꍇ�A�\�[�X�E�v���p�e�B�̍X�V���ɗ�O���������Ă��Ȃ������m�F����BValidationRules�v���p�e�B�ɁuExceptionValidationRule�v��ǉ������ꍇ�Ɠ��l�̋����ɂȂ�B</li>
-	<li><strong>ValidatesOnDataErrors</strong>�F 
-	�uTrue�v�ɐݒ肳��Ă���ꍇ�AIDataErrorInfo�C���^�[�t�F�C�X������f�[�^���؂�L���ɂ���BValidationRules�v���p�e�B�ɁuDataErrorValidationRule�v��ǉ������ꍇ�Ɠ��l�̋����ɂȂ�B</li>
+	<li><strong>ValidationRules</strong>：ValidationRuleクラス（System.Windows.Controls名前空間）を継承するクラスを使って、明示的に検証ルールを追加する。</li>
+	<li><strong>ValidatesOnExceptions</strong>： 
+	「True」に設定されている場合、ソース・プロパティの更新中に例外が発生していないかを確認する。ValidationRulesプロパティに「ExceptionValidationRule」を追加した場合と同様の挙動になる。</li>
+	<li><strong>ValidatesOnDataErrors</strong>： 
+	「True」に設定されている場合、IDataErrorInfoインターフェイスを介したデータ検証を有効にする。ValidationRulesプロパティに「DataErrorValidationRule」を追加した場合と同様の挙動になる。</li>
 </ul>
 <p>
-�f�[�^���؂̌��ʁA���炩�̃G���[���������ꍇ�ɂ́AValidation.HasError�Y�t�v���p�e�B�ɁuTrue�v���ݒ肳��AValidation.Errors�Y�t�v���p�e�B�ɃG���[�̈ꗗ���i�[�����B<br>
+データ検証の結果、何らかのエラーがあった場合には、Validation.HasError添付プロパティに「True」が設定され、Validation.Errors添付プロパティにエラーの一覧が格納される。<br>
 </p>
 <p>
 &nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -48,29 +48,29 @@
 	
 <br>
 <h2>
-�T���v���v���O����</h2>
+サンプルプログラム</h2>
 <p>
-�T���v���v���O���� �_�E�����[�h</p>
+サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
 <h2>
-�Q�l</h2>
+参考</h2>
 <ul>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/articles/1010/08/news123_2.html" target="_blank">
-	@IT WPF���� ��T��</a></li>
+	@IT WPF入門 第５回</a></li>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/articles/1011/09/news102_3.html" target="_blank">
-	@IT WPF���� ��U��</a></li>
+	@IT WPF入門 第６回</a></li>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/system.windows.data.binding.validatesonexceptions(v=vs.110).aspx" target="_blank">
-	Microsoft: Binding.ValidatesOnExceptions �v���p�e�B</a></li>
+	Microsoft: Binding.ValidatesOnExceptions プロパティ</a></li>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/system.windows.data.binding.validatesondataerrors(v=vs.110).aspx" target="_blank">
-	Microsoft: Binding.ValidatesOnDataErrors �v���p�e�B</a></li>
+	Microsoft: Binding.ValidatesOnDataErrors プロパティ</a></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2015�N08��28�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2015年08月28日 木下英俊<br>
 </font></p>
 </body>
 </html>

@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>[VBA] �t�@�C���ꗗ���o�͂���</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[VBA] ファイル一覧を出力する</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../prettify.css" rel="stylesheet" type="text/css">
@@ -20,52 +20,52 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-[Excel VBA] �t�@�C���ꗗ���o�͂���</h1>
+[Excel VBA] ファイル一覧を出力する</h1>
 
-<p> Excel VBA ���g���ăt�@�C���ꗗ���V�[�g�ɏo�͂�����@�ɂ��ċL�ڂ��܂��B</p>
-<h2> �ڎ�</h2>
+<p> Excel VBA を使ってファイル一覧をシートに出力する方法について記載します。</p>
+<h2> 目次</h2>
 <p>
-<a href="#1._�t�@�C���ꗗ���o�͂���">1. �t�@�C���ꗗ���o�͂���</a><br>
-<a href="#2._�ꗗ�̃t�@�C�������_�u���N���b�N���邱�ƂŁA�Ώۂ̃t�@�C�����J��">2. �ꗗ�̃t�@�C�������_�u���N���b�N���邱�ƂŁA�Ώۂ̃t�@�C�����J��</a><br>
-<a href="#�T���v���v���O����">�T���v���v���O���� </a>
+<a href="#1._ファイル一覧を出力する">1. ファイル一覧を出力する</a><br>
+<a href="#2._一覧のファイル名をダブルクリックすることで、対象のファイルを開く">2. 一覧のファイル名をダブルクリックすることで、対象のファイルを開く</a><br>
+<a href="#サンプルプログラム">サンプルプログラム </a>
 </p>
 <p> &nbsp;</p>
 
-<h2> <a name="1._�t�@�C���ꗗ���o�͂���">1. �t�@�C���ꗗ���o�͂���</a></h2>
-<p> [�T�v] ���g�̃t�@�C��������t�H���_�[�ȉ��̃t�@�C���ꗗ���A�V�[�g�֏o�͂���VBA�}�N�����쐬���܂��B</p>
-<p>[��]</p>
+<h2> <a name="1._ファイル一覧を出力する">1. ファイル一覧を出力する</a></h2>
+<p> [概要] 自身のファイルがあるフォルダー以下のファイル一覧を、シートへ出力するVBAマクロを作成します。</p>
+<p>[環境]</p>
 <ul>
 	<li>Excel 2016</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<p> [���]</p>
-<p> �@�\�͂Q�ł��B����ȉ�ʂɂ��Ă݂܂����B<br>�i�@�\�P�j�t�@�C���ꗗ���u�t�@�C���ꗗ�v�V�[�g�ɏo�͂���B<br>�i�@�\�Q�j�u�t�@�C���ꗗ�v�V�[�g���N���A����B</p>
+<p> [画面]</p>
+<p> 機能は２つです。こんな画面にしてみました。<br>（機能１）ファイル一覧を「ファイル一覧」シートに出力する。<br>（機能２）「ファイル一覧」シートをクリアする。</p>
 <p> 
 <img alt="" src="output_file_list/img6.jpg"></p>
-�ꗗ�o�͂���<span class="table_title">���ʂ͂���Ȋ���<br><img alt="" src="output_file_list/imgB.jpg"><br>
-<br>[&quot;�t�@�C���ꗗ�o��&quot; ���镔����VBA]<br>
+一覧出力した<span class="table_title">結果はこんな感じ<br><img alt="" src="output_file_list/imgB.jpg"><br>
+<br>[&quot;ファイル一覧出力&quot; する部分のVBA]<br>
 <pre class="prettyprint linenums">
 '
-' �����ɋL�ڂ�VBA�͈ȉ��̏��ЂɋL�ڂ̓��e���Q�l�ɍ쐬���܂����B
-' �u���o�\�t�g�E�F�A 2017�N11���� �| �����ł����ɖ𗧂� Excel VBA ��7�� �t�@�C����t�H���_�[�𑀍삷��}�N���v
+' ここに記載のVBAは以下の書籍に記載の内容を参考に作成しました。
+' 「日経ソフトウェア 2017年11月号 － 実務ですぐに役立つ Excel VBA 第7回 ファイルやフォルダーを操作するマクロ」
 '
 
-Sub �t�@�C���ꗗ�o��()
+Sub ファイル一覧出力()
     Application.ScreenUpdating = False
     
-    Worksheets(&quot;�t�@�C���ꗗ&quot;).Activate
+    Worksheets(&quot;ファイル一覧&quot;).Activate
     Cells.Clear
-    Cells(1, 1).Value = &quot;�t�@�C���ۑ���ꗗ&quot;
+    Cells(1, 1).Value = &quot;ファイル保存先一覧&quot;
     
-    Call �t�@�C���ꗗ�擾(ThisWorkbook.Path)
+    Call ファイル一覧取得(ThisWorkbook.Path)
     Columns(&quot;A&quot;).AutoFit
     
     Application.ScreenUpdating = True
     
-    MsgBox &quot;�t�@�C���̈ꗗ���o�͂���܂���&quot;, vbOKOnly, &quot;����&quot;
+    MsgBox &quot;ファイルの一覧が出力されました&quot;, vbOKOnly, &quot;完了&quot;
 End Sub
 
-Sub �t�@�C���ꗗ�擾(Path As String)
+Sub ファイル一覧取得(Path As String)
     Dim FileName As String, o As Object, r As Long
     
     FileName = Dir(Path &amp; &quot;\*.*&quot;)
@@ -77,22 +77,22 @@ Sub �t�@�C���ꗗ�擾(Path As String)
     Loop
     
     For Each o In CreateObject(&quot;Scripting.FileSystemObject&quot;).GetFolder(Path).SubFolders
-        Call �t�@�C���ꗗ�擾(o.Path)
+        Call ファイル一覧取得(o.Path)
     Next o
 End Sub</pre>
 
-<span class="table_title">[&quot;�t�@�C���ꗗ�N���A&quot; ���镔����VBA]<br>
+<span class="table_title">[&quot;ファイル一覧クリア&quot; する部分のVBA]<br>
 
 <pre class="prettyprint linenums">
-Sub �t�@�C���ꗗ�N���A()
+Sub ファイル一覧クリア()
     Application.ScreenUpdating = False
     
-    ' &quot;�t�@�C���ꗗ&quot; �V�[�g�̓��e�����ׂăN���A
-    Worksheets(&quot;�t�@�C���ꗗ&quot;).Activate
+    ' &quot;ファイル一覧&quot; シートの内容をすべてクリア
+    Worksheets(&quot;ファイル一覧&quot;).Activate
     Cells.Clear
 '   Columns(&quot;A&quot;).AutoFit
 
-    ' A��̕���������(8.38�ɐݒ�)
+    ' A列の幅を初期化(8.38に設定)
     Columns(&quot;A:A&quot;).Select
     Selection.ColumnWidth = 8.38
     
@@ -100,34 +100,34 @@ Sub �t�@�C���ꗗ�N���A()
     
     Application.ScreenUpdating = True
 End Sub</pre>
-<p>���}�N���̓o�^<br>��ʏ�̃{�^���ƃ}�N����R�Â��܂��B</p>
+<p>■マクロの登録<br>画面上のボタンとマクロを紐づけます。</p>
 <ul>
-	<li>�{�^���m�t�@�C���ꗗ �o�́n���A&quot;�t�@�C���ꗗ�o��&quot; �ɕR�Â��܂��B</li>
-	<li>�{�^���m�t�@�C���ꗗ �N���A�n���A&quot;�t�@�C���ꗗ�N���A&quot; �ɕR�Â��܂��B</li>
+	<li>ボタン［ファイル一覧 出力］を、&quot;ファイル一覧出力&quot; に紐づけます。</li>
+	<li>ボタン［ファイル一覧 クリア］を、&quot;ファイル一覧クリア&quot; に紐づけます。</li>
 </ul>
 </span>
 	
 <p>&nbsp;</p>
-<h2> <a name="2._�ꗗ�̃t�@�C�������_�u���N���b�N���邱�ƂŁA�Ώۂ̃t�@�C�����J��">2. 
-�ꗗ�̃t�@�C�������_�u���N���b�N���邱�ƂŁA�Ώۂ̃t�@�C�����J��</a></h2>
-<p> [�T�v] �O�͂ŏo�͂����t�@�C���ꗗ�̃t�@�C�������}�E�X�Ń_�u���N���b�N���邱�ƂŁA�Ώۂ̃t�@�C�����J���A�Ƃ���VBA���L�ڂ��܂��B</p>
-<p>[��]</p>
+<h2> <a name="2._一覧のファイル名をダブルクリックすることで、対象のファイルを開く">2. 
+一覧のファイル名をダブルクリックすることで、対象のファイルを開く</a></h2>
+<p> [概要] 前章で出力したファイル一覧のファイル名をマウスでダブルクリックすることで、対象のファイルを開く、というVBAを記載します。</p>
+<p>[環境]</p>
 <ul>
 	<li>Excel 2016</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p> [&quot;�_�u���N���b�N�����t�@�C�����̃t�@�C�����J��&quot; �������s��VBA]</p>
+<p> [&quot;ダブルクリックしたファイル名のファイルを開く&quot; 処理を行うVBA]</p>
 <pre class="prettyprint linenums">
 Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
     If Target.Value &lt;&gt; &quot;&quot; Then
-        Cancel = True                                       ' True: �_�u���N���b�N�����Z���ɃJ�[�\�������Ȃ��AFalse: �_�u���N���b�N�����Z���ɃJ�[�\��������
+        Cancel = True                                       ' True: ダブルクリックしたセルにカーソルを入れない、False: ダブルクリックしたセルにカーソルを入れる
 
         If Right(Dir(Target.Value), 5) = &quot;.xlsx&quot; Or Right(Dir(Target.Value), 5) = &quot;.xlsm&quot; Then
-            <span class="auto-style8">Workbooks.Open Target.Value</span>                     ' (���@�P) �G�N�Z���t�@�C��(&quot;*.xlsx&quot;,&quot;*.xlsm&quot;)���J��
+            <span class="auto-style8">Workbooks.Open Target.Value</span>                     ' (方法１) エクセルファイル(&quot;*.xlsx&quot;,&quot;*.xlsm&quot;)を開く
         Else
             Set WSH = CreateObject(&quot;Wscript.Shell&quot;)
-            <span class="auto-style8">WSH.Run Chr(34) &amp; Target.Value &amp; Chr(34), 4</span>     ' (���@�Q) �G�N�Z���ȊO�̃t�@�C�����J��
+            <span class="auto-style8">WSH.Run Chr(34) &amp; Target.Value &amp; Chr(34), 4</span>     ' (方法２) エクセル以外のファイルを開く
         End If
     End If
 End Sub
@@ -137,21 +137,21 @@ End Sub
 	
 <br>
 <h2>
-<a name="�T���v���v���O����">�T���v���v���O����</a></h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
 <p>
-�T���v���v���O���� <a href="output_file_list/output_file_list.xlsm">�_�E�����[�h</a></p>
+サンプルプログラム <a href="output_file_list/output_file_list.xlsm">ダウンロード</a></p>
 <p>
 &nbsp;</p>
 <h2>
-�Q�l</h2>
+参考</h2>
 <ul>
-	<li>���o�\�t�g�E�F�A 2017�N11���� �| �����ł����ɖ𗧂� Excel VBA ��7�� �t�@�C����t�H���_�[�𑀍삷��}�N��</li>
+	<li>日経ソフトウェア 2017年11月号 － 実務ですぐに役立つ Excel VBA 第7回 ファイルやフォルダーを操作するマクロ</li>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/d5fk67ky(v=vs.84).aspx" target="_blank">
 	Run Method (Windows Script Host)</a></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2017�N10��06�� �؉��p�r, �V�K�쐬<br>
+<p> <font face="Meiryo UI">記載： 2017年10月06日 木下英俊, 新規作成<br>
 </font></p>
 </body>
 </html>

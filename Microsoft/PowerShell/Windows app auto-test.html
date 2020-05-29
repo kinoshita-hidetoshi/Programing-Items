@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�uUI Automation PowerShell Extension�v���g����Windows�A�v����UI�����e�X�g���s��</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -61,28 +61,28 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-�uUI Automation PowerShell Extension�v���g����Windows�A�v����UI�����e�X�g���s��</h1>
+「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</h1>
 
-<p> �uUI Automation PowerShell Extensions�v �� �uPowerShell�v���g���āA<br>Windows 
-GUI�A�v���P�[�V�����������e�X�g�܂��͎������삷�邱�Ƃ����݂܂��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._���\�z">1. ���\�z</a><br><a href="#2._UIAutomation_�̃R�}���h���b�g�ꗗ">2. 
-UIAutomation �R�}���h���b�g�ꗗ</a><br>
-<a href="#3._�܂��͂���Ă݂悤_�|_�d��icalc�j���N�����đ��삷��">3. �܂��͂���Ă݂悤 �| �d��icalc�j���N�����đ��삷��</a><br>
+<p> 「UI Automation PowerShell Extensions」 と 「PowerShell」を使って、<br>Windows 
+GUIアプリケーションを自動テストまたは自動操作することを試みます。</p>
+<h2> 目次</h2>
+<p> <a href="#1._環境構築">1. 環境構築</a><br><a href="#2._UIAutomation_のコマンドレット一覧">2. 
+UIAutomation コマンドレット一覧</a><br>
+<a href="#3._まずはやってみよう_－_電卓（calc）を起動して操作する">3. まずはやってみよう － 電卓（calc）を起動して操作する</a><br>
 4. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._���\�z">1. ���\�z</a></h2>
-<p> �܂��͊����\�z���܂��傤�B</p>
-<h3> 1.1. ��</h3>
-<p>�����ł͈ȉ��̊����g�p���܂��B<br>�uUI Automation PowerShell Extensions�v���g�p����ɂ́APowerShell 
-Ver.2 �ȍ~�ł���Ύg�p�ł��邻���ł��B<br>PowerShell Ver.2 �� Windows XP 
-�ȍ~�Ŏg�p�ł���̂ŁAXP�ȍ~�ł���΋��炭�����ɋL�ڂ̂قƂ�ǂ̓��e�𓮍삳���邱�Ƃ��ł���Ǝv���܂��B</p>
-[�g�p��]
-<table class="auto-style8" style="margin: 5px; width: 900px" border="1" bordercolor="#000000" cellspacing="0" title="�g�p��" cellpadding="5">
+<h2> <a name="1._環境構築">1. 環境構築</a></h2>
+<p> まずは環境を構築しましょう。</p>
+<h3> 1.1. 環境</h3>
+<p>ここでは以下の環境を使用します。<br>「UI Automation PowerShell Extensions」を使用するには、PowerShell 
+Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は Windows XP 
+以降で使用できるので、XP以降であれば恐らくここに記載のほとんどの内容を動作させることができると思います。</p>
+[使用環境]
+<table class="auto-style8" style="margin: 5px; width: 900px" border="1" bordercolor="#000000" cellspacing="0" title="使用環境" cellpadding="5">
 	<tr>
-		<td style="width: 300px" class="auto-style10">����</td>
-		<td style="width: 154px" class="auto-style10">���e</td>
-		<td class="auto-style10">���l</td>
+		<td style="width: 300px" class="auto-style10">項目</td>
+		<td style="width: 154px" class="auto-style10">内容</td>
+		<td class="auto-style10">備考</td>
 	</tr>
 	<tr>
 		<td style="width: 300px">OS</td>
@@ -92,119 +92,119 @@ Ver.2 �ȍ~�ł���Ύg�p�ł��邻���ł��B<br>PowerShell Ver.2 �� Windows XP
 	<tr>
 		<td style="width: 300px">PowerShell</td>
 		<td style="width: 154px">Ver. 5.0</td>
-		<td>Ver.5.0 �� Windows 10 �W���Y�t<br>�Œ� Ver.2 ��K�v�Ƃ���B�ł����Ver.3�ȍ~�𐄏��B</td>
+		<td>Ver.5.0 は Windows 10 標準添付<br>最低 Ver.2 を必要とする。できればVer.3以降を推奨。</td>
 	</tr>
 	<tr>
 		<td style="width: 300px">UI Automation PowerShell Extension</td>
 		<td style="width: 154px">Ver. 0.8.7 Beta 3</td>
 		<td><a href="https://uiautomation.codeplex.com/" target="_blank">https://uiautomation.codeplex.com/</a><br>
-		�uUIAutomation.0.8.7B3.NET40.zip�v ���g�p</td>
+		「UIAutomation.0.8.7B3.NET40.zip」 を使用</td>
 	</tr>
 </table>
 <p> &nbsp;</p>
-<h3> 1.2. �uWindowsPowerShell�v�f�B���N�g�����쐬</h3>
-<p> �K��p�X�ƂȂ�t�H���_�uWindowsPowerShell�v���쐬���܂��B</p>
+<h3> 1.2. 「WindowsPowerShell」ディレクトリを作成</h3>
+<p> 規定パスとなるフォルダ「WindowsPowerShell」を作成します。</p>
 <ul>
-	<li>�K��p�X�F<br>$env:USERPROFILE\Documents\<strong>WindowsPowerShell</strong></li>
-	<li>�p�X��F c:\Users\hoge\Documents\<strong>WindowsPowerShell</strong></li>
+	<li>規定パス：<br>$env:USERPROFILE\Documents\<strong>WindowsPowerShell</strong></li>
+	<li>パス例： c:\Users\hoge\Documents\<strong>WindowsPowerShell</strong></li>
 </ul>
 <p> &nbsp;</p>
-<h3> 1.3. �uUI Automation PowerShell Extension�v������</h3>
-<p> (1) �u<a href="https://uiautomation.codeplex.com/" target="_blank">https://uiautomation.codeplex.com/</a>�v 
-���� �uUIAutomation.0.8.7B3.NET40.zip�v ���_�E�����[�h</p>
-<p> (2) �擾�����t�@�C����W�J</p>
-<p> (3) �W�J�����S�t�@�C���ɂ��Ă��ꂼ��v���p�e�B���J���A�u�u���b�N�̉����v�Ƀ`�F�b�N�����āuOK�v�{�^���������܂��B</p>
-<p> <img alt="" src="Windows%20app%20auto-test/img38.jpg">�v</p>
-<p> (4) �W�J�����t�@�C�������L�t�H���_�֕ۑ����܂��B<br><br>
+<h3> 1.3. 「UI Automation PowerShell Extension」を準備</h3>
+<p> (1) 「<a href="https://uiautomation.codeplex.com/" target="_blank">https://uiautomation.codeplex.com/</a>」 
+から 「UIAutomation.0.8.7B3.NET40.zip」 をダウンロード</p>
+<p> (2) 取得したファイルを展開</p>
+<p> (3) 展開した全ファイルについてそれぞれプロパティを開き、「ブロックの解除」にチェックを入れて「OK」ボタンを押します。</p>
+<p> <img alt="" src="Windows%20app%20auto-test/img38.jpg">」</p>
+<p> (4) 展開したファイルを下記フォルダへ保存します。<br><br>
 <table border="1" bordercolor="#808080" style="width: 700px">
 	<tr>
 		<td class="auto-style12">
 		$env\USERPROFILE\Documents\WindowsPowerShell\modules\UIAutomation</td>
 	</tr>
 </table>
-<br>�ۑ�����t�H���_�͔C�ӂł����A��q�� Profile.ps1 �t�@�C���֋L�q����p�X�Ƒ�����K�v������܂��B</p>
+<br>保存するフォルダは任意ですが、後述の Profile.ps1 ファイルへ記述するパスと揃える必要があります。</p>
 <p> &nbsp;</p>
-<h3> 1.4. �X�N���v�g���s�|���V�[��ݒ�</h3>
-<p> PowerShell �܂��� PowerShell ISE ���N�����܂��B<br>�����Ĉȉ��̃R�}���h����͂��āA�X�N���v�g�����s�ł���悤�ɂ��܂��B</p>
+<h3> 1.4. スクリプト実行ポリシーを設定</h3>
+<p> PowerShell または PowerShell ISE を起動します。<br>続けて以下のコマンドを入力して、スクリプトを実行できるようにします。</p>
 <table cellpadding="5" cellspacing="0" class="auto-style11" style="width: 600px">
 	<tr>
 		<td>Set-ExecutionPolicy Unrestricted -Scope CurrentUser [Enter]</td>
 	</tr>
 </table>
-<p>�܂���</p>
+<p>または</p>
 <table cellpadding="5" cellspacing="0" class="auto-style11" style="width: 600px">
 	<tr>
 		<td>Set-ExecutionPolicy Bypass -Scope CurrentUser [Enter]</td>
 	</tr>
 </table>
-<p>�����s���܂��B</p>
+<p>を実行します。</p>
 <p> <img alt="" src="Windows%20app%20auto-test/img4.jpg"></p>
 <p> <img alt="" src="Windows%20app%20auto-test/img5.jpg"></p>
-<p> ���̉�ʂ��\�����ꂽ�� �u�͂�(Y)�v �܂��� �u���ׂđ��s(A)�v ���N���b�N���܂��B</p>
+<p> この画面が表示されたら 「はい(Y)」 または 「すべて続行(A)」 をクリックします。</p>
 <p> &nbsp;</p>
 <table class="auto-style13" style="width: 100%">
 	<tr>
-		<td><span class="auto-style16"><strong>�⑫�F</strong></span><br>�X�N���v�g���s�|���V�[�̂ɂ͎��̂U��ނ̐ݒ肪����܂��B<br>
+		<td><span class="auto-style16"><strong>補足：</strong></span><br>スクリプト実行ポリシーのには次の６種類の設定があります。<br>
 		<table border="1" bordercolor="#C0C0C0" cellspacing="1" class="auto-style14" style="width: 800px; margin:5px;" cellpadding="5" align="left">
 			<tr bgcolor="#0080FF">
-				<td class="auto-style15" style="width: 127px">���s�|���V�[</td>
-				<td class="auto-style15">����</td>
+				<td class="auto-style15" style="width: 127px">実行ポリシー</td>
+				<td class="auto-style15">説明</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">Restricted</td>
-				<td>[�f�t�H���g] 
-				�\���t�@�C��(�v���t�@�C��)�̓ǂݍ��݂�X�N���v�g�̎��s���s��Ȃ��B</td>
+				<td>[デフォルト] 
+				構成ファイル(プロファイル)の読み込みやスクリプトの実行を行わない。</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">AllSigned</td>
 				<td>
-				���ׂẴX�N���v�g����э\���t�@�C�����M�����ꂽ���s���ɂ���ď�������Ă���K�v������B</td>
+				すべてのスクリプトおよび構成ファイルが信頼された発行元によって署名されている必要がある。</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">RemoteSigned</td>
 				<td>
-				Web����_�E�����[�h�����X�N���v�g����э\���t�@�C���Ɋւ��ẮA�M�����ꂽ���s���ɂ���ď�������Ă���K�v������i���[�J���̃t�@�C���͏����Ȃ��Ŏ��s�ł���j�B</td>
+				Webからダウンロードしたスクリプトおよび構成ファイルに関しては、信頼された発行元によって署名されている必要がある（ローカルのファイルは署名なしで実行できる）。</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">Unrestricted</td>
-				<td>���ׂẴX�N���v�g����э\���t�@�C�������s����B<br>
-				�������AWeb����_�E�����[�h������������Ă��Ȃ��X�N���v�g�͎��s�O�Ɋm�F�̃v�����v�g���\�������B</td>
+				<td>すべてのスクリプトおよび構成ファイルを実行する。<br>
+				ただし、Webからダウンロードした署名されていないスクリプトは実行前に確認のプロンプトが表示される。</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">ByPass</td>
-				<td>���ׂẴX�N���v�g����э\���t�@�C�������s����B<br>
-				Web����_�E�����[�h������������Ă��Ȃ��X�N���v�g�����s���Ɋm�F�̃v�����v�g��\�����Ȃ��B</td>
+				<td>すべてのスクリプトおよび構成ファイルを実行する。<br>
+				Webからダウンロードした署名されていないスクリプトも実行時に確認のプロンプトを表示しない。</td>
 			</tr>
 			<tr>
 				<td style="width: 127px">Undefined</td>
-				<td>�V�X�e���̎��s�|���V�[������`�ƂȂ�B<br>�N���I�v�V�����Ŗ����w�肵�Ȃ��ꍇ�� Restricted 
-				�Ɠ��������ƂȂ�B</td>
+				<td>システムの実行ポリシーが未定義となる。<br>起動オプションで明示指定しない場合は Restricted 
+				と同じ扱いとなる。</td>
 			</tr>
 		</table>
 		</td>
 	</tr>
 </table>
 <p> &nbsp;</p>
-<h3> 1.5. Profile������</h3>
-<p> �uPowerShell ���N�����������̃R�}���h���������s���Ăق����B�v�Ƃ�����]��������̂�Profile�ł��BProfile 
-�́A�K�p�Ώۂɉ����Ĉȉ��̂Q�̃^�C�v�����݂��܂��B</p>
-<p> ������̕��@��Profile���쐬���Ă����\�ł����A<br>���́u���[�U�[�P�ʁv�̐ݒ�� PowerShell ����� PowerShell ISE 
-���ʂ̐ݒ���s�� <span class="auto-style16"><strong>profile.ps1</strong></span> �̃t�@�C�����쐬���܂����B</p>
-<p> �e�l�̑I������Profile���쐬��A��q�̓��e���L�ڂ��Ă��������B</p>
-<h4> ���[�U�[�P��</h4>
+<h3> 1.5. Profileを準備</h3>
+<p> 「PowerShell を起動したら特定のコマンドを自動実行してほしい。」という希望を叶えるのがProfileです。Profile 
+は、適用対象に応じて以下の２つのタイプが存在します。</p>
+<p> いずれの方法でProfileを作成しても結構ですが、<br>私は「ユーザー単位」の設定で PowerShell および PowerShell ISE 
+共通の設定を行う <span class="auto-style16"><strong>profile.ps1</strong></span> のファイルを作成しました。</p>
+<p> 各人の選択したProfileを作成後、後述の内容を記載してください。</p>
+<h4> ユーザー単位</h4>
 <ul>
-	<li>�K��p�X�F<br>$env:USERPROFILE\Documents\WindowsPowerShell</li>
-	<li>�p�X��F c:\Users\hoge\Documents\WindowsPowerShell</li>
-	<li>�t�@�C�����F ���L�R�̃t�@�C��������I�����܂��B<br><br>
+	<li>規定パス：<br>$env:USERPROFILE\Documents\WindowsPowerShell</li>
+	<li>パス例： c:\Users\hoge\Documents\WindowsPowerShell</li>
+	<li>ファイル名： 下記３つのファイル名から選択します。<br><br>
 	<table border="1" bordercolor="#808080" class="auto-style11" style="width: 730" cellpadding="5" cellspacing="0">
 		<tr bgcolor="#0080FF">
-			<td style="width: 186px" class="auto-style15">�K�p�Ώ�</td>
+			<td style="width: 186px" class="auto-style15">適用対象</td>
 			<td style="width: 205px" class="auto-style15">PowerShell</td>
 			<td style="width: 316px" class="auto-style15">PowerShell ISE</td>
-			<td style="width: 168px" class="auto-style15">����</td>
+			<td style="width: 168px" class="auto-style15">両方</td>
 		</tr>
 		<tr>
-			<td style="width: 186px" bgcolor="#0080FF" class="auto-style15">�t�@�C����</td>
+			<td style="width: 186px" bgcolor="#0080FF" class="auto-style15">ファイル名</td>
 			<td style="width: 205px">PowerShell_profile.ps1</td>
 			<td style="width: 316px">Microsoft.PowerShellISE_profile.ps1</td>
 			<td style="width: 168px">profile.ps1</td>
@@ -212,20 +212,20 @@ Ver.2 �ȍ~�ł���Ύg�p�ł��邻���ł��B<br>PowerShell Ver.2 �� Windows XP
 	</table>
 	</li>
 </ul>
-<h4> �V�X�e���P��</h4>
+<h4> システム単位</h4>
 <ul>
-	<li>�K��p�X�F<br>$PSHOME</li>
-	<li>�p�X��F c:\Windows\System32\WindowsPowerShell\v1.0</li>
-	<li>�t�@�C�����F ���L�R�̃t�@�C��������I�����܂��B<br><br>
+	<li>規定パス：<br>$PSHOME</li>
+	<li>パス例： c:\Windows\System32\WindowsPowerShell\v1.0</li>
+	<li>ファイル名： 下記３つのファイル名から選択します。<br><br>
 	<table border="1" bordercolor="#808080" class="auto-style11" style="width: 730" cellpadding="5" cellspacing="0">
 		<tr bgcolor="#0080FF">
-			<td style="width: 186px" class="auto-style15">�K�p�Ώ�</td>
+			<td style="width: 186px" class="auto-style15">適用対象</td>
 			<td style="width: 205px" class="auto-style15">PowerShell</td>
 			<td style="width: 316px" class="auto-style15">PowerShell ISE</td>
-			<td style="width: 168px" class="auto-style15">����</td>
+			<td style="width: 168px" class="auto-style15">両方</td>
 		</tr>
 		<tr>
-			<td style="width: 186px" bgcolor="#0080FF" class="auto-style15">�t�@�C����</td>
+			<td style="width: 186px" bgcolor="#0080FF" class="auto-style15">ファイル名</td>
 			<td style="width: 205px">PowerShell_profile.ps1</td>
 			<td style="width: 316px">Microsoft.PowerShellISE_profile.ps1</td>
 			<td style="width: 168px">profile.ps1</td>
@@ -234,66 +234,66 @@ Ver.2 �ȍ~�ł���Ύg�p�ł��邻���ł��B<br>PowerShell Ver.2 �� Windows XP
 	</li>
 </ul>
 <p> &nbsp;</p>
-<h3> 1.6. Profile�֋L�q</h3>
-<p> �쐬����Profile�ֈȉ��̏����L�ڂ��܂��B</p>
-<p> (1) PowerShell�N�����̃J�����g�z���_<br>(2) �uUIAutomation.dll�v�̃��[�h<br>(3) UIAutomation 
-�ݒ�</p>
+<h3> 1.6. Profileへ記述</h3>
+<p> 作成したProfileへ以下の情報を記載します。</p>
+<p> (1) PowerShell起動時のカレントホルダ<br>(2) 「UIAutomation.dll」のロード<br>(3) UIAutomation 
+設定</p>
 
-[profile.ps1 �̋L�ڗ�]
+[profile.ps1 の記載例]
 <table border="1" bordercolor="#808080" style="width: 100%">
 	<tr>
-		<td><span class="comment">#<br># �J�����g�t�H���_�̎w��<br>#</span><br>Set-Location 
+		<td><span class="comment">#<br># カレントフォルダの指定<br>#</span><br>Set-Location 
 		'C:\users\hoge\Documents\WindowsPowerShell'<br><br><span class="comment">#<br>
 		# import-modules<br>#</span><br>Import-Module 
 		.\modules\UIAutomation\UIAutomation.dll<br><br><span class="comment">#<br>
-		# UIAutomation �ݒ�<br>#<br></span>[UIAutomation.Preferences]::Highlight = 
+		# UIAutomation 設定<br>#<br></span>[UIAutomation.Preferences]::Highlight = 
 		$false&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span class="comment"># UI�v�f�������Ԙg��\�����Ȃ�</span><br></td>
+		<span class="comment"># UI要素を示す赤枠を表示しない</span><br></td>
 	</tr>
 </table>
 <p> &nbsp;</p>
-<h3> 1.7. PowerShell ISE ���ċN���A����m�F</h3>
-<p> PowerShell ISE ���ċN�����܂��B�����Đ������ݒ�ł��Ă��邩���m�F���܂��B</p>
-<p> (1) WindowsPowerShell �̃o�[�W�������m�F</p>
-<p> �R���\�[����ʂŁu$PSVersionTable [Enter]�v�Ɠ��͂��܂��B<br>��ʂɕ\�������uPSVersion�v�̒l���g�p���Ă��� 
-WindowsPowerShell �̃o�[�W�����ԍ��ł��B<br>���}�ł́u5.0.10586.0�v���o�[�W�����ԍ��ł��B</p>
+<h3> 1.7. PowerShell ISE を再起動、動作確認</h3>
+<p> PowerShell ISE を再起動します。続けて正しく設定できているかを確認します。</p>
+<p> (1) WindowsPowerShell のバージョンを確認</p>
+<p> コンソール画面で「$PSVersionTable [Enter]」と入力します。<br>画面に表示される「PSVersion」の値が使用している 
+WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.0」がバージョン番号です。</p>
 <p> <img alt="" src="Windows%20app%20auto-test/img40.jpg"></p>
-<p> (2) UIAutomation.dll �̃��[�h���m�F</p>
-<p> �R���\�[����ʂŁuGet-Module [Enter]�v�Ɠ��͂��܂��B<br>��ʂɃ��[�h�ς݂̃��W���[���ꗗ���\������܂��B<br>��ʂ� Name ���ɁuUIAutomation�v���\��������OK�ł��B<br>
-�\������Ȃ��ꍇ�͑O�q�̓��� Profile.ps1 �̐ݒ���ӂ��Ċm�F���Ă��������B</p>
+<p> (2) UIAutomation.dll のロードを確認</p>
+<p> コンソール画面で「Get-Module [Enter]」と入力します。<br>画面にロード済みのモジュール一覧が表示されます。<br>画面の Name 欄に「UIAutomation」が表示されればOKです。<br>
+表示されない場合は前述の特に Profile.ps1 の設定周辺を再確認してください。</p>
 <p> <img alt="" src="Windows%20app%20auto-test/img41.jpg"></p>
-<p> �ȏ�ŏ����͊����ł��B</p>
+<p> 以上で準備は完了です。</p>
 <p> &nbsp;</p>
-<h3> 1.8. �Q��</h3>
-<p> �Q�Ə������L�ɋL�ڂ��܂��B</p>
-<p>���ЁF</p>
+<h3> 1.8. 参照</h3>
+<p> 参照情報を下記に記載します。</p>
+<p>書籍：</p>
 <ul>
-	<li>Windows PowerShell �|�P�b�g���t�@�����X, �o�� �Z�p�]�_��, ISBN978-4-7741-5542-5</li>
+	<li>Windows PowerShell ポケットリファレンス, 出版 技術評論社, ISBN978-4-7741-5542-5</li>
 </ul>
-<p>�z�[���y�[�W�F</p>
+<p>ホームページ：</p>
 <ul>
 	<li><a href="http://uiautomation.codeplex.com/" target="_blank">UI Automation PowerShell Extensions</a></li>
 	<li>
-	<a href="http://d.sunnyone.org/2014/09/windowsuiui-automation-powershell.html" target="_blank">Windows�A�v����UI��������� UI Automation PowerShell Extensions �ōs��</a></li>
+	<a href="http://d.sunnyone.org/2014/09/windowsuiui-automation-powershell.html" target="_blank">WindowsアプリのUI自動操作を UI Automation PowerShell Extensions で行う</a></li>
 	<li>
 	<a href="http://www.ka-net.org/blog/?p=4946" target="_blank">UI Automation 
-	PowerShell Extensions �������Ɏg���Ă݂܂����B</a></li>
+	PowerShell Extensions を試しに使ってみました。</a></li>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/ms747327(v=vs.110).aspx?f=255&amp;MSPPError=-2147217396" target="_blank">UI Automation Overview</a></li>
 	<li>
-	<a href="http://www.atmarkit.co.jp/fdotnet/special/uiautomation/uiautomation_01.html" target="_blank">@IT�F UI�I�[�g���[�V�����ɂ�鎩��UI�e�X�g�̎��H</a></li>
+	<a href="http://www.atmarkit.co.jp/fdotnet/special/uiautomation/uiautomation_01.html" target="_blank">@IT： UIオートメーションによる自動UIテストの実践</a></li>
 	<li>
-	<a href="http://blogs.msdn.com/b/japan_platform_sdkwindows_sdk_support_team_blog/archive/2011/05/26/ui-automation.aspx" target="_blank">MSDN Blogs�F UI Automation �̃X�X��</a></li>
+	<a href="http://blogs.msdn.com/b/japan_platform_sdkwindows_sdk_support_team_blog/archive/2011/05/26/ui-automation.aspx" target="_blank">MSDN Blogs： UI Automation のススメ</a></li>
 	<li>
-	<a href="https://en.wikipedia.org/wiki/Microsoft_UI_Automation" target="_blank">WIKIPEDIA�F Microsoft UI Automation</a></li>
+	<a href="https://en.wikipedia.org/wiki/Microsoft_UI_Automation" target="_blank">WIKIPEDIA： Microsoft UI Automation</a></li>
 </ul>
 <p> &nbsp;</p>
-<h2> <a name="2._UIAutomation_�̃R�}���h���b�g�ꗗ">2. UIAutomation �̃R�}���h���b�g�ꗗ</a></h2>
-<p> �uGet-Command *uia*�v�ŃR���\�[���o�͂��ꂽ�R�}���h���b�g�ꗗ���ȉ��ɋL�ڂ��܂��B<br>���e�Ƃ��ċL�ڂ̂��̂͐���������ł��B</p>
+<h2> <a name="2._UIAutomation_のコマンドレット一覧">2. UIAutomation のコマンドレット一覧</a></h2>
+<p> 「Get-Command *uia*」でコンソール出力されたコマンドレット一覧を以下に記載します。<br>内容として記載のものは推測交じりです。</p>
 <table cellpadding="5" class="auto-style18" style="border: 2px solid #808080; margin: 5px; width: 800" border="1" bordercolor="#C0C0C0">
 	<tr bgcolor="#0080FF">
-		<td style="width: 373px" class="auto-style15">�R�}���h���b�g</td>
-		<td class="auto-style15">���e</td>
+		<td style="width: 373px" class="auto-style15">コマンドレット</td>
+		<td class="auto-style15">内容</td>
 	</tr>
 	<tr>
 		<td style="width: 373px">Add-UiaBannerText<br>Add-UiaWizardStep</td>
@@ -600,51 +600,51 @@ WindowsPowerShell �̃o�[�W�����ԍ��ł��B<br>���}�ł́u5.0.10586.0�v���o�[�W�����
 	</tr>
 </table>
 <p> &nbsp;</p>
-<h2> <a name="3._�܂��͂���Ă݂悤_�|_�d��icalc�j���N�����đ��삷��">3. �܂��͂���Ă݂悤 �| �d��icalc�j���N�����Ď������삷��</a></h2>
-<h3> 3.1. �d����N������</h3>
-<p> �d��(calc.exe)���N������ɂ͈ȉ��̂悤�ɃX�N���v�g���L�ڂ��܂��B</p>
+<h2> <a name="3._まずはやってみよう_－_電卓（calc）を起動して操作する">3. まずはやってみよう － 電卓（calc）を起動して自動操作する</a></h2>
+<h3> 3.1. 電卓を起動する</h3>
+<p> 電卓(calc.exe)を起動するには以下のようにスクリプトを記載します。</p>
 <table style="width: 600px" bordercolor="#C0C0C0" cellpadding="5" class="auto-style17">
 	<tr>
 		<td>Start-Process calc</td>
 	</tr>
 </table>
-<h3> 2.2. �u1+2=�v����͂���</h3>
-<p> �d����N����A�u1+2=�v����͂��Č��ʂ��u3�v�ɂȂ邱�Ƃ������e�X�g���܂��B</p>
-<p> �X�N���v�g�͈ȉ��̒ʂ�ł��B</p>
-<span class="table_title">[&quot;�d����N�����āA1+2=����͂���.ps1&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<h3> 2.2. 「1+2=」を入力する</h3>
+<p> 電卓を起動後、「1+2=」を入力して結果が「3」になることを自動テストします。</p>
+<p> スクリプトは以下の通りです。</p>
+<span class="table_title">[&quot;電卓を起動して、1+2=を入力する.ps1&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
 <span class="comment">&lt;#
-�T�v�F �d����N�����āA&quot;1+2=&quot; ���v�Z����
-�O��F Windows10 �ɓY�t�̓d��p�ł��BWindows7���܂ޑ��̓d��p�ɂ͓��삵�܂���B
-�����F �Ȃ�
-�ߒl�F �Ȃ�
+概要： 電卓を起動して、&quot;1+2=&quot; を計算する
+前提： Windows10 に添付の電卓用です。Windows7を含む他の電卓用には動作しません。
+引数： なし
+戻値： なし
 #&gt;</span>
 
 &amp;{
-    # �d����N��
+    # 電卓を起動
     $process = Start-Process calc -PassThru
 
 <span class="comment">    #
-    # �E�B���h�E�A�{�^���A���擾
+    # ウィンドウ、ボタン、を取得
     #</span>
     $bLoop = $true
     do{
         try{
-            $window = Get-UiaWindow -AutomationId 'TitleBar' -Name '�d��' -Seconds 3        <span class="comment"># �d��̃E�B���h�E���擾</span>
-<span class="comment">            #$window = Get-UiaWindow -ProcessId $process.Id    # ����� calc �̏ꍇ��NG�B
-            # c:\windows\system32\calc.exe ���N������ƁA
-            # ���̃v���Z�X���炳��ɕʂ̃v���Z�X���N������Ă��邱�Ƃ������Ǝv����
+            $window = Get-UiaWindow -AutomationId 'TitleBar' -Name '電卓' -Seconds 3        <span class="comment"># 電卓のウィンドウを取得</span>
+<span class="comment">            #$window = Get-UiaWindow -ProcessId $process.Id    # これは calc の場合はNG。
+            # c:\windows\system32\calc.exe を起動すると、
+            # このプロセスからさらに別のプロセスが起動されていることが原因と思われる
 </span>
-            <span class="comment"># �{�^�������擾</span>
+            <span class="comment"># ボタン情報を取得</span>
             $btn1 = $window | Get-UiaButton -AutomationId 'num1Button'
             $btn2 = $window | Get-UiaButton -AutomationId 'num2Button'
             $btnPlus = $window | Get-UiaButton -AutomationId 'plusButton'
             $btnEqual = $window | Get-UiaButton -AutomationId 'equalButton'
             $btnClose = $window | Get-UiaButton -AutomationId 'Close'
             
-            <span class="comment"># ���ʕ\�������擾</span>
+            <span class="comment"># 結果表示欄を取得</span>
             $resultText = $window | Get-uiatext -AutomationId 'CalculatorResults'
 
             $bLoop = $false
@@ -657,20 +657,20 @@ WindowsPowerShell �̃o�[�W�����ԍ��ł��B<br>���}�ł́u5.0.10586.0�v���o�[�W�����
         Start-Sleep -Milliseconds 300
     } while( $bLoop -eq $true )
 
-    <span class="comment"># �{�^��������</span>
+    <span class="comment"># ボタンを押す</span>
     $btn1 | Invoke-UiaButtonClick | Out-Null
     $btnPlus | Invoke-UiaButtonClick | Out-Null
     $btn2 | Invoke-UiaButtonClick | Out-Null
     $btnEqual | Invoke-UiaButtonClick | Out-Null
     
-    <span class="comment"># ���ʂ��擾</span>
-    $results = ($resultText.GetCurrent()).Name     # &quot;�\�� 3&quot; �Ƃ�����������擾
-    $result = ($results.Split(&quot; &quot;))[1]             # &quot;�\�� 3&quot; �Ƃ�����������X�y�[�X�ŕ������A2�Ԗڂ̕���������Z���ʂƂ��Ď擾
+    <span class="comment"># 結果を取得</span>
+    $results = ($resultText.GetCurrent()).Name     # &quot;表示 3&quot; という文字列を取得
+    $result = ($results.Split(&quot; &quot;))[1]             # &quot;表示 3&quot; という文字列をスペースで分離し、2番目の文字列を演算結果として取得
 
-    <span class="comment"># ���ʂ��R���\�[���o��</span>
+    <span class="comment"># 結果をコンソール出力</span>
     Write-Host '1 + 2 =' $result -NoNewline
 
-    <span class="comment"># ���ʂ𔻒�</span>
+    <span class="comment"># 結果を判定</span>
     if ( $result -eq '3' ){
         Write-Host ' [OK]' -ForegroundColor Cyan
     }
@@ -678,10 +678,10 @@ WindowsPowerShell �̃o�[�W�����ԍ��ł��B<br>���}�ł́u5.0.10586.0�v���o�[�W�����
         Write-Host ' [NG]' -ForegroundColor Red
     }
 
-    <span class="comment"># 2�b�ҋ@</span>
+    <span class="comment"># 2秒待機</span>
     Start-Sleep 2
 
-    <span class="comment"># �d����I��</span>
+    <span class="comment"># 電卓を終了</span>
     $btnClose | Invoke-UiaButtonClick | Out-Null
 }</pre>
 		</td>
@@ -691,40 +691,40 @@ WindowsPowerShell �̃o�[�W�����ԍ��ł��B<br>���}�ł́u5.0.10586.0�v���o�[�W�����
 <br>
 	
 <p> &nbsp;</p>
-<h3> 2.3. �L�[���͏����A���Z���ʎ擾�����A���֐��ɂ���</h3>
+<h3> 2.3. キー入力処理、演算結果取得処理、を関数にする</h3>
 
-[���͏����Ȃǂ��֐�������]
+[入力処理などを関数化する]
 <table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
 &lt;#
-�T�v�F �d����N�����āA&quot;1+2=&quot; ���v�Z����
-�O��F Windows10 �ɓY�t�̓d��p�ł��BWindows7���܂ޑ��̓d��p�ɂ͓��삵�܂���B
-�����F �Ȃ�
-�ߒl�F �Ȃ�
+概要： 電卓を起動して、&quot;1+2=&quot; を計算する
+前提： Windows10 に添付の電卓用です。Windows7を含む他の電卓用には動作しません。
+引数： なし
+戻値： なし
 #&gt;
 
 
 &lt;#
-�֐��F �d��̃L�[���擾����
-�O��F �d�삪�N���ς݂ł��邱��
-�����F �Ȃ�
-�ߒl�F �Ȃ�
-�����F
+関数： 電卓のキーを取得する
+前提： 電卓が起動済みであること
+引数： なし
+戻値： なし
+説明：
 #&gt;
 function Get-CalcKeys {
     #
-    # �E�B���h�E�A�{�^���A���擾
+    # ウィンドウ、ボタン、を取得
     #
     $bLoop = $true
     do{
         try{
-            $window = Get-UiaWindow -AutomationId 'TitleBar' -Name '�d��' -Seconds 3        # �d��̃E�B���h�E���擾
-            #$window = Get-UiaWindow -ProcessId $process.Id    # ����� calc �̏ꍇ��NG�B-Class 'Windows.UI.Core.CoreWindow' 
-            # c:\windows\system32\calc.exe ���N������ƁA���̃v���Z�X���炳��ɕʂ̃v���Z�X���N������Ă��邱�Ƃ������Ǝv����
+            $window = Get-UiaWindow -AutomationId 'TitleBar' -Name '電卓' -Seconds 3        # 電卓のウィンドウを取得
+            #$window = Get-UiaWindow -ProcessId $process.Id    # これは calc の場合はNG。-Class 'Windows.UI.Core.CoreWindow' 
+            # c:\windows\system32\calc.exe を起動すると、このプロセスからさらに別のプロセスが起動されていることが原因と思われる
 
-            # �{�^�������擾
+            # ボタン情報を取得
             $script:btn0 = $window | Get-UiaButton -AutomationId 'num0Button' -Class 'Button'
             $script:btn1 = $window | Get-UiaButton -AutomationId 'num1Button' -Class 'Button'
             $script:btn2 = $window | Get-UiaButton -AutomationId 'num2Button' -Class 'Button'
@@ -740,7 +740,7 @@ function Get-CalcKeys {
             $script:btnEqual = $window | Get-UiaButton -AutomationId 'equalButton' -Class 'Button'
             $script:btnClose = $window | Get-UiaButton -AutomationId 'Close'
             
-            # ���ʕ\�������擾
+            # 結果表示欄を取得
             $script:resultText = $window | Get-uiatext -AutomationId 'CalculatorResults'
 
             $bLoop = $false
@@ -757,11 +757,11 @@ function Get-CalcKeys {
 
 
 &lt;#
-�֐��F �d��̃L�[����͂���
-�O��F �d�삪�N���ς݂ł��邱��
-�����F $keys : ���͂���L�[�̔z��
-�ߒl�F �Ȃ�
-�����F
+関数： 電卓のキーを入力する
+前提： 電卓が起動済みであること
+引数： $keys : 入力するキーの配列
+戻値： なし
+説明：
 #&gt;
 function Input-Keys( $keys )
 {
@@ -786,28 +786,28 @@ function Input-Keys( $keys )
 
 
 &lt;#
-�֐��F �d��̉��Z���ʂ��擾����
-�O��F �d�삪�N���ς݂ł��邱��
-�����F �Ȃ�
-�ߒl�F �d��̉��Z����
-�����F
+関数： 電卓の演算結果を取得する
+前提： 電卓が起動済みであること
+引数： なし
+戻値： 電卓の演算結果
+説明：
 #&gt;
 function Get-Result{
-    # ���ʂ��擾
-    $results = ($script:resultText.GetCurrent()).Name     # &quot;�\�� 3&quot; �Ƃ�����������擾
-    $result = ($results.Split(&quot; &quot;))[1]                      # &quot;�\�� 3&quot; �Ƃ�����������X�y�[�X�ŕ������A2�Ԗڂ̕���������Z���ʂƂ��Ď擾
+    # 結果を取得
+    $results = ($script:resultText.GetCurrent()).Name     # &quot;表示 3&quot; という文字列を取得
+    $result = ($results.Split(&quot; &quot;))[1]                      # &quot;表示 3&quot; という文字列をスペースで分離し、2番目の文字列を演算結果として取得
 
     return $result
 }
 
 
 &lt;#
-�֐��F �v�Z���ʂ̔���
-�O��F �Ȃ�
-�����F $result:   ���Z����
-          $expect:  ���҂��錋��
-�ߒl�F �Ȃ�
-�����F
+関数： 計算結果の判定
+前提： なし
+引数： $result:   演算結果
+          $expect:  期待する結果
+戻値： なし
+説明：
 #&gt;
 function Judge-Result ( $result, $expect )
 {
@@ -821,28 +821,28 @@ function Judge-Result ( $result, $expect )
 
 
 &amp;{
-    # �d����N��
+    # 電卓を起動
     $process = Start-Process calc -PassThru
 
-    # �d��̃L�[�����擾
+    # 電卓のキー情報を取得
     Get-CalcKeys
 
     # 1 + 2 = 3
     &amp;{
-        # �e�X�g���e
+        # テスト内容
         $keys = '1', '+', '2', '='
         $expect = '3'
 
-        # �{�^��������
+        # ボタンを押す
         Input-Keys( $keys )
     
-        # ���ʂ��擾
+        # 結果を取得
         $result = Get-Result
 
-        # ���ʂ��R���\�[���o��
+        # 結果をコンソール出力
         Write-Host '1 + 2 =' $result -NoNewline
 
-        # ���ʂ𔻒�
+        # 結果を判定
         Judge-Result  $result $expect
     }
 
@@ -850,20 +850,20 @@ function Judge-Result ( $result, $expect )
 
     # 10 + 21 = 31
     &amp;{
-        # �e�X�g���e
+        # テスト内容
         $keys = '1', '0', '+', '2', '1', '='
         $expect = '31'
 
-        # �{�^��������
+        # ボタンを押す
         Input-Keys( $keys )
     
-        # ���ʂ��擾
+        # 結果を取得
         $result = Get-Result
 
-        # ���ʂ��R���\�[���o��
+        # 結果をコンソール出力
         Write-Host '10 + 21 =' $result -NoNewline
 
-        # ���ʂ𔻒�
+        # 結果を判定
         Judge-Result  $result $expect
     }
 
@@ -871,54 +871,54 @@ function Judge-Result ( $result, $expect )
 
     # 100 - 1 = 99
     &amp;{
-        # �e�X�g���e
+        # テスト内容
         $keys = '1', '0', '0', '-', '1', '='
         $expect = '99'
 
-        # �{�^��������
+        # ボタンを押す
         Input-Keys( $keys )
     
-        # ���ʂ��擾
+        # 結果を取得
         $result = Get-Result
 
-        # ���ʂ��R���\�[���o��
+        # 結果をコンソール出力
         Write-Host '100 - 1 =' $result -NoNewline
 
-        # ���ʂ𔻒�
+        # 結果を判定
         Judge-Result  $result $expect
     }
 
-    # 3�b�ҋ@
+    # 3秒待機
     Start-Sleep 3
 
-    # �d����I��
+    # 電卓を終了
     $script:btnClose | Invoke-UiaButtonClick | Out-Null
 }</pre>
 		</td>
 	</tr>
 </table>
 	
-<p> ���s����<br>
+<p> 実行結果<br>
 <img alt="" src="Windows%20app%20auto-test/img6.jpg"></p>
 <p> &nbsp;</p>
-<h3> 2.4. �Ǘ��҂Ƃ��Ď��s����</h3>
-<p> �Ǘ��҂Ƃ��ăv���O�������N������ꍇ�͈ȉ��̂悤�ɋL�ڂ���B</p>
-[�d����u�Ǘ��҂Ƃ��Ď��s����v�ŋN������.ps1]
+<h3> 2.4. 管理者として実行する</h3>
+<p> 管理者としてプログラムを起動する場合は以下のように記載する。</p>
+[電卓を「管理者として実行する」で起動する.ps1]
 <table style="width: 600px" bordercolor="#C0C0C0" cellpadding="5" class="auto-style17">
 	<tr>
 		<td>Start-Process calc -Verb runas</td>
 	</tr>
 </table>
 <p> &nbsp;</p>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -931,25 +931,25 @@ function Judge-Result ( $result, $expect )
 	
 <br>
 <h2>
-�T���v���v���O����</h2>
+サンプルプログラム</h2>
 <p>
-�T���v���v���O���� �_�E�����[�h</p>
+サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
 <h2>
-�Q�l</h2>
+参考</h2>
 <ul>
-	<li>(��) http://www.****.com</li>
+	<li>(例) http://www.****.com</li>
 </ul>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<span class="table_title">[�v���O�����\�[�X &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
 <pre class="prettyprint linenums">
@@ -962,7 +962,7 @@ function Judge-Result ( $result, $expect )
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2016�N01��23�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2016年01月23日 木下英俊<br>
 </font></p>
 </body>
 </html>

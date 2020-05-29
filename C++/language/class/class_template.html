@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�N���X�̊�{�e���v���[�g</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>クラスの基本テンプレート</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -24,23 +24,23 @@
 <!-- End for 'google-code-prettify' -->
 
 <h1 class="auto-style7">
-�mc++�n�N���X�̊�{�e���v���[�g</h1>
+［c++］クラスの基本テンプレート</h1>
 
-<p> &nbsp;c++ �̃N���X�́A��{�I�ɕK�v�Ƃ���R���X�g���N�^�⃁���o�[�֐������낢�날��܂��B<br>������ &quot;�����I�ɍ쐬�������ꃁ���o�֐�&quot; 
-�Ȃ�Ă��̂�����A����ɖʓ|�Ȃ��ƂɎ����I�ɐ�������郋�[�������邽�߁A�����������ꂽ��A������������Ȃ������肵�܂��B�����A����{�̃\�[�X�R�[�h�ł��p�ӂ��Ă����Ȃ��Ɠ�����e�ł��B</p>
-<p> &nbsp;�����ł� c++ �� class 
-�̐��`��p�ӂ��āA��������Ƃɂ��ĕK�v�ȏC�����s�������ł�����x�̃R�[�f�B���O���s����悤�ɂ��邱�Ƃ�ڎw���܂��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._�P���ȃe���v���[�g">1. �P���ȃe���v���[�g</a><br>2. ***<br>3. ***</p>
+<p> &nbsp;c++ のクラスは、基本的に必要とするコンストラクタやメンバー関数がいろいろあります。<br>加えて &quot;自動的に作成される特殊メンバ関数&quot; 
+なんてものがあり、さらに面倒なことに自動的に生成されるルールがあるため、自動生成されたり、自動生成されなかったりします。正直、お手本のソースコードでも用意しておかないと難しい内容です。</p>
+<p> &nbsp;ここでは c++ の class 
+の雛形を用意して、これをもとにして必要な修正を行うだけである程度のコーディングを行えるようにすることを目指します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._単純なテンプレート">1. 単純なテンプレート</a><br>2. ***<br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._�P���ȃe���v���[�g">1. �P���ȃe���v���[�g</a></h2>
-<p> [�T�v]</p>
-<p> ��ԃV���v���ł��낤�e���v���[�g���ȉ��Ɏ����܂��B<br>���X c++98 ���Ȃ��Ǝv���̂� c++11 ��O��ɁA�܂��� default 
-�w��őS�ċL�ڂ�����������܂��B<br>&quot;�����I�ɍ쐬�������ꃁ���o�֐�&quot; ��S�� default 
-�w�肵�Ă���̂ŁA�����I�ɍ쐬����郁���o�֐��͂���܂���B</p>
+<h2> <a name="1._単純なテンプレート">1. 単純なテンプレート</a></h2>
+<p> [概要]</p>
+<p> 一番シンプルであろうテンプレートを以下に示します。<br>今更 c++98 もないと思うので c++11 を前提に、まずは default 
+指定で全て記載した例を示します。<br>&quot;自動的に作成される特殊メンバ関数&quot; を全て default 
+指定しているので、自動的に作成されるメンバ関数はありません。</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[�]����]</p>
+<p>[評価環境]</p>
 <table>
 <tbody>
 	<tr>
@@ -48,7 +48,7 @@
 	</tr>
 	
 	<tr>
-		<td>�R���p�C�� :</td>
+		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -71,7 +71,7 @@
 </font>
 <p> &nbsp;</p>
 
-<p>[�v���O�����\�[�X &quot;class_template_01.cpp&quot;]</p>
+<p>[プログラムソース &quot;class_template_01.cpp&quot;]</p>
 	
 <pre class="prettyprint linenums"><code>#include &lt;utility&gt;  // std::move
 
@@ -101,8 +101,8 @@ int main()
     b7 = std::move(b1);     // call 'move operator'.
 }</code></pre>
 <p>&nbsp;</p>
-<p>�g�p��</p>
-<p>[�v���O�����\�[�X &quot;class_template_02.cpp&quot;]</p>
+<p>使用例</p>
+<p>[プログラムソース &quot;class_template_02.cpp&quot;]</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt; // std::cout, std::endl
 #include &lt;string&gt;   // std::string
 #include &lt;utility&gt;  // std::move
@@ -154,9 +154,9 @@ int main()
     b3.print_str(&quot;[b3] &quot;);
     std::cout &lt;&lt; std::endl;
 
-    // Base b4(Base());             // ����� VS Version 16.4.0 �ł̓G���[�B
+    // Base b4(Base());             // これは VS Version 16.4.0 ではエラー。
     Base b4{ Base() };              // call 'move constructor'.    
-    // Base b4(std::move(Base());   // �����OK�B
+    // Base b4(std::move(Base());   // これもOK。
     b4.print_str(&quot;[b4] &quot;);
     std::cout &lt;&lt; std::endl;
 
@@ -184,28 +184,28 @@ int main()
     b1.print_str(&quot;[b1] &quot;);
 }</code></pre>
 <p>&nbsp;</p>
-<p>[���s����]</p>
+<p>[実行結果]</p>
 <p><img alt="" src="class_template/img1D.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
-	<li>Effective Modern C++, Scott Meyers �� ��Z���Y ��, �I���C���[�E�W���p��, 
+	<li>Effective Modern C++, Scott Meyers 著 千住治郎 訳, オライリー・ジャパン, 
 	ISBN978-4-87311-736-2</li>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2019 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -216,21 +216,21 @@ int main()
 	
 <br>
 <h4>
-�T���v���v���O����</h4>
+サンプルプログラム</h4>
 <p>
-�T���v���v���O���� �_�E�����[�h</p>
+サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
 <h4>
-�Q�l</h4>
+参考</h4>
 <ul>
-	<li>(��) http://www.****.com</li>
+	<li>(例) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF</font></p>
+<p> <font face="Meiryo UI">記載：</font></p>
 <ul>
-	<li><font face="Meiryo UI">2019�NMM��DD�� �V�K�쐬�A�؉��p�r<br></font></li>
+	<li><font face="Meiryo UI">2019年MM月DD日 新規作成、木下英俊<br></font></li>
 </ul>
 </body>
 </html>

@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�m�^�C�g�����L�ڂ��܂��n</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>［タイトルを記載します］</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -17,42 +17,42 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-CRT ���C�u�������g�p���������� ���[�N�̌��o</h1>
+CRT ライブラリを使用したメモリ リークの検出</h1>
 
-<p> Visual Studio �̃f�o�b�K�[�� C �����^�C�� (CRT) ���C�u�����ɂ́A������ 
-���[�N�����o����ю��ʂ��邽�߂̌����I�Ȏ�i���p�ӂ���Ă��܂��B�����@�\�ɂ���Microsoft�Ђ����J���Ă��鎑������Љ�܂��B<br><br>
-�����������[�N�Ƃ�<br>������ ���[�N�Ƃ́A���蓖�čς݂̃�������K�؂ɉ���ł��Ȃ���Ԃ��w���܂��B<br>������ ���[�N�́AC/C++ 
-�A�v���P�[�V�����ōł������Ō��o���ɂ����o�O�� 1 �ł��B �킸���ȃ����� ���[�N�͍ŏ��͔F������Ȃ����Ƃ�����܂����A�����ɂ킽��ݐϓI�ȃ����� 
-���[�N�ɂ��A�v���P�[�V�������������s���ɂȂ�ƁA�p�t�H�[�}���X�̒ቺ����N���b�V���܂ŁA���܂��܂Ȓ��󂪌����\��������܂��B ����Ɉ����󋵂Ƃ��āA������ 
-���[�N���Ă���A�v���P�[�V�����ɂ���Ă��ׂĂ̎g�p�\�ȃ�������������ƁA�ʂ̃A�v���P�[�V�������N���b�V�����A�����ƂȂ����A�v���P�[�V�����̓��肪����ɂȂ邱�Ƃ�����܂��B 
-�ꌩ���ɂȂ�Ȃ��悤�Ɏv���郁���� ���[�N�ł����Ă��A�C�����K�v�ȕʂ̖��ɂȂ����Ă���\��������܂��B</p>
-<h2> �ڎ�</h2>
-<p> 1. ***<br>2. ***<br>3. ***<br><a href="#�Q�l_">�Q�l</a></p>
+<p> Visual Studio のデバッガーと C ランタイム (CRT) ライブラリには、メモリ 
+リークを検出および識別するための効率的な手段が用意されています。これら機能についてMicrosoft社が公開している資料から紹介します。<br><br>
+■メモリリークとは<br>メモリ リークとは、割り当て済みのメモリを適切に解放できない状態を指します。<br>メモリ リークは、C/C++ 
+アプリケーションで最も微妙で検出しにくいバグの 1 つです。 わずかなメモリ リークは最初は認識されないことがありますが、長期にわたる累積的なメモリ 
+リークによりアプリケーションがメモリ不足になると、パフォーマンスの低下からクラッシュまで、さまざまな兆候が現れる可能性があります。 さらに悪い状況として、メモリ 
+リークしているアプリケーションによってすべての使用可能なメモリが消費されると、別のアプリケーションがクラッシュし、原因となったアプリケーションの特定が困難になることもあります。 
+一見問題にならないように思われるメモリ リークであっても、修正が必要な別の問題につながっている可能性があります。</p>
+<h2> 目次</h2>
+<p> 1. ***<br>2. ***<br>3. ***<br><a href="#参考_">参考</a></p>
 <p> &nbsp;</p>
 <h2> 1. ***</h2>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 <pre class="prettyprint linenums">
 </pre>
 	
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [�T�v]</p>
+<p> [概要]</p>
 <p> &nbsp;</p>
-<p>[��]</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<p>[�v���O�����\�[�X &quot;***.cpp&quot;]</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
 <pre class="prettyprint linenums">
 </pre>
 	
@@ -60,30 +60,30 @@ CRT ���C�u�������g�p���������� ���[�N�̌��o</h1>
 	
 <br>
 <h2>
-�T���v���v���O����</h2>
+サンプルプログラム</h2>
 <p>
-�T���v���v���O���� �_�E�����[�h</p>
+サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�l_">�Q�l</a></h2>
+<a name="参考_">参考</a></h2>
 <ul>
 	<li>
 	<a href="https://msdn.microsoft.com/ja-jp/library/x98tx3cf.aspx" target="_blank">
-	CRT ���C�u�������g�p���������� ���[�N�̌��o<br>
+	CRT ライブラリを使用したメモリ リークの検出<br>
 	https://msdn.microsoft.com/ja-jp/library/x98tx3cf.aspx</a></li>
-	<li><a href="https://msdn.microsoft.com/ja-jp/library/2f7sy2e9.aspx" target="_blank">�f�o�b�O 
-	�o�[�W�����̃q�[�v���蓖�Ċ֐�<br>https://msdn.microsoft.com/ja-jp/library/2f7sy2e9.aspx</a></li>
-	<li><a href="HowToCrtDbg.html" target="_blank">CRT �f�o�b�O �q�[�v<br>
+	<li><a href="https://msdn.microsoft.com/ja-jp/library/2f7sy2e9.aspx" target="_blank">デバッグ 
+	バージョンのヒープ割り当て関数<br>https://msdn.microsoft.com/ja-jp/library/2f7sy2e9.aspx</a></li>
+	<li><a href="HowToCrtDbg.html" target="_blank">CRT デバッグ ヒープ<br>
 	https://msdn.microsoft.com/ja-jp/library/974tc9t1.aspx</a></li>
 	<li>
 	<a href="https://social.msdn.microsoft.com/Forums/en-US/d666adc8-dbc8-4f70-8253-8ba640390c81?forum=vsgeneralja" target="_blank">
-	���������[�N�`�F�b�N�̎�����</a><br>
+	メモリリークチェックの自動化</a><br>
 	<a href="https://social.msdn.microsoft.com/Forums/en-US/d666adc8-dbc8-4f70-8253-8ba640390c81?forum=vsgeneralja" target="_blank">
 	https://social.msdn.microsoft.com/Forums/en-US/d666adc8-dbc8-4f70-8253-8ba640390c81?forum=vsgeneralja</a></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2018�N03��28�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2018年03月28日 木下英俊<br>
 </font></p>
 </body>
 </html>

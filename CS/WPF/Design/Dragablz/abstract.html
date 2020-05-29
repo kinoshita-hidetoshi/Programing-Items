@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>[Dragablz] �͂��߂�</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[Dragablz] はじめに</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../../prettify.css" rel="stylesheet" type="text/css">
@@ -23,36 +23,36 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-�mDragablz�n�͂��߂�</h1>
+［Dragablz］はじめに</h1>
 
-<p> �uDragablz�v �́AWPF�A�v���Ŏg�p�ł���h���b�O�\�Ń^�u�𕪗��\�ɂ���I�[�v���\�[�X���C�u�����ł��BDragablz���g�p���邱�ƂłƂĂ��ȒP�Ƀh�b�L���O�\��Windows�A�v���P�[�V�������쐬�\�ł��B</p>
-<p> �g�p���C�Z���X�́uMs-PL�v�i<a href="https://msdn.microsoft.com/ja-jp/library/gg592960.aspx" target="_blank">https://msdn.microsoft.com/ja-jp/library/gg592960.aspx</a>�j�ł��B���̃��C�Z���X�́A�������̏��������΁A���p�^�񏤗p�ɂ�����炸�����g�p�ł�����̂ł��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._���C�u�������擾����">1. ���C�u�������擾����</a><br><a href="#2._�܂��͂���Ă݂悤">2. 
-�܂��͂���Ă݂悤</a><br><a href="#2-1._Dragablz_����">2-1. Dragablz ����</a><br>
-<a href="#2-2._�^�u���h���b�O�ړ��\�ɂ���">2-2. Tab���h���b�O�ړ��\�ɂ���</a><br>
-<a href="#2-3._�^�u�𕪗��\�ɂ���">2-3. Tab�𕪗��\�ɂ���</a><br>
-<a href="#2-4._�h���b�O�ɂ�郌�C�A�E�g�ύX_���\�ɂ���">2-4. �h���b�O�ɂ�郌�C�A�E�g�ύX���\�ɂ���</a><br><a href="#3._TablzControl_�̃v���p�e�B">3. TablzControl �̃v���p�e�B</a><br>
-<br><a href="#�Q�lURL">�Q�lURL</a><br><a href="#�֘A�y�[�W">�֘A�y�[�W</a></p>
+<p> 「Dragablz」 は、WPFアプリで使用できるドラッグ可能でタブを分離可能にするオープンソースライブラリです。Dragablzを使用することでとても簡単にドッキング可能なWindowsアプリケーションを作成可能です。</p>
+<p> 使用ライセンスは「Ms-PL」（<a href="https://msdn.microsoft.com/ja-jp/library/gg592960.aspx" target="_blank">https://msdn.microsoft.com/ja-jp/library/gg592960.aspx</a>）です。このライセンスは、いくつかの条件を守れば、商用／非商用にかかわらず無償使用できるものです。</p>
+<h2> 目次</h2>
+<p> <a href="#1._ライブラリを取得する">1. ライブラリを取得する</a><br><a href="#2._まずはやってみよう">2. 
+まずはやってみよう</a><br><a href="#2-1._Dragablz_入手">2-1. Dragablz 入手</a><br>
+<a href="#2-2._タブをドラッグ移動可能にする">2-2. Tabをドラッグ移動可能にする</a><br>
+<a href="#2-3._タブを分離可能にする">2-3. Tabを分離可能にする</a><br>
+<a href="#2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更を可能にする</a><br><a href="#3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a><br>
+<br><a href="#参考URL">参考URL</a><br><a href="#関連ページ">関連ページ</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._���C�u�������擾����">1. ���C�u�������擾����</a></h2>
-<p> �uDragablz�v �́A�ȉ��̕��@�Ŏ擾�\�ł��B</p>
+<h2> <a name="1._ライブラリを取得する">1. ライブラリを取得する</a></h2>
+<p> 「Dragablz」 は、以下の方法で取得可能です。</p>
 <h3> GitGub</h3>
-<p> ���L������ł��܂��B<br><a href="https://github.com/ButchersBoy/Dragablz">
+<p> 下記より入手できます。<br><a href="https://github.com/ButchersBoy/Dragablz">
 https://github.com/ButchersBoy/Dragablz</a></p>
 <p> &nbsp;</p>
 <h3> NuGet</h3>
-<p> ���L������ł��܂��B<br><a href="https://www.nuget.org/packages/Dragablz/">
+<p> 下記より入手できます。<br><a href="https://www.nuget.org/packages/Dragablz/">
 https://www.nuget.org/packages/Dragablz/</a></p>
 <p> &nbsp;</p>
-<h2> <a name="2._�܂��͂���Ă݂悤">2. �܂��͂���Ă݂悤</a></h2>
-<p> �܂���WPF�� TabControl ���g�����V���v���ȃv���O����������Ă݂܂��B<br>��������t�@�����X�ɂ��� Dragablz 
-���g���ď������������Ă����܂��B</p>
-<p> ��ʂł��B</p>
+<h2> <a name="2._まずはやってみよう">2. まずはやってみよう</a></h2>
+<p> まずはWPFで TabControl を使ったシンプルなプログラムを作ってみます。<br>これをリファレンスにして Dragablz 
+を使って少しずつ改造していきます。</p>
+<p> 画面です。</p>
 <p> 
 <img alt="" src="abstract/imgB.jpg"></p>
 <p> 
-���̃\�[�X�R�[�h(xaml)�ł��B</p>
+このソースコード(xaml)です。</p>
 <span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -90,17 +90,17 @@ https://www.nuget.org/packages/Dragablz/</a></p>
 	</tr>
 </table>
 	
-<p>�ł͂�����������Ă��܂��B</p>
+<p>ではこれを改造してきます。</p>
 <p>&nbsp;</p>
-<h3><a name="2-1._Dragablz_����">2-1. Dragablz ����</a></h3>
-<p>�ŏ��� NuGet �� Dragablz ����肵�܂��B<br>���̕��͂������Ă���Ƃ��̃o�[�W������ v0.0.3.160 �ł��B</p>
+<h3><a name="2-1._Dragablz_入手">2-1. Dragablz 入手</a></h3>
+<p>最初に NuGet で Dragablz を入手します。<br>この文章を書いているときのバージョンは v0.0.3.160 です。</p>
 <p> 
 <img alt="" src="abstract/imgA.jpg"></p>
 <p> 
 &nbsp;</p>
 <h3> 
-<a name="2-2._�^�u���h���b�O�ړ��\�ɂ���">2-2. 
-�^�u���h���b�O�ړ��\�ɂ���</a></h3>
+<a name="2-2._タブをドラッグ移動可能にする">2-2. 
+タブをドラッグ移動可能にする</a></h3>
 <span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -140,16 +140,16 @@ https://www.nuget.org/packages/Dragablz/</a></p>
 </table>
 	
 <p>
-���ꂾ���Ń^�u���h���b�O�ړ��\�ɂȂ�܂����B</p>
+これだけでタブをドラッグ移動可能になりました。</p>
 <p>
 <img alt="" src="abstract/img15.jpg"></p>
 <p>
 &nbsp;</p>
 <h3>
-<a name="2-3._�^�u�𕪗��\�ɂ���">2-3.
-�^�u�𕪗��\�ɂ���</a></h3>
+<a name="2-3._タブを分離可能にする">2-3.
+タブを分離可能にする</a></h3>
 <p>
-���������������ă^�u�𕪗��\�ɂ��܂��B</p>
+もう少し改造してタブを分離可能にします。</p>
 <p>
 <img alt="" src="abstract/img19.jpg"></p>
 <p>
@@ -196,14 +196,14 @@ https://www.nuget.org/packages/Dragablz/</a></p>
 </table>
 	
 <p>
-���s�ǉ����邾���ŊȒP�ɕ����E�B���h�E���쐬�ł���悤�ɂȂ�܂����B���΂炵���B<br>���_�͏�L�̕ύX������ƃ^�u���̕ҏW�� Visual Studio 
-��GUI��ōs���Ȃ��Ȃ邱�Ƃł��B����ɂ��Ă͏��������P����l���čs���܂��傤�B</p>
+数行追加するだけで簡単に分離ウィンドウを作成できるようになりました。すばらしい。<br>欠点は上記の変更をするとタブ内の編集を Visual Studio 
+のGUI上で行えなくなることです。これについては少しずつ改善策を考えて行きましょう。</p>
 <p>
 &nbsp;</p>
 <h3>
-<a name="2-4._�h���b�O�ɂ�郌�C�A�E�g�ύX_���\�ɂ���">2-4. �h���b�O�ɂ�郌�C�A�E�g�ύX ���\�ɂ���</a></h3>
+<a name="2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更 を可能にする</a></h3>
 <p>
-�����āA�^�u�������h���b�O���삷�邱�Ƃŉ��}�̂悤�ȃ��C�A�E�g�ύX���s����悤�ɂ��܂��B</p>
+続いて、タブ部分をドラッグ操作することで下図のようなレイアウト変更を行えるようにします。</p>
 <p>
 <img alt="" src="abstract/imgA1.jpg"></p>
 <p>
@@ -213,8 +213,8 @@ https://www.nuget.org/packages/Dragablz/</a></p>
 <p>
 <img alt="" src="abstract/imgE.jpg"></p>
 <p>
-�\�[�X�R�[�h�͈ȉ��̒ʂ�ł��B<br>���F�������ǉ������Ƃ���ł��B���F�����͂���܂łɊ��ɒǉ����������ł��B</p>
-<p>�E&quot;Partition&quot; �Ƃ��Ďw�肵�Ă���L�[���[�h�͉��ł��悢�悤�ł����A���ꂪ��v���Ă���^�u�݂̂����C�A�E�g�Ƃ��Ď�荞�߂�悤�ł��B</p>
+ソースコードは以下の通りです。<br>黄色部分が追加したところです。水色部分はこれまでに既に追加した部分です。</p>
+<p>・&quot;Partition&quot; として指定しているキーワードは何でもよいようですが、これが一致しているタブのみをレイアウトとして取り込めるようです。</p>
 <span class="table_title">[&quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -267,14 +267,14 @@ https://www.nuget.org/packages/Dragablz/</a></p>
 </table>
 	
 <p>
-����ȂɊȒP�ɂł��Ă��܂��܂����B����ׂ��ADragablz !!</p>
+こんなに簡単にできてしまいました。恐るべし、Dragablz !!</p>
 <p>
 &nbsp;</p>
 <h2>
-<a name="3._TablzControl_�̃v���p�e�B">3. TablzControl �̃v���p�e�B</a></h2>
+<a name="3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a></h2>
 <h3>ConsolidateOrphanedItems</h3>
-<p>�E�hTrue�h �F ���������^�u��Close�����ꍇ�A�c�����E�B���h�E�ɂ��̃^�u���W�񂳂��悤�ɂȂ�܂��B<br>�E�hFalse�h �F 
-���������^�u��Close�����ꍇ�A���̃^�u�͏����Ă��܂��܂��B</p>
+<p>・”True” ： 分離したタブをCloseした場合、残ったウィンドウにこのタブが集約されるようになります。<br>・”False” ： 
+分離したタブをCloseした場合、そのタブは消えてしまいます。</p>
 <h3>&nbsp;</h3>
 <h3>ShowDefaultCloseButton</h3>
 
@@ -285,18 +285,18 @@ ShowDefaultAddButton</h3>
 <h3>
 FixedHeaderCount</h3>
 <p>
-�Œ�^�u�i�h���b�O���������A�܂��f�t�H���g�� Close �{�^����\�����Ȃ��j�Ƃ���^�u�̐��ł��B<br>���̒l�͉�ʍ�������̃^�u�̐��ł��B<br>
-���̒l�̓v���O�������쒆�ɓ��I�ɕύX�\�ł��B</p>
+固定タブ（ドラッグを許さず、またデフォルトの Close ボタンを表示しない）とするタブの数です。<br>この値は画面左側からのタブの数です。<br>
+この値はプログラム動作中に動的に変更可能です。</p>
 <p>
 Allows a the first adjacent tabs to be fixed (no dragging, and default close 
 button will not show).</p>
 <p>
 &nbsp;</p>
 <h3>DissallowDragDrop</h3>
-<p>Issue #18 �ɋL�ڂ���Ă���v���p�e�B�Ȃ̂ł����ADragablz Ver. 0.0.3.165 �̃\�[�X���ɃR�[�h���m�F�ł��܂���B</p>
+<p>Issue #18 に記載されているプロパティなのですが、Dragablz Ver. 0.0.3.165 のソース中にコードを確認できません。</p>
 <h3>&nbsp;</h3>
 <h3>DissallowDragOut</h3>
-<p>Issue #18 �ɋL�ڂ���Ă���v���p�e�B�Ȃ̂ł����ADragablz Ver. 0.0.3.165 �̃\�[�X���ɃR�[�h���m�F�ł��܂���B</p>
+<p>Issue #18 に記載されているプロパティなのですが、Dragablz Ver. 0.0.3.165 のソース中にコードを確認できません。</p>
 <h3>&nbsp;</h3>
 <h3>
 ItemContainerStyle</h3>
@@ -335,7 +335,7 @@ ItemContainerStyle</h3>
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�lURL">�Q�lURL</a></h2>
+<a name="参考URL">参考URL</a></h2>
 <ul>
 	<li><a href="https://dragablz.net/" target="_blank">https://dragablz.net/</a></li>
 	<li><a href="https://github.com/ButchersBoy/Dragablz" target="_blank">
@@ -356,14 +356,14 @@ ItemContainerStyle</h3>
 	http://redino.net/blog/tag/wpf/</a></li>
 	<li>
 	<a href="https://github.com/ButchersBoy/Dragablz/blob/master/Dragablz/TabablzControl.cs" target="_blank">
-	https://github.com/ButchersBoy/Dragablz/blob/master/Dragablz/TabablzControl.cs</a><br>��TabablzControl �̃v���p�e�B�𒲂ׂ�Ȃ炱��B</li>
+	https://github.com/ButchersBoy/Dragablz/blob/master/Dragablz/TabablzControl.cs</a><br>→TabablzControl のプロパティを調べるならこれ。</li>
 	<li>
 	Disallow/Disable Drag &amp; Drop/Drag out #18<br>
 	<a href="https://github.com/ButchersBoy/Dragablz/issues/18" target="_blank">
 	https://github.com/ButchersBoy/Dragablz/issues/18</a></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2016�N04��16�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2016年04月16日 木下英俊<br>
 </font></p>
 </body>
 </html>

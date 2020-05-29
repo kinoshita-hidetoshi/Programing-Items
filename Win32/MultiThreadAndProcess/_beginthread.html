@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>_beginthread, _endthread</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -17,19 +17,19 @@
 _beginthread, 
 _endthread</font></h1>
 <p><font face="Meiryo UI"><font color="#ff0000">_beginthread, 
-_endthread</font>&nbsp;‚Í‚±‚ñ‚ÈŠ´‚¶‚Å‚Æ‚è‚ ‚¦‚¸OK‚Å‚µ‚½B<br>
+_endthread</font>&nbsp;ã¯ã“ã‚“ãªæ„Ÿã˜ã§ã¨ã‚Šã‚ãˆãšOKã§ã—ãŸã€‚<br>
 <br>
-<font color="#ff8000">_beginthread</font>() ‚Å <font color="#ff8000">boost::bind</font> 
-‚ğg‚Á‚½ŠÖ”ƒR[ƒ‹‚à‚¢‚ë‚¢‚ë‚Æ‚µ‚½‚Ì‚Å‚·‚ªA‚¤‚Ü‚­‚¢‚«‚Ü‚¹‚ñ‚Å‚µ‚½B 
+<font color="#ff8000">_beginthread</font>() ã§ <font color="#ff8000">boost::bind</font> 
+ã‚’ä½¿ã£ãŸé–¢æ•°ã‚³ãƒ¼ãƒ«ã‚‚ã„ã‚ã„ã‚ã¨è©¦ã—ãŸã®ã§ã™ãŒã€ã†ã¾ãã„ãã¾ã›ã‚“ã§ã—ãŸã€‚ 
 <br>
-ƒCƒ“ƒ^[ƒlƒbƒg‚ÅŒŸõ‚à‚¸‚¢‚Ô‚ñ‚µ‚½‚Ì‚Å‚·‚ªA‚¤‚Ü‚¢•û–@‚ªƒqƒbƒg‚µ‚Ü‚¹‚ñBboost::thread 
-‚Å‚Å‚«‚Ä‚¢‚éˆÈãA‰½‚©‚µ‚çè‚ª‚ ‚é‚Æv‚¤‚Ì‚Å‚·‚ªA¡‚Ì‚Æ‚±‚ë—Ç‚¢•û–@‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB‚±‚¿‚ç‚É‚Â‚¢‚Ä‚Í‚¤‚Ü‚­‚¢‚Á‚½‚ç‚±‚¿‚ç‚Ì‹Lq‚ğXV‚µ‚½‚¢‚Æv‚¢‚Ü‚·B 
+ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆã§æ¤œç´¢ã‚‚ãšã„ã¶ã‚“ã—ãŸã®ã§ã™ãŒã€ã†ã¾ã„æ–¹æ³•ãŒãƒ’ãƒƒãƒˆã—ã¾ã›ã‚“ã€‚boost::thread 
+ã§ã§ãã¦ã„ã‚‹ä»¥ä¸Šã€ä½•ã‹ã—ã‚‰æ‰‹ãŒã‚ã‚‹ã¨æ€ã†ã®ã§ã™ãŒã€ä»Šã®ã¨ã“ã‚è‰¯ã„æ–¹æ³•ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚ã“ã¡ã‚‰ã«ã¤ã„ã¦ã¯ã†ã¾ãã„ã£ãŸã‚‰ã“ã¡ã‚‰ã®è¨˜è¿°ã‚’æ›´æ–°ã—ãŸã„ã¨æ€ã„ã¾ã™ã€‚ 
 </font>
 </p>
 <code>
 <pre class="prettyprint linenums">
 //
-// test_BeginThread.cpp : ƒRƒ“ƒ\[ƒ‹ ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒGƒ“ƒgƒŠ ƒ|ƒCƒ“ƒg‚ğ’è‹`‚µ‚Ü‚·B
+// test_BeginThread.cpp : ã‚³ãƒ³ã‚½ãƒ¼ãƒ« ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¨ãƒ³ãƒˆãƒª ãƒã‚¤ãƒ³ãƒˆã‚’å®šç¾©ã—ã¾ã™ã€‚
 // #include &lt;windows.h&gt;
 #include &lt;process.h&gt;          // _beginthread, _endthread
 #include &lt;stdio.h&gt;
@@ -86,82 +86,82 @@ public:
 
 int main(int argc, char* argv[])
 {
-    // ˆø”‚È‚µ ‚ÌƒXƒŒƒbƒh‹N“®
+    // å¼•æ•°ãªã— ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
     {
         HANDLE hThread[2] ; 
-        // ƒXƒŒƒbƒh‹N“®
-        cout &lt;&lt; &quot;[ƒƒ\ƒbƒh ‚ÌƒXƒŒƒbƒh‹N“®] ŠJn&quot; &lt;&lt; endl;
+        // ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
+        cout &lt;&lt; &quot;[ãƒ¡ã‚½ãƒƒãƒ‰ ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] é–‹å§‹&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( PrintHello, 0, NULL );
         hThread[1] = (HANDLE)_beginthread( PrintWorld, 0, NULL ); 
-        // ƒXƒŒƒbƒhI—¹‘Ò‚¿
+        // ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 2, hThread, TRUE, INFINITE );
         switch( dwRet ){
         case WAIT_OBJECT_0:
-            cout &lt;&lt; &quot;[ˆø”‚È‚µ ‚ÌƒXƒŒƒbƒh‹N“®] ‘SƒXƒŒƒbƒh‚ğI—¹Š®—¹&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;[å¼•æ•°ãªã— ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] å…¨ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’çµ‚äº†å®Œäº†&quot; &lt;&lt; endl;
             break ;
         case WAIT_TIMEOUT:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‘Ò‚¿‚Åƒ^ƒCƒ€ƒAƒEƒg‚ª”­¶‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡ã§ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‚É¸”s‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
         }
     } 
-    // ˆø”‚ ‚è ‚ÌƒXƒŒƒbƒh‹N“®
+    // å¼•æ•°ã‚ã‚Š ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
     {
         HANDLE hThread[2] ;
         char sHello[] = &quot;Hello &quot;;
         char sWorld[] = &quot;World &quot;; 
-        // ƒXƒŒƒbƒh‹N“®
-        cout &lt;&lt; &quot;[ˆø”‚ ‚è ‚ÌƒXƒŒƒbƒh‹N“®] ŠJn&quot; &lt;&lt; endl;
+        // ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
+        cout &lt;&lt; &quot;[å¼•æ•°ã‚ã‚Š ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] é–‹å§‹&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( PrintString, 0, (void*)sHello );
         hThread[1] = (HANDLE)_beginthread( PrintString, 0, (void*)sWorld ); 
-        // ƒXƒŒƒbƒhI—¹‘Ò‚¿
+        // ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 2, hThread, TRUE, INFINITE );
         switch( dwRet ){
         case WAIT_OBJECT_0:
-            cout &lt;&lt; &quot;[ˆø”‚ ‚è ‚ÌƒXƒŒƒbƒh‹N“®] ‘SƒXƒŒƒbƒh‚ğI—¹Š®—¹&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;[å¼•æ•°ã‚ã‚Š ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] å…¨ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’çµ‚äº†å®Œäº†&quot; &lt;&lt; endl;
             break ;
         case WAIT_TIMEOUT:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‘Ò‚¿‚Åƒ^ƒCƒ€ƒAƒEƒg‚ª”­¶‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡ã§ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
         default:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‚É¸”s‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
         }
     } 
-    // ƒƒ\ƒbƒh ‚ÌƒXƒŒƒbƒh‹N“®
+    // ãƒ¡ã‚½ãƒƒãƒ‰ ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
     {
         HANDLE hThread[2] ; 
         Printer cpr1(&quot;Printer.&quot;);
         Printer cpr2(&quot;Run method directly.&quot;); 
-        // ƒXƒŒƒbƒh‹N“®
-        cout &lt;&lt; &quot;[ƒƒ\ƒbƒh ‚ÌƒXƒŒƒbƒh‹N“®] ŠJn&quot; &lt;&lt; endl;
+        // ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•
+        cout &lt;&lt; &quot;[ãƒ¡ã‚½ãƒƒãƒ‰ ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] é–‹å§‹&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( &amp;Printer::run, 0, (void*)&amp;cpr1 );
 //     hThread[1] = (HANDLE)_beginthread( &amp;Printer::print, 0, (void*)&amp;cpr2 ); 
-        // ƒXƒŒƒbƒhI—¹‘Ò‚¿
+        // ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 1, hThread, TRUE, INFINITE );
         switch( dwRet ){
         case WAIT_OBJECT_0:
-            cout &lt;&lt; &quot;[ƒƒ\ƒbƒh ‚ÌƒXƒŒƒbƒh‹N“®] ‘SƒXƒŒƒbƒh‚ğI—¹Š®—¹&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;[ãƒ¡ã‚½ãƒƒãƒ‰ ã®ã‚¹ãƒ¬ãƒƒãƒ‰èµ·å‹•] å…¨ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’çµ‚äº†å®Œäº†&quot; &lt;&lt; endl;
             break ;
         case WAIT_TIMEOUT:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‘Ò‚¿‚Åƒ^ƒCƒ€ƒAƒEƒg‚ª”­¶‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡ã§ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
         default:
-            cout &lt;&lt; &quot;ƒXƒŒƒbƒhI—¹‚É¸”s‚µ‚Ü‚µ‚½B&quot; &lt;&lt; endl;
+            cout &lt;&lt; &quot;ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚&quot; &lt;&lt; endl;
             break ;
         }
     } 
-    // Œãˆ—
+    // å¾Œå‡¦ç†
     return EXIT_SUCCESS ;
 }</pre>
 </code>
 <p>&nbsp;</p>
 <hr>
-<p><font face="Meiryo UI">‹LÚF 2010”N3Œ14“ú –Ø‰º‰pr</font></p>
+<p><font face="Meiryo UI">è¨˜è¼‰ï¼š 2010å¹´3æœˆ14æ—¥ æœ¨ä¸‹è‹±ä¿Š</font></p>
 </body>
 </html>

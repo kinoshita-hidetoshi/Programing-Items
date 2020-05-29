@@ -1,7 +1,7 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>mƒ^ƒCƒgƒ‹‚ğ‹LÚ‚µ‚Ü‚·n</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ï¼»ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¨˜è¼‰ã—ã¾ã™ï¼½</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../prettify.css" rel="stylesheet" type="text/css">
@@ -41,20 +41,20 @@
 <h1 class="auto-style7">
 Intrinsic</h1>
 
-<p> SIMD –½—ß‚È‚Ç‚ğ Intrinsic ‚Å•\‹L‚µ‚Ä‚‘¬‚ÈÀs‚ğÀŒ»‚·‚é•û–@‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
+<p> SIMD å‘½ä»¤ãªã©ã‚’ Intrinsic ã§è¡¨è¨˜ã—ã¦é«˜é€Ÿãªå®Ÿè¡Œã‚’å®Ÿç¾ã™ã‚‹æ–¹æ³•ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚</p>
 <p> &nbsp;</p>
-<h2> –ÚŸ</h2>
-<p> <a href="#1._4ƒoƒCƒg®”(int)‚Ì‰ÁZ">1. 4ƒoƒCƒg®”(int)‚Ì‰ÁZ</a><br>2. ***<br>3. ***</p>
+<h2> ç›®æ¬¡</h2>
+<p> <a href="#1._4ãƒã‚¤ãƒˆæ•´æ•°(int)ã®åŠ ç®—">1. 4ãƒã‚¤ãƒˆæ•´æ•°(int)ã®åŠ ç®—</a><br>2. ***<br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._4ƒoƒCƒg®”(int)‚Ì‰ÁZ">1. 4ƒoƒCƒg®”(int)‚Ì‰ÁZ</a></h2>
-<p> [ŠT—v]<br>‚SƒoƒCƒg®”(int)‚Ì‰ÁZ‚ğA•W€“I‚È•û–@ASSE2AAVX2A‚Ì‚R‚Â‚Ì•û–@‚Åì¬‚µ‚Ä‚İ‚Ü‚·B</p>
-<p>[ŠÂ‹«]</p>
+<h2> <a name="1._4ãƒã‚¤ãƒˆæ•´æ•°(int)ã®åŠ ç®—">1. 4ãƒã‚¤ãƒˆæ•´æ•°(int)ã®åŠ ç®—</a></h2>
+<p> [æ¦‚è¦]<br>ï¼”ãƒã‚¤ãƒˆæ•´æ•°(int)ã®åŠ ç®—ã‚’ã€æ¨™æº–çš„ãªæ–¹æ³•ã€SSE2ã€AVX2ã€ã®ï¼“ã¤ã®æ–¹æ³•ã§ä½œæˆã—ã¦ã¿ã¾ã™ã€‚</p>
+<p>[ç’°å¢ƒ]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C++</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p>&nbsp;</p>
-<h3>[•û®‚P] •W€<code>“I‚È•û–@</code></h3>
+<h3>[æ–¹å¼ï¼‘] æ¨™æº–<code>çš„ãªæ–¹æ³•</code></h3>
 &nbsp;<p>[stdafx.h]</p>
 <pre class="prettyprint linenums">
 #pragma once
@@ -102,7 +102,7 @@ int _tmain(int argc, _TCHAR* argv[])
     tcout &lt;&lt; _T(&quot;(Execute time [ms]) &quot;) &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; _T(&quot;[ms]&quot;) &lt;&lt; endl;
 
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
     {
         tstring str;
@@ -116,7 +116,7 @@ int _tmain(int argc, _TCHAR* argv[])
 </pre>
 	
 <p>&nbsp;</p>
-<h3>[•û®‚Q] SSE2</h3>
+<h3>[æ–¹å¼ï¼’] SSE2</h3>
 <p>[stdafx.h]</p>
 <pre class="prettyprint linenums">
 #pragma once
@@ -178,7 +178,7 @@ int _tmain(int argc, _TCHAR* argv[])
     cout &lt;&lt; &quot;(Execute time [ms]) &quot; &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; &quot;[ms]&quot; &lt;&lt; endl;
 
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
     {
         string str;
@@ -190,7 +190,7 @@ int _tmain(int argc, _TCHAR* argv[])
     return EXIT_SUCCESS;
 }</pre>
 <p>&nbsp;</p>
-<h3>[•û®3] AVX2</h3>
+<h3>[æ–¹å¼3] AVX2</h3>
 <pre class="prettyprint linenums">
 #include &lt;stdio.h&gt;
 #include &lt;Windows.h&gt;
@@ -230,7 +230,7 @@ int _tmain(int argc, _TCHAR* argv[])
     cout &lt;&lt; &quot;(Execute time [ms]) &quot; &lt;&lt; GetTickCount() - dwStartCount &lt;&lt; &quot;[ms]&quot; &lt;&lt; endl;
 
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
     {
         string str;
@@ -242,37 +242,37 @@ int _tmain(int argc, _TCHAR* argv[])
     return EXIT_SUCCESS;
 }</pre>
 <p>&nbsp;</p>
-<p>ã‹L‚Ì‚R‚Â‚É‚Â‚¢‚ÄA„‚ÌPCŠÂ‹«‚Å‚ÌÀsŠÔ‚ÍˆÈ‰º‚Ì‚æ‚¤‚ÈŒ‹‰Ê‚Æ‚È‚è‚Ü‚µ‚½B<br>AVX2 ‚Ì‘¬“x‚ª SSE2 
-‚Æ•Ï‚í‚ç‚È‚©‚Á‚½‚±‚Æ‚ª•sv‹c‚Å‚·BŒp‘±’²¸‚µ‚Ä AVX2 ‚Ì«”\‚ğ³‚µ‚­o‚¹‚é‚æ‚¤‚É‚·‚éƒmƒEƒnƒE‚ğ’~Ï‚µ‚½‚¢‚Æv‚¢‚Ü‚·B</p>
+<p>ä¸Šè¨˜ã®ï¼“ã¤ã«ã¤ã„ã¦ã€ç§ã®PCç’°å¢ƒã§ã®å®Ÿè¡Œæ™‚é–“ã¯ä»¥ä¸‹ã®ã‚ˆã†ãªçµæœã¨ãªã‚Šã¾ã—ãŸã€‚<br>AVX2 ã®é€Ÿåº¦ãŒ SSE2 
+ã¨å¤‰ã‚ã‚‰ãªã‹ã£ãŸã“ã¨ãŒä¸æ€è­°ã§ã™ã€‚ç¶™ç¶šèª¿æŸ»ã—ã¦ AVX2 ã®æ€§èƒ½ã‚’æ­£ã—ãå‡ºã›ã‚‹ã‚ˆã†ã«ã™ã‚‹ãƒã‚¦ãƒã‚¦ã‚’è“„ç©ã—ãŸã„ã¨æ€ã„ã¾ã™ã€‚</p>
 <table class="auto-style9" style="width: 300; height: 100;">
 	<tr>
-		<td class="auto-style11">•û®</td>
-		<td class="auto-style11">ÀsŠÔ [ms]</td>
+		<td class="auto-style11">æ–¹å¼</td>
+		<td class="auto-style11">å®Ÿè¡Œæ™‚é–“ [ms]</td>
 	</tr>
 	<tr>
-		<td class="auto-style11">•W€“I‚È•û–@</td>
-		<td class="auto-style11">–ñ 1390ms</td>
+		<td class="auto-style11">æ¨™æº–çš„ãªæ–¹æ³•</td>
+		<td class="auto-style11">ç´„ 1390ms</td>
 	</tr>
 	<tr>
 		<td class="auto-style11">SSE2</td>
-		<td class="auto-style11">–ñ 890ms</td>
+		<td class="auto-style11">ç´„ 890ms</td>
 	</tr>
 	<tr>
 		<td class="auto-style11">AVX2</td>
-		<td bordercolordark="#808080" class="auto-style10">–ñ 890ms</td>
+		<td bordercolordark="#808080" class="auto-style10">ç´„ 890ms</td>
 	</tr>
 </table>
 <p>&nbsp;</p>
 <h2> 2. ***</h2>
-<p> [ŠT—v]</p>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
-<p>[ŠÂ‹«]</p>
+<p>[ç’°å¢ƒ]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;***.cpp&quot;]</span>
+<span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;***.cpp&quot;]</span>
 <table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -286,13 +286,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 <br>
 <h2>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h2>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h2>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</p>
 <p>
 &nbsp;</p>
 <h2>
-Ql</h2>
+å‚è€ƒ</h2>
 <ul>
 	<li>
 	<a href="https://software.intel.com/sites/landingpage/IntrinsicsGuide/#">
@@ -300,7 +300,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	<li></li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF 2017”N09Œ30“ú –Ø‰º‰prFV‹Kì¬<br>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š 2017å¹´09æœˆ30æ—¥ æœ¨ä¸‹è‹±ä¿Šï¼šæ–°è¦ä½œæˆ<br>
 </font></p>
 </body>
 </html>

@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>AES (CryptAPI)</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -30,10 +30,10 @@
 AES (CryptAPI)
 </h1>
 
-<p> <font face="Meiryo UI">WindowsŠÂ‹«‚Å AES ‚Æ SHA256 ‚ğCryptAPI‚Åg—p‚µ‚½‚­‚È‚èA’²‚×n‚ß‚Ü‚µ‚½B<br>
-.NET‚ÅŠÈ’P‚É‚Å‚«‚é‚±‚Æ‚àACryptAPI’P“Æ‚ÅÀŒ»‚µ‚æ‚¤‚Æ‚·‚é‚Æè‘±‚«‚ª–Ê“|‚Å‚·B‚Å‚àXWin32‚ÅÀŒ»‚·‚é•K—v‚ª‚ ‚éê‡‚à‚ ‚é‚Ì‚ÅA‚Ü‚Ÿî•ñ‚Æ‚µ‚Ä—LˆÓ‹`‚Å‚Í‚È‚¢‚©‚ÆB</font></p>
-<p> <a href="AES_by_CryptAPI/AES_by_CryptAPI.zip">ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ˆê® ƒ_ƒEƒ“ƒ[ƒhizipŒ`®j</a></p>
-<span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;aes.h&quot;]<br><code>
+<p> <font face="Meiryo UI">Windowsç’°å¢ƒã§ AES ã¨ SHA256 ã‚’CryptAPIã§ä½¿ç”¨ã—ãŸããªã‚Šã€èª¿ã¹å§‹ã‚ã¾ã—ãŸã€‚<br>
+.NETã§ç°¡å˜ã«ã§ãã‚‹ã“ã¨ã‚‚ã€CryptAPIå˜ç‹¬ã§å®Ÿç¾ã—ã‚ˆã†ã¨ã™ã‚‹ã¨æ‰‹ç¶šããŒé¢å€’ã§ã™ã€‚ã§ã‚‚æ™‚ã€…Win32ã§å®Ÿç¾ã™ã‚‹å¿…è¦ãŒã‚ã‚‹å ´åˆã‚‚ã‚ã‚‹ã®ã§ã€ã¾ãæƒ…å ±ã¨ã—ã¦æœ‰æ„ç¾©ã§ã¯ãªã„ã‹ã¨ã€‚</font></p>
+<p> <a href="AES_by_CryptAPI/AES_by_CryptAPI.zip">ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ä¸€å¼ ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ï¼ˆzipå½¢å¼ï¼‰</a></p>
+<span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;aes.h&quot;]<br><code>
 <pre class="prettyprint linenums">
 namespace aes_library {
 
@@ -53,7 +53,7 @@ bool decryptData( unsigned char* cryptData, size_t sizeCryptData, unsigned char 
 
 } // namespace aes_library</pre>
 </code></span>
-&nbsp;<span class="table_title"><br>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;aes.cpp&quot;]</span>
+&nbsp;<span class="table_title"><br>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;aes.cpp&quot;]</span>
 <code>
 <pre class="prettyprint linenums">
 #include &lt;windows.h&gt;
@@ -70,55 +70,55 @@ namespace aes_library {
 
 <span class="comment">
 /*=====================================================================*/
-//! AES 128ƒrƒbƒg—p‚ÌŒ®ƒf[ƒ^‚ğì¬
+//! AES 128ãƒ“ãƒƒãƒˆç”¨ã®éµãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
 /*!
-    AES 128ƒrƒbƒg—p‚ÌŒ®ƒf[ƒ^‚ğì¬‚µ‚Ü‚·B16ƒoƒCƒgƒf[ƒ^‚Å‚·B
-    ¶¬ƒAƒ‹ƒSƒŠƒYƒ€‚ÍˆÈ‰º‚Ì’Ê‚è‚Å‚·B
-    -# ƒnƒbƒVƒ…ƒAƒ‹ƒSƒŠƒYƒ€ <span class="auto-style3">SHA256</span> ‚É‚æ‚è passFraise ‚Ìƒ_ƒCƒWƒFƒXƒg32ƒoƒCƒgƒf[ƒ^‚ğ¶¬‚µ‚Ü‚·B
-    -# ƒ_ƒCƒWƒFƒXƒg32ƒoƒCƒg ‚Ì‹ô”ƒoƒCƒg{0,2,4,EEE,30}‚ğ˜AŒ‹‚µ‚½16ƒoƒCƒgƒf[ƒ^‚ğ¶¬A‚±‚ê‚ğAESŒ®ƒf[ƒ^‚Æ‚µ‚Äo—Í‚µ‚Ü‚·B
+    AES 128ãƒ“ãƒƒãƒˆç”¨ã®éµãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã—ã¾ã™ã€‚16ãƒã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã§ã™ã€‚
+    ç”Ÿæˆã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã¯ä»¥ä¸‹ã®é€šã‚Šã§ã™ã€‚
+    -# ãƒãƒƒã‚·ãƒ¥ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ  <span class="auto-style3">SHA256</span> ã«ã‚ˆã‚Š passFraise ã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆ32ãƒã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
+    -# ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆ32ãƒã‚¤ãƒˆ ã®å¶æ•°ãƒã‚¤ãƒˆ{0,2,4,ãƒ»ãƒ»ãƒ»,30}ã‚’é€£çµã—ãŸ16ãƒã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã€ã“ã‚Œã‚’AESéµãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦å‡ºåŠ›ã—ã¾ã™ã€‚
 
-    @param[in]      passFraise      ˆÃ†‰»‘ÎÛ‚Ì•½•ªƒf[ƒ^
-    @param[out]     aesKey          AES128ƒrƒbƒg—p16ƒoƒCƒgŒ®
-    @param[out]     errorCode       ƒGƒ‰[ƒR[ƒh
-    @retval         true            ³íI—¹
-    @retval         false           ˆÙíI—¹
-    @note           Windows Vista ˆÈ~‚Å‚Ì‚İ“®ì‚µ‚Ü‚·B
-                    Windows XP ‚Å‚Í CALG_SHA_256ACALG_SHA_384ACALG_SHA_512 ‚Í“®ì‚µ‚Ü‚¹‚ñB
-    @author         –Ø‰º‰pr
-    @date           2011-12-04 V‹Kì¬
+    @param[in]      passFraise      æš—å·åŒ–å¯¾è±¡ã®å¹³åˆ†ãƒ‡ãƒ¼ã‚¿
+    @param[out]     aesKey          AES128ãƒ“ãƒƒãƒˆç”¨16ãƒã‚¤ãƒˆéµ
+    @param[out]     errorCode       ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
+    @retval         true            æ­£å¸¸çµ‚äº†
+    @retval         false           ç•°å¸¸çµ‚äº†
+    @note           Windows Vista ä»¥é™ã§ã®ã¿å‹•ä½œã—ã¾ã™ã€‚
+                    Windows XP ã§ã¯ CALG_SHA_256ã€CALG_SHA_384ã€CALG_SHA_512 ã¯å‹•ä½œã—ã¾ã›ã‚“ã€‚
+    @author         æœ¨ä¸‹è‹±ä¿Š
+    @date           2011-12-04 æ–°è¦ä½œæˆ
 */
 /*=====================================================================*/
 </span>bool createAesKey( std::string passFraise, unsigned char (&amp;aesKey)[AES_KEY_SIZE],  AES_ERROR_CODE &amp;errorCode )
 {
     bool    bRet = true ;
 
-<span class="comment">    // ƒL[ƒRƒ“ƒeƒi[‚Ìæ“¾
+<span class="comment">    // ã‚­ãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã®å–å¾—
 </span>    BOOL        bResult = TRUE ;
     HCRYPTPROV  hProv = NULL ;
     HCRYPTHASH  hHash = NULL ;
 
 
 <span class="comment">    /*========*/
-    /* ‘Oˆ— */
+    /* å‰å‡¦ç† */
     /*========*/
 </span>    errorCode = NORMAL ;
 
 <span class="comment">    /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
 </span>    while( bRet == true ){
         const ALG_ID AlgId      = <span class="auto-style3"><strong>CALG_SHA_256</strong></span> ;
         const size_t SizeHash   = <span class="auto-style3">32</span> ;
 
 
-<span class="comment">        // CPSƒnƒ“ƒhƒ‹æ“¾
+<span class="comment">        // CPSãƒãƒ³ãƒ‰ãƒ«å–å¾—
 </span>        {
             bResult = <span class="auto-style3">CryptAcquireContext</span>(
-                        &amp;hProv,                 <span class="comment">// ƒnƒ“ƒhƒ‹‚ª–ß‚è‚Ü‚·
-</span>                        NULL,                   <span class="comment">// Šù’è‚Ìƒ†[ƒU[‚ÌCSP‚ğg‚¢‚Ü‚·
-</span>                        <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// ƒoƒ“ƒhƒ‹‚³‚ê‚½Microsoft‚ÌCSP‚ğw’è
-</span>                        <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// ƒ^ƒCƒv‚ğw’è
-</span>                        0);                     <span class="comment">// ƒL[ƒRƒ“ƒeƒi[‚ª‚ ‚éê‡‚Ìw’è‚Å‚·
+                        &amp;hProv,                 <span class="comment">// ãƒãƒ³ãƒ‰ãƒ«ãŒæˆ»ã‚Šã¾ã™
+</span>                        NULL,                   <span class="comment">// æ—¢å®šã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®CSPã‚’ä½¿ã„ã¾ã™
+</span>                        <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// ãƒãƒ³ãƒ‰ãƒ«ã•ã‚ŒãŸMicrosoftã®CSPã‚’æŒ‡å®š
+</span>                        <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// ã‚¿ã‚¤ãƒ—ã‚’æŒ‡å®š
+</span>                        0);                     <span class="comment">// ã‚­ãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ãŒã‚ã‚‹å ´åˆã®æŒ‡å®šã§ã™
 </span>            if ( !bResult ){
                 if (!<span class="auto-style3">CryptAcquireContext</span>( &amp;hProv, NULL, <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>, <span class="auto-style3">PROV_RSA_AES</span>, <span class="auto-style3">CRYPT_NEWKEYSET</span>)){
                     cerr &lt;&lt; "CryptAcquireContext error" &lt;&lt; endl;
@@ -129,14 +129,14 @@ namespace aes_library {
             }
         }
 
-<span class="comment">        // ƒnƒbƒVƒ…ŒvZƒCƒ“ƒXƒ^ƒ“ƒXƒnƒ“ƒhƒ‹¶¬
+<span class="comment">        // ãƒãƒƒã‚·ãƒ¥è¨ˆç®—ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«ç”Ÿæˆ
 </span>        {
             bResult = <span class="auto-style3">CryptCreateHash</span>(
-                            hProv,              <span class="comment">// ƒnƒbƒVƒ…’l‚ğŒvZ‚·‚éCSP‚Ìƒnƒ“ƒhƒ‹
-</span>                            AlgId,              <span class="comment">// ƒnƒbƒVƒ…’l‚ÌŒvZƒAƒ‹ƒSƒŠƒYƒ€</span>
-                            0,                  <span class="comment">// iŒãq‚µ‚Ü‚·j</span>
-                            0,                  <span class="comment">//  –¢g—pA0iƒ[ƒj‚ğƒZƒbƒg</span>
-                            &amp;hHash);            <span class="comment">//  ‹‚ß‚éƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒnƒ“ƒhƒ‹</span>
+                            hProv,              <span class="comment">// ãƒãƒƒã‚·ãƒ¥å€¤ã‚’è¨ˆç®—ã™ã‚‹CSPã®ãƒãƒ³ãƒ‰ãƒ«
+</span>                            AlgId,              <span class="comment">// ãƒãƒƒã‚·ãƒ¥å€¤ã®è¨ˆç®—ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ </span>
+                            0,                  <span class="comment">// ï¼ˆå¾Œè¿°ã—ã¾ã™ï¼‰</span>
+                            0,                  <span class="comment">//  æœªä½¿ç”¨ã€0ï¼ˆã‚¼ãƒ­ï¼‰ã‚’ã‚»ãƒƒãƒˆ</span>
+                            &amp;hHash);            <span class="comment">//  æ±‚ã‚ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«</span>
             if (!bResult){
                 cerr &lt;&lt; "CryptCreateHash error" &lt;&lt; endl;
                 errorCode = LOGIC_ERROR ;
@@ -145,13 +145,13 @@ namespace aes_library {
             }
         }
 
-<span class="comment">        // ƒnƒbƒVƒ…ŒvZ
+<span class="comment">        // ãƒãƒƒã‚·ãƒ¥è¨ˆç®—
 </span>        {
             bResult = <span class="auto-style3">CryptHashData</span>(
-                            hHash,                      <span class="comment">// ƒnƒbƒVƒ…ŒvZƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒnƒ“ƒhƒ‹</span>
-                            (BYTE*)passFraise.c_str(),  <span class="comment">// ÀÛ‚ÌƒpƒXƒ[ƒh‚ğw’è</span>
-                            (DWORD)passFraise.size(),   <span class="comment">// ƒpƒXƒ[ƒh‚ÌƒoƒCƒg’·</span>
-                            0);                         <span class="comment">// 0 w’è</span>
+                            hHash,                      <span class="comment">// ãƒãƒƒã‚·ãƒ¥è¨ˆç®—ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«</span>
+                            (BYTE*)passFraise.c_str(),  <span class="comment">// å®Ÿéš›ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’æŒ‡å®š</span>
+                            (DWORD)passFraise.size(),   <span class="comment">// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®ãƒã‚¤ãƒˆé•·</span>
+                            0);                         <span class="comment">// 0 æŒ‡å®š</span>
             if (!bResult){
                 cerr &lt;&lt; "CryptHashData error" &lt;&lt; endl;
                 errorCode = LOGIC_ERROR ;
@@ -160,12 +160,12 @@ namespace aes_library {
             }
         }
 
-<span class="comment">        // ƒnƒbƒVƒ…’lŒvZ &amp; AES—pŒ®ƒf[ƒ^ì¬
+<span class="comment">        // ãƒãƒƒã‚·ãƒ¥å€¤è¨ˆç®— &amp; AESç”¨éµãƒ‡ãƒ¼ã‚¿ä½œæˆ
 </span>        {
             DWORD   dwHashSize = 0 ;
             unsigned char hashResult[SizeHash] ;
 
-<span class="comment">            // ƒnƒbƒVƒ…ƒTƒCƒYŠm”FGdwHashSize(32)ƒoƒCƒgˆÈŠO‚È‚çNG
+<span class="comment">            // ãƒãƒƒã‚·ãƒ¥ã‚µã‚¤ã‚ºç¢ºèªï¼›dwHashSize(32)ãƒã‚¤ãƒˆä»¥å¤–ãªã‚‰NG
 </span>            bResult = <span class="auto-style3">CryptGetHashParam</span>(hHash, HP_HASHVAL, NULL, &amp;dwHashSize, 0);
             if (!bResult){
                 cerr &lt;&lt; "CryptGetHashParam error" &lt;&lt; endl;
@@ -174,14 +174,14 @@ namespace aes_library {
                 break ;
             }
 
-<span class="comment">            // ¶¬‚³‚ê‚éƒnƒbƒVƒ…ƒTƒCƒY(dwHashSize)‚ªŠú‘Ò‚µ‚Ä‚¢‚é’l(SizeHash)‚ÆˆÙ‚È‚éê‡‚ÍˆÙí‚Æ‚·‚é
+<span class="comment">            // ç”Ÿæˆã•ã‚Œã‚‹ãƒãƒƒã‚·ãƒ¥ã‚µã‚¤ã‚º(dwHashSize)ãŒæœŸå¾…ã—ã¦ã„ã‚‹å€¤(SizeHash)ã¨ç•°ãªã‚‹å ´åˆã¯ç•°å¸¸ã¨ã™ã‚‹
 </span>            if ( dwHashSize != SizeHash ){
                 errorCode = LOGIC_ERROR ;
                 bRet = false ;
                 break ;
             }
 
-<span class="comment">            // ƒnƒbƒVƒ…’l æ“¾
+<span class="comment">            // ãƒãƒƒã‚·ãƒ¥å€¤ å–å¾—
 </span>            bResult = <span class="auto-style3">CryptGetHashParam</span>( hHash, HP_HASHVAL, (BYTE*)hashResult, &amp;dwHashSize, 0 );
             if (!bResult){
                 cerr &lt;&lt; "CryptGetHashParam error" &lt;&lt; endl;
@@ -190,8 +190,8 @@ namespace aes_library {
                 break ;
             }
 
-<span class="comment">            // ƒnƒbƒVƒ…’l‚©‚çAES—pŒ®ƒf[ƒ^ì¬
-            // ƒnƒbƒVƒ…Œ‹‰Ê‚Ì‹ô”ƒoƒCƒg‚ğ˜AŒ‹‚µ‚ÄŒ®‚Æ‚·‚é
+<span class="comment">            // ãƒãƒƒã‚·ãƒ¥å€¤ã‹ã‚‰AESç”¨éµãƒ‡ãƒ¼ã‚¿ä½œæˆ
+            // ãƒãƒƒã‚·ãƒ¥çµæœã®å¶æ•°ãƒã‚¤ãƒˆã‚’é€£çµã—ã¦éµã¨ã™ã‚‹
 </span>            assert( AES_KEY_SIZE*2 &lt;= SizeHash );
             for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
                 aesKey[i] = hashResult[i*2] ;
@@ -204,9 +204,9 @@ namespace aes_library {
 
 
 <span class="comment">    /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
-    // ƒnƒbƒVƒ… ƒCƒ“ƒXƒ^ƒ“ƒX ‰ğ•ú
+    // ãƒãƒƒã‚·ãƒ¥ ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ è§£æ”¾
 </span>    if ( hHash != NULL ){
         bResult = <span class="auto-style3">CryptDestroyHash</span>(hHash);
         if (!bResult){
@@ -216,7 +216,7 @@ namespace aes_library {
         }
     }
 
-<span class="comment">    // CPSƒnƒ“ƒhƒ‹‰ğ•ú
+<span class="comment">    // CPSãƒãƒ³ãƒ‰ãƒ«è§£æ”¾
 </span>    if ( hProv != NULL ){
         bResult = <span class="auto-style3">CryptReleaseContext</span>(hProv, 0);
         if (!bResult){
@@ -235,24 +235,24 @@ namespace aes_library {
 namespace {
 <span class="comment">
     /*=====================================================================*/
-    //! ˆÃ†ˆ— ‰Šú‰»
+    //! æš—å·å‡¦ç† åˆæœŸåŒ–
     /*!
-        CryptAPI ‚ğg—p‚µ‚½ˆÃ†ˆ—‚Ì‰Šú‰»ˆ—‚ğs‚¢‚Ü‚·B
-        ˆÃ†ƒAƒ‹ƒSƒŠƒYƒ€‚È‚Ç‚ÍˆÈ‰º‚Ì•û®‚Åİ’è‚µ‚Ü‚·B
-        - ƒAƒ‹ƒSƒŠƒYƒ€FAES
-        - Œ®’·F128ƒrƒbƒg
-        - ƒ‚[ƒhFCBCƒ‚[ƒh
-        - ƒCƒjƒVƒƒƒ‹ƒxƒNƒ^(IV)F0
-        - ƒpƒfƒBƒ“ƒO•û®FPKCS7 (ƒR[ƒhã‚Å‚ÍPKCS5‚Æ‹LÚ‚µ‚Ä‚¢‚Ü‚·‚ªPKCS7‚Æ“¯‹`‚Å‚·B)
+        CryptAPI ã‚’ä½¿ç”¨ã—ãŸæš—å·å‡¦ç†ã®åˆæœŸåŒ–å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚
+        æš—å·ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ãªã©ã¯ä»¥ä¸‹ã®æ–¹å¼ã§è¨­å®šã—ã¾ã™ã€‚
+        - ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ï¼šAES
+        - éµé•·ï¼š128ãƒ“ãƒƒãƒˆ
+        - ãƒ¢ãƒ¼ãƒ‰ï¼šCBCãƒ¢ãƒ¼ãƒ‰
+        - ã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ãƒ™ã‚¯ã‚¿(IV)ï¼š0
+        - ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°æ–¹å¼ï¼šPKCS7 (ã‚³ãƒ¼ãƒ‰ä¸Šã§ã¯PKCS5ã¨è¨˜è¼‰ã—ã¦ã„ã¾ã™ãŒPKCS7ã¨åŒç¾©ã§ã™ã€‚)
         
-        @param[out]     hProv           CPSƒnƒ“ƒhƒ‹
-        @param[out]     hKey            Œ®ƒnƒ“ƒhƒ‹
-        @param[in]      keyData         ˆÃ†Œ®ƒf[ƒ^Bƒf[ƒ^ƒTƒCƒY‚Í AES_KEY_SIZE B
-        @param[out]     errorCode       ƒGƒ‰[ƒR[ƒh
-        @retval         true            ³íI—¹
-        @retval         false           ˆÙíI—¹
-        @author         –Ø‰º‰pr
-        @date           2011-12-04 V‹Kì¬
+        @param[out]     hProv           CPSãƒãƒ³ãƒ‰ãƒ«
+        @param[out]     hKey            éµãƒãƒ³ãƒ‰ãƒ«
+        @param[in]      keyData         æš—å·éµãƒ‡ãƒ¼ã‚¿ã€‚ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯ AES_KEY_SIZE ã€‚
+        @param[out]     errorCode       ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
+        @retval         true            æ­£å¸¸çµ‚äº†
+        @retval         false           ç•°å¸¸çµ‚äº†
+        @author         æœ¨ä¸‹è‹±ä¿Š
+        @date           2011-12-04 æ–°è¦ä½œæˆ
     */
     /*=====================================================================*/
 </span>    bool InitializeAes( HCRYPTPROV &amp;hProv, HCRYPTKEY &amp;hKey, unsigned char (&amp;keyData)[AES_KEY_SIZE], AES_ERROR_CODE &amp;errorCode )
@@ -261,28 +261,28 @@ namespace {
 
 <span class="comment">
         /*========*/
-        /* ‘Oˆ— */
+        /* å‰å‡¦ç† */
         /*========*/
 </span>
         errorCode = NORMAL ;
 
 <span class="comment">
         /*========*/
-        /* ˆ—•” */
+        /* å‡¦ç†éƒ¨ */
         /*========*/
 </span>
         <span class="command">while</span>( bRet == true ){
             BOOL bResult = TRUE ;
 
-<span class="comment">            /* CPSƒnƒ“ƒhƒ‹æ“¾iˆÃ†ˆ— ‰Šú‰»j */
+<span class="comment">            /* CPSãƒãƒ³ãƒ‰ãƒ«å–å¾—ï¼ˆæš—å·å‡¦ç† åˆæœŸåŒ–ï¼‰ */
 </span>            {
                 bResult = <span class="auto-style3">CryptAcquireContext</span>(
-                            &amp;hProv,                 <span class="comment">// ƒnƒ“ƒhƒ‹‚ª–ß‚è‚Ü‚·</span>
-                            NULL,                   <span class="comment">// Šù’è‚Ìƒ†[ƒU[‚ÌCSP‚ğg‚¢‚Ü‚·</span>
-                            <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// ƒoƒ“ƒhƒ‹‚³‚ê‚½Microsoft‚ÌCSP‚ğw’è</span>
-                                                    <span class="comment">// XP ‚Å‚Í MS_ENH_RSA_AES_PROV_XP ‚ğw’è‚Ì‚±‚Æ</span>
-                            <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// ƒ^ƒCƒv‚ğw’è</span>
-                            0);                     <span class="comment">// ƒL[ƒRƒ“ƒeƒi[‚ª‚ ‚éê‡‚Ìw’è‚Å‚·</span>
+                            &amp;hProv,                 <span class="comment">// ãƒãƒ³ãƒ‰ãƒ«ãŒæˆ»ã‚Šã¾ã™</span>
+                            NULL,                   <span class="comment">// æ—¢å®šã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®CSPã‚’ä½¿ã„ã¾ã™</span>
+                            <span class="auto-style3">MS_ENH_RSA_AES_PROV</span>,    <span class="comment">// ãƒãƒ³ãƒ‰ãƒ«ã•ã‚ŒãŸMicrosoftã®CSPã‚’æŒ‡å®š</span>
+                                                    <span class="comment">// XP ã§ã¯ MS_ENH_RSA_AES_PROV_XP ã‚’æŒ‡å®šã®ã“ã¨</span>
+                            <span class="auto-style3">PROV_RSA_AES</span>,           <span class="comment">// ã‚¿ã‚¤ãƒ—ã‚’æŒ‡å®š</span>
+                            0);                     <span class="comment">// ã‚­ãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ãŒã‚ã‚‹å ´åˆã®æŒ‡å®šã§ã™</span>
                 if ( !bResult ){
                     if (!<span class="auto-style3">CryptAcquireContext</span>( &amp;hProv, NULL, MS_ENH_RSA_AES_PROV, PROV_RSA_AES, CRYPT_NEWKEYSET)){
                         cerr &lt;&lt; "CryptAcquireContext error" &lt;&lt; endl;
@@ -294,12 +294,12 @@ namespace {
             }
 
 <span class="comment">
-            /* ˆÃ†ƒAƒ‹ƒSƒŠƒYƒ€AŒ®î•ñ İ’è */</span>
+            /* æš—å·ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã€éµæƒ…å ± è¨­å®š */</span>
             {
                 struct KeyBLOB{
                     BLOBHEADER hdr;
                     DWORD cbKeySize;
-                    BYTE rgbKeyData[AES_KEY_SIZE]; // 16:AES_128‚ÌƒL[’·
+                    BYTE rgbKeyData[AES_KEY_SIZE]; // 16:AES_128ã®ã‚­ãƒ¼é•·
                 };
 
                 KeyBLOB kb;
@@ -312,7 +312,7 @@ namespace {
 
                 memcpy( kb.rgbKeyData, keyData, AES_KEY_SIZE );
                 
-                bResult = <span class="auto-style3">CryptImportKey</span>(hProv,(BYTE*)&amp;kb, sizeof(kb), 0, 0, &amp;hKey); <span class="comment">// ƒL[ì¬</span>
+                bResult = <span class="auto-style3">CryptImportKey</span>(hProv,(BYTE*)&amp;kb, sizeof(kb), 0, 0, &amp;hKey); <span class="comment">// ã‚­ãƒ¼ä½œæˆ</span>
                 if ( !bResult ){
                     errorCode = LOGIC_ERROR ;
                     bRet = false ;
@@ -321,7 +321,7 @@ namespace {
             }
 
 <span class="comment">
-            /* ˆÃ†ƒ‚[ƒhİ’è(CBCƒ‚[ƒh) */
+            /* æš—å·ãƒ¢ãƒ¼ãƒ‰è¨­å®š(CBCãƒ¢ãƒ¼ãƒ‰) */
 </span>            {
                 DWORD   mode = CRYPT_MODE_CBC;
 
@@ -332,7 +332,7 @@ namespace {
                 }
             }
 
-<span class="comment">            /* IViƒCƒjƒVƒƒƒ‹ƒxƒNƒ^jİ’è */
+<span class="comment">            /* IVï¼ˆã‚¤ãƒ‹ã‚·ãƒ£ãƒ«ãƒ™ã‚¯ã‚¿ï¼‰è¨­å®š */
 </span>            {
                 BYTE    iv[AES_KEY_SIZE] ;
                 
@@ -347,7 +347,7 @@ namespace {
                 }
             }
 
-<span class="comment">            /* ƒpƒfƒBƒ“ƒOƒ‚[ƒhİ’è */
+<span class="comment">            /* ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰è¨­å®š */
 </span>            {
                 DWORD      padding_mode = <span class="auto-style3">PKCS5_PADDING</span>;
                 
@@ -365,7 +365,7 @@ namespace {
 
 <span class="comment">
         /*========*/
-        /* Œãˆ— */
+        /* å¾Œå‡¦ç† */
         /*========*/
 </span>        return bRet ;
     }
@@ -373,17 +373,17 @@ namespace {
 
 
 <span class="comment">    /*=====================================================================*/
-    //! ˆÃ†ˆ— ‰ğ•úˆ—
+    //! æš—å·å‡¦ç† è§£æ”¾å‡¦ç†
     /*!
-        CryptAPI ‚ğg—p‚µ‚½ˆÃ†ˆ—‚Ì‰ğ•úˆ—‚ğs‚¢‚Ü‚·B
+        CryptAPI ã‚’ä½¿ç”¨ã—ãŸæš—å·å‡¦ç†ã®è§£æ”¾å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚
         
-        @param[in]      hProv           CPSƒnƒ“ƒhƒ‹BInitializeAes ‚Åg—p‚µ‚½ƒnƒ“ƒhƒ‹‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B                                       
-        @param[in]      hKey            Œ®ƒnƒ“ƒhƒ‹BInitializeAes ‚Åg—p‚µ‚½ƒnƒ“ƒhƒ‹‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
-        @param[out]     errorCode       ƒGƒ‰[ƒR[ƒh
-        @retval         true            ³íI—¹
-        @retval         false           ˆÙíI—¹
-        @author         –Ø‰º‰pr
-        @date           2011-12-04 V‹Kì¬
+        @param[in]      hProv           CPSãƒãƒ³ãƒ‰ãƒ«ã€‚InitializeAes ã§ä½¿ç”¨ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚                                       
+        @param[in]      hKey            éµãƒãƒ³ãƒ‰ãƒ«ã€‚InitializeAes ã§ä½¿ç”¨ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+        @param[out]     errorCode       ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
+        @retval         true            æ­£å¸¸çµ‚äº†
+        @retval         false           ç•°å¸¸çµ‚äº†
+        @author         æœ¨ä¸‹è‹±ä¿Š
+        @date           2011-12-04 æ–°è¦ä½œæˆ
     */
     /*=====================================================================*/
 </span>    bool DisposeAes( HCRYPTPROV &amp;hProv, HCRYPTKEY &amp;hKey, AES_ERROR_CODE &amp;errorCode )
@@ -391,14 +391,14 @@ namespace {
         bool bRet = true ;
 
 <span class="comment">        /*========*/
-        /* ‘Oˆ— */
+        /* å‰å‡¦ç† */
         /*========*/
 </span>        errorCode = NORMAL ;
 
 <span class="comment">        /*========*/
-        /* ˆ—•” */
+        /* å‡¦ç†éƒ¨ */
         /*========*/
-        // Œ®ƒnƒ“ƒhƒ‹‰ğ•ú
+        // éµãƒãƒ³ãƒ‰ãƒ«è§£æ”¾
 </span>        if ( hKey != NULL ){
             if (!<span class="auto-style3">CryptDestroyKey</span>(hKey)){
                 cerr &lt;&lt; "CryptDestroyKey error" &lt;&lt; endl;
@@ -407,7 +407,7 @@ namespace {
             }
         }
 
-<span class="comment">        // CPSƒnƒ“ƒhƒ‹‰ğ•ú
+<span class="comment">        // CPSãƒãƒ³ãƒ‰ãƒ«è§£æ”¾
 </span>        if ( hProv != NULL ){
             if (!<span class="auto-style3">CryptReleaseContext</span>(hProv, 0)){
                 cerr &lt;&lt; "CryptReleaseContext error" &lt;&lt; endl;
@@ -423,59 +423,59 @@ namespace {
 
 
 <span class="comment">/*=====================================================================*/
-//! ƒf[ƒ^‚ğˆÃ†‰»‚·‚é
+//! ãƒ‡ãƒ¼ã‚¿ã‚’æš—å·åŒ–ã™ã‚‹
 /*!
-    ƒf[ƒ^‚ğˆÃ†‰»‚µ‚Ü‚·B
-    ˆÃ†ƒAƒ‹ƒSƒŠƒYƒ€‚È‚ÇÚ×‚ÍŠÖ” InitializeAes ‚Ìà–¾‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+    ãƒ‡ãƒ¼ã‚¿ã‚’æš—å·åŒ–ã—ã¾ã™ã€‚
+    æš—å·ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ãªã©è©³ç´°ã¯é–¢æ•° InitializeAes ã®èª¬æ˜ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
     
-    @param[in]      rawData         ˆÃ†‰»‘ÎÛ‚Ì•½•ªƒf[ƒ^
-    @param[in]      sizeRawData     rawData ‚Ì—LŒøƒf[ƒ^ƒTƒCƒY
-    @param[in]      keyData         ˆÃ†Œ®ƒf[ƒ^Bƒf[ƒ^ƒTƒCƒY‚Í AES_KEY_SIZE B
-    @param[out]     cryptData       ˆÃ†‰»ƒf[ƒ^Ši”[—Ìˆæ
-                                    –{ŠÖ”‚ğƒR[ƒ‹‚·‚é‘O‚ÉŒÄ‚Ño‚µ‘¤‚Åƒƒ‚ƒŠŠm•Û‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢B
-                                    •K—v‚Æ‚·‚éƒf[ƒ^ƒTƒCƒY‚ÉŠÖ‚·‚éà–¾‚Í sizeCryptData ‚Ìà–¾‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
-    @param[in]      sizeCryptData   cryptData ‚Ì—LŒøƒoƒbƒtƒ@ƒTƒCƒYB
-                                    ˆÈ‰º‚ÌŠÖŒW‚ğ–‘«‚µ‚È‚¢ê‡A–{ŠÖ”‚ÍƒGƒ‰[‚É‚È‚è‚Ü‚·BƒGƒ‰[ƒR[ƒh‚Í INVALID_ARGUMENT ‚ğ‰“š‚µ‚Ü‚·B
+    @param[in]      rawData         æš—å·åŒ–å¯¾è±¡ã®å¹³åˆ†ãƒ‡ãƒ¼ã‚¿
+    @param[in]      sizeRawData     rawData ã®æœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+    @param[in]      keyData         æš—å·éµãƒ‡ãƒ¼ã‚¿ã€‚ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯ AES_KEY_SIZE ã€‚
+    @param[out]     cryptData       æš—å·åŒ–ãƒ‡ãƒ¼ã‚¿æ ¼ç´é ˜åŸŸ
+                                    æœ¬é–¢æ•°ã‚’ã‚³ãƒ¼ãƒ«ã™ã‚‹å‰ã«å‘¼ã³å‡ºã—å´ã§ãƒ¡ãƒ¢ãƒªç¢ºä¿ã—ã¦ãŠã„ã¦ãã ã•ã„ã€‚
+                                    å¿…è¦ã¨ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã«é–¢ã™ã‚‹èª¬æ˜ã¯ sizeCryptData ã®èª¬æ˜ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
+    @param[in]      sizeCryptData   cryptData ã®æœ‰åŠ¹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã€‚
+                                    ä»¥ä¸‹ã®é–¢ä¿‚ã‚’æº€è¶³ã—ãªã„å ´åˆã€æœ¬é–¢æ•°ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã™ã€‚ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã¯ INVALID_ARGUMENT ã‚’å¿œç­”ã—ã¾ã™ã€‚
                                     @code
                                     sizeCryptData &gt;= ((sizeRawData+16)/16)*16 ;
                                     @endcode
-    @param[out]     cryptDataBytes  ˆÃ†‰»ƒf[ƒ^ƒTƒCƒY
-    @param[out]     errorCode       ƒGƒ‰[ƒR[ƒh
-    @retval         true            ³íI—¹
-    @retval         false           ˆÙíI—¹
-    @author         –Ø‰º‰pr
-    @date           2011-12-04 V‹Kì¬
+    @param[out]     cryptDataBytes  æš—å·åŒ–ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+    @param[out]     errorCode       ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
+    @retval         true            æ­£å¸¸çµ‚äº†
+    @retval         false           ç•°å¸¸çµ‚äº†
+    @author         æœ¨ä¸‹è‹±ä¿Š
+    @date           2011-12-04 æ–°è¦ä½œæˆ
 */
 /*=====================================================================*/
 </span>bool encryptData( unsigned char* rawData, size_t sizeRawData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* cryptData, size_t sizeCryptData, size_t &amp;cryptDataBytes, AES_ERROR_CODE &amp;errorCode )
 {
     bool    bRet = true ;
 
-<span class="comment">    // ƒL[ƒRƒ“ƒeƒi[‚Ìæ“¾
+<span class="comment">    // ã‚­ãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã®å–å¾—
 </span>    HCRYPTPROV  hProv = NULL ;
     HCRYPTKEY   hKey = NULL ;
 
 
 <span class="comment">    /*========*/
-    /* ‘Oˆ— */
+    /* å‰å‡¦ç† */
     /*========*/
 </span>    errorCode = NORMAL ;
 
-<span class="comment">    // o—Íƒoƒbƒtƒ@ƒTƒCƒY‚Ìƒ`ƒFƒbƒN
+<span class="comment">    // å‡ºåŠ›ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã®ãƒã‚§ãƒƒã‚¯
 </span>    if ( sizeCryptData &lt; (((sizeRawData+16)/16)*16)){
 <span class="comment">
-        // ˆÃ†ƒf[ƒ^o—Í—Ìˆæ•s‘«
+        // æš—å·ãƒ‡ãƒ¼ã‚¿å‡ºåŠ›é ˜åŸŸä¸è¶³
 </span>        cerr &lt;&lt; "[ERROR] cryptData output memory is not enough." &lt;&lt; endl;
         bRet = false ;
         errorCode = INVALID_ARGUMENT ;
     }
-<span class="comment">    // cryptData ‚ÌNULLƒ`ƒFƒbƒN
+<span class="comment">    // cryptData ã®NULLãƒã‚§ãƒƒã‚¯
 </span>    if ( cryptData == NULL ){
         cerr &lt;&lt; "[ERROR] cryptData must be memory allocated." &lt;&lt; endl;
         bRet = false ;
         errorCode = INVALID_ARGUMENT ;
     }
-<span class="comment">    // rawData ‚ÌNULLƒ`ƒFƒbƒN
+<span class="comment">    // rawData ã®NULLãƒã‚§ãƒƒã‚¯
 </span>    if ( rawData == NULL ){
         cerr &lt;&lt; "[ERROR] rawData must be memory allocated." &lt;&lt; endl;
         bRet = false ;
@@ -484,42 +484,42 @@ namespace {
 
 
 <span class="comment">    /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
 </span>    while( bRet == true ){
 
-<span class="comment">        /* ‰Šúˆ— */
+<span class="comment">        /* åˆæœŸå‡¦ç† */
 </span>        if ( !InitializeAes( hProv, hKey, keyData, errorCode ) ){
             bRet = false ;
             break ;
         }
 
-<span class="comment">        /* ˆÃ†‰» */
+<span class="comment">        /* æš—å·åŒ– */
 </span>        {
             DWORD       sizeData_ = sizeRawData ;
 
-<span class="comment">            // •½•ªƒf[ƒ^‚ğ cryptData ‚ÖƒRƒs[BcryptData ‚ª“ü—Í‚Æo—Í‚ğŒ“‚Ë‚éAPId—l‚Ì‚½‚ß
+<span class="comment">            // å¹³åˆ†ãƒ‡ãƒ¼ã‚¿ã‚’ cryptData ã¸ã‚³ãƒ”ãƒ¼ã€‚cryptData ãŒå…¥åŠ›ã¨å‡ºåŠ›ã‚’å…¼ã­ã‚‹APIä»•æ§˜ã®ãŸã‚
 </span>            memcpy( cryptData, rawData, sizeRawData );
 
             //
             cryptDataBytes = 0 ;
 
-<span class="comment">            // ˆÃ†‰»
+<span class="comment">            // æš—å·åŒ–
 </span>            if(!<span class="auto-style3">CryptEncrypt</span>(
-                    hKey,                       <span class="comment">// Œ®‚Ìƒnƒ“ƒhƒ‹</span>
-                    0,                          <span class="comment">// ˆÃ†‰»‚Æ“¯‚ÉƒnƒbƒVƒ…‰»‚·‚éê‡‚Éw’è</span>
-                    TRUE,                       <span class="comment">// ÅŒã‚Ìƒf[ƒ^‚ğ“n‚·‚Æ‚«‚É^</span>
-                    0,                          <span class="comment">// ƒ[ƒ‚ğw’è</span>
-                    cryptData,                  <span class="comment">// ˆÃ†‰»‚³‚ê‚éƒf[ƒ^‚Ìƒ|ƒCƒ“ƒ^[</span>
-                    &amp;sizeData_,                 <span class="comment">// ˆÃ†‰»ƒf[ƒ^‚ÌƒoƒCƒg’·ƒf[ƒ^‚ÌŠi”[ƒ|ƒCƒ“ƒ^[, ‰‰ZŒã‚ÍˆÃ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY‚ğŠi”[</span>
-                    (DWORD)sizeCryptData))      <span class="comment">// ƒf[ƒ^ƒoƒbƒtƒ@[‚Ì‘å‚«‚³</span>
+                    hKey,                       <span class="comment">// éµã®ãƒãƒ³ãƒ‰ãƒ«</span>
+                    0,                          <span class="comment">// æš—å·åŒ–ã¨åŒæ™‚ã«ãƒãƒƒã‚·ãƒ¥åŒ–ã™ã‚‹å ´åˆã«æŒ‡å®š</span>
+                    TRUE,                       <span class="comment">// æœ€å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’æ¸¡ã™ã¨ãã«çœŸ</span>
+                    0,                          <span class="comment">// ã‚¼ãƒ­ã‚’æŒ‡å®š</span>
+                    cryptData,                  <span class="comment">// æš—å·åŒ–ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒ³ã‚¿ãƒ¼</span>
+                    &amp;sizeData_,                 <span class="comment">// æš—å·åŒ–ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒˆé•·ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´ãƒã‚¤ãƒ³ã‚¿ãƒ¼, æ¼”ç®—å¾Œã¯æš—å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã‚’æ ¼ç´</span>
+                    (DWORD)sizeCryptData))      <span class="comment">// ãƒ‡ãƒ¼ã‚¿ãƒãƒƒãƒ•ã‚¡ãƒ¼ã®å¤§ãã•</span>
             {
                 errorCode = LOGIC_ERROR ;
                 bRet = false ;
                 break ;
             }
 
-<span class="comment">            // ˆÃ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY‚ğo—Í•Ï”‚ÖƒRƒs[
+<span class="comment">            // æš—å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã‚’å‡ºåŠ›å¤‰æ•°ã¸ã‚³ãƒ”ãƒ¼
 </span>            cryptDataBytes = sizeData_ ;
         }
 
@@ -528,7 +528,7 @@ namespace {
     }
 <span class="comment">
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
 </span>    if ( !DisposeAes( hProv, hKey, errorCode ) ){
         bRet = false ;
@@ -540,58 +540,58 @@ namespace {
 
 
 <span class="comment">/*=====================================================================*/
-//! ƒf[ƒ^‚ğ•œ†‰»‚·‚é
+//! ãƒ‡ãƒ¼ã‚¿ã‚’å¾©å·åŒ–ã™ã‚‹
 /*!
-    ƒf[ƒ^‚ğ•œ†‰»‚µ‚Ü‚·B
-    ˆÃ†ƒAƒ‹ƒSƒŠƒYƒ€‚È‚ÇÚ×‚ÍŠÖ” InitializeAes ‚Ìà–¾‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+    ãƒ‡ãƒ¼ã‚¿ã‚’å¾©å·åŒ–ã—ã¾ã™ã€‚
+    æš—å·ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ãªã©è©³ç´°ã¯é–¢æ•° InitializeAes ã®èª¬æ˜ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
     
-    @param[in]      cryptData       ˆÃ†ƒf[ƒ^
-    @param[in]      sizeCryptData   cryptData ‚Ìƒf[ƒ^ƒTƒCƒY
-    @param[in]      keyData         ˆÃ†Œ®ƒf[ƒ^Bƒf[ƒ^ƒTƒCƒY‚Í AES_KEY_SIZE B
-    @param[out]     rawData         •œ†‰»ƒf[ƒ^Ši”[—Ìˆæ
-                                    –{ŠÖ”‚ğƒR[ƒ‹‚·‚é‘O‚ÉŒÄ‚Ño‚µ‘¤‚Åƒƒ‚ƒŠŠm•Û‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢B
-                                    •K—v‚Æ‚·‚éƒf[ƒ^ƒTƒCƒY‚ÉŠÖ‚·‚éà–¾‚Í sizeRawData ‚Ìà–¾‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
-    @param[in]      sizeRawstData   rawData ‚Ì—LŒøƒoƒbƒtƒ@ƒTƒCƒYB
-                                    ˆÈ‰º‚ÌŠÖŒW‚ğ–‘«‚µ‚È‚¢ê‡A–{ŠÖ”‚ÍƒGƒ‰[‚É‚È‚è‚Ü‚·BƒGƒ‰[ƒR[ƒh‚Í INVALID_ARGUMENT ‚ğ‰“š‚µ‚Ü‚·B
+    @param[in]      cryptData       æš—å·ãƒ‡ãƒ¼ã‚¿
+    @param[in]      sizeCryptData   cryptData ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+    @param[in]      keyData         æš—å·éµãƒ‡ãƒ¼ã‚¿ã€‚ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã¯ AES_KEY_SIZE ã€‚
+    @param[out]     rawData         å¾©å·åŒ–ãƒ‡ãƒ¼ã‚¿æ ¼ç´é ˜åŸŸ
+                                    æœ¬é–¢æ•°ã‚’ã‚³ãƒ¼ãƒ«ã™ã‚‹å‰ã«å‘¼ã³å‡ºã—å´ã§ãƒ¡ãƒ¢ãƒªç¢ºä¿ã—ã¦ãŠã„ã¦ãã ã•ã„ã€‚
+                                    å¿…è¦ã¨ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã«é–¢ã™ã‚‹èª¬æ˜ã¯ sizeRawData ã®èª¬æ˜ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
+    @param[in]      sizeRawstData   rawData ã®æœ‰åŠ¹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã€‚
+                                    ä»¥ä¸‹ã®é–¢ä¿‚ã‚’æº€è¶³ã—ãªã„å ´åˆã€æœ¬é–¢æ•°ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã™ã€‚ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã¯ INVALID_ARGUMENT ã‚’å¿œç­”ã—ã¾ã™ã€‚
                                     @code
                                     sizeRawData >= sizeCryptData ;
                                     @endcode
-    @param[out]     rawDataBytes    •œ†‰»ƒf[ƒ^ƒTƒCƒY
-    @param[out]     errorCode       ƒGƒ‰[ƒR[ƒh
-    @retval         true            ³íI—¹
-    @retval         false           ˆÙíI—¹
-    @author         –Ø‰º‰pr
-    @date           2011-12-04 V‹Kì¬
+    @param[out]     rawDataBytes    å¾©å·åŒ–ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+    @param[out]     errorCode       ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
+    @retval         true            æ­£å¸¸çµ‚äº†
+    @retval         false           ç•°å¸¸çµ‚äº†
+    @author         æœ¨ä¸‹è‹±ä¿Š
+    @date           2011-12-04 æ–°è¦ä½œæˆ
 */
 /*=====================================================================*/
 </span>bool decryptData( unsigned char* cryptData, size_t sizeCryptData, unsigned char (&amp;keyData)[AES_KEY_SIZE], unsigned char* rawData, size_t sizeRawData, size_t &amp;rawDataBytes, AES_ERROR_CODE &amp;errorCode )
 {
     bool    bRet = true ;
 
-<span class="comment">    // ƒL[ƒRƒ“ƒeƒi[‚Ìæ“¾
+<span class="comment">    // ã‚­ãƒ¼ã‚³ãƒ³ãƒ†ãƒŠãƒ¼ã®å–å¾—
 </span>    HCRYPTPROV  hProv = NULL ;
     HCRYPTKEY   hKey = NULL ;
 
 
 <span class="comment">    /*========*/
-    /* ‘Oˆ— */
+    /* å‰å‡¦ç† */
     /*========*/
 </span>    errorCode = NORMAL ;
 
-<span class="comment">    // o—Íƒoƒbƒtƒ@ƒTƒCƒY‚Ìƒ`ƒFƒbƒN
+<span class="comment">    // å‡ºåŠ›ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã®ãƒã‚§ãƒƒã‚¯
 </span>    if ( sizeRawData &lt; sizeCryptData ){
-<span class="comment">        // •œ†‰»ƒf[ƒ^o—Í—Ìˆæ•s‘«
+<span class="comment">        // å¾©å·åŒ–ãƒ‡ãƒ¼ã‚¿å‡ºåŠ›é ˜åŸŸä¸è¶³
 </span>        cerr &lt;&lt; "[ERROR] rawData output memory is not enough." &lt;&lt; endl;
         bRet = false ;
         errorCode = INVALID_ARGUMENT ;
     }
-<span class="comment">    // cryptData ‚ÌNULLƒ`ƒFƒbƒN
+<span class="comment">    // cryptData ã®NULLãƒã‚§ãƒƒã‚¯
 </span>    if ( cryptData == NULL ){
         cerr &lt;&lt; "[ERROR] cryptData must be memory allocated." &lt;&lt; endl;
         bRet = false ;
         errorCode = INVALID_ARGUMENT ;
     }
-<span class="comment">    // rawData ‚ÌNULLƒ`ƒFƒbƒN
+<span class="comment">    // rawData ã®NULLãƒã‚§ãƒƒã‚¯
 </span>    if ( rawData == NULL ){
         cerr &lt;&lt; "[ERROR] rawData must be memory allocated." &lt;&lt; endl;
         bRet = false ;
@@ -600,41 +600,41 @@ namespace {
 
 
 <span class="comment">    /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
 </span>    while( bRet == true ){
 
-<span class="comment">        /* ‰Šúˆ— */
+<span class="comment">        /* åˆæœŸå‡¦ç† */
 </span>        if ( !InitializeAes( hProv, hKey, keyData, errorCode ) ){
             bRet = false ;
             break ;
         }
 
-<span class="comment">        /* •œ†‰» */
+<span class="comment">        /* å¾©å·åŒ– */
 </span>        {
             DWORD       sizeData_ = sizeCryptData ;
 
-<span class="comment">            // ˆÃ†ƒf[ƒ^‚ğ rawData ‚ÖƒRƒs[BrawData ‚ª“ü—Í‚Æo—Í‚ğŒ“‚Ë‚éAPId—l‚Ì‚½‚ß
+<span class="comment">            // æš—å·ãƒ‡ãƒ¼ã‚¿ã‚’ rawData ã¸ã‚³ãƒ”ãƒ¼ã€‚rawData ãŒå…¥åŠ›ã¨å‡ºåŠ›ã‚’å…¼ã­ã‚‹APIä»•æ§˜ã®ãŸã‚
 </span>            memcpy( rawData, cryptData, sizeCryptData );
             
             //
             rawDataBytes = 0 ;
 
-<span class="comment">            // •œ†‰»
+<span class="comment">            // å¾©å·åŒ–
 </span>            if(!<span class="auto-style3">CryptDecrypt</span>(
-                    hKey,                       <span class="comment">// Œ®‚Ìƒnƒ“ƒhƒ‹</span>
-                    0,                          <span class="comment">// •œ†‰»‚Æ“¯‚ÉƒnƒbƒVƒ…‰»‚·‚éê‡‚Éw’è</span>
-                    TRUE,                       <span class="comment">// ÅŒã‚Ìƒf[ƒ^‚ğ“n‚·‚Æ‚«‚É^</span>
-                    0,                          <span class="comment">// ƒ[ƒ‚ğw’è</span>
-                    rawData,                    <span class="comment">// •œ†‰»‚³‚ê‚éƒf[ƒ^‚Ìƒ|ƒCƒ“ƒ^[</span>
-                    &amp;sizeData_))                <span class="comment">// ˆÃ†ƒf[ƒ^‚ÌƒoƒCƒg’·ƒf[ƒ^‚ÌŠi”[ƒ|ƒCƒ“ƒ^[, ‰‰ZŒã‚Í•œ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY‚ğŠi”[</span>
+                    hKey,                       <span class="comment">// éµã®ãƒãƒ³ãƒ‰ãƒ«</span>
+                    0,                          <span class="comment">// å¾©å·åŒ–ã¨åŒæ™‚ã«ãƒãƒƒã‚·ãƒ¥åŒ–ã™ã‚‹å ´åˆã«æŒ‡å®š</span>
+                    TRUE,                       <span class="comment">// æœ€å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’æ¸¡ã™ã¨ãã«çœŸ</span>
+                    0,                          <span class="comment">// ã‚¼ãƒ­ã‚’æŒ‡å®š</span>
+                    rawData,                    <span class="comment">// å¾©å·åŒ–ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒ³ã‚¿ãƒ¼</span>
+                    &amp;sizeData_))                <span class="comment">// æš—å·ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚¤ãƒˆé•·ãƒ‡ãƒ¼ã‚¿ã®æ ¼ç´ãƒã‚¤ãƒ³ã‚¿ãƒ¼, æ¼”ç®—å¾Œã¯å¾©å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã‚’æ ¼ç´</span>
             {
                 errorCode = LOGIC_ERROR ;
                 bRet = false ;
                 break ;
             }
 
-<span class="comment">            // •œ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY‚ğo—Í•Ï”‚ÖƒRƒs[
+<span class="comment">            // å¾©å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã‚’å‡ºåŠ›å¤‰æ•°ã¸ã‚³ãƒ”ãƒ¼
 </span>            rawDataBytes = sizeData_ ;
         }
 
@@ -644,7 +644,7 @@ namespace {
 
 
 <span class="comment">    /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
 </span>    if ( !DisposeAes( hProv, hKey, errorCode ) ){
         bRet = false ;
@@ -660,7 +660,7 @@ namespace {
 	
 <br>
 	
-<span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;test_aes.cpp&quot;]</span>
+<span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;test_aes.cpp&quot;]</span>
 <code>
 <pre class="prettyprint linenums">
 #include "stdafx.h"
@@ -679,48 +679,48 @@ int _tmain(int argc, _TCHAR* argv[])
 {
     bool            bRet = true ;
 
-<span class="comment">    // •½•¶ƒf[ƒ^
+<span class="comment">    // å¹³æ–‡ãƒ‡ãƒ¼ã‚¿
 </span>    unsigned char   rawData[] = {00, 01, 02, 03};
     size_t          sizeRawData = sizeof(rawData)/sizeof(rawData[0]);
 
-<span class="comment">    // ˆÃ†ƒf[ƒ^
+<span class="comment">    // æš—å·ãƒ‡ãƒ¼ã‚¿
 </span>    unsigned char*  cryptData = NULL ;
-    size_t          sizeCryptData = 0 ;             <span class="comment">// crpyptData ‚Ìƒoƒbƒtƒ@ƒTƒCƒY</span>
-    size_t          cryptDataBytes = 0 ;            <span class="comment">// ˆÃ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY</span>
+    size_t          sizeCryptData = 0 ;             <span class="comment">// crpyptData ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º</span>
+    size_t          cryptDataBytes = 0 ;            <span class="comment">// æš—å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º</span>
 
-<span class="comment">    // ˆÃ†ƒf[ƒ^‚©‚ç•œ†‚³‚ê‚½•½•¶ƒf[ƒ^
+<span class="comment">    // æš—å·ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å¾©å·ã•ã‚ŒãŸå¹³æ–‡ãƒ‡ãƒ¼ã‚¿
 </span>    unsigned char*  rawData2 = NULL ;
-    size_t          sizeRawData2 = 0 ;              <span class="comment">// rawData2 ‚Ìƒoƒbƒtƒ@ƒTƒCƒY</span>
-    size_t          rawData2Bytes = 0 ;             <span class="comment">// •œ†‰»‚³‚ê‚½Œ‹‰Ê‚Ìƒf[ƒ^ƒTƒCƒY</span>
+    size_t          sizeRawData2 = 0 ;              <span class="comment">// rawData2 ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º</span>
+    size_t          rawData2Bytes = 0 ;             <span class="comment">// å¾©å·åŒ–ã•ã‚ŒãŸçµæœã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º</span>
 
-<span class="comment">    // Œ®î•ñ</span>
-    string          strPassFraise = "";             <span class="comment">// ƒpƒXƒtƒŒ[ƒY</span>
-    unsigned char   aesKey[AES_KEY_SIZE];           <span class="comment">// AES‰‰Z—pŒ®ƒf[ƒ^</span>
+<span class="comment">    // éµæƒ…å ±</span>
+    string          strPassFraise = "";             <span class="comment">// ãƒ‘ã‚¹ãƒ•ãƒ¬ãƒ¼ã‚º</span>
+    unsigned char   aesKey[AES_KEY_SIZE];           <span class="comment">// AESæ¼”ç®—ç”¨éµãƒ‡ãƒ¼ã‚¿</span>
     
-<span class="comment">    // ƒGƒ‰[ƒR[ƒh
+<span class="comment">    // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰
 </span>    AES_ERROR_CODE  errorCode ;
 
 
 <span class="comment">    /*========*/
-    /* ‘Oˆ— */
+    /* å‰å‡¦ç† */
     /*========*/
-</span>    UNREFERENCED_PARAMETER(argc);           <span class="comment">// UNREFERENCED_PARAMETER ‚Í WinNT.h ‚Å’è‹`‚³‚ê‚Ä‚¢‚Ü‚·B</span>
-    UNREFERENCED_PARAMETER(argv);           <span class="comment">// UNREFERENCED_PARAMETER ‚Í WinNT.h ‚Å’è‹`‚³‚ê‚Ä‚¢‚Ü‚·B</span>
+</span>    UNREFERENCED_PARAMETER(argc);           <span class="comment">// UNREFERENCED_PARAMETER ã¯ WinNT.h ã§å®šç¾©ã•ã‚Œã¦ã„ã¾ã™ã€‚</span>
+    UNREFERENCED_PARAMETER(argv);           <span class="comment">// UNREFERENCED_PARAMETER ã¯ WinNT.h ã§å®šç¾©ã•ã‚Œã¦ã„ã¾ã™ã€‚</span>
 
 
 <span class="comment">    /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
 </span>    while(bRet) {
 
 <span class="comment">        /*==================================================*/
-        /* configuration.xml ƒtƒ@ƒCƒ‹‚©‚çƒpƒXƒtƒŒ[ƒY‚ğæ“¾ */
+        /* configuration.xml ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ‘ã‚¹ãƒ•ãƒ¬ãƒ¼ã‚ºã‚’å–å¾— */
         /*==================================================*/
         /*
             NOTE:
-            XMLƒtƒ@ƒCƒ‹‚Ì“Ç‚İæ‚è‚É boostƒ‰ƒCƒuƒ‰ƒŠ(Ver. 1.47) ‚Ì property_tree ‚ğg—p‚µ‚Ä‚¢‚Ü‚·B
-            property_tree ‚Í boostƒ‰ƒCƒuƒ‰ƒŠ‚Ì1.41ˆÈ~‚©‚çg—p‚Å‚«‚Ü‚·B
-            boostƒ‰ƒCƒuƒ‰ƒŠ‚ÍˆÈ‰º‚ÌURL‚©‚çæ“¾‚µ‚Ä‚­‚¾‚³‚¢Bboostpro ‚É‚ ‚éƒCƒ“ƒXƒg[ƒ‰‚ğg—p‚·‚é•û‚ªŠy‚É“±“ü‚Å‚«‚Ü‚·B
+            XMLãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿å–ã‚Šã« boostãƒ©ã‚¤ãƒ–ãƒ©ãƒª(Ver. 1.47) ã® property_tree ã‚’ä½¿ç”¨ã—ã¦ã„ã¾ã™ã€‚
+            property_tree ã¯ boostãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®1.41ä»¥é™ã‹ã‚‰ä½¿ç”¨ã§ãã¾ã™ã€‚
+            boostãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä»¥ä¸‹ã®URLã‹ã‚‰å–å¾—ã—ã¦ãã ã•ã„ã€‚boostpro ã«ã‚ã‚‹ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©ã‚’ä½¿ç”¨ã™ã‚‹æ–¹ãŒæ¥½ã«å°å…¥ã§ãã¾ã™ã€‚
             http://www.boost.org/
             http://www.boostpro.com/download/
         */
@@ -728,32 +728,32 @@ int _tmain(int argc, _TCHAR* argv[])
             const string filename = "configuration.xml";
             ptree pt;
 
-<span class="comment">            // XMLƒtƒ@ƒCƒ‹‚ğŠJ‚­
+<span class="comment">            // XMLãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 </span>            try{
                 read_xml( filename, pt );
             }
             catch( xml_parser_error e ){
-                // filename ‚ª–³‚¢ê‡‚Ì—áŠO
+                // filename ãŒç„¡ã„å ´åˆã®ä¾‹å¤–
                 cerr << "[ERROR] Cannnot open file \"" << filename << "\"" << "." << endl;
                 bRet = false ;
                 break ;
             }
 
-<span class="comment">            // ƒpƒXƒtƒŒ[ƒY“Ç‚İæ‚è
+<span class="comment">            // ãƒ‘ã‚¹ãƒ•ãƒ¬ãƒ¼ã‚ºèª­ã¿å–ã‚Š
 </span>            if ( boost::optional<std::string> str = pt.get_optional<std::string>(<xmlattr><span class="string">&quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise&quot;</span>) )
             {
                 strPassFraise = str.get();
                 cout << "Pass fraise : \"" << strPassFraise << "\"" << endl << endl;
             }
             else {
-<span class="comment">                </span><xmlattr><span class="comment">// ‘®« &quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise&quot; ‚ª–³‚¢ê‡‚ÌˆÙíˆ—
+<span class="comment">                </span><xmlattr><span class="comment">// å±æ€§ &quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise&quot; ãŒç„¡ã„å ´åˆã®ç•°å¸¸å‡¦ç†
 </span>                cerr << <xmlattr><span class="string">&quot;[ERROR] \&quot;Documents.DataFormat.Encryption.&lt;xmlattr&gt;.PassFraise\&quot; is nothing.&quot;</span> << std::endl;
                 bRet = false ;
                 break ;
             }
         }
         
-<span class="comment">        // strPassFraise ‚©‚ç16ƒoƒCƒg‚ÌŒ®î•ñ¶¬
+<span class="comment">        // strPassFraise ã‹ã‚‰16ãƒã‚¤ãƒˆã®éµæƒ…å ±ç”Ÿæˆ
 </span>        {
             AES_ERROR_CODE  errorCode = NORMAL ;
 
@@ -768,8 +768,8 @@ int _tmain(int argc, _TCHAR* argv[])
 </span>        {
             cout << "[Encrypt]" << endl;
 
-<span class="comment">            // ˆÃ†‰»‚µ‚½Œ‹‰Ê‚ğ•Û‘¶‚·‚é—Ìˆæ‚ğŠm•Û
-            // ¶ƒf[ƒ^ƒTƒCƒY ‚É1`16ƒoƒCƒg‚ğ‰Á‚¦‚½”‚ÅA16‚Ì”{”‚É‚È‚é’lA‚ªo—ÍƒTƒCƒY
+<span class="comment">            // æš—å·åŒ–ã—ãŸçµæœã‚’ä¿å­˜ã™ã‚‹é ˜åŸŸã‚’ç¢ºä¿
+            // ç”Ÿãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º ã«1ï½16ãƒã‚¤ãƒˆã‚’åŠ ãˆãŸæ•°ã§ã€16ã®å€æ•°ã«ãªã‚‹å€¤ã€ãŒå‡ºåŠ›ã‚µã‚¤ã‚º
 </span>            sizeCryptData = ((sizeRawData + 16)/16)*16 ;
             if ( cryptData != NULL ){
                 delete[] cryptData ;
@@ -782,11 +782,11 @@ int _tmain(int argc, _TCHAR* argv[])
                 break ;
             }
 
-<span class="comment">            // ˆÃ†‰»‚³‚ê‚½ƒf[ƒ^ƒTƒCƒY‚Ìƒ`ƒFƒbƒN
+<span class="comment">            // æš—å·åŒ–ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºã®ãƒã‚§ãƒƒã‚¯
 </span>            assert( sizeCryptData == cryptDataBytes );
         }
 
-<span class="comment">        // ‰‰ZŒ‹‰Êo—Í
+<span class="comment">        // æ¼”ç®—çµæœå‡ºåŠ›
 </span>        {
             cout &lt;&lt; "Key         : ";
             for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
@@ -814,7 +814,7 @@ int _tmain(int argc, _TCHAR* argv[])
 </span>        {
             cout << "[Decrypt]" << endl;
             
-<span class="comment">            // •œ†‰»‚µ‚½Œ‹‰Ê‚ğ•Û‘¶‚·‚é—Ìˆæ‚ğŠm•Û
+<span class="comment">            // å¾©å·åŒ–ã—ãŸçµæœã‚’ä¿å­˜ã™ã‚‹é ˜åŸŸã‚’ç¢ºä¿
 </span>            sizeRawData2 = cryptDataBytes ;
             if ( rawData2 != NULL ){
                 delete[] rawData2 ;
@@ -828,7 +828,7 @@ int _tmain(int argc, _TCHAR* argv[])
             }
         }
 
-<span class="comment">        // ‰‰ZŒ‹‰Êo—Í
+<span class="comment">        // æ¼”ç®—çµæœå‡ºåŠ›
 </span>        {
             cout << "Key         : ";
             for ( size_t i=0; i&lt;AES_KEY_SIZE; ++i ){
@@ -852,12 +852,12 @@ int _tmain(int argc, _TCHAR* argv[])
         }
 
 
-<span class="comment">        // ‰‰ZŒ‹‰ÊŠm”F
+<span class="comment">        // æ¼”ç®—çµæœç¢ºèª
 </span>        {
-<span class="comment">            // ƒf[ƒ^ƒTƒCƒY ƒ`ƒFƒbƒN
+<span class="comment">            // ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º ãƒã‚§ãƒƒã‚¯
 </span>            assert( sizeRawData == rawData2Bytes );
 
-<span class="comment">            // ƒf[ƒ^ƒ`ƒFƒbƒN
+<span class="comment">            // ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯
 </span>            for ( size_t i=0; i&lt;sizeRawData; ++i ){
                 assert( rawData[i] == rawData2[i] );
             }
@@ -869,9 +869,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 <span class="comment">    /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
-    // ƒŠƒ\[ƒX‰ğ•ú
+    // ãƒªã‚½ãƒ¼ã‚¹è§£æ”¾
 </span>    if ( cryptData != NULL ){
         delete[] cryptData ;
         cryptData = NULL ;
@@ -881,7 +881,7 @@ int _tmain(int argc, _TCHAR* argv[])
         rawData2 = NULL ;
     }
 
-<span class="comment">    // ˆ—Œ‹‰Êo—Í
+<span class="comment">    // å‡¦ç†çµæœå‡ºåŠ›
 </span>    {
         cout << "[Result] " ;
         if ( bRet ){
@@ -892,7 +892,7 @@ int _tmain(int argc, _TCHAR* argv[])
         }
     }
 
-<span class="comment">    // [enter]ƒL[‰Ÿ‰º‘Ò‚¿
+<span class="comment">    // [enter]ã‚­ãƒ¼æŠ¼ä¸‹å¾…ã¡
 </span>    {
         string str ;
         cout << "HIT [enter] KEY !! " ;
@@ -913,7 +913,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 <br>
 	
-<span class="table_title">[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;configuration.xml&quot;]</span>
+<span class="table_title">[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;configuration.xml&quot;]</span>
 <code>
 <pre class="prettyprint linenums">
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;Shift_JIS&quot;?&gt;
@@ -928,7 +928,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 <br>
 	
-<span class="table_title">[ÀsŒ‹‰Ê]</span>
+<span class="table_title">[å®Ÿè¡Œçµæœ]</span>
 <code>
 <pre class="prettyprint linenums">
 Pass fraise : &quot;PassFraise&quot;
@@ -947,9 +947,9 @@ Raw data : 00 01 02 03
 HIT [enter] KEY !!
 </pre>
 </code>
-<p> OS: Windows7 64bit Proffesional<br>ì¬F VC++2008 sp1A32bitƒRƒ“ƒpƒCƒ‹A/MT(d)</p>
-<p> QlURLF</p>
+<p> OS: Windows7 64bit Proffesional<br>ä½œæˆï¼š VC++2008 sp1ã€32bitã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã€/MT(d)</p>
+<p> å‚è€ƒURLï¼š</p>
 <hr>
-<p> ‹LÚF 2012”N1Œ28“ú –Ø‰º‰pr<br></p>
+<p> è¨˜è¼‰ï¼š 2012å¹´1æœˆ28æ—¥ æœ¨ä¸‹è‹±ä¿Š<br></p>
 </body>
 </html>

@@ -1,40 +1,40 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Large Address Ware</title>
 <link href="../../design.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>Large Address Aware</h1>
-<p>Win7 64bit�iWoW64�j �ł̓v���Z�X������ő�4GB���g�p�ł��܂��B<br>Win7 32bit �ł̓v���Z�X������ő�2GB���g�p�ł��܂��B<br>
-�����Microsoft�̐��������ł��B<br><br>�������A�ő�SGB�œ��삷��ɂ͎኱����������悤�ł��B<br>
-�uIMAGE_FILE_LARGE_ADDRESS_AWARE �w�肠��v�ŃR���p�C������32bit exe ���ƍő�4GB 
-�Ƃ������Ƃ炵���ł��B.NET�iC#)�̏ꍇ�̓R���p�C���I�v�V�����ł̎w��͂ł����Aeditbin �Ƃ����O���c�[���ł��̃t���O����t���邻���ł��B<br>
+<p>Win7 64bit（WoW64） ではプロセスあたり最大4GBを使用できます。<br>Win7 32bit ではプロセスあたり最大2GBを使用できます。<br>
+これはMicrosoftの正式見解です。<br><br>ただし、最大４GBで動作するには若干条件があるようです。<br>
+「IMAGE_FILE_LARGE_ADDRESS_AWARE 指定あり」でコンパイルした32bit exe だと最大4GB 
+ということらしいです。.NET（C#)の場合はコンパイルオプションでの指定はできず、editbin という外部ツールでこのフラグを後付するそうです。<br>
 &quot;editbin /LARGEADDRESSAWARE&quot;<br>
-�]������R���p�C�����Ȃǂ̏�񂪂��܂�L�ڂ���Ă��Ȃ��̂ŁA������ɂ���e�X�g�v���O�������ɂ��m�F���K�v�B�Ђ���Ƃ���Ɣ�r�I�V�����J�����ł̓f�t�H���g�ŏ�L�I�v�V�������L��������Ă����肷��ꍇ������Ǝv���܂��B</p>
-<p>Visual Studio 2012 Update3 �� C++ ���g���ăe�X�g�v���O�������쐬���Ă݂��̂ŁA�ȉ����ʕ񍐁B<br>�]�����͈ȉ��̒ʂ�B<br>
-========================<br>OS�FWindows8 64bit<br>�J�����F Visual Studio 2012 
-Update3<br>����F Win32�AC++<br>========================</p>
+評価環境やコンパイル環境などの情報があまり記載されていないので、いずれにせよテストプログラム等による確認が必要。ひょっとすると比較的新しい開発環境ではデフォルトで上記オプションが有効化されていたりする場合もあると思います。</p>
+<p>Visual Studio 2012 Update3 と C++ を使ってテストプログラムを作成してみたので、以下結果報告。<br>評価環境は以下の通り。<br>
+========================<br>OS：Windows8 64bit<br>開発環境： Visual Studio 2012 
+Update3<br>言語： Win32、C++<br>========================</p>
 <p>&nbsp;</p>
 <p>1. x86 + LARGEADDRESSAWARE</p>
-<p>����ȃe�X�g�v���O�������쐬�B<br><img alt="" src="LARGE_ADDRESS_WARE/img3.gif"></p>
-<p>��3.5GB�̃��������m�ۂł��܂����B&quot;LARGEADDRESSAWARE&quot;��������1.3GB���炢�܂ł����������m�ۂł��܂���ł����B<br>
+<p>こんなテストプログラムを作成。<br><img alt="" src="LARGE_ADDRESS_WARE/img3.gif"></p>
+<p>約3.5GBのメモリを確保できました。&quot;LARGEADDRESSAWARE&quot;無しだと1.3GBぐらいまでしかメモリ確保できませんでした。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img5.gif"></p>
 <p>&nbsp;</p>
 <p>2. x64</p>
-<p>���l�� x64 �R���p�C�����Ď����B������m�F���Ă����肪�Ȃ��̂ŁA�������擾�T�C�Y��8GB�ɂāB<br>
+<p>同様に x64 コンパイルして実験。上限を確認してもきりがないので、メモリ取得サイズは8GBにて。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img7.gif"></p>
-<p>x64 ���Ƃ���ς�8GB�Ȃ�Ċy���Ɏ擾�ł���݂����ł��B<br>
+<p>x64 だとやっぱり8GBなんて楽勝に取得できるみたいです。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img9.gif"></p>
 <p>&nbsp;</p>
-<p>3. �T���v���v���O����</p>
-<p>��L�̃e�X�g�v���O�������ȉ�����_�E�����[�h�ł���悤�ɂ��Ă����܂��B<br>�v���O������Win32�v���W�F�N�g�Ƃ��č쐬���Ă��܂��̂ŁAVisual 
-Studio �ȊO�̊��ւ��ڐA���e�Ղł��傤�B&nbsp;<br><a href="LARGE_ADDRESS_WARE/testLargeWare.zip">
-�_�E�����[�h</a></p>
-<p>�⑫�����P�F<br>�Ȃ��A�\�[�X�v���O�������ɂ���ȉ��̋L�q�� Windows XP 
-�ȍ~�̃R�����R���g���[�����g�p���邽�߂̋L�q�ł��B�}�j���t�F�X�g�ŃR�����R���g���[���̃o�[�W���������L�ڂ���K�v�����邻���ŁAVS2005���������� 
-#pragma �̋L�q�������ł��B�R�����R���g���[���̃o�[�W������ 6.0.0.0 
-�Ŏw�肵�܂��B���̃}�j���t�F�X�g�������ƃr�W���A���I�ɌÂ������̃_�C�A���O�ɂȂ��Ă��܂��܂��B</p>
+<p>3. サンプルプログラム</p>
+<p>上記のテストプログラムを以下からダウンロードできるようにしておきます。<br>プログラムはWin32プロジェクトとして作成していますので、Visual 
+Studio 以外の環境へも移植が容易でしょう。&nbsp;<br><a href="LARGE_ADDRESS_WARE/testLargeWare.zip">
+ダウンロード</a></p>
+<p>補足説明１：<br>なお、ソースプログラム中にある以下の記述は Windows XP 
+以降のコモンコントロールを使用するための記述です。マニュフェストでコモンコントロールのバージョン情報を記載する必要があるそうで、VS2005から加わった 
+#pragma の記述だそうです。コモンコントロールのバージョンを 6.0.0.0 
+で指定します。このマニュフェストが無いとビジュアル的に古い感じのダイアログになってしまいます。</p>
 <table style="border: medium solid #C0C0C0; width: 100%">
 	<tr>
 		<td>
@@ -50,14 +50,14 @@ Studio �ȊO�̊��ւ��ڐA���e�Ղł��傤�B&nbsp;<br><a href="LARGE_ADDRESS_WARE/t
 		</td>
 	</tr>
 </table>
-<p>�⑫�����Q�F<br>
-�}�j���t�F�X�g�t�@�C����ʃt�@�C���w�肵�ăR���p�C�����Ă��܂��B���s�t�@�C���Ɠ����ꏊ�ɂ���}�j���t�F�X�g�t�@�C���������Ȃ��ł��������B</p>
-<p>�⑫�����R�F<br>
-(��)x86�̎��s�t�@�C�����f�X�N�g�b�v�Ŏ��s�����ꍇ�ɁA���̂���L�⑫�����P�ŗL���������͂��̃r�W���A���X�^�C�����L�������ꂸ�ɌÂ��_�C�A���O�`���ŕ\������܂����B��ł��B</p>
+<p>補足説明２：<br>
+マニュフェストファイルを別ファイル指定してコンパイルしています。実行ファイルと同じ場所にあるマニュフェストファイルを消さないでください。</p>
+<p>補足説明３：<br>
+(謎)x86の実行ファイルをデスクトップで実行した場合に、何故か上記補足説明１で有効化したはずのビジュアルスタイルが有効化されずに古いダイアログ形式で表示されました。謎です。</p>
 <p>&nbsp;</p>
-<p>4. �Q�lURL</p>
-<p>�ȉ��A�Q�lURL�ł��B<br>�Â��L�����啪�������Ă���̂ŁAWin7��Win8�Ȃǎg�p����^�[�Q�b�g���ōĊm�F�̂����ł���Ă݂Ă��������B</p>
-<p>�Q�lURL�F</p>
+<p>4. 参考URL</p>
+<p>以下、参考URLです。<br>古い記事が大分混ざっているので、Win7やWin8など使用するターゲット環境で再確認のうえでやってみてください。</p>
+<p>参考URL：</p>
 <ul>
 	<li>
 	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop" target="_blank">
@@ -79,6 +79,6 @@ Studio �ȊO�̊��ւ��ڐA���e�Ղł��傤�B&nbsp;<br><a href="LARGE_ADDRESS_WARE/t
 	http://www.syuhitu.org/other/memory32/memory32.html</a></li>
 </ul>
 <hr>
-<p><font face="Meiryo UI">�L�ځF 2013�N5��12�� �؉��p�r</font></p>
+<p><font face="Meiryo UI">記載： 2013年5月12日 木下英俊</font></p>
 </body>
 </html>

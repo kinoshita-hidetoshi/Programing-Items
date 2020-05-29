@@ -1,6 +1,6 @@
-<html>
+ï»¿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>[Win32] Mutex</title>
 
 <!-- Start for 'google-code-prettify' -->
@@ -26,43 +26,43 @@
 <h1 class="auto-style7">
 [win32] Mutex</h1>
 
-<p> Windows ‚Ì win32 ‚É‚¨‚¯‚é‘ã•\“I‚È“¯Šúˆ—‚É‚ÍˆÈ‰º‚Ì‚R‚Â‚Ìè–@‚ª‚ ‚è‚Ü‚·B<br>‚±‚±‚Å‚Í‰º‹L‚©‚çu2. Mutexv‚É‚Â‚¢‚Ä‹LÚ‚µ‚Ü‚·B</p>
+<p> Windows ã® win32 ã«ãŠã‘ã‚‹ä»£è¡¨çš„ãªåŒæœŸå‡¦ç†ã«ã¯ä»¥ä¸‹ã®ï¼“ã¤ã®æ‰‹æ³•ãŒã‚ã‚Šã¾ã™ã€‚<br>ã“ã“ã§ã¯ä¸‹è¨˜ã‹ã‚‰ã€Œ2. Mutexã€ã«ã¤ã„ã¦è¨˜è¼‰ã—ã¾ã™ã€‚</p>
 <ol>
 	<li>Critical Section<ul>
-		<li>1‚Â‚ÌƒvƒƒZƒX‚Ì’†‚Å•¡”‚ÌƒXƒŒƒbƒhŠÔ‚Ì‘ŠŒİ”r‘¼«‚ğÀŒ»‚·‚é‚½‚ß‚Ég‚í‚ê‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Ì’†‚Å‚Í‚È‚­ƒ[ƒJƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>‚‘¬‚ÅŒø—¦‚ª—Ç‚¢B</li>
-		<li>Œ‡“_F ƒXƒŒƒbƒh‚É‚æ‚Á‚Ä•úŠü‚³‚ê‚½‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é‚±‚Æ‚ª‚Å‚«‚È‚¢B—á‚¦‚ÎAƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“’†‚ÌƒXƒŒƒbƒh‚ª 
-		CriticalSection ‚ğŠJ•ú‚µ‚È‚¢‚Ü‚ÜˆÙíI—¹‚µ‚Ä‚àOS‚ÍƒNƒŠ[ƒ“ƒAƒbƒv‚µ‚È‚¢B‚±‚ê‚ª–â‘è‚Æ‚È‚éê‡‚ÍŒãq‚Ì Mutex ‚ğg—p‚·‚éB</li>
+		<li>1ã¤ã®ãƒ—ãƒ­ã‚»ã‚¹ã®ä¸­ã§è¤‡æ•°ã®ã‚¹ãƒ¬ãƒƒãƒ‰é–“ã®ç›¸äº’æ’ä»–æ€§ã‚’å®Ÿç¾ã™ã‚‹ãŸã‚ã«ä½¿ã‚ã‚Œã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸­ã§ã¯ãªããƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>é«˜é€Ÿã§åŠ¹ç‡ãŒè‰¯ã„ã€‚</li>
+		<li>æ¬ ç‚¹ï¼š ã‚¹ãƒ¬ãƒƒãƒ‰ã«ã‚ˆã£ã¦æ”¾æ£„ã•ã‚ŒãŸã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹ã“ã¨ãŒã§ããªã„ã€‚ä¾‹ãˆã°ã€ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ä¸­ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒ 
+		CriticalSection ã‚’é–‹æ”¾ã—ãªã„ã¾ã¾ç•°å¸¸çµ‚äº†ã—ã¦ã‚‚OSã¯ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã—ãªã„ã€‚ã“ã‚ŒãŒå•é¡Œã¨ãªã‚‹å ´åˆã¯å¾Œè¿°ã® Mutex ã‚’ä½¿ç”¨ã™ã‚‹ã€‚</li>
 	</ul>
 	</li>
 	<li>Mutex<ul>
-		<li>ˆÙ‚È‚éƒvƒƒZƒX‚É‘®‚·‚éƒXƒŒƒbƒh‚àŠÜ‚ß‚ÄA•¡”‚ÌƒXƒŒƒbƒhŠÔ‚Ì‘ŠŒİ”r‘¼«‚ğÀŒ»‚·‚é‚½‚ß‚Ìd‘g‚İ‚Å‚ ‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>Š—L‚µ‚Ä‚¢‚éƒXƒŒƒbƒh‚ªI—¹‚·‚é‚Æ h•úŠü‚³‚ê‚½h ‚±‚Æ‚ğ¦‚·ƒGƒ‰[‚ğ¶¬‚·‚éB</li>
-		<li>–¼‘O‚ğ‚¿A•¡”‚ÌƒvƒƒZƒX‚©‚çƒI[ƒvƒ“‚Å‚«‚éB</li>
-		<li>‚»‚ê‚ğŠ—L‚·‚éƒXƒŒƒbƒh‚¾‚¯‚ª‰ğ•ú‚Å‚«‚éB </li>
+		<li>ç•°ãªã‚‹ãƒ—ãƒ­ã‚»ã‚¹ã«å±ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã‚‚å«ã‚ã¦ã€è¤‡æ•°ã®ã‚¹ãƒ¬ãƒƒãƒ‰é–“ã®ç›¸äº’æ’ä»–æ€§ã‚’å®Ÿç¾ã™ã‚‹ãŸã‚ã®ä»•çµ„ã¿ã§ã‚ã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>æ‰€æœ‰ã—ã¦ã„ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¨ â€æ”¾æ£„ã•ã‚ŒãŸâ€ ã“ã¨ã‚’ç¤ºã™ã‚¨ãƒ©ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ã€‚</li>
+		<li>åå‰ã‚’æŒã¡ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚»ã‚¹ã‹ã‚‰ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã‚‹ã€‚</li>
+		<li>ãã‚Œã‚’æ‰€æœ‰ã™ã‚‹ã‚¹ãƒ¬ãƒƒãƒ‰ã ã‘ãŒè§£æ”¾ã§ãã‚‹ã€‚ </li>
 	</ul>
 	</li>
 	<li>Semaphore<ul>
-		<li>—LŒÀ‚ÈƒŠƒ\[ƒX‚ğ’ÇÕŠÇ—‚·‚é‚½‚ß‚Ég—p‚·‚éB</li>
-		<li>ƒJ[ƒlƒ‹ƒIƒuƒWƒFƒNƒg‚Å‚ ‚éB</li>
-		<li>Š—LÒ‚ª‚¢‚È‚¢B</li>
-		<li>–¼‘O‚ğ‚¿A•¡”‚ÌƒvƒƒZƒX‚©‚çƒI[ƒvƒ“‚Å‚«‚éB</li>
-		<li>”CˆÓ‚ÌƒXƒŒƒbƒh‚©‚ç‰ğ•ú‚Å‚«‚éB</li>
+		<li>æœ‰é™ãªãƒªã‚½ãƒ¼ã‚¹ã‚’è¿½è·¡ç®¡ç†ã™ã‚‹ãŸã‚ã«ä½¿ç”¨ã™ã‚‹ã€‚</li>
+		<li>ã‚«ãƒ¼ãƒãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹ã€‚</li>
+		<li>æ‰€æœ‰è€…ãŒã„ãªã„ã€‚</li>
+		<li>åå‰ã‚’æŒã¡ã€è¤‡æ•°ã®ãƒ—ãƒ­ã‚»ã‚¹ã‹ã‚‰ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã‚‹ã€‚</li>
+		<li>ä»»æ„ã®ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰è§£æ”¾ã§ãã‚‹ã€‚</li>
 	</ul>
 	</li>
 </ol>
 <p>&nbsp;</p>
-<h2> –ÚŸ</h2>
-<p> <a href="#1._Mutex_‚ğ‚Â‚©‚Á‚Ä‚İ‚é">1. Mutex ‚ğ‚Â‚©‚Á‚Ä‚İ‚é</a><br>
-<a href="#2._Mutex_‚ğg‚Á‚ÄƒvƒƒZƒXŠÔ‚Ì“¯Šú‚ğs‚¤">2. Mutex ‚ğg‚Á‚ÄƒvƒƒZƒXŠÔ‚Ì“¯Šú‚ğs‚¤</a><br>3. ***</p>
+<h2> ç›®æ¬¡</h2>
+<p> <a href="#1._Mutex_ã‚’ã¤ã‹ã£ã¦ã¿ã‚‹">1. Mutex ã‚’ã¤ã‹ã£ã¦ã¿ã‚‹</a><br>
+<a href="#2._Mutex_ã‚’ä½¿ã£ã¦ãƒ—ãƒ­ã‚»ã‚¹é–“ã®åŒæœŸã‚’è¡Œã†">2. Mutex ã‚’ä½¿ã£ã¦ãƒ—ãƒ­ã‚»ã‚¹é–“ã®åŒæœŸã‚’è¡Œã†</a><br>3. ***</p>
 <p> &nbsp;</p>
-<h2> <a name="1._Mutex_‚ğ‚Â‚©‚Á‚Ä‚İ‚é">1. Mutex ‚ğ‚Â‚©‚Á‚Ä‚İ‚é</a></h2>
-<p> [ŠT—v]</p>
-<p> ‚Ü‚¸‚Í Mutex ‚ğg—p‚·‚éƒVƒ“ƒvƒ‹‚È—á‚ğ¦‚µ‚Ü‚·B</p>
+<h2> <a name="1._Mutex_ã‚’ã¤ã‹ã£ã¦ã¿ã‚‹">1. Mutex ã‚’ã¤ã‹ã£ã¦ã¿ã‚‹</a></h2>
+<p> [æ¦‚è¦]</p>
+<p> ã¾ãšã¯ Mutex ã‚’ä½¿ç”¨ã™ã‚‹ã‚·ãƒ³ãƒ—ãƒ«ãªä¾‹ã‚’ç¤ºã—ã¾ã™ã€‚</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -70,7 +70,7 @@
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.5 </td>
 	</tr>
@@ -92,16 +92,16 @@
 </table>
 </font>
 <p>&nbsp;</p>
-<p>Å‰‚ÉA‚¤‚Ü‚­“®‚©‚È‚¢—á‚ğ¦‚µ‚Ü‚·B‚»‚µ‚ÄŸ‚ÉAMutex‚ğg—p‚·‚é‚±‚Æ‚ÅˆÓ}’Ê‚è‚É“®ì‚·‚é—á‚ğ¦‚µ‚Ü‚·B</p>
-<p>‚±‚¿‚çABadExample.cpp ‚Í‚¤‚Ü‚­“®‚©‚È‚¢—á‚Å‚·B<br>4‚Â‚ÌƒXƒŒƒbƒh‚ª‚»‚ê‚¼‚ê25,000‰ñ‚ÌƒCƒ“ƒNƒŠƒƒ“ƒg‚ğ‚·‚é‚Ì‚ÅAÅŒã‚É count 
-‚Í100,000‚É‚È‚é‚±‚Æ‚ğŠú‘Ò‚·‚éƒvƒƒOƒ‰ƒ€‚Å‚·B‚µ‚©‚µ“¯Šúˆ—‚ª‚È‚¢‚½‚ß‚ÉˆÓ}‚·‚é“®ì‚ğ‚µ‚È‚¢A‚Æ‚¢‚¤—á‚Å‚·B</p>
+<p>æœ€åˆã«ã€ã†ã¾ãå‹•ã‹ãªã„ä¾‹ã‚’ç¤ºã—ã¾ã™ã€‚ãã—ã¦æ¬¡ã«ã€Mutexã‚’ä½¿ç”¨ã™ã‚‹ã“ã¨ã§æ„å›³é€šã‚Šã«å‹•ä½œã™ã‚‹ä¾‹ã‚’ç¤ºã—ã¾ã™ã€‚</p>
+<p>ã“ã¡ã‚‰ã€BadExample.cpp ã¯ã†ã¾ãå‹•ã‹ãªã„ä¾‹ã§ã™ã€‚<br>4ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒãã‚Œãã‚Œ25,000å›ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã‚’ã™ã‚‹ã®ã§ã€æœ€å¾Œã« count 
+ã¯100,000ã«ãªã‚‹ã“ã¨ã‚’æœŸå¾…ã™ã‚‹ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ã™ã€‚ã—ã‹ã—åŒæœŸå‡¦ç†ãŒãªã„ãŸã‚ã«æ„å›³ã™ã‚‹å‹•ä½œã‚’ã—ãªã„ã€ã¨ã„ã†ä¾‹ã§ã™ã€‚</p>
 <p>[BadExample.cpp]</p>
 <pre class="prettyprint linenums">
 <code>#include &lt;iostream&gt;     // std::cout, std::endl
 #include &lt;tchar.h&gt;      // _tmain
 #include &lt;thread&gt;       // std::thread
 
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 volatile long           count = 0;
 
 void CountThread(const size_t iterations)
@@ -111,8 +111,8 @@ void CountThread(const size_t iterations)
     for (size_t i = 0; i &lt; iterations; ++i)
     {
         x = count;
-        // –â‘è‚ğ”­¶‚³‚¹‚É‚­‚¢ê‡‚ÍŸ‚Ìs‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠO‚µ‚Ä‚­‚¾‚³‚¢B
-//      std::this_thread::yield();      // ƒXƒŒƒbƒh‚Ìˆ—–¾‚¯“n‚µBc++11B
+        // å•é¡Œã‚’ç™ºç”Ÿã•ã›ã«ãã„å ´åˆã¯æ¬¡ã®è¡Œã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’å¤–ã—ã¦ãã ã•ã„ã€‚
+//      std::this_thread::yield();      // ã‚¹ãƒ¬ãƒƒãƒ‰ã®å‡¦ç†æ˜ã‘æ¸¡ã—ã€‚c++11ã€‚
         x++;
         count = x;
     }
@@ -125,27 +125,27 @@ int _tmain(int argc, char* argv[])
     std::thread     countThreads[numThreads];
 
     /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
-    // ƒXƒŒƒbƒh‚ğ‚S‚Âì¬
+    // ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ï¼”ã¤ä½œæˆ
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i] = std::thread(CountThread, 25000);
     }
 
-    // ‚S‚Â‚ÌƒXƒŒƒbƒh‚ªI‚í‚é‚Ì‚ğ‘Ò‚Â
+    // ï¼”ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚ã‚ã‚‹ã®ã‚’å¾…ã¤
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i].join();
     }
 
-    // ‚S‚Â‚ÌƒXƒŒƒbƒh‚ªI—¹‚µ‚½‚Ì‚¿‚Ì count ‚Ì’l‚ğƒ`ƒFƒbƒN
+    // ï¼”ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã—ãŸã®ã¡ã® count ã®å€¤ã‚’ãƒã‚§ãƒƒã‚¯
     std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
     
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
-    // [Enter]ƒL[ “ü—Í‘Ò‚¿
+    // [Enter]ã‚­ãƒ¼ å…¥åŠ›å¾…ã¡
     {
         std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
         int ch = getchar();
@@ -154,15 +154,15 @@ int _tmain(int argc, char* argv[])
     return EXIT_SUCCESS;
 }</code></pre>
 <p>&nbsp;</p>
-[ÀsŒ‹‰Ê]
+[å®Ÿè¡Œçµæœ]
 <p><img alt="" src="Mutex/img18.jpg"></p>
-<p>Šú‘Ò‚·‚é 100,000 ‚É‘Î‚µ‚Ä 65,703 ‚Ü‚Å‚µ‚©ƒJƒEƒ“ƒgƒAƒbƒv‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B‚±‚ê‚Í‚¤‚Ü‚­“®ì‚µ‚È‚¢—á‚Å‚·B<br>‚±‚Ì’l‚ÍƒvƒƒOƒ‰ƒ€‚ğÀs‚·‚é‚½‚Ñ‚É‘ã‚í‚è‚Ü‚·B</p>
+<p>æœŸå¾…ã™ã‚‹ 100,000 ã«å¯¾ã—ã¦ 65,703 ã¾ã§ã—ã‹ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚ã“ã‚Œã¯ã†ã¾ãå‹•ä½œã—ãªã„ä¾‹ã§ã™ã€‚<br>ã“ã®å€¤ã¯ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å®Ÿè¡Œã™ã‚‹ãŸã³ã«ä»£ã‚ã‚Šã¾ã™ã€‚</p>
 <p> &nbsp;</p>
-<p> Ÿ‚É Mutex ‚É‚æ‚è“¯Šúˆ—‚ğ‰Á‚¦‚½—á‚ğ¦‚µ‚Ü‚·B</p>
+<p> æ¬¡ã« Mutex ã«ã‚ˆã‚ŠåŒæœŸå‡¦ç†ã‚’åŠ ãˆãŸä¾‹ã‚’ç¤ºã—ã¾ã™ã€‚</p>
 <p> &nbsp;</p>
 
 
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;test_mutex_01.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;test_mutex_01.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -172,7 +172,7 @@ int _tmain(int argc, char* argv[])
 #include &lt;Windows.h&gt;    // HANDLE, CreateMutex, OpenMutex, WaitForSingleObject, ReleaseMutex, CloseHandle,
 
 
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 volatile long           count = 0;
 LPCTSTR                 MutexName = _T(&quot;test_mutex&quot;);
 
@@ -190,29 +190,29 @@ void CountThread(const size_t iterations)
             DWORD ret = <span class="auto-style8">WaitForSingleObject</span>(mutex, 500);
 
             switch (ret) {
-            case WAIT_OBJECT_0:             // ƒVƒOƒiƒ‹æ“¾
+            case WAIT_OBJECT_0:             // ã‚·ã‚°ãƒŠãƒ«å–å¾—
                 x = count;
-                // –â‘è‚ğ”­¶‚³‚¹‚É‚­‚¢ê‡‚ÍŸ‚Ìs‚ÌƒRƒƒ“ƒgƒAƒEƒg‚ğŠO‚µ‚Ä‚­‚¾‚³‚¢B
-                //std::this_thread::yield();        // ƒXƒŒƒbƒh‚Ìˆ—–¾‚¯“n‚µBc++11B
+                // å•é¡Œã‚’ç™ºç”Ÿã•ã›ã«ãã„å ´åˆã¯æ¬¡ã®è¡Œã®ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã‚’å¤–ã—ã¦ãã ã•ã„ã€‚
+                //std::this_thread::yield();        // ã‚¹ãƒ¬ãƒƒãƒ‰ã®å‡¦ç†æ˜ã‘æ¸¡ã—ã€‚c++11ã€‚
                 x++;
                 count = x;
                 break;
 
-            case WAIT_TIMEOUT:              // ƒ^ƒCƒ€ƒAƒEƒg
+            case WAIT_TIMEOUT:              // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ
                 std::cout &lt;&lt; &quot;WAIT_TIMEOUT happend.&quot; &lt;&lt; std::endl;
                 break;
 
-            case WAIT_ABANDONED:            // ‘¼‚ÌƒI[ƒi[ƒXƒŒƒbƒhÁ¸
+            case WAIT_ABANDONED:            // ä»–ã®ã‚ªãƒ¼ãƒŠãƒ¼ã‚¹ãƒ¬ãƒƒãƒ‰æ¶ˆå¤±
                 std::cout &lt;&lt; &quot;WAIT_ABANDONED happend.&quot; &lt;&lt; std::endl;
                 break;
 
-            case WAIT_FAILED:               // ŠÖ”‚ğ¸”sBŒ´ˆö‚Í GetLastError ‚Åæ“¾B
+            case WAIT_FAILED:               // é–¢æ•°ã‚’å¤±æ•—ã€‚åŸå› ã¯ GetLastError ã§å–å¾—ã€‚
                 std::cout &lt;&lt; &quot;WAIT_FAILED happend.&quot; &lt;&lt; std::endl;
                 std::cout &lt;&lt; &quot;GetLastError() : &quot; &lt;&lt; GetLastError() &lt;&lt; std::endl;
                 break;
 
-            default:                        // ƒ^ƒCƒ€ƒAƒEƒgA‘¼
-                // ƒ^ƒCƒ€ƒAƒEƒgAˆÙí”­¶A‚È‚Ç
+            default:                        // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã€ä»–
+                // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã€ç•°å¸¸ç™ºç”Ÿã€ãªã©
                 std::cout &lt;&lt; &quot;Any other error happend.&quot; &lt;&lt; std::endl;
                 break;
             }
@@ -230,29 +230,29 @@ int _tmain(int argc, char* argv[])
 
 
     /*========*/
-    /* ˆ—•” */
+    /* å‡¦ç†éƒ¨ */
     /*========*/
 
-    // Mutex ‚ğ¶¬
+    // Mutex ã‚’ç”Ÿæˆ
     HANDLE      mutex = nullptr;
     mutex = <span class="auto-style8">CreateMutex</span>(0, FALSE, MutexName);
 
-    // ƒXƒŒƒbƒh‚ğ‚S‚Âì¬
+    // ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ï¼”ã¤ä½œæˆ
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i] = std::thread(CountThread, 25000);
     }
 
-    // ‚S‚Â‚ÌƒXƒŒƒbƒh‚ªI‚í‚é‚Ì‚ğ‘Ò‚Â
+    // ï¼”ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚ã‚ã‚‹ã®ã‚’å¾…ã¤
     for (size_t i = 0; i &lt; numThreads; ++i)
     {
         countThreads[i].join();
     }
 
-    // ‚S‚Â‚ÌƒXƒŒƒbƒh‚ªI—¹‚µ‚½‚Ì‚¿‚Ì count ‚Ì’l‚ğƒ`ƒFƒbƒN
+    // ï¼”ã¤ã®ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã—ãŸã®ã¡ã® count ã®å€¤ã‚’ãƒã‚§ãƒƒã‚¯
     std::cout &lt;&lt; &quot;count = &quot; &lt;&lt; count &lt;&lt; std::endl;
 
-    // Mutex ‚ğŠJ•ú
+    // Mutex ã‚’é–‹æ”¾
     if (mutex != nullptr) {
         if (<span class="auto-style8">CloseHandle</span>(mutex) == TRUE) {
             mutex = nullptr;
@@ -261,9 +261,9 @@ int _tmain(int argc, char* argv[])
 
 
     /*========*/
-    /* Œãˆ— */
+    /* å¾Œå‡¦ç† */
     /*========*/
-    // [Enter]ƒL[ “ü—Í‘Ò‚¿
+    // [Enter]ã‚­ãƒ¼ å…¥åŠ›å¾…ã¡
     {
         std::cout &lt;&lt; &quot;HIT [Enter] KEY &quot;;
         int ch = getchar();
@@ -274,12 +274,12 @@ int _tmain(int argc, char* argv[])
 <!-- End for 'google-code-prettify' -->
 
 <p>&nbsp;</p>
-[ÀsŒ‹‰Ê]
+[å®Ÿè¡Œçµæœ]
 <p>
 <img alt="" src="Mutex/img1F.jpg"></p>
 <p>&nbsp;</p>
 <h4>
-Ql</h4>
+å‚è€ƒ</h4>
 <ul>
 	<li>CreateMutexA<br>
 	<a href="https://docs.microsoft.com/ja-jp/windows/win32/api/synchapi/nf-synchapi-createmutexa" target="_blank">
@@ -299,11 +299,11 @@ int _tmain(int argc, char* argv[])
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> <a name="2._Mutex_‚ğg‚Á‚ÄƒvƒƒZƒXŠÔ‚Ì“¯Šú‚ğs‚¤">2. Mutex ‚ğg‚Á‚ÄƒvƒƒZƒXŠÔ‚Ì“¯Šú‚ğs‚¤</a></h2>
-<p> [ŠT—v]</p>
+<h2> <a name="2._Mutex_ã‚’ä½¿ã£ã¦ãƒ—ãƒ­ã‚»ã‚¹é–“ã®åŒæœŸã‚’è¡Œã†">2. Mutex ã‚’ä½¿ã£ã¦ãƒ—ãƒ­ã‚»ã‚¹é–“ã®åŒæœŸã‚’è¡Œã†</a></h2>
+<p> [æ¦‚è¦]</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
-<p>[•]‰¿ŠÂ‹«]</p>
+<p>[è©•ä¾¡ç’°å¢ƒ]</p>
 <table>
 <tbody>
 	<tr>
@@ -311,7 +311,7 @@ int _tmain(int argc, char* argv[])
 	</tr>
 	
 	<tr>
-		<td>ƒRƒ“ƒpƒCƒ‰ :</td>
+		<td>ã‚³ãƒ³ãƒ‘ã‚¤ãƒ© :</td>
 		<td>Visual Studio 2019 pro.,</td>
 		<td>Version 16.4.0 </td>
 	</tr>
@@ -333,7 +333,7 @@ int _tmain(int argc, char* argv[])
 </table>
 </font>
 <p>&nbsp;</p>
-<p>[ƒvƒƒOƒ‰ƒ€ƒ\[ƒX &quot;***.cpp&quot;]</p>
+<p>[ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚½ãƒ¼ã‚¹ &quot;***.cpp&quot;]</p>
 
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
@@ -344,21 +344,21 @@ int _tmain(int argc, char* argv[])
 	
 <br>
 <h4>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€</h4>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ </h4>
 <p>
-ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€ ƒ_ƒEƒ“ƒ[ƒh</p>
+ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰</p>
 <p>
 &nbsp;</p>
 <h4>
-Ql</h4>
+å‚è€ƒ</h4>
 <ul>
-	<li>(—á) http://www.****.com</li>
+	<li>(ä¾‹) http://www.****.com</li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">‹LÚF</font></p>
+<p> <font face="Meiryo UI">è¨˜è¼‰ï¼š</font></p>
 <ul>
-	<li><font face="Meiryo UI">2019”NMMŒDD“ú V‹Kì¬A–Ø‰º‰pr<br></font></li>
+	<li><font face="Meiryo UI">2019å¹´MMæœˆDDæ—¥ æ–°è¦ä½œæˆã€æœ¨ä¸‹è‹±ä¿Š<br></font></li>
 </ul>
 </body>
 </html>

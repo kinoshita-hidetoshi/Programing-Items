@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>WiX �v���W�F�N�g��V�K�쐬����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WiX プロジェクトを新規作成する</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../../../prettify.css" rel="stylesheet" type="text/css">
@@ -21,40 +21,40 @@
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
-�mWiX�nWiX�v���W�F�N�g��V�K�쐬����</h1>
+［WiX］WiXプロジェクトを新規作成する</h1>
 
-<p> WiX�v���W�F�N�g��V�K�쐬����菇���L�ڂ��܂��B</p>
-<h2> �ڎ�</h2>
-<p> <a href="#1._����">1. ����</a><br><a href="#2._WiX_�v���W�F�N�g��V�K�쐬����">2. 
-WiX�v���W�F�N�g��V�K�쐬����</a><br><a href="#2-1._Visual_Studio_�u�V�����v���W�F�N�g�̒ǉ��v">2-1. Visual Studio �u�V�K�v���W�F�N�g�̒ǉ��v</a><br>
-<a href="#2-2._WixEdit_�ŐV�K�v���W�F�N�g���쐬">2-2. WixEdit �ŐV�K�v���W�F�N�g���쐬</a><br>
-<a href="#�Q�l">�Q�l</a></p>
+<p> WiXプロジェクトを新規作成する手順を記載します。</p>
+<h2> 目次</h2>
+<p> <a href="#1._準備">1. 準備</a><br><a href="#2._WiX_プロジェクトを新規作成する">2. 
+WiXプロジェクトを新規作成する</a><br><a href="#2-1._Visual_Studio_「新しいプロジェクトの追加」">2-1. Visual Studio 「新規プロジェクトの追加」</a><br>
+<a href="#2-2._WixEdit_で新規プロジェクトを作成">2-2. WixEdit で新規プロジェクトを作成</a><br>
+<a href="#参考">参考</a></p>
 <p> &nbsp;</p>
-<h2> <a name="1._����">1. ����</a></h2>
-<p> ���̃z�[���y�[�W�ł͈ȉ��̊����g�p���܂��B</p>
+<h2> <a name="1._準備">1. 準備</a></h2>
+<p> このホームページでは以下の環境を使用します。</p>
 <p> (1) WiX Toolset</p>
-<p> Visual Studio �́u�g���@�\�ƍX�V�v���O�����v����uWiX Toolset�v��I�Ԃ��ƂŃ_�E�����[�h�ł��܂��B<br>
-���̕��͂��L�ڎ��_�ŁA�o�[�W������ 3.10.3 �ł��B</p>
+<p> Visual Studio の「拡張機能と更新プログラム」から「WiX Toolset」を選ぶことでダウンロードできます。<br>
+この文章を記載時点で、バージョンは 3.10.3 です。</p>
 <p> <img alt="" src="CreateNewProject/img4.jpg"></p>
 <p> &nbsp;</p>
-<p> �܂��͉��LURL����擾�\�ł��B</p>
+<p> または下記URLから取得可能です。</p>
 <p> 
 <a href="https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE">
 https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE</a></p>
 <p> &nbsp;</p>
 <p> (2) WixEdit</p>
-<p> �ȉ��̃z�[���y�[�W���� WixEdit ����肵�܂��B</p>
+<p> 以下のホームページから WixEdit を入手します。</p>
 <p> <a href="http://wixedit.sourceforge.net/" target="_blank">
 http://wixedit.sourceforge.net/</a></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
-<h2> <a name="2._WiX_�v���W�F�N�g��V�K�쐬����">2. WiX �v���W�F�N�g��V�K�쐬����</a></h2>
-<h3> <a name="2-1._Visual_Studio_�u�V�����v���W�F�N�g�̒ǉ��v">2-1. Visual Studio �u�V�����v���W�F�N�g�̒ǉ��v</a></h3>
-<p> Visual Studio �́u�V�����v���W�F�N�g�̒ǉ��v����uSetup Project�v��I�Ԃ��ƂŁAWiX �v���W�F�N�g��V�K�쐬���Ă݂܂��B</p>
-<p> ���}�ɏ]���āuSetup Project�v��I����A�mOK�n���N���b�N���܂��B</p>
+<h2> <a name="2._WiX_プロジェクトを新規作成する">2. WiX プロジェクトを新規作成する</a></h2>
+<h3> <a name="2-1._Visual_Studio_「新しいプロジェクトの追加」">2-1. Visual Studio 「新しいプロジェクトの追加」</a></h3>
+<p> Visual Studio の「新しいプロジェクトの追加」から「Setup Project」を選ぶことで、WiX プロジェクトを新規作成してみます。</p>
+<p> 下図に従って「Setup Project」を選択後、［OK］をクリックします。</p>
 <p> &nbsp;</p>
 <p> <img alt="" src="CreateNewProject/img9.jpg"></p>
-<p> �������ꂽ *.wxs �t�@�C���͈ȉ��̒ʂ�ł��B</p>
+<p> 生成された *.wxs ファイルは以下の通りです。</p>
 <span class="table_title">[&quot;Product.wxs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -97,31 +97,31 @@ http://wixedit.sourceforge.net/</a></p>
 <br>
 	
 <p> &nbsp;</p>
-<h3> <a name="2-2._WixEdit_�ŐV�K�v���W�F�N�g���쐬">2-2. WixEdit �ŐV�K�v���W�F�N�g���쐬</a> </h3>
+<h3> <a name="2-2._WixEdit_で新規プロジェクトを作成">2-2. WixEdit で新規プロジェクトを作成</a> </h3>
 <p> 
-������WixEdit���g���ĐV�K�v���W�F�N�g���쐬���Ă݂܂��B<br>
-WixEdit�̃E�B�U�[�h�ŗl�X�Ȃ��Ƃ��ł��܂����A�܂��̓f�t�H���g��Ԃ̃v���W�F�N�g���m�F���Ă݂܂��傤�B</p>
-<p> WixEdit ���N�����܂��B</p>
+続いてWixEditを使って新規プロジェクトを作成してみます。<br>
+WixEditのウィザードで様々なことができますが、まずはデフォルト状態のプロジェクトを確認してみましょう。</p>
+<p> WixEdit を起動します。</p>
 <p> 
 <img alt="" src="CreateNewProject/imgE.gif"></p>
-<p> File �� New ��I�����܂��B</p>
+<p> File → New を選択します。</p>
 <p> 
 <img alt="" src="CreateNewProject/img10.jpg"></p>
-<p> �mNext�n���N���b�N���܂��B</p>
+<p> ［Next］をクリックします。</p>
 <p> 
 <img alt="" src="CreateNewProject/img15.gif"></p>
 <p> 
 <img alt="" src="CreateNewProject/img17.gif"></p>
-<p> �mNext�n���N���b�N���܂��B</p>
+<p> ［Next］をクリックします。</p>
 <p> 
 <img alt="" src="CreateNewProject/img19.gif"></p>
-<p> �mFinish�n���N���b�N���܂��B</p>
+<p> ［Finish］をクリックします。</p>
 <p> 
 <img alt="" src="CreateNewProject/img1B.gif"></p>
-<p> ���}�̂悤�ȉ�ʂ�\������̂ŁA�mDone�n���N���b�N�B</p>
+<p> 下図のような画面を表示するので、［Done］をクリック。</p>
 <p> 
 <img alt="" src="CreateNewProject/img1D.jpg"></p>
-<p> �ȏ�̌��ʂŐ������ꂽ *.wxs �t�@�C���͈ȉ��̒ʂ�ł��B</p>
+<p> 以上の結果で生成された *.wxs ファイルは以下の通りです。</p>
 <span class="table_title">[&quot;Product.wxs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
 	<tr>
 		<td>
@@ -148,9 +148,9 @@ WixEdit�̃E�B�U�[�h�ŗl�X�Ȃ��Ƃ��ł��܂����A�܂��̓f�t�H���g��Ԃ̃v���W�F�N�g�
 <p>
 &nbsp;</p>
 <h2>
-<a name="�Q�l">�Q�l</a></h2>
+<a name="参考">参考</a></h2>
 <ul>
-	<li>WiX �`���[�g���A�� ���{���<br>
+	<li>WiX チュートリアル 日本語訳<br>
 	<a href="http://wix-tutorial-ja.github.io/" target="_blank">
 	http://wix-tutorial-ja.github.io/</a></li>
 	<li>WiX Toolset Tutorial<br>
@@ -161,13 +161,13 @@ WixEdit�̃E�B�U�[�h�ŗl�X�Ȃ��Ƃ��ł��܂����A�܂��̓f�t�H���g��Ԃ̃v���W�F�N�g�
 	https://visualstudiogallery.msdn.microsoft.com/b6868002-9770-4479-80a7-259de34df527?SRC=VSIDE</a></li>
 	<li>WixEdit<br><a href="http://wixedit.sourceforge.net/" target="_blank">
 	http://wixedit.sourceforge.net/</a></li>
-	<li>Windows��� WiX ����� WixEdit ���g�����C���X�g�[���쐬<br>
+	<li>Windows上で WiX および WixEdit を使ったインストーラ作成<br>
 	<a href="http://www.02.246.ne.jp/~torutk/windows/wixandwixedit.html" target="_blank">
 	http://www.02.246.ne.jp/~torutk/windows/wixandwixedit.html</a></li>
 </ul>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2016�N08��19�� �؉��p�r<br>
+<p> <font face="Meiryo UI">記載： 2016年08月19日 木下英俊<br>
 </font></p>
 </body>
 </html>

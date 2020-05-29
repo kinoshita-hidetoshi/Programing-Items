@@ -1,7 +1,7 @@
-<html>
+﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
-<title>�A�v���P�[�V�����̈ʒu�A�T�C�Y��ۑ�����</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>アプリケーションの位置、サイズを保存する</title>
 <link rel="stylesheet" href="../../design.css" type="text/css">
 <style type="text/css">
 .auto-style7 {
@@ -28,46 +28,46 @@
 </head>
 <body>
 <h1 class="auto-style7">
-�A�v���P�[�V�����̈ʒu�A�T�C�Y��ۑ�����</h1>
+アプリケーションの位置、サイズを保存する</h1>
 
-<p> �o�C���f�B���O���g����WPF�A�v���P�[�V�����̈ʒu�A�T�C�Y���A�v���P�[�V�����I�����ɕۑ�������@�������܂��B<br>�l�X�ȕ��@����܂����A�����ł� 
-Properties.Settings.Default �ɂ��ݒ��ۑ�������@�������܂��B���̕��@�����p���ėl�X�ȑ�����ۑ����邱�Ƃ��ȒP�ɂł��܂��B</p>
-<p>�J�����F<br>�ȉ��̊J�����ō쐬���܂��B������WPF���ł���΋��炭���ׂē������@�Ŏ����ł���Ǝv���܂��B</p>
+<p> バインディングを使ってWPFアプリケーションの位置、サイズをアプリケーション終了時に保存する方法を示します。<br>様々な方法がりますが、ここでは 
+Properties.Settings.Default により設定を保存する方法を示します。この方法を応用して様々な属性を保存することが簡単にできます。</p>
+<p>開発環境：<br>以下の開発環境で作成します。ただしWPF環境であれば恐らくすべて同じ方法で実現できると思います。</p>
 <ul>
 	<li>Expression Blend 4</li>
 	<li>Visual Studio 2012</li>
 	<li>.NET4</li>
 </ul>
-<p>�Q�lURL�F</p>
+<p>参考URL：</p>
 <ul>
 	<li>
 	<a href="http://csfun.blog49.fc2.com/blog-entry-102.html" target="_blank">http://csfun.blog49.fc2.com/blog-entry-102.html</a></li>
 </ul>
-<p>�ڎ��F<br><a href="#1._�V�K�v���W�F�N�g���쐬">1. �V�K�v���W�F�N�g���쐬</a><br><a href="#2._�ݒ�_���쐬">
-2. �ݒ�쐬</a><br><a href="#3._XAML_��_�ݒ�_���o�C���f�B���O">3. XAML �� �ݒ� ���o�C���f�B���O</a><br>
-<a href="#4._�ۑ�">4. �ۑ�</a></p>
+<p>目次：<br><a href="#1._新規プロジェクトを作成">1. 新規プロジェクトを作成</a><br><a href="#2._設定_を作成">
+2. 設定作成</a><br><a href="#3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a><br>
+<a href="#4._保存">4. 保存</a></p>
 <p>&nbsp;</p>
-<p><a name="1._�V�K�v���W�F�N�g���쐬">1. �V�K�v���W�F�N�g���쐬</a></p>
-<p>�V�KWPF�A�v���P�[�V�����v���W�F�N�g���쐬���܂��B�����ł́hSaveWpfAttribute�h�Ƃ������̂Ńv���W�F�N�g���쐬���܂����B<br>�ŏI�I�� 
-(a)Window�ʒu�A(b)Window�T�C�Y�A��ۑ�����̂ŁAWindow�̃v���p�e�B�����L�̒ʂ�ɂ��Ă����܂��B�V�K�v���W�F�N�g���쐬�����܂܂ɂ��Ă����Ηǂ��͂��ł��B<br>
-����Window�T�C�Y���Ƃ肠���� 320�~240 �֕ύX���Ă����܂����B</p>
+<p><a name="1._新規プロジェクトを作成">1. 新規プロジェクトを作成</a></p>
+<p>新規WPFアプリケーションプロジェクトを作成します。ここでは”SaveWpfAttribute”という名称でプロジェクトを作成しました。<br>最終的に 
+(a)Window位置、(b)Windowサイズ、を保存するので、Windowのプロパティを下記の通りにしておきます。新規プロジェクトを作成したままにしておけば良いはずです。<br>
+あとWindowサイズをとりあえず 320×240 へ変更しておきました。</p>
 <ul>
-	<li>ResizeMode�F &quot;CanResize&quot;</li>
-	<li>WindowStartup�F &quot;Manual&quot;</li>
+	<li>ResizeMode： &quot;CanResize&quot;</li>
+	<li>WindowStartup： &quot;Manual&quot;</li>
 </ul>
-<p>Visual Studio �̂��̂Ƃ��̉�ʏ�Ԃł��B<br>
+<p>Visual Studio のこのときの画面状態です。<br>
 <img alt="" height="407" src="SaveWpfAttribute/imgC.jpg" width="761"></p>
-<p>XAML�̑S�R�[�h���ȉ��ɋL�ڂ��܂��B���R�Ȃ��炷�������ł��B<br>
+<p>XAMLの全コードを以下に記載します。当然ながらすかすかです。<br>
 <img alt="" src="SaveWpfAttribute/img8.jpg"></p>
 <p>&nbsp;</p>
-<p><a name="2._�ݒ�_���쐬">2. �ݒ� ���쐬</a></p>
-<p>Visual Studio �Ńv���W�F�N�g�̃v���p�e�B���J���A[�ݒ�]�^�u���牺�L�̒ʂ�S�̖��O���쐬���܂��B<br>posX �� posY 
-��Window�̈ʒu�Awidth �� height ��Window�̃T�C�Y���������܂��B<br>
-�X�R�[�v�͕K���h���[�U�h�ɂ��܂��B�h�A�v���P�[�V�����h�ɂ����ꍇ�͐ݒ�̕ۑ����s�����A�ǂݎ���p�ɂȂ�܂��B<br>
+<p><a name="2._設定_を作成">2. 設定 を作成</a></p>
+<p>Visual Studio でプロジェクトのプロパティを開き、[設定]タブから下記の通り４つの名前を作成します。<br>posX と posY 
+がWindowの位置、width と height がWindowのサイズ情報を扱います。<br>
+スコープは必ず”ユーザ”にします。”アプリケーション”にした場合は設定の保存を行えず、読み取り専用になります。<br>
 <img alt="" src="SaveWpfAttribute/img1B.jpg"></p>
 <p>&nbsp;</p>
-<p><a name="3._XAML_��_�ݒ�_���o�C���f�B���O">3. XAML �� �ݒ� ���o�C���f�B���O</a></p>
-<p>XAML�̑��� �� �ݒ� ���o�C���f�B���O���܂��B<br>�uxmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;�v�̕����́h<strong>SaveWpfAttribute</strong>�h�́A�v���W�F�N�g�̖��O��Ԃł��B�����͂��ꂼ��̃v���W�F�N�g�̓��e�ɍ��킹�ĕύX���܂��B</p>
+<p><a name="3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a></p>
+<p>XAMLの属性 と 設定 をバインディングします。<br>「xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;」の部分の”<strong>SaveWpfAttribute</strong>”は、プロジェクトの名前空間です。ここはそれぞれのプロジェクトの内容に合わせて変更します。</p>
 <table class="auto-style8" style="width: 100%">
 	<tr>
 		<td>
@@ -91,11 +91,11 @@ Properties.Settings.Default �ɂ��ݒ��ۑ�������@�������܂��B���̕��@�����p��
 	</tr>
 </table>
 <p>&nbsp;</p>
-<p><a name="4._�ۑ�">4. �ۑ�</a></p>
-<p>�v���O�������I������Ƃ��Ɍ��݂̑�����ۑ����܂��B<br>�A�v���P�[�V������ Closed �C�x���g�������� 
-Properties.Setting.Default.Save() ���s�����ƂŎ��{���܂��B�ۑ���͉��L�̒ʂ�ł��B<br>
-&quot;C:\Users\%USENAME%\AppData\Local\SaveWpfAttribute\�E�E�E\user.config&quot;<br>
-���Ȃ݂ɍ���͎������܂��񂪁A�K��l�֋����I�ɖ߂��ɂ� Properties.Setting.Default.Reset() �ōs���܂��B</p>
+<p><a name="4._保存">4. 保存</a></p>
+<p>プログラムを終了するときに現在の属性を保存します。<br>アプリケーションの Closed イベント発生時に 
+Properties.Setting.Default.Save() を行うことで実施します。保存先は下記の通りです。<br>
+&quot;C:\Users\%USENAME%\AppData\Local\SaveWpfAttribute\・・・\user.config&quot;<br>
+ちなみに今回は実装しませんが、規定値へ強制的に戻すには Properties.Setting.Default.Reset() で行います。</p>
 [MainWindow.xaml]
 <table class="auto-style10" style="width: 100%" title="aaaa">
 	<tr>
@@ -156,9 +156,9 @@ namespace SaveWpfAttribute
 	</tr>
 </table>
 <p>&nbsp;</p>
-<p>�T���v���v���O�����F<a href="SaveWpfAttribute/SaveWpfAttribute.zip">�_�E�����[�h</a><br>&nbsp;&nbsp;&nbsp; 
-�쐬�F Visual Studio 2012</p>
+<p>サンプルプログラム：<a href="SaveWpfAttribute/SaveWpfAttribute.zip">ダウンロード</a><br>&nbsp;&nbsp;&nbsp; 
+作成： Visual Studio 2012</p>
 <hr>
-<p> <font face="Meiryo UI">�L�ځF 2012�N12��23�� �؉��p�r</font></p>
+<p> <font face="Meiryo UI">記載： 2012年12月23日 木下英俊</font></p>
 </body>
 </html>
