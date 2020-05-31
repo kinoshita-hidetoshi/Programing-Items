@@ -30,7 +30,7 @@ std::thread は promise, future
 これの意味は「std::thread よりも std::async を使いましょう」という内容です。</p>
 <h2> 目次</h2>
 <p> <a href="#1._シンプルな例">1. シンプルな例</a><br><a href="#2._一時停止状態のスレッドを作る">2. 
-一時停止状態のスレッドを作る</a><br>3. ***</p>
+一時停止状態のスレッドを作る</a><br><a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></p>
 <p> &nbsp;</p>
 <h2> <a name="1._シンプルな例">1. シンプルな例</a></h2>
 <p> [概要]</p>
@@ -242,8 +242,104 @@ int main()
 </ul>
 <p>
 &nbsp;</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
+<p>[概要]</p>
+<p> std::thread だと join または detatch が必須です。<br>std::async の場合は detatch 
+に相当する機能がないけれど、終了確認せずに worker スレッドを放置したらどうなるのでしょうか。<br>確認してみました。</p>
+<p> どうやら特に考慮は不要みたいです。<br>逆に main タスクが終了したにもかかわらず async タスク側が残ってしまう場合があるので、必要に応じて 
+main タスク終了時に別スレッドを適切に終了するという処理が必要ということになります。</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>&quot;test_async_03.cpp&quot;]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;   // vector
+#include &lt;chrono&gt;   // chrono
+#include &lt;thread&gt;   // this_thread
+#include &lt;future&gt;   // async, future, future_status
+
+#include &lt;windows.h&gt;    // OuputDebugString
+#include &lt;tchar.h&gt;      // _T
+
+using namespace std;
+
+
+int worker(const vector&lt;int&gt;&amp; data)
+{
+    int sum = 0;
+
+    for (int i : data) {
+        // 重たい処理
+        this_thread::sleep_for(chrono::milliseconds(2000));
+        sum += i;
+        cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum &lt;&lt; endl;
+    }
+
+    //throw std::wstring(L&quot;test&quot;);
+
+    return sum;
+}
+
+
+int main()
+{
+    vector&lt;int&gt; data = { 1, 2, 3, 4, 5 };
+
+    // worker() 関数を実行する
+    future&lt;int&gt; f = std::async( launch::async, worker, ref(data) );                     // 非同期実行
+
+    // このまま worker スレッドの終了を待たずに終了... どうなる？
+    // std::thread なら join または detatch が必要だけど...
+    cout &lt;&lt; &quot;[INF] Finish main task.&quot; &lt;&lt; endl;
+
+    return EXIT_SUCCESS;
+}</code>
+</pre>
+	
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p><img alt="" src="async/imgA.jpg"></p>
+<p>
+&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： <br>2017年11月18日 新規作成、木下英俊<br>
-2019年11月27日 「2. 一時停止状態のスレッドを作る」の章を追加</font></p>
+<p> <font face="Meiryo UI">記載： </font></p>
+<ul>
+	<li>2020年05月31日 「<a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a>」を追加。</li>
+	<li><font face="Meiryo UI">2019年11月27日 「<a href="#2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a>」の章を追加</font></li>
+	<li><font face="Meiryo UI">2017年11月18日 新規作成、木下英俊</font></li>
+</ul>
 </body>
 </html>
