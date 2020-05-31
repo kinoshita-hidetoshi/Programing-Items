@@ -37,7 +37,7 @@
 ではスレッドライブラリがなかったのでWin32やpthreadを使うことになります。Win32の_beginthreadを使用した場合はクラスのメソッドを呼ぶ場合に static 
 なメソッドなどをいったん間にかませる必要があるのですが、std::threadはこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
 <p>類似の機能として std::async という機能があります。個人見解としては、std::thread を使わずに std::async 
-へすべて統一して使用するほうが良い、と考えます。詳細は std::async を参照ください。</p>
+へすべて統一して使用するほうが良い、と考えます。詳細は <a href="async.html">std::async</a> を参照ください。</p>
 <h4>&nbsp;</h4>
 <h4>内容：</h4>
 <p><a href="#１．引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a><br>
@@ -47,16 +47,43 @@
 <a href="#5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></p>
 <p>&nbsp;</p>
 <h2><a name="１．引数無し関数をマルチスレッドで実行">１．引数無し関数をマルチスレッドで実行</a></h2>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： VS2012 Update3</li>
-	<li>OS： Windows8 64bit</li>
-</ul>
+<p>まずは一番シンプルな実装から試します。</p>
+<p>&nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
 <p>[プログラムソース]</p>
-&nbsp;<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// EXIT_SUCCESS</span>
+&nbsp;<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// cout, endl, EXIT_SUCCESS</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::milliseconds</span>
-#include <span class="string">&lt;tchar.h&gt;</span>      <span class="comment">// _TCHAR</span>
 
 using namespace std;
 
@@ -78,11 +105,11 @@ void PrintWorld()
     }
 } 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
     <span class="comment">// 引数無し関数をマルチスレッドで実行</span>
-    <span class="auto-style5">thread</span> thr_hello(&amp;PrintHello);
-    <span class="auto-style5">thread</span> thr_world(&amp;PrintWorld);
+    <span class="auto-style5">thread</span> thr_hello(PrintHello);
+    <span class="auto-style5">thread</span> thr_world(PrintWorld);
 
     <span class="comment">// スレッド終了待ち</span>
     thr_hello.join();
@@ -136,7 +163,7 @@ int main(int argc, char* argv[])
 {
     <span class="comment">// 引数付き関数をマルチスレッドで実行</span>
     {
-<span class="command">#if 1 </span><span class="comment">// 一般的な起債</span><span class="command">
+<span class="command">#if 1 </span><span class="comment">// 一般的な記載</span><span class="command">
 </span>        thread  thr_hello( PrintString, <span class="string">&quot;Hello &quot;</span> );
         thread  thr_world( PrintString, <span class="string">&quot;World! &quot;</span>);
         thread  thr_space( PrintString, <span class="string">&quot;Space &quot;</span>) );
@@ -320,7 +347,7 @@ int main(int argc, char* argv[])
 </tbody>
 </table>
 <p>&nbsp;</p>
-<p>[プログラムソース： &quot;test_thread_NN.cpp&quot;]</p>
+<p>[プログラムソース]</p>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
 #include &lt;thread&gt;       // std::thread
 #include &lt;future&gt;       // std::async
@@ -369,7 +396,7 @@ int main()
 </ul>
 <p></p>
 <hr>
-<p>記載：<br>2019年11月20日: <font face="Meiryo UI">「2. 一時停止状態のスレッドを作る」の章を追加</font><br>2013年9月1日: 新規作成、木下英俊 （boost::thread の記述をベースに修正）</p>
+<p>記載：<br>2020年06月01日 誤植を修正<br>2019年11月20日 <font face="Meiryo UI">「2. 一時停止状態のスレッドを作る」の章を追加</font><br>2013年09月01日 新規作成、木下英俊 （boost::thread の記述をベースに修正）</p>
 
 </body>
 </html>
