@@ -1,0 +1,198 @@
+﻿<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Programing Items/C++/thread/mutex.html</title>
+
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->
+
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+	<style type="text/css">
+	.auto-style1 {
+		background-color: #FFFF00;
+	}
+	</style>
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>std::lock_guard (c++11)&nbsp;</h1>
+
+<p> 
+スレッド間で共有されるリソースに対して複数のスレッドから同時に処理を行うと、プログラムの整合性が壊れてしまいます。これを防ぐために共有リソースに対する処理を適切に制御してプログラムの整合性を保つことを 
+&quot;排他制御&quot; といいます。<br>
+ミューテックスと呼ばれる種類のクラスによって共有リソースへアクセスできるスレッドを制限して、排他制御を実現できます。</p>
+<p> <strong><em>std::lock_guard</em></strong> クラスは、リソースの排他的なロックをシンプルに管理するためのクラスです。テンプレート引数には、std::mutexクラスのような、 
+lock() / unlock() メンバ関数を持つクラスを指定できます。</p>
+<p> コンストラクタの第一引数には、ミューテックスオブジェクトの参照を渡します。コンストラクタ内では、受け取ったオブジェクトに対して、 lock() 
+メンバ関数を呼び出してロックを取得します。</p>
+<p> すでにロックが取得されているオブジェクトを std::lock_guard クラスで管理したい場合は、コンストラクタの第２仮引数に 
+std::adopt_lock 変数を渡して、 lock() メンバ関数を呼び出さないように指定できます。</p>
+<p> デストラクタが呼び出されると、管理しているオブジェクトの unlock() メンバ関数を呼び出し、ロックを解除します。</p>
+<p> lock_guard クラスはコピー可能ではありません。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._lock_guard_を使ってみる">1. lock_guard を使ってみる</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._lock_guard_を使ってみる">1. lock_guard を使ってみる</a></h2>
+<p>[概要]</p>
+<p> mutex と lock_guard を使って、シンプルな排他処理を行うプログラムを作成してみます。</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.2 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;     // cout
+#include &lt;map&gt;          // map
+#include &lt;string&gt;       // string
+#include &lt;chrono&gt;       // chrono::seconds
+#include &lt;thread&gt;       // thread, join
+<span class="auto-style1">#include &lt;mutex&gt;        // mutex, lock_guard</span>
+
+std::map&lt;std::string, std::string&gt; g_pages;
+std::mutex g_pages_mutex;
+
+void save_page(const std::string&amp; url)
+{
+    // ページの読み込みに時間がかかるのをシミュレートしています。
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::string result = &quot;fake content&quot;;
+
+    // ミューテックスをロックして g_pages にアクセスします。
+    <span class="auto-style1">std::lock_guard&lt;std::mutex&gt;</span> guard(g_pages_mutex);
+    g_pages[url] = result;
+}
+
+int main()
+{
+    std::thread t1(save_page, &quot;http://foo&quot;);
+    std::thread t2(save_page, &quot;http://bar&quot;);
+    t1.join();
+    t2.join();
+
+    // スレッドが join 済みであるため、ロックなしで g_pages にアクセスしても安全です。
+    for (const auto&amp; pair : g_pages) {
+        std::cout &lt;&lt; pair.first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; pair.second &lt;&lt; &#39;\n&#39;;
+    }
+}</code></pre>
+
+<p>&nbsp;</p>
+<p>[実行結果]</p>
+<p><img alt="" src="lock_guard/imgD.jpg"></p>
+<p>&nbsp;</p>
+<h3>
+参考</h3>
+<ul>
+	<li>cppreference.com&nbsp; -&nbsp; lock_guard<br>
+	<a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">
+	https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
+	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
+	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
+	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2> 2. ***</h2>
+<p>[概要]</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.2 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
+				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+<pre class="prettyprint linenums">
+</pre>
+	
+<br>
+	
+<br>
+<h2>
+サンプルプログラム</h2>
+<p>
+サンプルプログラム ダウンロード</p>
+<p>
+&nbsp;</p>
+<h2>
+参考</h2>
+<ul>
+	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
+	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
+	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
+</ul>
+<hr>
+<p>記載： </p>
+<ul>
+	<li>2020年06月13日 新規作成、木下英俊<br></li>
+</ul>
+</body>
+</html>
