@@ -1,0 +1,194 @@
+﻿<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>［タイトルを記載します］</title>
+
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify.css" rel="stylesheet" type="text/css">
+	<script src="../prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->
+
+	<link rel="stylesheet" href="../design.css" type="text/css">
+	<style type="text/css">
+	</style>
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>［Excel］Excelガントチャート を作る</h1>
+
+<p> 「Excelガントチャート」を自作したので、以下でこのソフトウェアおよび作り方を紹介します。</p>
+<p> 仕事でもいろいろとガントチャートツールを利用しました。<br>が、少しずつ何かが足りませんでした。<br>私が強く求めるのは以下のような機能でした。</p>
+<p> (1) 計画/実績 を記載できること。<br>(2) バーチャート（ガントチャート）を表示すること。またこの更新が楽であること。<br>(3) 分解能は 
+1日 を基本とすること。<br>(4) 関係者へ配布できること。（ライセンスが無料であること、と同意。この観点でExcelファイルが優れている）<br>(5) 
+動作が軽快であること。（この観点では、MS Project、ProjectLibre などが秀逸。多くのExcelガントチャートはこれがNG。）<br>(6) 
+少なくともWBSを100程度は記載できること。改ページ可。<br>(7) ６カ月程度のスケジュールを一画面に記載できること。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+<p> <a href="#1._機能概要">1. 機能概要</a><br>2. ***<br>3. ***<br><a href="#サンプルプログラム">
+サンプルプログラム</a><br><a href="#参考">参考</a></p>
+<p> &nbsp;</p>
+<h2> <a name="1._機能概要">1. 機能概要</a></h2>
+<p> こんな感じの「Excelガントチャート」ツールを作っていきます。</p>
+<p> 図．全体図</p>
+<p> <img alt="" height="680" src="gantchart/imgA.jpg" width="1336"></p>
+<p> &nbsp;</p>
+<p> 図．拡大図</p>
+<p> <img alt="" src="gantchart/imgD.jpg"></p>
+<p> &nbsp;</p>
+<p> 図．スケジュール更新をコンテキストメニューから行う様子</p>
+<p> <img alt="" src="gantchart/img11.jpg"></p>
+<p> &nbsp;</p>
+<p> 図．設定１</p>
+<p> <img alt="" src="gantchart/imgB1.jpg"></p>
+<p> &nbsp;</p>
+<p> 図．設定２</p>
+<p> <img alt="" src="gantchart/imgC.jpg"></p>
+<p> &nbsp;</p>
+<p> 図．注意事項など</p>
+<p> <img alt="" src="gantchart/imgE1.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> 2. ***</h2>
+<p>[概要]</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="../MouseDragElementBehavior/SampleMovie01.mp4">
+				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+<pre class="prettyprint linenums">
+</pre>
+	
+<p>&nbsp;</p>
+<h2> 3. ***</h2>
+<p>[概要]</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.6.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+	<tr>
+		<td>
+			<video controls autoplay="y" loop="y" src="../MouseDragElementBehavior/SampleMovie01.mp4">
+				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+			</video>
+		</td>
+	</tr>
+</table>
+
+<p> &nbsp;</p>
+<p>[プログラムソース &quot;***.cpp&quot;]</p>
+<pre class="prettyprint linenums">
+</pre>
+	
+<br>
+	
+<br>
+<h2>
+<a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>
+サンプルプログラム <a href="gantchart/Excelガントチャート_v1_00.xlsm">ダウンロード</a></p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="参考">参考</a></h2>
+<ul>
+	<li>bizroute － ガントチャートのエクセルテンプレート<br>
+	<a href="https://bizroute.net/download/gantchart_simple01" target="_blank">
+	https://bizroute.net/download/gantchart_simple01</a></li>
+	<li>[Excel]VBAで「右クリックメニュー」を追加する<br>
+	<a href="https://m0ratorium.com/vba-rightclickmenuadd/" target="_blank">
+	https://m0ratorium.com/vba-rightclickmenuadd/</a></li>
+	<li>Shape プロパティ (Excel)<br>
+	<a href="https://docs.microsoft.com/ja-jp/office/vba/api/excel.shape.line" target="_blank">
+	https://docs.microsoft.com/ja-jp/office/vba/api/excel.shape.line</a></li>
+	<li>特定のオブジェクトを削除する<br>
+	<a href="http://www4.synapse.ne.jp/yone/excel2010/excel2010_zu_obje_del.html" target="_blank">
+	http://www4.synapse.ne.jp/yone/excel2010/excel2010_zu_obje_del.html</a></li>
+	<li>右クリックメニューやサブメニューにマクロを登録／削除するには<br>
+	<a href="https://www.atmarkit.co.jp/ait/articles/1408/25/news030.html" target="_blank">
+	https://www.atmarkit.co.jp/ait/articles/1408/25/news030.html</a></li>
+	<li>【VBA】選択したセルを取得する『Selectionプロパティ』の使い方<br>
+	<a href="https://detail-infomation.com/vba-selection/" target="_blank">
+	https://detail-infomation.com/vba-selection/</a></li>
+	<li>Excel VBAで外部ファイルのモジュールを読み込み実行する方法<br>
+	<a href="https://eijiman.com/execute-external-file-module-excel-vba/" target="_blank">
+	https://eijiman.com/execute-external-file-module-excel-vba/</a></li>
+</ul>
+<hr>
+<p>記載： 木下英俊<br>- 2020年07月07日 新規作成<br></p>
+</body>
+</html>
