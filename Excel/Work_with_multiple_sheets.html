@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>[VBA] 複数のシートを操作する</title>
+<title>[Excek VBA] 複数のシートを操作する</title>
 
 <!-- Start for 'google-code-prettify' -->
 <link href="../prettify.css" rel="stylesheet" type="text/css">
@@ -12,6 +12,21 @@
 <style type="text/css">
 .auto-style7 {
 	font-weight: normal;
+}
+.auto-style8 {
+	border-collapse: collapse;
+	border: 2px solid #808080;
+}
+.auto-style9 {
+	color: #FFFFFF;
+	border: 1px solid #808080;
+	background-color: #808080;
+}
+.auto-style10 {
+	border: 1px solid #808080;
+}
+.auto-style11 {
+	background-color: #FFFF00;
 }
 </style>
 </head>
@@ -39,6 +54,7 @@
 <p> &nbsp;</p>
 <h2> <a name="1._作業日により、月ごとにシートを分割する">1. 作業日により、月ごとにシートを分割する</a></h2>
 <p> [概要]</p>
+<p> 作業日により、月ごとにシートを分割するVBAマクロを作成します。</p>
 <p> &nbsp;</p>
 <font face="Meiryo UI">
 <p>[評価環境]</p>
@@ -71,16 +87,19 @@
 </table>
 </font>
 <p> &nbsp;</p>
+<p> 下記が使用するサンプルデータです。<br>このデータを「作業日」の月ごとに別のシートへ分離します。</p>
 <p> 
 <img alt="" src="Work_with_multiple_sheets/img3.jpg"></p>
 <p> &nbsp;</p>
 <p> <img alt="" src="Work_with_multiple_sheets/img9.gif"></p>
 <p> &nbsp;</p>
+<p> 実行結果の例です。</p>
 <p> <img alt="" src="Work_with_multiple_sheets/imgB.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 
 <p>[プログラムソース &quot;sample.xlsm&quot; - Module1]</p>
+
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums">
 <code>'
@@ -89,9 +108,216 @@
 Sub 月分割()
     Dim i
        
-    For i = 2 To 4
+    For i = 2 To 4                                                                                            &#39; --- (1)
         ' 2月から4月でフィルタ
-        Worksheets(&quot;一覧&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic
+        Worksheets(&quot;一覧&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, Criteria1:=i + 20, Operator:=xlFilterDynamic      &#39; --- (2)
+        
+        Worksheets.Add after:=Worksheets(Worksheets.Count)                                                    &#39; --- (3)
+        ActiveSheet.Name = i &amp; &quot;月分&quot;                                                                         &#39; --- (4)
+        Worksheets(&quot;一覧&quot;).UsedRange.Copy                                                                     &#39; --- (5)
+        
+        With Worksheets(i &amp; &quot;月分&quot;).Range(&quot;A1&quot;)                                                               &#39; --- (6)
+            .PasteSpecial xlPasteColumnWidths                                                                 &#39; --- (7)
+            .PasteSpecial xlPasteAll                                                                          &#39; --- (8)
+        End With
+    Next i
+    
+    With Worksheets(&quot;一覧&quot;)
+        .Select
+        .ShowAllData                                                                                          &#39; --- (9))
+    End With
+End Sub</code></pre>
+<!-- End for 'google-code-prettify' -->
+
+<p>&nbsp;</p>
+<p>(1) For ・・・ Next ステートメントは、カウンタ変数 i の開始値が「2」、終了値が「4」に指定されています。したがって i 
+の値が「2→3→4」と3回繰り返し処理を実行します。</p>
+<p>(2) AutoFilter メソッドを使用して「一覧」シートのA2セルから始まる表をオートフィルターします。<br>
+フィルター条件として、C列（field:=3）の値が 22～24 
+のデータ（Criteria1:=i+20）を抽出します。また「Operator:=xlFilterDynamic」とすることで、フィルターが同的に適用されるように指定しています。これは「日付フィルター」の「期間内の全日付」で、2月～4月の指定をしたのと同じになります。Criteria1には、定数を使用して指定を行いますが、定数ではなく値を指定することで繰り返し処理で利用することができます。全日付を指定する定数は以下の通りです。</p>
+<p>表：日付フィルターの条件として指定可能な定数と値</p>
+<table class="auto-style8" style="width: 800">
+	<tr>
+		<td class="auto-style9"><strong>定数</strong></td>
+		<td class="auto-style9" style="width: 60"><strong>値</strong></td>
+		<td class="auto-style9"><strong>説明</strong></td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterToday</td>
+		<td class="auto-style10" style="width: 60">1</td>
+		<td class="auto-style10">今日</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterYesterday</td>
+		<td class="auto-style10" style="width: 60">2</td>
+		<td class="auto-style10">昨日</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterTomorrow</td>
+		<td class="auto-style10" style="width: 60">3</td>
+		<td class="auto-style10">明日</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterThisWeek</td>
+		<td class="auto-style10" style="width: 60">4</td>
+		<td class="auto-style10">今週</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterLastWeek</td>
+		<td class="auto-style10" style="width: 60">5</td>
+		<td class="auto-style10">先週</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterNextWeek</td>
+		<td class="auto-style10" style="width: 60">6</td>
+		<td class="auto-style10">来週</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterThisMonth</td>
+		<td class="auto-style10" style="width: 60">7</td>
+		<td class="auto-style10">今月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterLastMonth</td>
+		<td class="auto-style10" style="width: 60">8</td>
+		<td class="auto-style10">先月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterNextMonth</td>
+		<td class="auto-style10" style="width: 60">9</td>
+		<td class="auto-style10">来月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterThisQuarter</td>
+		<td class="auto-style10" style="width: 60">10</td>
+		<td class="auto-style10">今四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterLastQuarter</td>
+		<td class="auto-style10" style="width: 60">11</td>
+		<td class="auto-style10">前四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterNextQuarter</td>
+		<td class="auto-style10" style="width: 60">12</td>
+		<td class="auto-style10">来四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterThisYear</td>
+		<td class="auto-style10" style="width: 60">13</td>
+		<td class="auto-style10">今年</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterLastYear</td>
+		<td class="auto-style10" style="width: 60">14</td>
+		<td class="auto-style10">昨年</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterNextYear</td>
+		<td class="auto-style10" style="width: 60">15</td>
+		<td class="auto-style10">来年</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterYearToDate</td>
+		<td class="auto-style10" style="width: 60">16</td>
+		<td class="auto-style10">今年の初めから今日まで</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodQuarter1</td>
+		<td class="auto-style10" style="width: 60">17</td>
+		<td class="auto-style10">期間内の全日付:第1四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodQuarter2</td>
+		<td class="auto-style10" style="width: 60">18</td>
+		<td class="auto-style10">期間内の全日付:第2四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodQuarter3</td>
+		<td class="auto-style10" style="width: 60">19</td>
+		<td class="auto-style10">期間内の全日付:第3四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodQuarter4</td>
+		<td class="auto-style10" style="width: 60">20</td>
+		<td class="auto-style10">期間内の全日付:第4四半期</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodJanuary</td>
+		<td class="auto-style10" style="width: 60">21</td>
+		<td class="auto-style10">期間内の全日付の1月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10"><strong>xlFilterAllDatesInPeriodFeburuary</strong></td>
+		<td class="auto-style10" style="width: 60"><strong>22</strong></td>
+		<td class="auto-style10"><strong>期間内の全日付の2月</strong></td>
+	</tr>
+	<tr>
+		<td class="auto-style10"><strong>xlFilterAllDatesInPeriodMarch</strong></td>
+		<td class="auto-style10" style="width: 60"><strong>23</strong></td>
+		<td class="auto-style10"><strong>期間内の全日付の3月</strong></td>
+	</tr>
+	<tr>
+		<td class="auto-style10"><strong>xlFilterAllDatesInPeriodApril</strong></td>
+		<td class="auto-style10" style="width: 60"><strong>24</strong></td>
+		<td class="auto-style10"><strong>期間内の全日付の4月</strong></td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodMay</td>
+		<td class="auto-style10" style="width: 60">25</td>
+		<td class="auto-style10">期間内の全日付の5月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodJune</td>
+		<td class="auto-style10" style="width: 60">26</td>
+		<td class="auto-style10">期間内の全日付の6月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodJuly</td>
+		<td class="auto-style10" style="width: 60">27</td>
+		<td class="auto-style10">期間内の全日付の7月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodAugust</td>
+		<td class="auto-style10" style="width: 60">28</td>
+		<td class="auto-style10">期間内の全日付の8月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodSeptember</td>
+		<td class="auto-style10" style="width: 60">29</td>
+		<td class="auto-style10">期間内の全日付の9月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodOctober</td>
+		<td class="auto-style10" style="width: 60">30</td>
+		<td class="auto-style10">期間内の全日付の10月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodNovember</td>
+		<td class="auto-style10" style="width: 60">31</td>
+		<td class="auto-style10">期間内の全日付の11月</td>
+	</tr>
+	<tr>
+		<td class="auto-style10">xlFilterAllDatesInPeriodDecember</td>
+		<td class="auto-style10" style="width: 60">32</td>
+		<td class="auto-style10">期間内の全日付の12月</td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p>上記指定の方法以外に、下記のような具体的な日付を指定する方法もあります。<br>こちらの方法を使うと、異なる年で同じ月、という条件を排除できます。</p>
+
+<!-- Start for 'google-code-prettify' -->
+<pre class="prettyprint linenums">
+<code>Sub 月分割()
+    Dim i, <span class="auto-style11"><strong>date1, date2</strong></span>
+       
+    For i = 2 To 4
+<span class="auto-style11">        date1 = DateSerial(2019, i, 1)                  &#39; 例えば date1=&quot;2019/2/1&quot; のとき...</span>
+<span class="auto-style11">        date2 = DateAdd(&quot;m&quot;, 1, date1)                  &#39; date2 は &quot;2019/3/1&quot; になって...</span>
+<span class="auto-style11">        date2 = DateAdd(&quot;d&quot;, -1, date2)                 &#39; ここで date2 が &quot;2019/2/28&quot; になります。</span>
+<span class="auto-style11">                                                        &#39; 閏年 を考慮した場合もよい実装と思います。</span>
+
+        Worksheets(&quot;一覧&quot;).Range(&quot;A2&quot;).AutoFilter field:=3, <span class="auto-style11"><strong>Criteria1:=&quot;&gt;=&quot; &amp; date1, Criteria2:=&quot;&lt;=&quot; &amp; date2, Operator:=xlAnd</strong></span>
         
         Worksheets.Add after:=Worksheets(Worksheets.Count)
         ActiveSheet.Name = i &amp; &quot;月分&quot;
@@ -110,6 +336,19 @@ Sub 月分割()
 End Sub</code></pre>
 <!-- End for 'google-code-prettify' -->
 
+
+<p>&nbsp;</p>
+<p>(3) Worksheets コレクションへ新しいシートを挿入（Add）します。<br>
+挿入場所は、一番右にあるワークシート（Worksheets(Worksheets.Count)）の右側（After）です。</p>
+<p>(4) アクティブシートの名前を「i &amp; 
+&quot;月分&quot;」に変更します。新しいシートを挿入すると、そのシートが必ずアクティブシートになります。結果として「2月分」、「3月分」、「4月分」という名称でシートが挿入されることになります。</p>
+<p>(5) 「一覧」シートの使用されているセル範囲（UsedRange）をコピーします。UsedRange 
+プロパティは、ワークシートで使用されているセル範囲を参照します。この例では、絞り込まれている各月のデータになります。</p>
+<p>(6) With ステートメントは、この後「EndWith」が記載されるまでの間、「.（ピリオド）」で始まる個所を「Worksheets(i &amp; 
+&quot;月分&quot;).Range(&quot;A1&quot;)」に対する命令として指定します。また、Worksheets(&quot;〇〇〇&quot;)と、文字列でシート名を指定することで、特定のシートを操作の対象にすることができます。</p>
+<p>(7) 各列の列幅（xlPasteColumn）を張り付け（PasteSpecial）ます。</p>
+<p>(8) その他のすべて（xlPasteAll）を張り付け（PasteSpecial）ます。</p>
+<p>(9) 「一覧」シートの絞り込みを解除（.ShowAllData）してコードを終了します。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> <a name="2._一覧以外のシートをすべて削除する">2. &quot;一覧&quot;以外のシートをすべて削除する</a></h2>
@@ -421,9 +660,8 @@ End Function</code>
 <h2>
 <a name="参考">参考</a></h2>
 <ul>
-	<li>(例) http://www.****.com</li>
+	<li>日経ソフトウェア 2019年9月号 「ビジネスパーソンの Excel VBA 再入門 第4回 複数のシートを操作しよう」</li>
 </ul>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <hr>
 <p> <font face="Meiryo UI">記載： 木下英俊<br>2020/05/05 新規作成</font></p>
