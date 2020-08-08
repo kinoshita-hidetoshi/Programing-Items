@@ -1,0 +1,91 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" Content="text/html; charset=utf-8">
+<title></title>
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+</style>
+
+<script type="text/javascript">
+var ulShowHide = {
+	showHide: function(element) {
+		if (element.parentNode.childNodes.item(2)) {
+			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+				if (styleDisplay == 'block' || styleDisplay == '') {
+					element.parentNode.childNodes.item(2).style.display = "none";
+				}
+				else {
+					element.parentNode.childNodes.item(2).style.display = "block";
+				}
+			}
+		}
+		return false;
+	}
+}
+</script>
+
+<script type="text/javascript">
+<!--
+function sublist( target ) {
+   var TargetList = target.parentNode.getElementsByTagName('ul');
+   if ( TargetList[0].style.display == 'none' ) {
+      TargetList[0].style.display = 'block';
+   }
+   else {
+      TargetList[0].style.display = 'none';
+   }
+}
+// -->
+</script>
+
+
+<base target="contents">
+
+
+<link href="design_items.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<a href="items_top.html" target="_self">
+<img alt="" height="24" width="24" src="images/to_upper_folder.png" align="middle" class="auto-style4"></a>
+<a href="items_top.html" target="_self">戻る</a>
+
+<ul>
+	<li style="list-style-type:none">
+	<a class="menu" href="url" name="html_menu_top" onclick="sublist(this); return false;">HTML</a>
+	<ul>
+		<li>Google Code Prettify</li>
+	</ul>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a class="menu" href="url" name="css_menu_top" onclick="sublist(this); return false;">CSS</a>
+	<ul>
+		<li>(empty)</li>
+	</ul>
+</ul>
+
+<hr>
+
+<ul>
+	<li style="list-style-type:none">
+	<a class="menu" href="url" name="JavaScript_menu_top" onclick="sublist(this); return false;">JavaScript</a>
+	<ul>
+		<li>(empty)</li>
+	</ul>
+</ul>
+
+<hr size="2">
+
+<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+</p>
+
+</body>
+</html>

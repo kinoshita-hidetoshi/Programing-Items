@@ -55,13 +55,18 @@ function sublist( target ) {
 
 <ul>
 	<li style="list-style-type:none">
-	<a href="url" class="menu" onclick="sublist(this); return false;">c</a>
+	<a class="menu" href="url" name="c_menu_top" onclick="sublist(this); return false;">c</a>
 	<ul>
 		<li>(empty)</li>
 	</ul>
 	</li>
+</ul>
+
+<hr>
+
+<ul>
 	<li style="list-style-type:none">
-	<a href="url" class="menu" onclick="sublist(this); return false;">c++</a>
+	<a class="menu" href="url" name="c++_menu_top" onclick="sublist(this); return false;">c++</a>
 	<ul>
 		<li>
 		<a href="url" class="menu" onclick="sublist(this); return false;">基本文法</a><ul>
@@ -384,8 +389,14 @@ function sublist( target ) {
 		</ul>
 		</li>
 	</ul>
+</ul>
+
+<hr>
+
+<ul>	
 	<li style="list-style-type:none">
-	<a href="url" class="menu" onclick="sublist(this); return false;">boost(c++)</a>
+	<a class="menu" href="url" name="boost_menu_top" onclick="sublist(this); return false;">boost
+	</a>
 	<ul>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">環境構築</a><ul>
 			<li><a href="boost/install.html">boost library をコンパイル</a></li>

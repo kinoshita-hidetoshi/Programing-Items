@@ -1,20 +1,20 @@
 ﻿body{
 	font-size: small;
 	color: #000000;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 }
 
 h1 {
 	font-size: x-large;
 	color: #0080FF;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: normal;
 }
 
 h2 {
 	font-size: medium;
 	color: #000088;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: bold;
 	text-decoration:underline;
 }
@@ -22,28 +22,33 @@ h2 {
 h3 {
 	font-size: small;
 	color: #000088;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: bold;
 }
 
 h4 {
 	font-size: small;
 	color: #000088;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: bold;
 }
 
 p{
 	font-size: small;
 	color: #000000;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 }
 
 ul {
 	font-size:small;
-	font-family:"Meiryo UI";
+	font-family:sans-serif;
 	margin-left:1.5em;
 	padding-left: 0;
+}
+
+li{
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 
 pre{
@@ -80,19 +85,19 @@ code{
 .table_title{
 	font-size: small;
 	color: #000000;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: normal;	
 }
 
 table{
 	font-size:small;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: normal;	
 }
 
 td{
 	font-size:small;
-	font-family: "Meiryo UI";
+	font-family: sans-serif;
 	font-weight: normal;	
 }
 
@@ -100,17 +105,18 @@ a.menu {
 	text-decoration: none;			/* 下線削除 */
 	border: 1px solid #8080ff;		/* 枠線 */
 	background-color: #ccccff;		/* 背景色 */
-	padding: 0px;					/* 内側余白 */
+	padding: 0px 4px 0px 4px;		/* 内側余白 */
+	border-radius: 2px
 }
 
 code{
 	font-size: small;
-	font-family: FixedSys;
+	font-family: monospace;
 }
 
 ul {
 	font-size:small;
-	font-family:"Meiryo UI";
+	font-family: sans-serif;
 }
 
 .t-tr-dropdown {
@@ -153,5 +159,3 @@ ul {
 	top:-3px;
 	left:100px
 }
-
-.ja-jp *,.ja-jp #ux-header .ux-mtps-internav{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important}
