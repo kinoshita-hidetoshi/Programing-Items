@@ -27,7 +27,7 @@ h3 {
 }
 
 h4 {
-	font-size: small;
+	font-size: medium;
 	color: #000088;
 	font-family: sans-serif;
 	font-weight: bold;
@@ -48,7 +48,7 @@ pre{
 	display:block;
 	padding:4px;
 	margin:0 0 10px;
-	font-size:small;
+	font-size:medium;
 	line-height:1.42857143;
 	color:#333;
 	word-break:break-all;
@@ -59,7 +59,7 @@ pre{
 }
 
 code{
-	font-size:small;
+	font-size:medium;
 	font-family: monospace;
 }
 
@@ -99,7 +99,6 @@ table{
 }
 
 td{
-	font-size:small;
 	font-family: sans-serif;
 	font-weight: normal;	
 }
