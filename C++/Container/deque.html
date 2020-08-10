@@ -1,0 +1,251 @@
+﻿<!DOCUMENTTYPE HTML>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>std::deque</title>
+	<meta name="author" content="木下英俊">
+	<meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+	<meta name="keywords" content="">
+	
+	<!--
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	-->
+
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->
+
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>std::deque&nbsp;</h1>
+
+<nav>
+	<p> std::deque（両端キュー）を試してみます。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+	<p>
+	<a href="#1._始めに">1. 始めに</a><br>
+	<a href="#2._emplace_back (c++11)">2. emplace_back (c++11)</a><br>
+	3. ***<br>参考</p>
+</nav>
+
+<p> &nbsp;</p>
+
+<section>
+<h2> <a name="1._始めに">1. 始めに</a></h2>
+<p>[概要]</p>
+<p>ja.cppreference.com に記載されているサンプルプログラムから作成してみます。</p>
+<p><a href="https://ja.cppreference.com/w/cpp/container/deque" target="_blank">
+https://ja.cppreference.com/w/cpp/container/deque</a></p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;deque&gt;
+
+int main()
+{
+    // Create a deque containing integers
+    std::deque<int> d = { 7, 5, 16, 8 };
+
+    // Add an integer to the beginning and end of the deque
+    d.push_front(13);
+    d.push_back(25);
+
+    // Iterate and print values of deque
+    for (int n : d) {
+        std::cout &lt;&lt; n &lt;&lt; '\n';
+    }
+}</code></pre>
+
+<p>[出力]</p>
+<pre><code>13
+7
+5
+16
+8
+25</code></pre>
+
+</section>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+<h2> <a name="2._emplace_back (c++11)">2. emplace_back (c++11)</a></h2>
+<p>[概要]</p>
+<p> emplace_back を使った例を示します。</p>
+<p> emplace_back, emplace_front は c++11 以降で使用可能です。<br>push_back 
+を使用したときに必要なコピーやムーブを回避するために、どのように emplace_back を使用すれば良いかを示します。</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;deque&gt;
+#include &lt;string&gt;
+
+
+struct President
+{
+    std::string name;
+    std::string country;
+    int year;
+
+    President(std::string p_name, std::string p_country, int p_year)
+        : name(std::move(p_name)), country(std::move(p_country)), year(p_year)
+    {
+        std::cout &lt;&lt; &quot;I am being constructed.\n&quot;;
+    }
+
+    President(President&amp;&amp; other) noexcept
+        : name(std::move(other.name)), country(std::move(other.country)), year(other.year)
+    {
+        std::cout &lt;&lt; &quot;I am being moved.\n&quot;;
+    }
+
+    President&amp; operator=(const President&amp; other) = default;
+};
+
+std::ostream&amp; operator &lt;&lt; (std::ostream&amp; os, const President&amp; president)
+{
+    os &lt;&lt; president.name &lt;&lt; &quot;, &quot; &lt;&lt; president.country &lt;&lt; &quot;, &quot; &lt;&lt; president.year;
+    return os;
+}
+
+
+int main()
+{
+    std::deque&lt;President&gt; elections;
+    std::cout &lt;&lt; &quot;emplace_back:\n&quot;;
+    elections.emplace_back(&quot;Nelson Mandela&quot;, &quot;South Africa&quot;, 1994);
+
+    std::deque&lt;President&gt; reElections;
+    std::cout &lt;&lt; &quot;\npush_back:\n&quot;;
+    reElections.push_back(President(&quot;Franklin Delano Roosevelt&quot;, &quot;the USA&quot;, 1936));
+
+
+    std::cout &lt;&lt; &quot;\nElections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : elections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+    std::cout &lt;&lt; &quot;\nRe-Elections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : reElections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+
+
+    std::cout &lt;&lt; &quot;\nContents:\n&quot;;
+    for (President const&amp; president : elections) {
+        std::cout &lt;&lt; president.name &lt;&lt; &quot; was elected president of &quot;
+            &lt;&lt; president.country &lt;&lt; &quot; in &quot; &lt;&lt; president.year &lt;&lt; &quot;.\n&quot;;
+    }
+
+    for (President const&amp; president : reElections) {
+        std::cout &lt;&lt; president.name &lt;&lt; &quot; was re-elected president of &quot;
+            &lt;&lt; president.country &lt;&lt; &quot; in &quot; &lt;&lt; president.year &lt;&lt; &quot;.\n&quot;;
+    }
+}</code></pre>
+	
+[出力]<br>
+<pre><code>emplace_back:
+I am being constructed.
+
+push_back:
+I am being constructed.
+I am being moved.
+
+Elections:
+Nelson Mandela, South Africa, 1994
+
+Re-Elections:
+Franklin Delano Roosevelt, the USA, 1936
+
+Contents:
+Nelson Mandela was elected president of South Africa in 1994.
+Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></pre>
+	
+<br>
+	
+</section>
+
+<h2><a name="参考">参考</a></h2>
+<ul>
+	<li><br><a href="https://ja.cppreference.com/w/cpp/container/deque">
+	https://ja.cppreference.com/w/cpp/container/deque</a></li>
+</ul>
+<hr>
+
+<p>記載：<br>2020-08-10 新規作成<br></p>
+
+<footer>
+	<p><small>&copy; copyright 2020 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
