@@ -1,0 +1,799 @@
+﻿<!DOCUMENTTYPE HTML>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>std::vector</title>
+	<meta name="author" content="木下英俊">
+	<meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+	<meta name="keywords" content="">
+	
+	<!--
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	-->
+
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->
+
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+	<style type="text/css">
+	.auto-style1 {
+		font-size: x-small;
+		color: #00FF00;
+	}
+	.auto-style2 {
+		font-size: large;
+	}
+	.auto-style3 {
+		background-color: #FFFF00;
+	}
+	.auto-style4 {
+		margin-left: 40px;
+		margin-bottom: 0px;
+	}
+	</style>
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>std::vector</h1>
+
+<nav>
+	<p> std::vector を試してみます。</p>
+<p> &nbsp;</p>
+<h2> 目次</h2>
+	<p>
+	<a href="#1._始めに">1. 始めに (push_back)</a><br><a href="#2._insert">2. insert</a><br>
+	<a href="#3._emplace_back (c++11)">3. emplace_back (c++11)</a><br>
+	<a href="#4._emplace (c++11)">4. emplace (c++11)</a><br><a href="#参考">参考</a></p>
+</nav>
+
+<p> &nbsp;</p>
+
+<section>
+<h2> <a name="1._始めに">1. 始めに (push_back)</a></h2>
+<h4>[概要]</h4>
+<p>ja.cppreference.com に記載されているサンプルプログラムから作成してみます。<br>push_back() を使う例です。</p>
+<p><a href="https://ja.cppreference.com/w/cpp/container/vector" target="_blank">
+https://ja.cppreference.com/w/cpp/container/vector</a></p>
+<p> &nbsp;</p>
+
+<div>
+<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+std::vector&lt;T,Allocator&gt;::<span class="auto-style2">push_back</span></h5>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">void 
+		push_back(  
+		const T&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(1)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">void push_back(  
+		T&amp;&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(2)(c++11以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+</tbody>
+</table>
+
+<p style="margin-bottom:0px">指定された要素 value をコンテナの終端に追加します。</p>
+	<p class="auto-style4">(1) 新しい要素は value のコピーとして初期化されます。<br>(2) value 
+	が新しい要素にムーブされます。</p>
+	<p style="margin-bottom:0px">新しい size() が capacity() 
+より大きい場合は、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
+<h5 style="margin-bottom:0px">引数</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">value</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">追加する要素の値</td>
+	</tr>
+</table>
+<h5 style="margin-bottom:0px">戻り値</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">(なし)</td>
+		<td class="auto-style1">&nbsp;</td>
+	</tr>
+	
+	</table>
+</div>
+
+<p> &nbsp;</p>
+
+<h4>[環境]</h4>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<h4>[プログラムソース]</h4>
+<pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+ 
+int main()
+{
+    // Create a vector containing integers
+    std::<span class="auto-style3">vector</span>&lt;int&gt; v = {7, 5, 16, 8};
+ 
+    // Add two more integers to vector
+    v.<span class="auto-style3">push_back</span>(25);
+    v.<span class="auto-style3">push_back</span>(13);
+ 
+    // Iterate and print values of vector
+    for(int n : v) {
+        std::cout &lt;&lt; n &lt;&lt; &#39;\n&#39;;
+    }
+}</pre>
+&nbsp;<h4>[出力]</h4>
+<pre>7
+5
+16
+8
+25
+13 </pre>
+
+<p>&nbsp;</p>
+
+<section>
+<h2><a name="2._insert">2. insert</a></h2>
+<h4>[概要]</h4>
+<p>同じく ja.cppreference.com に記載されているサンプルプログラムから insert() を使うサンプルを作成してみます。</p>
+<p>
+<a href="https://ja.cppreference.com/w/cpp/container/vector/insert" target="_blank">
+https://ja.cppreference.com/w/cpp/container/vector/insert</a></p>
+<p> &nbsp;</p>
+
+<div>
+<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+std::vector&lt;T,Allocator&gt;::<span class="auto-style2">insert</span></h5>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">iterator insert( iterator 
+		pos,  
+		const T&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(1) (c++11 未満)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">iterator insert( 
+		const_iterator pos, const T&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(2) (c++11 以上)</span></td>
+	</tr>
+	
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">iterator insert( 
+		const_iterator pos, const T&amp;&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(3) (c++11 以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">void insert( 
+		iterator pos, size_type count, const T&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(4) (c++11 未満)</span></td>
+	</tr>
+	
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">iterator insert( 
+		const_iterator pos, size_type count, const T&amp; value );</td>
+		<td class="auto-style1"><span class="comment">(5) (c++11 以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">template&lt; class InputIt &gt;<br>
+		void insert( 
+		const_iterator pos, InputIt first, InputIt last );</td>
+		<td class="auto-style1"><span class="comment">(6) (c++11 未満)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">template&lt; class InputIt &gt;<br>
+		iterator insert( 
+		const_iterator pos, InputIt first, InputIt last );</td>
+		<td class="auto-style1"><span class="comment">(7) (c++11 以上)</span></td>
+	</tr>
+	
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">iterator insert( 
+		const_iterator pos, std::initializer_list&lt;T&gt; ilist );</td>
+		<td class="auto-style1"><span class="comment">(8) (c++11 以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+</tbody>
+</table>
+
+<p style="margin-bottom:0px">コンテナ内の指定された位置に要素を挿入します。</p>
+	<p class="auto-style4">(1-3) pos の前に value を挿入します。<br>(4-5) pos の前に value 
+	のコピーを count 個挿入します。<br>(6-7) pos の前に範囲 [first, last] から要素を挿入します。<br>(8) pos 
+	の前に初期化子リスト ilist から要素を挿入します。</p>
+	<p style="margin-bottom:0px">新しい size() が capacity() 
+より大きい場合は再確保が発生し、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
+<h5 style="margin-bottom:0px">引数</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">pos</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">前に内容が挿入されるイテレータ。pos は 
+		end() イテレータでも構いません。</td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">value</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">挿入する要素の値</td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">first, last</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">挿入する要素の範囲。insert 
+		が呼ばれたコンテナ内を示すイテレータは使用できません。</td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">ilist</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">挿入する値の初期化子リスト</td>
+	</tr>
+</table>
+<h5 style="margin-bottom:0px">戻り値</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された value を指すイテレータ。</td>
+		<td class="auto-style1"><span class="comment">(1-3)</span></td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された 最初の要素を指すイテレータ、または 
+		<span class="cpp-source">count==0</span> の場合は pos。</td>
+		<td class="auto-style1"><span class="comment">(4-5)</span></td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された 最初の要素を指すイテレータ、または 
+		<span class="cpp-source">first==last</span> の場合は pos。</td>
+		<td class="auto-style1"><span class="comment">(6-7)</span></td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された 最初の要素を指すイテレータ、または 
+		ilist が空の場合は pos。</td>
+		<td class="auto-style1"><span class="comment">(8)</span></td>
+	</tr>
+	
+</table>
+</div>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<h4>[環境]</h4>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<h4>[プログラムソース]</h4>
+<pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+void print_vec(const std::vector&lt;int&gt;&amp; vec)
+{
+    for (auto x : vec) {
+        std::cout &lt;&lt; &#39; &#39; &lt;&lt; x;
+    }
+    std::cout &lt;&lt; &#39;\n&#39;;
+}
+
+int main()
+{
+    std::<span class="auto-style3">vector</span>&lt;int&gt; vec(3, 100);
+    print_vec(vec);
+
+    auto it = vec.begin();
+    it = vec.<span class="auto-style3">insert</span>(it, 200);
+    print_vec(vec);
+
+    vec.<span class="auto-style3">insert</span>(it, 2, 300);
+    print_vec(vec);
+
+    // &quot;it&quot; no longer valid, get a new one:
+    it = vec.begin();
+
+    std::vector&lt;int&gt; vec2(2, 400);
+    vec.<span class="auto-style3">insert</span>(it + 2, vec2.begin(), vec2.end());
+    print_vec(vec);
+
+    int arr[] = { 501,502,503 };
+    vec.<span class="auto-style3">insert</span>(vec.begin(), arr, arr + 3);
+    print_vec(vec);
+}</pre>
+&nbsp;<h4>[出力]</h4>
+<pre>100 100 100
+200 100 100 100
+300 300 200 100 100 100
+300 300 400 400 200 100 100 100
+501 502 503 300 300 400 400 200 100 100 100</pre>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+</section>
+
+</section>
+
+<section>
+<h2> <a name="3._emplace_back (c++11)">3. emplace_back (c++11)</a></h2>
+<h4>[概要]</h4>
+<p> emplace_back を使った例を示します。</p>
+<p> emplace_back, emplace_front は c++11 以降で使用可能です。<br>push_back 
+を使用したときに必要なコピーやムーブを回避するために、どのように emplace_back を使用すれば良いかを示します。</p>
+<p> &nbsp;</p>
+
+<div>
+<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h5>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">template&lt; class... Args &gt;<br>
+		void emplace_back(  
+		Args&amp;&amp;... args );</td>
+		<td class="auto-style1"><span class="comment">(c++11以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">template&lt; class... Args &gt;<br>
+		reference emplace_back(  
+		Args&amp;&amp;... args );</td>
+		<td class="auto-style1"><span class="comment">(c++17以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+</tbody>
+</table>
+
+<p style="margin-bottom:0px">コンテナの終端に新しい要素を追加します。<br>新しい size() が capacity() 
+よｒ大きい場合は、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
+<h5 style="margin-bottom:0px">引数</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">args</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">要素のコンストラクタに転送される引数</td>
+	</tr>
+</table>
+<h5 style="margin-bottom:0px">戻り値</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">(なし)</td>
+		<td class="auto-style1"><span class="comment">(c++11以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された要素を示す参照</td>
+		<td class="auto-style1"><span class="comment">(c++17以上)</span></td>
+	</tr>
+</table>
+</div>
+
+<p> &nbsp;</p>
+
+<h4>[環境]</h4>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h4>[プログラムソース]</h4>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+
+struct President
+{
+    std::string name;
+    std::string country;
+    int year;
+
+    President(std::string p_name, std::string p_country, int p_year)
+        : name(std::move(p_name)), country(std::move(p_country)), year(p_year)
+    {
+        std::cout &lt;&lt; &quot;I am being constructed.\n&quot;;
+    }
+
+    President(President&amp;&amp; other) noexcept
+        : name(std::move(other.name)), country(std::move(other.country)), year(other.year)
+    {
+        std::cout &lt;&lt; &quot;I am being moved.\n&quot;;
+    }
+
+    President&amp; operator=(const President&amp; other) = default;
+};
+
+std::ostream&amp; operator &lt;&lt; (std::ostream&amp; os, const President&amp; president)
+{
+    os &lt;&lt; president.name &lt;&lt; &quot;, &quot; &lt;&lt; president.country &lt;&lt; &quot;, &quot; &lt;&lt; president.year;
+    return os;
+}
+
+
+int main()
+{
+    std::vector&lt;President&gt; elections;
+    std::cout &lt;&lt; &quot;emplace_back:\n&quot;;
+    elections.emplace_back(&quot;Nelson Mandela&quot;, &quot;South Africa&quot;, 1994);
+
+    std::vector&lt;President&gt; reElections;
+    std::cout &lt;&lt; &quot;\npush_back:\n&quot;;
+    reElections.push_back(President(&quot;Franklin Delano Roosevelt&quot;, &quot;the USA&quot;, 1936));
+
+
+    std::cout &lt;&lt; &quot;\nElections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : elections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+    std::cout &lt;&lt; &quot;\nRe-Elections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : reElections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+
+
+    std::cout &lt;&lt; &quot;\nContents:\n&quot;;
+    for (President const&amp; president : elections) {
+        std::cout &lt;&lt; president.name &lt;&lt; &quot; was elected president of &quot;
+            &lt;&lt; president.country &lt;&lt; &quot; in &quot; &lt;&lt; president.year &lt;&lt; &quot;.\n&quot;;
+    }
+
+    for (President const&amp; president : reElections) {
+        std::cout &lt;&lt; president.name &lt;&lt; &quot; was re-elected president of &quot;
+            &lt;&lt; president.country &lt;&lt; &quot; in &quot; &lt;&lt; president.year &lt;&lt; &quot;.\n&quot;;
+    }
+}</code></pre>
+	
+<h4>[出力]<br>
+</h4>
+<pre><code>emplace_back:
+I am being constructed.
+
+push_back:
+I am being constructed.
+I am being moved.
+
+Elections:
+Nelson Mandela, South Africa, 1994
+
+Re-Elections:
+Franklin Delano Roosevelt, the USA, 1936
+
+Contents:
+Nelson Mandela was elected president of South Africa in 1994.
+Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></pre>
+	
+<br>
+	
+</section>
+
+<section>
+<h2><a name="4._emplace (c++11)">4. emplace (c++11)</a></h2>
+<h4>[概要]</h4>
+<p> emplace を使った例を示します。</p>
+<p> &nbsp;</p>
+
+<div>
+<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace</span></h5>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+	
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">template&lt; class... Args &gt;<br>iterator emplace( const_iterator pos, 
+		Args&amp;&amp;... args );</td>
+		<td class="auto-style1"><span class="comment">(c++11以上)</span></td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="2"></td>
+	</tr>
+</tbody>
+</table>
+
+<p style="margin-bottom:0px">新しい要素を pos の前に直接挿入します。<br>c++11 以降で使用可能です。</p>
+<h5 style="margin-bottom:0px">引数</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">pos</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">前に新しい要素が構築されるイテレータ </td>
+	</tr>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">args</td>
+		<td style="padding-top:0px;padding-bottom:0px">-</td>
+		<td style="padding-top:0px;padding-bottom:0px">要素のコンストラクタに転送される引数</td>
+	</tr>
+</table>
+<h5 style="margin-bottom:0px">戻り値</h5>
+<table>
+	<tr>
+		<td style="padding-top:0px;padding-bottom:0px">挿入された要素を指すイテレータ。</td>
+	</tr>
+</table>
+</div>
+
+<p>&nbsp;</p>
+
+<h4>[環境]</h4>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>Visual Studio 2019 pro.,</td>
+		<td>Version 16.7.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Windows10 home,</td>
+		<td>Version 1909 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<h4>[プログラムソース]</h4>
+<pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+struct President
+{
+    std::string name;
+    std::string country;
+    int year;
+
+    President(std::string p_name, std::string p_country, int p_year)
+        : name(std::move(p_name)), country(std::move(p_country)), year(p_year)
+    {
+        std::cout &lt;&lt; &quot;I am being constructed.\n&quot;;
+    }
+
+    President(President&amp;&amp; other) noexcept
+        : name(std::move(other.name)), country(std::move(other.country)), year(other.year)
+    {
+        std::cout &lt;&lt; &quot;I am being moved.\n&quot;;
+    }
+
+    President&amp; operator=(const President&amp; other) = default;
+};
+
+std::ostream&amp; operator &lt;&lt; (std::ostream&amp; os, const President&amp; president)
+{
+    os &lt;&lt; president.name &lt;&lt; &quot;, &quot; &lt;&lt; president.country &lt;&lt; &quot;, &quot; &lt;&lt; president.year;
+    return os;
+}
+
+
+int main()
+{
+    std::<span class="auto-style3">vector</span>&lt;President&gt; elections;
+    std::cout &lt;&lt; &quot;emplace_back:\n&quot;;
+    elections.emplace_back(&quot;Nelson Mandela&quot;, &quot;South Africa&quot;, 1994);
+    elections.emplace_back(&quot;Franklin Delano Roosevelt&quot;, &quot;the USA&quot;, 1936);
+    elections.emplace_back(&quot;Foo&quot;, &quot;Japan&quot;, 2020);
+
+    std::cout &lt;&lt; &quot;\nElections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : elections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+
+    elections.<span class="auto-style3">emplace</span>(elections.begin()+1, &quot;Boo&quot;, &quot;Japan&quot;, 2021);
+
+    std::cout &lt;&lt; &quot;\nElections:&quot; &lt;&lt; std::endl;
+    for (auto const&amp; president : elections) {
+        std::cout &lt;&lt; president &lt;&lt; std::endl;
+    }
+}</pre>
+<h4>&nbsp;[出力]<br>
+</h4>
+<pre>emplace_back:
+I am being constructed.
+I am being constructed.
+I am being moved.
+I am being constructed.
+I am being moved.
+I am being moved.
+
+Elections:
+Nelson Mandela, South Africa, 1994
+Franklin Delano Roosevelt, the USA, 1936
+Foo, Japan, 2020
+I am being constructed.
+I am being moved.
+I am being moved.
+I am being moved.
+
+Elections:
+Nelson Mandela, South Africa, 1994
+Boo, Japan, 2021
+Franklin Delano Roosevelt, the USA, 1936
+Foo, Japan, 2020</pre>
+	
+<br>
+	
+</section>
+
+
+<h2><a name="参考">参考</a></h2>
+<ul>
+	<li>cppreference.com<br><a href="https://ja.cppreference.com/w/cpp/container/vector">
+	https://ja.cppreference.com/w/cpp/container/vector</a></li>
+</ul>
+<hr>
+
+<h2 style="margin-bottom:5px">記載</h2>
+<table>
+	<tr>
+		<td class="td_history">2020-08-11</td>
+		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+		<td class="td_history">新規作成 </td>
+	</tr>
+</table>
+
+<p></p>
+
+<footer>
+	<p><small>&copy; copyright 2020 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
