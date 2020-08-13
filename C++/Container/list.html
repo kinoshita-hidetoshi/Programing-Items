@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>std::deque</title>
+	<title>std::list</title>
 	<meta name="author" content="木下英俊">
 	<meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
 	<meta name="keywords" content="">
@@ -17,14 +17,19 @@
 	<!-- End for 'google-code-prettify' -->
 
 	<link rel="stylesheet" href="../../design.css" type="text/css">
+	<style type="text/css">
+.auto-style1 {
+	background-color: #FFFF00;
+}
+</style>
 </head>
 
 <body onload="prettyPrint();">
 	
-<h1>std::deque&nbsp;</h1>
+<h1>std::list</h1>
 
 <nav>
-	<p> std::deque（両端キュー）を試してみます。</p>
+	<p> std::list を試してみます。</p>
 <p> &nbsp;</p>
 <h2> 目次</h2>
 	<p>
@@ -39,8 +44,8 @@
 <h2> <a name="1._始めに">1. 始めに</a></h2>
 <h4>[概要]</h4>
 <p>ja.cppreference.com に記載されているサンプルプログラムから作成してみます。</p>
-<p><a href="https://ja.cppreference.com/w/cpp/container/deque" target="_blank">
-https://ja.cppreference.com/w/cpp/container/deque</a></p>
+<p><a href="https://ja.cppreference.com/w/cpp/container/list" target="_blank">
+https://ja.cppreference.com/w/cpp/container/list</a></p>
 <p> &nbsp;</p>
 
 <h4>[環境]</h4>
@@ -53,7 +58,7 @@ https://ja.cppreference.com/w/cpp/container/deque</a></p>
 	<tr>
 		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.7.0 </td>
+		<td>Version 16.7.1 </td>
 	</tr>
 	
 	<tr>
@@ -75,31 +80,39 @@ https://ja.cppreference.com/w/cpp/container/deque</a></p>
 <p> &nbsp;</p>
 
 <h4>[プログラムソース]</h4>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
-#include &lt;deque&gt;
-
+<pre class="prettyprint linenums">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;list&gt;
+ 
 int main()
 {
-    // Create a deque containing integers
-    std::deque<int> d = { 7, 5, 16, 8 };
-
-    // Add an integer to the beginning and end of the deque
-    d.push_front(13);
-    d.push_back(25);
-
-    // Iterate and print values of deque
-    for (int n : d) {
-        std::cout &lt;&lt; n &lt;&lt; '\n';
+    // Create a list containing integers
+    std::list&lt;int&gt; l = { 7, 5, 16, 8 };
+ 
+    // Add an integer to the front of the list
+    l.push_front(25);
+    // Add an integer to the back of the list
+    l.push_back(13);
+ 
+    // Insert an integer before 16 by searching
+    auto it = std::find(l.begin(), l.end(), 16);
+    if (it != l.end()) {
+        l.insert(it, 42);
     }
-}</code></pre>
-
-<h4>[出力]</h4>
-<pre><code>13
+ 
+    // Iterate and print values of the list
+    for (int n : l) {
+        std::cout &lt;&lt; n &lt;&lt; &#39;\n&#39;;
+    }
+}</pre>
+&nbsp;<h4>[出力]</h4>
+<pre>25
 7
 5
+42
 16
 8
-25</code></pre>
+13</pre>
 
 </section>
 
@@ -124,7 +137,7 @@ int main()
 	<tr>
 		<td>コンパイラ :</td>
 		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.7.0 </td>
+		<td>Version 16.7.1 </td>
 	</tr>
 	
 	<tr>
@@ -147,7 +160,7 @@ int main()
 
 <h4>[プログラムソース]</h4>
 <pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
-#include &lt;deque&gt;
+#include &lt;list&gt;
 #include &lt;string&gt;
 
 
@@ -181,13 +194,13 @@ std::ostream&amp; operator &lt;&lt; (std::ostream&amp; os, const President&amp; 
 
 int main()
 {
-    std::deque&lt;President&gt; elections;
+    std::<span class="auto-style1">list</span>&lt;President&gt; elections;
     std::cout &lt;&lt; &quot;emplace_back:\n&quot;;
-    elections.emplace_back(&quot;Nelson Mandela&quot;, &quot;South Africa&quot;, 1994);
+    elections.<span class="auto-style1">emplace_back</span>(&quot;Nelson Mandela&quot;, &quot;South Africa&quot;, 1994);
 
-    std::deque&lt;President&gt; reElections;
+    std::<span class="auto-style1">list</span>&lt;President&gt; reElections;
     std::cout &lt;&lt; &quot;\npush_back:\n&quot;;
-    reElections.push_back(President(&quot;Franklin Delano Roosevelt&quot;, &quot;the USA&quot;, 1936));
+    reElections.<span class="auto-style1">push_back</span>(President(&quot;Franklin Delano Roosevelt&quot;, &quot;the USA&quot;, 1936));
 
 
     std::cout &lt;&lt; &quot;\nElections:&quot; &lt;&lt; std::endl;
@@ -214,7 +227,7 @@ int main()
 	
 <h4>[出力]<br>
 </h4>
-<pre><code>emplace_back:
+<pre>emplace_back:
 I am being constructed.
 
 push_back:
@@ -229,7 +242,7 @@ Franklin Delano Roosevelt, the USA, 1936
 
 Contents:
 Nelson Mandela was elected president of South Africa in 1994.
-Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></pre>
+Franklin Delano Roosevelt was re-elected president of the USA in 1936.</pre>
 	
 <br>
 	
@@ -238,14 +251,15 @@ Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></p
 <h2><a name="参考">参考</a></h2>
 <ul>
 	<li>cppreference.com<br>
-	<a href="https://ja.cppreference.com/w/cpp/container/deque" target="_blank">https://ja.cppreference.com/w/cpp/container/deque</a></li>
+	<a href="https://ja.cppreference.com/w/cpp/container/list" target="_blank">
+	https://ja.cppreference.com/w/cpp/container/list</a></li>
 </ul>
 <hr>
 
 <h2>記載</h2>
 <table>
 	<tr>
-		<td class="td_history">2020-08-10</td>
+		<td class="td_history">2020-08-13</td>
 		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
 		<td class="td_history">新規作成</td>
 	</tr>

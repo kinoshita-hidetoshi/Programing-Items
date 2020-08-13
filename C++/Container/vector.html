@@ -441,7 +441,7 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 		<td style="padding-top:0px;padding-bottom:0px">template&lt; class... Args &gt;<br>
 		void emplace_back(  
 		Args&amp;&amp;... args );</td>
-		<td class="auto-style1"><span class="comment">(c++11以上)</span></td>
+		<td class="auto-style1"><span class="comment">(1)(c++11以上)</span></td>
 	</tr>
 	
 	<tr>
@@ -452,7 +452,7 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 		<td style="padding-top:0px;padding-bottom:0px">template&lt; class... Args &gt;<br>
 		reference emplace_back(  
 		Args&amp;&amp;... args );</td>
-		<td class="auto-style1"><span class="comment">(c++17以上)</span></td>
+		<td class="auto-style1"><span class="comment">(2)(c++17以上)</span></td>
 	</tr>
 	
 	<tr>
@@ -462,7 +462,7 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 </table>
 
 <p style="margin-bottom:0px">コンテナの終端に新しい要素を追加します。<br>新しい size() が capacity() 
-よｒ大きい場合は、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
+より大きい場合は再確保が発生し、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
 <h5 style="margin-bottom:0px">引数</h5>
 <table>
 	<tr>
@@ -475,12 +475,12 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">(なし)</td>
-		<td class="auto-style1"><span class="comment">(c++11以上)</span></td>
+		<td class="auto-style1"><span class="comment">(1)(c++11以上)</span></td>
 	</tr>
 	
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">挿入された要素を示す参照</td>
-		<td class="auto-style1"><span class="comment">(c++17以上)</span></td>
+		<td class="auto-style1"><span class="comment">(2)(c++17以上)</span></td>
 	</tr>
 </table>
 </div>
@@ -768,19 +768,22 @@ Boo, Japan, 2021
 Franklin Delano Roosevelt, the USA, 1936
 Foo, Japan, 2020</pre>
 	
-<br>
+<br>補足：<br>新しい size() が現在の capacity() 
+より大きいため、vectorの再構築が発生し、コンテナ内アイテムの移動が発生しているようです。<br>
+アイテムの挿入が頻繁に発生する場合、reserve()で必要な領域を事前確保しておく、または std::list 
+を使用する、などを検討することでペナルティを減らせる場合があります。<br>
 	
 </section>
 
 
 <h2><a name="参考">参考</a></h2>
 <ul>
-	<li>cppreference.com<br><a href="https://ja.cppreference.com/w/cpp/container/vector">
-	https://ja.cppreference.com/w/cpp/container/vector</a></li>
+	<li>cppreference.com<br>
+	<a href="https://ja.cppreference.com/w/cpp/container/vector" target="_blank">https://ja.cppreference.com/w/cpp/container/vector</a></li>
 </ul>
 <hr>
 
-<h2 style="margin-bottom:5px">記載</h2>
+<h2>記載</h2>
 <table>
 	<tr>
 		<td class="td_history">2020-08-11</td>
