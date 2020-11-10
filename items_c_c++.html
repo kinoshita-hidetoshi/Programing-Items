@@ -88,7 +88,7 @@ function sublist( target ) {
 			</li>
 			<li>右辺値参照とムーブセマンティクス</li>
 			<li>関数<ul>
-				<li><a href="C++/language/functions/lambda.html">ラムダ式</a></li>
+				<li><a href="C++/language/functions/lambda.html">ラムダ式 (c++11)</a> </li>
 			</ul>
 			</li>
 			<li>クラス<ul>
@@ -109,6 +109,8 @@ function sublist( target ) {
 				<li><a href="C++/language/class/static_member.html">静的メンバ</a></li>
 			</ul>
 			</li>
+			<li><a href="C++/language/types/constexpr.html">定数式 - constexpr (c++11)</a></li>
+			<li>属性 (c++11)</li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">文字列処理</a>
@@ -135,6 +137,7 @@ function sublist( target ) {
 			<li>format (c++20)</li>
 		</ul>
 		</li>
+		
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">コンテナライブラリ</a>
 		<ul>
 			<li>シーケンスコンテナ<ul>
@@ -175,7 +178,16 @@ function sublist( target ) {
 			<li><a href="C++/smart_pointer/weak_ptr.html">weak_ptr (c++11)</a></li>
 		</ul>
 		</li>
-		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
+		
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">関数型プログラミング</a>
+		<ul>
+			<li>bind (c++11)</li>
+			<li>function (c++11)</li>
+		</ul>
+		</li>
+
+		<li>
+		<a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
 			<ul>
 				<li>スレッド<ul class="auto-style1">
 					<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
@@ -348,6 +360,29 @@ function sublist( target ) {
 			<li>next_permutation, prev_permutation</li>
 		</ul>
 		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Template</a><ul>
+			<li>クラステンプレート</li>
+			<li>関数テンプレート</li>
+			<li>エイリアステンプレート (c++11)</li>
+			<li>変数テンプレート (c++14)</li>
+			<li>テンプレートの実引数推定</li>
+			<li>明示的特殊化</li>
+			<li>クラステンプレートの実引数推定 (c++17)</li>
+			<li>部分特殊化</li>
+			<li>パラメータバック (c++11)</li>
+			<li>sizeof ... (c++11)</li>
+			<li>畳み込み式 (c++17)</li>
+			<li>依存名 - SFINAE</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="sublist(this); return false;">Exceptions</a><ul>
+			<li>throw式</li>
+			<li>try-catchブロック</li>
+			<li>関数tryブロック</li>
+			<li>noexcept指定子 (c++11)</li>
+			<li>noexcept演算子 (c++11)</li>
+		</ul>
+		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">Expressions</a><ul>
 			<li>Constant expressions</li>
 			<li>
@@ -364,25 +399,6 @@ function sublist( target ) {
 				<li>user-defined (c++11)</li>
 			</ul>
 			</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">Template</a><ul>
-			<li>Class template</li>
-			<li>Function template</li>
-			<li>Class member template</li>
-			<li>Variable template (c++14)</li>
-			<li>Template argument deducation</li>
-			<li>Explicit specialization</li>
-			<li>Partial specialization</li>
-			<li>Parameter packs (c++11)</li>
-			<li>sizeof ... (c++11)</li>
-			<li>Fold-expressions (c++17)</li>
-			<li>Dependent names -SFINAE</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">Exceptions</a><ul>
-			<li>noexcept specifier (c++11)</li>
-			<li>noexcept operator (c++11)</li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>

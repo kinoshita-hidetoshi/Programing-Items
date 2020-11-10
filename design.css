@@ -66,8 +66,8 @@ pre{
 }
 
 code{
-	font-size:medium;
-	font-family: monospace;
+	font-size:small;
+	font-family:monospace;
 }
 
 .cpp-source{
@@ -93,15 +93,15 @@ code{
 	color: #0000FF;
 }
 
-.table_title{
-	font-size: small;
-	color: #000000;
+table{
+	font-size:small;
 	font-family: sans-serif;
 	font-weight: normal;	
 }
 
-table{
-	font-size:small;
+.table_title{
+	font-size: small;
+	color: #000000;
 	font-family: sans-serif;
 	font-weight: normal;	
 }
@@ -111,6 +111,12 @@ td{
 	font-weight: normal;	
 }
 
+
+/*
+===
+開発環境のバージョン情報記載用
+===
+*/
 td:first-child{
 	padding-left:1em;
 	padding-top:0.5em;
@@ -140,3 +146,49 @@ td:nth-last-child(1){
 	padding:0px !important;
 	padding-bottom:0px !important;
 }
+
+
+/*
+===
+シンプルな表を作成用
+===
+*/
+table.border-collapse{
+	border-collapse:collapse;
+	border: thin silver solid;
+}
+
+thead.standard_table{
+	background-color:#eeeeee;
+}
+
+tbody.standard_table{
+	background-color:white;
+}
+
+td.standard_table{
+	border:1px silver solid;	
+}
+
+/*
+-> end
+*/
+
+
+/*
+===
+img（図）の飾り
+===
+*/
+img.border{
+	border:1px silver solid;
+}
+
+img.border_with_drow-shadow{
+	border:1px silver solid;
+	box-shadow: 4px 4px 8px gray;
+}
+
+/*
+-> end
+*/

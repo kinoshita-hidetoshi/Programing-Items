@@ -1,0 +1,653 @@
+﻿<!DOCUMENTTYPE HTML>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Doxygen</title>
+	<meta name="author" content="木下英俊">
+	<meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+	<meta name="keywords" content="">
+	
+	<!--
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	-->
+
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->
+
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+	<style type="text/css">
+.auto-style1 {
+	background-color: #FFFF00;
+}
+</style>
+	</head>
+
+<body onload="prettyPrint();">
+	
+<h1>Doxygen - Windows版</h1>
+
+<p> Doxygen (Windows版) の使用方法などをざっくり記載してみます。</p>
+<nav>
+	<p> &nbsp;</p>
+<h2> 目次</h2>
+	<p>
+	<a href="#1._Doxygen_とは">1. Doxygen とは</a><br>
+	<a href="#2._インストール">2. インストール</a><br>&nbsp; <a href="#2-1._Doxygen">2-1. Doxygen</a><br>
+	&nbsp;
+	<a href="#2-2._Graphviz">2-2. Graphviz</a><br>
+	&nbsp;
+	<a href="#2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a><br>
+	<a href="#3._Doxygenを使ってみる">3. Doxygenを使ってみる</a><br>
+	&nbsp;
+	<a href="#3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a><br>
+	&nbsp;
+	<a href="#3-2._Project_を設定する">3-2. Project を設定する</a><br>
+	&nbsp;
+	<a href="#3-3._Mode_を設定する">3-3. Mode を設定する</a><br>
+	&nbsp;
+	<a href="#3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a><br>
+	&nbsp;
+	<a href="#3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する</a><br>
+	&nbsp;
+	<a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a><br>
+	&nbsp;
+	<a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a><br>
+	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>
+	<a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a><br>
+	<a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a><br>
+	<a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
+	<a href="#8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a><br>
+	<a href="#参考">参考</a></p>
+</nav>
+
+<p> &nbsp;</p>
+<h2> <a name="1._Doxygen_とは">1. Doxygen とは</a></h2>
+<p> Doxygen とは、ソースコードから文書を自動生成してくれるツールです。</p>
+<ul>
+	<li><a href="https://www.doxygen.nl/index.html" target="_blank">Doxygen 本家</a></li>
+	<li><a href="http://www.doxygen.jp/" target="_blank">Doxygen 日本語サイト</a></li>
+</ul>
+<p> この種のツールでは Java の Javadoc や.NET の Sandcastle 
+などが有名です。これらが特定のプログラミング言語やプラットフォームに最適化されているのに対して、Doxygen はさまざまな言語に対応しており、また 
+Windows、Mac、Linux 上で動作することもうれしいところです。<br><br>ドキュメントの出力形式も豊富で、HTML 
+を基本とし、LaTeX、RTF、CHM (HTML ヘルプ)、PDF など様々な形式をサポートしています。<br>
+そしてこれだけ多機能にもかかわらずフリーウェアであることもとてもうれしいことです。現時点でも十分に有用ですが、2020年現在も改善され続けているとても有用なツールです。</p>
+<p> &nbsp;</p>
+
+<section>
+<h2> <a name="2._インストール">2. インストール</a></h2>
+<p> ここでは Windows10 64bit 環境へインストールを粉う手順を記載します。<br>Doxygen、Graphviz、HTML Help 
+Workshop の順に入手とインストールを行います。</p>
+<p> &nbsp;</p>
+<h3> <a name="2-1._Doxygen">2-1. Doxygen</a></h3>
+<p> 下記 URL から Windows版のインストーラを入手します。</p>
+<p> <a href="https://www.doxygen.nl/download.html">
+https://www.doxygen.nl/download.html</a></p>
+<p> ここでは &quot;doxygen-1.8.20-setup.exe&quot; というファイルをダウンロードしました。</p>
+<p> &nbsp;</p>
+<p> <img alt="" src="doxygen_windows/img19.jpg" class="border"></p>
+<p> &nbsp;</p>
+<p> ダウンロードしたインストーラを実行し、デフォルトの設定でそのままインストールを実行します。<br>特に注意事項ありません。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> <a name="2-2._Graphviz">2-2. Graphviz</a></h3>
+<p> Graphviz は DOT というスクリプト言語によってグラフ生成するためのツールです。Doxygen はクラス 
+ダイアグラムを生成する機能を持っており、この Graphviz を利用することで関数コールグラフを始めとする様々な関係図を描画してくれるようになります。</p>
+<p> 下記 URL からWindows版のインストーラを入手します。</p>
+<p> <a href="https://graphviz.org/download/" target="_blank">https://graphviz.org/download/</a></p>
+<p> ここでは &quot;graphviz-2.44.1-win32.zip&quot; というファイルをダウンロードしました。</p>
+<p> &nbsp;</p>
+<p> <img alt="" src="doxygen_windows/img1F.jpg" class="border"></p>
+<p> この &quot;graphviz-2.44.1-win32.zip&quot; を入手しました。</p>
+<p> <img alt="" class="border" src="doxygen_windows/img46.jpg"></p>
+<p> ちなみに、こちらの &quot;graphviz-install-2.44.1-win64.exe&quot; も試してみましたが、うまく動作しませんでした。<br>
+エラーの原因は詳細不明です。上記 win32 版を入手して使うことを推奨します。</p>
+<p> <img alt="" src="doxygen_windows/img23.jpg" class="border"></p>
+<p> &nbsp;</p>
+<p> &quot;graphviz-2.44.1-win32.zip&quot; を解凍後、好きな場所へ置きます。<br>私は以下の場所にコピーしました。</p>
+<p> &quot;C:\Program Files (x86)\graphviz-2.44.1-win32\bin&quot;</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> <a name="2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a></h3>
+<p> Doxygen で CHM (HTML ヘルプ) 形式のドキュメントを生成したい場合は HTML Help Workshop 
+をインストールしておく必要があります。</p>
+<p> 下記 URL からインストーラを入手します。</p>
+<p> 
+<a href="https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&amp;id=21138">
+https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&amp;id=21138</a></p>
+<p> 下図のように３つをダウンロードできるようになっています。<br>実際には &quot;htmlhelp.exe&quot; 
+だけあれば十分ですが、とりあえず全部入手しておきます。</p>
+<p> <img alt="" src="doxygen_windows/img28.jpg" class="border"></p>
+<p> 入手した &quot;htmlhelp.exe&quot; を実行し、デフォルトの設定でインストールを行います。<br>デフォルト設定のままであれば &quot;C:\Program 
+Files (x86)\HTML Help Workshop&quot; というパスにインストールされるはずです。<br>
+インストールした場所だけ覚えておいてください。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+</section>
+
+<section>
+<h2> <a name="3._Doxygenを使ってみる">3. Doxygenを使ってみる</a></h2>
+<p> Doxygen を早速使ってみましょう。</p>
+<p> 練習台として、c++言語の <a href="doxygen_windows/StopWatch.zip">サンプルプログラム１</a> 
+をここ(←)からダウンロードできます。<br>以下ではこのサンプルプログラム１(stopwatch)を使ってDoxygenの使い方を説明します。</p>
+<p> &nbsp;</p>
+<h3> <a name="3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a></h3>
+
+<p>では、早速ですがDoxygenをインストールしたメニューから &quot;Doxywizard&quot; をクリックして起動します。<br>
+すると下図のような画面を表示して起動します。</p>
+
+<p>
+<img alt="" src="doxygen_windows/img8.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<table class="border-collapse" style="border-style: solid; width: 1000">
+	<thead class="standard_table">
+		<tr>
+			<td class="standard_table" style="width: 15%">項目</td>
+			<td class="standard_table">内容</td>
+		</tr>
+	</thead>
+	<tbody class="standard_table">
+		<tr>
+			<td class="standard_table">Wizard</td>
+			<td class="standard_table">簡易設定です。ウィザード形式で Project ～ Diagrams 
+			まで設定します。<br>ここでおおざっぱに設定してから Expert で微修正する、という手順がおすすめです。</td>
+		</tr>
+		<tr>
+			<td class="standard_table">Expert</td>
+			<td class="standard_table">高度で詳細な設定を行えます。</td>
+		</tr>
+		<tr>
+			<td class="standard_table">Run</td>
+			<td class="standard_table">Wizard/Expert で設定した内容に従ってドキュメント生成を実行します。</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>
+&nbsp;</p>
+<p>
+本書では、&quot;Wizard&quot;でざっくり設定をしてから&quot;Expert&quot;で微修正し、&quot;Run&quot;を実行する、という手順で説明します。</p>
+<p>
+&nbsp;</p>
+<p>
+最初に、&quot;<strong>Step 1</strong>&quot; として作業フォルダ(working directory)を設定します。<br>ここではソースファイルがあるフォルダの配下に &quot;doxygen&quot; 
+というフォルダを作成し、ここを作業フォルダ(working directory)として設定しました。</p>
+<p>
+<img alt="" src="doxygen_windows/imgA.jpg" class="border_with_drow-shadow"></p>
+<p>&nbsp;</p>
+<h3><a name="3-2._Project_を設定する">3-2. Project を設定する</a></h3>
+<p>&quot;<strong>Step 2</strong>&quot; として &quot;<strong>Wizard</strong>&quot; を使って &quot;<strong>Project</strong>&quot; を設定します。</p>
+
+<table width: 1000px; class="border-collapse">
+	<thead class="standard_table">
+		<tr>
+			<td style="width: 22%" class="standard_table">項目</td>
+			<td class="standard_table">内容</td>
+		</tr>
+	</thead>
+	<tbody class="standard_table">
+	<tr>
+		<td class="standard_table">Project name</td>
+		<td class="standard_table">プロジェクト名。ドキュメントのタイトルなど様々な場所に反映されます。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Project synopsis</td>
+		<td class="standard_table">プロジェクト概要。出力形式が HTML の場合、タイトル直下に説明文として添えられます。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Project version or id</td>
+		<td class="standard_table">プロジェクトのバージョン情報、または識別子。出力形式が HTML 
+		の場合、タイトル右側に添えられます。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Project logo</td>
+		<td class="standard_table">プロジェクトのロゴとなる画像ファイル。出力形式が HTML 
+		の場合、タイトル左側に画像として挿入されます。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Source code directory</td>
+		<td class="standard_table" >解析対象とするソースコードを格納したフォルダの場所を設定します。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Scan recursiveley</td>
+		<td class="standard_table">ソースコードのフォルダが階層化されており、それらも解析する場合はこれをチェックします。</td>
+	</tr>
+	<tr>
+		<td class="standard_table">Destination directory</td>
+		<td class="standard_table">ドキュメントの出力先。未指定なら作業フォルダが選ばれます。</td>
+	</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+<p>ここではこんな感じで設定してみました。</p>
+<p>
+<img alt="" src="doxygen_windows/img3.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<p>
+一通り設定したら「Next」ボタンを押下して次へ進みます。</p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="3-3._Mode_を設定する">3-3. Mode を設定する</a></h3>
+<p>
+&quot;<strong>Mode</strong>&quot; を設定します。</p>
+<p>
+<img alt="" src="doxygen_windows/img17.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<p>
+各設定項目の内容はこんな感じです。</p>
+
+
+
+
+
+<table style="width: 1000" class="border-collapse">
+	<thead class="standard_table">
+		<tr>
+			<td class="standard_table">項目</td>
+			<td colspan="2" class="standard_table">内容</td>
+		</tr>
+	</thead>
+	<tbody class="standard_table">
+		<tr>
+			<td rowspan="3" class="standard_table">Select the desired extraction mode</td>
+			<td class="standard_table">Documented entities only</td>
+			<td class="standard_table">ドキュメント化されたソースコードのみを文書化の対象とします。</td>
+		</tr>
+		<tr>
+			<td class="standard_table">All Entities</td>
+			<td class="standard_table">全てのソースコードを文書化の対象とします。</td>
+		</tr>
+		<tr>
+			<td class="standard_table">Include cross-referenced source 
+						code in the output</td>
+			<td class="standard_table">相互参照しているソースコードを含みます。<br>(この機能、ちゃんと理解できていません)</td>
+		</tr>
+		<tr>
+			<td class="standard_table">Select programming language to optimize 
+				the results for </td>
+			<td colspan="2" class="standard_table">最適化するプログラミング言語。<br>プロジェクトのメイン言語を選ぶ。</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+&nbsp;</p>
+<p>
+&quot;All Entities&quot;に設定して足りない文書を追加するのが良いかな、と思って私は以下のように設定を変更してみました。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img4.jpg"></p>
+<p>
+&nbsp;</p>
+<h3>
+3-4. Output を設定する</h3>
+<p>
+&quot;<strong>Output</strong>&quot; を設定します。</p>
+<p>
+出力する文書の選択と形式を設定します。素の状態は下図の通りです。</p>
+<p>
+<img alt="" src="doxygen_windows/img5.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<p>
+HTML は &quot;with navigation panel&quot; がデフォルトかな、と思ったのでこちらを選択。<br>とりあえずここでのお話を 
+HTML に絞って進めたいので、LaTex のチェックを外して、下図のような設定にして進めます。</p>
+<p>
+(LaTex での出力は別途 LaTex をインストールする必要があります。)<br>(RTF 
+での出力はそこそこ機能しますが、いろいろと変です。少なくとも一工夫必要かも。)</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img22.jpg"></p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a></h3>
+<p>
+&quot;<strong>Diagrams</strong>&quot; を設定します。</p>
+<p>
+&quot;dot tool&quot; を使うお話は後で記載するので、ここではデフォルトの &quot;Use built-in class diagram generator&quot; 
+で行きます。</p>
+<p>
+<img alt="" src="doxygen_windows/imgF.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する&nbsp;</a></h3>
+<p>
+Wizard の設定は以上です。&quot;Expert&quot; の設定を必要最小限だけ設定していきます。
+</p>
+<p>
+&quot;<strong>Expert</strong>&quot; -&gt; &quot;<strong>Project</strong>&quot; -&gt; &quot;<strong>OUTPUT_LANGUAGE</strong>&quot; 
+の設定を &quot;<strong>Japanese</strong>&quot; 
+に設定します。</p>
+<p>
+<img alt="" src="doxygen_windows/img11.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a></h3>
+<p>
+&quot;<strong>Expert</strong>&quot; -&gt; &quot;<strong>Input</strong>&quot; -&gt; &quot;<strong>INPUT_ENCODING</strong>&quot; 
+の設定を使用している文字コードへ設定します。</p>
+<p>
+UTF-8 がデフォルトなので、UTF-8 でコーディングしていればそのままでOKです。<br>使える文字コードは &quot;<a href="https://www.gnu.org/software/libiconv/">https://www.gnu.org/software/libiconv/</a>&quot; 
+を参照。<br>Shift-JIS を使用している場合は &quot;CP932&quot; や &quot;SHIFT_JIS&quot; を設定すればよさそうです。</p>
+<p>
+<img alt="" src="doxygen_windows/img14.jpg" class="border_with_drow-shadow"></p>
+<p>
+&nbsp;</p>
+<h3>
+<a name="3-7._文書を生成する（Run）">3-7. 文書を生成する（Run）</a></h3>
+<p>
+さて、いよいよ &quot;Run doxygen&quot; してみます。</p>
+<p>
+下図の「Run doxygen」ボタンを押下します。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img25.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+無事に実行出来たら「Show HTML output」ボタンを押下します。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img27.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+と、下図のような画面を表示しました。ここまでできれば成功です。</p>
+<p>
+<img alt="" src="doxygen_windows/img3C.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+&nbsp;</p>
+<p>
+最後に、Doxywizard のメインメニューから「File」-&gt;「Save」または「Save as...」を選んで設定を記録しておきます。<br>
+ファイル名や拡張子は何でもよいです。私は Doxygen の作業用フォルダ直下に &quot;doxygen&quot; (拡張子無し)で保存する場合が多いです。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img4D.jpg"></p>
+<p>
+&nbsp;</p>
+<p>
+<br>
+</p>
+</section>
+
+
+<section>
+	<h2><a name="4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a></h2>
+	<p>DOT (Graphviz) を使って作図を行ってみます。</p>
+<p>先ほどは &quot;Diagrams&quot; で &quot;Use build-in class diagram generator&quot; を選択しましたが、<br>今度は 
+&quot;Use dot tool from the GraphViz package&quot; を選択して、ついでに全ての graphs をチェックします。<br>
+(チェックを外すのは簡単ですから適当にアレンジしてみてください。)</p>
+<p><img alt="" src="doxygen_windows/img40.jpg" class="border_with_drow-shadow"></p>
+<p>&nbsp;</p>
+<p>で、今度は &quot;<strong>Expert</strong>&quot; -&gt; &quot;<strong>Dot</strong>&quot; を設定します。<br>
+難しいところは省略、<strong>DOT_PATH</strong> だけ設定します。Graphviz をインストールした場所をここに設定します。</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img49.jpg"></p>
+<p>&nbsp;</p>
+<p>基本的な設定は以上です。&quot;Run&quot;すると下図のように &quot;呼び出し関係図&quot; など様々なグラフを挿入してくれます。</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img4C.jpg"></p>
+	<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+
+
+<section>
+	<h2><a name="5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a></h2>
+<p>chm（HTMLヘルプ）ファイルへの出力を行います。</p>
+<p>chm ファイルで出力することの良い点は、HTMLファイルだと多数のファイルから構成されますが、chmファイルだと &quot;compressed HTML&quot; 
+の名の通り１ファイルで出力されることが良い点です。良くない点は...特に感じませんね。</p>
+<p>最初にインストールした &quot;HTML Help Workshop&quot; に付属の hhc.exe を必要とします。</p>
+<p>まずは <strong>Wizard</strong> の設定から。<br>HTML の設定を &quot;prepare for compressed 
+HTML(.chm)&quot; へ変更します。</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img50.jpg"></p>
+<p>&nbsp;</p>
+<p>続いて <strong>Expert</strong> を設定します。</p>
+<p>絶対必要な設定は以下の２つです。</p>
+<ul>
+	<li>HHC_LOCATION : hhc.exe の所在をフルパスで記載してください。</li>
+	<li>CHM_INDEX_ENCODING : CP932 は Shift-JIS を意味します。日本語ではこれ以外文字化けします。</li>
+</ul>
+<p>以下は、出力する chm ファイルの名称を指定したい場合に記載してください。無指定だと index.chm というファイルで生成されます。</p>
+<ul>
+	<li>CHM_FILE</li>
+</ul>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img51.jpg"></p>
+<p>&nbsp;</p>
+<p>設定は以上です。&quot;Run&quot;すると、下図のような表示をする chm ファイルを生成します。&nbsp;</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img52.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a></h2>
+<p>サンプルプログラムには、STATE という状態を意味する enum が定義されています。<br>この状態遷移図を追加する、という作業を例にやってみます。</p>
+
+<pre class="prettyprint linenums"><code>//! プログラム状態
+enum STATE {
+    beforeStart,                  //!&lt; 時間計測前
+    underMeasurement,             //!&lt; 時間計測中
+    dispLapTime,                  //!&lt; ラップ時間表示
+    afterStop                     //!&lt; 時間計測終了
+};</code></pre>
+
+<p></p>
+<p>まずは埋め込みたい画像を作成します。VS code と markdown でこんな図を作成してみました。<br>作業フォルダ下に &quot;figure&quot; 
+というフォルダを作成し、ここにこの図を &quot;state_graph.png&quot; というファイル名で保存します。</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/imgD.jpg"></p>
+<p>&nbsp;</p>
+<p>まずは設定から。&quot;<strong>Expert</strong>&quot; -&gt; &quot;<strong>Input</strong>&quot; -&gt; &quot;<strong>IMAGE_PATH</strong>&quot; 
+に、画像ファイルを保存しているフォルダ、またはファイル、を登録します。</p>
+<p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img6A.jpg"></p>
+<p>&nbsp;</p>
+
+<p>ソースコードを以下のように変更します。</p>
+<p>最初に &quot;special commands&quot; にある &quot;@image&quot; を使ってみます。</p>
+<p>&quot;@image html state_graph.png&quot; の部分が画像埋め込みをしている部分です。<br>
+このコマンドではどうやら画像の幅や高さ、位置、などを指定できないようです。</p>
+
+<pre class="prettyprint linenums"><code>/*=========================================================*/
+/*!
+    プログラム状態
+
+    このプログラムは
+    beforeStart, underMeasurement, dispLapTime, afterStop
+    の４つの状態を持ちます。 \n
+    状態遷移図を以下に示します。
+
+    <span class="auto-style1">@image html state_graph.png</span>
+*/
+/*=========================================================*/
+enum STATE {
+    beforeStart,                        //!&lt; 時間計測前
+    underMeasurement,                   //!&lt; 時間計測中
+    dispLapTime,                        //!&lt; ラップ時間表示
+    afterStop                           //!&lt; 時間計測終了
+};</code></pre>
+<p>&nbsp;</p>
+<p>&quot;Run&quot; して確認した結果が下図です。</p>
+<p>悪くはありませんが、やはり図の大きさを変更できないと使いづらい印象です。<br>
+下図例では、図全体を見えるようにブラウザの表示倍率を変更したところ、文字がとても小さくなってしまいました。</p>
+<p>
+<img alt="" src="doxygen_windows/img6.jpg"></p>
+<p>&nbsp;</p>
+<p>次に、&quot;HTML commands&quot; から &lt;img&gt; を使ってみます。</p>
+<p>&lt;img&gt; では width や height を使って大きさを指定することができます。HTMLに限定されますが、こちらの方が使い勝手がよさそうです。</p>
+<pre class="prettyprint linenums"><code>/*=========================================================*/
+/*!
+    プログラム状態
+    
+    このプログラムは
+    beforeStart, underMeasurement, dispLapTime, afterStop
+    の４つの状態を持ちます。 \n
+    状態遷移図を以下に示します。
+    
+    <span class="auto-style1">&lt;img src=&quot;state_graph.png&quot; width=&quot;300px&quot;&gt;</span>
+*/
+/*=========================================================*/
+enum STATE {
+	beforeStart,                    //!&lt; 時間計測前
+	underMeasurement,               //!&lt; 時間計測中
+	dispLapTime,                    //!&lt; ラップ時間表示
+	afterStop                       //!&lt; 時間計測終了
+};</code></pre>
+<p></p>
+<p>&quot;Run&quot; して確認した結果が下図です。良さそうですね。</p>
+<p>やはり図の大きさをコントロールできる方が使いやすい印象です。</p>
+<p><img alt="" src="doxygen_windows/img9.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="7._mainpage_を追加する">7. mainpage を追加する</a></h2>
+<p> 説明をいろいろ書くことを目的とするメインページを追加します。</p>
+<p> @mainpage タグを１つだけ使うことができ、これを設定したページがメインページになります。</p>
+<p> 練習台として、<a href="doxygen_windows/StopWatch_2.zip">サンプルプログラム２</a> 
+をここ(←)からダウンロードできます。<br>サンプルプログラム１ に mainpage.txt と いくつかの図 を追加したものです。<br>以下ではこのサンプルプログラム２を使って説明します。</p>
+<p> 元のサンプルプログラム１のフォルダに mainpage.txt と図をコピーするでもOKです。</p>
+<p> </p>
+<p> Doxygen の設定変更ありません。必要なファイルを追加したら "Run" して確認します。<br>
+変換した結果は下図の通りです。</p>
+<p> <img alt="" src="doxygen_windows/img10.jpg"></p>
+<p></p>
+<p>追加した &quot;mainpage.txt&quot; の中身を見てみましょう。</p>
+<p>@mainpage, @section, @subsection を使って記載していることがわかります。他に @subsubsection というコマンドもまだあります。</p>
+<pre class="prettyprint linenums"><code>/*=========================================================*/
+/*! @file
+    @brief	Doxygen のためのプログラム説明用メインページファイル
+    
+    本ファイルはDoxygen のためのプログラム説明用メインページファイルであり、
+    プログラムの実体は一切ありません。
+
+    @author	木下英俊
+    @date   2004-07-04 新規作成
+    $Revision: 1.0.0.0 $
+*/
+/*=========================================================*/
+
+/*! <span class="auto-style1">@mainpage</span> プログラム概要
+
+<span class="auto-style1">@section</span> section1 概要
+本プログラムは、C magazine 2004年7月号 「プログラミング研究会」のお題に従って作成したプログラムです。
+
+
+<span class="auto-style1">@subsection</span> subsec1 [プログラムの説明]
+今回のお題におけるプログラムへの要求は以下のとおりです。
+	-# プログラムを開始する
+	-# １回キーを押すと時間の計測が始まる
+	-# もう一度キーを押すまでの時間を計測
+	-# 2～3の間の時間を表示する
+
+そこでこれに次の仕様（? 工夫）を追加したプログラムを作成することとしました。
+	-# コンソール環境のプログラムとする。
+	-# 使用言語をＣ言語とする。
+	-# 時間表示分解能を1/1000秒とする。
+	-# ラップ時間計測機能を追加する。
+	-# 最初にボタンを押されてからの経過時間を常に表示する。
+	-# Doxygenによるドキュメント自動生成を考慮したソースプログラムへのコメント記載を行う。
+
+ユーザインタフェースを次のように定めます。
+	-# プログラムを開始する。
+	-# ｢S｣を押すと時間計測開始。
+	-# ｢L｣を押すとラップ時間表示。2～3の間の時間を表示する。 \n
+	  （時間計測を止めずにそのときの経過時間を表示）
+	-# ｢S｣を押すと時間計測停止。2～4の間の時間を表示する。
+
+これを実現するためにＣ言語標準ではない次の３つの関数を許容することとしました。
+- ftime : 1秒以下の時間取得
+- kbhit : キーボード監視
+- getch : 押されたボタンの取得
+
+そしてこの３関数以外は極力ANSI準拠の関数を使用することとしました。勘違いが無ければ、本当にこの３つ以外は全て標準関数しか使っていないはずです。
+
+
+<span class="auto-style1">@subsection</span> subsec2 [開発環境]
+- 開発言語：      Ｃ言語
+- ＣＰＵ：        PentiumⅢ 600MHz
+- ＯＳ：          MS Windows2000 Professional
+- コンパイラ： \n
+                  MS Visual C++6.0 sp6 (以降 VC6) \n
+                  Borland C++ 5.5.1 (以降 BCC551) \n
+                  Borland C++ BuilderX (以降 BCC565)
+- コンパイル方法： \n
+                  VC6: cl /W3 /Ox StopWatch.c \n
+                  BCC551: bcc32 -w -O1 -WC StopWatch.c \n
+                  BCC565: bcc32 -w -O1 -WC StopWatch.c
+
+
+<span class="auto-style1">@subsection</span> subsec3 [開発環境２]
+- Doxygen ：      Ver. 1.3.7
+- Dot(graphviz) ：Ver. 1.8.6
+
+注記 \n
+Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日に行った環境は下記のとおりです。
+- Doxygen :       Ver. 1.5.8
+- Dot(graphviz) : Ver. 2.8
+
+<span class="auto-style1">@subsection</span> subsec4 [プログラム作成に参考とした文献]
+	- Microsoft C Ver6.0 開発ハンドブック ライブラリ編 (ISBN4-87966-240-2)
+
+
+<span class="auto-style1">@subsection</span> subsec5 [画面イメージ]
+@image html DispImage.jpg
+@latexonly
+\begin{figure}[h]
+\includegraphics[width=17cm,bb=0 0 669 481]{DispImage.jpg}\caption{画面イメージ}
+\end{figure}
+@endlatexonly
+
+*/</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a></h2>
+<p>別に図を作成してから埋め込みする、でもいいですけれど、<br>できればソースコード埋め込みで状態遷移図やフローチャートなどを描きたいものです。</p>
+<p>Dot を使うことである程度実現できそうです。</p>
+<p>・・・</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+
+
+<section>
+<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>Doxygen 本家<br>
+		<a href="https://www.doxygen.nl/index.html" target="_blank">
+		https://www.doxygen.nl/index.html</a></li>
+		<li>Doxygen 日本語サイト<br><a href="http://www.doxygen.jp/" target="_blank">
+		http://www.doxygen.jp/</a></li>
+		<li>Doxygen の使い方<br>
+		<a href="https://akabeko.me/blog/2012/01/doxygen/" target="_blank">
+		https://akabeko.me/blog/2012/01/doxygen/</a></li>
+		<li>DoxygenによるMarkdown形式からのドキュメント作成<br>
+		<a href="https://qiita.com/mebiusbox2/items/16dabf649b0a91f63f1c" target="_blank">
+		https://qiita.com/mebiusbox2/items/16dabf649b0a91f63f1c</a></li>
+	</ul>
+</section>
+
+<hr>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+		<tr>
+			<td class="td_history">2020-11-10</td>
+			<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+			<td class="td_history">「7. mainpage を追加する」まで追加 </td>
+		</tr>
+		<tr>
+			<td class="td_history">2020-11-05</td>
+			<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+			<td class="td_history">新規作成 </td>
+		</tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2020 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
