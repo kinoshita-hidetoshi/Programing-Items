@@ -55,9 +55,13 @@ pre{
 	display:block;
 	padding:4px;
 	margin:0 0 10px;
-	font-size:small;
+	
+	/* prettify.css 中の font-size とそろえる目的で、"font-size:14px" を指定 */
+	font-size:14px;
+	font-family:monospace;
 	line-height:1.42857143;
-	color:#333;
+	
+	color:#000;
 	word-break:break-all;
 	word-wrap:break-word;
 	background-color:#f5f5f5;
@@ -66,7 +70,8 @@ pre{
 }
 
 code{
-	font-size:medium;
+	/* prettify.css 中の font-size とそろえる目的で、"font-size:14px" を指定 */
+	font-size:14px;
 	font-family:monospace;
 }
 
