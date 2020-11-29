@@ -1,4 +1,11 @@
-﻿body{
+﻿@charset "UTF-8";
+
+/* 共通部分 */
+html{
+	font-size: 100%	
+}
+
+body{
 	font-size: small;
 	color: #000000;
 	font-family: sans-serif;
@@ -175,10 +182,6 @@ td.standard_table{
 	border:1px silver solid;	
 }
 
-/*
--> end
-*/
-
 
 /*
 ===
@@ -193,7 +196,3 @@ img.border_with_drow-shadow{
 	border:1px silver solid;
 	box-shadow: 4px 4px 8px gray;
 }
-
-/*
--> end
-*/

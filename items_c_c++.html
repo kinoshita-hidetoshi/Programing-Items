@@ -1,52 +1,55 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" Content="text/html; charset=utf-8">
-<title></title>
-
-<link href="./design_items.css" rel="stylesheet" type="text/css">
-
-<style type="text/css">
-</style>
-
-<script type="text/javascript">
-var ulShowHide = {
-	showHide: function(element) {
-		if (element.parentNode.childNodes.item(2)) {
-			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-				if (styleDisplay == 'block' || styleDisplay == '') {
-					element.parentNode.childNodes.item(2).style.display = "none";
-				}
-				else {
-					element.parentNode.childNodes.item(2).style.display = "block";
+	<meta charset="utf-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title></title>
+	
+	<base target="contents">
+	
+	<!-- CSS -->
+	<link href="./design_items.css" rel="stylesheet">
+	
+	<script type="text/javascript">
+	var ulShowHide = {
+		showHide: function(element) {
+			if (element.parentNode.childNodes.item(2)) {
+				if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+					var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+					if (styleDisplay == 'block' || styleDisplay == '') {
+						element.parentNode.childNodes.item(2).style.display = "none";
+					}
+					else {
+						element.parentNode.childNodes.item(2).style.display = "block";
+					}
 				}
 			}
+			return false;
 		}
-		return false;
 	}
-}
-</script>
-
-<script type="text/javascript">
-function sublist( target ) {
-   var TargetList = target.parentNode.getElementsByTagName('ul');
-   if ( TargetList[0].style.display == 'none' ) {
-      TargetList[0].style.display = 'block';
-   }
-   else {
-      TargetList[0].style.display = 'none';
-   }
-}
-</script>
-
-
-<base target="contents">
-
-
-<link href="design_items.css" rel="stylesheet" type="text/css">
-
-
+	</script>
+	
+	<script type="text/javascript">
+	function sublist( target ) {
+	   var TargetList = target.parentNode.getElementsByTagName('ul');
+	   if ( TargetList[0].style.display == 'none' ) {
+	      TargetList[0].style.display = 'block';
+	   }
+	   else {
+	      TargetList[0].style.display = 'none';
+	   }
+	}
+	</script>
+	
+	<style type="text/css">
+	.auto-style1 {
+		vertical-align: middle;
+	}
+	</style>
+	
 </head>
+
 <body>
 
 <a href="items_top.html" target="_self">
@@ -186,126 +189,136 @@ function sublist( target ) {
 		</ul>
 		</li>
 
-		<li>
-		<a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
-			<ul>
-				<li>スレッド<ul class="auto-style1">
-					<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
-					<li>jthread (c++20)</li>
-				</ul>
-				</li>
-				<li>カレントスレッドを管理する関数<ul class="auto-style1">
-					<li>this_thread::yield (c++11)</li>
-					<li>this_thread::get_id (c++11)</li>
-					<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
-					<li><a href="C++/thread/sleep_until.html">this_thread::sleep_until (c++11)</a></li>
-				</ul>
-				</li>
-				<li>スレッドのキャンセル<ul class="auto-style1">
-					<li>stop_token (c++20)</li>
-					<li>stop_source (c++20)</li>
-					<li>stop_callback (c++20)</li>
-				</ul>
-				</li>
-				<li>相互排他<ul class="auto-style1">
-					<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
-					<li>timed_mutex (c++11)</li>
-					<li>recursive_mutex (c++11)</li>
-					<li>recursive_timed_mutex (c++11)</li>
-					<li>shared_mutex (c++17)</li>
-					<li>shared_timed_mutex (c++14)</li>
-					<li>counting_semaphore (c++20)</li>
-					<li>binary_semaphore (c++20)</li>
-				</ul>
-				</li>
-				<li>汎用ミューテックス管理
+		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
+		<ul>
+			<li>スレッド
+			<ul class="auto-style1">
+				<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
+				<li>jthread (c++20)</li>
+			</ul>
+			</li>
+			<li>カレントスレッドを管理する関数
+			<ul class="auto-style1">
+				<li>this_thread::yield (c++11)</li>
+				<li>this_thread::get_id (c++11)</li>
+				<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
+				<li><a href="C++/thread/sleep_until.html">this_thread::sleep_until (c++11)</a></li>
+			</ul>
+			</li>
+			<li>スレッドのキャンセル
+			<ul class="auto-style1">
+				<li>stop_token (c++20)</li>
+				<li>stop_source (c++20)</li>
+				<li>stop_callback (c++20)</li>
+			</ul>
+			</li>
+			<li>相互排他
 				<ul class="auto-style1">
-					<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
-					<li>scoped_lock (c++17)</li>
-					<li>unique_lock (c++11)</li>
-					<li>shared_lock (c++14)</li>
-				</ul>
-				</li>
-				<li>汎用ロックアルゴリズム<ul class="auto-style1">
-					<li>try_lock (c++11)</li>
-					<li>lock (c++11)</li>
-				</ul>
-				</li>
-				<li>コールワンス<ul class="auto-style1">
-					<li>once_flag (c++11)</li>
-					<li>call_once (c++11)</li>
-				</ul>
-				</li>
-				<li>条件変数<ul class="auto-style1">
-					<li>condition_variable (c++11)</li>
-					<li>condition_vriable_any (c++11)</li>
-					<li>notify_all_at_thread_exit (c++11)</li>
-					<li>cv_status (c++11)</li>
-				</ul>
-				</li>
-				<li>フューチャー<ul class="auto-style1">
-					<li>promise (c++11)</li>
-					<li>packaged_task (c++11)</li>
-					<li>future (c++11)</li>
-					<li>shared_future (c++11)</li>
-					<li><a href="C++/thread/async.html">async (c++11)</a></li>
-					<li>launch (c++11)</li>
-					<li>future_status (c++11)</li>
-				</ul>
-				</li>
-				<li>フューチャーのエラー<ul class="auto-style1">
-					<li>future_error (c++11)</li>
-					<li>future_category (c++11)</li>
-					<li>future_errc (c++11)</li>
-				</ul>
-				</li>
+				<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
+				<li>timed_mutex (c++11)</li>
+				<li>recursive_mutex (c++11)</li>
+				<li>recursive_timed_mutex (c++11)</li>
+				<li>shared_mutex (c++17)</li>
+				<li>shared_timed_mutex (c++14)</li>
+				<li>counting_semaphore (c++20)</li>
+				<li>binary_semaphore (c++20)</li>
 			</ul>
 			</li>
+			<li>汎用ミューテックス管理
+			<ul class="auto-style1">
+				<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
+				<li>scoped_lock (c++17)</li>
+				<li>unique_lock (c++11)</li>
+				<li>shared_lock (c++14)</li>
+			</ul>
+			</li>
+			<li>汎用ロックアルゴリズム
+			<ul class="auto-style1">
+				<li>try_lock (c++11)</li>
+				<li>lock (c++11)</li>
+			</ul>
+			</li>
+			<li>コールワンス
+			<ul class="auto-style1">
+				<li>once_flag (c++11)</li>
+				<li>call_once (c++11)</li>
+			</ul>
+			</li>
+			<li>条件変数
+			<ul class="auto-style1">
+				<li>condition_variable (c++11)</li>
+				<li>condition_vriable_any (c++11)</li>
+				<li>notify_all_at_thread_exit (c++11)</li>
+				<li>cv_status (c++11)</li>
+			</ul>
+			</li>
+			<li>フューチャー
+			<ul class="auto-style1">
+				<li>promise (c++11)</li>
+				<li>packaged_task (c++11)</li>
+				<li>future (c++11)</li>
+				<li>shared_future (c++11)</li>
+				<li><a href="C++/thread/async.html">async (c++11)</a></li>
+				<li>launch (c++11)</li>
+				<li>future_status (c++11)</li>
+			</ul>
+			</li>
+			<li>フューチャーのエラー
+			<ul class="auto-style1">
+				<li>future_error (c++11)</li>
+				<li>future_category (c++11)</li>
+				<li>future_errc (c++11)</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
 			
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">atomic</a>
+		<li>
+		<a href="url" class="menu" onclick="sublist(this); return false;">atomic</a>
+		<ul>
+			<li><a href="C++/atomic/atomic.html">std::atomic (c++11)</a></li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">ファイルシステムライブラリ</a>
+		<ul>
+			<li>クラス
 			<ul>
-				<li><a href="C++/atomic/atomic.html">std::atomic (c++11)</a></li>
+				<li>path</li>
+				<li>filesystem_error</li>
+				<li>directory_entry</li>
 			</ul>
 			</li>
-			<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">ファイルシステムライブラリ</a>
+			<li>非メンバ関数
 			<ul>
-				<li>クラス<ul>
-					<li>path</li>
-					<li>filesystem_error</li>
-					<li>directory_entry</li>
-				</ul>
-				</li>
-				<li>非メンバ関数<ul>
-					<li>copy</li>
-					<li>copy_file</li>
-					<li>create_directory, create_directories</li>
-					<li>exist</li>
-					<li>file_size</li>
-					<li>remove, remove_all</li>
-					<li>rename</li>
-				</ul>
-				</li>
-				<li>ファイル種別<ul>
-					<li>is_block_file</li>
-					<li>is_character_file</li>
-					<li>is_directory</li>
-					<li>is_empty</li>
-					<li>is_fifo</li>
-					<li>is_other</li>
-					<li>is_regular_file</li>
-					<li>is_socket</li>
-					<li>is_symlink</li>
-					<li>status_known</li>
-				</ul>
-				</li>
+				<li>copy</li>
+				<li>copy_file</li>
+				<li>create_directory, create_directories</li>
+				<li>exist</li>
+				<li>file_size</li>
+				<li>remove, remove_all</li>
+				<li>rename</li>
 			</ul>
 			</li>
-			<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">日時</a>
-			<ul>
-				<li>(empty)</li>
+			<li>ファイル種別<ul>
+				<li>is_block_file</li>
+				<li>is_character_file</li>
+				<li>is_directory</li>
+				<li>is_empty</li>
+				<li>is_fifo</li>
+				<li>is_other</li>
+				<li>is_regular_file</li>
+				<li>is_socket</li>
+				<li>is_symlink</li>
+				<li>status_known</li>
 			</ul>
 			</li>
+		</ul>
+		</li>
+		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">日時</a>
+		<ul>
+			<li>(empty)</li>
+		</ul>
+		</li>
 		
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">数学</a>
 		<ul>
@@ -381,24 +394,6 @@ function sublist( target ) {
 			<li>関数tryブロック</li>
 			<li>noexcept指定子 (c++11)</li>
 			<li>noexcept演算子 (c++11)</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">Expressions</a><ul>
-			<li>Constant expressions</li>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">Conversions</a><ul>
-				<li>implicit / explicit / user-defined</li>
-				<li>static_cast / dynamic_cast / const_cast / reinterpret_cast</li>
-			</ul>
-			</li>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">Literals</a><ul>
-				<li>boolean / integer / floating</li>
-				<li>charactor / string</li>
-				<li>nullptr (c++11)</li>
-				<li>user-defined (c++11)</li>
-			</ul>
-			</li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
@@ -513,7 +508,8 @@ function sublist( target ) {
 
 <hr size="2">
 
-<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+<p>
+<img alt="" src="images/mail.gif" class="auto-style1" height="25" width="40">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
 </p>
 
 </body>

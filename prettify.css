@@ -36,8 +36,8 @@
 
 
 /*水平スクロールバーを表示させるためoverflow-x: scrollを追加*/
-/*pre.prettyprint{padding:2px;border:1px solid #888;overflow-x: scroll;}*/
-pre.prettyprint{padding:2px;border:1px solid #888;}
+pre.prettyprint{padding:2px;border:1px solid #888;overflow-x: scroll;}
+/* pre.prettyprint{padding:2px;border:1px solid #888;} */
 
 /*行番号をグレーの斜体にするため、font-size以下を追加*/
 ol.linenums{margin-top:0;margin-bottom:0;font-size:14px;font-style:italic;color:#999;}

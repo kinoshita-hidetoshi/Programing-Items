@@ -1,52 +1,57 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" Content="text/html; charset=utf-8">
-<title></title>
+	<meta charset="utf-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="./design_items.css" rel="stylesheet" type="text/css">
+	<title></title>
 
-<style type="text/css">
-</style>
+	<base target="contents">
+	
+	<!-- CSS -->
+	<link href="./design_items.css" rel="stylesheet">
 
-<script type="text/javascript">
-var ulShowHide = {
-	showHide: function(element) {
-		if (element.parentNode.childNodes.item(2)) {
-			if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-				var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-				if (styleDisplay == 'block' || styleDisplay == '') {
-					element.parentNode.childNodes.item(2).style.display = "none";
-				}
-				else {
-					element.parentNode.childNodes.item(2).style.display = "block";
+	<script type="text/javascript">
+	var ulShowHide = {
+		showHide: function(element) {
+			if (element.parentNode.childNodes.item(2)) {
+				if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+					var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+					if (styleDisplay == 'block' || styleDisplay == '') {
+						element.parentNode.childNodes.item(2).style.display = "none";
+					}
+					else {
+						element.parentNode.childNodes.item(2).style.display = "block";
+					}
 				}
 			}
+			return false;
 		}
-		return false;
 	}
-}
-</script>
-
-<script type="text/javascript">
-<!--
-function sublist( target ) {
-   var TargetList = target.parentNode.getElementsByTagName('ul');
-   if ( TargetList[0].style.display == 'none' ) {
-      TargetList[0].style.display = 'block';
-   }
-   else {
-      TargetList[0].style.display = 'none';
-   }
-}
-// -->
-</script>
-
-
-<base target="contents">
-
-
-<link href="design_items.css" rel="stylesheet" type="text/css">
-
+	</script>
+	
+	<script type="text/javascript">
+	<!--
+	function sublist( target ) {
+	   var TargetList = target.parentNode.getElementsByTagName('ul');
+	   if ( TargetList[0].style.display == 'none' ) {
+	      TargetList[0].style.display = 'block';
+	   }
+	   else {
+	      TargetList[0].style.display = 'none';
+	   }
+	}
+	// -->
+	</script>
+	
+	
+	<link href="design_items.css" rel="stylesheet" type="text/css">
+	
+	<style type="text/css">
+	.auto-style1 {
+		vertical-align: middle;
+	}
+	</style>
 
 </head>
 <body>
@@ -54,11 +59,11 @@ function sublist( target ) {
 <ul>
 	<li  style="list-style-type:none">
 	<a href="items_csharp.html#CS_menu_top" target="_self">c#</a>
-	<li style="list-style-type: none">
+	<li style="list-style-type:none">
 	<a href="items_csharp.html#Form_menu_top" target="_self">Form</a>
-	<li style="list-style-type: none">
+	<li style="list-style-type:none">
 	<a href="items_csharp.html#WPF_menu_top" target="_self">WPF</a>
-	<li style="list-style-type: none">
+	<li style="list-style-type:none">
 	<a href="items_csharp.html#other_menu_top" target="_self">他</a></li>
 </ul>
 <hr>
@@ -178,7 +183,9 @@ function sublist( target ) {
 <hr>
 
 <ul>
-	<a href="ImageMagick/commands.html">ImageMagick </a>
+	<li style="list-style-type:none">
+		<a href="ImageMagick/commands.html">ImageMagick </a>
+	</li>
 </ul>
 
 <hr>
@@ -195,7 +202,7 @@ function sublist( target ) {
 <hr>
 
 <ul>
-	<li style="list-style-type: none">
+	<li style="list-style-type:none">
 	<a href="url" class="menu" onclick="sublist(this); return false;">分類外</a>
 	<ul>
 		<li><a href="Etc/Windows%20SDK.html">Windows SDK</a></li>
@@ -209,7 +216,7 @@ function sublist( target ) {
 </ul>
 <hr>
 <ul>
-	<li style="list-style-type: none">
+	<li style="list-style-type:none">
 	<a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a><ul>
 		<li><a href="Algorithm/levenshtein.html">レーベンシュタイン距離</a></li>
 	</ul>
@@ -218,7 +225,10 @@ function sublist( target ) {
 
 <hr size="2">
 
-<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
+<p>
+<img alt="" src="images/mail.gif" class="auto-style1" height="25" width="40">&nbsp;
+<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a></p>
+<p><br>
 </p>
 
 </body>
