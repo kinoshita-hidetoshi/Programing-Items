@@ -54,7 +54,9 @@
 	<a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a><br>
 	&nbsp;
 	<a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a><br>
-	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>
+	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>&nbsp;
+	<a href="#4-1._基本操作">4-1. 基本操作</a><br>&nbsp;
+	<a href="#4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a><br>
 	<a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a><br>
 	<a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a><br>
 	<a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
@@ -379,6 +381,7 @@ UTF-8 がデフォルトなので、UTF-8 でコーディングしていれば�
 
 <section>
 	<h2><a name="4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a></h2>
+<h3><a name="4-1._基本操作">4-1. 基本操作</a></h3>
 	<p>DOT (Graphviz) を使って作図を行ってみます。</p>
 <p>先ほどは &quot;Diagrams&quot; で &quot;Use build-in class diagram generator&quot; を選択しましたが、<br>今度は 
 &quot;Use dot tool from the GraphViz package&quot; を選択して、ついでに全ての graphs をチェックします。<br>
@@ -392,6 +395,23 @@ UTF-8 がデフォルトなので、UTF-8 でコーディングしていれば�
 <p>基本的な設定は以上です。&quot;Run&quot;すると下図のように &quot;呼び出し関係図&quot; など様々なグラフを挿入してくれます。</p>
 <p><img alt="" class="border_with_drow-shadow" src="doxygen_windows/img4C.jpg"></p>
 	<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a></h3>
+<p>ここまでの作業で追加された図は、あくまで図です。クリックしても何もおこりません。<br>図なので、当然ながら文字列をコピーすることもできませんでした。</p>
+<p>ここで、下図の通り DOT_IMAGE_FORMAT の設定を &quot;png&quot; から &quot;svg&quot; 
+へ変更してみます。</p>
+<p><img alt="" src="doxygen_windows/img7.jpg" class="border_with_drow-shadow"></p>
+<p>&nbsp;</p>
+<p>すると、下記４つの効果が発生することを確認しました。いい感じです。</p>
+<p>(1) SVG なので絵がきれいになる － ベクター画像ですもんね<br>(2) 関数などをクリックするとその関数の詳細説明へジャンプするようになる<br>
+(3) ツールチップで関数概要を表示してくれるようになる<br>(4) 
+文字列をコピーできるようになる</p>
+<p>ただし、SVGは HTML でしか使用できません。HTML以外の文書を出力する場合はデフォルトの png を使用することを考えましょう。</p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="doxygen_windows/img15.jpg">
+</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 </section>
 
@@ -636,6 +656,11 @@ Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+		<tr>
+			<td class="td_history">2020-12-01</td>
+			<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+			<td class="td_history">「4-2. 図中の関数名をクリックしてジャンプできるようにする」を追加</td>
+		</tr>
 		<tr>
 			<td class="td_history">2020-11-10</td>
 			<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
