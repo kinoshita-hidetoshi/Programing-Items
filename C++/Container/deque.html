@@ -1,22 +1,32 @@
-﻿<!DOCUMENTTYPE HTML>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="utf-8">
-	<title>std::deque</title>
-	<meta name="author" content="木下英俊">
-	<meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
-	<meta name="keywords" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
 	
-	<!--
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	-->
-
-	<!-- Start for 'google-code-prettify' -->
-	<link href="../../prettify.css" rel="stylesheet" type="text/css">
-	<script src="../../prettify.js" type="text/javascript"></script>
-	<!-- End for 'google-code-prettify' -->
-
-	<link rel="stylesheet" href="../../design.css" type="text/css">
+  <title>std::deque</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+  
+  <style type="text/css">
+	.auto-style2 {
+		font-size: large;
+	}
+	.auto-style3 {
+		margin-left: 40px;
+		margin-bottom: 0px;
+	}
+  </style>
 </head>
 
 <body onload="prettyPrint();">
@@ -34,6 +44,77 @@
 </nav>
 
 <p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<div>
+	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+	std::<span class="auto-style2">deque</span></h5>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+			&lt;deque&gt; で定義</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
+			class T,<br>&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;T&gt;<br>&gt; 
+			class deque;</td>
+			<td class="auto-style1"><span class="comment">(1)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
+			template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using deque = std::deque&lt;T, 
+			std::pmr::polymorphic_allocator&lt;T&gt;&gt;;<br>}</td>
+			<td class="auto-style1"><span class="comment">(2)(c++17以上)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+	</tbody>
+	</table>
+	
+	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<table>
+		<tr>
+			<td style="vertical-align:top">T</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素の型</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top">Allocator </td>
+			<td style="vertical-align:top">-</td>
+			<td>メモリを確保/解放したり、そのメモリに要素を構築/破棄したりするために使用されるアロケータ。 この型は Allocator 
+				の要件を満たさなければなりません。 Allocator::value_type と T が同じでない場合、動作は未定義です。</td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+	<p>std::deque (double-ended deque) 
+	は先頭と末尾の両方に高速な挿入と削除を行えるインデックス付きのシーケンスコンテナです。さらに、deque 
+	の先頭または末尾への挿入および削除は残りの要素に対するポインタや参照を決して無効化しません。</p>
+	<p>std::vector と異なり、deque 
+	の要素は隣接して格納されません。一般的な実装では、個別に確保された一連の固定サイズの列を用い、deque 
+	へのインデックスアクセスが2回のポインタ逆参照で行えるように追加の維持管理を行います。それに対して vector 
+	へのインデックスアクセスはポインタ１回逆参照するだけです。</p>
+</div>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
 
 <section>
 <h2> <a name="1._始めに">1. 始めに</a></h2>
@@ -42,6 +123,10 @@
 <p><a href="https://ja.cppreference.com/w/cpp/container/deque" target="_blank">
 https://ja.cppreference.com/w/cpp/container/deque</a></p>
 <p> &nbsp;</p>
+<div>
+	<p style="margin-bottom:0px">&nbsp;</p>
+	<p class="auto-style4">&nbsp;</p>
+</div>
 
 <h4>[環境]</h4>
 <table>
@@ -81,7 +166,7 @@ https://ja.cppreference.com/w/cpp/container/deque</a></p>
 int main()
 {
     // Create a deque containing integers
-    std::deque<int> d = { 7, 5, 16, 8 };
+    std::deque&lt;int&gt;<int> d = { 7, 5, 16, 8 };
 
     // Add an integer to the beginning and end of the deque
     d.push_front(13);

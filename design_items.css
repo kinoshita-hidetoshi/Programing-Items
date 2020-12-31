@@ -123,18 +123,6 @@ td{
 
 */
 
-*/
-
-a.menu {
-	text-decoration: none;			/* 下線削除 */
-	border: 1px solid #8080ff;		/* 枠線 */
-	background-color: #ccccff;		/* 背景色 */
-	padding: 0px 4px 0px 4px;		/* 内側余白 */
-	border-radius: 2px
-}
-
-*/
-
 a.menu {
 	text-decoration: none;			/* 下線削除 */
 	border: 1px solid #8080ff;		/* 枠線 */

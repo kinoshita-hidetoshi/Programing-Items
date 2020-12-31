@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+	
+  <title>priority_queue</title>
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style2 {
+	  font-size: large;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>std::priority_queue</h1>
+
+<p>std::priority_queue を試してみます。</p>
+<p> &nbsp;</p>
+
+<h2> 目次</h2>
+	<nav>
+		<p>
+		<a href="#1._始めに">1. 始めに</a><br>
+		<a href="#2._逆順にする_-_Compare_に_std::greater_を指定する">2. 逆順にする - Compare に std::greater を指定する</a><br>
+		<a href="#3._Compare_を独自に指定する">3. Compare を独自に指定する</a><br>
+		<a href="#参考">参考</a><br>
+		</p>
+	</nav>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<div>
+	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+	std::<span class="auto-style2">priority_queue</span></h5>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+			&lt;queue&gt; で定義</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">
+			<span class="command">template</span>&lt;<br>&nbsp;&nbsp;&nbsp; 
+			<span class="command">class </span>T,<br>&nbsp;&nbsp;&nbsp; 
+			<span class="command">class </span>Container = std::vector&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp; 
+			<span class="command">class </span>Compare = std::less&lt;<span class="command">typename </span>Container::value_type&gt;<br>&gt; 
+			<span class="command">class </span><strong>priority_queue</strong>;</td>
+			<td>&nbsp;</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+	</tbody>
+	</table>
+	
+	<p style="margin-bottom:0px">&nbsp;</p>
+	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<table>
+		<tr>
+			<td style="vertical-align:top">T</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素の型</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top">Container</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素を格納するために使用するベースとなるコンテナの型。コンテナは SequenceContainer 
+			の要件を満たさねばならず、そのイテレータは LegacyRandamAccessIterator 
+			の要件を満たさなければなりません。さらに、通常のセマンティクスを持つ以下の関数を提供していなければなりません。<br>
+			<ul>
+			<li>front()</li>
+				<li>push_back()</li>
+				<li>pop_back()</li>
+			</ul>
+			標準のコンテナ std::vector および std::deque はこれらの要件を満たします。
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top">Compare</td>
+			<td style="vertical-align:top">-</td>
+			<td>狭義弱順序を提供する Compare 型。</td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+	<p>Compare 引数は弱順序で第１引数が第２引数よりも前にくる場合に <span class="cpp-source">true</span> 
+	を返すように定義されていることに注意してください。<br>
+	しかし優先度付きキューは最も大きな要素を最初に出力するため、「前にくる」要素は実際には最後に出力されます。つまり、Compare 
+	によって定める弱順序に従って「最後」の要素がキューの先頭に格納されます。</p>
+</div>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
+<h2> <a name="1._始めに">1. 始めに</a></h2>
+<p>[概要]</p>
+<p>まずは単純に、数字をいろいろ push してから top/pop してみます。<br>これで priority_queue の基本動作がわかると思います。</p>
+<p> &nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>g++, </td>
+		<td>9.3.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Ubuntu (WSL2),&nbsp; </td>
+		<td>20.04 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+ 
+template&lt;typename T&gt; void print_queue(T&amp; q) {
+    while(!q.empty()) {
+        std::cout &lt;&lt; q.top() &lt;&lt; &quot; &quot;;
+        q.pop();
+    }
+    std::cout &lt;&lt; &#39;\n&#39;;
+}
+ 
+int main() {
+    // 要素を比較するためにラムダを使用。
+    auto cmpFunc = [](int left, int right) { return (left ^ 1) &lt; (right ^ 1); };
+    std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmpFunc)&gt; q3(cmpFunc);
+ 
+    for(int n : {1,8,5,6,3,4,0,9,7,2}){
+        q3.push(n);
+    }
+ 
+    print_queue(q3);
+ #if 0
+#endif 
+}</pre>
+
+<p>&nbsp;</p>
+<p>[出力]</p>
+
+<pre class="prettyprint">9 8 7 6 5 4 3 2 1 0</pre>
+
+<p>&nbsp;</p>
+<p>なるほど、デフォルトでは大きい順になるみたいですね。</p>
+<p>&nbsp;</p>
+</section>
+
+<section>
+<p>&nbsp;</p>
+<h2><a name="2._逆順にする_-_Compare_に_std::greater_を指定する">2. 逆順にする - Compare に std::greater を指定する</a></h2>
+<p>[概要]</p>
+<p>Compare に std::greater を指定して出力を逆順にしてみます。</p>
+<p>&nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>g++, </td>
+		<td>9.3.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Ubuntu (WSL2),&nbsp; </td>
+		<td>20.04 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;  // vector
+#include &lt;functional&gt;  // greater
+ 
+template&lt;typename T&gt; void print_queue(T&amp; q) {
+    while(!q.empty()) {
+        std::cout &lt;&lt; q.top() &lt;&lt; &quot; &quot;;
+        q.pop();
+    }
+    std::cout &lt;&lt; &#39;\n&#39;;
+}
+ 
+int main() {
+    std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; q2;
+ 
+    for(int n : {1,8,5,6,3,4,0,9,7,2})
+        q2.push(n);
+ 
+    print_queue(q2);
+}</code></pre>
+
+<p>&nbsp;</p>
+<p>[出力]</p>
+
+<pre class="prettyprint">0 1 2 3 4 5 6 7 8 9</pre>
+
+<p>&nbsp;</p>
+<p>逆順で出力することができました。<br>なるほど、priority_queue の説明に書かれていた意味が少しわかってきました。greater 
+を設定したら小さい値が先頭に入る、という機能は直観的な動作とは逆になるようですね。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+
+<section>
+<h2><a name="3._Compare_を独自に指定する">3. Compare を独自に指定する</a></h2>
+<p>[概要]</p>
+<p>Compare に 独自の処理を指定します。lambda式で定義してみます。</p>
+<p>&nbsp;</p>
+
+<p>[環境]</p>
+<table>
+<tbody>
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>コンパイラ :</td>
+		<td>g++, </td>
+		<td>9.3.0 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+	
+	<tr>
+		<td>OS: </td>
+		<td>Ubuntu (WSL2),&nbsp; </td>
+		<td>20.04 </td>
+	</tr>
+	
+	<tr>
+		<td class="td_separate" colspan="3"></td>
+	</tr>
+</tbody>
+</table>
+
+<p> &nbsp;</p>
+
+<p>[プログラムソース]</p>
+<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;  // vector
+#include &lt;functional&gt;  // greater
+ 
+template&lt;typename T&gt; void print_queue(T&amp; q) {
+    while(!q.empty()) {
+        std::cout &lt;&lt; q.top() &lt;&lt; &quot; &quot;;
+        q.pop();
+    }
+    std::cout &lt;&lt; &#39;\n&#39;;
+}
+ 
+int main() {
+    std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; q2;
+ 
+    for(int n : {1,8,5,6,3,4,0,9,7,2})
+        q2.push(n);
+ 
+    print_queue(q2);
+}</code></pre>
+
+<p>&nbsp;</p>
+<p>[出力]</p>
+
+<pre class="prettyprint">8 9 6 7 4 5 2 3 0 1</pre>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<h2><a name="参考">参考</a></h2>
+<ul>
+	<li>cppreference.com - std::priority_queue<br>
+	<a href="https://ja.cppreference.com/w/cpp/container/priority_queue" target="_blank">
+	https://ja.cppreference.com/w/cpp/container/priority_queue</a></li>
+</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+<section>
+<h2 style="margin-bottom:5px">記載</h2>
+<table>
+  <tr>
+    <td class="td_history">2020-12-19</td>
+    <td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+    <td class="td_history">新規作成 </td>
+  </tr>
+</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+<p><small>&copy; copyright 2020 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
