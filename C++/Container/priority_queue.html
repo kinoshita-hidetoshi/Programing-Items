@@ -169,17 +169,13 @@ template&lt;typename T&gt; void print_queue(T&amp; q) {
 }
  
 int main() {
-    // 要素を比較するためにラムダを使用。
-    auto cmpFunc = [](int left, int right) { return (left ^ 1) &lt; (right ^ 1); };
-    std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmpFunc)&gt; q3(cmpFunc);
+    std::priority_queue<int> q;
  
     for(int n : {1,8,5,6,3,4,0,9,7,2}){
-        q3.push(n);
+        q.push(n);
     }
  
-    print_queue(q3);
- #if 0
-#endif 
+    print_queue(q);
 }</pre>
 
 <p>&nbsp;</p>
@@ -317,12 +313,14 @@ template&lt;typename T&gt; void print_queue(T&amp; q) {
 }
  
 int main() {
-    std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; q2;
+    auto cmpFunc = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
+    std::priority_queue<int, std::vector<int>&lt;int, std::vector&lt;int&gt;, decltype(comFunc)&gt; q3(cmpFunc);
+    
+    for(int n : {1,8,5,6,3,4,0,9,7,2}){
+        q3.push(n);
+    }
  
-    for(int n : {1,8,5,6,3,4,0,9,7,2})
-        q2.push(n);
- 
-    print_queue(q2);
+    print_queue(q3);
 }</code></pre>
 
 <p>&nbsp;</p>
