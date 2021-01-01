@@ -1,4 +1,4 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -13,14 +13,33 @@
 </head>
 
 <body>
+  <!-- 起動時にアニメーションが発生してしまうため、これを抑制することを目的にダミーのスクリプトを実行 -->
+  <!-- ref: "https://qiita.com/nagtkk/items/27ff4f2fe17746afabdd" -->
+  <script>console.log("ちゃんとスタイル適用してね。");</script>
+  
   <div class="base">
+    <!-- ハンバーガーメニューからの連動操作用チェックボックス、常に非表示 -->
+    <input type="checkbox" id="nav-input" class="nav-unshown">
+    
+    <!-- タイトル画面 -->
     <div class="title">
-      <iframe src="title.html"></iframe>
+      <!-- ハンバーガーメニュー -->
+      <label class="nav-open" for="nav-input"><span></span></label>
+      
+      <!-- タイトル画面 -->
+      <iframe id="title_html" src="title.html"></iframe>
     </div>
+    
     <div class="content_wrapper">
+      <!-- 記事一覧 -->
       <div class="items_list">
         <iframe src="items_top.html" target="contents"></iframe>
       </div>
+      
+      <!-- content全体を隠すパネル -->
+      <label id="nav-close" class="nav-unshown" for="nav-input"></label>
+      
+      <!-- 記事本文 -->
       <div class="content">
         <iframe name="contents" src="whats_new.html"></iframe>
       </div>

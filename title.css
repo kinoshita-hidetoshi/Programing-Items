@@ -12,8 +12,11 @@ body{
   font-size: 1rem;
   color: #000000;
   font-family: sans-serif;
-  width: 100%;
+  width: auto;
   height: 100%;
   margin: 0px;
   padding: 0px;
+  background-image:url('images/title.png');
+  background-repeat:no-repeat;
+  background-size:contain;
 }
