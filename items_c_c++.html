@@ -47,6 +47,13 @@
 	.auto-style1 {
 		vertical-align: middle;
 	}
+	.auto-style2 {
+	list-style-type: disc;
+}
+.auto-style3 {
+	vertical-align: middle;
+	list-style-type: disc;
+}
 	</style>
 	
 </head>
@@ -144,7 +151,8 @@
 		
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">コンテナライブラリ</a>
 		<ul>
-			<li>シーケンスコンテナ<ul>
+			<li>シーケンスコンテナ
+			<ul class="auto-style2">
 				<li><a href="C++/Container/array.html">array (c++11)</a></li>
 				<li><a href="C++/Container/vector.html">vector</a></li>
 				<li><a href="C++/Container/deque.html">deque</a></li>
@@ -152,22 +160,27 @@
 				<li><a href="C++/Container/list.html">list</a></li>
 			</ul>
 			</li>
-			<li>連想コンテナ<ul>
+			
+			<li>コンテナアダプタ
+			<ul class="auto-style2">
+				<li><a href="C++/Container/stack.html">stack</a></li>
+				<li><a href="C++/Container/queue.html">queue</a></li>
+				<li><a href="C++/Container/priority_queue.html">priority_queue</a></li>
+			</ul>
+			</li>
+			
+			<li>連想コンテナ
+			<ul class="auto-style2">
 				<li>map, multimap</li>
 				<li>set, multiset</li>
 			</ul>
 			</li>
-			<li>非順序連想コンテナ<ul>
+			<li>非順序連想コンテナ
+			<ul class="auto-style2">
 				<li>unorderd_set (c++11)</li>
 				<li>unorderd_map (c++11)</li>
 				<li>unorderd_multiset (c++11)</li>
 				<li>unorderd_multimap (c++11)</li>
-			</ul>
-			</li>
-			<li>コンテナアダプタ<ul>
-				<li><a href="C++/Container/stack.html">stack</a></li>
-				<li><a href="C++/Container/queue.html">queue</a></li>
-				<li><a href="C++/Container/priority_queue.html">priority_queue</a></li>
 			</ul>
 			</li>
 		</ul>
@@ -193,13 +206,13 @@
 		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
 		<ul>
 			<li>スレッド
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
 				<li>jthread (c++20)</li>
 			</ul>
 			</li>
 			<li>カレントスレッドを管理する関数
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>this_thread::yield (c++11)</li>
 				<li>this_thread::get_id (c++11)</li>
 				<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
@@ -207,14 +220,14 @@
 			</ul>
 			</li>
 			<li>スレッドのキャンセル
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>stop_token (c++20)</li>
 				<li>stop_source (c++20)</li>
 				<li>stop_callback (c++20)</li>
 			</ul>
 			</li>
 			<li>相互排他
-				<ul class="auto-style1">
+				<ul class="auto-style3">
 				<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
 				<li>timed_mutex (c++11)</li>
 				<li>recursive_mutex (c++11)</li>
@@ -226,7 +239,7 @@
 			</ul>
 			</li>
 			<li>汎用ミューテックス管理
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
 				<li>scoped_lock (c++17)</li>
 				<li>unique_lock (c++11)</li>
@@ -234,19 +247,19 @@
 			</ul>
 			</li>
 			<li>汎用ロックアルゴリズム
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>try_lock (c++11)</li>
 				<li>lock (c++11)</li>
 			</ul>
 			</li>
 			<li>コールワンス
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>once_flag (c++11)</li>
 				<li>call_once (c++11)</li>
 			</ul>
 			</li>
 			<li>条件変数
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>condition_variable (c++11)</li>
 				<li>condition_vriable_any (c++11)</li>
 				<li>notify_all_at_thread_exit (c++11)</li>
@@ -254,7 +267,7 @@
 			</ul>
 			</li>
 			<li>フューチャー
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>promise (c++11)</li>
 				<li>packaged_task (c++11)</li>
 				<li>future (c++11)</li>
@@ -265,7 +278,7 @@
 			</ul>
 			</li>
 			<li>フューチャーのエラー
-			<ul class="auto-style1">
+			<ul class="auto-style3">
 				<li>future_error (c++11)</li>
 				<li>future_category (c++11)</li>
 				<li>future_errc (c++11)</li>
@@ -283,14 +296,14 @@
 		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">ファイルシステムライブラリ</a>
 		<ul>
 			<li>クラス
-			<ul>
+			<ul class="auto-style2">
 				<li>path</li>
 				<li>filesystem_error</li>
 				<li>directory_entry</li>
 			</ul>
 			</li>
 			<li>非メンバ関数
-			<ul>
+			<ul class="auto-style2">
 				<li>copy</li>
 				<li>copy_file</li>
 				<li>create_directory, create_directories</li>
@@ -300,7 +313,7 @@
 				<li>rename</li>
 			</ul>
 			</li>
-			<li>ファイル種別<ul>
+			<li>ファイル種別<ul class="auto-style2">
 				<li>is_block_file</li>
 				<li>is_character_file</li>
 				<li>is_directory</li>

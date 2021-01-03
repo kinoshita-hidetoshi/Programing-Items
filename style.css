@@ -31,7 +31,7 @@ iframe{
 }
 
 
-.base {
+#base {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -43,7 +43,7 @@ iframe{
 }
 
 /* チェックボックスなどは非表示に */
-.nav-unshown{
+#nav-unshown{
   display:none;
   /*display:block;*/
   z-index: 99;
@@ -53,7 +53,7 @@ iframe{
 	display: none;
 }
 
-.title {
+#title {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -68,7 +68,7 @@ iframe{
 	position:relative;
 }
 
-.content_wrapper {
+#content_wrapper {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -76,12 +76,12 @@ iframe{
   flex: 1;
 }
 
-.items_list {
+#items_list {
   width:  300px;
   height: auto;
 }
 
-.content {
+#content {
   height: auto;
   flex: 1;
 }
@@ -107,13 +107,13 @@ iframe{
 /* モバイル版 */
 @media (max-width: 768px){
 	/* チェックボックスなどは非表示に */
-		.nav-unshown{
+	.nav-unshown{
 		display:none;
 		/*display:block;*/
 		z-index: 99;
 	}
 
-	.title {
+	#title {
 		width: auto;
 		height: 55px;
 		border-bottom: 1px silver solid;
@@ -124,7 +124,7 @@ iframe{
 		position:relative;
 	}
 
-	.content_wrapper{
+	#content_wrapper{
 	/*
 		display: flex;
 		flex-direction: row;
@@ -133,7 +133,7 @@ iframe{
 		width: 100%;
 	}
 	
-	.items_list{
+	#items_list{
 		height: -webkit-calc(100% - 55px);
 		height: calc(100% - 55px);
 		width: 300px;
@@ -150,7 +150,7 @@ iframe{
 		transition: .3s ease-in-out;
 	}
 	
-	.content{
+	#content{
 		height: -webkit-calc(100% - 55px);
 		height: calc(100% - 55px);
 		width: 100%;
@@ -159,7 +159,7 @@ iframe{
 		background-color:white;
 	}
 	
-	.nav-open{
+	#nav-open{
 		display: inline-block;
 		width: 48px;
 		height: 40px;
@@ -168,13 +168,13 @@ iframe{
 		padding: 10px;
 	}
 
-	#nav-input:checked ~ .content_wrapper .items_list{
+	#nav-input:checked ~ #content_wrapper #items_list{
 		display: block;
 		-webkit-transform: translateX(0%);
 		transform: translateX(0%);
 	}
 
-	#nav-input:checked ~ .content_wrapper #nav-close{
+	#nav-input:checked ~ #content_wrapper #nav-close{
 		display: block;
 		opacity: .5;
 		z-index: 9;
@@ -185,7 +185,7 @@ iframe{
 	
 	/* <--- ハンバーガーメニュー、ここから */
 	/* ハンバーガーメニューアイコンをCSSだけで表現 */
-	.nav-open span, .nav-open span:before, .nav-open span:after{
+	#nav-open span, #nav-open span:before, #nav-open span:after{
 	  transition: .3s ease-in-out;
 	  position: absolute;
 	  height: 3px;
@@ -197,33 +197,33 @@ iframe{
 	  opacity: 1;
 	}
 	
-	.nav-open{
+	#nav-open{
 	  cursor: pointer;
 	}
 	
-	.nav-open span:before{
+	#nav-open span:before{
 	  bottom: -8px;
 	}
 	
-	.nav-open span:after{
+	#nav-open span:after{
 	  bottom: -16px;
 	}
 	
 	/* チェックが入ったら✖マークに */
-	#nav-input:checked ~ .title .nav-open span {
+	#nav-input:checked ~ #title #nav-open span {
 	  transition: .3s ease-in-out;
 	  transform: translateY(8px) rotate(45deg);
 	  -webkit-transorm: translateY(8px) rotate(45deg) ;
 	}
 	
-	#nav-input:checked ~ .title .nav-open span::before {
+	#nav-input:checked ~ #title #nav-open span::before {
 	  transition: .3s ease-in-out;
 	  transform: translateY(-8px) rotate(-45deg) scaleX(0.0);
 	  -webkit-transorm: translateY(-8px) rotate(-45deg) scaleX(0.0);
 	  opacity: 0.0;
 	}
 	
-	#nav-input:checked ~ .title .nav-open span::after {
+	#nav-input:checked ~ #title #nav-open span::after {
 	  transition: .3s ease-in-out;
 	  transform: translateY(-16px) rotate(-90deg);
 	  -webkit-transorm: translateY(-16px) rotate(-90deg);

@@ -17,22 +17,22 @@
   <!-- ref: "https://qiita.com/nagtkk/items/27ff4f2fe17746afabdd" -->
   <script>console.log("ちゃんとスタイル適用してね。");</script>
   
-  <div class="base">
+  <div id="base">
     <!-- ハンバーガーメニューからの連動操作用チェックボックス、常に非表示 -->
     <input type="checkbox" id="nav-input" class="nav-unshown">
     
     <!-- タイトル画面 -->
-    <div class="title">
+    <div id="title">
       <!-- ハンバーガーメニュー -->
-      <label class="nav-open" for="nav-input"><span></span></label>
+      <label id="nav-open" for="nav-input"><span></span></label>
       
       <!-- タイトル画面 -->
       <iframe id="title_html" src="title.html"></iframe>
     </div>
     
-    <div class="content_wrapper">
+    <div id="content_wrapper">
       <!-- 記事一覧 -->
-      <div class="items_list">
+      <div id="items_list">
         <iframe src="items_top.html" target="contents"></iframe>
       </div>
       
@@ -40,7 +40,7 @@
       <label id="nav-close" class="nav-unshown" for="nav-input"></label>
       
       <!-- 記事本文 -->
-      <div class="content">
+      <div id="content">
         <iframe name="contents" src="whats_new.html"></iframe>
       </div>
     </div>

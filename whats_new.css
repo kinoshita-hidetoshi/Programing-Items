@@ -12,7 +12,12 @@ body{
 }
 
 h1{
+	font-size: 1.6rem;
 	padding-left: 10px;
+}
+
+h2{
+	font-size: 1.6rem;
 }
 
 ul{
@@ -23,8 +28,9 @@ ul{
 トップ画面のスタイル
 */
 .post-title{
-	font-family: "Yu Mincho", "YuMincho", serif;
-	font-size: 2rem;
+  /* 明朝 */
+	font-family: 'Noto Serif JP', 'Yu Mincho', 'YuMincho', serif;
+	font-size: 1.6rem;
 	font-weight: normal;
 }
 
@@ -36,8 +42,8 @@ ul{
 
 .post-info{
 	position: relative;
-	padding-top: 4px;
-	margin-bottom: 20px
+	padding: 12px 0 10px 0;
+	margin: 10px 0 20px 0px;
 }
 
 .post-date{
@@ -51,7 +57,8 @@ ul{
 	position: absolute;
 	top: 0;
 	left: 10px;
-	padding-top: 10px;
+	margin-top: 0px;
+	padding-top: 12px;
 	padding-left: 0px;
 }
 
@@ -62,4 +69,19 @@ ul{
 	display: block;
 	width: 60%;
 	margin: 0 auto;
+}
+
+
+/* モバイル版 */
+@media (max-width: 600px){
+	.post-title{
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+	
+	.post-title,
+	.post-cate,
+	.post-link{
+		margin-left: 110px;
+	}
 }

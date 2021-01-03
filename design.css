@@ -147,6 +147,7 @@ td:first-child{
 	padding-top:0.5em;
 	padding-right:1em;
 	padding-bottom:0.5em;
+	white-space: nowrap;	/* 改行禁止 */
 }
 
 td:nth-last-child(2){
@@ -170,10 +171,23 @@ td:nth-last-child(1){
 	border-top-color:#cccccc;
 }
 
-.td_history{
+.td_history_date{
+	text-align: left;
 	vertical-align:top;
 	padding:0px !important;
 	padding-bottom:0px !important;
+	white-space: nowrap;	/* 改行禁止 */
+}
+
+.td_history_separator{
+	padding: 0px 5px !important;
+	text-align:center;
+	vertical-align: top;
+}
+
+.td_history{
+	vertical-align:top;
+	padding:0px !important;
 }
 
 
@@ -212,4 +226,23 @@ img.border{
 img.border_with_drow-shadow{
 	border:1px silver solid;
 	box-shadow: 4px 4px 8px gray;
+}
+
+
+/* モバイル版 */
+@media (max-width: 600px){
+	ul {
+		/*
+		font-size:small;
+		font-family: sans-serif;
+		list-style-position: outside;
+		list-style-type: disc;
+		*/
+		padding: 5px 0 5px 20px;
+	}
+	
+	ol{
+		list-style-position: outside;
+		padding: 0 0 0 40px;
+	}
 }
