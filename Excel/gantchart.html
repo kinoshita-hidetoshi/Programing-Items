@@ -40,8 +40,14 @@
 <nav>
   <p>
   <a href="#1._機能概要">1. 機能概要</a><br>
-  2. ***<br>
-  3. ***<br>
+  <a href="#2._ベースのエクセルシートを作成_">2. ベースのエクセルシートを作成</a><br>
+  <a href="#3._カレンダー部分を作る">3. カレンダー部分を作る</a><br>
+  <a href="#4._設定１_を作る">4. 設定１ を作る</a><br>
+  <a href="#5._ガントチャート(図)を描画">5. ガントチャート(図)を描画</a><br>
+  <a href="#6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a><br>
+  <a href="#7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a><br>
+  <a href="#8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a><br>
+  <a href="#9._設定２_を作る">9. 設定２ を作る</a><br>
   <a href="#サンプルプログラム">サンプルプログラム</a><br>
   <a href="#参考">参考</a>
   </p>
@@ -74,125 +80,184 @@
 
 
 <section>
-  <h2> 2. ***</h2>
-  <p>[概要]</p>
-  <p> &nbsp;</p>
-  
-  <p>[環境]</p>
-  <table>
-  <tbody>
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>コンパイラ :</td>
-  		<td>Visual Studio 2019 pro.,</td>
-  		<td>Version 16.6.0 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>OS: </td>
-  		<td>Windows10 home,</td>
-  		<td>Version 1909 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  </tbody>
-  </table>
-  
-  <p> &nbsp;</p>
+  <h2> <a name="2._ベースのエクセルシートを作成_">2. ベースのエクセルシートを作成</a></h2>
+</section>
+  <h4>[概要]</h4>
+  <p> VBA 無しで、まずはベース部分を作ってみます。</p>
+<p> 要求事項はこんな感じで。</p>
+<ol style="list-style-type: decimal; list-style-position: outside; margin-left: 0px;">
+  <li>「計画」と「実績」を分けて記載できるようにする。</li>
+  <li>分解能を 1日 とする。</li>
+  <li>WBSを100とする。</li>
+  <li>6カ月程度のスケジュールとする。</li>
+  <li>「担当者」欄を設ける。</li>
+  <li>「ステータス」欄を設ける。</li>
+</ol>
+<p> カレンダーの月、日の部分は一旦空欄にしておきます。ここは次の章で作っていきます。</p>
+<p> &nbsp;</p>
+<p> ここでは下図のような感じでレイアウトを作ってみました。</p>
+<p> 「カテゴリ」はグルーピングなどを意識した項目です。「大分類」「中分類」など複数列にしても良いかもしれません。</p>
+<p> &nbsp;</p>
+<p> <img alt="" src="gantchart/img19.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> サンプル： <a href="gantchart/Excel_gantchart_chap-02.xlsm">ダウンロード</a></p>
+<p> &nbsp;</p>
   
   <p>&nbsp;</p>
-  <p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-  <table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-  	<tr>
-  		<td>
-  			<video controls autoplay="y" loop="y" src="../MouseDragElementBehavior/SampleMovie01.mp4">
-  				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-  			</video>
-  		</td>
-  	</tr>
-  </table>
-  
-  <p> &nbsp;</p>
-  <p> &nbsp;</p>
-  
-  <p>[プログラムソース &quot;***.cpp&quot;]</p>
-  <pre class="prettyprint linenums">
-  </pre>
-</section>
-
-	
-<p>&nbsp;</p>
 
 
 <section>
-  <h2> 3. ***</h2>
-  <p>[概要]</p>
+
+
+<section>
+  <h2> <a name="3._カレンダー部分を作る">3. カレンダー部分を作る</a></h2>
+  <h4>[概要]</h4>
+  <p> 引き続き VBA 無しで、条件付き書式、excelのセルへの関数指定、などでさらにベース部分を作りこみしてみます。</p>
+<p> &nbsp;</p>
+<h3> 3-1. 「開始日」を指定でカレンダーを更新</h3>
+<p> 最初に日を表示する部分の書式を変更します。<br>&quot;セルの表示設定&quot; を &quot;日のみ&quot;(d) にします。&quot;=date(Y1)&quot; 
+とすることでも同じことをできますが、後で示す曜日の実現でこのセルには年月日の全ての情報を持っていてほしいので、表示形式で&quot;日のみ&quot;の表示を実現します。</p>
+<p> <img alt="" src="gantchart/imgC1.jpg"></p>
+<p> &nbsp;</p>
+<p> 続いて、カレンダーの最も左側の日付を「開始日」と同じ日にします。</p>
+<p> それ以降の日を、一つ左側のセルの翌日とします。</p>
+<p> 左側から２つ目のセルを設定したらドラッグでOKです。</p>
+<p> <img alt="" src="gantchart/img8.jpg"></p>
+<p> &nbsp;</p>
+<p> <img alt="" src="gantchart/img9.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> 3-2. 月を表示</h3>
+<p> 次に月の部分を作ります。</p>
+<p> 月表示は以下の条件で行います。</p>
+<p>・最も左側のセルは月を表示</p>
+<p>・各月の１日に対応するセルは月を表示</p>
+<p>・以上の条件以外、空欄</p>
+<p> &nbsp;</p>
+<p> &quot;セルの書式設定&quot; を &quot;月のみ&quot;(m)とします。</p>
+<p> <img alt="" src="gantchart/img10.jpg"></p>
+<p> &nbsp;</p>
+<p> 一番左側のセルは、真下と同じ日付を代入、月をそのまま無条件で表示します。</p>
+<p> <img alt="" src="gantchart/img12.jpg"></p>
+<p> &nbsp;</p>
+<p> それ以外のセルは、参照するセルを各セルの真下として、日付が１のときだけ日付を代入し、それ以外は空欄を代入します。</p>
+<p> <img alt="" src="gantchart/img14.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> 3-3. 曜日を表示</h3>
+<p> 次に曜日表示です。こちらは全部のセルが同じ手順です。</p>
+<p> 真上のセルを参照し、「=TEXT(AH5, &quot;AAA&quot;)」という式で曜日を計算して表示してくれます。</p>
+<p> <img alt="" src="gantchart/img16.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> 3-4. 月の部分は 1日なら左側に縦罫線、翌日が&quot;END&quot;なら右側に縦罫線</h3>
+<p> 今のままでは月の切り替わり部分、最終セルの右側、に罫線がありません。</p>
+<p> 美しくないので、ここに罫線を自動追加されるように &quot;条件付き書式&quot; を設定します。</p>
+<p> &nbsp;</p>
+<p> <img alt="" src="gantchart/img1D.jpg"> <img alt="" src="gantchart/img1E.jpg"></p>
+<p> &nbsp;</p>
+<p> 月部分の全セルを選択後、&quot;条件付き書式&quot;を設定します。</p>
+<p> <img alt="" src="gantchart/img21.jpg"></p>
+<p> <img alt="" src="gantchart/img22.jpg"></p>
+<p> &nbsp;</p>
+<p> <img alt="" src="gantchart/img23.jpg"></p>
+<p> &nbsp;</p>
+<p> これで月の切り替わりに罫線が入りました。</p>
+<p> <img alt="" src="gantchart/img24.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> 同様に、最終列に罫線を加える作業をします。最終列のセルに &quot;END&quot; という表記を入れてこれをマークにして書式指定します。</p>
+<p> <img alt="" src="gantchart/img26.jpg"></p>
+<p> &nbsp;</p>
+<p> この場合は右側に縦の罫線を追加します。</p>
+<p> <img alt="" src="gantchart/img27.jpg"></p>
+<p> &nbsp;</p>
+<p> こういう書式設定を行いました。</p>
+<p> <img alt="" src="gantchart/img29.jpg"></p>
+<p> &nbsp;</p>
+<p> 最終列にも罫線が入りました。</p>
+<p> <img alt="" src="gantchart/img2A.jpg"></p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h3> 3-5. カレンダーの土日を別の色にする</h3>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<p> サンプル： <a href="gantchart/Excel_gantchart_chap-03.xlsm">ダウンロード</a></p>
+<p> &nbsp;</p>
+  
   <p> &nbsp;</p>
-  
-  <p>[環境]</p>
-  <table>
-  <tbody>
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>コンパイラ :</td>
-  		<td>Visual Studio 2019 pro.,</td>
-  		<td>Version 16.6.0 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>OS: </td>
-  		<td>Windows10 home,</td>
-  		<td>Version 1909 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  </tbody>
-  </table>
-  
-  <p>&nbsp;</p>
-  <p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-  <table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-  	<tr>
-  		<td>
-  			<video controls autoplay="y" loop="y" src="../MouseDragElementBehavior/SampleMovie01.mp4">
-  				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-  			</video>
-  		</td>
-  	</tr>
-  </table>
-  
-  <p> &nbsp;</p>
-  <p>[プログラムソース &quot;***.cpp&quot;]</p>
-  <pre class="prettyprint linenums">
-  </pre>
+<p> &nbsp;</p>
 </section>
-
-
-<br>
-<br>
-
-
+  <h2> <a name="4._設定１_を作る">4. 設定１ を作る</a></h2>
+  <h4>[概要]</h4>
+  <p> 引き続き VBA 無しで、条件付き書式、excelのセルへの関数指定、などでさらにベース部分を作りこみしてみます。</p>
+<p> &nbsp;</p>
+<h3> 4-1. 「担当」を選べるようにする</h3>
+<p> &nbsp;</p>
+<h3> 4-2. 「ステータス」を選べるようにする</h3>
+<h3> &nbsp;</h3>
+<h3> 4-3. ステータスを「WBS終了条件」にしたら、行をグレー化する</h3>
+<p> &nbsp;</p>
+<h3> 4-4. カレンダーの色表示を祝日対応する</h3>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="5._ガントチャート(図)を描画">5. ガントチャート(図)を描画</a></h2>
+  <h4>[概要]</h4>
+  <p> 計画、実績 の期間を入力したら、その内容に従ってガントチャート（図）を作図する処理を追加します。</p>
+<p> VBA を使います。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a></h2>
+  <h4>[概要]</h4>
+  <p> 描画済みのガントチャート(図)を全て削除する処理を追加します。これが無いとデバッグなどが不便ですよね。</p>
+<p> 「更新」ボタンをクリックすることで、描画済みのガントチャート(図)を全て消してから再度全てを再描画するようにします。</p>
+<p> ただしガントチャート以外の図は消さないようにします。これを行わないとメモなどの図やテキストもすべて削除されてしまうので不便です。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
+  <h4>[概要]</h4>
+  <p> 独自の右クリックメニュー(コンテキストメニュー)を追加する方法を示します。</p>
+<p> 右クリックメニューとして「計画を設定」「実績を設定」を追加します。</p>
+<p> 合わせて、これらメニューを選択したときに対応する計画および実績のセルを更新します。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a></h2>
+  <h4>[概要]</h4>
+  <p> エクセルワークブックを閉じる際の後処理を実装します。</p>
+<p> ・独自のコンテキストメニューを削除します。</p>
+<p> &nbsp;</p>
+<p> 同様に、別のエクセルブックを使用するなどによりデアクティブになった際の処理を実装します。</p>
+<p> ・独自のコンテキストメニューを削除します。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="9._設定２_を作る">9. 設定２ を作る</a></h2>
+<h3> 9-1. 線の色を変える (ObjectThemeColor)</h3>
+<p> &nbsp;</p>
+<h3> 9-2. 線の色を変える (TintAndShade)</h3>
+<p> &nbsp;</p>
+<h3> 9-3. 線の太さを変える(Weight)</h3>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+  
+  <p> &nbsp;</p>
+  
+</section>
 <section>
   <h2><a name="サンプルプログラム">サンプルプログラム</a></h2>
   <p>
+  以上の内容を全て（＋アルファ？）した <strong>Excelガントチャート</strong> を以下からダウンロードできます。<br>
+  私自身が業務で使用することを目的にこれをブラッシュアップしているので、ここのが一番完成度が高いです。</p>
+<p>
+  使用ライセンスはエクセルシートに記載の通り &quot;木下が使用を許可した人だけ&quot; としています。要相談にて、ご連絡ください。</p>
+<p>
+  VBA についてはパスワードをかけていますが、ここのサイトを見れている人は以上の記事を参考に自分で作れますよね。</p>
+<p>
+  &nbsp;</p>
+<p>
   サンプルプログラム <a href="gantchart/Excel_gantchart_v1_02.xlsm">ダウンロード</a></p>
   <br>
   
@@ -275,6 +340,11 @@
 <h2 style="margin-bottom:5px">記載</h2>
 <table>
   <tr>
+    <td class="td_history_date">2021-01-04</td>
+    <td class="td_history_separator">-</td>
+    <td class="td_history">記事本文を更新</td>
+  </tr>
+  <tr>
     <td class="td_history_date">2020-12-24</td>
     <td class="td_history_separator">-</td>
     <td class="td_history">サンプルプログラムを v1.02 へバージョンアップ</td>
@@ -294,7 +364,7 @@
 <p>&nbsp;</p>
 
 <footer>
-<p><small>&copy; copyright 2020 木下英俊</small></p>
+<p><small>&copy; copyright 2020-2021 木下英俊</small></p>
 </footer>
 
 <p>&nbsp;</p>
