@@ -6,6 +6,8 @@
   <meta name="author" content="木下英俊">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
 	
   <title>forward_list</title>
   
@@ -17,6 +19,15 @@
   <link href="../../prettify.css" rel="stylesheet" type="text/css">
   <script src="../../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #FFFF00;
+  }
+  .auto-style2 {
+    font-size: large;
+  }
+  </style>
 
 </head>
 
@@ -30,157 +41,316 @@
 <h2> 目次</h2>
 	<nav>
 		<p>
-		1. ***<br>
-		2. ***<br>
-		3. ***<br>参考<br>
-		</p>
+		<a href="#1._始めに_－_Constructor">1. 始めに - Constructor</a><br>
+		<a href="#2._挿入">2. 挿入</a><br>
+		<a href="#参考">参考</a></p>
 	</nav>
 
-<p> &nbsp;</p>
-
-<section>
-<h2> 1. ***</h2>
-<p>[概要]</p>
-<p> &nbsp;</p>
-
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
-<p> &nbsp;</p>
-
-<p>&nbsp;</p>
-<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	<tr>
-		<td>
-			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-			</video>
-		</td>
-	</tr>
-</table>
-
-<p> &nbsp;</p>
-<p> &nbsp;</p>
-
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-
-<pre class="prettyprint linenums">&nbsp;</pre>
-</section>
-	
 <p>&nbsp;</p>
 
-<section>
-<h2> 2. ***</h2>
-<p>[概要]</p>
-<p> &nbsp;</p>
-
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
+<div>
+	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+	std::<span class="auto-style2">forward_list</span></h5>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+			&lt;forward_list&gt; で定義</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
+			class T,<br>&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;T&gt;<br>
+            &gt; class forward_list;</td>
+			<td><span class="comment">(1)(c++11以上)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
+			template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using forward_list = std::forward_list&lt;T, 
+			std::pmr::polymorphic_allocator&lt;T&gt;&gt;;<br>}</td>
+			<td><span class="comment">(2)(c++17以上)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+	</tbody>
+	</table>
 	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
-<p>&nbsp;</p>
-<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	<tr>
-		<td>
-			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-			</video>
-		</td>
-	</tr>
-</table>
-
-<p> &nbsp;</p>
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-<pre class="prettyprint linenums">
-</pre>
-	
-<br>
-	
-<br>
-<h2>
-サンプルプログラム</h2>
+	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<table>
+		<tr>
+			<td style="vertical-align:top">T</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素の型</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top">Allocator </td>
+			<td style="vertical-align:top">-</td>
+			<td>メモリを確保/解放したり、そのメモリに要素を構築/破棄したりするために使用されるアロケータ。 この型は Allocator 
+				の要件を満たさなければなりません。 Allocator::value_type と T が同じでない場合、動作は未定義です。</td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+	<p>std::forward_list 
+    はコンテナ内のあらゆる位置への高速な挿入と削除をサポートするコンテナです。高速なランダムアクセスはサポートされません。このコンテナは片方向連結リストとして実装され、本質的に 
+    C 
+    で実装された場合と比較していかなるオーバーヘッドもありません。std::listと比較すると、このコンテナは双方向のイテレーションが必要ないため、より空間効率の良い記憶領域を提供します。</p>
+    <p>
+    リスト内の要素を追加、削除、移動、またはいくつかのリストを横断するそれらの操作は、リスト中の他の要素を現在参照しているイテレータを無効化しません。しかし、（erase_afterを用いて）リストから要素が削除される場合、対応する要素を参照するイテレータや参照は無効化されます。</p>
+    <p>
+    std::forward_list は（size メンバ関数と operator== の計算量が常に線形時間であることを除いて） Container, 
+    AllocatorAwareContainer, SequenceContainer の要件を満たします。</p>
+</div>
 <p>
-サンプルプログラム ダウンロード</p>
+		<br>
+		</p>
+
+<p> &nbsp;</p>
+
+<section>
+  <h2> <a name="1._始めに_－_Constructor">1. 始めに － Constructor</a></h2>
+  <h4>[概要]</h4>
+<p>forward_list の各種コンストラクタの例を示します。</p>
+  <p> &nbsp;</p>
+  
+  <h4>[環境]</h4>
+  <table>
+  <tbody>
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>コンパイラ :</td>
+  		<td>g++,</td>
+  		<td>9.3.0 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>OS :</td>
+  		<td>Ubuntu (WSL2),</td>
+  		<td>20.04 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  </tbody>
+  </table>
+  
+  <p> &nbsp;</p>
+  
+  <p>[プログラムソース &quot;forword_list_01.cpp&quot;]</p>
+  
+  <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
+#include &lt;string&gt;   // string
+#include &lt;iostream&gt; // ostream
+
+template&lt;typename T&gt;
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const std::forward_list&lt;T&gt;&amp; v)
+{
+    os.put(&#39;[&#39;);
+    char comma[3] = {&#39;\0&#39;, &#39; &#39;, &#39;\0&#39;};
+    for (const auto&amp; e : v){
+        os &lt;&lt; comma &lt;&lt; e;
+        comma[0] = &#39;,&#39;;
+    }
+    return os &lt;&lt; &#39;]&#39;;
+}
+
+int main()
+{
+    // c++11 の初期化リストの構文
+    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words1 {&quot;the&quot;, &quot;frogurt&quot;, &quot;is&quot;, &quot;also&quot;, &quot;cursed.&quot;};
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // word2 = word1
+    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words2(words1.begin(), words1.end());
+    std::cout &lt;&lt; &quot;words2: &quot; &lt;&lt; words2 &lt;&lt; std::endl;
+
+    // words3 = words1
+    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words3(words1);
+    std::cout &lt;&lt; &quot;words3: &quot; &lt;&lt; words3 &lt;&lt; std::endl;
+
+    // words4 is {&quot;Mo&quot;,&quot;Mo&quot;, &quot;Mo&quot;, &quot;Mo&quot;, &quot;Mo&quot;}
+    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words4(5, &quot;Mo&quot;);
+    std::cout &lt;&lt; &quot;words4: &quot; &lt;&lt; words4 &lt;&lt; std::endl;
+
+    return EXIT_SUCCESS;
+}</pre>
+  
+</section>
+	
+<p>&nbsp;</p>
+<p>[出力]</p>
+<pre>words1: [the, frogurt, is, also, cursed.]
+words2: [the, frogurt, is, also, cursed.]
+words3: [the, frogurt, is, also, cursed.]
+words4: [Mo, Mo, Mo, Mo, Mo]</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="2._挿入">2. 挿入</a></h2>
+  <h4>[概要]</h4>
+<p>挿入系のメソッドをいろいろと試してみます。</p>
+  <p> &nbsp;</p>
+  
+  <h4>[環境]</h4>
+  <table>
+  <tbody>
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>コンパイラ :</td>
+  		<td>g++,</td>
+  		<td>9.3.0 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>OS :</td>
+  		<td>Ubuntu (WSL2),</td>
+  		<td>20.04 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  </tbody>
+  </table>
+  
+  <p>&nbsp;</p>
+  <p>[プログラムソース &quot;forward_list_02.cpp&quot;]</p>
+  	
+  <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
+#include &lt;string&gt;   // string
+#include &lt;iostream&gt; // ostream
+
+template&lt;typename T&gt;
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const std::forward_list&lt;T&gt;&amp; v)
+{
+    os.put(&#39;[&#39;);
+    char comma[3] = {&#39;\0&#39;, &#39; &#39;, &#39;\0&#39;};
+    for (const auto&amp; e : v){
+        os &lt;&lt; comma &lt;&lt; e;
+        comma[0] = &#39;,&#39;;
+    }
+    return os &lt;&lt; &#39;]&#39;;
+}
+
+int main(){
+    // c++11 の初期化リストの構文
+    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words1 {&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;};
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // emplace_front
+    words1.<span class="auto-style1">emplace_front</span>(&quot;emplace_front&quot;);
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // push_front
+    words1.<span class="auto-style1">push_front</span>(std::string(&quot;push_front&quot;));
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // emplace_after
+    words1.<span class="auto-style1">emplace_after</span>(words1.begin(), &quot;emplace_after&quot;);
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // insert_after
+    words1.<span class="auto-style1">insert_after</span>(words1.begin(), std::string(&quot;insert_after&quot;));
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // insert_afert &amp; next
+    std::forward_list&lt;std::string&gt; li {&quot;test1&quot;, &quot;test2&quot;, &quot;test3&quot;};
+    words1.<span class="auto-style1">insert_after</span>(std::next(words1.begin(), 3), li.begin(), li.end());
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+
+    // insert_after &amp; prev
+    // forward_list で prev() を使用することはできません。コンパイルは成功しますが実行時に例外を送出します。
+#if 0
+    std::forward_list&lt;std::string&gt; fi {&quot;test1&quot;, &quot;test2&quot;, &quot;test3&quot;};
+    words1.insert_after(std::prev(words1.end(), 3), fi.begin(), fi.end());
+    std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
+#endif
+
+    return EXIT_SUCCESS;
+}
+</pre>
+  	
+  <br>[出力]<br>
+<pre>words1: [1, 2, 3, 4, 5]
+words1: [emplace_front, 1, 2, 3, 4, 5]
+words1: [push_front, emplace_front, 1, 2, 3, 4, 5]
+words1: [push_front, emplace_after, emplace_front, 1, 2, 3, 4, 5]
+words1: [push_front, insert_after, emplace_after, emplace_front, 1, 2, 3, 4, 5]
+words1: [push_front, insert_after, emplace_after, emplace_front, test1, test2, test3, 1, 2, 3, 4, 5]</pre>
+  	
+  <br>
+  	
+  <br>
+  	
+  <br>
+  <h2>
+  サンプルプログラム</h2>
+  <p>
+  サンプルプログラム ダウンロード</p>
 </section>
 
 <p>&nbsp;</p>
-
-<h2><a name="参考">参考</a></h2>
-<ul>
-	<li>cppreference.com - std::priority_queue<br>
-	<a href="https://ja.cppreference.com/w/cpp/container/priority_queue" target="_blank">
-	https://ja.cppreference.com/w/cpp/container/priority_queue</a></li>
-</ul>
 <p>&nbsp;</p>
+
+<section>
+  <h2><a name="参考">参考</a></h2>
+  <ul>
+  	<li>cppreference.com - std::forward_list<br>
+  	<a href="https://ja.cppreference.com/w/cpp/container/forward_list" target="_blank">
+      https://ja.cppreference.com/w/cpp/container/forward_list</a></li>
+  </ul>
+  <p>&nbsp;</p>
+</section>
+
 <hr>
 
 <p style="margin-bottom:5px">&nbsp;</p>
-<h2 style="margin-bottom:5px">記載</h2>
-<table>
-	<tr>
-		<td class="td_history">2020-12-19</td>
-		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
-		<td class="td_history">新規作成 </td>
-	</tr>
-</table>
+
+<section>
+  <h2 style="margin-bottom:5px">記載</h2>
+  <table>
+  	<tr>
+  		<td class="td_history">2021-01-03</td>
+  		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
+  		<td class="td_history">新規作成 </td>
+  	</tr>
+  </table>
+</section>
 
 <p>&nbsp;</p>
 
 <footer>
-<p><small>&copy; copyright 2020 木下英俊</small></p>
+<p><small>&copy; copyright 2021 木下英俊</small></p>
 </footer>
 
 </body>
