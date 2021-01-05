@@ -6,6 +6,8 @@
   <meta name="author" content="木下英俊">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
 	
   <title>stack</title>
   
@@ -17,6 +19,12 @@
   <link href="../../prettify.css" rel="stylesheet" type="text/css">
   <script src="../../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    font-size: large;
+  }
+  </style>
 
 </head>
 
@@ -30,154 +38,171 @@
 <h2> 目次</h2>
 	<nav>
 		<p>
-		1. ***<br>
-		2. ***<br>
-		3. ***<br>
+		<a href="#1._始めに">1. 始めに</a><br><a href="#参考">参考</a><br>
 		</p>
 	</nav>
 
 <p> &nbsp;</p>
 
+<div>
+	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+	std::<span class="auto-style1">stack</span></h5>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+			&lt;stack&gt; で定義</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
+			class T,<br>&nbsp;&nbsp;&nbsp; class Container = std::deque&lt;T&gt;<br>
+            &gt; class stack;</td>
+			<td>&nbsp;</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+	</tbody>
+	</table>
+	
+	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<table>
+		<tr>
+			<td style="vertical-align:top">T</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素の型</td>
+		</tr>
+		<tr>
+			<td style="vertical-align:top">Container</td>
+			<td style="vertical-align:top">-</td>
+			<td>要素を格納するために使用するベースとなるコンテナの型。このコンテナは SequenceContainer 
+            の要件を満たさなければなりません。さらに、通常のセマンティクスを持つ以下の関数を提供していなければなりません。<br>・back()<br>
+            ・push_back()<br>・pop_back()<br>標準のコンテナ std::vector, std::deque, 
+            std::list はこれらの要件を満たします。デフォルトでは、特定の stack 
+            クラスの実体化に対してコンテナクラスが指定されていない場合、標準のコンテナ std::deque が使用されます。</td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+	<p>std::stack はスタックの機能、特に LIFO(後入れ先出し) のデータ構造を提供するコンテナアダプタです。</p>
+    <p>
+    このクラステンプレートはベースとなるコンテナのラッパーとして振る舞います。stackのベースとなるコンテナの末尾へ要素をプッシュし、末尾からポップします。すなわち末尾がスタックトップとなります。</p>
+</div>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
 <section>
-<h2> 1. ***</h2>
-<p>[概要]</p>
+<h2> <a name="1._始めに">1. 始めに</a></h2>
+<h4>[概要]</h4>
+<p>ja.cppreference.com に記載されているものをベースに改造したサンプルプログラムから提示します。</p>
+<p>stack.top() は、コンテナが空だと segmentation fault を発生して異常終了しました。事前に stack.size() 
+を確認してコンテナが空でないことを確認する必要がありそうです。</p>
 <p> &nbsp;</p>
 
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
+<h4>[環境]</h4>
+  <table>
+  <tbody>
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>コンパイラ :</td>
+  		<td>g++,</td>
+  		<td>9.3.0 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>OS :</td>
+  		<td>Ubuntu (WSL2),</td>
+  		<td>20.04 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  </tbody>
+  </table>
+  
 <p> &nbsp;</p>
 
-<p>&nbsp;</p>
-<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	<tr>
-		<td>
-			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-			</video>
-		</td>
-	</tr>
-</table>
+<p>[プログラムソース &quot;stack_01.cpp&quot;]</p>
+<pre class="prettyprint linenums">#include &lt;stack&gt; // stack
+#include &lt;iostream&gt;
 
-<p> &nbsp;</p>
-<p> &nbsp;</p>
+int main()
+{
+    std::stack&lt;int&gt; s;
+    s.push(2);
+    s.push(6);
+    s.push(51);
 
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-<pre class="prettyprint linenums">
-</pre>
+    std::cout &lt;&lt; s.size() &lt;&lt; &quot; elements on stack.\n&quot;;
+    std::cout &lt;&lt; &quot;Top element: &quot;
+              &lt;&lt; s.top()        // Leaves elements on stack.
+              &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; s.size() &lt;&lt; &quot; elements on stack.\n&quot;;
+
+    while(s.size() &gt; 0){
+        std::cout &lt;&lt; s.size() &lt;&lt; &quot; elements on stack.\n&quot;;
+        std::cout &lt;&lt; &quot;Top element: &quot; &lt;&lt; s.top() &lt;&lt; &quot;\n&quot;;
+        s.pop();
+    }
+    std::cout &lt;&lt; s.size() &lt;&lt; &quot; elements on stack.\n&quot;;
+
+    return EXIT_SUCCESS;
+}</pre>
 </section>
 	
 <p>&nbsp;</p>
+<p>[出力]</p>
+<pre>3 elements on stack.
+Top element: 51
+3 elements on stack.
+3 elements on stack.
+Top element: 51
+2 elements on stack.
+Top element: 6
+1 elements on stack.
+Top element: 2
+0 elements on stack.</pre>
+<p>&nbsp;</p>
 
 <section>
-<h2> 2. ***</h2>
-<p>[概要]</p>
-<p> &nbsp;</p>
-
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
-<p>&nbsp;</p>
-<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	<tr>
-		<td>
-			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-			</video>
-		</td>
-	</tr>
-</table>
-
-<p> &nbsp;</p>
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-<pre class="prettyprint linenums">
-</pre>
-	
-<br>
-	
-<br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
 </section>
-
 <p>&nbsp;</p>
 
-<h2>参考</h2>
+<h2><a name="参考">参考</a></h2>
 <ul>
-	<li>(例) http://www.****.com</li>
+	<li>cppreference.com - std::stack<br>
+  	<a href="https://ja.cppreference.com/w/cpp/container/stack" target="_blank">
+    https://ja.cppreference.com/w/cpp/container/stack</a></li>
 </ul>
+<p>&nbsp;</p>
 <hr>
 
+<p style="margin-bottom:5px">&nbsp;</p>
 <h2 style="margin-bottom:5px">記載</h2>
 <table>
 	<tr>
-		<td class="td_history">2020-08-12</td>
-		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
-		<td class="td_history">なんか変えた。<br></td>
-	</tr>
-	<tr>
-		<td class="td_history"></td>
-		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
-		<td class="td_history">こんなことも変えた。</td>
-	</tr>
-	<tr>
-		<td class="td_history">2020-08-11</td>
+		<td class="td_history">2021-01-04</td>
 		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
 		<td class="td_history">新規作成 </td>
 	</tr>
@@ -186,7 +211,7 @@
 <p>&nbsp;</p>
 
 <footer>
-<p><small>&copy; copyright 2020 木下英俊</small></p>
+<p><small>&copy; copyright 2021 木下英俊</small></p>
 </footer>
 
 </body>
