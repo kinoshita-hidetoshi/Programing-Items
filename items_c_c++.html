@@ -188,16 +188,45 @@
 		
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a>
 		<ul>
-			<li>all_of, any_of, non_of (c++11)</li>
-			<li>copy</li>
-			<li>copy_if</li>
+			<li>非変更シーケンス操作<ul>
+              <li>all_of (c++11)<br>any_of (c++11)<br>non_of (c++11)</li>
+              <li>for_each</li>
+              <li>for_each_n (c++17)</li>
+              <li>count<br>count_if</li>
+              <li>mismatch</li>
+              <li>find<br>find_if<br>find_if_not (c++11)</li>
+              <li>find_end</li>
+              <li>find_first_of</li>
+              <li>adjacent_find</li>
+              <li>search</li>
+              <li>search_n</li>
+            </ul>
+            </li>
+			<li>変更シーケンス操作<ul class="auto-style2">
+              <li>copy</li>
+              <li>copy_if (c++11)</li>
 			<li>fill</li>
 			<li>fill_n</li>
-			<li>iota (c++11)</li>
-			<li>random_shuffle</li>
-			<li>shuffle (c++11)</li>
-			<li>unique</li>
-			<li>next_permutation, prev_permutation</li>
+			  <li>random_shuffle (c++17未満)</li>
+			<li>shuffle (c++11)unique</li>
+            </ul>
+            </li>
+            <li>分割操作</li>
+            <li>ソート操作</li>
+            <li>二分探索操作(ソート済み範囲用)</li>
+            <li>集合操作(ソート済み範囲用)</li>
+            <li>ヒープ操作</li>
+            <li>最小/最大演算</li>
+            <li>比較演算</li>
+            <li>順列操作<ul class="auto-style2">
+              <li>next_permutation, prev_permutation</li>
+            </ul>
+            </li>
+            <li>数値演算<ul class="auto-style2">
+              <li>iota (c++11)</li>
+            </ul>
+            </li>
+            <li>未初期化記憶域の操作</li>
 		</ul>
 		</li>
 		
