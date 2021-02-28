@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>［タイトルを記載します］</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #FFFF00;
+  }
+  </style>
+
+  </head>
+
+<body onload="prettyPrint();">
+	
+<h1>[Bitbucket] SSH認証カギを設定する</h1>
+
+<p> Bitbucket で SSH認証カギを設定する手順を記載します。</p>
+<p> &nbsp;</p>
+<nav>
+  </nav>
+
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a><br>
+        <a href="#2._Windowsの場合">2. Windowsの場合</a><br><a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a></h2>
+	<h4>[概要]</h4>
+	<p> Git を使うために、必ずしも必要というわけではないのですが、SSH認証カギを生成・登録して使用すると良い場合が多々あります。<br>
+    Bitbucket で SSH認証カギを使用するための手順などを記載します。</p>
+<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS:</td>
+	    <td>(1) WSL/Ubuntu,</td>
+	    <td>20.04</td>
+	  </tr>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>(2) VirtualBox/Ubuntu,</td>
+	    <td>20.304</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>ベースOS :</td>
+	    <td>Windows10 home,</td>
+	    <td>Version 2003 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h3>Bitbucket にアカウントを作成</h3>
+<p><a href="https://bitbucket.org/">https://bitbucket.org/</a> 
+にアクセスしてアカウントを作ってください。</p>
+<p>詳細は割愛します。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>既に公開鍵が作成されていないかを確認</h3>
+<p>SSH認証鍵はホームフォルダ下の &quot;.ssh&quot; フォルダに作成されます。<br>下記コマンドで .ssh 
+フォルダおよびフォルダ内のファイルを確認することで、既に登録されているSSH認証鍵の状態を確認できます。</p>
+<p>
+<pre><code>$ ls ~/.ssh</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
+<p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
+<p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
+<p>
+<pre><code>$ mkdir ~/.ssh
+$ cd ~/.ssh
+$ mkdir bitbucket
+$ cd bitbucket
+$ ssh-keygen -t rsa -C hoge@foo.com              <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/hidetoshi/.ssh/id_rsa):/home/hidetoshi/.ssh/bitbucket/id_rsa
+                                                 <span class="auto-style1">&lt;----- &quot;bitbucket&quot;フォルダへ修正してEnter</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Your identification has been saved in /home/hidetoshi/.ssh/bitbucket/id_rsa.
+Your public key has been saved in /home/hidetoshi/.ssh/bitbucket/id_rsa.pub.
+The key fingerprint is:
+0f:19:40:a4:36:b4:89:42:b0:e2:f4:b2:5b:ce:85:39 mail@mail
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+| o  .   .  o  +  |
+|.  .  o  +   .   |
+|+..   *    .     |
+|   + . .. .   o  |
+|       o  .   S  |
+| o  o        o   |
+|    .    E   . . |
+|         =     o |
+| . o             |
++-----------------+
+$</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>これで公開鍵と秘密鍵が作成できました。</p>
+<ul>
+  <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+  <li>id_rsa.pub: 公開鍵</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>~/.ssh/config にSSH鍵を設定</h3>
+<p>config ファイルに設定を書いていきます。無ければ以下のコマンドで作ることができます。</p>
+<p>
+<pre><code>$ vi ~/.ssh/config</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>config ファイルに以下の情報を書き込みます。</p>
+<p>
+<pre><code>Host bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket/id_rsa
+  User git
+  Port 22
+  TCPKeepAlive yes
+  IdentitiesOnly yes</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>設定は以上です。</p>
+<p>&nbsp;</p>
+<p>NOTE:</p>
+<ul>
+  <li>SSHのポート番号は通常 22 を使用しますが、例えば会社のプロキシーが Port 22 を遮断しているなどの場合があります。<br>上記設定で 
+  Port を 443 にすることで接続できるようになった、という記事を見かけたことがあるので、ここに記載します。</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Bitbucket へ公開鍵を設定</h3>
+<p>Bitbucket にアクセス後、左下のユーザーアイコンを選択すると「Personal settings」が見えるのでこれをクリックします。</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgC.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgE.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgF.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
+<p>
+<pre><code>$ cat ~/.ssh/bitbucket/id_rsa.pub
+ssh-rsa
+**************************************************************************
+**************************************************************************
+mail@mail</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
+<p>&quot;Label&quot; は自分がどの公開鍵かわかる名称を付けます。私は端末名を記入してみました。</p>
+<p>複数の端末を持つ場合も共通の鍵を使用するのではなくそれぞれ異なる鍵を生成して使用するほうが良いと思います。</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/img10.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p>「保存」ボタンをクリックしたら設定は以上で完了です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>接続できるか確認</h3>
+<p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
+<p>
+<pre><code>$ ssh -T git@bitbucket.org
+logged in as kinoshita_hidetoshi
+
+You can use git or hg to connect to Bitbucket. Shell access is disabled
+$</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>git clone</h3>
+<p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
+とします。</p>
+
+<pre>$ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
+
+<p><img alt="" src="How%20to%20use%20SSH%20key/img17.gif"></p>
+</section>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._Windowsの場合">2. Windowsの場合</a></h2>
+	<h4>[概要]</h4>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows10 home,</td>
+	    <td>Version 2003 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+	  <tr>
+	    <td>
+	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
+	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+	      </video>
+	    </td>
+	  </tr>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+	<pre class="prettyprint linenums">
+	</pre>
+</section>
+	
+<br>
+<br>
+
+<section>
+	<h2>サンプルプログラム</h2>
+	<p>サンプルプログラム ダウンロード</p>
+</section>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>
+        <a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
+        <li>
+        <a href="https://qiita.com/shimishimizu/items/e057e09325148f455637" target="_blank">BitbucketでSSH接続 - Qiita</a></li>
+        <li>
+        <a href="https://qiita.com/0084ken/items/2e4e9ae44ec5e01328f1" target="_blank">.ssh/configファイルでSSH接続を管理する - Qiita</a></li>
+        <li>
+        <a href="https://mrkmyki.com/bitbucketのgitリポジトリを作成してwindows10からssh接続でpushする手" target="_blank">
+        Bitbucketのgitリポジトリを作成してWindows10からssh接続でpushする手順 | mrkmyki＠フリーランスブログ</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2021-02-07</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

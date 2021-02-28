@@ -13,22 +13,32 @@
 	
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="design.css" type="text/css">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
   
   <!-- Start for 'google-code-prettify' -->
-  <link href="prettify.css" rel="stylesheet" type="text/css">
-  <script src="prettify.js" type="text/javascript"></script>
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
 
-</head>
+  </head>
 
 <body onload="prettyPrint();">
 	
-<h1>［タイトルを記載します］</h1>
+<h1>[Bitbucket] Pipelines で c++(g++)を使ってみる</h1>
 
 <p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
 <p> ［概要を記載します］</p>
 <p> &nbsp;</p>
+
+<h2> 目次</h2>
+  <nav>
+    <p>
+    1. ***<br>
+    2. ***<br>
+    3. ***<br><a href="#参考">参考</a><br>
+    </p>
+  </nav>
+
 
 <p>&nbsp;</p>
 <table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
@@ -45,7 +55,6 @@
     </td>
   </tr>
 </table>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -89,7 +98,7 @@
 	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
 	  <tr>
 	    <td>
-	      <video controls autoplay="y" loop="y" src="MouseDragElementBehavior/SampleMovie01.mp4">
+	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
 	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
 	      </video>
 	    </td>
@@ -99,9 +108,34 @@
 	<p> &nbsp;</p>
 	<p> &nbsp;</p>
 	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
+	<p>[&quot;bitbucket-pipelines.yml&quot;]</p>
+		<pre class="prettyprint linenums"><code># Template C++ Application
+
+# This template allows you to validate your C++ application.
+# The workflow allows running tests and code linting on the default branch.
+
+image: gcc:10.2
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Test
+            script:
+              - make check
+        - step:
+            name: Lint
+            script:
+              # apt update &amp;&amp; apt -y install cppcheck &amp;&amp; cppcheck .
+              - apt-get update
+              - apt-get -y install cppcheck
+              - make lint
+        - step:
+            name: Build and Run
+            script:
+              - make compile
+              # Execute your C++ application after compilation to check success
+              - make distcheck</code></pre>
 </section>
 	
 <p>&nbsp;</p>
@@ -146,7 +180,7 @@
 	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
 	  <tr>
 	    <td>
-	      <video controls autoplay="y" loop="y" src="MouseDragElementBehavior/SampleMovie01.mp4">
+	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
 	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
 	      </video>
 	    </td>
@@ -173,7 +207,26 @@
 <section>
 	<h2><a name="参考">参考</a></h2>
 	<ul>
-		<li>(例) http://www.****.com</li>
+		<li>
+        <a href="https://support.atlassian.com/ja/bitbucket-cloud/resources/" target="_blank">
+        Bitbucket Cloud リソース | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a></li>
+        <li>
+        <a href="https://ja.confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html" target="_blank">
+        Configure bitbucket-pipelines.yml | Bitbucket Cloud | Atlassian 
+        Documentation</a></li>
+        <li>
+        <a href="https://www.lyzon.co.jp/blog/2021/20210105_bitbucketpipelines/" target="_blank">
+        Bitbucket PipelinesでCI/CD入門！ビルドとレンタルサーバーへのFTPデプロイを自動化する (lyzon.co.jp)</a></li>
+        <li>
+        <a href="https://github.com/tdlib/td/blob/master/bitbucket-pipelines.yml" target="_blank">
+        td/bitbucket-pipelines.yml at master · tdlib/td (github.com)</a></li>
+        <li>
+        <a href="https://github.com/ignitionrobotics/ign-plugin/blob/ign-plugin1/bitbucket-pipelines.yml" target="_blank">
+        ign-plugin/bitbucket-pipelines.yml at ign-plugin1 · 
+        ignitionrobotics/ign-plugin (github.com)</a></li>
+        <li>
+        <a href="https://qiita.com/keisuke-nakata/items/cb3d436519dab2868c39" target="_blank">
+        Bitbucket Pipelines の cache の使い方 - Qiita</a></li>
 	</ul>
 </section>
 

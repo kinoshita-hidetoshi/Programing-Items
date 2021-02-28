@@ -67,17 +67,106 @@
 </nav>
 
 <p> &nbsp;</p>
+
 <h2> <a name="1._Doxygen_とは">1. Doxygen とは</a></h2>
-<p> Doxygen とは、ソースコードから文書を自動生成してくれるツールです。</p>
+<p> Doxygen (ドキシジェン) とは、C++、C言語、Java、Objective-C、Python、IDL 
+(CORBAおよびMicrosoft形式) のためのソースコードから文書を自動生成してくれるツールです。他にも 
+PHP、C#、D言語、ActionScriptでもある程度利用可能です。多くのUnix系システム、Windows、macOSで動作することができます。</p>
+<p> Javadoc の文法に加えて、Qtツールキットで使われるドキュメンテーションタグや 
+<a href="https://www.doxygen.nl/manual/htmlcmds.html" target="_blank">HTML</a>、<a href="https://www.doxygen.nl/manual/markdown.html" target="_blank">Markdown</a> 
+記法をサポートしています。出力は、HTML形式の出力だけでなく、CHM、RTF、PDF、LaTeX、PostScript、manページ形式の文書を生成することができます。<a href="https://www.doxygen.nl/manual/emojisup.html" target="_blank">絵文字</a>、もサポートしてたりします。</p>
+<p> 簡単な手順はこんな感じ。</p>
+<ol>
+  <li>Doxygenルールに乗っ取り各ソースコードにコメントを入れる。</li>
+  <li>Doxygenに設定を行う。</li>
+  <li>キュメントを出力する。</li>
+</ol>
+<p>Doxygen のサイトはこちらです。</p>
 <ul>
 	<li><a href="https://www.doxygen.nl/index.html" target="_blank">Doxygen 本家</a></li>
 	<li><a href="http://www.doxygen.jp/" target="_blank">Doxygen 日本語サイト</a></li>
 </ul>
 <p> この種のツールでは Java の Javadoc や.NET の Sandcastle 
-などが有名です。これらが特定のプログラミング言語やプラットフォームに最適化されているのに対して、Doxygen はさまざまな言語に対応しており、また 
-Windows、Mac、Linux 上で動作することもうれしいところです。<br><br>ドキュメントの出力形式も豊富で、HTML 
-を基本とし、LaTeX、RTF、CHM (HTML ヘルプ)、PDF など様々な形式をサポートしています。<br>
-そしてこれだけ多機能にもかかわらずフリーウェアであることもとてもうれしいことです。現時点でも十分に有用ですが、2020年現在も改善され続けているとても有用なツールです。</p>
+などが有名です。これらが特定のプログラミング言語やプラットフォームに最適化されているのに対して、Doxygen は上記のようなさまざまな言語に対応しており、また 
+Windows、Mac、Linux 上で動作することもうれしいところです。<br><br>そしてこれだけ多機能にもかかわらずフリーウェアであることもとてもうれしいことです。現時点でも十分に有用ですが、2020年現在も改善され続けているとても有用なツールです。</p>
+<p> &nbsp;</p>
+
+<h3> 基本コメントルール</h3>
+<p> 基本は /**, /*!, //! などのコメントから始まるコメントに反応して、その直後の変数や構造体に情報を付加することが出来ます。</p>
+<ul>
+  <li>
+  <a href="https://www.doxygen.nl/manual/docblocks.html#cppblock" target="_blank">
+  C言語系 の場合 (C/C++/C#/Objective-C/PHP/Java)</a></li>
+  <li>
+  <a href="https://www.doxygen.nl/manual/docblocks.html#pythonblocks" target="_blank">
+  Python の場合</a></li>
+</ul>
+<p> 使用できるコマンドはとてもたくさんあります（<a href="https://www.doxygen.nl/manual/commands.html" target="_blank">参考URL</a>）が、よく使用するコマンドは以下のような感じです。</p>
+<p> &nbsp;</p>
+<table class="border-collapse" style="width: 600">
+	<thead class="standard_table">
+    <tr>
+      <td class="standard_table">コマンド</td>
+      <td class="standard_table">概要</td>
+    </tr>
+  </thead>
+  <tbody class="standard_table">
+    <tr>
+      <td class="standard_table">@file</td>
+      <td class="standard_table">ファイル名を記載</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@brief</td>
+      <td class="standard_table">概要を記載</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@param</td>
+      <td>関数の引数で使用。</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@return / @retval</td>
+      <td class="standard_table">関数の戻り値で使用。複数の場合は retval を使用。</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@note</td>
+      <td class="standard_table">関数の補足説明に使用することができる。</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@author</td>
+      <td class="standard_table">プログラム著者を記載。</td>
+    </tr>
+    <tr>
+      <td class="standard_table">@date</td>
+      <td class="standard_table">日付を記載。変更履歴など書くときに使用する。</td>
+    </tr>
+  </tbody>
+</table>
+<p> &nbsp;</p>
+<p> ざっくり記載例です。これは c/c++ で関数について記載した例です。</p>
+<pre><code>/*=====================================================================*/
+//! @brief 初期化処理 (概要をここに記載します)
+/*!
+    @details 初期化処理の詳細 (詳細をここに記載します)
+	
+    @param	 contributor [i,o]    処理用ワークエリア
+    @param	 dwResult [o]         関数実施結果のステータスコード記録用変数
+    @retval	 true                 正常終了
+    @retval	 false                異常終了
+    @author	 木下英俊
+    @date    2009-03-05           内部ワーク領域の初期化処理を追加
+    @date    2007-02-16           新規作成
+*/
+/*=====================================================================*/
+bool Initialize( CONTRIBUTOR&amp; contributor, unsigned long dwResult )
+{
+    ・・・
+}</code></pre>
+<p> &nbsp;</p>
+<p> ざっくり出力例です。これは HTML で出力した例です。</p>
+<p> <img alt="" height="694" src="doxygen_windows/img4C.jpg" width="952"></p>
+<p> &nbsp;</p>
+<p> 以上、概要についての説明でした。</p>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 
 <section>
@@ -400,15 +489,13 @@ UTF-8 がデフォルトなので、UTF-8 でコーディングしていれば�
 <p>&nbsp;</p>
 <h3><a name="4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a></h3>
 <p>ここまでの作業で追加された図は、あくまで図です。クリックしても何もおこりません。<br>図なので、当然ながら文字列をコピーすることもできませんでした。</p>
-<p>ここで、下図の通り DOT_IMAGE_FORMAT の設定を &quot;png&quot; から &quot;svg&quot; 
-へ変更してみます。</p>
-<p><img alt="" src="doxygen_windows/img7.jpg" class="border_with_drow-shadow"></p>
+<p>ここで、下図の通り INTERACTIVE_SVG の設定を &quot;チェック&quot; へ変更してみます。</p>
+<p>&nbsp;</p>
+<p><img alt="" src="doxygen_windows/img2.jpg"></p>
 <p>&nbsp;</p>
 <p>すると、下記４つの効果が発生することを確認しました。いい感じです。</p>
-<p>(1) SVG なので絵がきれいになる － ベクター画像ですもんね<br>(2) 関数などをクリックするとその関数の詳細説明へジャンプするようになる<br>
-(3) ツールチップで関数概要を表示してくれるようになる<br>(4) 
-文字列をコピーできるようになる</p>
-<p>ただし、SVGは HTML でしか使用できません。HTML以外の文書を出力する場合はデフォルトの png を使用することを考えましょう。</p>
+<p>(1) 関数などをクリックするとその関数の詳細説明へジャンプするようになる<br>
+(2) ツールチップで関数概要を表示してくれるようになる<br></p>
 <p>&nbsp;</p>
 <p>
 <img alt="" class="border_with_drow-shadow" src="doxygen_windows/img15.jpg">
@@ -638,6 +725,9 @@ Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日
 		https://www.doxygen.nl/index.html</a></li>
 		<li>Doxygen 日本語サイト<br><a href="http://www.doxygen.jp/" target="_blank">
 		http://www.doxygen.jp/</a></li>
+        <li>Doxygen - Wikipedia<br>
+        <a href="https://ja.wikipedia.org/wiki/Doxygen">
+        https://ja.wikipedia.org/wiki/Doxygen</a></li>
 		<li>Doxygen の使い方<br>
 		<a href="https://akabeko.me/blog/2012/01/doxygen/" target="_blank">
 		https://akabeko.me/blog/2012/01/doxygen/</a></li>
