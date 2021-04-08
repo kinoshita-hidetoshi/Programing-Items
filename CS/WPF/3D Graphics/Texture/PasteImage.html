@@ -52,10 +52,9 @@
 <p>
 <img alt="" src="PasteImage/img24.jpg"></p>
 <span class="table_title"><br>[&quot;MainWindow.xaml&quot;]<br>・３Ｄの画角は 
-PersectiveCamera の設定で定義しています。</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+PersectiveCamera の設定で定義しています。</span>
+
+<pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;_3D_Texture_Image.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -126,9 +125,6 @@ PersectiveCamera の設定で定義しています。</span><table class="auto-s
         &lt;/Viewport3D&gt;        
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
 <h2>
@@ -152,10 +148,8 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
 ・回転は、カメラをＹ軸を中心に回転させることで実現しています。&quot;PersectiveCamera.Transform&quot; で設定しています。<br>
 ・回転の動画は、ViewPort3D.Triggers の中で定義しています。Storyboard の定義でアニメーションの内容を具体化します。</p>
 
-["MainWindow.xaml"]&nbsp;<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+["MainWindow.xaml"]&nbsp;
+<pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;_3D_Texture_Image.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -254,9 +248,6 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
         
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 	
@@ -291,10 +282,7 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
 ・複数の変換を同時に登録するには&lt;Transform3DGroup&gt;を使う必要があります。</p>
 <br>
 [&quot;MainWindow.xaml&quot;]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+<pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;_3D_Texture_Image_02.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -398,9 +386,6 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
 
     &lt;/DockPanel&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 	
@@ -440,10 +425,7 @@ MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_Mo
 	
 &nbsp;</p>
 ["MainWindow.xaml"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+<pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;_3D_Texture_Image_03.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -544,9 +526,6 @@ MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_Mo
         &lt;/Viewport3D&gt;
     &lt;/DockPanel&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 	
@@ -554,10 +533,7 @@ MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_Mo
 <p>
 
 [MainWindow.xaml.cs]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+<pre class="prettyprint linenums">
 using System.Windows;
 using System.Windows.Input;
 
@@ -614,9 +590,6 @@ namespace _3D_Texture_Image_03
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
 </p>
 <p>

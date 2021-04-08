@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>gcov と lcov</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #FFFF00;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>gcov / lcov</h1>
+
+<p> 高品質なソフトウェア開発を行う、という観点で調べると必ず登場するのがソースコードカバレッジです。<br>
+ソースコード上のどの行が評価されて、どの行が未評価なのか、などを可視化することができます。</p>
+<p> ここでは gcc/g++ 環境で使用可能な gcov と、その結果を html に変換して閲覧しやすくしてくれる lcov 
+という超有名なツールについて記載します。</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._gcov_を使ってみる">1. gcov を使ってみる</a><br>
+        <a href="#2._lcov_を使ってみる">2. lcov を使ってみる</a><br>
+        <a href="#3._lcov_の表示に_Branches(c1)_を追加する">3. lcov の表示に Branches(c1) 
+        を追加する</a><br><a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._gcov_を使ってみる">1. gcov を使ってみる</a></h2>
+	<h4>[概要]</h4>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcc/g++ :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcov :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+	<pre class="prettyprint linenums">
+	</pre>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._lcov_を使ってみる">2. lcov を使ってみる</a></h2>
+	<h4>[概要]</h4>
+<p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>genhtml というツールとともに使用します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcc/g++ :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcov :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>lcov :</td>
+	    <td>1.14</td>
+	    <td></td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>genhtml :</td>
+	    <td>1.14</td>
+	    <td></td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+	<pre class="prettyprint linenums">
+	</pre>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+</section>
+	
+<section>
+	<h2> <a name="3._lcov_の表示に_Branches(c1)_を追加する">3. lcov の表示に Branches(c1) 
+    を追加する</a></h2>
+	<h4>[概要]</h4>
+<p>gcov の出力結果を HTML 形式に変換して可視化してくれる lcov というツールがあります。<br>とても便利なツールですが、デフォルトでは 
+C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
+<p>C1(分岐網羅)のカバレッジを表示するには ~/.lcovrc を以下のように設定して C1 を有効化する必要があります。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcc/g++ :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>gcov :</td>
+	    <td>9.3.0, </td>
+	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>lcov :</td>
+	    <td>1.14</td>
+	    <td></td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>genhtml :</td>
+	    <td>1.14</td>
+	    <td></td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	<p>[~/.lcovrc]</p>
+	<pre class="prettyprint linenums">
+# Include branch coverage data display (can be disabled by the
+# --no-branch-coverage option of genhtml)
+<span class="auto-style1">genhtml_branch_coverage = 1</span>
+
+# Specify if branch coverage data should be collected and processed.
+<span class="auto-style1">lcov_branch_coverage = 1</span></pre>
+<br>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。<br>lcover<br>
+<pre><span style="background-color: #FFFF00">--rc lcov_branch_coverage=1</span></pre>
+genhtml<br>
+<pre><span class="auto-style1">--branch_coverage</span></pre>
+<br>
+<br>
+<br>これを追加して表示した結果を以下に示します。<br>Branches を表示できるようになりました。<br>Lines でみると未実行は 2行 
+だけなんですが、Branches にすると 57.1%(8/14) と一気に成績が悪くなりました。<br>
+<br><img alt="" src="gcov_lcov/img2.jpg"><br>
+</section>
+<br>
+
+<section>
+	<h2>サンプルプログラム</h2>
+	<p>サンプルプログラム ダウンロード</p>
+</section>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>
+        <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_blank">
+        Linux Test Project - Coverage » lcov (sourceforge.net)</a></li>
+        <li>
+        <a href="https://www.ois-yokohama.co.jp/oisblog2018/archives/6664" target="_blank">
+        gcovによるステートメントカバレッジ計測 | OISブログ (ois-yokohama.co.jp)</a></li>
+        <li>
+        <a href="https://orumin.blogspot.com/2020/11/blog-post.html" target="_blank">
+        コードカヴァレッジ計測 (orumin.blogspot.com)</a></li>
+	</ul>
+<p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2021-03-20</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

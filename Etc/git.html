@@ -20,6 +20,15 @@
   <script src="../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
 
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #FFFF00;
+  }
+  .auto-style2 {
+    font-weight: normal;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -36,6 +45,8 @@
     <a href="#2._credential.helper">2. credential.helper</a><br>
     <a href="#3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a><br>
     <a href="#4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a><br>
+    <a href="#5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git 
+    LES)</a><br>
     <a href="#参考">参考</a><br>
     </p>
   </nav>
@@ -46,6 +57,102 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+<h3>1-2. &quot;git submodule&quot;</h3>
+<h4>1-2-1. &quot;git submodule add&quot;</h4>
+<p>submoduleは.gitmodulesで管理されている。</p>
+<ul>
+  <li>submodule は "git submodule add" コマンドで追加される。</li>
+  <li>submodule のリポジトリ先の情報等は .gitmodules というファイルに記載される。</li>
+  <li>.gitmodules に記載されたリポジトリ情報と参照先の CommitID 情報を元に submodule と接続する。</li>
+</ul>
+<p>&nbsp;</p>
+
+<pre class="prettyprint"><code>$ git submodule add https://example.com/sub-modules  # .gitmodules ファイルが更新される
+$ git commit -a                                      # 変更を保存（必須！）</code></pre>
+
+<p>&nbsp;</p>
+<h5>参考</h5>
+<ul>
+  <li><a href="http://git-scm.com/book/en/v2/Git-Tools-Submodules">Git - 
+  Submodules (git-scm.com)</a></li>
+  <li><a href="https://qiita.com/sotarok/items/0d525e568a6088f6f6bb">Git 
+  submodule の基礎 - Qiita</a></li>
+  <li><a href="https://qiita.com/kinpira/items/3309eb2e5a9a422199e9">Git 
+  submoduleの押さえておきたい理解ポイントのまとめ - Qiita</a></li>
+  <li><a href="https://www.m3tech.blog/entry/git-submodule">git submodule 
+  はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>1-2-2. &quot;git submodule update&quot;</h4>
+<p>submoduleはupdateコマンドで更新しなければならない。</p>
+<ul>
+  <li>親プロジェクトをpullで更新しても、submoduleは勝手に更新されません。</li>
+  <li>必ずgit submodule updateコマンドでの更新手続きが必要。</li>
+  <li>最悪の場合「親プロジェクトをpullした時にsubmoduleがmodifiedになっていたらsubmodule 
+  updateする」というおまじないを覚えておけばなんとかなる。</li>
+</ul>
+<p>&nbsp;</p>
+<h5>参考</h5>
+<ul>
+  <li><a href="http://git-scm.com/book/en/v2/Git-Tools-Submodules">Git - 
+  Submodules (git-scm.com)</a></li>
+  <li><a href="https://qiita.com/sotarok/items/0d525e568a6088f6f6bb">Git 
+  submodule の基礎 - Qiita</a></li>
+  <li><a href="https://qiita.com/kinpira/items/3309eb2e5a9a422199e9">Git 
+  submoduleの押さえておきたい理解ポイントのまとめ - Qiita</a></li>
+  <li><a href="https://www.m3tech.blog/entry/git-submodule">git submodule 
+  はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>1-2-3. サブモジュールを含んだGitレポジトリを &quot;<span class="auto-style2"><em><strong>git clone</strong></em></span>&quot; 
+する</h4>
+<p><strong><em>--recursive</em></strong> オプションをつけてください。</p>
+
+<pre class="prettyprint">git clone https://example.com/repo-with-sub-modules <span class="auto-style1"><strong><em>--recursive</em></strong></span></pre>
+
+<p>すると、サブモジュールのファイルも自動で取得されます。</p>
+<p>&nbsp;</p>
+<p><em><strong>--recursive</strong></em> をつけ忘れた / サブモジュールのファイルを取得したい</p>
+<p>git clone に <strong><em>--recursive</em></strong> 
+を付けないとサブモジュールのファイルが取得されませんが、<span class="cpp-source">git submodule update --init</span> で後からチェックアウトできます。</p>
+
+<pre class="prettyprint">git submodule update --init</pre>
+
+<p>&nbsp;</p>
+<p>新しいバージョンを &quot;git checkout&quot; したら、他の人がサブモジュールを追加していた。</p>
+<p><span class="cpp-source">git submodule update --init</span> 
+でサブモジュールのファイルを取得しましょう。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>1-2-4. &quot;git submodule deinit&quot;</h4>
+<p>submodule削除するときはファイルを消すだけではダメ</p>
+<ul>
+  <li>git submodule deinitコマンドとgit rmコマンドの２段階で削除する。</li>
+  <li>削除の場合は親プロジェクトをpullしただけで、削除が反映される。</li>
+</ul>
+<p>&nbsp;</p>
+
+<pre class="prettyprint">$ git submodule deinit submodule/test_app_submodule 
+$ git rm submodule/test_app_submodule</pre>
+
+<p>&nbsp;</p>
+<h5>参考</h5>
+<ul>
+  <li><a href="http://git-scm.com/book/en/v2/Git-Tools-Submodules">Git - 
+  Submodules (git-scm.com)</a></li>
+  <li><a href="https://qiita.com/sotarok/items/0d525e568a6088f6f6bb">Git 
+  submodule の基礎 - Qiita</a></li>
+  <li><a href="https://qiita.com/kinpira/items/3309eb2e5a9a422199e9">Git 
+  submoduleの押さえておきたい理解ポイントのまとめ - Qiita</a></li>
+  <li><a href="https://www.m3tech.blog/entry/git-submodule">git submodule 
+  はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -54,16 +161,28 @@
 を設定することでこれら設定を端末へ保存することができます。</p>
 <p> &nbsp;</p>
 <p> [Windows]</p>
-<p> &quot;git config --global credential.helper wincred&quot;</p>
+<p> <span class="cpp-source">$ git config --global credential.helper wincred</span></p>
 <p> &nbsp;</p>
-<p> (追記)</p>
-<p> ・・・と思いきや、<br>現在は<br>&quot;<a href="https://github.com/microsoft/Git-Credential-Manager-for-Windows" target="_blank">microsoft/Git-Credential-Manager-for-Windows</a>&quot; 
-をインストールする必要があるみたいです。</p>
-<p> これをインストールすると自動で(？) credential.helper=manager に切り替わるみたいです。<br><br>
-~/.gitconfig を見てみると<br><br>[credential]<br>helper = manager<br>となっていました。<br><br>
-これでエラーも出ず、パスワード入力も求められず扱えるようになりました。</p>
-<p> [Windows]</p>
-<p> &quot;git config --global credential.helper manager&quot;</p>
+<p> ・・・と思いきや、&quot;wincred&quot; は既にサポート外。<br>現在は &quot;<a href="https://github.com/microsoft/Git-Credential-Manager-for-Windows" target="_blank">microsoft/Git-Credential-Manager-for-Windows</a>&quot; 
+をインストールする必要があるみたいです。<br>以下の設定が正解。</p>
+<p> &nbsp;</p>
+<h4> [Windows]</h4>
+<p> <span class="cpp-source">$ git config --global credential.helper manager</span></p>
+<p> &nbsp;</p>
+<p> これをインストールすると自動で(？) credential.helper=manager に切り替わるみたいです。</p>
+<p> ~/.gitconfig を見てみると</p>
+<p> 
+<pre>[credential]<br>helper = manager</pre>
+</p>
+<p> となっていました。</p>
+<p> これでエラーも出ず、パスワード入力も求められず扱えるようになりました。</p>
+<p> &nbsp;</p>
+<h4> [Linux]</h4>
+<p> Linux ではこんな感じでパスワードをキャッシュすることができるみたいです。</p>
+
+<pre><code>$ git config --global credential.helper &#39;cache --timeout=3600&#39;
+# Set the cache to timeout after 1 hour (setting is in seconds)</code></pre>
+
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a></h2>
@@ -80,75 +199,68 @@ https://github.com/Microsoft/Git-Credential-Manager-for-Windows</a></p>
 <p> &nbsp;</p>
 </section>
 
+<section>
 <h2><a name="4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a></h2>
+<p>こんな感じでやります。<br>私の場合は、&quot;Azure DevOps&quot; から &quot;Bitbucket&quot; 
+へ引っ越しする際にこれでやってうまくお引越しできました。</p>
 <p>&nbsp;</p>
-<pre><code>$ git clone --mirror &lt;SOURCE_REPOSITORY_URL&gt;
-$ cd &lt;REPOSITORY&gt;
-$ git push --mirror &lt;DESTINATION_REPOSITORY_URL&gt;</code></pre>
-<p>
-<section>
-</section>
-</p>
-<p>
-<section>
-SOURCE_REPOSITORY_URL</section></p>
-<p>
-<section>
-移行する対象のリポジトリのURLのこと。</section></p>
-<p>
-<section>
-末尾が .git で終わるURL。</section></p>
-<p>
-<section>
-</section>
-</p>
-<p>
-<section>
-REPOSITORY</section></p>
-<p>
-<section>
-最初のコマンド<span class="cpp-source">git clone ～</span>を実行したときに ～.git フォルダができると思う。</section></p>
-<p>
-<section>
-そのフォルダのこと。</section></p>
-<p>
-<section>
-</section>
-</p>
-<p>
-<section>
-DESTINATION_REPOSITORY_URL</section></p>
-<p>
-<section>
-移行する先のリポジトリのURL。</section></p>
-<p>
-<section>
-末尾が .git で終わるURL。</section></p>
-<p>
-<section>
-</section>
-</p>
-<p>
-<section>
-</section>
-</p>
-<p>
-参考</p>
+
+<pre class="prettyprint"><code>$ git clone --mirror <strong><em>&lt;SOURCE_REPOSITORY_URL&gt;</em></strong>
+$ cd <strong><em>&lt;REPOSITORY&gt;</em></strong>
+$ git push --mirror <strong><em>&lt;DESTINATION_REPOSITORY_URL&gt;</em></strong></code></pre>
+
+<p>&nbsp;</p>
+<h4><em>SOURCE_REPOSITORY_URL</em></h4>
+<p>移行する対象のリポジトリのURLのこと。</p>
+<p>末尾が .git で終わるURL。</p>
+<p>&nbsp;</p>
+<h4><em>REPOSITORY</em></h4>
+<p>最初のコマンド<span class="cpp-source">git clone ～</span>を実行したときに ～.git フォルダができると思う。</p>
+<p>そのフォルダのこと。</p>
+<p>&nbsp;</p>
+<h4><em>DESTINATION_REPOSITORY_URL</em></h4>
+<p>移行する先のリポジトリのURL。</p>
+<p>末尾が .git で終わるURL。</p>
+<p>&nbsp;</p>
+
+
+<h3>参考</h3>
 <ul>
   <li><a href="https://qiita.com/orange5405/items/783b74667bcc69a34a52">
   Gitリポジトリを別のGitサーバーに移行する - Qiita</a></li>
 </ul>
-<p>
-<section>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git 
+LFS)</a></h2>
+<p>Git LFS を使用すると、大容量ファイルはコードに対し並列ストレージに格納され、軽量な参照が Git 
+リポジトリに格納されます。これは、リポジトリをより小さく高速にするため、オーディオファイルやビデオファイルなどの大きなメディアで作業するチームにとって便利です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>参考</h3>
+<ul>
+  <li>
+  <a href="https://ja.confluence.atlassian.com/bitbucket/git-large-file-storage-in-bitbucket-829078514.html">
+  Git Large File Storage in Bitbucket | Bitbucket Cloud | Atlassian 
+  Documentation</a></li>
+  <li><a href="https://satoyan419.com/post/git-large-file-storage/">
+  画像を含めると1GB以上あったので、Git Large File Storageを使ってみた | Satoshi Shoji’s Blog 
+  (satoyan419.com)</a></li>
+  <li>
+  <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/reduce-repository-size/">
+  リポジトリのサイズを減らす | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a></li>
+  <li><a href="https://www.ricksoft.jp/blog/articles/000578.html">Bitbucket の 
+  Git LFS でバイナリファイルをバージョン管理する - リックソフトブログ (ricksoft.jp)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 </section>
-</p>
-<p>
 <section>
-</section>
-</p>
-<p>
-<section>
-	</p>
 	<h2><a name="参考">参考</a></h2>
 	<ul>
 		<li>
@@ -177,6 +289,17 @@ DESTINATION_REPOSITORY_URL</section></p>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	
+	  <tr>
+	    <td class="td_history_date">2021-04-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"1-2. &#39;git submodule&#39;"を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"5. Git Large File System (Git LFS)&quot;を追加</td>
+	  </tr>
+	  
 	  <tr>
 	    <td class="td_history_date">2021-02-10</td>
 	    <td class="td_history_separator">-</td>
