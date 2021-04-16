@@ -38,18 +38,24 @@
 <p> git に関する情報を記載します。</p>
 <p> &nbsp;</p>
 
-<h2> 目次</h2>
-  <nav>
-    <p>
-    <a href="#1._基本的な_git_コマンド">1. 基本的な git コマンド</a><br>
-    <a href="#2._credential.helper">2. credential.helper</a><br>
-    <a href="#3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a><br>
-    <a href="#4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a><br>
-    <a href="#5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git 
-    LES)</a><br>
-    <a href="#参考">参考</a><br>
-    </p>
-  </nav>
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+          <a href="#1._基本的な_git_コマンド">1. 基本的な git コマンド</a><br>
+          <a href="#2._credential.helper">2. credential.helper</a><br>
+          <a href="#3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a><br>
+          <a href="#4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a><br>
+          <a href="#5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git LFS)</a><br>
+          <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -171,16 +177,16 @@ $ git rm submodule/test_app_submodule</pre>
 <p> &nbsp;</p>
 <p> これをインストールすると自動で(？) credential.helper=manager に切り替わるみたいです。</p>
 <p> ~/.gitconfig を見てみると</p>
-<p> 
-<pre>[credential]<br>helper = manager</pre>
-</p>
+
+<pre class="prettyprint">[credential]<br>helper = manager</pre>
+
 <p> となっていました。</p>
 <p> これでエラーも出ず、パスワード入力も求められず扱えるようになりました。</p>
 <p> &nbsp;</p>
 <h4> [Linux]</h4>
 <p> Linux ではこんな感じでパスワードをキャッシュすることができるみたいです。</p>
 
-<pre><code>$ git config --global credential.helper &#39;cache --timeout=3600&#39;
+<pre class="prettyprint"><code>$ git config --global credential.helper &#39;cache --timeout=3600&#39;
 # Set the cache to timeout after 1 hour (setting is in seconds)</code></pre>
 
 <p> &nbsp;</p>
