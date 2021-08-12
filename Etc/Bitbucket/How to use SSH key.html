@@ -77,7 +77,7 @@
 	  <tr>
 	    <td>&nbsp;</td>
 	    <td>(2) VirtualBox/Ubuntu,</td>
-	    <td>20.304</td>
+	    <td>20.04</td>
 	  </tr>
 		
 	  <tr>
@@ -160,14 +160,20 @@ $</code></pre>
 <p>&nbsp;</p>
 <p>config ファイルに以下の情報を書き込みます。</p>
 <p>
-<pre><code>Host bitbucket.org
+<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+[“config“]</strong><pre><code>Host bitbucket.org
   HostName bitbucket.org
   IdentityFile ~/.ssh/bitbucket/id_rsa
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes</code></pre>
+<p>&nbsp;</p>
+<p>
+<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+[“config“ プロキシ環境下]</strong><pre>未確認</pre>
 </p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>設定は以上です。</p>
 <p>&nbsp;</p>
@@ -224,10 +230,14 @@ $</code></pre>
 </section>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
 	<h2> <a name="2._Windowsの場合">2. Windowsの場合</a></h2>
 	<h4>[概要]</h4>
+	<p> Git を使うために、必ずしも必要というわけではないのですが、SSH認証カギを生成・登録して使用すると良い場合が多々あります。<br>
+    Bitbucket で SSH認証カギを使用するための手順などを記載します。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -248,38 +258,170 @@ $</code></pre>
 	  </tr>
 	</tbody>
 	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<br>
-<br>
 
-<section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
 </section>
 
-<br>
-<br>
+<p>&nbsp;</p>
 
 <section>
-	<h2><a name="参考">参考</a></h2>
+	
+	<h3>Bitbucket にアカウントを作成</h3>
+<p><a href="https://bitbucket.org/">https://bitbucket.org/</a> 
+にアクセスしてアカウントを作ってください。</p>
+<p>詳細は割愛します。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>既に公開鍵が作成されていないかを確認</h3>
+<p>SSH認証鍵はホームフォルダ下の &quot;.ssh&quot; フォルダに作成されます。<br>下記コマンドで .ssh 
+フォルダおよびフォルダ内のファイルを確認することで、既に登録されているSSH認証鍵の状態を確認できます。</p>
+<p>
+<pre><code>&gt; dir %homedrive%%homepath%\.ssh</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
+<p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
+<p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
+<p>
+<pre>&gt; %homedrive%
+&gt; cd %homepath%
+&gt; mkdir .ssh
+&gt; cd .ssh
+&gt; mkdir bitbucket
+&gt; cd bitbucket
+&gt; ssh-keygen -t rsa -C <a href="mailto:hoge@foo.com">hoge@foo.com</a>               <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\ユーザ名/.ssh/id_rsa): <a href="file:///c:/users/ユーザ名/.ssh/bitbucket/id_rsa">c:\users\ユーザ名/.ssh/bitbucket/id_rsa</a>
+                                                  <span class="auto-style1">&lt;----- &quot;bitbucket&quot;フォルダへ修正してEnter</span>
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\kinos/.ssh/id_rsa): c:\Users\kinos/.ssh/bitbucket/id.rsa
+Enter passphrase (empty for no passphrase):       <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter same passphrase again:                      <span class="auto-style1">&lt;-----Enterを押す</span>
+Your identification has been saved in c:\Users\ユーザ名/.ssh/bitbucket/id_rsa.
+Your public key has been saved in c:\Users\ユーザ名/.ssh/bitbucket/id_rsa.pub.
+The key fingerprint is:
+SHA256:sxNXQxxEEMuuB+zYuX95RVRKkpe4zn3zRbDe/88z+nQ hoge@foo.com
+The key&#39;s randomart image is:
++---[RSA 2048]----+
+| o**+..o|
+| . o+o+..|
+| o oo.+ |
+| . . .... o|
+| S oo o + |
+| + O o o.=|
+| . B . . +E|
+| + o o++|
+| .... oo.O|
++----[SHA256]-----+
+
+C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
+</p>
+<p>&nbsp;</p>
+<p>これで公開鍵と秘密鍵が作成できました。</p>
+<ul>
+  <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+  <li>id_rsa.pub: 公開鍵</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>~/.ssh/config にSSH鍵を設定</h3>
+<p>config ファイルに設定を書いていきます。無ければ以下のコマンドで作ることができます。</p>
+<p>
+<pre>&gt; notepad %homedrive%%homepath%\.ssh\config</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>config ファイルに以下の情報を書き込みます。</p>
+<p>
+<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+[“config“]</strong><pre>Host bitbucket.org
+  HostName bitbucket.org
+  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  User git
+  Port 22
+  TCPKeepAlive yes
+  IdentitiesOnly yes</pre>
+<p></p>
+<p>
+<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+[“config“ プロキシ環境下]</strong><p>
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+proxy 環境下ではこちらのサンプルを参照ください。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+”ProxyCommand” の行を追加しています。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+プロキシアドレス (“</span><strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">http://proxy.mei.co.jp:8080</strong><span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">“) 
+は i-PRO 社内環境における例です。</span><pre>Host bitbucket.org
+  HostName bitbucket.org
+  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  User git
+  Port 22
+  TCPKeepAlive yes
+  IdentitiesOnly yes
+  ProxyCommand &quot;C:\Program Files\Git\mingw64\bin\connect.exe&quot; -H http://proxy.mei.co.jp:8080 %h %p</pre>
+<p></p>
+<p>&nbsp;</p>
+<p>設定は以上です。</p>
+<p>&nbsp;</p>
+<p>NOTE:</p>
+<ul>
+  <li>SSHのポート番号は通常 22 を使用しますが、例えば会社のプロキシーが Port 22 を遮断しているなどの場合があります。<br>上記設定で 
+  Port を 443 にすることで接続できるようになった、という記事を見かけたことがあるので、ここに記載します。</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Bitbucket へ公開鍵を設定</h3>
+<p>Bitbucket にアクセス後、左下のユーザーアイコンを選択すると「Personal settings」が見えるのでこれをクリックします。</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgC.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgE.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/imgF.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
+<p>
+<pre>&gt; type %homedrive%%homepath%\.ssh\bitbucket\id.rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
+1o8a5iQ8blw3fd43c2qZYjVTIIh7N+lcUWuVXnXyWQNeVNT/IPEoaZaaur9SDAojhcA1kUMODK
+0KuKDlbddxijWqJzzmEqcrZGNFEKUTVfB/ctQFZIgb0ScyGWiJWjIOVUloLqcdy6CEbHSjiLV7
+rxFqPhFU/RO0QbqS58zjxWLVYP7jgJXudJ+QJcwmUlLoH1k22AEH154Q28hRNriupma8D/VyJ5
+2VWWHwtgF+F6jp8G72uhn46aYmQXK3brUIv7vu/k/8lAUUNI32UrPNoxWII6rbs/lU+0vs5peh
+QqVlPcjJd3 hoge@foo.com</pre>
+</p>
+<p>&nbsp;</p>
+<p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
+<p>&quot;Label&quot; は自分がどの公開鍵かわかる名称を付けます。私は端末名を記入してみました。</p>
+<p>複数の端末を持つ場合も共通の鍵を使用するのではなくそれぞれ異なる鍵を生成して使用するほうが良いと思います。</p>
+<p><img alt="" src="How%20to%20use%20SSH%20key/img10.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p>「保存」ボタンをクリックしたら設定は以上で完了です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>接続できるか確認</h3>
+<p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
+<p>
+<pre><code>$ ssh -T git@bitbucket.org
+logged in as kinoshita_hidetoshi
+
+You can use git or hg to connect to Bitbucket. Shell access is disabled
+$</code></pre>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>git clone</h3>
+<p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
+とします。</p>
+
+<pre>$ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
+
+<p>
+<img alt="" src="How%20to%20use%20SSH%20key/image-20210422-095315.png" style="height: 384px" width="1011"></p>
+</section>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+<h2><a name="参考">参考</a></h2>
 	<ul>
 		<li>
         <a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
@@ -302,11 +444,19 @@ $</code></pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2021-07-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows の情報を追記 </td>
+	  </tr>
+	
 	  <tr>
 	    <td class="td_history_date">2021-02-07</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
+	  
 	</table>
 </section>
 

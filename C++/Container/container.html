@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>container libraries</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>コンテナライブラリ</h1>
+
+<p> 
+コンテナライブラリは、キュー、リスト、スタックのような一般的なデータ構造をプログラマが簡単に実装することを可能とする汎用のクラステンプレートとアルゴリズムのコレクションです。 
+コンテナはシーケンスコンテナ、連想コンテナ、非順序連想コンテナの3種類に分類され、それぞれ違った操作をサポートするよう設計されています。</p>
+<p> コンテナは要素のために確保した記憶域空間を管理し、それらに直接またはイテレータ (ポインタに似た性質のオブジェクト) 
+を通してアクセスするためのメンバ関数を提供します。</p>
+<p> ほとんどのコンテナは少なくともいくつかのメンバ関数を共通して持っており、機能性を共有しています。 
+特定のアプリケーションに対してどのコンテナがベストかはその提供される機能性だけではなく、異なるワークロードに対する効率性にもよります。</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#シーケンスコンテナ">シーケンスコンテナ</a><br>
+        <a href="#連想コンテナ">連想コンテナ</a><br>
+        <a href="#非順序連想コンテナ">非順序連想コンテナ</a><br><a href="#コンテナアダプタ">コンテナアダプタ</a><br>
+        <a href="#スパン">スパン</a><br><a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<h2><a name="シーケンスコンテナ">シーケンスコンテナ</a></h2>
+<p>シーケンスコンテナはシーケンシャルアクセスが可能なデータ構造を実装しています。</p>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td><a href="array.html">array</a> <span class="comment">(c++11)</span></td>
+			<td >要素が隣接した静的な配列 <br><span class="comment">(クラステンプレート) </span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+				
+		<tr>
+			<td><a href="vector.html">vector</a></td>
+			<td >要素が隣接した動的な配列<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td><a href="deque.html">deque</a></td>
+			<td >両端キュー<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td><a href="forward_list.html">forward_list</a> <span class="comment">(c++11)</span></td>
+			<td >片方向連結リスト<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td><a href="list.html">list</a></td>
+			<td >双方向連結リスト<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+	</tbody>
+	</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<h2><a name="連想コンテナ">連想コンテナ</a></h2>
+<p>&nbsp;</p>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td><a href="set.html">set</a></td>
+			<td >一意なキーによってソートされた、キーのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+				
+		<tr>
+			<td><a href="map.html">map</a></td>
+			<td >一意なキーによってソートされた、キー値ペアのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td>multiset</td>
+			<td >キーによってソートされた、キーのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td>multimap</td>
+			<td >キーによってソートされた、キー値ペアのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+	</tbody>
+	</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="非順序連想コンテナ">非順序連想コンテナ</a></h2>
+<p>&nbsp;</p>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td>unorderd_set <span class="comment">(c++11)</span></td>
+			<td >一意なキーによってハッシュされた、キーのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+				
+		<tr>
+			<td>unorderd_map <span class="comment">(c++11)</span></td>
+			<td >一意なキーによってハッシュされた、キー値ペアのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td>unorderd_multiset <span class="comment">(c++11)</span></td>
+			<td >キーによってハッシュされた、キーのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td>unorderd_multimap <span class="comment">(c++11)</span></td>
+			<td >キーによってハッシュされた、キー値ペアのコレクション<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+	</tbody>
+	</table>
+
+<p>&nbsp;</p>
+<h2><a name="コンテナアダプタ">コンテナアダプタ</a></h2>
+<p>&nbsp;</p>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td><a href="stack.html">stack</a></td>
+			<td >スタック（LIFO データ構造）を提供するためにコンテナを適合させます<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+				
+		<tr>
+			<td><a href="queue.html">queue</a></td>
+			<td >キュー（FIFO データ構造）を提供するためにコンテナを適合させます<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+		<tr>
+			<td><a href="priority_queue.html">priority_queue</a></td>
+			<td >優先度付きキューを提供するためにコンテナを適合させます<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+
+	</tbody>
+	</table>
+
+<p>&nbsp;</p>
+<h2><a name="スパン">スパン</a></h2>
+<p>&nbsp;</p>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td>span <span class="comment">(c++20)</span></td>
+			<td >オブジェクトの隣接したシーケンスに対する非所有ビュー<br><span class="comment">(クラステンプレート)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+				
+	</tbody>
+	</table>
+
+<p>&nbsp;</p>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>コンテナライブラリ - cppreference.com<br>
+        <a href="https://ja.cppreference.com/w/cpp/container" target="_blank">
+        https://ja.cppreference.com/w/cpp/container</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2021-08-12</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	  
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

@@ -3,6 +3,11 @@
 <head>
 	<meta charset="utf-8">	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
 	
 	<title></title>
 	
@@ -158,7 +163,7 @@
 		</ul>
 		</li>
 		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">コンテナライブラリ</a>
+		<li><a href="C++/Container/container.html">コンテナライブラリ</a>
 		<ul>
 			<li>シーケンスコンテナ
 			<ul class="auto-style2">
@@ -180,8 +185,10 @@
 			
 			<li>連想コンテナ
 			<ul class="auto-style2">
-				<li>map, multimap</li>
-				<li>set, multiset</li>
+				<li><a href="C++/Container/set.html">set</a></li>
+				<li><a href="C++/Container/map.html">map</a></li>
+                <li>multiset</li>
+                <li>multimap</li>
 			</ul>
 			</li>
 			<li>非順序連想コンテナ
@@ -192,12 +199,16 @@
 				<li>unorderd_multimap (c++11)</li>
 			</ul>
 			</li>
+		    <li>スパン<ul class="auto-style2">
+              <li>span (c++20)</li>
+            </ul>
+            </li>
 		</ul>
 		</li>
 		
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a>
 		<ul>
-			<li>非変更シーケンス操作<ul>
+			<li>非変更シーケンス操作<ul class="auto-style2">
               <li>all_of (c++11)<br>any_of (c++11)<br>non_of (c++11)</li>
               <li>for_each</li>
               <li>for_each_n (c++17)</li>

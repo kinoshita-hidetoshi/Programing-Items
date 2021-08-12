@@ -1,38 +1,49 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>参照 － 左辺値参照、右辺値参照</title>
-
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	color: #808080;
-}
-.auto-style9 {
-	text-indent:4em;
-}
-.auto-style10 {
-	background-color: #FFFF00;
-}
-.auto-style11 {
-	background-color: #00FF00;
-}
-.auto-style12 {
-	color: #000;
-	background-color: #FF0000;
-}
-.auto-style13 {
-	text-decoration: underline;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <title>参照 － 左辺値参照、右辺値参照</title>
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+  
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	color: #808080;
+    }
+    .auto-style9 {
+    	text-indent:4em;
+    }
+    .auto-style10 {
+    	background-color: #FFFF00;
+    }
+    .auto-style11 {
+    	background-color: #00FF00;
+    }
+    .auto-style12 {
+    	color: #000;
+    	background-color: #FF0000;
+    }
+    .auto-style13 {
+    	text-decoration: underline;
+    }
+  </style>
 </head>
 
 <!-- Start for 'google-code-prettify' -->
@@ -47,16 +58,31 @@
 を参照することができるようになり、大きなコピーコストを気にすることなく扱うことができます。</p>
 <p> これら参照機能を有効に活用できるようになることで、低コストで有効なプログラムを作成できるようになりましょう。</p>
 <p> &nbsp;</p>
-<h2> 目次</h2>
-<p> <a href="#1._構文">1. 構文</a><br><a href="#2._左辺値参照">2. 左辺値参照</a><br>&nbsp;
-<a href="#2-1._左辺値参照とは">2-1. 左辺値参照とは</a><br>&nbsp; 
-<a href="#2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a><br>&nbsp;
-<a href="#2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a><br>
-<a href="#3._右辺値参照 (c++11)">3._右辺値参照 (c++11)</a><br>&nbsp;
-<a href="#3-1._右辺値参照とは">3-1. 右辺値参照とは</a></p>
-<p> <a href="#参考">参考</a></p>
-<p> &nbsp;</p>
-<h2> <a name="1._構文">1. 構文</a></h2>
+
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+          <a href="#1._構文">1. 構文</a><br>
+          <a href="#2._左辺値参照">2. 左辺値参照</a><br>
+          &nbsp; <a href="#2-1._左辺値参照とは">2-1. 左辺値参照とは</a><br>
+          &nbsp; <a href="#2-2._関数の仮引数で使う">2-2. 関数の仮引数で使う</a><br>
+          &nbsp; <a href="#2-3._関数の戻り値で使う">2-3. 関数の戻り値で使う</a><br>
+          <a href="#3._右辺値参照 (c++11)">3._右辺値参照 (c++11)</a><br>
+          &nbsp; <a href="#3-1._右辺値参照とは">3-1. 右辺値参照とは</a><br>
+          <a href="#参考">参考</a>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<a name="1._構文">1. 構文</a></h2>
 <p> 参照変数宣言は、宣言子が以下の形式を持つ単純宣言です。</p>
 <table>
 <tbody>
@@ -353,6 +379,17 @@ VS2019でデバッグ実行中に中断した時の様子を下図に示しま�
 <p>
 	
 &nbsp;</p>
+<h4>
+	
+注意</h4>
+<ul>
+  <li>template による実現は、使用する N のバリエーションが増えるとコンパイル後のプログラムサイズ増大につながります。template と 
+  generic は実現方法が異なるので注意が必要です。（generic は Java や .NET などで採用されている template 
+  と似た技術です。c++にはありません。）</li>
+</ul>
+<p>
+	
+&nbsp;</p>
 	
 <h4>
 参考</h4>
@@ -561,20 +598,45 @@ std::vector クラスの右辺値参照を受け取るコンストラクタで�
 *this につなぎ変えたあと、一時オブジェクトが持つデータを無効にしています。こうすることで大きなデータのコピーコストを気にすることなく扱えます。</p>
 <p> &nbsp;</p>
 <p>&nbsp;</p>
+
 <h2>
-<a name="参考">参考</a></h2>
+  <a name="参考">参考</a>
+</h2>
+
 <ul>
-	<li>「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
-	著、ISBN978-4-7741-9567-4</li>
 	<li>
-	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
-	https://ja.cppreference.com/w/cpp/language/reference</a></li>
+	  「改訂版第３版」 C++ポケットリファレンス、技術評論社、高橋昌・安藤敏彦・一戸優介・楠田真矢・湯朝剛介 
+  	著、ISBN978-4-7741-9567-4
+  </li>
+	<li>
+  	<a href="https://ja.cppreference.com/w/cpp/language/reference" target="_blank">
+	  https://ja.cppreference.com/w/cpp/language/reference</a>
+	</li>
 </ul>
 <p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載：</font></p>
-<ul>
-	<li><font face="Meiryo UI">2019年11月16日 新規作成、木下英俊</font></li>
-</ul>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2019-11-16</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2019 木下英俊</small></p>
+</footer>
+
 </body>
 </html>

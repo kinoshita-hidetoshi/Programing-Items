@@ -1,30 +1,60 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>WPF - TreeView コントロール</title>
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-*{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important;}
-.auto-style8 {
-	background-color: #FFFF00;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <title>WPF - TreeView コントロール</title>
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../../design.css" type="text/css">
+
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+    .auto-style7 {
+  	  font-weight: normal;
+    }
+    *{font-family:'Meiryo UI',Meiryo,'Segoe UI','Lucida Grande',Verdana,Arial,Helvetica,sans-serif!important;}
+      .auto-style8 {
+    	background-color: #FFFF00;
+    }
+  </style>
 </head>
-<body>
+
+<body onload="prettyPrint();">
+
 <h1 class="auto-style7">
 WPF : VisualBrush</h1>
-<h2>
-内容一覧：</h2>
-<ol>
-	<li><a href="#1._鏡像を作成する">鏡像を作成する</a></li>
-</ol>
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._鏡像を作成する">1. 鏡像を作成する</a><br>
+        <br><a href="#参考">参考</a></p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 <p>
 &nbsp;</p>
-<p class="auto-style7">
-<a name="1._鏡像を作成する">1. 鏡像を作成する</a></p>
+<h2>
+<a name="1._鏡像を作成する">1. 鏡像を作成する</a></h2>
+<h4>
+[概要]</h4>
 <p class="auto-style7">
 下記のMicrosoftホームページ内資料に従って作成したものをベースにちょっと修正したプログラムを作成してみました。</p>
 <p class="auto-style7">
@@ -32,21 +62,75 @@ WPF : VisualBrush</h1>
 <p class="auto-style7">
 作製したプログラムの画面は下記の通りです。<br>開発は Blend for Visual Studio 2013 のみで作成。</p>
 <p class="auto-style7">
-環境：<br>・Blend for Visual Studio 2013<br>・.NET4.5.1<br>・Windows8.1</p>
+&nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	      <td>Blend for Visual Studio 2013,</td>
+	      <td>- </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+	      <td>.NET4.5.1,</td>
+	      <td>- </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows8.1,</td>
+	    <td>&nbsp;-</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
 <p class="auto-style7">
-Microsoftオリジナルからの変化点は下記の通り。<br>・Eclipse に MouseDragElementBehavior を加えた。<br>→ 
-(注意)ConstrainToParentBounds=&quot;True&quot; にしないと円を領域外までドラッグできてしまう。<br>
-・TextBlock を TextBox へ変更してテキストを変更可能にした。<br>・その他、もろもろ。</p>
+Microsoftオリジナルからの変化点は下記の通り。</p>
+<ul>
+  <li>
+  <p class="auto-style7">Eclipse に MouseDragElementBehavior を加えた。<br>→ 
+(注意)ConstrainToParentBounds=&quot;True&quot; にしないと円を領域外までドラッグできてしまう。</p>
+  </li>
+  <li>
+  <p class="auto-style7">TextBlock を TextBox へ変更してテキストを変更可能にした。</p>
+  </li>
+  <li>
+  <p class="auto-style7">その他、もろもろ。</p>
+  </li>
+</ul>
+<p class="auto-style7">
+&nbsp;</p>
 <p class="auto-style7">
 <img alt="" height="450" src="VisualBrush/img6.jpg" width="545"></p>
 <p class="auto-style7">
 <img alt="" height="431" src="VisualBrush/img11.jpg" width="830"></p>
 
+<p class="auto-style7">&nbsp;</p>
+
 [MainWindow.xaml]
-<table style="border: medium solid #808080; width: 100%" title="[MainWindow.xaml]">
-	<tr title="[MainWindow.xaml]">
-		<td>
-		<pre>&lt;Window
+<pre class="prettyprint linenums">
+<code>&lt;Window&gt;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot; xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot; x:Class=&quot;testVisualBrush.MainWindow&quot;
@@ -117,10 +201,9 @@ Microsoftオリジナルからの変化点は下記の通り。<br>・Eclipse �
 <span class="auto-style8">        &lt;/Rectangle&gt;</span>
 
     &lt;/StackPanel&gt;
-&lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
+&lt;/Window&gt;</code></pre>
+
+
 <p class="auto-style7">
 &nbsp;</p>
 <p class="auto-style7">
@@ -132,7 +215,54 @@ VisualBrush のリソースへの登録は下図の通り行います。<br>(1) 
 サンプルプログラム： <a href="VisualBrush/testVisualBrush.zip">ダウンロード</a></p>
 <p class="auto-style7">
 &nbsp;</p>
+<p class="auto-style7">
+&nbsp;</p>
+<h2><a name="参考">参考</a></h2>
+
+<ul>
+  <li>
+  <p class="auto-style7">
+  <a href="https://hilapon.hatenadiary.org/entry/20100826/1282840321">
+  WPF 超入門　〜番外編「とある動画の同期再生」 - 周回遅れのブルース (hatenadiary.org)
+  </a></p>
+  </li>
+</ul>
+
+<p class="auto-style7">
+&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： 2014年04月28日 木下英俊</font></p>
+<p>&nbsp;</p>
+
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2021-06-30</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">画面フォーマットを最新系へ更新 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date"></td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">[参考] を追加</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date">2014-04-28</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2014-2021 木下英俊</small></p>
+</footer>
+
+
 </body>
 </html>

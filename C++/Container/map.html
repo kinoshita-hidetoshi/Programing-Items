@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>std::map</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    font-size: large;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>std::map</h1>
+
+<p> std::map を試してみます。</p>
+<p> &nbsp;</p>
+
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._始めに">1. 始めに</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<div>
+	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+	std::<span class="auto-style1">set</span></h5>
+	<table>
+	<tbody>
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+			&lt;map&gt; で定義</td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
+			class Key,<br>&nbsp;&nbsp;&nbsp; class T,<br>
+			&nbsp;&nbsp;&nbsp; class&nbsp;Compare&nbsp;=&nbsp;std::less<Key>&lt;Key&gt;, <br>
+			&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;std::pair&lt;const 
+            Key, T&gt; &gt;<br>&gt; 
+			class <strong>map</strong>;</td>
+			<td><span class="comment">(1)</span></td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+		
+		<tr>
+			<td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
+            template &lt;class Key, class T, class Compare = std::less&lt;Key&gt;&gt;<br>&nbsp;&nbsp;&nbsp; using             
+            <strong>map</strong>  = std::map&lt;Key, T, Compare, 
+            std::pmr::polymorphic_allocator&lt;std::pair&lt;const Key,T&gt;&gt;&gt;;<br>}<td><span class="comment">(2)(c++17以上)</span>
+      </td>
+		</tr>
+		
+		<tr>
+			<td class="td_separate" colspan="2"></td>
+		</tr>
+	</tbody>
+	</table>
+	
+	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<table>
+
+		<tr>
+			<td style="vertical-align:top">Key</td>
+			<td style="vertical-align:top">-</td>
+			<td>キーの型</td>
+		</tr>
+		
+		<tr>
+			<td style="vertical-align:top">T</td>
+			<td style="vertical-align:top">-</td>
+			<td>値の型</td>
+		</tr>
+		
+		<tr>
+			<td style="vertical-align:top">Compare</td>
+			<td style="vertical-align:top">-</td>
+			<td>キー比較関数<br>
+            <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: small; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+            狭義弱順序を提供する Compare 型。</span></td>
+		</tr>
+		
+		<tr>
+			<td style="vertical-align:top">Allocator </td>
+			<td style="vertical-align:top">-</td>
+			<td>メモリを確保/解放したり、そのメモリに要素を構築/破棄したりするために使用されるアロケータ。 この型は Allocator 
+				の要件を満たさなければなりません。 Allocator::value_type と Key が同じでない場合、動作は未定義です。</td>
+		</tr>
+
+	</table>
+	<p>&nbsp;</p>
+	<p>std::map は一意なキーを持つキー値ペアを格納するソートされた連想コンテナです。キーは比較関数&nbsp;Compare&nbsp;を使用してソートされます。検索、削除、挿入の操作の計算量は対数時間です。</p>
+    <p>&nbsp;標準ライブラリが&nbsp;Compare&nbsp;要件を使用する場所ではすべて、一意性は同等関係を使用して決定されます。 
+    不正確な言葉で言うと、2つのオブジェクト&nbsp;a&nbsp;と&nbsp;b&nbsp;は、どちらがどちらより小さいわけでもない (!comp(a, b) &amp;&amp;&nbsp;!comp(b, a)) 
+    場合に等しいとみなされます。</p>
+    <p>
+    std::map&nbsp;は&nbsp;Container,&nbsp;AllocatorAwareContainer,&nbsp;AssociativeContainer,&nbsp;ReversibleContainer&nbsp;の要件を満たします。 たします。 </p>
+</div>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._始めに">1. 始めに</a></h2>
+	<h4>[概要]</h4>
+	<p> 適当に簡単なサンプルプログラムを作成してみます。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+  <table>
+  <tbody>
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>コンパイラ :</td>
+  		<td>g++,</td>
+  		<td>9.3.0 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  	
+  	<tr>
+  		<td>OS :</td>
+  		<td>Ubuntu (WSL2),</td>
+  		<td>20.04 </td>
+  	</tr>
+  	
+  	<tr>
+  		<td class="td_separate" colspan="3"></td>
+  	</tr>
+  </tbody>
+  </table>
+  
+  <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<p>[プログラムソース &quot;map_01.cpp&quot;]</p>
+<pre class="prettyprint linenums">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;map&gt;
+
+using namespace std;
+
+template &lt;class T, class U&gt;
+void output(const map&lt;T, U&gt;&amp; container)
+{
+    cout &lt;&lt; &#39;{&#39;;
+    for (const auto&amp; data : container){
+//  for (const pair&lt;T, U&gt;&amp; data : container){
+        cout &lt;&lt; &#39;(&#39; &lt;&lt; data.first &lt;&lt; &quot;, &quot; &lt;&lt; data.second &lt;&lt; &quot;), &quot;;
+    }
+    cout &lt;&lt; &#39;}&#39; &lt;&lt; endl;
+}
+
+int main()
+{
+    map&lt;string, int&gt; data_a;
+    map&lt;string, int&gt; data_b = {{&quot;red&quot;, 1}, {&quot;blue&quot;, 2}, {&quot;yellow&quot;, 3}};
+
+    output(data_a);
+    output(data_b);
+
+    cout &lt;&lt; &quot;data_b[\&quot;red\&quot;]    = &quot; &lt;&lt; data_b[&quot;red&quot;]    &lt;&lt; endl;
+    cout &lt;&lt; &quot;data_b[\&quot;blue\&quot;]   = &quot; &lt;&lt; data_b[&quot;blue&quot;]   &lt;&lt; endl;
+    cout &lt;&lt; &quot;data_b[\&quot;yellow\&quot;] = &quot; &lt;&lt; data_b[&quot;yellow&quot;] &lt;&lt; endl;
+}</pre>
+	
+<p>&nbsp;</p>
+<p>[出力]</p>
+<pre>{}
+{(blue, 2), (red, 1), (yellow, 3), }
+data_b["red"]  = 1
+data_b["blue"] = 2
+data_b["yellow"] = 3</pre>
+<p>&nbsp;</p>
+
+<br>
+<br>
+</section>
+
+
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>std::map - cppreference.com<br>
+        <a href="https://ja.cppreference.com/w/cpp/container/map" target="_blank">
+        https://ja.cppreference.com/w/cpp/container/map</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+
+	  <tr>
+	    <td class="td_history_date">2021-08-12</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

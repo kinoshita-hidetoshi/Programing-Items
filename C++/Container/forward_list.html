@@ -38,14 +38,21 @@
 <p>std::forward_list を試してみます。</p>
 <p> &nbsp;</p>
 
-<h2> 目次</h2>
-	<nav>
-		<p>
-		<a href="#1._始めに_－_Constructor">1. 始めに - Constructor</a><br>
-		<a href="#2._挿入">2. 挿入</a><br>
-		<a href="#参考">参考</a></p>
-	</nav>
-
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+      		<a href="#1._始めに_－_Constructor">1. 始めに - Constructor</a><br>
+      		<a href="#2._挿入">2. 挿入</a><br>
+      		<a href="#参考">参考</a>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <div>
@@ -69,7 +76,7 @@
 		<tr>
 			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
 			class T,<br>&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;T&gt;<br>
-            &gt; class forward_list;</td>
+            &gt; class <strong>forward_list</strong>;</td>
 			<td><span class="comment">(1)(c++11以上)</span></td>
 		</tr>
 		
@@ -79,7 +86,7 @@
 		
 		<tr>
 			<td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
-			template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using forward_list = std::forward_list&lt;T, 
+			template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using <strong>forward_list</strong> = std::forward_list&lt;T, 
 			std::pmr::polymorphic_allocator&lt;T&gt;&gt;;<br>}</td>
 			<td><span class="comment">(2)(c++17以上)</span></td>
 		</tr>

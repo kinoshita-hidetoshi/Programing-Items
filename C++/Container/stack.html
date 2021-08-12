@@ -24,6 +24,9 @@
   .auto-style1 {
     font-size: large;
   }
+  .auto-style2 {
+  background-color: #FFFF00;
+}
   </style>
 
 </head>
@@ -35,14 +38,21 @@
 <p>std::stack を試してみます。</p>
 <p> &nbsp;</p>
 
-<h2> 目次</h2>
-	<nav>
-		<p>
-		<a href="#1._始めに">1. 始めに</a><br><a href="#参考">参考</a><br>
-		</p>
-	</nav>
-
-<p> &nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+      		<a href="#1._始めに">1. 始めに</a><br>
+      		<a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <div>
 	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
@@ -65,7 +75,7 @@
 		<tr>
 			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
 			class T,<br>&nbsp;&nbsp;&nbsp; class Container = std::deque&lt;T&gt;<br>
-            &gt; class stack;</td>
+            &gt; class <strong>stack</strong>;</td>
 			<td>&nbsp;</td>
 		</tr>
 		
@@ -76,7 +86,8 @@
 	</tbody>
 	</table>
 	
-	<h5 style="margin-bottom:0px">テンプレート引数</h5>
+	<p style="margin-bottom:0px">&nbsp;</p>
+    <h5 style="margin-bottom:0px">テンプレート引数</h5>
 	<table>
 		<tr>
 			<td style="vertical-align:top">T</td>
@@ -87,10 +98,16 @@
 			<td style="vertical-align:top">Container</td>
 			<td style="vertical-align:top">-</td>
 			<td>要素を格納するために使用するベースとなるコンテナの型。このコンテナは SequenceContainer 
-            の要件を満たさなければなりません。さらに、通常のセマンティクスを持つ以下の関数を提供していなければなりません。<br>・back()<br>
-            ・push_back()<br>・pop_back()<br>標準のコンテナ std::vector, std::deque, 
+            の要件を満たさなければなりません。さらに、通常のセマンティクスを持つ以下の関数を提供していなければなりません。
+        <ul style="padding: 5px 0px 5px 20px;">
+  			  <li>back()</li>
+  			  <li>push_back()</li>
+  			  <li>pop_back()</li>
+  			</ul>
+            標準のコンテナ std::vector, std::deque, 
             std::list はこれらの要件を満たします。デフォルトでは、特定の stack 
-            クラスの実体化に対してコンテナクラスが指定されていない場合、標準のコンテナ std::deque が使用されます。</td>
+            クラスの実体化に対してコンテナクラスが指定されていない場合、標準のコンテナ std::deque が使用されます。
+      </td>
 		</tr>
 	</table>
 	<p>&nbsp;</p>
@@ -146,7 +163,7 @@
 
 int main()
 {
-    std::stack&lt;int&gt; s;
+    std::<span class="auto-style2">stack</span>&lt;int&gt; s;
     s.push(2);
     s.push(6);
     s.push(51);

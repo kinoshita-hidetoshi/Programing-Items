@@ -24,6 +24,9 @@
   .auto-style2 {
 	  font-size: large;
   }
+  .auto-style3 {
+  background-color: #FFFF00;
+}
   </style>
 
 </head>
@@ -35,17 +38,23 @@
 <p>std::priority_queue を試してみます。</p>
 <p> &nbsp;</p>
 
-<h2> 目次</h2>
-	<nav>
-		<p>
-		<a href="#1._始めに">1. 始めに</a><br>
-		<a href="#2._逆順にする_-_Compare_に_std::greater_を指定する">2. 逆順にする - Compare に std::greater を指定する</a><br>
-		<a href="#3._Compare_を独自に指定する">3. Compare を独自に指定する</a><br>
-		<a href="#参考">参考</a><br>
-		</p>
-	</nav>
-
-<p> &nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+    	<nav>
+        <h2> 目次</h2>
+    		<p>
+    		<a href="#1._始めに">1. 始めに</a><br>
+    		<a href="#2._逆順にする_-_Compare_に_std::greater_を指定する">2. 逆順にする - Compare に std::greater を指定する</a><br>
+    		<a href="#3._Compare_を独自に指定する">3. Compare を独自に指定する</a><br>
+    		<a href="#参考">参考</a><br>
+    		</p>
+    	</nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <div>
 	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
@@ -96,10 +105,10 @@
 			<td>要素を格納するために使用するベースとなるコンテナの型。コンテナは SequenceContainer 
 			の要件を満たさねばならず、そのイテレータは LegacyRandamAccessIterator 
 			の要件を満たさなければなりません。さらに、通常のセマンティクスを持つ以下の関数を提供していなければなりません。<br>
-			<ul>
-			<li>front()</li>
-				<li>push_back()</li>
-				<li>pop_back()</li>
+			<ul style="padding: 5px 0px 5px 20px;">
+			  <li>front()</li>
+			  <li>push_back()</li>
+			  <li>pop_back()</li>
 			</ul>
 			標準のコンテナ std::vector および std::deque はこれらの要件を満たします。
 			</td>
@@ -170,7 +179,7 @@ template&lt;typename T&gt; void print_queue(T&amp; q) {
 }
  
 int main() {
-    std::priority_queue<int> q;
+    std::<span class="auto-style3">priority_queue</span><int> q;
  
     for(int n : {1,8,5,6,3,4,0,9,7,2}){
         q.push(n);
