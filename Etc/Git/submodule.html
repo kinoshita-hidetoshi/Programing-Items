@@ -1,0 +1,629 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>［タイトルを記載します］</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>git submodule コマンド</h1>
+
+<p> git submodule コマンドの使い方を整理します。</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+      <p>
+        <a href="#1._git_submodule_コマンド">1. git submodule コマンド</a><br>&nbsp; 
+        <a href="#1-1._git_submodule_add">1-1. git submodule add</a><br>&nbsp; 
+        <a href="#1-2._git_submodule_update">1-2. git submodule update</a><br>&nbsp; 
+        <a href="#1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだ Git リポジトリを git clone する</a><br>&nbsp;
+        <a href="#1-4._git_submodule_deinit">1-4. git submodule deinit</a><br>
+        <a href="#2._チュートリアル">2. チュートリアル</a><br>&nbsp; 
+        <a href="#2-1._テスト用に２つのリポジトリを作成する">2-1. テスト用に２つのリポジトリを作成する</a><br>&nbsp;
+        <a href="#2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a><br>&nbsp;
+        <a href="#2-3._PP_testapp_01_としてメインアプリを作成する_">2-3. PP_testapp_01 としてメインアプリを作成する</a><br>&nbsp;
+        <a href="#2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる</a><br>&nbsp;
+        <a href="#2-5.“git_clone“_してみる_">2-5.</a><br><a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<h2><a name="1._git_submodule_コマンド">1. git submodule コマンド</a></h2>
+<p>&nbsp;</p>
+<h3><a name="1-1._git_submodule_add">1-1. &quot;git submodule add&quot;</a></h3>
+<p>submoduleは.gitmodulesで管理されている。</p>
+<ul>
+  <li>submodule は "git submodule add" コマンドで追加される。</li>
+  <li>submodule のリポジトリ先の情報等は .gitmodules というファイルに記載される。</li>
+  <li>.gitmodules に記載されたリポジトリ情報と参照先の CommitID 情報を元に submodule と接続する。</li>
+</ul>
+<p>&nbsp;</p>
+
+<pre><code>$ git submodule add https://example.com/sub-modules                    # .gitmodules ファイルが更新される
+$ git commit -a                                                        # 変更を保存（必須！）</code></pre>
+
+<p>&nbsp;</p>
+<p>上記の場合、追加するリポジトリ名がフォルダ名になります。<br>自身が指定するフォルダ名で追加する場合は以下のように行います。</p>
+
+<pre><code>$ git submodule add https://example.com/sub-modules [folder-name]      # .gitmodules ファイルが更新される
+$ git commit -a                                                        # 変更を保存（必須！）</code></pre>
+<p>(ex) <span class="cpp-source">git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter</span></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-2._git_submodule_update">1-2. &quot;git submodule update&quot;</a></h3>
+<p>submoduleはupdateコマンドで更新しなければならない。</p>
+<ul>
+  <li>親プロジェクトをpullで更新しても、submoduleは勝手に更新されません。</li>
+  <li>必ずgit submodule updateコマンドでの更新手続きが必要。</li>
+  <li>最悪の場合「親プロジェクトをpullした時にsubmoduleがmodifiedになっていたらsubmodule 
+  updateする」というおまじないを覚えておけばなんとかなる。</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだGitレポジトリを &quot;<span class="auto-style2"><em><strong>git clone</strong></em></span>&quot; 
+する</a></h3>
+<p><strong><em>--recursive</em></strong> オプションをつけてください。</p>
+
+<pre>git clone https://example.com/repo-with-sub-modules <span class="auto-style1"><strong><em>--recursive</em></strong></span></pre>
+
+<p>すると、サブモジュールのファイルも自動で取得されます。</p>
+<p>&nbsp;</p>
+<p><em><strong>--recursive</strong></em> をつけ忘れた / サブモジュールのファイルを取得したい</p>
+<p>git clone に <strong><em>--recursive</em></strong> 
+を付けないとサブモジュールのファイルが取得されませんが、<span class="cpp-source">git submodule update --init</span> で後からチェックアウトできます。</p>
+
+<pre>git submodule update --init</pre>
+
+<p>&nbsp;</p>
+<p>新しいバージョンを &quot;git checkout&quot; したら、他の人がサブモジュールを追加していた。</p>
+<p><span class="cpp-source">git submodule update --init</span> 
+でサブモジュールのファイルを取得しましょう。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-4._git_submodule_deinit">1-4. &quot;git submodule deinit&quot;</a></h3>
+<p>submodule削除するときはファイルを消すだけではダメ</p>
+<ul>
+  <li>git submodule deinitコマンドとgit rmコマンドの２段階で削除する。</li>
+  <li>削除の場合は親プロジェクトをpullしただけで、削除が反映される。</li>
+</ul>
+<p>&nbsp;</p>
+
+<pre>$ git submodule deinit submodule/test_app_submodule 
+$ git rm submodule/test_app_submodule</pre>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="2._チュートリアル">2. チュートリアル</a></h2>
+<p>
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+“git submodule“ を実際に使用してみる簡単な例を以下に記載します。c++のプログラムを例に作成してみます。</span></p>
+<p>&nbsp;</p>
+<h3><a name="2-1._テスト用に２つのリポジトリを作成する">2-1. テスト用に２つのリポジトリを作成する</a></h3>
+<p>&nbsp;</p>
+<p>チュートリアルのためのテスト用として2つのリポジトリを作成します。</p>
+<p>&nbsp;(1) PP_testapp_01 ： プログラム本体用。 </p>
+<p>(2) PP_testlib_01 ： 共有ライブラリ用。PP_testapp_01 で使用します。 </p>
+<p>&nbsp;</p>
+<p>
+<img alt="" src="submodule/img13.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></h3>
+<p>&nbsp;ライブラリ側（PP_testlib_01）として動的ライブラリ（libcounter.so）を作成してみます。</p>
+<p>&nbsp;</p>
+<h4>2-2-1. PP_testlib_01 をクローンします。</h4>
+<p>&nbsp;<pre><code>$ git clone git@bitbucket.org:iproiot/pp_testlib_01.git</code>&nbsp; </pre>
+</p>
+<p>&nbsp;</p>
+<h4>2-2-2. プログラムを作成します。</h4>
+<p>&nbsp;vscode で作成した例です。プログラム詳細の説明は割愛します。 </p>
+<p>&nbsp;</p>
+<p>
+<img alt="" src="submodule/img16.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+counter.h は以下の通りです。</span></p>
+<p>&nbsp;</p>
+<pre class="prettyprint linenums">#ifndef COUNTER_H
+#define COUNTER_H
+
+#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+
+namespace counter{
+    // prototype giving.
+    class counter{
+        private:
+            size_t  _count;
+
+        public:
+            counter();                                              // default constructor
+            explicit counter(size_t init_count);
+            virtual ~counter();                                     // destructor
+            counter(const counter&amp;) = default;                      // copy constructor
+            counter&amp; operator = (const counter&amp;) = default;         // copy operator
+            counter(counter&amp;&amp;) = default;                           // move constructor
+            counter&amp; operator = (counter&amp;&amp;) = default;              // move operator
+
+            void increment();
+            void decrement();
+            void set_count(size_t new_count);
+            size_t get_count();
+
+            //constexpr static size_t MaxCount = 10000;             // (a) c++11 以降
+            const static size_t MaxCount;                           // (b) c++11 以前
+            //constexpr static size_t DefaultCount = 0;             // (a) c++11 以降
+            const static size_t DefaultCount;                       // (b) c++11 以前
+    };
+}
+
+#endif</pre>
+<p>&nbsp;</p>
+<p>
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+counter.cpp は以下の通りです。</span></p>
+
+<pre class="prettyprint linenums">#include &quot;counter.h&quot;
+
+namespace counter{
+
+    /**
+     * @brief Construct a new counter::counter object
+     * カウント値は DefaultCount で初期化される。
+     */
+    counter::counter()
+        : counter(DefaultCount)
+    {
+    }
+
+    /**
+     * @brief Construct a new counter::counter object
+     * @param init_count カウント値の初期値
+     */
+    counter::counter(size_t init_count)
+        : _count(init_count)
+    {
+        if (_count &gt; MaxCount){
+            _count = DefaultCount;
+        }
+    }
+
+    /**
+     * @brief Destroy the counter::counter object
+     * 
+     */
+    counter::~counter()
+    {}
+
+    /**
+     * @brief 値を１増やす
+     * @exception std::overflow_error incrementした結果が MaxCount を超える場合に throw する。_count 値は前状態を維持する。
+     */
+    void counter::increment()
+    {
+        if ( _count &lt; MaxCount ){
+            _count++;
+        }
+        else{
+            throw std::overflow_error(&quot;The counter value has exceeded the maximum value.&quot;);
+        }
+    }
+
+    /**
+     * @brief 値を１減らす
+     * @exception std::underflow_error decrementした結果が 0 を下回る場合に throw する。_count 値は前状態を維持する。
+     */
+    void counter::decrement()
+    {
+        if ( _count &gt; 0 ){
+            _count--;
+        }
+        else{
+            throw std::underflow_error(&quot;The counter value is below the minimum value.&quot;);
+        }
+    }
+
+    /**
+     * @brief 値を _count に設定する
+     * @param new_count 新しい値
+     */
+    void counter::set_count(size_t new_count)
+    {
+        if ( new_count &lt;= MaxCount ){
+            _count = new_count;
+        }
+        else{
+            throw std::overflow_error(&quot;The counter value has exceeded the maximum value.&quot;);
+        }
+    }
+
+    /**
+     * @brief 現在の値（_count）を取得する
+     * @return size_t 現在のカウント値
+     */
+    size_t counter::get_count()
+    {
+        return _count;
+    }
+
+    /**
+     * @brief 最大カウント値
+     */
+    const size_t counter::MaxCount = 10000;     // (b) c++11 以前
+
+    /**
+     * @brief デフォルトカウント値
+     */
+    const size_t counter::DefaultCount = 0;     // (b) c++11 以前
+}</pre>
+<p>&nbsp;</p>
+
+<p>このサンプルプログラムでは cmake を使ってビルドしています。<br>
+”CMakeLists.txt” の内容は以下の通りです。（可読性を優先して余分な処理を削除しています。）</p>
+
+<pre class="prettyprint linenums"># このバージョン以上のCMAKEを使うよう宣言
+cmake_minimum_required(VERSION 3.10)
+
+# プロジェクト名．C++言語であることを宣言
+project(counter CXX)
+
+# 共通オプション
+set(CMAKE_EXE_LINKER_FLAGS &quot;${CMAKE_EXE_LINKER_FLAGS}&quot;)
+
+# ビルドの種類によってオプションを変える
+set(CMAKE_CXX_FLAGS_DEBUG &quot;-Wall -O0 -g&quot;)
+set(CMAKE_CXX_FLAGS_RELEASE &quot;-Wall -O3 -DNDEBUG&quot;)
+set(CMAKE_CXX_FLAGS_MINSIZEREL &quot;-Wall -Os -DNDEBUG&quot;)
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO &quot;-Wall -O2 -g -DNDEBUG&quot;)
+
+message(STATUS &quot;CMAKE_CXX_FLAGS = ${CMAKE_CXX_FLAGS}&quot;)
+
+# ライブラリの作成を指示．SHARED で共有ライブラリ．
+# counter.cpp を元に、libcounter.so という名前で作成．
+add_library(counter SHARED counter.cpp)
+
+# counter ライブラリのインクルードディレクトリを教えてあげる
+# PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
+target_include_directories(counter
+  PUBLIC ${PROJECT_SOURCE_DIR}
+  )</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="2-3._PP_testapp_01_としてメインアプリを作成する_">2-3. PP_testapp_01 としてメインアプリを作成する  
+</a> </h3>
+<p>メインアプリ（PP_testapp_01）を作成します。</p>
+<p>&nbsp;</p>
+<h4>&nbsp;2-3-1. PP_testapp_01 をクローンしてフォルダへ cd します。</h4>
+<p>&nbsp;</p>
+<p>
+<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git
+$ cd pp_testapp_01</pre>
+</p>
+<p>&nbsp;</p>
+<h4>&nbsp;2-3-2. PP_testlib_01 を git submodule add コマンドにより counter フォルダへ割り付けます。</h4>
+<p>
+<pre>$ git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter
+$ git commit -a &nbsp; ”</pre>
+</p>
+<p>&nbsp;</p>
+<p>.gitmodules” は以下のような記載となっていました。<br>counter が submodule として登録されていることを確認できます。 </p>
+<p><img alt="" src="submodule/img2A.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-3-3. プログラムを作成します。</h4>
+<p>&nbsp;vscode で作成した例です。</p>
+<p>&nbsp;下図では counter ライブラリが “git submodule add” で登録した対象です。 <br>”S” という表示は 
+Submodule の ”S” と思われます。ここに修正がある場合は ”M” (Modify ？) を表示しました。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img2C.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>main.cpp の内容は以下の通りです。</p>
+<pre>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &quot;counter.h&quot;
+
+int main( int argc, char*argv[])
+{
+
+    // counter
+    {
+        std::cout &lt;&lt; &quot;\n=== counter ===\n&quot;;
+
+        counter::counter counter;
+
+        std::cout &lt;&lt; &quot;counter = &quot; &lt;&lt; counter.get_count() &lt;&lt; std::endl;
+        counter.increment();
+        std::cout &lt;&lt; &quot;counter = &quot; &lt;&lt; counter.get_count() &lt;&lt; std::endl;
+        counter.increment();
+        std::cout &lt;&lt; &quot;counter = &quot; &lt;&lt; counter.get_count() &lt;&lt; std::endl;
+    }
+    
+    return EXIT_SUCCESS;
+}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>このサンプルプログラムでは cmake を使ってビルドしています。</p>
+<p>&nbsp;”CMakeLists.txt” の内容は以下の通りです。ここで submodule である counter 
+を指定しています。（可読性を優先して余分な処理を削除しています。） </p>
+<pre>cmake_minimum_required(VERSION 3.10)
+
+project(main CXX)
+
+# c++17 が必要
+set(CMAKE_CXX_STANDARD 17)
+# 非対応ならエラーにする
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# デバッグ出力
+message(STATUS &quot;PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}&quot;)
+message(STATUS &quot;PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}&quot;)
+message(STATUS &quot;CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}&quot;)
+
+# ビルドの種類によってオプションを変える
+set(CMAKE_CXX_FLAGS_DEBUG &quot;-Wall -O0 -g&quot;)
+set(CMAKE_CXX_FLAGS_RELEASE &quot;-Wall -O3 -DNDEBUG&quot;)
+set(CMAKE_CXX_FLAGS_MINSIZEREL &quot;-Wall -Os -DNDEBUG&quot;)
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO &quot;-Wall -O2 -g -DNDEBUG&quot;)
+
+# サブディレクトリを指定。指定したディレクトリ内のCMakeLists.txt が実行される。
+add_subdirectory(counter)
+
+# main.out という実行ファイルを main.cpp から作成
+add_executable(main.out main.cpp)
+
+# main.outをコンパイルする際に counter をリンクする
+target_link_libraries(main.out counter)</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>
+<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+同じく vscode の「ソース管理」画面です。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+vscode では submodule (counter) はアプリ本体と別の管理対象として扱われていることがわかります。</p>
+<p><img alt="" src="submodule/img2D.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Commit, Push 後の状態をブラウザ画面で確認すると、submodule は下図のように表示されました。<br>counter が 
+pp_testlib_01 [c1c852b17dc] へリンクしていることがわかります。 </p>
+<p><img alt="" src="submodule/img2F.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-3-4. プログラムをビルドして動かします。</h4>
+<p>&nbsp;cmake のお作法に従って、以下の通り入力します。 </p>
+<pre>$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./main.out</pre>
+<p>&nbsp;</p>
+<p>ビルドを成功してプログラムもちゃんと動作できました。submodule 内のプログラムをちゃんと使用できています。 </p>
+<p><img alt="" src="submodule/img31.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる  
+</a> </h3>
+<p>
+ライブラリ側（PP_testlib_01）を単独で修正してコミット、プッシュ後、アプリ本体側（PP_testapp_01）がどうなるかを確認してみます。合わせてアプリ側（PP_testapp_01）へこの修正を取り込む手順などを確認します。 </p>
+<p>&nbsp;</p>
+<h4>2-4-1. ライブラリ側（PP_testlib_01）のリポジトリを単独で開いて変更してみます。</h4>
+<p>&nbsp;ここでは README.md を変更してみました。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img33.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h4>2-4-2. コミット／プッシュします。</h4>
+<p>PP_testlib_01 の修正をコミット／プッシュします。詳細は割愛。</p>
+<p>&nbsp;</p>
+
+<h4> 2-4-3. アプリ側リポジトリ（PP_testapp_01）を vscode で開きます </h4>
+
+<p>画面上で submodule の変更を確認できるところはありません。</p>
+<p>git status コマンドで状態を確認した結果は以下の通りです。</p>
+<p>&nbsp;</p>
+<table class="border-collapse" style="width: 800px">
+  <tr>
+    <td class="standard_table" style="background-color: #eeeeee">PP_testapp_01 フォルダ</td>
+    <td class="standard_table" style="width: 627px">
+    it status したところ、
+    ”nothing to commit, working tree clean.”（変更なし）
+    と出力されました。</td>
+  </tr>
+  <tr>
+    <td class="standard_table" style="background-color: #eeeeee">PP_testlib_01 フォルダ</td>
+    <td class="standard_table" style="width: 627px">
+      cd counter 後に            
+      git status したところ、下図のように ”このブランチは ‘origin/main’ 
+      に比べて1コミット遅れています。” と出力されました。</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img4A.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>「ソース管理」の画面を確認すると、以下のようになっていました。変更が発生していることをここで確認するのが良さそうです。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img4C.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-4-4. counter をプルします</h4>
+<p>これで counter（submodule）を最新状態にできます。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img4E.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>すると、以下のような状態になりました。</p>
+<p>アプリ側（PP_testapp_01）として変更が生じたという扱いになります。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img51.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>［ソース管理］画面で確認すると、counter のリンク先が変更になった、という扱いのようです。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img53.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-4-5. アプリ側（PP_testapp_01）をコミット／プッシュします</h4>
+<p>&nbsp;アプリ側をコミット／プッシュします。詳細の記載は割愛します。</p>
+<p>&nbsp;以上でライブラリ側変更の取り込みを完了です。 </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="2-5.“git_clone“_してみる_">2-5.“git clone“ してみる </a> </h3>
+<p>&nbsp;</p>
+<p>以上のコミット結果を別フォルダへ “git clone“ してみます。</p>
+<p>せっかくなので、”--recursive” オプションありの git clone と、”--recursive” オプション無しの git clone 
+をそれぞれ行って比べてみます。 </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-5-1. ”--recursive” 付きの git clone </h4>
+<p>&nbsp;</p>
+<p>始めに “--recursive“ 付きの git clone を試してみます。</p>
+<p>ここでは下記のようにコマンドを入力しました。</p>
+<p>&nbsp;</p>
+<p>
+<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git --recursive test1 </pre>
+</p>
+<p>&nbsp;</p>
+<p>クローン下フォルダを vscode で開いた結果を下図に示します。<br>予定通り submodule のフォルダ counter 
+と中身を含んでクローンされました。特記事項ありません。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img58.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>2-5-2. “--recursive“ 無しの git clone</h4>
+<p>&nbsp;次に ““ 無しの git clone を試してみます。ここでは下記のようにコマンドを入力しました。 </p>
+<p>&nbsp;</p>
+<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git test2</pre>
+<p>&nbsp;</p>
+<p>クローン下フォルダを vscode で開いた結果を下図に示します。こちらは counter の中身が空でクローンされました。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img5A.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>ここで “--recursive“ をつけ忘れたことに気づいた、または他の人が submodule 
+を追加したことに気づいた、ということにします。下記コマンドを入力して、サブモジュールのファイルを取得しましょう。 </p>
+<p>&nbsp;</p>
+<pre>$ git submodule update --init</pre>
+<p>&nbsp;</p>
+<p>下図の通りちゃんと counter フォルダ内のファイルを取得することができました。 </p>
+<p>&nbsp;</p>
+<p><img alt="" src="submodule/img5C.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>以上です。 </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="参考">参考</a></h2>
+<ul style="background-repeat: no-repeat; box-sizing: inherit; padding: 5px 0px 5px 40px; margin: 0px; font-size: small; font-family: sans-serif; list-style-position: outside; list-style-type: disc; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+  <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
+  <a href="http://git-scm.com/book/en/v2/Git-Tools-Submodules" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
+  Git - Submodules (git-scm.com)</a><br>
+  <a href="http://git-scm.com/book/en/v2/Git-Tools-Submodules" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;" target="_blank">
+  http://git-scm.com/book/en/v2/Git-Tools-Submodules</a></li>
+  <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
+  <a href="https://git-scm.com/book/ja/v2/Git-のさまざまなツール-サブモジュール">Git - 
+  Submodules (git-scm.com) - 日本語版</a><br>
+  <a href="https://git-scm.com/book/ja/v2/Git-のさまざまなツール-サブモジュール" target="_blank">
+  https://git-scm.com/book/ja/v2/Git-のさまざまなツール-サブモジュール</a></li>
+  <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
+  <a href="https://qiita.com/sotarok/items/0d525e568a6088f6f6bb" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
+  Git submodule の基礎 - Qiita</a></li>
+  <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
+  <a href="https://qiita.com/kinpira/items/3309eb2e5a9a422199e9" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
+  Git submoduleの押さえておきたい理解ポイントのまとめ - Qiita</a></li>
+  <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
+  <a href="https://www.m3tech.blog/entry/git-submodule" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
+  git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2021-08-28</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">submodule を単独ページに分離</td>
+	  </tr>
+	
+	  <tr>
+	    <td class="td_history_date">2021-04-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	  
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

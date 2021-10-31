@@ -1,45 +1,57 @@
-﻿<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-	<meta http-equiv="Content-Type" Content="text/html; charset=shift_jis">
+	<meta charset="utf-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title></title>
 
-	<link href="./design_items.css" rel="stylesheet" type="text/css">
-
-	<style type="text/css">
-	</style>
+	<base target="contents">
+	
+	<!-- CSS -->
+	<link href="./design_items.css" rel="stylesheet">
 
 	<script type="text/javascript">
-		var ulShowHide = {
-			showHide: function(element) {
-				if (element.parentNode.childNodes.item(2)) {
-					if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-						var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-						if (styleDisplay == 'block' || styleDisplay == '') {
-							element.parentNode.childNodes.item(2).style.display = "none";
-						}
-						else {
-							element.parentNode.childNodes.item(2).style.display = "block";
-						}
+	var ulShowHide = {
+		showHide: function(element) {
+			if (element.parentNode.childNodes.item(2)) {
+				if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+					var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+					if (styleDisplay == 'block' || styleDisplay == '') {
+						element.parentNode.childNodes.item(2).style.display = "none";
+					}
+					else {
+						element.parentNode.childNodes.item(2).style.display = "block";
 					}
 				}
-				return false;
 			}
+			return false;
 		}
+	}
 	</script>
-
+	
 	<script type="text/javascript">
-		function sublist( target ) {
-			var TargetList = target.parentNode.getElementsByTagName('ul');
-			if ( TargetList[0].style.display == 'none' ) {
-				TargetList[0].style.display = 'block';
-			}
-			else {
-				TargetList[0].style.display = 'none';
-			}
-		}
+	<!--
+	function sublist( target ) {
+	   var TargetList = target.parentNode.getElementsByTagName('ul');
+	   if ( TargetList[0].style.display == 'none' ) {
+	      TargetList[0].style.display = 'block';
+	   }
+	   else {
+	      TargetList[0].style.display = 'none';
+	   }
+	}
+	// -->
 	</script>
-
-	<base target="contents">
+	
+	
+	<link href="design_items.css" rel="stylesheet" type="text/css">
+	
+	<style type="text/css">
+	.auto-style1 {
+		vertical-align: middle;
+	}
+	</style>
 
 </head>
 
@@ -53,7 +65,7 @@
 	<li style="list-style-type:none">
 	<a href="url" class="menu" onclick="sublist(this); return false;">AI</a>
 	<ul>
-		<li>Caffe<ul>
+		<li>Caffe<ul>0
 			<li>http://tadaoyamaoka.hatenablog.com/entry/2017/03/15/233723</li>
 			<li>Caffe-ssd<ul>
 				<li>https://soralab.space-ichikawa.com/2016/11/caffe-ssd-demo/</li>

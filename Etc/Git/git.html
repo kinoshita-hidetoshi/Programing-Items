@@ -1,0 +1,484 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>git</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  </head>
+
+<body onload="prettyPrint();">
+	
+<h1>git</h1>
+
+<p> git に関する情報を記載します。</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+          <a href="#1._git_コマンド">1. git コマンド</a><br>&nbsp;
+          <a href="#1-1._基本的な_git_コマンド">1-1. 基本的な git コマンド</a><br>&nbsp; 
+          <a href="#1-2._変更系">1-2. 変更系</a><br>&nbsp; 
+          <a href="#1-3._確認系">1-3. 確認系</a><br>&nbsp;
+          <a href="#1-4._取り消し系">1-4. 取り消し系</a><br>&nbsp; 
+          <a href="#1-5._git_submodule">1-5. git submodule</a><br>
+          <a href="#2._credential.helper">2. credential.helper</a><br>
+          <a href="#3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a><br>
+          <a href="#4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a><br>
+          <a href="#5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git LFS)</a><br>
+          <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="1._git_コマンド">1. git コマンド</a></h2>
+<p>&nbsp;</p>
+<h3><a name="1-1._基本的な_git_コマンド">1-1. 基本的な git コマンド</a></h3>
+<p>&nbsp;</p>
+<h4>git init</h4>
+<p>概要： リポジトリの作成</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git status</h4>
+<p>概要： 現在のリポジトリ状況を確認</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git add</h4>
+<p>概要： 追加・編集などで変化があったファイルをステージングする</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit</h4>
+<p>概要： ステージングしたファイル・ディレクトリをコミット</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git push origin main</h4>
+<p>概要： Remote Repository (origin main) に Local Repository を反映</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-2._変更系">1-2. 変更系</a></h3>
+<p>&nbsp;</p>
+<h4>git add .</h4>
+<p>概要： WorkTree ファイルを全て add でステージング</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit -m &quot;commit comment&quot;</h4>
+<p>概要： コメントを付けて commit 実行</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit -am &quot;commit comment&quot;</h4>
+<p>概要： add &amp; コメント付きで commit 実行</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit -F- &lt;&lt;EOM</h4>
+<p>概要： 複数行コメントでコミット（１）</p>
+<p>&nbsp;</p>
+<p>(例)</p>
+<pre>$ git commit -F- &lt;&lt;EOM
+&gt;<EOM > 要約
+&gt;
+&gt; 詳細 
+&gt; 
+&gt; EOM</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit -m &quot;コメント１行目&quot; -m &quot;コメント２行目&quot; -m &quot;コメント３行目&quot;</h4>
+<p>概要： 複数行コメントでコミット（２）</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h4>git commit --amend</h4>
+<p>概要： 直前のコミットを編集</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git push origin main</p>
+<p>概要： リモートリポジトリにローカルリポジトリを反映</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git push -f origin main</p>
+<p>概要： リモートリポジトリにローカルリポジトリを強制反映</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git fetch</p>
+<p>概要： リモートリポジトリをダウンロード。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git pull</p>
+<p>概要： リモートリポジトリをローカルへ反映</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git pull origin &lt;remote branch name&gt;</p>
+<p>概要： 指定のリモートブランチをローカルへ反映</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git branch &lt;branch name&gt;</p>
+<p>概要： ブランチ作成</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git branch -m &lt;<strong>old</strong> branch name&gt; &lt;<strong>new</strong> branch 
+name&gt;</p>
+<p>概要： ブランチ名を変更</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git checkout &lt;branch name&gt;</p>
+<p>概要： 作業ブランチ（HEAD）変更</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git checkout -b &lt;branch name&gt;</p>
+<p>概要： ブランチ作成 ＆ 作業ブランチ（HEAD）変更</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git merge &lt;branch name&gt;</p>
+<p>概要： 現在のブランチへ &lt;branch name&gt; の内容をマージ</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git stash</p>
+<p>概要： 変更退避</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git mv &lt;old filename&gt; &lt;new filename&gt;</p>
+<p>概要： ファイル名を変更する、ファイルを移動する</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git rm &lt;ファイル名&gt;</p>
+<p>概要： git で管理しているファイルを削除し、ワークツリーからも削除する</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-3._確認系">1-3. 確認系</a></h3>
+<p>&nbsp;</p>
+<p>git branch</p>
+<p>&nbsp;</p>
+<p>git branch -a</p>
+<p>&nbsp;</p>
+<p>git status</p>
+<p>&nbsp;</p>
+<p>git add --dry-run .</p>
+<p>&nbsp;</p>
+<p>git ls-files</p>
+<p>&nbsp;</p>
+<p>git diff --name-only</p>
+<p>&nbsp;</p>
+<p>git diff --staged</p>
+<p>&nbsp;</p>
+<p>git log -2</p>
+<p>&nbsp;</p>
+<p>git log -2 --stat</p>
+<p>&nbsp;</p>
+<p>git log -2 --patch</p>
+<p>&nbsp;</p>
+<p>git log -p &lt;ファイルパス / ファイル名&gt;</p>
+<p>&nbsp;</p>
+<p>git stash list</p>
+<p>&nbsp;</p>
+<p>git clean -nd</p>
+<p>概要： Untracked ファイルの確認</p>
+<p>&nbsp;</p>
+<p>git show</p>
+<p>&nbsp;</p>
+<p>git branch -r</p>
+<p>概要： リモートブランチ確認</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git remote</p>
+<p>概要： リモートリポジトリ表示</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git remote -v</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git remove rm origin</p>
+<p>概要： リモートリポジトリ削除</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git help</p>
+<p>概要： ヘルプページ表示</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git help -a</p>
+<p>概要： git 全コマンドリスト</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git tag</p>
+<p>概要： tag 一覧表示</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git reflog</p>
+<p>概要： 過去の HEAD コミット一覧表示</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git config --list</p>
+<p>概要： リポジトリ設定内容表示</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git config user.email</p>
+<p>概要： </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git config user.name</p>
+<p>概要：</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git --version</p>
+<p>概要： git インストールバージョン確認</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-4._取り消し系">1-4. 取り消し系</a></h3>
+<p>&nbsp;</p>
+<p>git rm --cached &lt;ファイル名&gt;</p>
+<p>概要： git で管理しているファイルを削除し、ワークツリーからは削除しない</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git branch --delete &lt;ブランチ名&gt;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git reflog</p>
+<p>概要： 削除したブランチの最後のコミットを見つけて</p>
+<p><span class="cpp-source">git branch &lt;ブランチ名&gt; HEAD@{ログ番号}</span></p>
+<p>ブランチを復活。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git reset</p>
+<p>概要： 全ての add を取り消し</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git revert</p>
+<p>概要： コミットを打ち消して記録残す</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git clean -fd</p>
+<p>概要： Untracked ファイルの削除</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git merge --abort</p>
+<p>概要： 直前マージの取り消し</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git reflog</p>
+<p>概要： 復活する可能性のある呪文</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>git push --delete origin &lt;リモートブランチ名&gt;</p>
+<p>概要： リモート上のブランチを削除</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><a name="1-5._git_submodule">1-5. &quot;git submodule&quot;</a></h3>
+<p><a href="submodule.html">こちら</a> へ移動</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._credential.helper">2. credential.helper</a></h2>
+<p> GitHub などで二段階認証を有効化すると、毎回ユーザー名・パスワードの入力を求められてやってられません。<br>credential.helper 
+を設定することでこれら設定を端末へ保存することができます。</p>
+<p> &nbsp;</p>
+<p> [Windows]</p>
+<p> <span class="cpp-source">$ git config --global credential.helper wincred</span></p>
+<p> &nbsp;</p>
+<p> ・・・と思いきや、&quot;wincred&quot; は既にサポート外。<br>現在は &quot;<a href="https://github.com/microsoft/Git-Credential-Manager-for-Windows" target="_blank">microsoft/Git-Credential-Manager-for-Windows</a>&quot; 
+をインストールする必要があるみたいです。<br>以下の設定が正解。</p>
+<p> &nbsp;</p>
+<h4> [Windows]</h4>
+<p> <span class="cpp-source">$ git config --global credential.helper manager</span></p>
+<p> &nbsp;</p>
+<p> これをインストールすると自動で(？) credential.helper=manager に切り替わるみたいです。</p>
+<p> ~/.gitconfig を見てみると</p>
+
+<pre class="prettyprint">[credential]<br>helper = manager</pre>
+
+<p> となっていました。</p>
+<p> これでエラーも出ず、パスワード入力も求められず扱えるようになりました。</p>
+<p> &nbsp;</p>
+<h4> [Linux]</h4>
+<p> Linux ではこんな感じでパスワードをキャッシュすることができるみたいです。</p>
+
+<pre class="prettyprint"><code>$ git config --global credential.helper &#39;cache --timeout=3600&#39;
+# Set the cache to timeout after 1 hour (setting is in seconds)</code></pre>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<hr>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+<h2> <a name="3._Windows_の認証情報保存場所">3. Windows の認証情報保存場所</a></h2>
+<p> どういう仕組みで保存されてるのかを調べてみると Windows の場合は Windows の資格情報マネージャを使ってるようです。</p>
+<p> <a href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage">
+https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage</a></p>
+<p> <a href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows">
+https://github.com/Microsoft/Git-Credential-Manager-for-Windows</a></p>
+<p> エクスプローラで<br>&quot;コントロール パネル\すべてのコントロール パネル項目\資格情報マネージャー&quot;<br>のパスを指定すれば表示できます。</p>
+<p> ここの「汎用資格情報」のところに &quot;git:https://github.com&quot; や &quot;git:https://gitlab.com&quot; 
+などの名前で保存されています。<br>消したいならここで削除すればいいです。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+</section>
+
+<section>
+<h2><a name="4._Gitリポジトリを別のGitサーバへ移行">4. Gitリポジトリを別のGitサーバへ移行</a></h2>
+<p>こんな感じでやります。<br>私の場合は、&quot;Azure DevOps&quot; から &quot;Bitbucket&quot; 
+へ引っ越しする際にこれでやってうまくお引越しできました。</p>
+<p>&nbsp;</p>
+
+<pre class="prettyprint"><code>$ git clone --mirror <strong><em>&lt;SOURCE_REPOSITORY_URL&gt;</em></strong>
+$ cd <strong><em>&lt;REPOSITORY&gt;</em></strong>
+$ git push --mirror <strong><em>&lt;DESTINATION_REPOSITORY_URL&gt;</em></strong></code></pre>
+
+<p>&nbsp;</p>
+<h4><em>SOURCE_REPOSITORY_URL</em></h4>
+<p>移行する対象のリポジトリのURLのこと。</p>
+<p>末尾が .git で終わるURL。</p>
+<p>&nbsp;</p>
+<h4><em>REPOSITORY</em></h4>
+<p>最初のコマンド<span class="cpp-source">git clone ～</span>を実行したときに ～.git フォルダができると思う。</p>
+<p>そのフォルダのこと。</p>
+<p>&nbsp;</p>
+<h4><em>DESTINATION_REPOSITORY_URL</em></h4>
+<p>移行する先のリポジトリのURL。</p>
+<p>末尾が .git で終わるURL。</p>
+<p>&nbsp;</p>
+
+
+<h3>参考</h3>
+<ul>
+  <li><a href="https://qiita.com/orange5405/items/783b74667bcc69a34a52">
+  Gitリポジトリを別のGitサーバーに移行する - Qiita</a></li>
+</ul>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="5.Git_Large_File_System_(Git_LFS)">5. Git Large File System (Git 
+LFS)</a></h2>
+<p>Git LFS を使用すると、大容量ファイルはコードに対し並列ストレージに格納され、軽量な参照が Git 
+リポジトリに格納されます。これは、リポジトリをより小さく高速にするため、オーディオファイルやビデオファイルなどの大きなメディアで作業するチームにとって便利です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>参考</h3>
+<ul>
+  <li>
+  <a href="https://ja.confluence.atlassian.com/bitbucket/git-large-file-storage-in-bitbucket-829078514.html">
+  Git Large File Storage in Bitbucket | Bitbucket Cloud | Atlassian 
+  Documentation</a></li>
+  <li><a href="https://satoyan419.com/post/git-large-file-storage/">
+  画像を含めると1GB以上あったので、Git Large File Storageを使ってみた | Satoshi Shoji’s Blog 
+  (satoyan419.com)</a></li>
+  <li>
+  <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/reduce-repository-size/">
+  リポジトリのサイズを減らす | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a></li>
+  <li><a href="https://www.ricksoft.jp/blog/articles/000578.html">Bitbucket の 
+  Git LFS でバイナリファイルをバージョン管理する - リックソフトブログ (ricksoft.jp)</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</section>
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>
+        <a href="https://docs.github.com/en/free-pro-team@latest/github/using-git/which-remote-url-should-i-use" target="_blank">Which remote URL should I use? - GitHub Docs</a></li>
+        <li>
+        <a href="https://docs.github.com/en/free-pro-team@latest/github/using-git/caching-your-github-credentials-in-git" target="_blank">Caching your GitHub credentials in Git - GitHub Docs</a></li>
+        <li>
+        <a href="https://qiita.com/Kamo123/items/c92b03278b6302c641e3" target="_blank">git 
+        パスワードを毎回聞かれる問題をHTTPSでも解決 - Qiita</a></li>
+        <li>
+        <a href="http://var.blog.jp/archives/81784650.html">Windows で git 
+        の認証情報を保存させない (blog.jp)</a></li>
+        <li>
+        <a href="https://qiita.com/orange5405/items/783b74667bcc69a34a52">
+        Gitリポジトリを別のGitサーバーに移行する - Qiita</a></li>
+        <li>
+        <a href="https://qiita.com/thinkalot/items/9c185fe41fca269ae0b0">
+        よく使うGitコマンド一覧 - Qiita</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p style="margin-bottom:5px">&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2021-04-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"1-2. &#39;git submodule&#39;"を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"5. Git Large File System (Git LFS)&quot;を追加</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date">2021-02-10</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"4. Gitリポジトリを別のGitサーバへ移行"を追加</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date">2021-02-03</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"3. Windows の認証情報保存場所"を追加</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date">2021-01-13</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	  
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
