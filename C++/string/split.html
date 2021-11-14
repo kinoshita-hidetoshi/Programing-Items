@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>split を実装する</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>split を実装する</h1>
+
+<p> c++ の標準ライブラリには他の言語によくある split がありません。</p>
+<p> 図書「改訂版３版 C++ ポケットリファレンス」の229ページに記載されている「split の実装」を実際に作成して試してみます。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._split_を実装する">1. split を実装する</a><br><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2> <a name="1._split_を実装する">1. split を実装する</a></h2>
+	
+  <h4>[概要]</h4>
+
+  <p> c++ の標準ライブラリには他の言語によくある split がありません。</p>
+  <p> 図書「改訂版３版 C++ ポケットリファレンス」の229ページに記載されている「split の実装」を実際に作成して試してみます。</p>
+  <p> &nbsp;</p>
+	
+  <h4>[環境]</h4>
+  <table>
+  <tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	      <td>gcc,</td>
+	      <td>&nbsp;9.3.0 </td>
+    </tr>
+		
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+		
+    <tr>
+      <td>OS :</td>
+      <td>Ubuntu, </td>
+      <td>&nbsp;20.04 (Windows11 WSL)</td>
+    </tr>
+	  
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+  </table>
+	
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+	
+	<h4>[プログラムソース &quot;split_01.cpp&quot;]</h4>
+	<pre class="prettyprint linenums">#include &lt;iostream&gt;     // cout, EXIT_SUCCESS
+#include &lt;string&gt;       // string
+#include &lt;vector&gt;       // vecotr
+#include &lt;regex&gt;        // regex, sregex_token_iterator
+
+
+<strong>std::vector&lt;std::string&gt; split(std::string&amp;&amp; s, std::regex&amp;&amp; pattern){
+    std::sregex_token_iterator first(s.begin(), s.end(), pattern, -1);
+    std::sregex_token_iterator last;
+    return std::vector&lt;std::string&gt;(first, last);
+}</strong>
+
+void print( std::vector&lt;std::string&gt;&amp; s){
+    for ( const std::string x : s){
+        std::cout &lt;&lt; x &lt;&lt; std::endl;
+    }
+}
+
+int main(){
+    // test pattern 1.
+    {
+        std::string s = &quot;123,456,789&quot;;
+
+        // 文字列をカンマで分割する
+        std::vector&lt;std::string&gt; result = split(move(s), std::regex(&quot;,&quot;));
+
+        // 出力
+        print(result);
+    }
+
+    // test pattern 2.
+    {
+        std::string s = &quot;1, 23  ,456,   7   ,89&quot;;
+
+        // 文字列をカンマとスペースで分割する
+        std::vector&lt;std::string&gt; result = split(move(s), std::regex(&quot;[, ]+&quot;));
+
+        // 出力
+        print(result);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h4>[出力]</h4>
+
+<pre>123
+456
+789
+1
+23
+456
+7
+89</pre>
+
+<p>&nbsp;</p>
+
+
+</section>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>「改訂版３版 C++ ポケットリファレンス」</li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2021-11-07</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	  
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
