@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>JPEGで画像を取得する</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #FFFF00;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>JPEG で画像を取得する</h1>
+
+<p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) から JPEG 形式で映像取得して遊んでみます。</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a> <br>
+        <a href="#2. OpenCV で顔認識を加えてみる">2. OpenCV 
+        で顔認識を加えてみる</a><br>
+        <br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で 
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a></h2>
+	<h4>[概要]</h4>
+	<p> とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
+    <p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.8.10 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu(WSL),</td>
+	    <td>20.04</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<p>[プログラムソース &quot;connect_with_jpeg.py&quot;]</p>
+	<pre class="prettyprint linenums">
+ '''
+[abstract]
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみる
+
+[library install]
+    pip install opencv-python
+    pip install Pillow
+'''
+
+import requests
+from requests.auth import HTTPDigestAuth
+
+import io
+from PIL import Image
+import numpy as np
+import cv2
+
+user_id = "user-id"         # ユーザーID
+user_pw = "password"        # ユーザーパスワード
+host = "192.168.2.126"      # カメラのIPアドレス
+resolution = 1920           # 解像度
+
+# URL
+url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
+
+# 顔を識別するためのファイル
+cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔
+#cascade_file = "haarcascade_eye.xml"                   # 目？
+#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？
+cascade = cv2.CascadeClassifier(cascade_file)
+
+while True:
+
+    # 画像の取得
+    rs = requests.get(url, auth=HTTPDigestAuth(user_id, user_pw))
+
+    # PIL 形式で作成
+    img_bin = io.BytesIO(rs.content)
+    img_pil = Image.open(img_bin)
+
+    # PIL 形式を OpenCV 形式へ変換
+    img_np  = np.asarray(img_pil)
+    img1 = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+
+    # リサイズ
+    img2 = cv2.resize(img1, (1280, 760))
+
+    # 映像表示
+    cv2.imshow('VIDEO', img2)
+    cv2.waitKey(1)</pre>
+    <p>&nbsp;</p>
+</section>
+
+<p></p>
+<p></p>
+
+<section>
+<p><a name="2. OpenCV で顔認識を加えてみる">2. OpenCV で顔認識を加えてみる</a></p>
+	<h4>[概要]</h4>
+	<p>OpenCV を使って顔認識を行って、見つけた顔部分に赤枠を描画してみます。&nbsp;</p>
+  <p>&nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.8.10 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu(WSL),</td>
+	    <td>20.04</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<p>&nbsp;</p>
+	<pre class="prettyprint linenums">
+ '''
+[abstract]
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみる
+
+[library install]
+    pip install opencv-python
+    pip install Pillow
+
+<span class="auto-style1">[OpenCV]</span>
+<span class="auto-style1">    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること</span>
+<span class="auto-style1">    https://github.com/opencv/opencv/tree/master/data/haarcascades</span>
+'''
+
+import requests
+from requests.auth import HTTPDigestAuth
+
+import io
+from PIL import Image
+import numpy as np
+import cv2
+
+user_id = "user-id"         # ユーザーID
+user_pw = "password"        # ユーザーパスワード
+host = "192.168.2.126"      # カメラのIPアドレス
+resolution = 1920           # 解像度
+
+# URL
+url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
+
+# 顔を識別するためのファイル
+cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔
+#cascade_file = "haarcascade_eye.xml"                   # 目？
+#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？
+cascade = cv2.CascadeClassifier(cascade_file)
+
+while True:
+
+    # 画像の取得
+    rs = requests.get(url, auth=HTTPDigestAuth(user_id, user_pw))
+
+    # PIL 形式で作成
+    img_bin = io.BytesIO(rs.content)
+    img_pil = Image.open(img_bin)
+
+    # PIL 形式を OpenCV 形式へ変換
+    img_np  = np.asarray(img_pil)
+    img1 = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+
+<span class="auto-style1">    # 顔検出のためにグレイスケール画像に変換</span>
+<span class="auto-style1">    img_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)</span>
+
+<span class="auto-style1">    # 検出した顔の位置情報を取得</span>
+<span class="auto-style1">    face_list = cascade.detectMultiScale(img_gray, minSize=(100, 100))</span>
+
+<span class="auto-style1">    # 顔を検出したらループ処理を終了</span>
+<span class="auto-style1">    if len(face_list) != 0:</span>
+<span class="auto-style1">        #print("Find face.")</span>
+
+<span class="auto-style1">        for (pos_x, pos_y, w, h) in face_list:</span>
+<span class="auto-style1">            print(f"pos_x = {pos_x}, pos_y = {pos_y}, w = {w}, h = {h}")</span>
+<span class="auto-style1">            cv2.rectangle(img1, (pos_x, pos_y), (pos_x + w, pos_y + h), (0,0,255), thickness=5)</span>
+
+    # リサイズ
+    img2 = cv2.resize(img1, (1280, 760))
+
+    # 映像表示
+    cv2.imshow('VIDEO', img2)
+    cv2.waitKey(1)</pre>
+
+<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p><img alt="" src="connect_with_jpeg/img57.jpg" width="800px"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</section>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>Panasonic製ネットワークカメラの画像を取得して顔検出をしてみる - Qiita<br>
+        <a href="https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639" target="_blank">
+        https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639</a></li>
+	</ul>
+    <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-03-19</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2022 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

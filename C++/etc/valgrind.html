@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>valgrind</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>valgrind</h1>
+
+<p> valgrind についてメモなどを記載します。</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+          <a href="#1._インストール">1. インストール</a><br>
+          &nbsp; <a href="#1-1._ビルド＆インストール">1-1. ビルド＆インストール</a><br>
+          &nbsp; <a href="#1-2._バイナリインストール">1-2. バイナリインストール</a><br>
+          2. ***<br>
+          3. ***<br>
+          <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._インストール">1. インストール</a></h2>
+	<p> &nbsp;</p>
+	
+  <h3> <a name="1-1._ビルド＆インストール">1-1. ビルド＆インストール</a></h3>
+  <p> ソースコードを取得してビルド、インストールを行う場合は以下の手順で行います。</p>
+  <p> &nbsp;</p>
+  <p> (1) 下記URLからソースコード一式を取得します。</p>
+  <p> <a href="https://valgrind.org/">Valgrind Home</a></p>
+  <p> &nbsp;</p>
+  <p> (2) 下記手順で解凍、ビルド、インストールを行います。</p>
+
+<pre>
+bzip2 -d valgrind-3.10.1.tar.bz2
+tar -xf valgrind-3.10.1.tar
+./configure
+make
+make install
+</pre>
+
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+
+  <h3> <a name="1-2._バイナリインストール">1-2. バイナリインストール</a></h3>
+  <p> バイナリファイルをインストールする手順は以下の通りです。Ubuntu の例です。</p>
+  <p> &nbsp;</p>
+
+<pre>
+sudo apt-get install valgrind
+</pre>
+
+  <p> &nbsp;</p>
+	
+</section>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>Valgrind Home<br>
+		  <a href="https://valgrind.org/" target="_blank">
+		    https://valgrind.org/
+		  </a>
+    </li>
+    <li>c++ - valgrind memcheck options - 解決方法 (i-harness.com)<br>
+      <a href="https://code.i-harness.com/ja-jp/q/1bf7227" target="_blank">
+        https://code.i-harness.com/ja-jp/q/1bf7227
+      </a>
+    </li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-01-02</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2021 木下英俊</small></p>
+</footer>
+
+</body>
+</html>

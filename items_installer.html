@@ -6,6 +6,9 @@
 <link href="./design_items.css" rel="stylesheet" type="text/css">
 
 <style type="text/css">
+.auto-style1 {
+  list-style-type: square;
+}
 </style>
 
 <script type="text/javascript">
@@ -56,7 +59,13 @@ function sublist( target ) {
 <a href="items_top.html" target="_self">戻る</a>
 
 <ul>
-	<li style="list-style-type: none"><a href="url" class="menu" onclick="sublist(this); return false;">WiX</a><ul>
+  <li style="list-style-type: none"><a href="url" class="menu" onclick="sublist(this); return false;">Visual Studio Installer</a><ul>
+    <li class="auto-style1">
+    <a href="Installer/Visual%20Studio%20Installer/how_to_make_on_net6.html">
+    .NET6 におけるインストーラ作成方法</a></li>
+  </ul></li>
+  
+  <li style="list-style-type: none">WiX<ul>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">Tutorials</a><ul>
 			<li><a href="Installer/WiX/Tutorials/CreateNewProject.html">&quot;WiX project&quot; を新規作成する</a></li>
 			<li>プロジェクトを設定する</li>
