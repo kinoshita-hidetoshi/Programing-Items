@@ -102,6 +102,8 @@
 [library install]
     pip install opencv-python
     pip install Pillow
+    pip install numpy
+    pip install requests
 '''
 
 import requests
@@ -119,12 +121,6 @@ resolution = 1920           # 解像度
 
 # URL
 url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
-
-# 顔を識別するためのファイル
-cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔
-#cascade_file = "haarcascade_eye.xml"                   # 目？
-#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？
-cascade = cv2.CascadeClassifier(cascade_file)
 
 while True:
 
@@ -198,6 +194,8 @@ while True:
 [library install]
     pip install opencv-python
     pip install Pillow
+    pip install numpy
+    pip install requests
 
 <span class="auto-style1">[OpenCV]</span>
 <span class="auto-style1">    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること</span>
@@ -220,11 +218,11 @@ resolution = 1920           # 解像度
 # URL
 url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
 
-# 顔を識別するためのファイル
-cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔
-#cascade_file = "haarcascade_eye.xml"                   # 目？
-#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？
-cascade = cv2.CascadeClassifier(cascade_file)
+<span class="auto-style1"># 顔を識別するためのファイル</span>
+<span class="auto-style1">cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔</span>
+<span class="auto-style1">#cascade_file = "haarcascade_eye.xml"                   # 目？</span>
+<span class="auto-style1">#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？</span>
+<span class="auto-style1">cascade = cv2.CascadeClassifier(cascade_file)</span>
 
 while True:
 
