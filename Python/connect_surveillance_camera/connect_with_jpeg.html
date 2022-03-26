@@ -41,9 +41,9 @@
       <nav>
         <h2> 目次</h2>
         <p>
-        <a href="#1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a> <br>
-        <a href="#2. OpenCV で顔認識を加えてみる">2. OpenCV 
-        で顔認識を加えてみる</a><br>
+        <a href="#1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a><br>
+        <a href="#2.プログラムを改善する_">2. プログラムを改善する</a><br>
+        <a href="#3. OpenCV で顔認識を加えてみる">3. OpenCV で顔認識を加えてみる</a><br>
         <br>
         <a href="#参考">参考</a><br>
         </p>
@@ -93,7 +93,7 @@
 	<p> &nbsp;</p>
 	<p> &nbsp;</p>
 	
-	<p>[プログラムソース &quot;connect_with_jpeg.py&quot;]</p>
+	<p>[プログラムソース &quot;connect_with_jpeg_1.py&quot;]</p>
 	<pre class="prettyprint linenums">
  '''
 [abstract]
@@ -142,13 +142,161 @@ while True:
     cv2.imshow('VIDEO', img2)
     cv2.waitKey(1)</pre>
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 </section>
 
-<p></p>
-<p></p>
+
 
 <section>
-<p><a name="2. OpenCV で顔認識を加えてみる">2. OpenCV で顔認識を加えてみる</a></p>
+  <h2><a name="2.プログラムを改善する_">2.プログラムを改善する </a></h2>
+	<h4>[概要]</h4>
+  <p>今作成したプログラムはとても簡単に作成できましたが、いろいろと課題がありました。<br>とりあえず下記３つの課題を解決してみます。</p>
+  <p>&nbsp;</p>
+  <ol>
+    <li>ウィンドウ初期位置を指定</li>
+    <li>&nbsp;ウィンドウ終了ボタン[X] でプログラム終了</li>
+    <li>"z" キー押下でプログラム終了</li>
+  </ol>
+    <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.8.10 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu(WSL),</td>
+	    <td>20.04</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>[プログラムソース &quot;connect_with_jpeg_2.py&quot;]</p>
+	<pre class="prettyprint linenums">
+'''
+[abstract]
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみる
+
+[library install]
+    pip install opencv-python
+    pip install requests
+    pip install Pillow
+
+[OpenCV]
+    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること
+    https://github.com/opencv/opencv/tree/master/data/haarcascades
+'''
+
+import requests
+from requests.auth import HTTPDigestAuth
+
+import io
+from PIL import Image
+import numpy as np
+import cv2
+
+user_id = "user-id"         # ユーザーID
+user_pw = "password"        # ユーザーパスワード
+host = "192.168.2.126"      # カメラのIPアドレス
+resolution = 1920           # 解像度
+winname = "VIDEO"
+
+# URL
+url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
+
+<span class="auto-style1">#</span>
+<span class="auto-style1">initialized = False</span>
+
+<span class="auto-style1"># Exception 定義</span>
+<span class="auto-style1">BackendError = type('BackendError', (Exception,), {})</span>
+
+<span class="auto-style1">'''</span>
+<span class="auto-style1">[Abstract]</span>
+<span class="auto-style1">    対象ウィンドウが存在するかを確認する。</span>
+<span class="auto-style1">[Param]</span>
+<span class="auto-style1">    winname :       ウィンドウタイトル</span>
+<span class="auto-style1">[Return]</span>
+<span class="auto-style1">    True :          対象ウィンドウは存在する</span>
+<span class="auto-style1">    False :         対象ウィンドウは存在しない</span>
+<span class="auto-style1">[Exception]</span>
+<span class="auto-style1">    BackendError :  バックエンドで使用している Qt でエラー発生</span>
+<span class="auto-style1">'''</span>
+<span class="auto-style1">def IsWindowVisible(winname):</span>
+<span class="auto-style1">    try:</span>
+<span class="auto-style1">        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)</span>
+<span class="auto-style1">        if ret == -1:</span>
+<span class="auto-style1">            raise BackendError('Use Qt as backend to check whether window is visible or not.')</span>
+
+<span class="auto-style1">        return bool(ret)</span>
+
+<span class="auto-style1">    except cv2.error:</span>
+<span class="auto-style1">        return False</span>
+
+
+
+while True:
+
+    # 画像の取得
+    rs = requests.get(url, auth=HTTPDigestAuth(user_id, user_pw))
+
+    # PIL 形式で作成
+    img_bin = io.BytesIO(rs.content)
+    img_pil = Image.open(img_bin)
+
+    # PIL 形式を OpenCV 形式へ変換
+    img_np  = np.asarray(img_pil)
+    img1 = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+
+    # リサイズ
+    img2 = cv2.resize(img1, (1280, 760))
+
+    # 映像表示
+    cv2.imshow(winname, img2)
+
+<span class="auto-style1">    if initialized==False:</span>
+<span class="auto-style1">        # ウィンドウ表示位置が安定しないので、最初の起動時のみ表示場所を指定</span>
+<span class="auto-style1">        cv2.moveWindow(winname, 100, 100)</span>
+<span class="auto-style1">        initialized = True</span>
+        
+<span class="auto-style1">    # "z" キーを押されていたら終了</span>
+<span class="auto-style1">    k = cv2.waitKey(1)</span>
+<span class="auto-style1">    if k == ord("z"):</span>
+<span class="auto-style1">        break</span>
+
+<span class="auto-style1">    # 指定ウィンドウが無かったら終了</span>
+<span class="auto-style1">    if not IsWindowVisible(winname):</span>
+<span class="auto-style1">        break</span></pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+
+<section>
+<p><a name="3. OpenCV で顔認識を加えてみる">3. OpenCV で顔認識を加えてみる</a></p>
 	<h4>[概要]</h4>
 	<p>OpenCV を使って顔認識を行って、見つけた顔部分に赤枠を描画してみます。&nbsp;</p>
   <p>&nbsp;</p>
@@ -185,21 +333,20 @@ while True:
 	<p> &nbsp;</p>
 	<p> &nbsp;</p>
 	
-	<p>&nbsp;</p>
+	<p>[プログラムソース &quot;connect_with_jpeg_3.py&quot;]</p>
 	<pre class="prettyprint linenums">
- '''
+'''
 [abstract]
     i-PRO mini (WV-S7130W) と接続して映像を表示してみる
 
 [library install]
     pip install opencv-python
-    pip install Pillow
-    pip install numpy
     pip install requests
+    pip install Pillow
 
-<span class="auto-style1">[OpenCV]</span>
-<span class="auto-style1">    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること</span>
-<span class="auto-style1">    https://github.com/opencv/opencv/tree/master/data/haarcascades</span>
+[OpenCV]
+    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること
+    https://github.com/opencv/opencv/tree/master/data/haarcascades
 '''
 
 import requests
@@ -214,6 +361,7 @@ user_id = "user-id"         # ユーザーID
 user_pw = "password"        # ユーザーパスワード
 host = "192.168.2.126"      # カメラのIPアドレス
 resolution = 1920           # 解像度
+winname = "VIDEO"
 
 # URL
 url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
@@ -223,6 +371,36 @@ url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
 <span class="auto-style1">#cascade_file = "haarcascade_eye.xml"                   # 目？</span>
 <span class="auto-style1">#cascade_file = "haarcascade_eye_tree_eyeglasses.xml"   # 目？</span>
 <span class="auto-style1">cascade = cv2.CascadeClassifier(cascade_file)</span>
+
+#
+initialized = False
+
+# Exception 定義
+BackendError = type('BackendError', (Exception,), {})
+
+'''
+[Abstract]
+    対象ウィンドウが存在するかを確認する。
+[Param]
+    winname :       ウィンドウタイトル
+[Return]
+    True :          対象ウィンドウは存在する
+    False :         対象ウィンドウは存在しない
+[Exception]
+    BackendError :  バックエンドで使用している Qt でエラー発生
+'''
+def IsWindowVisible(winname):
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
 
 while True:
 
@@ -255,8 +433,22 @@ while True:
     img2 = cv2.resize(img1, (1280, 760))
 
     # 映像表示
-    cv2.imshow('VIDEO', img2)
-    cv2.waitKey(1)</pre>
+    cv2.imshow(winname, img2)
+
+    if initialized==False:
+        # ウィンドウ表示位置が安定しないので、最初の起動時のみ表示場所を指定
+        cv2.moveWindow(winname, 100, 100)
+        initialized = True
+        
+    # "z" キーを押されていたら終了
+    k = cv2.waitKey(1)
+    if k == ord("z"):
+        break
+
+    # 指定ウィンドウが無かったら終了
+    if not IsWindowVisible(winname):
+        break</pre>
+  <p>&nbsp;</p>
 
 <p>&nbsp;</p>
   <p>&nbsp;</p>
@@ -288,6 +480,11 @@ while True:
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-03-26</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">２章を挿入</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-03-19</td>
 	    <td class="td_history_separator">-</td>
