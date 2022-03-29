@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>ノーコード機械学習 Microsoft Lobe を試してみよう</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+  </head>
+
+<body onload="prettyPrint();">
+	
+<h1>ノーコード機械学習 Microsoft Lobe を試してみよう </h1>
+
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._概要">1. 概要</a><br>
+        <a href="#2._インストール">2. インストール</a><br>
+        <a href="#3._学習データの準備">3. 学習データの準備</a><br>
+        <a href="#4._学習データの登録">4. 学習データの登録</a><br>
+        <a href="#5._推論してみる">5. 推論してみる</a><br>
+        <a href="#6._Export_機能">6. Export 機能</a><br>
+        <a href="#7._Lobe_Connect">7. Lobe Connect</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._概要">1. 概要</a></h2>
+    <p> &nbsp;</p>
+    <p> Microsoftがノーコードの「Lobe」を無料公開しています。 今日はこの「Lobe」を使って、学習～推論 
+    をノーコード、20分以内でやってみます！ </p>
+    <p> 
+    <img alt="" src="first_try_lobe/img6.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> 
+    Lobeは、米マイクロソフト（Microsoft）が無料で公開している機械学習ツールで、学習から推論までをノーコードで実行できます。今回は、Lobeを使って犬と猫を判別するモデルを作成していきます。 
+    </p>
+    <p> 引用元： <a href="https://ledge.ai/lobe-try/">https://ledge.ai/lobe-try/</a>
+    </p>
+    <p> &nbsp;</p>
+</section>
+    
+    <hr>
+    
+<section>
+    <p> &nbsp;</p>
+    <h2> <a name="2._インストール">2. インストール</a></h2>
+    <p> &nbsp;</p>
+    <p> “<a href="https://www.lobe.ai" target="_blank">https://www.lobe.ai</a>” 
+    から無料で入手できます。 </p>
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img7.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+</section>
+    
+    <hr>
+    
+<section>
+    <p> &nbsp;</p>
+    <h2> <a name="3._学習データの準備">3. 学習データの準備</a></h2>
+    <p> &nbsp;</p>
+    <p> 
+    まずは、学習データの準備としてLobeというフォルダの中に、catとdogというフォルダを作成し、それぞれの中に猫と犬の画像を30枚ずつ用意します。</p>
+    <p> 
+    <img alt="" src="first_try_lobe/img13.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> 画像収集方法</h3>
+    <p> 今回は Flickr で画像を集めました (<a href="https://www.flickr.com/" target="_blank">https://www.flickr.com/</a>) </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img16.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+</section>    
+
+<hr>
+    
+<section>
+    <p> &nbsp;</p>
+    <h2> <a name="4._学習データの登録">4. 学習データの登録</a></h2>
+    <p> &nbsp;</p>
+    <p> Lobeを開くと、このような画面になります。 </p>
+    <p> 右上の「import」をクリックすると、images、Camera、Datasetの3つが現れます。</p>
+    <p> 画像を1枚ずつ選択する場合はimages、カメラで撮影する場合はCameraを選択します。 
+    今回はフォルダを用意したので、Datasetを選びます。</p>
+    <p> <img alt="" src="first_try_lobe/img42.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> Choose Datasetを選択し、先ほど作成したLobeフォルダを開きます。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img18.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 学習用データを保存する train フォルダ選択します。 </p>
+    <p> 
+    <img alt="" src="first_try_lobe/img1A.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> </p>
+    <p> imagesやCameraで画像を1枚ずつアップロードすると、毎回ラベルをつける必要があります。</p>
+    <p> ここでLabel Using Folder 
+    Nameを選択すると、フォルダの名前(今回はcatとdog)のラベルが自動でつくので便利です。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img1B.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> Import ボタンをクリックすると、Label 付けを完了します。 同時に学習を開始します。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img1D.jpg" width="800">&nbsp;</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 学習を完了すると下図のような画面になります。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img1E.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 「Train」ボタンをクリックします。認識精度は以下の通りです。 ※この結果は毎回変わります。同じ結果になりません。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img1F.jpg" width="800"></p>
+    <p> &nbsp;</p>
+</section>    
+
+<hr>
+    
+<section>
+    <p> &nbsp;</p>
+    <h2> <a name="5._推論してみる">5. 推論してみる</a></h2>
+    <p> &nbsp;</p>
+    <p> 学習が終わったら左側のPlayを選択して、学習に使わなかったデータで推論してみます。ここでは test フォルダ中のデータを選択します。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img20.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 正しく推論できました。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img21.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img22.jpg" width="800">&nbsp;</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 他の結果もいくつか参考・・・ </p>
+    <p> 
+    <img alt="" src="first_try_lobe/img23.jpg"></p>
+    <p> &nbsp;</p>
+    <p> <img alt="" src="first_try_lobe/img25.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    
+</section>    
+
+<hr>
+    
+<section>
+    
+    <p> &nbsp;</p>
+    <h2> <a name="6._Export_機能">6. Export 機能</a></h2>
+    <p> &nbsp;</p>
+    <p> 「TensorFlow」「TensorFlow.js」「TensorFlow 
+    Lite」「ONNX」のファイル形式で学習結果を出力することができます。<br>これにより別のPCやサーバー、クラウド環境、Raspberry 
+    Piなどで Lobe で作成したAIモデルを利用することができます。</p>
+    <p> モデルを実際に Export して Python プログラムで使用してみます。ここでは「TensorFlow Lite」をクリックします。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img28.jpg" width="800">&nbsp;</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> Export するフォルダを選択します。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img29.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 最適化を行ってからExportしたい場合は右側の[Optimize &amp; Export]を選択します。 ここでは「Just 
+    Export」をクリックします。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img2B.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> Export 完了です。[Done]をクリックします。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img2C.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> こんな感じでファイル出力されました。</p>
+    <p> <img alt="" src="first_try_lobe/img2D.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 出力された “tflite_example.py” を vscode で動かしてみます。 プログラムはわずか 127行 のプログラムでした。 </p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img2E.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 細かい設定情報は、ファイル "signature.json" に記録されているようです。</p>
+    <pre>{"doc_id": "03d6449c-7a34-4444-8b54-3987f8063935", 
+"doc_name": "train", 
+"doc_version": "459b7c84515bf8d6bfc0ef320cd6359f", 
+"format": "tf_lite", 
+"version": 8, 
+"inputs": {"Image": {"dtype": "float32", "shape": [null, 224, 224, 3], "name": "Image"}}, 
+"outputs": {"Confidences": {"dtype": "float32", "shape": [null, 3], "name": "03d6449c-7a34-4444-8b54-3987f8063935.4d1cd0b3-b374-41f2-8dd5-cf40832e8f97/dense_2/Softmax"}}, 
+"tags": [], 
+"classes": {"Label": ["cat", "dog", "human"]}, 
+"filename": "saved_model.tflite", 
+"export_model_version": 1}</pre>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> <strong>[注意]</strong></p>
+    <ul>
+      <li>カレントフォルダを "example" の中にして実行するようにプログラムが作成されていました。</li>
+      <li>同様に、学習済みデータ "saved_model.tflite" 
+      ファイルはカレントフォルダの１つ上位フォルダに保存されている必要があります。</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> Example/requirements.txt に従って下記をインストールしました。</p>
+    <ul>
+      <li>pillow</li>
+      <li>tflite_runtime</li>
+      <li>numpy</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> "requirements.txt" の内容は以下の通り。</p>
+  	<pre class="prettyprint linenums">pillow==8.2.0
+# TF Lite runtime packages based on OS and python version: https://www.tensorflow.org/lite/guide/python#install_just_the_tensorflow_lite_interpreter
+# windows
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp35-cp35m-win_amd64.whl; sys_platform == 'win32' and python_version == '3.5'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-win_amd64.whl; sys_platform == 'win32' and python_version == '3.6'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp37-cp37m-win_amd64.whl; sys_platform == 'win32' and python_version == '3.7'
+# mac
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp35-cp35m-macosx_10_14_x86_64.whl; sys_platform == 'darwin' and python_version == '3.5'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-macosx_10_14_x86_64.whl; sys_platform == 'darwin' and python_version == '3.6'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp37-cp37m-macosx_10_14_x86_64.whl; sys_platform == 'darwin' and python_version == '3.7'
+# linux
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp35-cp35m-linux_x86_64.whl; sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.5'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_x86_64.whl; sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.6'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp37-cp37m-linux_x86_64.whl; sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.7'
+https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp38-cp38-linux_x86_64.whl; sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.8'
+# for other linux/raspberry pi, please see the link above to find the right version for your OS
+numpy==1.19.5</pre>
+    <p> &nbsp;</p>
+    <p> でも README.md を読んでみると、下記のようにコマンドを入力すれば良いようです。</p>
+    <p> <span class="cpp-source">python -m pip install --upgrade pip &amp;&amp; pip 
+    install -r requirements.txt</span></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> これらの内容から推測すると、Python でサポートしているバージョンは 3.5、3.6、3.7 と読み取れます。<br>3.8 
+    以降でも動作するかもしれないけれど、開発側は未確認と推測するべきでしょう。<br>実際に 3.10 
+    で実行してみましたが、エラーになって動作できませんでした。</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> ２つのサンプル画像に対して動作した結果です。<br>ちゃんと動作しました。 </p>
+    <p> <img alt="" src="first_try_lobe/img35.jpg"></p>
+    <p> &nbsp;</p>
+    <p> Export（TensorFlow Lite）に関するレポートは以上です。 </p>
+    <p> &nbsp;</p>
+    <hr>
+    <p> &nbsp;</p>
+    <h2> <a name="7._Lobe_Connect">7. Lobe Connect</a></h2>
+    <p> &nbsp;</p>
+    <p> 「Lobe」でプロジェクトを開くと、自動的にローカルホスト上で動作するREST APIサーバーとしても稼働するようになっています。<br>
+    「Lobe Connect」で表示されたエンドポイントのURLに対してリクエストを投げれば、モデルを利用した判別が可能となります。 </p>
+    <p> &nbsp;</p>
+    <p> “Lobe Connect” を使って Python プログラムから使ってみます。</p>
+    <p> &nbsp;</p>
+    <ul>
+      <li>Lobe を起動しておきます。</li>
+      <li>事前に requests をインストールしておきます。<br><span class="cpp-source">pip install 
+      requests</span></li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> こんな簡単なプログラム（26行）で実現できました。</p>
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img4A.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> <strong>[注意]</strong> url 部分のアドレスは Lobe を起動するたびに変わるようです。</p>
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="" src="first_try_lobe/img4B.jpg"></p>
+    <p> &nbsp;</p>
+</section>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>Lobe | Machine Learning Made Easy <br>
+        <a href="https://www.lobe.ai/" target="_blank">https://www.lobe.ai/</a></li>
+        <li>Microsoftがノーコードの「Lobe」を無料公開機械学習モデルを作成してみた | Ledge.ai <br>
+        <a href="https://ledge.ai/lobe-try/" target="_blank">
+        https://ledge.ai/lobe-try/</a></li>
+        <li>Lobeで学習したモデルをPythonで利用する方法 – Qiita <br>
+        <a href="https://qiita.com/tkinjo1/items/bbcb77fb0f4b8fe79a81" target="_blank">
+        https://qiita.com/tkinjo1/items/bbcb77fb0f4b8fe79a81</a></li>
+        <li>誰でもノーコードで画像判別の機械学習モデルを作成できる「Lobe」【イニシャルB】 - INTERNET Watch 
+        (impress.co.jp)
+        <a href="https://internet.watch.impress.co.jp/docs/column/shimizu/1316830.html" target="_blank">
+        https://internet.watch.impress.co.jp/docs/column/shimizu/1316830.html</a></li>
+        <li>機械学習ツールlobeで画像判定 その2 | make-iot <br>
+        <a href="http://make-iot.com/2021/01/09/機械学習ツールlobeで画像判定　その2/" target="_blank">
+        http://make-iot.com/2021/01/09/%e6%a9%9f%e6%a2%b0%e5%ad%a6%e7%bf%92%e3%83%84%e3%83%bc%e3%83%ablobe%e3%81%a7%e7%94%bb%e5%83%8f%e5%88%a4%e5%ae%9a%e3%80%80%e3%81%9d%e3%81%ae2/</a></li>
+        <li>Lobeで作った画像認識モデルをローカル環境でAPI化するLobe Connectを試してみる | Think Globally, 
+        Act Locally – 井上 研一 (vivinko.com) <br>
+        <a href="https://vivinko.com/inoue/blog/2021/04/02/120201.html" target="_blank">
+        https://vivinko.com/inoue/blog/2021/04/02/120201.html</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-03-29</td>
+	    <td class="td_history_separator">-
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&c&copy; copyright 2022 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
