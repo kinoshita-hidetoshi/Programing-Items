@@ -39,9 +39,11 @@
         <a href="#2._インストール">2. インストール</a><br>
         <a href="#3._学習データの準備">3. 学習データの準備</a><br>
         <a href="#4._学習データの登録">4. 学習データの登録</a><br>
-        <a href="#5._推論してみる">5. 推論してみる</a><br>
-        <a href="#6._Export_機能">6. Export 機能</a><br>
-        <a href="#7._Lobe_Connect">7. Lobe Connect</a><br>
+        <a href="#5._推論してみる">5. 推論してみる</a><br><a href="#6._ラベル(分類)を追加">6. 
+        ラベル(分類)を追加</a><br>
+        
+        <a href="#7._Export_機能">7. Export 機能</a><br>
+        <a href="#8._Lobe_Connect">8. Lobe Connect</a><br>
         <a href="#参考">参考</a><br>
         </p>
       </nav>
@@ -174,6 +176,44 @@
     <p> <img alt="" src="first_try_lobe/img25.jpg"></p>
     <p> &nbsp;</p>
     <p> &nbsp;</p>
+    <hr>
+    <p> &nbsp;</p>
+    <h2> <a name="6._ラベル(分類)を追加">6. ラベル(分類)を追加</a></h2>
+    <p> &nbsp;</p>
+    <p> 私は "dog" になってしまってちょっと残念。"person"(人)に分類してほしいので、私の写真を使ってラベル(分類)を追加して、私を 
+    "person"(人)として認識してくれるようにチャレンジしてみます。</p>
+    <p> 今回は Lobe から直接カメラを使って Train してみます。</p>
+    <p> &nbsp;</p>
+    <p> ①"Train" &gt; ②"Import" &gt; ③"Camera" を順にクリックします。</p>
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img8.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> こんな感じの画面になりました。</p>
+    <p> 画面下の 〇 をクリックすることで撮影できます。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/img9.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> "Unlabeled" が "1" になりました。<br>必要な撮影を完了したら "Done" をクリックして終了します。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/imgB.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> "Label" &gt; "Unlabeled" をクリックすると先ほど撮影した写真が並んでいます。</p>
+    <p> "Label" の部分に直接 "person" と入力します。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/imgC.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> 新しい Label として "person" を追加することができました。</p>
+    <p> 自動的に学習も進むようです。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/imgD.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> "Use" &gt; "Camera" で再チャレンジしてみます。</p>
+    <p> 今度は私を "person" と分類してくれました。OKですね。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="first_try_lobe/imgE.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
     
 </section>    
 
@@ -182,7 +222,7 @@
 <section>
     
     <p> &nbsp;</p>
-    <h2> <a name="6._Export_機能">6. Export 機能</a></h2>
+    <h2> <a name="7._Export_機能">7. Export 機能</a></h2>
     <p> &nbsp;</p>
     <p> 「TensorFlow」「TensorFlow.js」「TensorFlow 
     Lite」「ONNX」のファイル形式で学習結果を出力することができます。<br>これにより別のPCやサーバー、クラウド環境、Raspberry 
@@ -282,7 +322,7 @@ numpy==1.19.5</pre>
     <p> &nbsp;</p>
     <hr>
     <p> &nbsp;</p>
-    <h2> <a name="7._Lobe_Connect">7. Lobe Connect</a></h2>
+    <h2> <a name="8._Lobe_Connect">8. Lobe Connect</a></h2>
     <p> &nbsp;</p>
     <p> 「Lobe」でプロジェクトを開くと、自動的にローカルホスト上で動作するREST APIサーバーとしても稼働するようになっています。<br>
     「Lobe Connect」で表示されたエンドポイントのURLに対してリクエストを投げれば、モデルを利用した判別が可能となります。 </p>
@@ -344,6 +384,10 @@ numpy==1.19.5</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-04-02</td>
+	    <td class="td_history_separator">-<td class="td_history">「6. ラベル(分類)を追加」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-03-29</td>
 	    <td class="td_history_separator">-

@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>"Quest 2 Handtracking Passthrough" を試してみる</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>"Quest 2 Handtracking Passthrough" を試してみる </h1>
+
+<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
+<p> ［概要を記載します］</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#始めに">始めに</a><br>
+        <a href="#手順">手順</a><br>
+        <a href="#スマホアプリでの開発者モード設定方法">スマホアプリでの開発者モード設定方法</a><br>
+        <br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h2><a name="始めに">始めに</a></h2>
+
+<p>&nbsp;</p>
+<p>“Quest 2 Handtracking Passthrough Multiplayer“ は何か、っていことは下記 Youtube 
+を閲覧してみてください。</p>
+<p>このページでは、下記プログラムを自身の Quest 2 へインストールして遊べるようになるまでを目標に進めていきます。</p>
+<ul class="ak-ul">
+  <li>
+  <p>Quest 2 Handtracking Passthrough Multiplayer - YouTube<br>
+  <a href="https://www.youtube.com/watch?v=p9pdInwHofc&amp;t=171s" target="_blank">https://www.youtube.com/watch?v=p9pdInwHofc&amp;t=171s</a> </p>
+  </li>
+</ul>
+
+<iframe width="600" height="400" src="https://www.youtube.com/embed/p9pdInwHofc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<h3>SteampunkDigital / UnityVRStarter</h3>
+<p>プログラムのソースコード一式は、下記 GitHub から入手可能です。</p>
+<p>
+<a data-card-data="" data-inline-card="" href="https://github.com/SteampunkDigital/UnityVRStarter">
+https://github.com/SteampunkDigital/UnityVRStarter</a> </p>
+<p>&nbsp;</p>
+<p>下記からビルド済み apk ファイルをダウンロードできます。</p>
+<p>
+<a href="http://hidetoshi.la.coocan.jp/Programing%20Items/Metaverse/Meta_Quest/questtest.apk">
+http://hidetoshi.la.coocan.jp/Programing 
+Items/Metaverse/Meta_Quest/questtest.apk</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Vysor</h3>
+<p>Android の表示をPC画面上へミラーリング表示するためのツール、とのことでした。これも使ってみます。</p>
+<p>Vysor - Chrome ウェブストア (<a data-card-data="" data-inline-card="" href="http://google.com">http://google.com</a> 
+)</p>
+<p>
+<a data-card-data="" data-inline-card="" href="https://chrome.google.com/webstore/detail/vysor/gidgenkbbabolejbgbpnhbimgjbffefm?hl=ja">
+https://chrome.google.com/webstore/detail/vysor/gidgenkbbabolejbgbpnhbimgjbffefm?hl=ja</a>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>SideQuest</h3>
+<p>”SideQuest” は、Meta Quest 2 へ apk ファイルをインストールするためのツールです。</p>
+<ul class="ak-ul">
+  <li>
+  <p>SideQuest (<a data-card-data="" data-inline-card="" href="http://sidequestvr.com">http://sidequestvr.com</a> 
+  )<br><a data-card-data="" data-inline-card="" href="https://sidequestvr.com/">
+  https://sidequestvr.com/</a> </p>
+  </li>
+  <li>
+  <p>SideQuestを使ってOculusQuestにapkファイルをインストールしよう！<br>
+  <a data-card-data="" data-inline-card="" href="https://vracademy.jp/development/install_sidequest/">
+  https://vracademy.jp/development/install_sidequest/</a> </p>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<hr>
+<h1>&nbsp;</h1>
+<h2><a name="手順">手順</a></h2>
+<p>&nbsp;</p>
+<h3>１．Oculus公式サイトで開発者登録</h3>
+<p>Oculus公式サイトで開発者登録をおこないます。</p>
+<p>まずは開発者団体の登録から。<br>次のOculusの開発者向けURLにアクセスします。</p>
+<p><a href="https://developer.oculus.com/">https://developer.oculus.com/</a> </p>
+<p>右上の登録ボタンをクリックです。</p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img42.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>説明がいろいろ書いてあるので確認し、「Facebookアカウントで登録」をクリックします。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>２．ADBドライバーのインストール (windows の方のみ)</h3>
+<p>&nbsp;</p>
+<p>Windowsの方はADBドライバーのインストールをします。</p>
+<p>以下のサイトにアクセスし、ADBドライバーをダウンロードします。</p>
+<p>
+<a data-card-data="" data-inline-card="" href="https://developer.oculus.com/downloads/package/oculus-adb-drivers/">
+https://developer.oculus.com/downloads/package/oculus-adb-drivers/</a> </p>
+<p>
+&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img43.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>３．「Oculus 開発者ハブ」をダウンロード</h3>
+<p>「Oculus 開発者ハブ」を下記から取得してインストールします。</p>
+<p>&nbsp;</p>
+<p><a href="https://developer.oculus.com/downloads/native-android/">
+https://developer.oculus.com/downloads/native-android/</a> </p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img45.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>４．PC と Quest 2 を有線（USB）で接続します。</h3>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>５．Quest 2 を開発者モードに設定する</h3>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>”Oculus Developer Hub” を起動します。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img46.jpg"></p>
+<div data-layout="align-start" data-node-type="mediaSingle" data-width="">
+  <div data-alt="" data-collection="contentId-737740147" data-context-id="737740147" data-file-mime-type="image/png" data-file-name="image-20220220-093629.png" data-file-size="36670" data-height="114" data-id="bd18d7d2-54c8-4be1-92f2-6ee2c598d151" data-node-type="media" data-type="file" data-width="146" style="display: inline-block; border-radius: 3px; background: #EBECF0; box-shadow: 0 1px 1px rgba(9, 30, 66, 0.2), 0 0 1px 0 rgba(9, 30, 66, 0.24);" title="Attachment">
+  </div>
+</div>
+<p>”Device Manager” から ”Enable Developer Mode” を ON に切り替えます。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img47.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>Quest 2 内の画面でPCとの接続を［OK］したら、下図のような画面になりました。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img48.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>６．Questtest.apk をダウンロード</h3>
+<p>&nbsp;</p>
+<p>ビルド後の apk ファイルを以下に置いておきます。</p>
+<p>
+<a href="http://hidetoshi.la.coocan.jp/Programing%20Items/Metaverse/Meta_Quest/questtest.apk" target="_blank">http://hidetoshi.la.coocan.jp/Programing 
+Items/Metaverse/Meta_Quest/questtest.apk</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>7．SideQuest インストーラーをダウンロード</h3>
+<p>&nbsp;</p>
+<p>いよいよ、SideQuestをダウンロードしていきます！</p>
+<p>以下のサイトにアクセスします。使用しているPC環境に合わせてインストーラをダウンロードします。</p>
+<p><a href="https://sidequestvr.com/setup-howto" target="_blank">https://sidequestvr.com/setup-howto</a> </p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img4A.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>私は Windows 版をダウンロードしました。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>８．SideQuestをインストールする</h3>
+<p>&nbsp;</p>
+<p>難しくないので詳細省略。インストールを完了して起動したらこんな画面でした。</p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img4B.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>９．SideQuestからAPKファイルをインストールする</h3>
+<p>&nbsp;</p>
+<p>SideQuestはストアからアプリをインストールすることもできますが、自前のapkファイルをアップロードしてインストールすることもできます。</p>
+<p>いよいよ、apkファイルのインストールを行っていきます！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>９－１．SideQuestの右上の四角いアイコンをクリック</h3>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img4C.jpg"></p>
+<p>&nbsp;</p>
+<p>
+⇩</p>
+<p>
+&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img4D.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>９－２．apkファイルをSideQuestのウィンドウにドラッグ＆ドロップしてインストール</h3>
+<p>&nbsp;</p>
+<p>インストール中はタスクアイコンに1と表示されます。</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img4F.jpg"></p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img50.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;上の数字が消えたら Quest へのインストール完了です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>１０．動かしてみる</h3>
+<p>&nbsp;</p>
+<p>Quest 2 中の画面では「<strong>提供元不明</strong>」に分類されるアプリになっていました。<br>”<strong>VRStarter</strong>” 
+を起動します。</p>
+<p>&nbsp;</p>
+<p>
+<img alt="" class="border_with_drow-shadow" src="try_handtracking_passthrough/img51.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>インストールした ”VRStarter” を動かす様子を以下に動画でアップします。<br>画面キャプチャーは ”Vysor” というアプリを使用しました。</p>
+<p>&nbsp;</p>
+
+<video controls autoplay="y" loop="y" src="try_handtracking_passthrough/vrstarter_demo.mp4" width="800" style="height: 482px">
+  <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+</video>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>以上です</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<h1>&nbsp;</h1>
+<p>&nbsp;</p>
+<h2><a name="スマホアプリでの開発者モード設定方法">スマホアプリでの開発者モード設定方法</a></h2>
+<p>&nbsp;</p>
+<p>アイコン8個並んでいる左下の「デバイス」を選択</p>
+<p><img alt="" src="try_handtracking_passthrough/img5C.jpg" width="400"></p>
+<p>&nbsp;</p>
+<p>下の方に「ヘッドセットの設定」があり、その中の「開発者モード」で設定</p>
+<p><img alt="" src="try_handtracking_passthrough/img5D.jpg" width="400"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>
+        <p data-pm-slice="1 1 []">AR FukuokaのTogetterまとめ<br>
+        <a href="https://togetter.com/li/1842917">Lunch Time XR #04: Meta 
+        Questのパススルー とMRTKを使ってみよう - Togetter</a></p>
+        </li>
+	    <li>
+        <p>開発者登録<br>ダイレクトアクセスしたリンク先<br>
+        <a data-card-data="" data-inline-card="" href="https://developer.oculus.com/manage/organizations/create/">
+        https://developer.oculus.com/manage/organizations/create/</a> </p>
+        </li>
+        <li>
+        <p>今回実施した海外の方の英語説明の開発手順動画<br>
+        <a href="https://www.youtube.com/watch?v=YLntpH_tYz4">Oculus Passthrough 
+        API With MRTK And Oculus Quest 2 WORKS NOW ! - YouTube</a></p>
+        </li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-03-29</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2022 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
