@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>機能拡張ソフトウェア(WV-XAE200W)と接続する</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>機能拡張ソフトウェア(WV-XAE200W)と接続する</h1>
+
+<p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) を入手したので、JPEG 形式で映像取得して遊んでみます。</p>
+<p> ここではAI機能拡張ソフトウェア (WV-XAE200W) をインストールして遊んでみます。</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2> 目次</h2>
+        <p>
+        <a href="#1._インストール">1. インストール</a><br>
+        <a href="#2._JPEGヘッダーから_AI-VMD_認識結果を取り出す">2. JPEGヘッダーから AI-VMD 認識結果を取り出す</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._インストール">1. インストール</a></h2>
+    <p> AI機能拡張ソフトウェアから WV-XAE200W (AI動体検知アプリケーション)を入手して、i-PRO カメラへインストールします。</p>
+    <p> インストール済みの場合は、最新ファームウェアへアップデートします。</p>
+	<h4>&nbsp;</h4>
+    <p>1. 最新版ファームウェアを入手（ダウンロード）</p>
+    <p>下記あたりから最新版ファームウェアを入手します。</p>
+    <ul>
+      <li>
+      <a href="https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w">
+      AI動体検知アプリケーション、AIプライバシーガードアプリケーション、AIプロセッサー解除ライセンス WV-XAE200W / WV-XAE201W 
+      / WV-XLE001W - 映像管理ソフト 製品一覧 - 監視・防犯システム - Panasonic</a></li>
+      <li>
+      <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092">
+      ダウンロード詳細｜ファームウェア、マニュアル、図面ほか｜ダウンロード｜サポート情報｜監視・防犯システム｜Panasonic</a></li>
+    </ul>
+    <p>※本書記載時点の最新版は v2.20 でした。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/imgB.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>2. カメラへインストール</p>
+    <p> カメラを起動してブラウザから接続します。</p>
+    <p> 「設定」&gt;「ソフトウェア管理」 を開きます。</p>
+    <p> どうやら AI-VMD と AIプライバシーガード の２つはプレインストール済みのようです。</p>
+    <p> でも最新版ではなさそうなので、上記で取得した最新版へアップデートしてみます。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img9.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> 「ファイルの選択」&gt;「AI-VMDをバージョンアップする」&gt;「実行」 を順にクリックします。</p>
+    <p> 選択するファイルは *.ext です。ここでは「XAE200_v220.ext」というファイルを選択しています。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/imgD.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> こんな確認画面を表示するので、［OK］ボタンをクリックします。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img12.jpg"></p>
+    <p> &nbsp;</p>
+    <p> ファームウェアアップデート中の画面です。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img14.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> これで最新版(v2.20)へアップデートできました。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img15.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> で「ライブ画」を表示してみます。<br>ちゃんと私を「HUMAN」として見つけてくれました。</p>
+    <p> 
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img18.jpg" width="800"></p>
+	
+</section>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._JPEGヘッダーから_AI-VMD_認識結果を取り出す">2. JPEGヘッダーから AI-VMD 認識結果を取り出す</a></h2>
+    <p> &nbsp;</p>
+	<h4>[概要]</h4>
+    <p>i-PRO の資料によると JPEG,RTSP ともにパケットのヘッダ情報に AI-VMD の認識結果が記録されているようです。</p>
+    <p>私の技量では RTSP からこの情報を取り出すのは何があるので、JPEG から取り出しすることにチャレンジしてみます。<br>
+    コメント領域に記録されている模様です。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>Visual Studio 2019 pro.,</td>
+	    <td>Version 16.6.0 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows10 home,</td>
+	    <td>Version 1909 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+</section>
+<br><br>T.B.D.<br><br><br><br>
+
+<br>
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>AI動体検知アプリケーション、AIプライバシーガードアプリケーション、AIプロセッサー解除ライセンス WV-XAE200W / 
+        WV-XAE201W / WV-XLE001W - 映像管理ソフト 製品一覧 - 監視・防犯システム - Panasonic<br>
+        <a href="https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w" target="_blank">
+        https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w</a></li>
+        <li>WV-XAE200W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE200W]<br>
+        <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092" target="_blank">
+        https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092</a></li>
+        <li>WV-XAE201W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE201W] <br>
+        <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510101336" target="_blank">
+        https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510101336</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-04-10</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2022 木下英俊</small></p>
+</footer>
+
+</body>
+</html>
