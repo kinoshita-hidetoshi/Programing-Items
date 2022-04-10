@@ -11,12 +11,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	-->
 
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  
 	<!-- Start for 'google-code-prettify' -->
-	<link href="../prettify.css" rel="stylesheet" type="text/css">
-	<script src="../prettify.js" type="text/javascript"></script>
+	<!-- <link href="../prettity/prettify.css" rel="stylesheet" type="text/css"> -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<!-- <link href="../prettify/styles/sunburst.css" rel="stylesheet" type="text/css"> -->
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
 	<!-- End for 'google-code-prettify' -->
-
+	
 	<link rel="stylesheet" href="../design.css" type="text/css">
+
 </head>
 
 <body onload="prettyPrint();">
@@ -87,8 +93,61 @@
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-<pre class="prettyprint linenums">
+<p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
+<pre class="prettyprint linenums" lang="lang-cpp">
+#include "stdafx.h"
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;memory&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+struct Data {
+    int id;
+    std::string name;
+
+    Data()
+        : Data(0, "") {}
+    Data(int id, const std::string&amp; name)
+        : id(id), name(name)
+    {
+        std::cout &lt;&lt; "ctor" &lt;&lt; std::endl;
+    }
+
+    ~Data()
+    {
+        std::cout &lt;&lt; "dtor" &lt;&lt; std::endl;
+    }
+};
+
+
+int main()
+{
+    {
+        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
+
+        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(1, "foo")));
+        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(2, "var")));
+
+        for (auto data : v1) {
+            cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
+        }
+    }
+
+    {
+        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v2;
+
+        v2.emplace_back(new Data(3, "foo"));
+        v2.emplace_back(new Data(4, "bar"));
+
+        for (auto data : v2) {
+            cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
+        }
+    }
+
+    return EXIT_SUCCESS;
 </pre>
 </section>
 	
@@ -162,14 +221,21 @@
 	<a href="https://github.com/googlearchive/code-prettify" target="_blank">
 	googlearchive/code-prettify: An embeddable script that makes source-code 
 	snippets in HTML prettier. (github.com)</a></li>
+    <li>
+	Google Code-Prettify シンタックスハイライト (webdesignleaves.com)<br>
+    <a href="https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html" target="_blank">
+    https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html</a></li>
 	<li>
 	<a href="https://rfs.jp/sb/javascript/js-lab/code-prettify.html" target="_blank">
 	Google Code Prettifyでソースコードを読みやすく色分けする - JavaScriptテックラボ - [SMART] (rfs.jp)</a></li>
 	<li>
 	<a href="http://kihon-no-ki.com/customize-google-code-prettify" target="_blank">
 	シンタックスハイライター「Google Code Prettify」のカスタマイズ | きほんのき (kihon-no-ki.com)</a></li>
-	<li></li>
+	<li>white-space - CSS: カスケーディングスタイルシート | MDN (mozilla.org)<br>
+    <a href="https://developer.mozilla.org/ja/docs/Web/CSS/white-space" target="_blank">
+    https://developer.mozilla.org/ja/docs/Web/CSS/white-space</a></li>
 </ul>
+<p>&nbsp;</p>
 <hr>
 
 <h2 style="margin-bottom:5px">記載</h2>
