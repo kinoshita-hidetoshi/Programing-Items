@@ -21,8 +21,8 @@
 	<!-- End for 'google-code-prettify' -->	
 
   <style type="text/css">
-  .auto-style1 {
-    background-color: rgba( 255, 255, 0, 0.2);
+  .auto-style2 {
+    background-color: #484800;
   }
   </style>
 
@@ -305,33 +305,33 @@ winname = "VIDEO"
 
 cap = cv2.VideoCapture(f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1")
 
-<span class="auto-style1">#</span>
-<span class="auto-style1">windowInitialized = False</span>
+<span class="auto-style2">#</span>
+<span class="auto-style2">windowInitialized = False</span>
 
-<span class="auto-style1"># Exception 定義</span>
-<span class="auto-style1">BackendError = type('BackendError', (Exception,), {})</span>
+<span class="auto-style2"># Exception 定義</span>
+<span class="auto-style2">BackendError = type('BackendError', (Exception,), {})</span>
 
-<span class="auto-style1">'''</span>
-<span class="auto-style1">[Abstract]</span>
-<span class="auto-style1">    対象ウィンドウが存在するかを確認する。</span>
-<span class="auto-style1">[Param]</span>
-<span class="auto-style1">    winname :       ウィンドウタイトル</span>
-<span class="auto-style1">[Return]</span>
-<span class="auto-style1">    True :          対象ウィンドウは存在する</span>
-<span class="auto-style1">    False :         対象ウィンドウは存在しない</span>
-<span class="auto-style1">[Exception]</span>
-<span class="auto-style1">    BackendError :  バックエンドで使用している Qt でエラー発生</span>
-<span class="auto-style1">'''</span>
-<span class="auto-style1">def IsWindowVisible(winname):</span>
-<span class="auto-style1">    try:</span>
-<span class="auto-style1">        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)</span>
-<span class="auto-style1">        if ret == -1:</span>
-<span class="auto-style1">            raise BackendError('Use Qt as backend to check whether window is visible or not.')</span>
+<span class="auto-style2">'''</span>
+<span class="auto-style2">[Abstract]</span>
+<span class="auto-style2">    対象ウィンドウが存在するかを確認する。</span>
+<span class="auto-style2">[Param]</span>
+<span class="auto-style2">    winname :       ウィンドウタイトル</span>
+<span class="auto-style2">[Return]</span>
+<span class="auto-style2">    True :          対象ウィンドウは存在する</span>
+<span class="auto-style2">    False :         対象ウィンドウは存在しない</span>
+<span class="auto-style2">[Exception]</span>
+<span class="auto-style2">    BackendError :  バックエンドで使用している Qt でエラー発生</span>
+<span class="auto-style2">'''</span>
+<span class="auto-style2">def IsWindowVisible(winname):</span>
+<span class="auto-style2">    try:</span>
+<span class="auto-style2">        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)</span>
+<span class="auto-style2">        if ret == -1:</span>
+<span class="auto-style2">            raise BackendError('Use Qt as backend to check whether window is visible or not.')</span>
 
-<span class="auto-style1">        return bool(ret)</span>
+<span class="auto-style2">        return bool(ret)</span>
 
-<span class="auto-style1">    except cv2.error:</span>
-<span class="auto-style1">        return False</span>
+<span class="auto-style2">    except cv2.error:</span>
+<span class="auto-style2">        return False</span>
 
 
 while(True):
@@ -341,19 +341,19 @@ while(True):
             frame2 = cv2.resize(frame, (1280, 760))
             cv2.imshow(winname, frame2)
 
-<span class="auto-style1">            if windowInitialized==False:</span>
-<span class="auto-style1">                # ウィンドウ表示位置が安定しないので、最初の起動時のみ表示場所を指定</span>
-<span class="auto-style1">                cv2.moveWindow(winname, 100, 100)</span>
-<span class="auto-style1">                windowInitialized = True</span>
+<span class="auto-style2">            if windowInitialized==False:</span>
+<span class="auto-style2">                # ウィンドウ表示位置が安定しないので、最初の起動時のみ表示場所を指定</span>
+<span class="auto-style2">                cv2.moveWindow(winname, 100, 100)</span>
+<span class="auto-style2">                windowInitialized = True</span>
 
-<span class="auto-style1">        # "z" キーを押されていたら終了</span>
-<span class="auto-style1">        k = cv2.waitKey(1)</span>
-<span class="auto-style1">        if k == ord("z"):</span>
-<span class="auto-style1">            break</span>
-        
-<span class="auto-style1">        # 指定ウィンドウが無かったら終了</span>
-<span class="auto-style1">        if not IsWindowVisible(winname):</span>
-<span class="auto-style1">            break</span>
+<span class="auto-style2">        # "z" キーを押されていたら終了</span>
+<span class="auto-style2">        k = cv2.waitKey(1)</span>
+<span class="auto-style2">        if k == ord("z"):</span>
+<span class="auto-style2">            break</span>
+<span class="auto-style2">        </span>
+<span class="auto-style2">        # 指定ウィンドウが無かったら終了</span>
+<span class="auto-style2">        if not IsWindowVisible(winname):</span>
+<span class="auto-style2">            break</span>
 
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
