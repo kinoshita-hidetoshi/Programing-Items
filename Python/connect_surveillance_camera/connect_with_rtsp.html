@@ -653,6 +653,7 @@ def DetectFaces(cascade, image):
 
 <span class="auto-style2">            q2.put(face_list)</span>
 <span class="auto-style2">        except Empty: # timeout of q1.get()</span>
+<span class="auto-style2">            print("Timeout happen.")</span>
 
 <span class="auto-style2">    print("Finish DetectFacesProcess()")    </span>
 
