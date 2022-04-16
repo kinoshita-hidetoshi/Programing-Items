@@ -162,7 +162,7 @@ td:first-child{
 	padding-top:0.5em;
 	padding-right:1em;
 	padding-bottom:0.5em;
-	white-space: nowrap;	/* 改行禁止 */
+	/*white-space: nowrap;*/	/* 改行禁止 */
 }
 
 td:nth-last-child(2){
