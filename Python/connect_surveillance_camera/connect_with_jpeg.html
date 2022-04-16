@@ -24,6 +24,9 @@
   .auto-style1 {
     background-color: #484800;
   }
+  .super {
+    vertical-align: super;
+  }
   </style>
 
 </head>
@@ -52,10 +55,12 @@
       <nav>
         <h2> 目次</h2>
         <p>
-        <a href="#1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a><br>
-        <a href="#2.プログラムを改善する_">2. プログラムを改善する</a><br>
-        <a href="#3. OpenCV で顔認識を加えてみる">3. OpenCV で顔認識を加えてみる</a><br>
+        <a href="#1._CGI_表記仕様">1. CGI 表記仕様</a><br>
+        <a href="#2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a><br>
+        <a href="#3.プログラムを改善する_">3. プログラムを改善する</a><br>
+        <a href="#4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a><br>
         <br>
+        <a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
         </p>
       </nav>
@@ -66,13 +71,35 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="1._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">1. Python で 
+	<h2> <a name="1._CGI_表記仕様">1. CGI 表記仕様</a></h2>
+	<h4>[概要]</h4>
+  	<p> JPEG(1shot要求)で接続するための表記を以下に記載します。</p>
+    <p> 「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> では下記あたりに書いてある情報です。</p>
+    <ul>
+      <li>「4.8. カメラ映像(JPEG)1shot要求」</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p><span class="cpp-source">
+    <a href="http://%3CカメラのIPアドレス%3E/cgi-bin/camera?resolution={resolution">
+    http://&lt;カメラのIPアドレス&gt;/cgi-bin/camera?resolution={resolution</a>}</span></p>
+    <p>&nbsp;</p>
+    <p>補足説明</p>
+    <ul>
+      <li>resolution :<br>任意の数字を書けそうに見えますが、カメラ側で設定されている解像度から選択する必要があります。<br>
+      カメラ側設定と一致する値が無い場合はカメラ側設定のデフォルト値が採用されます。<br>こういう仕様みたいです</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+</section>
+
+<section>
+    <h2> <a name="2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で 
     i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a></h2>
 	<h4>[概要]</h4>
 	<p> とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
     <p> &nbsp;</p>
 	
-	<h4>[評価環境]</h4>
+	<h4>[評価環境1]</h4>
 	<table>
 	<tbody>
 	  <tr>
@@ -82,7 +109,7 @@
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.8.10 </td>
+	    <td>3.10.2 </td>
 	  </tr>
 		
 	  <tr>
@@ -91,8 +118,8 @@
 		
 	  <tr>
 	    <td>OS :</td>
-	    <td>Ubuntu(WSL),</td>
-	    <td>20.04</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
 	  </tr>
 		
 	  <tr>
@@ -101,87 +128,9 @@
 	</tbody>
 	</table>
 	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
+	<p>&nbsp;</p>
 	
-	<p>[プログラムソース &quot;connect_with_jpeg_1.py&quot;]</p>
-	<pre class="prettyprint linenums lang-py">
- '''
-[abstract]
-    i-PRO mini (WV-S7130W) と接続して映像を表示してみる
-
-[library install]
-    pip install opencv-python
-    pip install Pillow
-    pip install numpy
-    pip install requests
-'''
-
-import requests
-from requests.auth import HTTPDigestAuth
-
-import io
-from PIL import Image
-import numpy as np
-import cv2
-
-user_id = "user-id"         # ユーザーID
-user_pw = "password"        # ユーザーパスワード
-host = "192.168.2.126"      # カメラのIPアドレス
-resolution = 1920           # 解像度
-
-# URL
-url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
-
-while True:
-
-    # 画像の取得
-    rs = requests.get(url, auth=HTTPDigestAuth(user_id, user_pw))
-
-    # PIL 形式で作成
-    img_bin = io.BytesIO(rs.content)
-    img_pil = Image.open(img_bin)
-
-    # PIL 形式を OpenCV 形式へ変換
-    img_np  = np.asarray(img_pil)
-    img1 = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
-
-    # リサイズ
-    img2 = cv2.resize(img1, (1280, 760))
-
-    # 映像表示
-    cv2.imshow('VIDEO', img2)
-    cv2.waitKey(1)</pre>
-    <p>&nbsp;</p>
-    <p>補足説明</p>
-    <ul>
-      <li>resolution :<br>任意の数字を書けそうに見えますが、カメラ側で設定されている解像度から選択する必要があります。<br>
-      一致する値が無い場合はカメラ側設定のデフォルト値が採用されます。<br>こういう仕様みたいです</li>
-    </ul>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-</section>
-
-
-
-<section>
-  <h2><a name="2.プログラムを改善する_">2.プログラムを改善する </a></h2>
-	<h4>[概要]</h4>
-  <p>前章で作成したプログラムはとても簡単に作成できましたが、いろいろと課題がありました。<br>とりあえず下記３つの課題を解決してみます。</p>
-  <p>&nbsp;</p>
-  <p>課題１<br>プログラムを起動するたびにウィンドウ位置が変わる。場合によっては画面外へ表示する場合もあって不便。<br>
-  適当に画面内に収まる場所に表示してほしい。<br>⇨ 指定する場所にウィンドウを表示するようにします。</p>
-  <p>&nbsp;</p>
-  <p>課題２<br>プログラムを終了するのが大変。<br>ウィンドウ右上の×を押すとウィンドウがいったん消えるが、すぐに再表示されて終われない。<br>⇨ 
-  ウィンドウ右上の✕ボタンでプログラムを終了できるようにします。</p>
-  <p>&nbsp;</p>
-  <p>課題３<br>同様に、任意のキー入力でプログラムを終了できるとうれしい。<br>⇨ "z" キー押下でプログラムを終了できるようにします。</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<h4>[評価環境]</h4>
+	<h4>[評価環境2]</h4>
 	<table>
 	<tbody>
 	  <tr>
@@ -211,7 +160,146 @@ while True:
 	</table>
 	
 	<p>&nbsp;</p>
+	
+	<p> &nbsp;</p>
+	<h4> [プログラム]</h4>
+	
+	<p>[プログラムソース &quot;connect_with_jpeg_1.py&quot;]</p>
+	<pre class="prettyprint linenums lang-py">
+ '''
+[abstract]
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみる
+
+[library install]
+    pip install opencv-python
+    pip install Pillow
+    pip install numpy
+    pip install requests
+'''
+
+import requests
+from requests.auth import HTTPDigestAuth
+
+import io
+from PIL import Image
+import numpy as np
+import cv2
+
+user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
+user_pw = "password"    # ご使用のカメラ設定に合わせて変更
+host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
+resolution = 1920       # 解像度
+
+# URL
+url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
+
+while True:
+
+    # 画像の取得
+    rs = requests.get(url, auth=HTTPDigestAuth(user_id, user_pw))
+
+    # PIL 形式で作成
+    img_bin = io.BytesIO(rs.content)
+    img_pil = Image.open(img_bin)
+
+    # PIL 形式を OpenCV 形式へ変換
+    img_np  = np.asarray(img_pil)
+    img1 = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+
+    # リサイズ
+    img2 = cv2.resize(img1, (1280, 760))
+
+    # 映像表示
+    cv2.imshow('VIDEO', img2)
+    cv2.waitKey(1)</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</section>
+
+
+
+<section>
+  <h2><a name="3.プログラムを改善する_">3.プログラムを改善する </a></h2>
+	<h4>[概要]</h4>
+  <p>前章で作成したプログラムはとても簡単に作成できましたが、いろいろと課題がありました。<br>とりあえず下記３つの課題を解決してみます。</p>
   <p>&nbsp;</p>
+  <p>課題１<br>プログラムを起動するたびにウィンドウ位置が変わる。場合によっては画面外へ表示する場合もあって不便。<br>
+  適当に画面内に収まる場所に表示してほしい。<br>⇨ 指定する場所にウィンドウを表示するようにします。</p>
+  <p>&nbsp;</p>
+  <p>課題２<br>プログラムを終了するのが大変。<br>ウィンドウ右上の×を押すとウィンドウがいったん消えるが、すぐに再表示されて終われない。<br>⇨ 
+  ウィンドウ右上の✕ボタンでプログラムを終了できるようにします。</p>
+  <p>&nbsp;</p>
+  <p>課題３<br>同様に、任意のキー入力でプログラムを終了できるとうれしい。<br>⇨ "z" キー押下でプログラムを終了できるようにします。</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<h4>[評価環境1]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.2 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<h4>[評価環境2]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.8.10 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu(WSL),</td>
+	    <td>20.04</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<p> &nbsp;</p>
+	<h4> [プログラム]</h4>
+	
   <p>[プログラムソース &quot;connect_with_jpeg_2.py&quot;]</p>
 	<pre class="prettyprint linenums lang-py">
 '''
@@ -236,11 +324,11 @@ from PIL import Image
 import numpy as np
 import cv2
 
-user_id = "user-id"         # ユーザーID
-user_pw = "password"        # ユーザーパスワード
-host = "192.168.2.126"      # カメラのIPアドレス
-resolution = 1920           # 解像度
-winname = "VIDEO"
+user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
+user_pw = "password"    # ご使用のカメラ設定に合わせて変更
+host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
+resolution = 1920       # 解像度
+winname = "VIDEO"       # ウィンドウタイトル
 
 # URL
 url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
@@ -315,12 +403,43 @@ while True:
 
 
 <section>
-<h2><a name="3. OpenCV で顔認識を加えてみる">3. OpenCV で顔認識を加えてみる</a></h2>
+<h2><a name="4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a></h2>
 	<h4>[概要]</h4>
 	<p>OpenCV を使って顔認識を行って、見つけた顔部分に赤枠を描画してみます。&nbsp;</p>
   <p>&nbsp;</p>
 	
-	<h4>[環境]</h4>
+	<h4>[評価環境1]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.2 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<h4>[評価環境2]</h4>
 	<table>
 	<tbody>
 	  <tr>
@@ -349,8 +468,10 @@ while True:
 	</tbody>
 	</table>
 	
+	<p>&nbsp;</p>
+	
 	<p> &nbsp;</p>
-	<p> &nbsp;</p>
+	<h4> [プログラム]</h4>
 	
 	<p>[プログラムソース &quot;connect_with_jpeg_3.py&quot;]</p>
 	<pre class="prettyprint linenums lang-py">
@@ -376,11 +497,11 @@ from PIL import Image
 import numpy as np
 import cv2
 
-user_id = "user-id"         # ユーザーID
-user_pw = "password"        # ユーザーパスワード
-host = "192.168.2.126"      # カメラのIPアドレス
-resolution = 1920           # 解像度
-winname = "VIDEO"
+user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
+user_pw = "password"    # ご使用のカメラ設定に合わせて変更
+host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
+resolution = 1920       # 解像度
+winname = "VIDEO"       # ウィンドウタイトル
 
 # URL
 url = f"http://{host}/cgi-bin/camera?resolution={resolution}"
@@ -478,14 +599,48 @@ while True:
 </section>
 
 <section>
-	<h2><a name="参考">参考</a></h2>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 800px; background-color: #F0F0F0;">
+  <tr>
+    <td>
+    <pre style="border-color: rgba(239,239,239,0);background-color:rgba(239,239,239,0)">MIT License
+
+Copyright (c) 2022  Kinoshita Hidetoshi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<section>
+  <h2><a name="参考">参考</a></h2>
 	<ul>
-		<li>Panasonic製ネットワークカメラの画像を取得して顔検出をしてみる - Qiita<br>
-        <a href="https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639" target="_blank">
-        https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639</a></li>
-        <li>ネットワークカメラCGIコマンドインターフェース仕様書　統合版<br>
+		<li>[1] ネットワークカメラCGIコマンドインターフェース仕様書　統合版<br>
         <a href="https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872" target="_blank">
         https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872</a></li>
+    <li>[2] Panasonic製ネットワークカメラの画像を取得して顔検出をしてみる - Qiita<br>
+        <a href="https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639" target="_blank">
+        https://qiita.com/mix_dvd/items/a0bdbe0ba628d5282639</a></li>
 	</ul>
     <p>&nbsp;</p>
 </section>
@@ -502,7 +657,7 @@ while True:
 	  <tr>
 	    <td class="td_history_date">2022-03-26</td>
 	    <td class="td_history_separator">-</td>
-	    <td class="td_history">２章を挿入</td>
+	    <td class="td_history">３章を挿入</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-03-19</td>
