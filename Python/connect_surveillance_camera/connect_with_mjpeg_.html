@@ -90,8 +90,10 @@
     <h3>注意事項</h3>
     <ul>
       <li>実験してみたところ、ストリーム(1)～(4) を On にしているとMJPEGの配信性能が落ちる様子です。フレームレートを例えば 15 
-      と設定してもコマ落ちが多く発生しているように見えました。<br>ストリーム(1)～(4)を Off にすることで 30fps 
+      と設定してもコマ落ちが多く発生しているように見えました。<br>カメラの設定にて、ストリーム(1)～(4)を Off、にすることで 30fps 
       の動作もできているように見えます。</li>
+      <li>CGI のせっていでは "Framerate" の指定を必ず行った方が良さそうです。試しに Framerate 指定を行わなかったところ 0.2fps 
+    程度の表示となりました。恐らくデフォルト値が 0.2fps ぐらいになっていると思われます。</li>
     </ul>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -203,9 +205,6 @@ cap.release()
 cv2.destroyAllWindows()</pre>
 
     <p>&nbsp;</p>
-    <p>"Framerate" の指定は必ず行った方が良さそうです。試しに Framerate 指定を行わなかったところ 0.2fps 
-    程度の表示となりました。<br>恐らくデフォルト値が 0.2fps ぐらいになっていると思われます。</p>
-    <p>&nbsp;</p>
     <p>上記プログラムを動かしてみます。実行はこんな感じで行います。</p>
     <p><span class="cpp-source"><strong>python</strong> connect_with_mjpeg_1.py</span></p>
     <p>&nbsp;</p>
@@ -215,6 +214,8 @@ cv2.destroyAllWindows()</pre>
     <p>&nbsp;</p>
     <p>上記プログラムを動かした様子を動画で示します。</p>
     <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
+    <p>[注意] 上記でも記載しましたが、カメラ側の設定でストリーム(1)～(4)を Off にすることで滑らかな映像表示を実現できました。On 
+    のままでもプログラム自体は動作しますが、5fps 程度の映像となりました。</p>
     
 <video controls autoplay="y" loop="y" src="connect_with_rtsp/rtsp_first.mp4" width="800px">
   <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
@@ -819,7 +820,7 @@ if __name__ == '__main__':
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
 <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0;">
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
   <tr>
     <td>
 MIT License<br><br>
