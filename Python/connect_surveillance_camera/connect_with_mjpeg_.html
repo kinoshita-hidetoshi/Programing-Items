@@ -179,6 +179,9 @@
 	
 	<p>&nbsp;</p>
     <p>&nbsp;</p>
+    <h3>2-1. １つ目の方法</h3>
+    <p>まずは簡単な方法から。RTSP のコードとほとんど同じ内容で実現できました。</p>
+    <p>&nbsp;</p>
     <h4>[プログラム]</h4>
   <p>[プログラムソース &quot;connect_with_rtsp_1.py&quot;]</p>
   
@@ -235,6 +238,74 @@ cv2.destroyAllWindows()</pre>
 <p>[動画] MJPEG でカメラと接続して映像表示してみた様子</p>
     
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>2-2. 他の方法</h3>
+    <p>下記のような別の方法でも MJPEG の読出しをできるみたいです。参考記事[2]を参考に作成してみました。</p>
+    <p>&nbsp;</p>
+    <h4>[プログラム]</h4>
+  <p>[プログラムソース &quot;connect_with_rtsp_1_2.py&quot;]</p>
+  
+	  <pre class="prettyprint linenums lang-py">
+'''
+[abstract]
+    i-PRO mini (WV-S7130W) と接続して映像を表示してみます。
+    このプログラムでは MJPEG(Motion JPEG) 形式で接続してみます。
+
+[library install]
+    pip install opencv-python
+'''
+
+import cv2
+import urllib.request as rq
+import numpy as np
+
+
+user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
+user_pw = "password"    # ご使用のカメラ設定に合わせて変更
+host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
+winname = "VIDEO"       # ウィンドウタイトル
+
+url = f"http://{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15"
+
+
+'''
+[abstract]
+    IP カメラと認証処理を行います。
+
+[params]
+    uri:      mjpeg 開始 CGI コマンド
+    user:     IPカメラの user-id
+    passwd:   IPカメラの user-password
+'''
+def set_digest_auth(uri, user, passwd):
+    pass_mgr = rq.HTTPPasswordMgrWithDefaultRealm()
+    pass_mgr.add_password(realm=None, uri=uri, user=user, passwd=passwd)
+    auth_handler = rq.HTTPDigestAuthHandler(pass_mgr)
+    opener = rq.build_opener(auth_handler)
+    rq.install_opener(opener)
+
+
+set_digest_auth(url, user_id, user_pw)
+stream = rq.urlopen(url)
+
+bytes = bytes()
+while True:
+    bytes += stream.read(1024)
+    a = bytes.find(b'\xff\xd8')
+    b = bytes.find(b'\xff\xd9')
+    if a != -1 and b != -1:
+        jpg = bytes[a:b+2]
+        bytes = bytes[b+2:]
+        frame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+
+        frame2 = cv2.resize(frame, (1280, 760))
+        cv2.imshow(winname, frame2)
+
+        if cv2.waitKey(1) &amp; 0xFF == ord('z'):
+            break 
+
+cv2.destroyAllWindows()	</pre>
+    <p></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -867,8 +938,11 @@ SOFTWARE.
 	<h2><a name="参考">参考</a></h2>
 	<ul>
 		<li>[1] ネットワークカメラCGIコマンドインターフェース仕様書　統合版<br>
-        <a href="https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872" target="_blank">
-        https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872</a></li>
+        <a href="https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872" target="_blank">https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872</a></li>
+        <li>[2] python - example - stream mjpeg - Code Examples 
+        (code-examples.net)<br>
+        <a href="https://code-examples.net/en/q/14b274d" target="_blank">
+        https://code-examples.net/en/q/14b274d</a></li>
 	</ul>
 </section>
 
