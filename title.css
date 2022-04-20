@@ -19,4 +19,5 @@ body{
   background-image:url('images/title.png');
   background-repeat:no-repeat;
   background-size:contain;
+  cursor: pointer;
 }
