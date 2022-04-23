@@ -60,6 +60,7 @@
         <a href="#4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a><br>
         <a href="#4-1._まずは単純にやってみる">4-1. まずは単純にやってみる</a><br>
         <a href="#4-2._顔認識部分を別プロセスの処理にしてみる">4-2. 顔認識部分を別プロセスの処理にしてみる</a><br>
+        <a href="#5._連番の_JPEG_ファイルで保存する">5. 連番の JPEG ファイルで保存する</a><br>
         <br>
         <a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
@@ -292,8 +293,8 @@ stream = rq.urlopen(url)
 bytes = bytes()
 while True:
     bytes += stream.read(1024)
-    a = bytes.find(b'\xff\xd8')
-    b = bytes.find(b'\xff\xd9')
+    a = bytes.find(b'\xff\xd8')     # SOI スタートマーカ (Start of Image)  0xFFD8
+    b = bytes.find(b'\xff\xd9')     # EOI エンドマーカ   (End   of Image)  0xFFD9
     if a != -1 and b != -1:
         jpg = bytes[a:b+2]
         bytes = bytes[b+2:]
@@ -899,6 +900,162 @@ if __name__ == '__main__':
   
 </section>
 
+<section>
+  <h2><a name="5._連番の_JPEG_ファイルで保存する">5. 連番の JPEG ファイルで保存する</a></h2>
+  <p>受信した画像を 1 から始まる連番のファイル名 (image_NNNNNN.jpg) で JPEG ファイルとして保存してみます。</p>
+  <p>&nbsp;</p>
+  <ul>
+    <li>JPEG 情報はカメラから受信したデータをそのままに保存するようにします。</li>
+    <li>"image" という名称でフォルダを作成し、ここに "image_000001.jpg" というようなファイル名で画像を保存します。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>[プログラムソース &quot;connect_with_mjpeg_4.py&quot;]</p>
+  <pre class="prettyprint linenums lang-py">
+'''
+[Abstract]
+    MJPEG(Motion JPEG) で i-PRO カメラと接続します
+
+[Details]
+    受信した JPEG 画像をファイル保存します。
+    ファイル名の末尾に６ケタの番号を付けて連番で保存します。
+
+[Author]
+    kinoshita hidetoshi (木下英俊)
+
+[Library install]
+    pip install opencv-python
+'''
+import cv2
+import numpy as np
+import os
+import urllib.request as rq
+
+user_id     = "admin"           # ご使用のカメラ設定に合わせて変更
+user_pw     = "Admin12345"      # ご使用のカメラ設定に合わせて変更
+host        = "192.168.2.126"   # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  5                # フレームレート
+pathOut     = 'image'           # 画像ファイル保存フォルダ
+
+# URL
+url = f"http://{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"
+
+# Exception 定義
+BackendError = type('BackendError', (Exception,), {})
+
+'''
+[Abstract]
+    対象ウィンドウが存在するかを確認する。
+[Param]
+    winname :       ウィンドウタイトル
+[Return]
+    True :          対象ウィンドウは存在する
+    False :         対象ウィンドウは存在しない
+[Exception]
+    BackendError :  バックエンドで使用している Qt でエラー発生
+'''
+def IsWindowVisible(winname):
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
+'''
+[abstract]
+    IP カメラと認証処理を行います。
+
+[params]
+    uri:      mjpeg 開始 CGI コマンド
+    user:     IPカメラの user-id
+    passwd:   IPカメラの user-password
+'''
+def set_digest_auth(uri, user, passwd):
+    pass_mgr = rq.HTTPPasswordMgrWithDefaultRealm()
+    pass_mgr.add_password(realm=None, uri=uri, user=user, passwd=passwd)
+    auth_handler = rq.HTTPDigestAuthHandler(pass_mgr)
+    opener = rq.build_opener(auth_handler)
+    rq.install_opener(opener)
+
+
+<span class="auto-style2">'''</span>
+<span class="auto-style2">[Abstract]</span>
+<span class="auto-style2">    バイナリデータを指定ファイル名で保存する</span>
+<span class="auto-style2">[Param]</span>
+<span class="auto-style2">    data :      保存するバイナリデータ</span>
+<span class="auto-style2">    filename :  ファイル名</span>
+<span class="auto-style2">'''</span>
+<span class="auto-style2">def SaveBinaryData(data, filename):</span>
+<span class="auto-style2">    fout = open(filename, 'wb')</span>
+<span class="auto-style2">    fout.write(data)</span>
+<span class="auto-style2">    fout.close()</span>
+
+
+'''
+[Abstract]
+    main 関数
+'''
+if __name__ == '__main__':
+
+    windowInitialized = False
+<span class="auto-style2">    count = 0</span>
+<span class="auto-style2">    if not os.path.exists(pathOut):</span>
+<span class="auto-style2">        os.mkdir(pathOut)</span>
+
+    set_digest_auth(url, user_id, user_pw)
+    stream = rq.urlopen(url)
+
+    bytes = bytes()
+    while True:
+        bytes += stream.read(1024)
+        a = bytes.find(b'\xff\xd8')     # SOI スタートマーカ (Start of Image)  0xFFD8
+        b = bytes.find(b'\xff\xd9')     # EOI エンドマーカ   (End   of Image)  0xFFD9
+        if a != -1 and b != -1:
+            jpg = bytes[a:b+2]
+            bytes = bytes[b+2:]
+
+<span class="auto-style2">            # ファイル保存</span>
+<span class="auto-style2">            count += 1</span>
+<span class="auto-style2">            filename = os.path.join(pathOut, 'image_{:06d}.jpg'.format(count))</span>
+<span class="auto-style2">            SaveBinaryData(jpg, filename)</span>
+
+            # binary データを ndarray 型へ変換
+            img_buf = np.frombuffer(jpg, dtype=np.uint8)
+
+            # バイナリデータをデコードして画像データ(OpenCV形式)にする
+            frame = cv2.imdecode(img_buf, cv2.IMREAD_UNCHANGED)
+
+            # リサイズ
+            frame2 = cv2.resize(frame, (1280, 760))
+
+            # 映像表示
+            cv2.imshow(winname, frame2)
+
+            if windowInitialized==False:
+                # ウィンドウ表示位置が安定しないので、最初の起動時のみ表示場所を指定
+                cv2.moveWindow(winname, 100, 100)
+                windowInitialized = True
+
+            # "z" キーを押されていたら終了
+            if cv2.waitKey(1) &amp; 0xFF == ord('z'):
+                break
+
+            # 指定ウィンドウが無かったら終了
+            if not IsWindowVisible(winname):
+                break
+
+    cv2.destroyAllWindows()</pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+</section>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
@@ -957,6 +1114,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-04-23</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「5. 連番の JPEG ファイルで保存する」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-04-17</td>
 	    <td class="td_history_separator">-</td>
