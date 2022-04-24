@@ -55,7 +55,7 @@
         <h2> 目次</h2>
         <p>
         <a href="#1._MJPEG 表記仕様">1. MJPEG 表記仕様</a><br>
-        <a href="#2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a><br>
+        <a href="#2. i-PRO カメラと MJPEG 接続して映像を表示してみる">2. i-PRO カメラと MJPEG 接続して映像を表示してみる</a><br>
         <a href="#3.プログラムを改善する_">3. プログラムを改善する</a><br>
         <a href="#4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a><br>
         <a href="#4-1._まずは単純にやってみる">4-1. まずは単純にやってみる</a><br>
@@ -97,7 +97,7 @@
     <p><span class="cpp-source">http://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/nphMotionJpeg?Resolution=&lt;解像度&gt;&amp;Quality=&lt;品質&gt;&amp;Framerate=&lt;フレームレート&gt;</span></p>
     <p>&nbsp;</p>
     <p>(例) <span class="cpp-source">
-    <a href="mailto:rtsp://admin:password@192.168.0.10/MediaInput/stream_1">http://admin:password@192.168.0.10/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15</a></span></p>
+    http://admin:password@192.168.0.10/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15</span></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3>注意事項</h3>
@@ -114,7 +114,7 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a></h2>
+	<h2> <a name="2. i-PRO カメラと MJPEG 接続して映像を表示してみる">2. i-PRO カメラと MJPEG 接続して映像を表示してみる</a></h2>
 	<h4>[概要]</h4>
     <p>とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
 	<p> &nbsp;</p>
@@ -192,14 +192,21 @@
 [abstract]
     i-PRO mini (WV-S7130W) と接続して映像を表示してみる 
 [library install]
- &nbsp; &nbsp;pip install opencv-python 
+    pip install opencv-python 
 '''
 
 import cv2
-user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
-user_pw = "password"    # ご使用のカメラ設定に合わせて変更
-host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
-cap = cv2.VideoCapture(f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15")
+
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  15               # フレームレート
+
+# URL
+url = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"
+cap = cv2.VideoCapture(url) 
 
 while(True):
     try:
@@ -207,7 +214,7 @@ while(True):
         if ret == True:
             # 使っているPC画面に適当に収まる表示大きさへリサイズ
             frame2 = cv2.resize(frame, (1280, 760))
-            cv2.imshow('VIDEO', frame2)
+            cv2.imshow(winname, frame2)
 
         # コンソール上で ctrl-c を押すとプログラムを終了する。
         # GUI 上で ctrl-c してもプログラムを終了できない。
@@ -233,7 +240,7 @@ cv2.destroyAllWindows()</pre>
     <p>[注意] 上記でも記載しましたが、カメラ側の設定でストリーム(1)～(4)を Off にすることで滑らかな映像表示を実現できました。On 
     のままでもプログラム自体は動作しますが、5fps 程度の映像となりました。</p>
     
-<video controls autoplay="y" loop="y" src="connect_with_mjpeg/mjpeg_first.mp4" width="800px">
+<video controls muted autoplay="y" loop="y" src="connect_with_mjpeg/mjpeg_first.mp4" width="800px">
   <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
 </video>
 
@@ -262,12 +269,15 @@ import urllib.request as rq
 import numpy as np
 
 
-user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
-user_pw = "password"    # ご使用のカメラ設定に合わせて変更
-host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
-winname = "VIDEO"       # ウィンドウタイトル
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  15               # フレームレート
 
-url = f"http://{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15"
+# URL
+url = f"http://{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}" 
 
 
 '''
@@ -407,14 +417,19 @@ cv2.destroyAllWindows()	</pre>
 
 import cv2
 
-user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
-user_pw = "password"    # ご使用のカメラ設定に合わせて変更
-host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
-winname = "VIDEO"
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  15               # フレームレート
 
-cap = cv2.VideoCapture(f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15")
+# URL
+url = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}" 
+cap = cv2.VideoCapture(url)
 
-<span class="auto-style2">#</span>
+<span class="auto-style2">
+#</span>
 <span class="auto-style2">windowInitialized = False</span>
 
 <span class="auto-style2"># Exception 定義</span>
@@ -559,10 +574,15 @@ cv2.destroyAllWindows()</pre>
 
 import cv2
 
-user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
-user_pw = "password"    # ご使用のカメラ設定に合わせて変更
-host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
-winname = "VIDEO"
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  15               # フレームレート
+
+# URL
+url = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"
 
 # Exception 定義
 BackendError = type('BackendError', (Exception,), {})
@@ -632,7 +652,7 @@ def IsWindowVisible(winname):
 '''
 if __name__ == '__main__':
 
-    cap = cv2.VideoCapture(f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15") 
+    cap = cv2.VideoCapture(url) 
 
     #
     windowInitialized = False
@@ -693,13 +713,18 @@ if __name__ == '__main__':
   と呼ばれるプラットフォームの場合はスレッドは複数の処理を同時に実行してくれないらしいです。そこで、ここでは別プロセスを起動し、キューと呼ばれるIOで情報をやり取りしてみます。</p>
   <p>&nbsp;</p>
   <p>[プログラムソース &quot;connect_with_mjpeg_3_2.py&quot;]</p>
-  <pre class="prettyprint linenums lang-py">'''
-[abstract]
+  <pre class="prettyprint linenums lang-py">
+'''
+[Abstract]
     i-PRO mini (WV-S7130W) と接続して映像を表示してみる。
     ここでは opencv を使って顔認識を追加してみます。
 
-[library install]
+[Library install]
     pip install opencv-python
+
+[OpenCV]
+    下記URLからファイル "haarcascade_frontalface_alt2.xml" を入手すること
+    https://github.com/opencv/opencv/tree/master/data/haarcascades 
 '''
 
 import cv2
@@ -707,10 +732,15 @@ import cv2
 <span class="auto-style2">from queue import Empty</span>
 
 
-user_id = "user-id"     # ご使用のカメラ設定に合わせて変更
-user_pw = "password"    # ご使用のカメラ設定に合わせて変更
-host = "192.168.0.10"   # ご使用のカメラ設定に合わせて変更
-winname = "VIDEO"
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
+winname     = "VIDEO"           # ウィンドウタイトル
+resolution  = "1920x1080"       # 解像度
+framerate   =  15               # フレームレート
+
+# URL
+url = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"
 
 <span class="auto-style2"># 顔を識別するためのファイル</span>
 <span class="auto-style2">cascade_file = "haarcascade_frontalface_alt2.xml"       # 顔</span>
@@ -817,7 +847,7 @@ def DrawFaceRectangles(image, face_list):
 '''
 if __name__ == '__main__':
 
-    cap = cv2.VideoCapture(f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15") 
+    cap = cv2.VideoCapture(url) 
 
     #
     windowInitialized = False
@@ -826,7 +856,7 @@ if __name__ == '__main__':
 <span class="auto-style2">    q2 = mp.Queue()</span>
 
 <span class="auto-style2">    # "cannot pickle object" というエラーが出て解決できなかったので、args に cascade を加えるのを断念</span>
-<span class="auto-style2">    # 合わせて cascade をグローバル変数に。悔しい。</span>
+<span class="auto-style2">    # 合わせて cascade をグローバル変数に。</span>
 <span class="auto-style2">    p = mp.Process(target=DetectFacesProcess, args=(q1, q2))</span>
 <span class="auto-style2">    # p = mp.Process(target=DetectFacesProcess, args=(cascade, q1, q2))</span>
 <span class="auto-style2">    p.daemon = True</span>
@@ -889,7 +919,7 @@ if __name__ == '__main__':
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   
-	<video controls autoplay="y" loop="y" src="connect_with_mjpeg/mjpeg_opencv.mp4" width="800px">
+	<video controls muted autoplay="y" loop="y" src="connect_with_mjpeg/mjpeg_opencv.mp4" width="800px">
 	  <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
 	</video>
 
@@ -919,9 +949,6 @@ if __name__ == '__main__':
     受信した JPEG 画像をファイル保存します。
     ファイル名の末尾に６ケタの番号を付けて連番で保存します。
 
-[Author]
-    kinoshita hidetoshi (木下英俊)
-
 [Library install]
     pip install opencv-python
 '''
@@ -930,9 +957,9 @@ import numpy as np
 import os
 import urllib.request as rq
 
-user_id     = "admin"           # ご使用のカメラ設定に合わせて変更
-user_pw     = "Admin12345"      # ご使用のカメラ設定に合わせて変更
-host        = "192.168.2.126"   # ご使用のカメラ設定に合わせて変更
+user_id     = "user-id"         # ご使用のカメラ設定に合わせて変更
+user_pw     = "password"        # ご使用のカメラ設定に合わせて変更
+host        = "192.168.0.10"    # ご使用のカメラ設定に合わせて変更
 winname     = "VIDEO"           # ウィンドウタイトル
 resolution  = "1920x1080"       # 解像度
 framerate   =  5                # フレームレート

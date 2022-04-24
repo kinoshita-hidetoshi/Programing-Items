@@ -48,7 +48,6 @@
 
 <p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) を入手したので、RTSP(H.264/H.265) で映像取得して遊んでみます。</p>
 <p> &nbsp;</p>
-<p> &nbsp;</p>
 <table style="border: 1px solid #808080; width: 800px; max-width:100%; background-color: #F0F0F0;">
   <tr>
     <td>
@@ -56,7 +55,7 @@
         <h2> 目次</h2>
         <p>
         <a href="#1._RTSP 表記仕様">1. RTSP 表記仕様</a><br>
-        <a href="#2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a><br>
+        <a href="#2. i-PRO カメラと RTSP 接続して映像を表示してみる">2. i-PRO カメラと RTSP 接続して映像を表示してみる</a><br>
         <a href="#3.プログラムを改善する_">3. プログラムを改善する</a><br>
         <a href="#4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a><br>
         <a href="#4-1._まずは単純にやってみる">4-1. まずは単純にやってみる</a><br>
@@ -86,191 +85,204 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="1._RTSP 表記仕様">1. RTSP 表記仕様</a></h2>
-	<h4>[概要]</h4>
-  	<p> RTSP で接続するための表記を以下に記載します。</p>
-    <p> 「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> で下記に記載されている情報を元に加筆などしています。</p>
-    <ul>
-      <li>「10.5. 汎用ビューアで H.264 を見る」</li>
-      <li>「10.6. 汎用ビューアで H.265 を見る」</li>
-    </ul>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h3>i-PRO H.265 model</h3>
-    <p><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1</span></p>
-    <p>&nbsp;</p>
-    <p>(例) <span class="cpp-source">
-    <a href="mailto:rtsp://admin:password@192.168.0.10/MediaInput/stream_1">rtsp://admin:password@192.168.0.10/MediaInput/stream_1</a></span></p>
-    <p>&nbsp;</p>
-    <p>補足： カメラ側の映像圧縮方式設定が H.264/H.265 のいずれの場合も上記で接続できました。</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    
-    <h3>i-PRO H265モデル</h3>
-    
-    <table class="border-collapse" style="width: 1000px">
-      <tr>
-        <td class="standard_table"><strong>ストリーム(1)</strong></td>
-        <td class="standard_table">
-        <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(2)</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(3)</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_3</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(4)</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_4</span></td>
-      </tr>
-      </table>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    
-    <h3>マルチセンサーカメラ（X8570 / S8530）</h3>
-    
-    <table class="border-collapse" style="width: 1000px">
-      <tr>
-        <td class="standard_table"><strong>ストリーム(1) Ch1 (Camera1)/</strong></td>
-        <td class="standard_table">
-        <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1</span><br>
-        <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_1</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(2) Ch1 (Camera1)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2</span><br>
-        <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_1</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(1) Ch2 (Camera2)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_2</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(2) Ch2 (Camera2)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_2</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(1) Ch3 (Camera3)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_3</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(2) Ch3 (Camera3)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_3</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(1) Ch4 (Camera4)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_4</span></td>
-      </tr>
-      <tr>
-        <td class="standard_table"><strong>ストリーム(2) Ch4 (Camera4)/</strong></td>
-        <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_4</span></td>
-      </tr>
-      </table>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h3>i-PRO (Panasonic) 従来 model</h3>
-    <p><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/h264/stream_1</span></p>
-    <p>&nbsp;</p>
-    <p>(例) <span class="cpp-source">
-    rtsp://admin:password@192.168.0.10/MediaInput/h264/stream_1</span></p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h3>注意事項</h3>
-    <ul>
-      <li>RTSPを使用するためには「インターネットモード(over HTTP) の設定を On にする」と[1]に記載されています。</li>
-    </ul>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+  <h2><a name="1._RTSP 表記仕様">1. RTSP 表記仕様</a></h2>
+  <h4>[概要]</h4>
+  <p>RTSP で接続するための表記を以下に記載します。</p>
+  <p>「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> 
+  で下記に記載されている情報を元に加筆などしています。</p>
+  <ul>
+    <li>「10.5. 汎用ビューアで H.264 を見る」</li>
+    <li>「10.6. 汎用ビューアで H.265 を見る」</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h3>i-PRO H.265 model</h3>
+  <table class="border-collapse">
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1)</strong></td>
+      <td class="standard_table">
+      <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(3)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_3</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(4)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_4</span></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>(例) <span class="cpp-source">
+  rtsp://admin:password@192.168.0.10/MediaInput/stream_1</span></p>
+  <p>&nbsp;</p>
+  <p>補足： カメラ側の映像圧縮方式設定が H.264/H.265 のいずれの場合も上記で接続できました。</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <h3>マルチセンサーカメラ（X8570 / S8530）</h3>
+
+  <table class="border-collapse">
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1) Ch1 (Camera1)/</strong></td>
+      <td class="standard_table">
+      <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1</span><br>
+      <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_1</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2) Ch1 (Camera1)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2</span><br>
+      <span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_1</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1) Ch2 (Camera2)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_2</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2) Ch2 (Camera2)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_2</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1) Ch3 (Camera3)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_3</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2) Ch3 (Camera3)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_3</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1) Ch4 (Camera4)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_1/ch_4</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2) Ch4 (Camera4)/</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/stream_2/ch_4</span></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h3>i-PRO (Panasonic) 従来 model</h3>
+  <table class="border-collapse">
+    <tr>
+      <td class="standard_table"><strong>ストリーム(1)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/h264/stream_1</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(2)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/h264/stream_2</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(3)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/h264/stream_3</span></td>
+    </tr>
+    <tr>
+      <td class="standard_table"><strong>ストリーム(4)</strong></td>
+      <td class="standard_table"><span class="cpp-source">rtsp://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/MediaInput/h264/stream_4</span></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>(例) <span class="cpp-source">
+  rtsp://admin:password@192.168.0.10/MediaInput/h264/stream_1</span></p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h3>注意事項</h3>
+  <ul>
+    <li>RTSPを使用するためには「インターネットモード(over HTTP) の設定を On にする」と[1]に記載されています。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._Python_で_i-PRO_mini_(WV-S7130W)_と接続して映像を表示してみる">2. Python で i-PRO mini (WV-S7130W) と接続して映像を表示してみる</a></h2>
-	<h4>[概要]</h4>
-    <p>とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
-    <ul>
-      <li>Stream1 はデフォルトで 1920x1024、H.265 となっています。<br>必要に応じて H.264 
-      へ変更した方が処理は軽くなりそうです。（推奨）</li>
-      <li>それでもまだ処理が重たい場合は、接続先を stream1 から stream2 または stream3 などへ変更してみてください。</li>
-      <li>
-      遊んでみた印象ですが、リアルタイム性（映像遅延性）という観点では極力フレームレートを高めにしておく方が良さそうです。特にブラウザ表示、フレームレートを下げると遅延が大きくなりました。Iフレームを1秒周期で送信しているようなので、恐らく固定枚数分の映像蓄積を行って映像表示を滑らかにしているのだろうと私は予想しています。10枚前後っぽいかな。</li>
-    </ul>
-	<p> &nbsp;</p>
-	
-	<h4>[評価環境1]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>言語 :</td>
-	    <td>Python,</td>
-	    <td>3.10.2 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows 11 home,</td>
-	    <td>21H2</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	
-	<h4>[評価環境2]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>言語 :</td>
-	    <td>Python,</td>
-	    <td>3.8.10 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Ubuntu(WSL),</td>
-	    <td>20.04</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h4>[プログラム]</h4>
-  <p>[プログラムソース &quot;connect_with_rtsp_1.py&quot;]</p>
-  
-	<pre class="prettyprint linenums lang-py">
+  <h2><a name="2. i-PRO カメラと RTSP 接続して映像を表示してみる">2. i-PRO カメラと RTSP 接続して映像を表示してみる</a></h2>
+  <h4>[概要]</h4>
+  <p>Python で i-PRO カメラ（i-PRO mini (WV-S7130W)）と RTSP 接続して映像を表示してみます。<br>
+  とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
+  <ul>
+    <li>Stream1 はデフォルトで 1920x1024、H.265 となっています。<br>必要に応じて H.264 
+    へ変更した方が処理は軽くなりそうです。（推奨）</li>
+    <li>それでもまだ処理が重たい場合は、接続先を stream1 から stream2 または stream3 などへ変更してみてください。</li>
+    <li>
+    遊んでみた印象ですが、リアルタイム性（映像遅延性）という観点では極力フレームレートを高めにしておく方が良さそうです。特にブラウザ表示、フレームレートを下げると遅延が大きくなりました。Iフレームを1秒周期で送信しているようなので、恐らく固定枚数分の映像蓄積を行って映像表示を滑らかにしているのだろうと私は予想しています。10枚前後っぽいかな。</li>
+  </ul>
+  <p>&nbsp;</p>
+
+  <h4>[評価環境1]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.2 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+
+  <h4>[評価環境2]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.8.10 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Ubuntu(WSL),</td>
+      <td>20.04</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h4>[プログラム]</h4>
+  <p>[プログラムソース "connect_with_rtsp_1.py"]</p>
+
+  <pre class="prettyprint linenums lang-py">
 '''
 [abstract]
-    i-PRO mini (WV-S7130W) と接続して映像を表示してみる 
+    RTSP で i-PRO カメラと接続してみる 
 [library install]
- &nbsp; &nbsp;pip install opencv-python 
+    pip install opencv-python 
 '''
 
 import cv2
@@ -298,28 +310,31 @@ while(True):
 cap.release()
 cv2.destroyAllWindows()</pre>
 
-    <p>&nbsp;</p>
-    <p>上記プログラムを動かしてみます。実行はこんな感じで行います。</p>
-    <p><span class="cpp-source"><strong>python</strong> connect_with_rtsp_1.py</span></p>
-    <p>&nbsp;</p>
-    <p>Windows環境で複数の Python バージョンをインストールしている場合、下図のような感じで実行バージョンを指定することもできます。<br>
-    こちらはバージョン 3.10 の Python で実行を指示する例です。</p>
-    <p><span class="cpp-source"><strong>py</strong> -3.10 connect_with_rtsp_1.py</span></p>
-    <p>&nbsp;</p>
-    <p>上記プログラムを動かした様子を動画で示します。</p>
-    <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
-    
-<video controls autoplay="y" loop="y" src="connect_with_rtsp/rtsp_first.mp4" width="800px">
-  <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-</video>
+<p>&nbsp;</p>
+  <p>上記プログラムを動かしてみます。実行はこんな感じで行います。</p>
+  <p><span class="cpp-source"><strong>python</strong> connect_with_rtsp_1.py</span></p>
+  <p>&nbsp;</p>
+  <p>Windows環境で複数の Python バージョンをインストールしている場合、下図のような感じで実行バージョンを指定することもできます。<br>
+  こちらはバージョン 3.10 の Python で実行を指示する例です。</p>
+  <p><span class="cpp-source"><strong>py</strong> -3.10 connect_with_rtsp_1.py</span></p>
+  <p>&nbsp;</p>
+  <p>上記プログラムを動かした様子を動画で示します。</p>
+  <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
 
-<p>[動画] RTSP でカメラと接続して映像表示してみた様子</p>
-    
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    
+  <video controls muted autoplay="y" loop="y" src="connect_with_rtsp/rtsp_first.mp4" width="800px">
+    <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+  </video>
+
+  <p>[動画] RTSP でカメラと接続して映像表示してみた様子</p>
+
+  <p>&nbsp;</p>
+  <p>i-PRO カメラの IP アドレスを調べるには、下記「EasyIP Setup Tool Plus」を使ってみてください。</p>
+  <p>
+  <a href="https://connect.panasonic.com/jp-ja/products-services/proav_remote-camera-system/lineup/easyip-plus" target="_blank">
+  EasyIP Setup Tool Plus - リモートカメラシステム - 放送・業務用映像システム - Panasonic</a></p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
 </section>
 
 <section>
@@ -897,7 +912,7 @@ if __name__ == '__main__':
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   
-	<video controls autoplay="y" loop="y" src="connect_with_rtsp/rtsp_opencv.mp4" width="800px">
+	<video controls muted autoplay="y" loop="y" src="connect_with_rtsp/rtsp_opencv.mp4" width="800px">
 	  <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
 	</video>
 
