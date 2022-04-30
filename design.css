@@ -9,7 +9,7 @@ html{
 }
 
 body{
-	font-size: small;
+	font-size: 14px;
 	color: #000000;
 	font-family: sans-serif;
 	margin: 4px;
@@ -39,32 +39,32 @@ h3 {
 }
 
 h4 {
-	font-size: small;
+	/*font-size: small;*/
 	color: #000088;
 	font-family: sans-serif;
 	font-weight: bold;
 }
 
 h5 {
-	font-size: small;
+	/*font-size: small;*/
 	color: #000000;
 	font-family: sans-serif;
 	font-weight: bold;
 }
 
 p{
-	font-size: small;
+	/*font-size: small;*/
 	color: #000000;
 	font-family: sans-serif;
 	margin: 6px 0px 6px 0px;
 }
 
 ul {
-	font-size:small;
+	/*font-size:small;*/
 	font-family: sans-serif;
 	list-style-position: outside;
 	list-style-type: disc;
-	padding: 5px 0 5px 40px;
+	padding: 5px 0 5px 20px;
 }
 
 ol{
@@ -134,13 +134,13 @@ table{
 }
 
 table{
-	font-size:small;
+	/*font-size:small;*/
 	font-family: sans-serif;
 	font-weight: normal;	
 }
 
 .table_title{
-	font-size: small;
+	/*font-size: small;*/
 	color: #000000;
 	font-family: sans-serif;
 	font-weight: normal;	
@@ -246,18 +246,7 @@ img.border_with_drow-shadow{
 
 /* モバイル版 */
 @media (max-width: 600px){
-	ul {
-		/*
-		font-size:small;
-		font-family: sans-serif;
-		list-style-position: outside;
-		list-style-type: disc;
-		*/
-		padding: 5px 0 5px 20px;
-	}
-	
-	ol{
-		list-style-position: outside;
-		padding: 0 0 0 40px;
-	}
+  body{
+  	/*font-size: medium;*/
+  }
 }

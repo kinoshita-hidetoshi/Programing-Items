@@ -9,7 +9,7 @@
   <base target="contents">
 	
   <!-- CSS -->
-  <link href="./design_items.css" rel="stylesheet">
+  <link href="./design_items_v2.css" rel="stylesheet">
 
   <script type="text/javascript">
   	function sublist( target ) {
@@ -27,6 +27,28 @@
     }
 	</script>	
 	
+  <script src="jquery.js"></script>  
+  <script>
+    $(function() {
+
+      $(".menu-list").find(".accordion-toggle").click(
+        function() {
+          // リスト開閉
+          $(this).next().toggleClass("open").slideToggle("fast");   // fast, middle, slow
+          // アイコン更新
+          $(this).toggleClass("active-tab").find(".menu-link").toggleClass("active");
+
+          /*
+          // クリックしたメニュー以外のコンテントを閉じる
+          $(".menu-list .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
+          // クリックしたメニュー以外のアイコンを '+' にする
+          $(".menu-list .accordion-toggle").not(jQuery(this)).removeClass("active-tab").find(".menu-link").removeClass("active");
+          */
+        }
+      );
+    }); // jQuery load
+  </script>
+
 </head>
 
 <body>
@@ -35,25 +57,29 @@
 <img alt="" height="24" width="24" src="images/to_upper_folder.png" align="middle" class="auto-style4"></a>
 <a href="items_top.html" target="_self">戻る</a>
 
-<ul>
-	<li style="list-style-type:none">
-  	<a href="url" class="menu" onclick="sublist(this); return false;">Python</a>
-  	<ul>
+<div id="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">Python</a>
+    </li>
+    <ul>
   		<li>Python をインストールする</li>
       <li><a href="Python/install_jupyter_notebook.html" onclick="checkedOff()">Jupyter Notebook をインストールする</a></li>
+
       <li>仮想環境を使用する (venv)</li>
-      <li><a href="url" class="menu" onclick="sublist(this); return false;">監視カメラとPCをつないで遊ぶ</a>
-        <ul>
-          <li><a href="Python/connect_surveillance_camera/connect_with_rtsp.html" onclick="checkedOff()">RTSP で画像を取得する</a></li>
-          <li><a href="Python/connect_surveillance_camera/connect_with_jpeg.html" onclick="checkedOff()">JPEG で画像を取得する</a></li>
-          <li><a href="Python/connect_surveillance_camera/connect_with_mjpeg.html" onclick="checkedOff()">MJPEG で画像を取得する</a></li>
-          <li><a href="Python/connect_surveillance_camera/connect_to_extensions.html" onclick="checkedOff()">機能拡張ソフトウェア(WV-XAE200W)と接続する</a></li>
-        </ul>
+      <li class="accordion-toggle">
+        <a class="menu-link">i-PRO カメラとPCをつないで遊ぶ</a>
       </li>
-      <li>＊＊＊</li>
-  	</ul>
-	</li>
-</ul>
+      <ul>
+        <li><a href="Python/connect_surveillance_camera/connect_with_rtsp.html" onclick="checkedOff();">RTSP で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_with_jpeg.html" onclick="checkedOff();">JPEG で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_with_mjpeg.html" onclick="checkedOff();">MJPEG で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_to_extensions.html" onclick="checkedOff();">機能拡張ソフトウェア(WV-XAE200W)と接続する</a></li>
+      </ul>
+    </ul>
+  </ul>
+</div>
 
 <hr size="2">
 
