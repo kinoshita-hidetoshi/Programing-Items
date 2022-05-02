@@ -15,7 +15,7 @@ body{
 
 ul {
 	font-family: sans-serif;
-  margin-top: 0em;
+  margin-top: 0.15em;
   margin-bottom: 0em;
   margin-left: 0;
   padding-left: 0;
@@ -24,8 +24,8 @@ ul {
 
 li{
   margin-left: 1.3em;
-  margin-top: 0.5px;
-  margin-bottom: 0.0px;
+  margin-top: 2px;
+  margin-bottom: 0.5px;
 }
 
 li[style="list-style-type:none"],

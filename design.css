@@ -106,10 +106,6 @@ video{
   max-height: 80%;
 }
 
-table{
-  max-width: 100%;
-}
-
 .cpp-source{
 	display: inline;
 	padding: 0px 1px 0px 1px !important;
@@ -134,7 +130,8 @@ table{
 }
 
 table{
-	/*font-size:small;*/
+  max-width: 100%;
+	/*font-size:small;*
 	font-family: sans-serif;
 	font-weight: normal;	
 }

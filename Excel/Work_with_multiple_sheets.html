@@ -1,34 +1,50 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>[Excel VBA] 複数のシートを操作する</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>[Excel VBA] 複数のシートを操作する</title>
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+  <script src="../prettify/lang-vb.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../prettify.css" rel="stylesheet" type="text/css">
-<script src="../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	border-collapse: collapse;
-	border: 2px solid #808080;
-}
-.auto-style9 {
-	color: #FFFFFF;
-	border: 1px solid #808080;
-	background-color: #808080;
-}
-.auto-style10 {
-	border: 1px solid #808080;
-}
-.auto-style11 {
-	background-color: #FFFF00;
-}
-</style>
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	border-collapse: collapse;
+    	border: 2px solid #808080;
+    }
+    .auto-style9 {
+    	color: #FFFFFF;
+    	border: 1px solid #808080;
+    	background-color: #808080;
+    }
+    .auto-style10 {
+    	border: 1px solid #808080;
+    }
+    .auto-style11 {
+    	background-color: #484800;
+    }
+  </style>
 </head>
 
 <!-- Start for 'google-code-prettify' -->
@@ -101,7 +117,7 @@
 <p>[プログラムソース &quot;sample.xlsm&quot; - Module1]</p>
 
 <!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-vb">
 <code>'
 ' &quot;一覧&quot;シートから作業日を確認して、作業日が2月、3月、4月、のものを&quot;2月分&quot;、&quot;3月分&quot;、&quot;4月分&quot;のシートへコピーする
 '
@@ -307,7 +323,7 @@ End Sub</code></pre>
 <p>上記指定の方法以外に、下記のような具体的な日付を指定する方法もあります。<br>こちらの方法を使うと、異なる年で同じ月、という条件を排除できます。</p>
 
 <!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-vb">
 <code>Sub 月分割()
     Dim i, <span class="auto-style11"><strong>date1, date2</strong></span>
        
@@ -391,7 +407,7 @@ End Sub</code></pre>
 
 <p>[プログラムソース &quot;sample.xlsm&quot; - Module1]</p>
 <!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-vb">
 <code>'
 ' シート名 &quot;一覧&quot; 以外のシートを削除する
 '
@@ -456,7 +472,7 @@ End Sub</code></pre>
 
 <p>[プログラムソース &quot;sample.xlsm&quot; - Module1]</p>
 <!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-vb">
 <code>'
 ' &quot;シート一覧&quot; を作成する
 '
@@ -534,7 +550,7 @@ End Function</code></pre>
 
 <p>[プログラムソース &quot;sample.xlsm&quot; - 全体]</p>
 <!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-vb">
 <code>'
 ' &quot;一覧&quot;シートから作業日を確認して、作業日が2月、3月、4月、のものを&quot;2月分&quot;、&quot;3月分&quot;、&quot;4月分&quot;のシートへコピーする
 '
