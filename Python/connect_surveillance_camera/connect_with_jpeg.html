@@ -57,7 +57,7 @@
         <a href="#1._CGI_表記仕様">1. CGI 表記仕様</a><br>
         <a href="#2. i-PRO カメラと JPEG 接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a><br>
         <a href="#3.プログラムを改善する_">3. プログラムを改善する</a><br>
-        <a href="#4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a><br>
+        <a href="#4. OpenCV で顔検知を加えてみる">4. OpenCV で顔検知を加えてみる</a><br>
         <a href="#5._連番の_JPEG_ファイルで保存する">5. 連番の JPEG ファイルで保存する</a><br>
         <br>
         <a href="#ライセンス">ライセンス</a><br>
@@ -78,7 +78,8 @@
   i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
 </ul>
 <p> &nbsp;</p>
-<p> <img alt="" src="connect_with_jpeg/imgE.jpg"></p>
+<p> 
+<img alt="" src="connect_with_jpeg/imgE.jpg" class="border_with_drow-shadow" width="400"></p>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -436,9 +437,9 @@ while True:
 
 
 <section>
-<h2><a name="4. OpenCV で顔認識を加えてみる">4. OpenCV で顔認識を加えてみる</a></h2>
+<h2><a name="4. OpenCV で顔検知を加えてみる">4. OpenCV で顔検知を加えてみる</a></h2>
 	<h4>[概要]</h4>
-	<p>OpenCV を使って顔認識を行って、見つけた顔部分に赤枠を描画してみます。&nbsp;</p>
+	<p>OpenCV を使って顔検知を行って、見つけた顔部分に赤枠を描画してみます。&nbsp;</p>
   <p>&nbsp;</p>
 	
 	<h4>[評価環境1]</h4>
@@ -513,7 +514,7 @@ while True:
     JPEG(1shot) でカメラと接続します。
 
 [Details]
-    ここでは opencv を使って顔認識を追加してみます。
+    ここでは opencv を使って顔検知を追加してみます。
 
 [Library install]
     pip install opencv-python
