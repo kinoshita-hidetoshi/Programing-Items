@@ -205,57 +205,48 @@ if not os.path.exists(save_path):
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._静止画を画像分類する">2. 静止画を画像分類する</a></h2>
-	<h4>[概要]</h4>
-	
-	<p>学習済みの VGG モデルを使用し、静止画（JPEGファイル）の画像分類を行ってみます。</p>
-    <p>ここでは入力画像として、 <a href="https://pixabay.com">https://pixabay.com</a> 
-    から取得した４つの画像（てんとう虫、ゴールデンレトリバー（犬）、車、デイジー（花））を使用させていただき実験してみます。</p>
-    <p>いずれも 商用利用無料、帰属表示必要なし、の画像です。<br>各画像の取得元は、下記ソースコード中に記載の URL を参照ください。</p>
-    <p>下記プログラムを実行する際は、ご自身で各画像をダウンロードして事前に data フォルダに保存してください。</p>
-    <p>&nbsp;</p>
-    <p>
-    <img alt="" src="image_classification_vgg/ladybug-g7744c038e_1280.jpg" style="height: 267px" width="400">
-    <img alt="" src="image_classification_vgg/marguerite-gfad1f1cea_1920.jpg" style="height: 260px" width="400">
-    <img alt="" src="image_classification_vgg/car-g955f2640f_1920.jpg" style="height: 266px" width="400">
-    <img alt="" src="image_classification_vgg/goldenretriever-3724972_640.jpg" style="height: 266px" width="400"></p>
-    <p>&nbsp;</p>
-	
-	<h4>[評価環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>言語 :</td>
-	    <td>Python,</td>
-	    <td>3.10.2 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows 11 home,</td>
-	    <td>21H2</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-    <h4>[説明]</h4>
-    <p>部分ごとに説明して最後に全体ソースコードを示します。</p>
-    <p>&nbsp;</p>
-    <p>パッケージのインポートを最初に行います。</p>
-    <pre class="prettyprint linenums lang-py">import numpy as np
+  <h2><a name="2._静止画を画像分類する">2. 静止画を画像分類する</a></h2>
+  <h4>[概要]</h4>
+  <p>学習済みの VGG モデルを使用し、静止画（JPEGファイル）の画像分類を行ってみます。</p>
+  <p>ここでは入力画像として、 <a href="https://pixabay.com">https://pixabay.com</a> 
+  から取得した４つの画像（てんとう虫、ゴールデンレトリバー（犬）、車、デイジー（花））を使用させていただき実験してみます。</p>
+  <p>いずれも 商用利用無料、帰属表示必要なし、の画像です。<br>各画像の取得元は、下記ソースコード中に記載の URL を参照ください。</p>
+  <p>下記プログラムを実行する際は、ご自身で各画像をダウンロードして事前に data フォルダに保存してください。</p>
+  <p>&nbsp;</p>
+  <p>
+  <img alt="" src="image_classification_vgg/ladybug-g7744c038e_1280.jpg" width="400">
+  <img alt="" src="image_classification_vgg/marguerite-gfad1f1cea_1920.jpg" width="400">
+  <img alt="" src="image_classification_vgg/car-g955f2640f_1920.jpg" width="400">
+  <img alt="" src="image_classification_vgg/goldenretriever-3724972_640.jpg" width="400"></p>
+  <p>&nbsp;</p>
+  <h4>[評価環境]</h4>
+  <table>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.2 </td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <h4>[説明]</h4>
+  <p>部分ごとに説明して最後に全体ソースコードを示します。</p>
+  <p>&nbsp;</p>
+  <p>パッケージのインポートを最初に行います。</p>
+  <pre class="prettyprint linenums lang-py">import numpy as np
 import json
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -263,24 +254,23 @@ import matplotlib.pyplot as plt
 import torch
 import torchvision
 from torchvision import models, transforms</pre>
-    <p>&nbsp;</p>
-    <p>下記コードにより VGG16 の学習済みモデルをロードします。<br>初めて実行する際は、学習済みパラメータをインターネットからダウンロードするため、実行に時間がかかります。</p>
-    <pre class="prettyprint linenums lang-py">
-        # Create an instance of the VGG16 model
+  <p>&nbsp;</p>
+  <p>下記コードにより VGG16 の学習済みモデルをロードします。<br>
+  初めて実行する際は、学習済みパラメータをインターネットからダウンロードするため、実行に時間がかかります。</p>
+  <pre class="prettyprint linenums lang-py">        # Create an instance of the VGG16 model
         self.net = models.vgg16( pretrained = True )
         self.net.eval()             # Set to evaluation mode.
 
         # Display network-model.
         print(self.net)</pre>
-    <p>&nbsp;</p>
-    <p>入力画像の前処理クラスを作成します。</p>
-    <ul>
-      <li>画像サイズを 224x224 にリサイズする必要があります。</li>
-      <li>色情報の規格化が必要です。RGB に対して平均が (0.485, 0.456, 0.406)、標準偏差が (0.229, 0.224, 
-      0.225) を設定します。学習済みの VGG16 モデルがこの規格化条件で前処理した画像で学習しているためこれと同じ値を設定する必要があります。</li>
-    </ul>
-    <pre class="prettyprint linenums lang-py">
-class BaseTransform():
+  <p>&nbsp;</p>
+  <p>入力画像の前処理クラスを作成します。</p>
+  <ul>
+    <li>画像サイズを 224x224 にリサイズする必要があります。</li>
+    <li>色情報の規格化が必要です。RGB に対して平均が (0.485, 0.456, 0.406)、標準偏差が (0.229, 0.224, 
+    0.225) を設定します。学習済みの VGG16 モデルがこの規格化条件で前処理した画像で学習しているためこれと同じ値を設定する必要があります。</li>
+  </ul>
+  <pre class="prettyprint linenums lang-py">class BaseTransform():
     '''
     Pre-process the input image. Image resizing, color standardization, etc.
     入力画像の前処理を行う。画像のリサイズ、色の標準化など。
@@ -300,18 +290,18 @@ class BaseTransform():
         Perform pre-process the input image.
         '''
         return self.base_transform(img)</pre>
-    <p>&nbsp;</p>
-    <p>こんな感じで BaseTransform クラスのインスタンスを生成するときに画像サイズ、規格化の情報を与えています。</p>
-    <pre class="prettyprint linenums lang-py">
-        # Create an instance of preprocessing.
+  <p>&nbsp;</p>
+  <p>こんな感じで BaseTransform クラスのインスタンスを生成するときに画像サイズ、規格化の情報を与えています。</p>
+  <pre class="prettyprint linenums lang-py">        # Create an instance of preprocessing.
         resize = 224
         mean = (0.485, 0.456, 0.406)
         std = (0.229, 0.224, 0.225)
         self.transform = BaseTransform(resize, mean, std)</pre>
-    <p>&nbsp;</p>
-    <p>出力結果からラベルを判定するクラスを作成します。</p>
-    
-    <pre class="prettyprint linenums lang-py">class ILSVRCPredictor():
+  <p>&nbsp;</p>
+  <p>出力結果からラベルを判定するクラスを作成します。</p>
+  <p>最もスコアの高いラベル（predicted_label_name）とそのスコア（score）を返します。<br>出力を softmax 
+  で処理することで全体（1000種別）のスコアを足すと 1.0 になるようにしています。</p>
+  <pre class="prettyprint linenums lang-py">class ILSVRCPredictor():
     '''
     Get the label name with the highest score from the calculation result.
     演算結果から最もスコアの高いラベル名を取得する。
@@ -332,13 +322,16 @@ class BaseTransform():
         最もスコアの高いラベル名を取得する。
         '''
         data = out.detach().numpy()
+        probabilities = torch.nn.functional.softmax(out, dim=1)[0]
         maxid = np.argmax(data)
+
+        score = probabilities[maxid].item()
         predicted_label_name = self.class_index[str(maxid)][1]
 
-        return predicted_label_name</pre>
-    <p>&nbsp;</p>
-    <p>画像分類を行う本体のクラスを作成します。</p>
-    <pre class="prettyprint linenums lang-py">class ImagenetClassificationVgg():
+        return predicted_label_name, score</pre>
+  <p>&nbsp;</p>
+  <p>画像分類を行う本体のクラスを作成します。</p>
+  <pre class="prettyprint linenums lang-py">class ImagenetClassificationVgg():
     '''
     Image classification.
     画像分類を行う。
@@ -412,13 +405,49 @@ class BaseTransform():
         result = self.predictor.predict_max(out)
 
         return result</pre>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>以下に全ソースコードを記載します。&nbsp;</p>
-	
-	<p> &nbsp;</p>
-	<p>[全ソースコード &quot;imagenet_classsification_vgg.py&quot;]</p>
-    <pre class="prettyprint linenums lang-py">import numpy as np
+  <p>&nbsp;</p>
+  <p>main 部分です。</p>
+  <p>ImagenetClassificatinVgg クラスのインスタンスを作成して分類を行う画像を入力するだけです。</p>
+  <pre class="prettyprint linenums lang-py">if __name__ == "__main__":
+    '''
+    main
+    '''
+    imagenetClassifigationVgg = ImagenetClassificationVgg('./data/imagenet_class_index.json')
+
+    # Open image file.
+    # https://pixabay.com/ja/photos/%e3%81%a6%e3%82%93%e3%81%a8%e3%81%86%e8%99%ab-%e7%94%b2%e8%99%ab-%e3%83%86%e3%83%b3%e3%83%88%e3%82%a6%e3%83%a0%e3%82%b7-1480102/
+    # https://pixabay.com/ja/service/license/
+    # 商用利用無料、帰属表示必要なし、1280x855
+    img = Image.open('./data/ladybug-g7744c038e_1280.jpg')      # [height][width][color]
+    result = imagenetClassifigationVgg.do_classification(img)
+    print("Result: ", result)
+
+    # https://pixabay.com/ja/photos/goldenretriever-%E7%8A%AC-3724972/
+    # https://pixabay.com/ja/service/license/
+    # 商用利用無料、帰属表示必要なし、640x426
+    img = Image.open('./data/goldenretriever-3724972_640.jpg')  # [height][width][color]
+    result = imagenetClassifigationVgg.do_classification(img)
+    print("Result: ", result)
+
+    # https://pixabay.com/ja/photos/%e8%bb%8a-%e7%94%b2%e8%99%ab-%e3%83%95%e3%82%a9%e3%83%ab%e3%82%af%e3%82%b9%e3%83%af%e3%83%bc%e3%82%b2%e3%83%b3-1283947/
+    # https://pixabay.com/ja/service/license/
+    # 商用利用無料、帰属表示必要なし、1920x1280
+    img = Image.open('./data/car-g955f2640f_1920.jpg')          # [height][width][color]
+    result = imagenetClassifigationVgg.do_classification(img)
+    print("Result: ", result)
+
+    # https://pixabay.com/ja/photos/%e3%83%9e%e3%83%bc%e3%82%ac%e3%83%ac%e3%83%83%e3%83%88-%e3%83%87%e3%82%a4%e3%82%b8%e3%83%bc-%e8%8a%b1-729510/
+    # https://pixabay.com/ja/service/license/
+    # 商用利用無料、帰属表示必要なし、1920x1249
+    img = Image.open('./data/marguerite-gfad1f1cea_1920.jpg')   # [height][width][color]
+    result = imagenetClassifigationVgg.do_classification(img)
+    print("Result: ", result)</pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>以下に全ソースコードを記載します。&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>[全ソースコード "<a href="https://github.com/ipro-corp/python-examples/blob/main/image_classification_vgg/classification_vgg.py" target="_blank">classsification_vgg.py</a>"]</p>
+  <pre class="prettyprint linenums lang-py">import numpy as np
 import json
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -588,9 +617,9 @@ if __name__ == "__main__":
     img = Image.open('./data/marguerite-gfad1f1cea_1920.jpg')   # [height][width][color]
     result = imagenetClassifigationVgg.do_classification(img)
     print("Result: ", result)</pre>
-    <p>&nbsp;</p>
-    <p>実行結果です。コンソールへ出力された内容です。</p>
-    <pre>PyTorch Version:  1.11.0+cpu
+  <p>&nbsp;</p>
+  <p>実行結果です。コンソールへ出力された内容です。</p>
+  <pre>PyTorch Version:  1.11.0+cpu
 Torchvision Version:  0.12.0+cpu
 VGG(
   (features): Sequential(
@@ -641,11 +670,12 @@ VGG(
 <span class="auto-style4">Result: ('golden_retriever', 0.9413034915924072) </span>
 <span class="auto-style4">Result: ('sports_car', 0.3690492510795593) </span>
 <span class="auto-style4">Result: ('daisy', 0.9962427616119385)</span> </pre>
-    <p>&nbsp;</p>
-    <p>正しく画像分類できていそうです。</p>
-    <p>ImagenetClassificationVgg クラスのインスタンスを作成したらあとは画像を渡すだけ、という感じで実行できます。<br>学習済みのモデルを使用して推論するだけならさほど難しく無いと思います。興味あればチャレンジしてみて下さい。</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>正しく画像分類できていそうです。</p>
+  <p>ImagenetClassificationVgg クラスのインスタンスを作成したらあとは画像を渡すだけ、という感じで実行できます。<br>
+  学習済みのモデルを使用して推論するだけならさほど難しく無いと思います。興味あればチャレンジしてみて下さい。</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 	
 <br>
@@ -695,9 +725,9 @@ VGG(
 	
 	<p> こんな方法を活用して必要最小限の情報記載で進めたいと思います。</p>
   <p> &nbsp;</p>
-  <p> ["imagenet_classification_main.py"]</p>
+  <p> ["classification_main.py"]</p>
   <pre class="prettyprint linenums lang-py">from PIL import Image
-<span class="auto-style3">from imagenet_classsification_vgg import ImagenetClassificationVgg</span>
+<span class="auto-style3">from classification_vgg import ImagenetClassificationVgg</span>
 
 if __name__ == "__main__":
     '''
@@ -717,7 +747,7 @@ if __name__ == "__main__":
     <p> こちらが新規に作成したプログラムです。<br>"connect_with_rtsp_3_2.py" を元に作成しています。</p>
     <p> &nbsp;</p>
     
-	  <p>[プログラムソース &quot;imagenet_with_camera.py&quot;]</p>
+	  <p>[プログラムソース &quot;classification_with_camera.py&quot;]</p>
     <pre class="prettyprint linenums lang-py">'''
 [Abstract]
     Try connecting to an i-PRO camera with RTSP.
@@ -736,7 +766,7 @@ if __name__ == "__main__":
 import cv2
 import multiprocessing as mp
 from queue import Empty
-<span class="auto-style3">from imagenet_classsification_vgg import ImagenetClassificationVgg</span>
+<span class="auto-style3">from classification_vgg import ImagenetClassificationVgg</span>
 <span class="auto-style3">from PIL import Image</span>
 
 user_id     = "user-id"         # Change to match your camera setting
@@ -1003,6 +1033,8 @@ SOFTWARE.
       https://sol.panasonic.biz/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%20&amp;mm=2012100910461872</a></li>
       <li>[2] PyTorch<br><a href="https://pytorch.org/" target="_blank">
       https://pytorch.org/</a></li>
+      <li>[3] 図書「作りながら学ぶ! PyTorch による発展ディープラーニング」小川雄太郎 [著]<br>
+      ISBN978-4-8399-7025-3</li>
     </ul>
 </section>
 
