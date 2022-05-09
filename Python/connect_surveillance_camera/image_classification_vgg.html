@@ -63,8 +63,8 @@
         <a href="#1-2._「画像分類」を準備する">1-2. 「画像分類」を準備する</a><br>&nbsp;
         <a href="#1-3._必要なライブラリをインストール">1-3. 必要なライブラリをインストール</a><br>
         <a href="#2._静止画を画像分類する">2. 静止画を画像分類する</a><br>
-        <a href="#3._i-PRO_カメラの映像を画像分類する">3. i-PRO_カメラの映像を画像分類する</a><br>
-        <a href="#4._i-PRO_カメラの映像と画像分類結果をGUI表示する_(tkinter)">4. i-PRO_カメラの映像と画像分類結果をGUI表示する_(tkinter)</a><br><br>
+        <a href="#3._i-PRO_カメラの映像を画像分類する">3. i-PRO カメラの映像を画像分類する</a><br>
+        <a href="#4._i-PRO_カメラの映像と画像分類結果をGUI表示する_(tkinter)">4. i-PRO カメラの映像と画像分類結果をGUI表示する (tkinter)</a><br><br>
         <a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
         </p>
@@ -121,6 +121,11 @@ Group) チームが作成した16層から構成されるネットワークモ�
 	    <td>OS :</td>
 	    <td>Windows 11 home,</td>
 	    <td>21H2</td>
+	  </tr>
+	  <tr>
+	    <td></td>
+	    <td>Windows 10 Pro,</td>
+	    <td>21H1</td>
 	  </tr>
 		
 	  <tr>
@@ -232,19 +237,28 @@ if not os.path.exists(save_path):
     <tr>
       <td class="td_separate" colspan="3"></td>
     </tr>
+    
     <tr>
       <td>OS :</td>
       <td>Windows 11 home,</td>
       <td>21H2</td>
     </tr>
+	  <tr>
+	    <td></td>
+	    <td>Windows 10 Pro,</td>
+	    <td>21H1</td>
+	  </tr>
+    
     <tr>
       <td class="td_separate" colspan="3"></td>
     </tr>
+    
   </table>
   <p>&nbsp;</p>
   <h4>[説明]</h4>
   <p>部分ごとに説明して最後に全体ソースコードを示します。</p>
   <p>&nbsp;</p>
+  <p>1.</p>
   <p>パッケージのインポートを最初に行います。</p>
   <pre class="prettyprint linenums lang-py">import numpy as np
 import json
@@ -255,6 +269,7 @@ import torch
 import torchvision
 from torchvision import models, transforms</pre>
   <p>&nbsp;</p>
+  <p>2.</p>
   <p>下記コードにより VGG16 の学習済みモデルをロードします。<br>
   初めて実行する際は、学習済みパラメータをインターネットからダウンロードするため、実行に時間がかかります。</p>
   <pre class="prettyprint linenums lang-py">        # Create an instance of the VGG16 model
@@ -264,6 +279,27 @@ from torchvision import models, transforms</pre>
         # Display network-model.
         print(self.net)</pre>
   <p>&nbsp;</p>
+  <p><span class="cpp-source">self.net = models.vgg16( pretrained = True )</span> 
+  により取得した学習済みモデルは下記に保存されます。<br>'~' はログインしているユーザーのホームディレクトリを意味します。</p>
+  <p>&nbsp;</p>
+  <p>
+  <a href="https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved" target="_blank">
+  Where are my downloaded models saved?</a></p>
+  <blockquote>
+  <p>The locations are used in the order of </p>
+  <ul>
+    <li>Calling <span class="cpp-source">hub.set_dir(&lt;PATH_TO_HUB_DIR&gt;)</span> </li>
+    <li><span class="cpp-source">$TORCH_HOME/hub</span>, if environment variable 
+    <span class="cpp-source">TORCH_HOME</span> is set. </li>
+    <li><span class="cpp-source">$XDG_CACHE_HOME/torch/hub</span>, if environment variable 
+    <span class="cpp-source">XDG_CACHE_HOME</span> is set. </li>
+    <li><span class="cpp-source">~/.cache/torch/hub</span></li>
+  </ul>
+  </blockquote>
+  <p>私の場合は下記に vgg16-397923af.pth を保存していました。約540MBのファイルサイズでした。</p>
+  <p>"~.cache\torch\hub\checkpoints\vgg16-397923af.pth"</p>
+  <p>&nbsp;</p>
+  <p>3.</p>
   <p>入力画像の前処理クラスを作成します。</p>
   <ul>
     <li>画像サイズを 224x224 にリサイズする必要があります。</li>
@@ -298,6 +334,7 @@ from torchvision import models, transforms</pre>
         std = (0.229, 0.224, 0.225)
         self.transform = BaseTransform(resize, mean, std)</pre>
   <p>&nbsp;</p>
+  <p>4.</p>
   <p>出力結果からラベルを判定するクラスを作成します。</p>
   <p>最もスコアの高いラベル（predicted_label_name）とそのスコア（score）を返します。<br>出力を softmax 
   で処理することで全体（1000種別）のスコアを足すと 1.0 になるようにしています。</p>
@@ -330,6 +367,7 @@ from torchvision import models, transforms</pre>
 
         return predicted_label_name, score</pre>
   <p>&nbsp;</p>
+  <p>5.</p>
   <p>画像分類を行う本体のクラスを作成します。</p>
   <pre class="prettyprint linenums lang-py">class ImagenetClassificationVgg():
     '''
@@ -406,6 +444,7 @@ from torchvision import models, transforms</pre>
 
         return result</pre>
   <p>&nbsp;</p>
+  <p>6.</p>
   <p>main 部分です。</p>
   <p>ImagenetClassificatinVgg クラスのインスタンスを作成して分類を行う画像を入力するだけです。</p>
   <pre class="prettyprint linenums lang-py">if __name__ == "__main__":
@@ -709,6 +748,11 @@ VGG(
 	    <td>OS :</td>
 	    <td>Windows 11 home,</td>
 	    <td>21H2</td>
+	  </tr>
+	  <tr>
+	    <td></td>
+	    <td>Windows 10 Pro,</td>
+	    <td>21H1</td>
 	  </tr>
 		
 	  <tr>
