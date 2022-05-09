@@ -1217,17 +1217,17 @@ class Application(tk.Frame):
                 canvas_height / 2,                   
                 image=self.photo_image  # image data
                 )
+        else:
+          pass
 
+        # Update GUI Label.
         result_num = self.resultQueue.qsize()
         if result_num &gt; 0:
             for i in range(result_num):
                 label, score = self.resultQueue.get()
-            self.class_text.set(label)
-            score = '{:.4f}'.format(score)
-            self.score_text.set(score)
-            
-        else:
-            pass
+                self.class_text.set(label)
+                score = '{:.4f}'.format(score)
+                self.score_text.set(score)
 
         # Raise a video display event (disp_image) after 1ms.
         self.disp_id = self.after(1, self.disp_image)
