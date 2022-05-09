@@ -41,6 +41,9 @@
   .auto-style4 {
     background-color: #FFFF00;
   }
+  .auto-style5 {
+  text-decoration: underline;
+}
   </style>
 
 </head>
@@ -970,7 +973,7 @@ if __name__ == '__main__':
   <p>&nbsp;</p>
   <p>
     
-  <video controls muted autoplay="y" loop="y" src="image_classification_vgg/image_classification_1.mp4">
+  <video controls muted autoplay="y" loop="y" src="image_classification_vgg/image_classification_1.mp4" width="800px">
   </video>
   <p>[動画] i-PRO カメラと接続して、リアルタイムに画像分類</p>
   
@@ -987,46 +990,373 @@ if __name__ == '__main__':
 	<h2> <a name="4._i-PRO_カメラの映像と画像分類結果をGUI表示する_(tkinter)">4. i-PRO カメラの映像と画像分類結果をGUI表示する 
     (tkinter)</a></h2>
 	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
+	<p> 前述の画像分類を GUI（tkinter）版で作成してみます。</p>
+    <p> 記事「<a href="connect_with_rtsp.html#7-3. メニュー・ボタンを追加して GUI アプリらしくしてみる">
+    RTSP で画像を取得する ： 7-3. メニュー・ボタンを追加して GUI アプリらしくしてみる</a>」で作成した GUI 
+    プログラムをベースに改造してみます。</p>
+    <p> &nbsp;</p>
+    <p class="auto-style5"> <strong>ポイント</strong></p>
+    <ul>
+      <li>GUI 下部に "Class" と "Score" を表示するための Label を追加してみました。</li>
+      <li>
+      映像表示に極力影響を与えないように、映像受信プロセス（ReceiveImageProcess）から画像分類プロセス（ImageClassificationProcess）へ画像データを渡し、別プロセスで画像分類を行っています。そして認識した結果のラベルとスコアを 
+      main プロセスへ渡して画面へ表示する、というようなデータの流れで作成しています。</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  <h4>[評価環境]</h4>
+  <table>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.2 </td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
 	  <tr>
-	    <td class="td_separate" colspan="3"></td>
+	    <td></td>
+	    <td>Windows 10 Pro,</td>
+	    <td>21H1</td>
 	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+  </table>
 	
 	<p>&nbsp;</p>
 	
 	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-  <pre class="prettyprint linenums lang-cpp">
-	</pre>
-	<p>&nbsp;</p>
+	<p>[プログラムソース &quot;classification_gui.py&quot;]</p>
+    <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Image classification.
+    画像分類を行います。
+
+[Details]
+    Create an application in the GUI using tkinter.
+    tkinter を使って GUI アプリケーションを作成します。
+    
+[Author]
+    kinoshita hidetoshi (木下英俊)
+
+[Library install]
+    pip install opencv-python
+'''
+
+import cv2
+import time
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk, ImageOps
+import multiprocessing as mp
+from queue import Empty
+<span class="auto-style3">from classification_vgg import ImagenetClassificationVgg    # Local module. See 'classification_vgg.py'.</span>
+
+
+user_id     = "user-id"         # Change to match your camera setting
+user_pw     = "password"        # Change to match your camera setting
+host        = "192.168.0.10"    # Change to match your camera setting
+winname     = "VIDEO"           # Window title
+url         = f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1"
+
+
+class Application(tk.Frame):
+    def __init__(self, master = None):
+        super().__init__(master)
+        self.pack()
+
+        # Window settings.
+        self.master.title("Display i-PRO camera with tkinter")      # Window title
+        self.master.geometry("800x600+100+100")                     # Window size, position
+
+        # Event registration for window termination.
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing_window)
+
+        # Create menu.
+        menubar = tk.Menu(self.master)
+        self.master.configure(menu=menubar)
+        filemenu = tk.Menu(menubar)
+        menubar.add_cascade(label='File', menu=filemenu)
+        filemenu.add_command(label='Quit', command = self.on_closing_window)
+
+        # Create button_frame
+        self.button_frame = tk.Frame(self.master, padx=10, pady=10, relief=tk.RAISED, bd=2)
+        self.button_frame.pack(side = tk.BOTTOM, fill=tk.X)
+
+<span class="auto-style3">        # Label</span>
+<span class="auto-style3">        self.label_frame1 = tk.Frame(self.button_frame, width=10)</span>
+<span class="auto-style3">        self.label_frame1.pack(side=tk.LEFT)</span>
+<span class="auto-style3">        self.label_frame2 = tk.Frame(self.button_frame, width=40)</span>
+<span class="auto-style3">        self.label_frame2.pack(side=tk.LEFT)</span>
+<span class="auto-style3">        self.class_text = tk.StringVar()</span>
+<span class="auto-style3">        self.score_text = tk.StringVar()</span>
+<span class="auto-style3">        self.class_text.set('')</span>
+<span class="auto-style3">        self.score_text.set('')</span>
+<span class="auto-style3">        self.label1 = tk.Label(self.label_frame1, text='Class: ').pack(side=tk.TOP)</span>
+<span class="auto-style3">        self.label2 = tk.Label(self.label_frame2, textvariable=self.class_text, relief=tk.RIDGE, width=20).pack(side=tk.TOP)</span>
+<span class="auto-style3">        self.label3 = tk.Label(self.label_frame1, text='Score: ').pack(side=tk.TOP)</span>
+<span class="auto-style3">        self.label4 = tk.Label(self.label_frame2, textvariable=self.score_text, relief=tk.RIDGE, width=20).pack(side=tk.TOP)</span>
+
+
+        # Create quit_button
+        self.quit_button = tk.Button(self.button_frame, text='Quit', width=10, command = self.on_closing_window)
+        self.quit_button.pack(side=tk.RIGHT)
+        
+        # Create canvas.
+        self.canvas = tk.Canvas(self.master)
+
+        # Add mouse click event to canvas.
+        self.canvas.bind('&lt;Button-1&gt;', self.canvas_click)
+
+        # Place canvas.
+        self.canvas.pack(expand = True, fill = tk.BOTH)
+
+        # Create queue and value for image receive process.
+        self.imageQueue = mp.Queue()
+        self.request = mp.Value('i', 0)     # -1 : Exit ReceiveImageProcess.
+                                            #  0 : Normal.
+                                            #  1 : Connect camera.
+                                            #  2 : Release camera.
+
+        # Create queue for classification process.
+<span class="auto-style3">        self.imageQueue2 = mp.Queue()</span>
+        self.resultQueue = mp.Queue()
+
+        # Create processes.
+        self.imageReceiveProcess = mp.Process(target=ReceiveImageProcess, args=(self.imageQueue, <span class="auto-style3">self.imageQueue2,</span> self.request))
+<span class="auto-style3">        self.classificationProcess = mp.Process(target=ImageClassificationProcess, args=(self.imageQueue2, self.resultQueue))</span>
+        self.imageReceiveProcess.start()
+<span class="auto-style3">        self.classificationProcess.start()</span>
+
+        # Raise a video display event (disp_image) after 500m
+        self.disp_id = self.after(500, self.disp_image)
+
+    def on_closing_window(self):
+        ''' Window closing event. '''
+
+        if messagebox.askokcancel("QUIT", "Do you want to quit?"):
+            # Request terminate process.
+            self.request.value = -1
+<span class="auto-style3">            self.imageQueue2.put(-1)</span>
+
+            # Waiting for process p to finish
+            time.sleep(1)
+
+            # Flash queue.
+            # The program cannot complete processes unless the queue is emptied.
+            for i in range(self.imageQueue.qsize()):
+                image = self.imageQueue.get()
+<span class="auto-style3">            for i in range(self.imageQueue2.qsize()):</span>
+<span class="auto-style3">                image = self.imageQueue2.get()</span>
+<span class="auto-style3">            for i in range(self.resultQueue.qsize()):</span>
+<span class="auto-style3">                result = self.resultQueue.get()</span>
+
+            # Wait for process to be terminated.
+            self.imageReceiveProcess.join()
+<span class="auto-style3">            self.classificationProcess.join()</span>
+            self.master.destroy()
+            print("Finish Application.")
+
+    def canvas_click(self, event):
+        ''' Event handling with mouse clicks on canvas '''
+
+        if self.disp_id is None:
+            # Connect camera.
+            self.request.value = 1
+            # Display image.
+            self.disp_image()
+
+        else:
+            # Release camera.
+            self.request.value = 2
+            # Cancel scheduling
+            self.after_cancel(self.disp_id)
+            self.disp_id = None
+
+    def disp_image(self):
+        ''' Display image on Canvas '''
+
+        # If there is data in the imageQueue, the program receives the data and displays the video.
+        num = self.imageQueue.qsize()
+        if num &gt; 0:
+            if (num &gt; 5):
+                num -= 1
+            for i in range(num):
+                cv_image = self.imageQueue.get()
+
+            # (2) Convert image from ndarray to PIL.Image.
+            pil_image = Image.fromarray(cv_image)
+
+            # Get canvas size.
+            canvas_width = self.canvas.winfo_width()
+            canvas_height = self.canvas.winfo_height()
+
+            # Resize the image to the size of the canvas without changing the aspect ratio.
+            # アスペクトを維持したまま画像を Canvas と同じサイズにリサイズ
+            pil_image = ImageOps.pad(pil_image, (canvas_width, canvas_height))
+
+            # (3) Convert image from PIL.Image to PhotoImage
+            # PIL.Image から PhotoImage へ変換する
+            self.photo_image = ImageTk.PhotoImage(image=pil_image)
+
+            # Display image on the canvas.
+            self.canvas.create_image(
+                canvas_width / 2,       # Image display position (center of the canvas)
+                canvas_height / 2,                   
+                image=self.photo_image  # image data
+                )
+
+        result_num = self.resultQueue.qsize()
+        if result_num &gt; 0:
+            for i in range(result_num):
+                label, score = self.resultQueue.get()
+            self.class_text.set(label)
+            score = '{:.4f}'.format(score)
+            self.score_text.set(score)
+            
+        else:
+            pass
+
+        # Raise a video display event (disp_image) after 1ms.
+        self.disp_id = self.after(1, self.disp_image)
+
+
+def ReceiveImageProcess(imageQueue, <span class="auto-style3">imageQueue2,</span> request):
+    '''
+    Receive Image Process.
+
+    Args:
+        imageQueue      [o] Image data for display.
+<span class="auto-style3">        imageQueue2     [o] Image data for image classification.</span>
+        request         [i] Shared memory for receiving requests from the main process.
+                            -1: Terminate process.
+                             0: Nothing.
+                             1: Connect camera.
+                             2: Release camera connection.
+    Returns:
+        None
+    Raises
+        None
+    '''
+
+    # Connect camera.
+    cap = cv2.VideoCapture(url)
+
+    while True:
+        if cap != None:
+            # Get frame.
+            ret, frame = cap.read()
+
+            if ret == True:
+                # (1) Convert image from BGR to RGB.
+                cv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                # for display.
+                if imageQueue.qsize() &lt; 10:
+                    imageQueue.put(cv_image)
+                
+<span class="auto-style3">                # for image classification.</span>
+<span class="auto-style3">                if imageQueue2.qsize() &lt;= 1:</span>
+<span class="auto-style3">                    imageQueue2.put(cv_image)</span>
+
+            else:
+                print("cap.read() return False.")
+                # The timeout period seems to be 30 seconds.
+                # And there seems to be no API to change the timeout value.
+                time.sleep(1)
+
+                # Reconnect
+                cap.release()
+                cap = cv2.VideoCapture(url)
+        else:
+            time.sleep(0.1)
+                
+        # Check process termination request.
+        if request.value == -1:
+            # Terminate process.
+            cap.release()
+            request.value = 0
+            break
+
+        # Check connect request.
+        if request.value == 1:
+            cap = cv2.VideoCapture(url)
+            request.value = 0
+
+        # Check release request.
+        if request.value == 2:
+            cap.release()
+            cap = None
+            request.value = 0
+
+    print("Terminate ReceiveImageProcess().")
+
+
+<span class="auto-style3">def ImageClassificationProcess(imageQueue, resultQueue):</span>
+<span class="auto-style3">    '''</span>
+<span class="auto-style3">    Image classification process.</span>
+
+<span class="auto-style3">    Args:</span>
+<span class="auto-style3">        imageQueue :        [i] Image for image classification.</span>
+<span class="auto-style3">        resultQueue :       [o] Save classification result labels and scores.</span>
+<span class="auto-style3">    Returns:</span>
+<span class="auto-style3">        None</span>
+<span class="auto-style3">    '''</span>
+<span class="auto-style3">    imagenetClassifigationVgg = ImagenetClassificationVgg('./data/imagenet_class_index.json')</span>
+
+<span class="auto-style3">    while True:</span>
+<span class="auto-style3">        try:</span>
+<span class="auto-style3">            image = imageQueue.get(True, 10)</span>
+
+<span class="auto-style3">            # If type(image) is 'int' and image is -1, then this process is terminated.</span>
+<span class="auto-style3">            if type(image) == int:</span>
+<span class="auto-style3">                if image == -1:</span>
+<span class="auto-style3">                    break</span>
+
+<span class="auto-style3">            # Image classification</span>
+<span class="auto-style3">            pilImage = Image.fromarray(image)   # convert from OpenCV image to PIL.Image</span>
+<span class="auto-style3">            result, score = imagenetClassifigationVgg.do_classification(pilImage)</span>
+
+<span class="auto-style3">            if score &gt; 0.15:</span>
+<span class="auto-style3">                print(result, score)</span>
+<span class="auto-style3">                resultQueue.put((result, score))</span>
+<span class="auto-style3">            else:</span>
+<span class="auto-style3">                print('None')</span>
+<span class="auto-style3">                resultQueue.put(('None', 0.0))</span>
+
+<span class="auto-style3">        except Empty: # timeout of imageQueue.get()</span>
+<span class="auto-style3">            print("Timeout happen.(3)")</span>
+
+<span class="auto-style3">    print("Finish ImageClassificationProcess()")</span>
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Application(master = root)
+    app.mainloop()</pre>
     <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <video controls muted autoplay="y" loop="y" src="image_classification_vgg/classification_gui_with_camera.mp4" width="800px">
+  </video>
+  <p>[動画] i-PRO カメラと接続してリアルタイムに画像分類、GUI版</p>
     <p>&nbsp;</p>
+    <p>そこそこ良い感じに作れたのでは、と思っています。<br>
+    プログラムが約300ステップまで大きくなってきましたので、機能拡張はこの辺で一旦おしまいにしたいと思います。</p>
+  
+  <p>&nbsp;</p>
 </section>
 	
 <br>
@@ -1079,6 +1409,9 @@ SOFTWARE.
       https://pytorch.org/</a></li>
       <li>[3] 図書「作りながら学ぶ! PyTorch による発展ディープラーニング」小川雄太郎 [著]<br>
       ISBN978-4-8399-7025-3</li>
+      <li>[4]【Python tkinter】Frame（フレーム）の使い方：作成・配置・オプション一覧 | OFFICE54<br>
+      <a href="https://office54.net/python/tkinter/python-tkinter-frame?msclkid=d2ca4cb3cf6411ecaf9347bcb431db8c" target="_blank">
+      https://office54.net/python/tkinter/python-tkinter-frame?msclkid=d2ca4cb3cf6411ecaf9347bcb431db8c</a></li>
     </ul>
 </section>
 
@@ -1090,12 +1423,21 @@ SOFTWARE.
 
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
+	
 	<table>
+	
+	  <tr>
+	    <td class="td_history_date">2022-05-09</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">４章を追加</td>
+	  </tr>
+	  	
 	  <tr>
 	    <td class="td_history_date">2022-05-04</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
+	  
 	</table>
 </section>
 
