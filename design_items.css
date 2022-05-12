@@ -41,6 +41,25 @@ a.menu {
 	border-radius: 2px
 }
 
+/* 戻る */
+li.return{
+  list-style-type:none;
+  margin:3px;
+  display:flex;
+  align-items:center;
+}
+
+img.return{
+  height="24px";
+  width="24px";
+}
+
+label.return{
+   cursor: pointer;
+   margin:6px;
+}
+/* 戻る */
+
 /* モバイル版 */
 @media (max-width: 600px){
   body{

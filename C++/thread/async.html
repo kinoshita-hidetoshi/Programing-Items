@@ -1,23 +1,46 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>std::async</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <title>std::async</title>
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+	
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify/prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+    
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	background-color: #FFFF00;
-}
-</style>
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	background-color: #484800;
+    }
+  </style>
 </head>
+
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
 std::async (c++11)</h1>
@@ -28,10 +51,29 @@ std::thread は promise, future
 はもはや使用せずに std::async のみで良いのではと考えます。 </p>
 <p> &quot;Effective Modern C++&quot; の項目35 にも「スレッドベースよりもタスクベースプログラミングを優先する」って書いてありますしね。<br>
 これの意味は「std::thread よりも std::async を使いましょう」という内容です。</p>
-<h2> 目次</h2>
-<p> <a href="#1._シンプルな例">1. シンプルな例</a><br><a href="#2._一時停止状態のスレッドを作る">2. 
-一時停止状態のスレッドを作る</a><br><a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></p>
 <p> &nbsp;</p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p>
+        <a href="#1._シンプルな例">1. シンプルな例</a><br>
+        <a href="#2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a><br>
+        <a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a><br>
+        <br>
+        <a href="#ライセンス">ライセンス</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
 <h2> <a name="1._シンプルな例">1. シンプルな例</a></h2>
 <p> [概要]</p>
 <p> まずはシンプルなサンプルを作ってみます。<br>少し処理の重たい関数 worker() を準備して、これを std::async で実行します。</p>
@@ -160,7 +202,13 @@ int main()
 	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
 	http://ja.cppreference.com/w/cpp/thread/async</a></li>
 </ul>
+
 <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
 <h2><a name="2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a></h2>
 <p>一時停止状態のシステムスレッドを作成してみます。<br>
 すなわち、スレッドで何かを処理する時が来たらすぐに開始できるようにあらかじめスレッドを作成しておき、作成のスレッドのオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらのせえっていを行う必要があるため一時停止状態のスレッドを作成する場合もあるでしょう。<br>
@@ -240,10 +288,13 @@ int main()
 	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
 	http://ja.cppreference.com/w/cpp/thread/async</a></li>
 </ul>
-<p>
-&nbsp;</p>
-<p>
-&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
 <h2>
 <a name="3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
 <p>[概要]</p>
@@ -332,14 +383,88 @@ int main()
 <p>&nbsp;</p>
 <p>[実行結果]</p>
 <p><img alt="" src="async/imgA.jpg"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+    Copyright (c) 2017  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>
+&nbsp;</p>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
+	http://ja.cppreference.com/w/cpp/thread/async</a></li>
+	</ul>
+</section>
+
 <p>
 &nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： </font></p>
-<ul>
-	<li>2020年05月31日 「<a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a>」を追加。</li>
-	<li><font face="Meiryo UI">2019年11月27日 「<a href="#2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a>」の章を追加</font></li>
-	<li><font face="Meiryo UI">2017年11月18日 新規作成、木下英俊</font></li>
-</ul>
+<p> &nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2020-05-31</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a>」を追加<br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2019-11-27</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a>」の章を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2017-11-18</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p> &nbsp;</p>
+
+<footer>
+  <p><small>&copy; copyright 2017-2019 木下英俊</small></p>
+</footer>
+
 </body>
 </html>

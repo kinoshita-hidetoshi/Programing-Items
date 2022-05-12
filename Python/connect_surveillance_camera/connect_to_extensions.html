@@ -55,7 +55,8 @@
         <h2> 目次</h2>
         <p>
         <a href="#1._インストール">1. インストール</a><br>
-        <a href="#2._JPEGヘッダーから_AI-VMD_認識結果を取り出す">2. JPEGヘッダーから AI-VMD 認識結果を取り出す</a><br>
+        <a href="#2._JPEGヘッダーから認識結果を取り出す">2. JPEGヘッダーから認識結果を取り出す</a><br>
+        <a href="#3._認識結果を赤枠と文字で表示する">3. 認識結果を赤枠と文字で表示する</a><br>
         <br><a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
         </p>
@@ -136,15 +137,14 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._JPEGヘッダーから_AI-VMD_認識結果を取り出す">2. JPEGヘッダーから AI-VMD 認識結果を取り出す</a></h2>
-    <p> &nbsp;</p>
+	<h2> <a name="2._JPEGヘッダーから認識結果を取り出す">2. JPEGヘッダーから認識結果を取り出す</a></h2>
 	<h4>[概要]</h4>
-    <p>i-PRO の資料によると JPEG,RTSP ともにパケットのヘッダ情報に AI-VMD の認識結果が記録されているようです。</p>
+    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットのヘッダ情報に AI 認識結果が記録されているようです。</p>
     <p>私の技量では RTSP からこの情報を取り出すのは難があるので、JPEG から取り出しすることにチャレンジしてみます。<br>
     コメント領域に記録されている模様です。</p>
 	<p> &nbsp;</p>
 	
-	<h4>[環境]</h4>
+	<h4>[評価環境]</h4>
 	<table>
 	<tbody>
 	  <tr>
@@ -152,9 +152,9 @@
 	  </tr>
 		
 	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.2 </td>
 	  </tr>
 		
 	  <tr>
@@ -163,8 +163,8 @@
 		
 	  <tr>
 	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
 	  </tr>
 		
 	  <tr>
@@ -173,13 +173,55 @@
 	</tbody>
 	</table>
 	
-    <br>
-	
-<br><br><span class="auto-style1">編集予定 － To Be Edited.<br></span><br><br><br>
+<br><br><span class="auto-style1">編集予定 － To Be Edited.</span><br><br><br>
 
 </section>
 
 <br>
+
+<section>
+	<h2> <a name="3._認識結果を赤枠と文字で表示する">3. 認識結果を赤枠と文字で表示する</a></h2>
+    <p> &nbsp;</p>
+	<h4>[概要]</h4>
+    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットのヘッダ情報に AI 認識結果が記録されているようです。</p>
+    <p>前の章で JPEG ヘッダから取り出した認識結果を使用して、映像上に認識位置を赤枠で、分類を文字でそれぞれ描画して
+      画面に映像を表示するサンプルプログラムを作成してみたいと思います。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[評価環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.2 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+<br><br><span class="auto-style1">編集予定 － To Be Edited.</span><br><br><br>
+
+</section>
+
+<p>&nbsp;</p>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
@@ -226,9 +268,6 @@ SOFTWARE.
         <li>WV-XAE200W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE200W]<br>
         <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092" target="_blank">
         https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092</a></li>
-        <li>WV-XAE201W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE201W] <br>
-        <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510101336" target="_blank">
-        https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510101336</a></li>
 	</ul>
 </section>
 
