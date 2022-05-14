@@ -63,6 +63,8 @@
         <a href="#4-1._まずは単純にやってみる">4-1. まずは単純にやってみる</a><br>&nbsp;
         <a href="#4-2._顔検知部分を別プロセスの処理にしてみる">4-2. 顔検知部分を別プロセスの処理にしてみる</a><br>
         <a href="#5._連番の_JPEG_ファイルで保存する">5. 連番の JPEG ファイルで保存する</a><br>
+        <a href="#6._映像切断時の再接続処理を追加">6. 映像切断時の再接続処理を追加</a><br>
+        <a href="#7._GUIで映像表示してみる（tkinter）">7. GUIで映像表示してみる（tkinter）</a><br>
         <br>
         <a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
@@ -132,7 +134,7 @@
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -250,6 +252,24 @@ cv2.destroyAllWindows()</pre>
 <p>[動画] MJPEG でカメラと接続して映像表示してみた様子</p>
     
     <p>&nbsp;</p>
+    <p>本プログラムでは下記ライブラリを使用しています。概要だけ記載します。</p>
+    
+    <table class="border-collapse" style="width: 800px">
+    	<thead class="standard_table">
+        <tr>
+          <td class="standard_table">ライブラリ名</td>
+          <td class="standard_table">概要</td>
+        </tr>
+      </thead>
+      <tbody class="standard_table">
+        <tr>
+          <td class="standard_table">cv2</td>
+          <td class="standard_table">画像処理などで有名な OpenCV です。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3><a name="2-2._方法2">2-2. 方法2</a></h3>
     <p>下記方法でも MJPEG で接続して映像表示できます。参考記事[2]を参考に作成してみました。</p>
@@ -336,6 +356,32 @@ while True:
 cv2.destroyAllWindows()
 </pre>
     <p>&nbsp;</p>
+    <p>本プログラムでは下記ライブラリを使用しています。概要だけ記載します。</p>
+    
+    <table class="border-collapse" style="width: 800px">
+    	<thead class="standard_table">
+        <tr>
+          <td class="standard_table">ライブラリ名</td>
+          <td class="standard_table">概要</td>
+        </tr>
+      </thead>
+      <tbody class="standard_table">
+        <tr>
+          <td class="standard_table">cv2</td>
+          <td class="standard_table">画像処理などで有名な OpenCV です。</td>
+        </tr>
+        <tr>
+          <td class="standard_table">numpy</td>
+          <td class="standard_table">数値計算を行うライブラリです。</td>
+        </tr>
+        <tr>
+          <td class="standard_table">urllib</td>
+          <td class="standard_table">ネットワーク通信などの処理を行います。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
 </section>
@@ -368,7 +414,7 @@ cv2.destroyAllWindows()
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -525,7 +571,7 @@ cv2.destroyAllWindows()</pre>
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -957,6 +1003,37 @@ if __name__ == '__main__':
     <li>"image" という名称でフォルダを作成し、ここに "image_000001.jpg" というようなファイル名で画像を保存します。</li>
   </ul>
   <p>&nbsp;</p>
+	
+	<h4>[評価環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.4 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+  <p>&nbsp;</p>
   <p>[プログラムソース &quot;connect_with_mjpeg_4.py&quot;]</p>
   <pre class="prettyprint linenums lang-py">
 '''
@@ -1102,6 +1179,467 @@ if __name__ == '__main__':
 
 </section>
 
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="6._映像切断時の再接続処理を追加">6. 映像切断時の再接続処理を追加</a></h2>
+  <p>ここまでのプログラムは、カメラとの接続が30秒以上切断すると接続が復活しませんでした。<br>OpenCV の read() 
+  関数のタイムアウトは30秒となっているようです。30秒以内に接続が復活していれば自動的に再接続してくれるのですが、30秒を超えると自動的には復活しません。</p>
+  <p>"connect_with_rtsp_2.py" を元に再接続処理を追加してこの問題を解決してみたいと思います。</p>
+  <p>&nbsp;</p>
+  <p class="auto-style3"><strong>ポイント</strong></p>
+  <ul>
+    <li>read() の戻り値が False であったら再接続を行います。</li>
+    <li>release() で切断後、cv2.VideoCapture() で再接続します。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p class="auto-style3"><strong>NOTE</strong></p>
+  <ul>
+    <li>切断の試験はカメラの電源をOff/Onする、通信をOff/Onする、などで試験してください。</li>
+    <li>カメラとの接続が正常状態に戻ってから再接続までは最長30秒かかります。気長にお待ちください。</li>
+    <li>read() のタイムアウト時間を変更する API を確認できませんでした。おそらく固定値で変更できないと思われます。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+	
+	<h4>[評価環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.4 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	
+	<p>&nbsp;</p>
+  <p>[プログラムソース &quot;connect_with_mjpeg_5.py&quot;]</p>
+  <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Try connecting to an i-PRO camera with RTSP.
+    RTSP で i-PRO カメラと接続してみる。
+
+[Details]
+    Add reconnection when video is disconnected to "connect_with_mjpeg_2.py".
+    映像切断時の再接続処理を"connect_with_mjpeg_2.py"へ追加する。
+
+[Library install]
+    pip install opencv-python
+'''
+
+from nturl2path import url2pathname
+import cv2
+
+user_id     = "user-id"         # Change to match your camera setting
+user_pw     = "password"        # Change to match your camera setting
+host        = "192.168.0.10"    # Change to match your camera setting
+winname     = "VIDEO"           # Window title
+resolution  = "1920x1080"       # Resolution
+framerate   =  15               # Frame rate
+url         = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"
+
+#
+windowInitialized = False
+
+# Exception definition.
+BackendError = type('BackendError', (Exception,), {})
+
+'''
+[Abstract]
+    Check if the target window exists.
+    対象ウィンドウが存在するかを確認する。
+[Param]
+    winname :       Window title
+[Return]
+    True :          exist
+                    存在する
+    False :         not exist
+                    存在しない
+[Exception]
+    BackendError :
+'''
+def IsWindowVisible(winname):
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
+'''
+[Abstract]
+    main function.
+'''
+if __name__ == '__main__':
+
+    cap = cv2.VideoCapture(url)
+
+    while True:
+        try:
+            ret, frame = cap.read()
+            if ret == True:
+                # Please modify the value to fit your PC screen size.
+                frame2 = cv2.resize(frame, (1280, 760))
+                # Display video.
+                cv2.imshow(winname, frame2)
+
+                if windowInitialized==False:
+                    # Specify window position only once at startup.
+                    cv2.moveWindow(winname, 100, 100)
+                    windowInitialized = True
+<span class="auto-style2">            else:</span>
+<span class="auto-style2">                print("cap.read() return False.")</span>
+<span class="auto-style2">                # The timeout period seems to be 30 seconds.</span>
+<span class="auto-style2">                # And there seems to be no API to change the timeout value.</span>
+
+<span class="auto-style2">                # Reconnect</span>
+<span class="auto-style2">                cap.release()</span>
+<span class="auto-style2">                cap = cv2.VideoCapture(url)</span>
+
+            # Press the "z" key to finish.
+            k = cv2.waitKey(1)
+            if k == ord("z"):
+                break
+            
+            # Exit the program if there is no specified window.
+            if not IsWindowVisible(winname):
+                break
+        
+        except KeyboardInterrupt:
+            # Press'[ctrl] + [c]' on the console to exit the program.
+            print("KeyboardInterrupt")
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()</pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+<section>
+  <h2><a name="7._GUIで映像表示してみる（tkinter）">7. GUIで映像表示してみる（tkinter）</a></h2>
+  <p>ここまでのプログラムは全てOpenCVが作成するウィンドウ表示でした。<br>ここでは独自の GUI を作成してここに映像表示する例を示します。</p>
+  <p>GUI 表示の実現方法もいろいろありますが、ここでは Python 標準の tkinter を使用してみます。</p>
+  <p>&nbsp;</p>
+  <p>tkinter のインストール方法は環境により異なるようです。各人の環境にあった方法をインターネットで調べて実施してください。</p>
+  <p>&nbsp;</p>
+  <p class="auto-style3"><strong>ポイント</strong></p>
+  <ul>
+    <li>tkinter で動画を表示するときは、after() 関数で繰り返し処理を行います。</li>
+    <li>tkinter で表示するために ImageTk.PhotoImage という型に変換する必要があります。<br>numpy.ndarray → 
+    PIL.Image → ImageTk.PhotoImage という順に変換して tkinter で表示します。</li>
+    <li>OpenCVの画像は BGR の並び順になっています。tkinker で表示するために BGR データを RGB へ並び替える必要があります。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>記事「<a href="connect_with_rtsp.html#7._GUIで映像表示してみる（tkinter）">RTSPで画像を取得する</a>」中で既に GUI 版を作成済みなので、プログラム 
+  "connect_with_rtsp_6_3.py" をベースに変更箇所のみをわかるように以下で記載します。ほとんど同じ内容で実現できます。</p>
+  <p>&nbsp;</p>
+	
+	<h4>[評価環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.4 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>Tcl/Tk,</td>
+	    <td>8.6 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+  <p>[プログラムソース &quot;connect_with_mjpeg_6.py&quot;]</p>
+  <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Try connecting to an i-PRO camera with MJPEG.
+    MJPEG で i-PRO カメラと接続してみる。
+
+[Details]
+    Display the video with GUI using tkinter.
+    Add menus and buttons to make it look like a GUI app.
+    
+    tkinter を使ったGUIで映像を表示します。
+    メニューとボタンを追加してGUIアプリらしくします。
+
+    BGR → RGB
+    numpy.ndarray → PIL.Image → ImageTk.PhotoImage
+    (1) BGR → RGB
+    (2) numpy.ndarray → PIL.Image
+    (3) PIL.Image → ImageTk.PhotoImage
+
+[Library install]
+    pip install opencv-python
+'''
+
+import cv2
+import time
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk, ImageOps
+import multiprocessing as mp
+
+
+user_id     = "user-id"         # Change to match your camera setting
+user_pw     = "password"        # Change to match your camera setting
+host        = "192.168.0.10"    # Change to match your camera setting
+winname     = "VIDEO"           # Window title
+<span class="auto-style2">resolution  = "1920x1080"       # Resolution</span>
+<span class="auto-style2">framerate   =  15               # Frame rate</span>
+<span class="auto-style2">url         = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"</span>
+
+
+class Application(tk.Frame):
+    def __init__(self, master = None):
+        super().__init__(master)
+        self.pack()
+
+        # Window settings.
+        self.master.title("Display i-PRO camera with tkinter")      # Window title
+        self.master.geometry("800x600+100+100")                     # Window size, position
+
+        # Event registration for window termination.
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing_window)
+
+        # Create menu.
+        menubar = tk.Menu(self.master)
+        self.master.configure(menu=menubar)
+        filemenu = tk.Menu(menubar)
+        menubar.add_cascade(label='File', menu=filemenu)
+        filemenu.add_command(label='Quit', command = self.on_closing_window)
+
+        # Create button_frame
+        self.button_frame = tk.Frame(self.master, padx=10, pady=10, relief=tk.RAISED, bd=2)
+        self.button_frame.pack(side = tk.BOTTOM, fill=tk.X)
+
+        # Create quit_button
+        self.quit_button = tk.Button(self.button_frame, text='Quit', width=10, command = self.on_closing_window)
+        self.quit_button.pack(side=tk.RIGHT)
+        
+        # Create canvas.
+        self.canvas = tk.Canvas(self.master)
+
+        # Add mouse click event to canvas.
+        self.canvas.bind('&lt;Button-1&gt;', self.canvas_click)
+
+        # Place canvas.
+        self.canvas.pack(expand = True, fill = tk.BOTH)
+
+        # Create image receiving process and queue
+        self.imageQueue = mp.Queue()
+        self.request = mp.Value('i', 0)     # -1 : Exit ReceiveImageProcess.
+                                            #  0 : Normal.
+                                            #  1 : Connect camera.
+                                            #  2 : Release camera.
+        self.p = mp.Process(target=ReceiveImageProcess, args=(self.imageQueue, self.request))
+        self.p.start()
+
+        # Raise a video display event (disp_image) after 500m
+        self.disp_id = self.after(500, self.disp_image)
+
+    def on_closing_window(self):
+        ''' Window closing event. '''
+
+        if messagebox.askokcancel("QUIT", "Do you want to quit?"):
+            # Request terminate process self.p.
+            self.request.value = -1
+
+            # Waiting for process p to finish
+            time.sleep(1)
+
+            # Flash buffer.
+            # The program cannot complete p.join() unless the imageQueue is emptied.
+            for i in range(self.imageQueue.qsize()):
+                pil_image = self.imageQueue.get()
+
+            # Wait for process p to be terminated.
+            self.p.join()
+            self.master.destroy()
+            print("Finish Application.")
+
+    def canvas_click(self, event):
+        ''' Event handling with mouse clicks on canvas '''
+
+        if self.disp_id is None:
+            # Connect camera.
+            self.request.value = 1
+            # Display image.
+            self.disp_image()
+
+        else:
+            # Release camera.
+            self.request.value = 2
+            # Cancel scheduling
+            self.after_cancel(self.disp_id)
+            self.disp_id = None
+
+    def disp_image(self):
+        ''' Display image on Canvas '''
+
+        # If there is data in the imageQueue, the program receives the data and displays the video.
+        num = self.imageQueue.qsize()
+        if num &gt; 0:
+            if (num &gt; 5):
+                num -= 1
+            for i in range(num):
+                cv_image = self.imageQueue.get()
+
+            # (2) Convert image from ndarray to PIL.Image.
+            pil_image = Image.fromarray(cv_image)
+
+            # Get canvas size.
+            canvas_width = self.canvas.winfo_width()
+            canvas_height = self.canvas.winfo_height()
+
+            # Resize the image to the size of the canvas without changing the aspect ratio.
+            # アスペクトを維持したまま画像を Canvas と同じサイズにリサイズ
+            pil_image = ImageOps.pad(pil_image, (canvas_width, canvas_height))
+
+            # (3) Convert image from PIL.Image to PhotoImage
+            # PIL.Image から PhotoImage へ変換する
+            self.photo_image = ImageTk.PhotoImage(image=pil_image)
+
+            # Display image on the canvas.
+            self.canvas.create_image(
+                canvas_width / 2,       # Image display position (center of the canvas)
+                canvas_height / 2,                   
+                image=self.photo_image  # image data
+                )
+            
+        else:
+            pass
+
+        # Raise a video display event (disp_image) after 1ms.
+        self.disp_id = self.after(1, self.disp_image)
+
+
+def ReceiveImageProcess(imageQueue, request):
+    '''
+    Receive Image Process.
+
+    Args:
+        imageQueue      [o] This process stores the received image data in the imageQueue.
+        request         [i] Shared memory for receiving requests from the main process.
+                            -1: Terminate process.
+                             0: Nothing.
+                             1: Connect camera.
+                             2: Release camera connection.
+    Returns:
+        None
+    Raises
+        None
+    '''
+
+    # Connect camera.
+    cap = cv2.VideoCapture(url)
+
+    while True:
+        if cap != None:
+            # Get frame.
+            ret, frame = cap.read()
+
+            if ret == True:
+                # (1) Convert image from BGR to RGB.
+                cv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                if imageQueue.qsize() &lt; 10:
+                    imageQueue.put(cv_image)
+
+            else:
+                print("cap.read() return False.")
+                # The timeout period seems to be 30 seconds.
+                # And there seems to be no API to change the timeout value.
+                time.sleep(1)
+
+                # Reconnect
+                cap.release()
+                cap = cv2.VideoCapture(url)
+        else:
+            time.sleep(0.1)
+                
+        # Check process termination request.
+        if request.value == -1:
+            # Terminate process.
+            cap.release()
+            request.value = 0
+            break
+
+        # Check connect request.
+        if request.value == 1:
+            cap = cv2.VideoCapture(url)
+            request.value = 0
+
+        # Check release request.
+        if request.value == 2:
+            cap.release()
+            cap = None
+            request.value = 0
+
+    print("Terminate SaveImageProcess().")
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Application(master = root)
+    app.mainloop()</pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+<p>&nbsp;</p>
+
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
 <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
@@ -1159,6 +1697,16 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-05-14</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「7. GUIで映像表示してみる（tkinter）」を追加</td>
+	  </tr>
+      <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「6. 映像切断時の再接続処理を追加 」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-04-23</td>
 	    <td class="td_history_separator">-</td>
