@@ -1,19 +1,43 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Windows バージョン情報の取得方法</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <title>Windows バージョン情報の取得方法</title>
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+  
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
 
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+    .auto-style7 {
+      font-weight: normal;
+    }
+    *{margin:0;padding:0}*,:after,:before{background-repeat:no-repeat;box-sizing:inherit}
+  </style>
+
 </head>
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
@@ -407,7 +431,7 @@ BOOL GetProductInfo( TCHAR* cProductInfo, size_t dwProductInfo )
     @param[out]     version         バージョン番号 格納用変数
     @param[in]      nVersion        cVersion の変数サイズ
     @param[out]     build           ビルド番号 格納用変数
-    @param[in]      nuild           cBuild の変数サイズ
+    @param[in]      nBuild          cBuild の変数サイズ
     @retval         TRUE            正常終了
     @retval         FALSE           異常終了
     @author         木下英俊
@@ -704,8 +728,7 @@ Windows8.1 以降にもかかわらず Windows8 に見えてしまう。<br><br>
     &lt;/application&gt;
   &lt;/compatibility&gt;
 &lt;/assembly&gt;</pre>
-<br>参考URL<br>
-<a href="http://d.hatena.ne.jp/chi-bd/20130915/1379207754" target="_blank">http://d.hatena.ne.jp/chi-bd/20130915/1379207754</a><br><br>
+<br>
 
 <br>
 <span class="table_title">[実行結果]<br>
@@ -729,9 +752,28 @@ Windows 7 PRODUCT_PROFESSIONAL, Version 6.1 Service Pack 1, Build 7601
 		</td>
 	</tr>
 </table>
-図：Windows7 の例<br>&nbsp;<hr>
+図：Windows7 の例<br><br><br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li>Windows8.1のバージョン番号 - Null and void (hatenadiary.org)<br>
+<a href="http://d.hatena.ne.jp/chi-bd/20130915/1379207754" target="_blank">http://d.hatena.ne.jp/chi-bd/20130915/1379207754</a></li>
+        <li>バージョン ヘルパー関数 - Win32 apps | Microsoft Docs<br>
+        <a href="https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis" target="_blank">
+        https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis</a></li>
+	</ul>
+</section>
+
+&nbsp;<hr>
 <p> <font face="Meiryo UI">記載：<br>2017年09月30日 木下英俊<br>・Windows10, Windows Server 
 2016, に対応<br><br>2013年01月09日 木下英俊<br>・Windows8.1 に対応<br><br>2012年11月24日 木下英俊<br>・Windows8 に対応<br><br>2012年 3月11日 木下英俊<br>
 ・新規作成</font></p>
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© copyright 2012-2017 木下英俊</small></p>
+</footer>
+
 </body>
 </html>
