@@ -45,8 +45,8 @@ li{
 	width: 100%;
 	margin-left: 0em;
 	margin-right: 0em;
-	margin-top: 0.5px;
-  margin-bottom: 0.0px;
+	margin-top: 0px;
+  margin-bottom: 0px;
   padding-left: 0.5em;
   padding-right: 0em;
 	padding-top: 0.1em;
@@ -57,7 +57,13 @@ li{
 
 li[style="list-style-type:none"],
 p{
-  margin-left: 0.2rem;
+	/*margin-left: 0.2rem;*/
+	margin-left: 0px;
+}
+
+li.accordion-toggle{
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 a.menu {
@@ -66,6 +72,10 @@ a.menu {
 	border-radius: 2px
 }
 
+hr{
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
 
 /* 戻る */
 li.return{

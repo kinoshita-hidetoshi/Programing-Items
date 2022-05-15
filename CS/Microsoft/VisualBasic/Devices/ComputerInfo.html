@@ -1,95 +1,204 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>class ComputerInfo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <title>class ComputerInfo</title>
+	
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	border-collapse: collapse;
-	border: 2px solid #808080;
-}
-td {
-	border: thin solid #808080;
-}
-.auto-style9 {
-	background-color: #FFFF00;
-}
-</style>
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style9 {
+    	background-color: #484800;
+    }
+  .auto-style10 {
+    background-color: #FFFF00;
+  }
+  </style>
 </head>
+
+
 <body onload="prettyPrint();">
 <h1 class="auto-style7">
 ComputerInfo クラス</h1>
 
 <p> コンピューターのメモリ、読みこまれているアセンブリ、コンピューター名、オペレーティングシステムなどに関する情報を取得するためのプロパティを提供します。</p>
+<p> &nbsp;</p>
 <h2> 1. 概要</h2>
 <p> 継承階層<br>System.Object<br>&nbsp; Microsoft.VisualBasic.Devices.ComputerInfo</p>
 <p> 名前空間: Microsoft.VisualBasic.Devices</p>
 <p> アセンブリ： Microsoft.VisualBasic (Microsoft.VisualBasic.dll 内)</p>
+<p> &nbsp;</p>
 <h2> 2. プロパティ</h2>
-<table class="auto-style8" style="width: 100%">
+<table class="border-collapse" style="width: 100%">
+  <thead class="standard_table">
+  	<tr>
+  		<td style="width: 64px; height: 24px" class="standard_table"></td>
+  		<td style="width: 100px; height: 24px" class="standard_table">名前</td>
+  		<td style="width: 400px; height: 24px" class="standard_table">説明</td>
+  	</tr>
+  </thead>
 	<tr>
-		<td style="width: 64px; height: 24px"></td>
-		<td style="width: 100px; height: 24px">名前</td>
-		<td style="width: 400px; height: 24px">説明</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">AvailablePhysicalMemory</td>
+		<td class="standard_table">コンピューターの空き物理メモリの合計サイズを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>AvailablePhysicalMemory</td>
-		<td>コンピューターの空き物理メモリの合計サイズを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">AvailableVirtualMemory</td>
+		<td class="standard_table">コンピューターの空き仮想アドレス空間の合計アドレスを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>AvailableVirtualMemory</td>
-		<td>コンピューターの空き仮想アドレス空間の合計アドレスを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">InstalledUICulture</td>
+		<td class="standard_table">オペレーティングシステムにインストールされた現在のUIカルチャーを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>InstalledUICulture</td>
-		<td>オペレーティングシステムにインストールされた現在のUIカルチャーを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">OSFullName</td>
+		<td class="standard_table">オペレーティングシステムの完全名を取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>OSFullName</td>
-		<td>オペレーティングシステムの完全名を取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">OSPlatform</td>
+		<td class="standard_table">コンピューターで使用されているオペレーティングシステムのプラットフォームIDを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>OSPlatform</td>
-		<td>コンピューターで使用されているオペレーティングシステムのプラットフォームIDを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">OSVersion</td>
+		<td class="standard_table">コンピューターで使用されているオペレーティングシステムのバージョンを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>OSVersion</td>
-		<td>コンピューターで使用されているオペレーティングシステムのバージョンを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">TotalPhysicalMemory</td>
+		<td class="standard_table">コンピューターの物理メモリの合計サイズを取得します。</td>
 	</tr>
 	<tr>
-		<td>public</td>
-		<td>TotalPhysicalMemory</td>
-		<td>コンピューターの物理メモリの合計サイズを取得します。</td>
-	</tr>
-	<tr>
-		<td>public</td>
-		<td>TotalVirtualMmory</td>
-		<td>コンピューターの仮想アドレス空間の合計サイズを取得します。</td>
+		<td class="standard_table">public</td>
+		<td class="standard_table">TotalVirtualMmory</td>
+		<td class="standard_table">コンピューターの仮想アドレス空間の合計サイズを取得します。</td>
 	</tr>
 </table>
 <p>&nbsp;</p>
 <h2>3. サンプルプログラム</h2>
+<p>&nbsp;</p>
 <p>環境：<br>&nbsp;&nbsp;&nbsp; 開発環境： Visual Studio 2013, C#, 
 .NET 4.0<br>&nbsp;&nbsp;&nbsp; ＯＳ： Windows8.1</p>
-<span class="table_title">[プログラムソース &quot;Program.cs&quot;]</span><table style="font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre  class="prettyprint linenums">
+<p>&nbsp;</p>
+	
+	<h4>[評価環境1]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	      <td>Visual Studio 2013,</td>
+	      <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td></td>
+	    <td>.NET Framework,</td>
+	    <td>4.0</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows8 home,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[評価環境2]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	      <td>Visual Studio 2022,</td>
+	      <td>Version 17.1.6</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td></td>
+	    <td>.NET,</td>
+	    <td>6</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>Version 10.0.22000.675</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<p>&nbsp;</p>
+
+<pre  class="prettyprint linenums">
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,18 +230,12 @@ namespace ComputerInfo
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
 <br>
 <br>マニュフェストファイルはこんな感じで。これをしないとWindows8.1のバージョンを正しく認識できません。<br><br>
 
 [app.manifest]
-<table style="font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+<pre class="prettyprint linenums">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;asmv1:assembly manifestVersion=&quot;1.0&quot; xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv1=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv2=&quot;urn:schemas-microsoft-com:asm.v2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
   &lt;assemblyIdentity version=&quot;1.0.0.0&quot; name=&quot;MyApplication.app&quot;/&gt;
   &lt;trustInfo xmlns=&quot;urn:schemas-microsoft-com:asm.v2&quot;&gt;
@@ -176,12 +279,59 @@ namespace ComputerInfo
   &lt;/compatibility&gt;
 
 &lt;/asmv1:assembly&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
-<span class="table_title"><br>[実行結果]<br>
-<br><img alt="" src="ComputerInfo/imgD.gif"></span><p>サンプルプログラム  
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span class="table_title">[実行結果]</span></p>
+<p>&nbsp;</p>
+<p><span class="table_title"><img alt="" src="ComputerInfo/imgD.gif">
+</span></p>
+<p>[図] Windows 8.1 による動作結果</p>
+<p>&nbsp;</p>
+<p><span class="table_title">
+<img alt="" src="ComputerInfo/img29.jpg"> </span></p>
+<p><span class="table_title">[図] Windows11, .NET6, VS2022 による動作結果</span></p>
+<p>&nbsp;</p>
+<p>補足： Build Number が 22000 以上であれば Windows11 らしいのですが、OSFullName は Windows 10 
+に見えてしまって残念な結果となりました。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<h3>.NET6 および VS2022 環境における補足情報</h3>
+<p>VS2022 の環境で .NET6 プロジェクトとして使用したとき、下記の通り <span class="cpp-source">
+&lt;UseWindowsForms&gt;true&lt;/UseWindowsForms&gt;</span> を直接書き込みする必要がありました。</p>
+<p>これを行わないと参照情報として <strong>Microsoft.VisualBasic.Forms</strong> 
+を取り込んでくれず動作できませんでした。</p>
+<p>&nbsp;</p>
+<p>[ファイル名： "ComputerInfo.csproj"]</p>
+<pre>&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+
+  &lt;PropertyGroup Label="Globals"&gt;
+    &lt;SccProjectName&gt;SAK&lt;/SccProjectName&gt;
+    &lt;SccProvider&gt;SAK&lt;/SccProvider&gt;
+    &lt;SccAuxPath&gt;SAK&lt;/SccAuxPath&gt;
+    &lt;SccLocalPath&gt;SAK&lt;/SccLocalPath&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;net6.0-windows&lt;/TargetFramework&gt;
+    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
+    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+    <span class="auto-style10">&lt;UseWindowsForms&gt;true&lt;/UseWindowsForms&gt;</span>
+    &lt;PlatformTarget&gt;AnyCPU&lt;/PlatformTarget&gt;
+    &lt;Platforms&gt;AnyCPU&lt;/Platforms&gt;
+    &lt;FileVersion&gt;&lt;/FileVersion&gt;
+    &lt;AssemblyVersion&gt;&lt;/AssemblyVersion&gt;
+  &lt;/PropertyGroup&gt;
+
+&lt;/Project&gt;</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<p>サンプルプログラム  
 <a href="ComputerInfo/GetTotalPhysicalMemory.zip">ダウンロード</a></p>
 <p>&nbsp;</p>
 <h2>参照</h2>
@@ -190,6 +340,30 @@ namespace ComputerInfo
 https://msdn.microsoft.com/ja-jp/library/microsoft.visualbasic.devices.computerinfo(v=vs.100).aspx</a></p>
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： 2015年5月16日 木下英俊</font></p>
+<p> &nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">記載</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-05-15</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows11, VS2022 情報にて更新 <br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2015-05-16</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2015-2021 木下英俊</small></p>
+</footer>
+
 </body>
 </html>

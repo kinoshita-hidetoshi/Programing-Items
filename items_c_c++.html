@@ -13,597 +13,631 @@
 	
 	<base target="contents">
 	
-	<!-- CSS -->
+  <!-- CSS -->
 	<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-	<link href="./design_items.css" rel="stylesheet">
+  <link href="./design_items_v2.css" rel="stylesheet">
 	
-	<script type="text/javascript">
-	var ulShowHide = {
-		showHide: function(element) {
-			if (element.parentNode.childNodes.item(2)) {
-				if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-					var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-					if (styleDisplay == 'block' || styleDisplay == '') {
-						element.parentNode.childNodes.item(2).style.display = "none";
-					}
-					else {
-						element.parentNode.childNodes.item(2).style.display = "block";
-					}
-				}
-			}
-			return false;
-		}
-	}
-	</script>
+  <script type="text/javascript">
+  	function sublist( target ) {
+      var TargetList = target.parentNode.getElementsByTagName('ul');
+      if ( TargetList[0].style.display == 'none' ) {
+        TargetList[0].style.display = 'block';
+      }
+      else {
+        TargetList[0].style.display = 'none';
+      }
+    }
+    
+    function checkedOff(){
+      window.parent.checkedOff();
+    }
+	</script>	
 	
-	<script type="text/javascript">
-	function sublist( target ) {
-	   var TargetList = target.parentNode.getElementsByTagName('ul');
-	   if ( TargetList[0].style.display == 'none' ) {
-	      TargetList[0].style.display = 'block';
-	   }
-	   else {
-	      TargetList[0].style.display = 'none';
-	   }
-	}
-	</script>
-	
-	<style type="text/css">
-	.auto-style1 {
-		vertical-align: middle;
-	}
-	.auto-style2 {
-	list-style-type: disc;
-}
-.auto-style3 {
-	vertical-align: middle;
-	list-style-type: disc;
-}
-	</style>
+  <script src="jquery.js"></script>  
+  <script>
+    $(function() {
+
+      $(".menu-list").find(".accordion-toggle").click(
+        function() {
+          // リスト開閉
+          $(this).next().toggleClass("open").slideToggle("fast");   // fast, middle, slow
+          // アイコン更新
+          $(this).toggleClass("active-tab").find(".menu-link").toggleClass("active");
+
+          /*
+          // クリックしたメニュー以外のコンテントを閉じる
+          $(".menu-list .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
+          // クリックしたメニュー以外のアイコンを '+' にする
+          $(".menu-list .accordion-toggle").not(jQuery(this)).removeClass("active-tab").find(".menu-link").removeClass("active");
+          */
+        }
+      );
+    }); // jQuery load
+  </script>
 	
 </head>
 
 <body>
 
-<ul>
-  <a href="items_top.html" target="_self">
-  	<li class="return">
-      <img class="return" alt="" src="images/to_upper_folder.png">
-      <label class="return">戻る</label>
+<!-- c -->
+<a href="items_top.html" target="_self">
+  <li class="return">
+    <img class="return" alt="" src="images/to_upper_folder.png">
+    <label class="return">戻る</label>
+  </li>
+</a>
+
+<div id="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">c</a>
     </li>
-  </a>
-	<li style="list-style-type:none">
-  	<a class="menu" href="url" name="c_menu_top" onclick="sublist(this); return false;">c</a>
-  	<ul>
-  		<li>(empty)</li>
-  	</ul>
-	</li>
-</ul>
+    <ul>
+      <li>(empty)</li>
+    </ul>
+  </ul>
+</div>
 
 <hr>
 
-<ul>
-  <a href="items_top.html" target="_self">
-  	<li class="return">
-      <img class="return" alt="" src="images/to_upper_folder.png">
-      <label class="return">戻る</label>
-    </li>
-  </a>
-  
-  <li style="list-style-type:none">
-	<a class="menu" href="url" name="c++_menu_top" onclick="sublist(this); return false;">c++</a>
-	<ul>
-		<li>
-		<a href="url" class="menu" onclick="sublist(this); return false;">基本文法</a><ul>
-			<li>型<ul>
-				<li>基本型</li>
-				<li>大きさが規定されている型</li>
-				<li>ポインタ</li>
-				<li>関数ポインタ</li>
-				<li><a href="C++/language/types/reference.html">参照 (左辺値参照、右辺値参照)</a></li>
-			</ul>
-			</li>
-			<li>型の別名宣言</li>
-			<li>キャスト<ul>
-				<li>static_cast</li>
-				<li>dynamic_cast</li>
-				<li>const_cast</li>
-				<li>reinterpret_cast</li>
-			</ul>
-			</li>
-			<li>右辺値参照とムーブセマンティクス</li>
-			<li>関数<ul>
-				<li><a href="C++/language/functions/lambda.html">ラムダ式 (c++11)</a> </li>
-			</ul>
-			</li>
-			<li>クラス<ul>
-				<li><a href="C++/language/class/class_template.html">クラスの基本テンプレート</a></li>
-				<li>メンバ変数</li>
-				<li>メンバ関数</li>
-				<li>参照修飾子</li>
-				<li>コンストラクタ<ul>
-					<li>変換コンストラクタ</li>
-					<li>explicit コンストラクタ</li>
-					<li>コピーコンストラクタと代入演算子</li>
-					<li>ムーブコンストラクタとムーブ代入演算子</li>
-					<li>委譲コンストラクタ</li>
-					<li>継承コンストラクタ</li>
-				</ul>
-				</li>
-				<li>デストラクタ</li>
-				<li><a href="C++/language/class/static_member.html">静的メンバ</a></li>
-			</ul>
-			</li>
-			<li><a href="C++/language/types/constexpr.html">定数式 - constexpr (c++11)</a></li>
-			<li>属性 (c++11)</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">文字列処理</a>
-		<ul>
-			<li>regex (c++11)</li>
-            <li><a href="C++/string/split.html">split</a></li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">入出力</a>
-		<ul>
-			<li><a href="C++/iostream/Get_FileSize.html" target="contents">ifstream によるファイルサイズ取得</a></li>
-			<li>
-			<a href="C++/iostream/ReadWrite_BinaryFile.html" target="contents">ofstream, ifstream, によるバイナリファイルの読み書き</a></li>
-			<li><a href="C++/iostream/ClearCinBuffer.html">std::cin バッファをクリアする方法</a></li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">汎用ユーティリティライブラリ</a><ul>
-			<li>pair</li>
-			<li><a href="C++/Utility/tuple.html">tuple (c++11)</a></li>
-			<li>optional (c++17)</li>
-			<li>any (c++17)</li>
-			<li>variant (c++17)</li>
-			<li>format (c++20)</li>
-		</ul>
-		</li>
-		
-		<li><a href="C++/Container/container.html">コンテナライブラリ</a>
-		<ul>
-			<li>シーケンスコンテナ
-			<ul class="auto-style2">
-				<li><a href="C++/Container/array.html">array (c++11)</a></li>
-				<li><a href="C++/Container/vector.html">vector</a></li>
-				<li><a href="C++/Container/deque.html">deque</a></li>
-				<li><a href="C++/Container/forward_list.html">forward_list (c++11)</a></li>
-				<li><a href="C++/Container/list.html">list</a></li>
-			</ul>
-			</li>
-			
-			<li>コンテナアダプタ
-			<ul class="auto-style2">
-				<li><a href="C++/Container/stack.html">stack</a></li>
-				<li><a href="C++/Container/queue.html">queue</a></li>
-				<li><a href="C++/Container/priority_queue.html">priority_queue</a></li>
-			</ul>
-			</li>
-			
-			<li>連想コンテナ
-			<ul class="auto-style2">
-				<li><a href="C++/Container/set.html">set</a></li>
-				<li><a href="C++/Container/map.html">map</a></li>
-                <li>multiset</li>
-                <li>multimap</li>
-			</ul>
-			</li>
-			<li>非順序連想コンテナ
-			<ul class="auto-style2">
-				<li>unorderd_set (c++11)</li>
-				<li>unorderd_map (c++11)</li>
-				<li>unorderd_multiset (c++11)</li>
-				<li>unorderd_multimap (c++11)</li>
-			</ul>
-			</li>
-		    <li>スパン<ul class="auto-style2">
-              <li>span (c++20)</li>
-            </ul>
-            </li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a>
-		<ul>
-			<li>非変更シーケンス操作<ul class="auto-style2">
-              <li>all_of (c++11)<br>any_of (c++11)<br>non_of (c++11)</li>
-              <li>for_each</li>
-              <li>for_each_n (c++17)</li>
-              <li>count<br>count_if</li>
-              <li>mismatch</li>
-              <li>find<br>find_if<br>find_if_not (c++11)</li>
-              <li>find_end</li>
-              <li>find_first_of</li>
-              <li>adjacent_find</li>
-              <li>search</li>
-              <li>search_n</li>
-            </ul>
-            </li>
-			<li>変更シーケンス操作<ul class="auto-style2">
-              <li>copy</li>
-              <li>copy_if (c++11)</li>
-			<li>fill</li>
-			<li>fill_n</li>
-			  <li>random_shuffle (c++17未満)</li>
-			<li>shuffle (c++11)unique</li>
-            </ul>
-            </li>
-            <li>分割操作</li>
-            <li>ソート操作</li>
-            <li>二分探索操作(ソート済み範囲用)</li>
-            <li>集合操作(ソート済み範囲用)</li>
-            <li>ヒープ操作</li>
-            <li>最小/最大演算</li>
-            <li>比較演算</li>
-            <li>順列操作<ul class="auto-style2">
-              <li>next_permutation, prev_permutation</li>
-            </ul>
-            </li>
-            <li>数値演算<ul class="auto-style2">
-              <li>iota (c++11)</li>
-            </ul>
-            </li>
-            <li>未初期化記憶域の操作</li>
-		</ul>
-		</li>
-		
-		<li>
-		<a href="url" class="menu" onclick="sublist(this); return false;">スマートポインタ</a>
-		<ul>
-			<li><a href="C++/smart_pointer/auto_ptr.html">auto_ptr</a></li>
-			<li><a href="C++/smart_pointer/unique_ptr.html">unique_ptr (c++11)</a></li>
-			<li><a href="C++/smart_pointer/shared_ptr.html">shared_ptr (c++11)</a></li>
-			<li><a href="C++/smart_pointer/weak_ptr.html">weak_ptr (c++11)</a></li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">関数型プログラミング</a>
-		<ul>
-			<li>bind (c++11)</li>
-			<li>function (c++11)</li>
-		</ul>
-		</li>
+<!-- c++ -->
+<a href="items_top.html" target="_self">
+  <li class="return">
+    <img class="return" alt="" src="images/to_upper_folder.png">
+    <label class="return">戻る</label>
+  </li>
+</a>
 
-		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">スレッドサポートライブラリ</a>		 
-		<ul>
-			<li>スレッド
-			<ul class="auto-style3">
-				<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
-				<li>jthread (c++20)</li>
-			</ul>
-			</li>
-			<li>カレントスレッドを管理する関数
-			<ul class="auto-style3">
-				<li>this_thread::yield (c++11)</li>
-				<li>this_thread::get_id (c++11)</li>
-				<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
-				<li><a href="C++/thread/sleep_until.html">this_thread::sleep_until (c++11)</a></li>
-			</ul>
-			</li>
-			<li>スレッドのキャンセル
-			<ul class="auto-style3">
-				<li>stop_token (c++20)</li>
-				<li>stop_source (c++20)</li>
-				<li>stop_callback (c++20)</li>
-			</ul>
-			</li>
-			<li>相互排他
-				<ul class="auto-style3">
-				<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
-				<li>timed_mutex (c++11)</li>
-				<li>recursive_mutex (c++11)</li>
-				<li>recursive_timed_mutex (c++11)</li>
-				<li>shared_mutex (c++17)</li>
-				<li>shared_timed_mutex (c++14)</li>
-				<li>counting_semaphore (c++20)</li>
-				<li>binary_semaphore (c++20)</li>
-			</ul>
-			</li>
-			<li>汎用ミューテックス管理
-			<ul class="auto-style3">
-				<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
-				<li>unique_lock (c++11)</li>
-				<li>shared_lock (c++14)</li>
-				<li>scoped_lock (c++17)</li>
-			</ul>
-			</li>
-			<li>汎用ロックアルゴリズム
-			<ul class="auto-style3">
-				<li>try_lock (c++11)</li>
-				<li>lock (c++11)</li>
-			</ul>
-			</li>
-			<li>コールワンス
-			<ul class="auto-style3">
-				<li>once_flag (c++11)</li>
-				<li>call_once (c++11)</li>
-			</ul>
-			</li>
-			<li>条件変数
-			<ul class="auto-style3">
-				<li>condition_variable (c++11)</li>
-				<li>condition_vriable_any (c++11)</li>
-				<li>notify_all_at_thread_exit (c++11)</li>
-				<li>cv_status (c++11)</li>
-			</ul>
-			</li>
-			<li>フューチャー
-			<ul class="auto-style3">
-				<li>promise (c++11)</li>
-				<li>packaged_task (c++11)</li>
-				<li>future (c++11)</li>
-				<li>shared_future (c++11)</li>
-				<li><a href="C++/thread/async.html">async (c++11)</a></li>
-				<li>launch (c++11)</li>
-				<li>future_status (c++11)</li>
-			</ul>
-			</li>
-			<li>フューチャーのエラー
-			<ul class="auto-style3">
-				<li>future_error (c++11)</li>
-				<li>future_category (c++11)</li>
-				<li>future_errc (c++11)</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-			
-		<li>
-		<a href="url" class="menu" onclick="sublist(this); return false;">atomic</a>
-		<ul>
-			<li><a href="C++/atomic/atomic.html">std::atomic (c++11)</a></li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">ファイルシステムライブラリ</a>
-		<ul>
-			<li>クラス
-			<ul class="auto-style2">
-				<li>path</li>
-				<li>filesystem_error</li>
-				<li>directory_entry</li>
-			</ul>
-			</li>
-			<li>非メンバ関数
-			<ul class="auto-style2">
-				<li>copy</li>
-				<li>copy_file</li>
-				<li>create_directory, create_directories</li>
-				<li>exist</li>
-				<li>file_size</li>
-				<li>remove, remove_all</li>
-				<li>rename</li>
-			</ul>
-			</li>
-			<li>ファイル種別<ul class="auto-style2">
-				<li>is_block_file</li>
-				<li>is_character_file</li>
-				<li>is_directory</li>
-				<li>is_empty</li>
-				<li>is_fifo</li>
-				<li>is_other</li>
-				<li>is_regular_file</li>
-				<li>is_socket</li>
-				<li>is_symlink</li>
-				<li>status_known</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="ulShowHide.showHide(this);return false;">日時</a>
-		<ul>
-			<li>(empty)</li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">数学</a>
-		<ul>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">乱数生成</a>
-			<ul>
-				<li class="auto-style1">
-				<a href="C++/Numeric%20library/mt19937.html">mt19937, uniform_int_distribution (c++11)</a></li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">関数型プログラミング</a>
-		<ul>
-			<li>bind (c++11)</li>
-			<li>function (c++11)</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">メタプログラミング</a>
-		<ul>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">type_traits</a>
-			<ul type="disc">
-				<li>is_void&lt;T&gt;</li>
-				<li>is_integral&lt;T&gt;</li>
-				<li>is_float&lt;T&gt;</li>
-				<li>is_pointer&lt;T&gt;</li>
-				<li>is_reference&lt;T&gt;</li>
-				<li>is_member_pointer&lt;T&gt;</li>
-				<li>is_member_function_pointer&lt;T&gt;</li>
-				<li>is_array&lt;T&gt;</li>
-				<li>is_union&lt;T&gt;</li>
-				<li>is_class&lt;T&gt;</li>
-				<li>is_enum&lt;T&gt;</li>
-				<li>is_function&lt;T&gt;</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">Template</a><ul>
-			<li>クラステンプレート</li>
-			<li>関数テンプレート</li>
-			<li>エイリアステンプレート (c++11)</li>
-			<li>変数テンプレート (c++14)</li>
-			<li>テンプレートの実引数推定</li>
-			<li>明示的特殊化</li>
-			<li>クラステンプレートの実引数推定 (c++17)</li>
-			<li>部分特殊化</li>
-			<li>パラメータバック (c++11)</li>
-			<li>sizeof ... (c++11)</li>
-			<li>畳み込み式 (c++17)</li>
-			<li>依存名 - SFINAE</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">Exceptions</a><ul>
-			<li>throw式</li>
-			<li>try-catchブロック</li>
-			<li>関数tryブロック</li>
-			<li>noexcept指定子 (c++11)</li>
-			<li>noexcept演算子 (c++11)</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a><ul>
-			<li><a href="C++/etc/Properties.html">Properties</a></li>
-		</ul>
-		</li>
-	</ul>
-</ul>
+<div id="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">c++</a>
+    </li>
+    <ul>
+      <li class="accordion-toggle">
+        <a class="menu-link">基本文法</a>
+      </li>
+      <ul>
+
+  			<li class="accordion-toggle">型</li>
+  			<ul>
+  				<li>基本型</li>
+  				<li>大きさが規定されている型</li>
+  				<li>ポインタ</li>
+  				<li>関数ポインタ</li>
+  				<li><a href="C++/language/types/reference.html">参照 (左辺値参照、右辺値参照)</a></li>
+  			</ul>
+  			<li>型の別名宣言</li>
+  			
+  			<li class="accordion-toggle">キャスト</li>
+  			<ul>
+  				<li>static_cast</li>
+  				<li>dynamic_cast</li>
+  				<li>const_cast</li>
+  				<li>reinterpret_cast</li>
+  			</ul>
+  			<li>右辺値参照とムーブセマンティクス</li>
+  			
+  			<li class="accordion-toggle">関数</li>
+  			<ul>
+  				<li><a href="C++/language/functions/lambda.html">ラムダ式 (c++11)</a> </li>
+  			</ul>
+  			
+  			<li class="accordion-toggle">クラス</li>
+  			<ul>
+  				<li><a href="C++/language/class/class_template.html">クラスの基本テンプレート</a></li>
+  				<li>メンバ変数</li>
+  				<li>メンバ関数</li>
+  				<li>参照修飾子</li>
+  				
+  				<li class="accordion-toggle">コンストラクタ</li>
+  				<ul>
+  					<li>変換コンストラクタ</li>
+  					<li>explicit コンストラクタ</li>
+  					<li>コピーコンストラクタと代入演算子</li>
+  					<li>ムーブコンストラクタとムーブ代入演算子</li>
+  					<li>委譲コンストラクタ</li>
+  					<li>継承コンストラクタ</li>
+  				</ul>
+  				<li>デストラクタ</li>
+  				<li><a href="C++/language/class/static_member.html">静的メンバ</a></li>
+  			</ul>
+  			<li><a href="C++/language/types/constexpr.html">定数式 - constexpr (c++11)</a></li>
+  			<li>属性 (c++11)</li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">文字列処理</a>
+      </li>
+      <ul>
+        <li>regex (c++11)</li>
+        <li><a href="C++/string/split.html">split</a></li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">入出力</a>
+      </li>
+      <ul>
+  			<li><a href="C++/iostream/Get_FileSize.html" target="contents">ifstream によるファイルサイズ取得</a></li>
+  			<li><a href="C++/iostream/ReadWrite_BinaryFile.html" target="contents">ofstream, ifstream, によるバイナリファイルの読み書き</a></li>
+  			<li><a href="C++/iostream/ClearCinBuffer.html">std::cin バッファをクリアする方法</a></li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">汎用ユーティリティライブラリ</a>
+      </li>
+      <ul>
+  			<li>pair</li>
+  			<li><a href="C++/Utility/tuple.html">tuple (c++11)</a></li>
+  			<li>optional (c++17)</li>
+  			<li>any (c++17)</li>
+  			<li>variant (c++17)</li>
+  			<li>format (c++20)</li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">コンテナライブラリ</a>
+      </li>
+      <ul>
+        <li><a href="C++/Container/container.html">コンテナライブラリ一覧</a></li>
+        
+  			<li class="accordion-toggle">シーケンスコンテナ</li>
+  			<ul>
+  				<li><a href="C++/Container/array.html">array (c++11)</a></li>
+  				<li><a href="C++/Container/vector.html">vector</a></li>
+  				<li><a href="C++/Container/deque.html">deque</a></li>
+  				<li><a href="C++/Container/forward_list.html">forward_list (c++11)</a></li>
+  				<li><a href="C++/Container/list.html">list</a></li>
+  			</ul>
+  			
+  			<li class="accordion-toggle">コンテナアダプタ</li>
+  			<ul class="auto-style2">
+  				<li><a href="C++/Container/stack.html">stack</a></li>
+  				<li><a href="C++/Container/queue.html">queue</a></li>
+  				<li><a href="C++/Container/priority_queue.html">priority_queue</a></li>
+  			</ul>
+  			
+  			<li class="accordion-toggle">連想コンテナ</li>
+  			<ul class="auto-style2">
+  				<li><a href="C++/Container/set.html">set</a></li>
+  				<li><a href="C++/Container/map.html">map</a></li>
+          <li>multiset</li>
+          <li>multimap</li>
+  			</ul>
+  			
+  			<li class="accordion-toggle">非順序連想コンテナ</li>
+  			<ul>
+  				<li>unorderd_set (c++11)</li>
+  				<li>unorderd_map (c++11)</li>
+  				<li>unorderd_multiset (c++11)</li>
+  				<li>unorderd_multimap (c++11)</li>
+  			</ul>
+  			
+ 		    <li class="accordion-toggle">スパン</li>
+ 		    <ul>
+          <li>span (c++20)</li>
+        </ul>
+      </ul>
+
+
+      <!-- アルゴリズム -->
+      <li class="accordion-toggle"><a class="menu-link">アルゴリズム</a></li>
+      <ul>
+			  <li class="accordion-toggle">非変更シーケンス操作</li>
+			  <ul class="auto-style2">
+          <li>all_of (c++11)<br>any_of (c++11)<br>non_of (c++11)</li>
+          <li>for_each</li>
+          <li>for_each_n (c++17)</li>
+          <li>count<br>count_if</li>
+          <li>mismatch</li>
+          <li>find<br>find_if<br>find_if_not (c++11)</li>
+          <li>find_end</li>
+          <li>find_first_of</li>
+          <li>adjacent_find</li>
+          <li>search</li>
+          <li>search_n</li>
+        </ul>
+      
+  			<li class="accordion-toggle">変更シーケンス操作</li>
+  			<ul>
+          <li>copy</li>
+          <li>copy_if (c++11)</li>
+  			  <li>fill</li>
+  			  <li>fill_n</li>
+  			  <li>random_shuffle (c++17未満)</li>
+  			  <li>shuffle (c++11)unique</li>
+        </ul>
+        
+        <li>分割操作</li>
+        <li>ソート操作</li>
+        <li>二分探索操作(ソート済み範囲用)</li>
+        <li>集合操作(ソート済み範囲用)</li>
+        <li>ヒープ操作</li>
+        <li>最小/最大演算</li>
+        <li>比較演算</li>
+        
+        <li class="accordion-toggle">順列操作</li>
+        <ul>
+          <li>next_permutation, prev_permutation</li>
+        </ul>
+  
+        <li class="accordion-toggle">数値演算</li>
+        <ul>
+          <li>iota (c++11)</li>
+        </ul>
+      
+        <li>未初期化記憶域の操作</li>
+  		</ul>
+
+
+      <!-- スマートポインタ -->
+      <li class="accordion-toggle"><a class="menu-link">スマートポインタ</a></li>
+      <ul>
+  			<li><a href="C++/smart_pointer/auto_ptr.html">auto_ptr</a></li>
+  			<li><a href="C++/smart_pointer/unique_ptr.html">unique_ptr (c++11)</a></li>
+  			<li><a href="C++/smart_pointer/shared_ptr.html">shared_ptr (c++11)</a></li>
+  			<li><a href="C++/smart_pointer/weak_ptr.html">weak_ptr (c++11)</a></li>
+      </ul>
+
+      
+      <!-- 関数型プログラミング -->
+      <li class="accordion-toggle"><a class="menu-link">関数型プログラミング</a></li>
+      <ul>
+  			<li>bind (c++11)</li>
+  			<li>function (c++11)</li>
+      </ul>
+
+
+      <!-- スレッドサポートライブラリ -->
+      <li class="accordion-toggle">
+        <a class="menu-link">スレッドサポートライブラリ</a>
+      </li>
+      <ul>
+      
+        <li>スレッド</li>
+  			<ul>
+  				<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
+  				<li>jthread (c++20)</li>
+  			</ul>
+  			
+  			<li>カレントスレッドを管理する関数</li>
+  			<ul>
+  				<li>this_thread::yield (c++11)</li>
+  				<li>this_thread::get_id (c++11)</li>
+  				<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
+  				<li><a href="C++/thread/sleep_until.html">this_thread::sleep_until (c++11)</a></li>
+  			</ul>
+  			
+  			<li>スレッドのキャンセル</li>
+  			<ul class="auto-style3">
+  				<li>stop_token (c++20)</li>
+  				<li>stop_source (c++20)</li>
+  				<li>stop_callback (c++20)</li>
+  			</ul>
+  			
+        <li>相互排他</li>
+        <ul>
+  				<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
+  				<li>timed_mutex (c++11)</li>
+  				<li>recursive_mutex (c++11)</li>
+  				<li>recursive_timed_mutex (c++11)</li>
+  				<li>shared_mutex (c++17)</li>
+  				<li>shared_timed_mutex (c++14)</li>
+  				<li>counting_semaphore (c++20)</li>
+  				<li>binary_semaphore (c++20)</li>
+  			</ul>
+
+  			<li>汎用ミューテックス管理</li>
+  			<ul>
+  				<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
+  				<li>unique_lock (c++11)</li>
+  				<li>shared_lock (c++14)</li>
+  				<li>scoped_lock (c++17)</li>
+  			</ul>
+  			
+  			<li>汎用ロックアルゴリズム</li>
+  			<ul>
+  				<li>try_lock (c++11)</li>
+  				<li>lock (c++11)</li>
+  			</ul>
+
+        <li>コールワンス</li>
+        <ul>
+  				<li>once_flag (c++11)</li>
+  				<li>call_once (c++11)</li>
+  			</ul>
+  			
+  			<li>条件変数</li>
+  			<ul>
+  				<li>condition_variable (c++11)</li>
+  				<li>condition_vriable_any (c++11)</li>
+  				<li>notify_all_at_thread_exit (c++11)</li>
+  				<li>cv_status (c++11)</li>
+  			</ul>
+  			
+        <li>フューチャー</li>
+  			<ul>
+  				<li>promise (c++11)</li>
+  				<li>packaged_task (c++11)</li>
+  				<li>future (c++11)</li>
+  				<li>shared_future (c++11)</li>
+  				<li><a href="C++/thread/async.html">async (c++11)</a></li>
+  				<li>launch (c++11)</li>
+  				<li>future_status (c++11)</li>
+  			</ul>
+  			
+  			<li>フューチャーのエラー</li>
+  			<ul>
+  				<li>future_error (c++11)</li>
+  				<li>future_category (c++11)</li>
+  				<li>future_errc (c++11)</li>
+  			</ul>
+  		</ul>
+ 
+
+      <li class="accordion-toggle">
+        <a class="menu-link">atomic</a>
+      </li>
+      <ul>
+        <li><a href="C++/atomic/atomic.html">std::atomic (c++11)</a></li>
+      </ul>
+
+
+      <li class="accordion-toggle">
+        <a class="menu-link">ファイルシステムライブラリ</a>
+      </li>
+      <ul>
+  			<li>クラス</li>
+  			<ul>
+  				<li>path</li>
+  				<li>filesystem_error</li>
+  				<li>directory_entry</li>
+  			</ul>
+  			
+  			<li>非メンバ関数</li>
+  			<ul>
+  				<li>copy</li>
+  				<li>copy_file</li>
+  				<li>create_directory, create_directories</li>
+  				<li>exist</li>
+  				<li>file_size</li>
+  				<li>remove, remove_all</li>
+  				<li>rename</li>
+  			</ul>
+
+  			<li>ファイル種別</li>
+  			<ul>
+  				<li>is_block_file</li>
+  				<li>is_character_file</li>
+  				<li>is_directory</li>
+  				<li>is_empty</li>
+  				<li>is_fifo</li>
+  				<li>is_other</li>
+  				<li>is_regular_file</li>
+  				<li>is_socket</li>
+  				<li>is_symlink</li>
+  				<li>status_known</li>
+  			</ul>
+      </ul>
+
+
+      <li class="accordion-toggle">
+        <a class="menu-link">日時</a>
+      </li>
+      <ul>
+        <li>(empty)</li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">数学</a>
+      </li>
+      <ul>
+  			<li>乱数生成</li>
+  			<ul>
+  				<li class="auto-style1"><a href="C++/Numeric%20library/mt19937.html">mt19937, uniform_int_distribution (c++11)</a></li>
+  			</ul>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">関数型プログラミング</a>
+      </li>
+      <ul>
+  			<li>bind (c++11)</li>
+  			<li>function (c++11)</li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">メタプログラミング</a>
+      </li>
+      <ul>
+  			<li class="accordion-toggle">type_traits</li>
+  			<ul>
+  				<li>is_void&lt;T&gt;</li>
+  				<li>is_integral&lt;T&gt;</li>
+  				<li>is_float&lt;T&gt;</li>
+  				<li>is_pointer&lt;T&gt;</li>
+  				<li>is_reference&lt;T&gt;</li>
+  				<li>is_member_pointer&lt;T&gt;</li>
+  				<li>is_member_function_pointer&lt;T&gt;</li>
+  				<li>is_array&lt;T&gt;</li>
+  				<li>is_union&lt;T&gt;</li>
+  				<li>is_class&lt;T&gt;</li>
+  				<li>is_enum&lt;T&gt;</li>
+  				<li>is_function&lt;T&gt;</li>
+  			</ul>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">Template</a>
+      </li>
+      <ul>
+  			<li>クラステンプレート</li>
+  			<li>関数テンプレート</li>
+  			<li>エイリアステンプレート (c++11)</li>
+  			<li>変数テンプレート (c++14)</li>
+  			<li>テンプレートの実引数推定</li>
+  			<li>明示的特殊化</li>
+  			<li>クラステンプレートの実引数推定 (c++17)</li>
+  			<li>部分特殊化</li>
+  			<li>パラメータバック (c++11)</li>
+  			<li>sizeof ... (c++11)</li>
+  			<li>畳み込み式 (c++17)</li>
+  			<li>依存名 - SFINAE</li>
+      </ul>
+
+      <li class="accordion-toggle"><a class="menu-link">Exceptions</a></li>
+      <ul>
+  			<li>throw式</li>
+  			<li>try-catchブロック</li>
+  			<li>関数tryブロック</li>
+  			<li>noexcept指定子 (c++11)</li>
+  			<li>noexcept演算子 (c++11)</li>
+      </ul>
+
+      <li class="accordion-toggle">
+        <a class="menu-link">他</a>
+      </li>
+      <ul>
+  			<li><a href="C++/etc/Properties.html">Properties</a></li>
+      </ul>
+
+    </ul>
+  </ul>
+</div>
 
 <hr>
 
-<ul>	
-  <a href="items_top.html" target="_self">
-  	<li class="return">
-      <img class="return" alt="" src="images/to_upper_folder.png">
-      <label class="return">戻る</label>
+<a href="items_top.html" target="_self">
+  <li class="return">
+    <img class="return" alt="" src="images/to_upper_folder.png">
+    <label class="return">戻る</label>
+  </li>
+</a>
+
+<div id="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">boost</a>
     </li>
-  </a>
-  
-  <li style="list-style-type:none">
-	<a class="menu" href="url" name="boost_menu_top" onclick="sublist(this); return false;">boost</a>
-	
-	<ul>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">環境構築</a><ul>
-			<li><a href="boost/install.html">boost library をコンパイル</a></li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">文字列処理</a>
-		<ul>
-			<li>xpressive</li>
-			<li>regex</li>
-			<li>lexcal_cast</li>
-			<li>format</li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">スマートポインタ</a>
-		<ul>
-			<li>shared_ptr</li>
-			<li>shared_array</li>
-			<li>scoped_ptr</li>
-			<li>scoped_array</li>
-			<li>weak_ptr</li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">システム</a>
-		<ul>
-			<li>gregorian</li>
-			<li>posix_time</li>
-			<li>filesystem</li>
-			<li><a href="boost/thread/thread.html" target="contents">thread</a></li>
-			<li>
-			<a href="boost/thread/mutex,%20scoped_lock,%20condition.html" target="contents">mutex, mutex::scoped_lock, condition</a></li>
-		</ul>
-		</li>
-		
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">入出力</a>
-		<ul>
-			<li><a href="boost/io/property_tree.html">property_tree</a></li>
-			<li>asio</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">数学</a><ul>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">乱数生成</a>
-			<ul>
-				<li class="auto-style1">(empty)</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">データ構造と反復子</a>
-		<ul>
-			<li>array</li>
-			<li>multi_array</li>
-			<li>tuple</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">関数型プログラミング</a>
-		<ul>
-			<li>bind</li>
-			<li>function</li>
-			<li>lambda</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">メタプログラミング</a>
-		<ul>
-			<li>
-			<a href="url" class="menu" onclick="sublist(this); return false;">type_traits</a>
-			<ul type="disc">
-				<li>is_void&lt;T&gt;</li>
-				<li>is_integral&lt;T&gt;</li>
-				<li>is_float&lt;T&gt;</li>
-				<li>is_pointer&lt;T&gt;</li>
-				<li>is_reference&lt;T&gt;</li>
-				<li>is_member_pointer&lt;T&gt;</li>
-				<li>is_member_function_pointer&lt;T&gt;</li>
-				<li>is_array&lt;T&gt;</li>
-				<li>is_union&lt;T&gt;</li>
-				<li>is_class&lt;T&gt;</li>
-				<li>is_enum&lt;T&gt;</li>
-				<li>is_function&lt;T&gt;</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">アルゴリズム</a>
-		<ul>
-			<li>graph</li>
-		</ul>
-		</li>
-		<li><a href="url" class="menu" onclick="sublist(this); return false;">他</a>
-		<ul>
-			<li><a href="boost/etc/method_to_confirm_the_version.html">boost バージョン確認方法</a></li>
-			<li>program_options</li>
-		</ul>
-		</li>
-	</ul>
-	</li>
-</ul>
+    <ul>
+    
+      <li class="accordion-toggle"><a class="menu-link">環境構築</a></li>
+      <ul>
+  			<li><a href="boost/install.html">boost library をコンパイル</a></li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">文字列処理</a></li>
+      <ul>
+  			<li>xpressive</li>
+  			<li>regex</li>
+  			<li>lexcal_cast</li>
+  			<li>format</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">スマートポインタ</a></li>
+      <ul>
+  			<li>shared_ptr</li>
+  			<li>shared_array</li>
+  			<li>scoped_ptr</li>
+  			<li>scoped_array</li>
+  			<li>weak_ptr</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">システム</a></li>
+      <ul>
+  			<li>gregorian</li>
+  			<li>posix_time</li>
+  			<li>filesystem</li>
+  			<li><a href="boost/thread/thread.html" target="contents">thread</a></li>
+  			<li><a href="boost/thread/mutex,%20scoped_lock,%20condition.html" target="contents">mutex, mutex::scoped_lock, condition</a></li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">入出力</a></li>
+      <ul>
+  			<li><a href="boost/io/property_tree.html">property_tree</a></li>
+  			<li>asio</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">数学</a></li>
+      <ul>
+  			<li>乱数生成</li>
+  			<ul>
+  				<li class="auto-style1">(empty)</li>
+  			</ul>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">データ構造と反復子</a></li>
+      <ul>
+  			<li>array</li>
+  			<li>multi_array</li>
+  			<li>tuple</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">関数型プログラミング</a></li>
+      <ul>
+  			<li>bind</li>
+  			<li>function</li>
+  			<li>lambda</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">メタプログラミング</a></li>
+      <ul>
+  			<li>type_traits</li>
+  			<ul type="disc">
+  				<li>is_void&lt;T&gt;</li>
+  				<li>is_integral&lt;T&gt;</li>
+  				<li>is_float&lt;T&gt;</li>
+  				<li>is_pointer&lt;T&gt;</li>
+  				<li>is_reference&lt;T&gt;</li>
+  				<li>is_member_pointer&lt;T&gt;</li>
+  				<li>is_member_function_pointer&lt;T&gt;</li>
+  				<li>is_array&lt;T&gt;</li>
+  				<li>is_union&lt;T&gt;</li>
+  				<li>is_class&lt;T&gt;</li>
+  				<li>is_enum&lt;T&gt;</li>
+  				<li>is_function&lt;T&gt;</li>
+  			</ul>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">アルゴリズム</a></li>
+      <ul>
+  			<li>graph</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">他</a></li>
+      <ul>
+  			<li><a href="boost/etc/method_to_confirm_the_version.html">boost バージョン確認方法</a></li>
+  			<li>program_options</li>
+      </ul>
+      
+    </ul>
+  </ul>
+</div>
 
 <hr>
 
-<ul>	
-  <a href="items_top.html" target="_self">
-  	<li class="return">
-      <img class="return" alt="" src="images/to_upper_folder.png">
-      <label class="return">戻る</label>
-    </li>
-  </a>
-  
-  <li style="list-style-type:none">
-    <a class="menu" href="url" name="etc_menu_top" onclick="sublist(this); return false;">
-    etc
-    </a>
+<!-- etc -->
+<a href="items_top.html" target="_self">
+  <li class="return">
+    <img class="return" alt="" src="images/to_upper_folder.png">
+    <label class="return">戻る</label>
+  </li>
+</a>
 
+<div id="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;"><a class="menu-link">etc</a></li>
     <ul>
       <li><a href="C++/etc/cppcheck.html">cppcheck</a></li>
       <li><a href="C++/etc/valgrind.html">valgrind</a></li>
       <li><a href="C++/etc/online_programing_environment.html">オンラインプログラミング環境</a></li>
     </ul>
-  </li>
-</ul>
+  </ul>
+</div>
 
 <hr>
 
