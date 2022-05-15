@@ -83,11 +83,12 @@ li.return{
   margin:3px;
   display:flex;
   align-items:center;
+  max-width: 95%;
 }
 
 img.return{
-  height="24px";
-  width="24px";
+  height: 24px;
+  width: 24px;
 }
 
 label.return{
