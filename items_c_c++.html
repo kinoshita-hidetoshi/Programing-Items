@@ -101,17 +101,17 @@
       </li>
       <ul>
 
-  			<li class="accordion-toggle">型</li>
+  			<li class="accordion-toggle"><a class="menu-link">型</a></li>
   			<ul>
   				<li>基本型</li>
   				<li>大きさが規定されている型</li>
   				<li>ポインタ</li>
   				<li>関数ポインタ</li>
-  				<li><a href="C++/language/types/reference.html">参照 (左辺値参照、右辺値参照)</a></li>
+  				<li><a href="C++/language/types/reference.html" onclick="checkedOff()">参照 (左辺値参照、右辺値参照)</a></li>
   			</ul>
   			<li>型の別名宣言</li>
   			
-  			<li class="accordion-toggle">キャスト</li>
+  			<li class="accordion-toggle"><a class="menu-link">キャスト</a></li>
   			<ul>
   				<li>static_cast</li>
   				<li>dynamic_cast</li>
@@ -120,19 +120,19 @@
   			</ul>
   			<li>右辺値参照とムーブセマンティクス</li>
   			
-  			<li class="accordion-toggle">関数</li>
+  			<li class="accordion-toggle"><a class="menu-link">関数</a></li>
   			<ul>
-  				<li><a href="C++/language/functions/lambda.html">ラムダ式 (c++11)</a> </li>
+  				<li><a href="C++/language/functions/lambda.html" onclick="checkedOff()">ラムダ式 (c++11)</a> </li>
   			</ul>
   			
-  			<li class="accordion-toggle">クラス</li>
+  			<li class="accordion-toggle"><a class="menu-link">クラス</a></li>
   			<ul>
-  				<li><a href="C++/language/class/class_template.html">クラスの基本テンプレート</a></li>
+  				<li><a href="C++/language/class/class_template.html" onclick="checkedOff()">クラスの基本テンプレート</a></li>
   				<li>メンバ変数</li>
   				<li>メンバ関数</li>
   				<li>参照修飾子</li>
   				
-  				<li class="accordion-toggle">コンストラクタ</li>
+  				<li class="accordion-toggle"><a class="menu-link">コンストラクタ<a></a></li>
   				<ul>
   					<li>変換コンストラクタ</li>
   					<li>explicit コンストラクタ</li>
@@ -142,9 +142,9 @@
   					<li>継承コンストラクタ</li>
   				</ul>
   				<li>デストラクタ</li>
-  				<li><a href="C++/language/class/static_member.html">静的メンバ</a></li>
+  				<li><a href="C++/language/class/static_member.html" onclick="checkedOff()">静的メンバ</a></li>
   			</ul>
-  			<li><a href="C++/language/types/constexpr.html">定数式 - constexpr (c++11)</a></li>
+  			<li><a href="C++/language/types/constexpr.html" onclick="checkedOff()">定数式 - constexpr (c++11)</a></li>
   			<li>属性 (c++11)</li>
       </ul>
 
@@ -153,16 +153,16 @@
       </li>
       <ul>
         <li>regex (c++11)</li>
-        <li><a href="C++/string/split.html">split</a></li>
+        <li><a href="C++/string/split.html" onclick="checkedOff()">split</a></li>
       </ul>
 
       <li class="accordion-toggle">
         <a class="menu-link">入出力</a>
       </li>
       <ul>
-  			<li><a href="C++/iostream/Get_FileSize.html" target="contents">ifstream によるファイルサイズ取得</a></li>
-  			<li><a href="C++/iostream/ReadWrite_BinaryFile.html" target="contents">ofstream, ifstream, によるバイナリファイルの読み書き</a></li>
-  			<li><a href="C++/iostream/ClearCinBuffer.html">std::cin バッファをクリアする方法</a></li>
+  			<li><a href="C++/iostream/Get_FileSize.html" onclick="checkedOff()">ifstream によるファイルサイズ取得</a></li>
+  			<li><a href="C++/iostream/ReadWrite_BinaryFile.html" onclick="checkedOff()">ofstream, ifstream, によるバイナリファイルの読み書き</a></li>
+  			<li><a href="C++/iostream/ClearCinBuffer.html" onclick="checkedOff()">std::cin バッファをクリアする方法</a></li>
       </ul>
 
       <li class="accordion-toggle">
@@ -170,7 +170,7 @@
       </li>
       <ul>
   			<li>pair</li>
-  			<li><a href="C++/Utility/tuple.html">tuple (c++11)</a></li>
+  			<li><a href="C++/Utility/tuple.html" onclick="checkedOff()">tuple (c++11)</a></li>
   			<li>optional (c++17)</li>
   			<li>any (c++17)</li>
   			<li>variant (c++17)</li>
@@ -181,33 +181,33 @@
         <a class="menu-link">コンテナライブラリ</a>
       </li>
       <ul>
-        <li><a href="C++/Container/container.html">コンテナライブラリ一覧</a></li>
+        <li><a href="C++/Container/container.html" onclick="checkedOff()">コンテナライブラリ一覧</a></li>
         
-  			<li class="accordion-toggle">シーケンスコンテナ</li>
+  			<li class="accordion-toggle"><a class="menu-link">シーケンスコンテナ</a></li>
   			<ul>
-  				<li><a href="C++/Container/array.html">array (c++11)</a></li>
-  				<li><a href="C++/Container/vector.html">vector</a></li>
-  				<li><a href="C++/Container/deque.html">deque</a></li>
-  				<li><a href="C++/Container/forward_list.html">forward_list (c++11)</a></li>
-  				<li><a href="C++/Container/list.html">list</a></li>
+  				<li><a href="C++/Container/array.html" onclick="checkedOff()">array (c++11)</a></li>
+  				<li><a href="C++/Container/vector.html" onclick="checkedOff()">vector</a></li>
+  				<li><a href="C++/Container/deque.html" onclick="checkedOff()">deque</a></li>
+  				<li><a href="C++/Container/forward_list.html" onclick="checkedOff()">forward_list (c++11)</a></li>
+  				<li><a href="C++/Container/list.html" onclick="checkedOff()">list</a></li>
   			</ul>
   			
-  			<li class="accordion-toggle">コンテナアダプタ</li>
-  			<ul class="auto-style2">
-  				<li><a href="C++/Container/stack.html">stack</a></li>
-  				<li><a href="C++/Container/queue.html">queue</a></li>
-  				<li><a href="C++/Container/priority_queue.html">priority_queue</a></li>
+  			<li class="accordion-toggle"><a class="menu-link">コンテナアダプタ</a></li>
+  			<ul>
+  				<li><a href="C++/Container/stack.html" onclick="checkedOff()">stack</a></li>
+  				<li><a href="C++/Container/queue.html" onclick="checkedOff()">queue</a></li>
+  				<li><a href="C++/Container/priority_queue.html" onclick="checkedOff()">priority_queue</a></li>
   			</ul>
   			
-  			<li class="accordion-toggle">連想コンテナ</li>
+  			<li class="accordion-toggle"><a class="menu-link">連想コンテナ</a></li>
   			<ul class="auto-style2">
-  				<li><a href="C++/Container/set.html">set</a></li>
-  				<li><a href="C++/Container/map.html">map</a></li>
+  				<li><a href="C++/Container/set.html" onclick="checkedOff()">set</a></li>
+  				<li><a href="C++/Container/map.html" onclick="checkedOff()">map</a></li>
           <li>multiset</li>
           <li>multimap</li>
   			</ul>
   			
-  			<li class="accordion-toggle">非順序連想コンテナ</li>
+  			<li class="accordion-toggle"><a class="menu-link">非順序連想コンテナ</a></li>
   			<ul>
   				<li>unorderd_set (c++11)</li>
   				<li>unorderd_map (c++11)</li>
@@ -215,7 +215,7 @@
   				<li>unorderd_multimap (c++11)</li>
   			</ul>
   			
- 		    <li class="accordion-toggle">スパン</li>
+ 		    <li class="accordion-toggle"><a class="menu-link">スパン</a></li>
  		    <ul>
           <li>span (c++20)</li>
         </ul>
@@ -225,7 +225,7 @@
       <!-- アルゴリズム -->
       <li class="accordion-toggle"><a class="menu-link">アルゴリズム</a></li>
       <ul>
-			  <li class="accordion-toggle">非変更シーケンス操作</li>
+			  <li class="accordion-toggle"><a class="menu-link">非変更シーケンス操作</a></li>
 			  <ul class="auto-style2">
           <li>all_of (c++11)<br>any_of (c++11)<br>non_of (c++11)</li>
           <li>for_each</li>
@@ -240,7 +240,7 @@
           <li>search_n</li>
         </ul>
       
-  			<li class="accordion-toggle">変更シーケンス操作</li>
+  			<li class="accordion-toggle"><a class="menu-link">変更シーケンス操作</a></li>
   			<ul>
           <li>copy</li>
           <li>copy_if (c++11)</li>
@@ -258,12 +258,12 @@
         <li>最小/最大演算</li>
         <li>比較演算</li>
         
-        <li class="accordion-toggle">順列操作</li>
+        <li class="accordion-toggle"><a class="menu-link">順列操作</a></li>
         <ul>
           <li>next_permutation, prev_permutation</li>
         </ul>
   
-        <li class="accordion-toggle">数値演算</li>
+        <li class="accordion-toggle"><a class="menu-link">数値演算</a></li>
         <ul>
           <li>iota (c++11)</li>
         </ul>
@@ -275,15 +275,17 @@
       <!-- スマートポインタ -->
       <li class="accordion-toggle"><a class="menu-link">スマートポインタ</a></li>
       <ul>
-  			<li><a href="C++/smart_pointer/auto_ptr.html">auto_ptr</a></li>
-  			<li><a href="C++/smart_pointer/unique_ptr.html">unique_ptr (c++11)</a></li>
-  			<li><a href="C++/smart_pointer/shared_ptr.html">shared_ptr (c++11)</a></li>
-  			<li><a href="C++/smart_pointer/weak_ptr.html">weak_ptr (c++11)</a></li>
+  			<li><a href="C++/smart_pointer/auto_ptr.html" onclick="checkedOff()">auto_ptr</a></li>
+  			<li><a href="C++/smart_pointer/unique_ptr.html" onclick="checkedOff()">unique_ptr (c++11)</a></li>
+  			<li><a href="C++/smart_pointer/shared_ptr.html" onclick="checkedOff()">shared_ptr (c++11)</a></li>
+  			<li><a href="C++/smart_pointer/weak_ptr.html" onclick="checkedOff()">weak_ptr (c++11)</a></li>
       </ul>
 
       
       <!-- 関数型プログラミング -->
-      <li class="accordion-toggle"><a class="menu-link">関数型プログラミング</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">関数型プログラミング</a>
+      </li>
       <ul>
   			<li>bind (c++11)</li>
   			<li>function (c++11)</li>
@@ -295,31 +297,38 @@
         <a class="menu-link">スレッドサポートライブラリ</a>
       </li>
       <ul>
-      
-        <li>スレッド</li>
+        <li class="accordion-toggle">
+          <a class="menu-link">スレッド</a>
+        </li>
   			<ul>
-  				<li><a href="C++/thread/thread.html">thread (c++11)</a></li>
+  				<li><a href="C++/thread/thread.html" onclick="checkedOff()">thread (c++11)</a></li>
   				<li>jthread (c++20)</li>
   			</ul>
   			
-  			<li>カレントスレッドを管理する関数</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">カレントスレッド管理</a>
+  			</li>
   			<ul>
   				<li>this_thread::yield (c++11)</li>
   				<li>this_thread::get_id (c++11)</li>
-  				<li><a href="C++/thread/sleep_for.html">this_thread::sleep_for (c++11)</a></li>
-  				<li><a href="C++/thread/sleep_until.html">this_thread::sleep_until (c++11)</a></li>
+  				<li><a href="C++/thread/sleep_for.html" onclick="checkedOff()">this_thread::sleep_for (c++11)</a></li>
+  				<li><a href="C++/thread/sleep_until.html" onclick="checkedOff()">this_thread::sleep_until (c++11)</a></li>
   			</ul>
   			
-  			<li>スレッドのキャンセル</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">スレッドのキャンセル</a>
+  			</li>
   			<ul class="auto-style3">
   				<li>stop_token (c++20)</li>
   				<li>stop_source (c++20)</li>
   				<li>stop_callback (c++20)</li>
   			</ul>
   			
-        <li>相互排他</li>
+        <li class="accordion-toggle">
+          <a class="menu-link">相互排他</a>
+        </li>
         <ul>
-  				<li><a href="C++/thread/mutex.html">mutex (c++11)</a></li>
+  				<li><a href="C++/thread/mutex.html" onclick="checkedOff()">mutex (c++11)</a></li>
   				<li>timed_mutex (c++11)</li>
   				<li>recursive_mutex (c++11)</li>
   				<li>recursive_timed_mutex (c++11)</li>
@@ -329,27 +338,35 @@
   				<li>binary_semaphore (c++20)</li>
   			</ul>
 
-  			<li>汎用ミューテックス管理</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">汎用ミューテックス管理</a>
+  			</li>
   			<ul>
-  				<li><a href="C++/thread/lock_guard.html">lock_guard (c++11)</a></li>
+  				<li><a href="C++/thread/lock_guard.html" onclick="checkedOff()">lock_guard (c++11)</a></li>
   				<li>unique_lock (c++11)</li>
   				<li>shared_lock (c++14)</li>
   				<li>scoped_lock (c++17)</li>
   			</ul>
   			
-  			<li>汎用ロックアルゴリズム</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">汎用ロックアルゴリズム</a>
+  			</li>
   			<ul>
   				<li>try_lock (c++11)</li>
   				<li>lock (c++11)</li>
   			</ul>
 
-        <li>コールワンス</li>
+        <li class="accordion-toggle">
+          <a class="menu-link">コールワンス</a>
+        </li>
         <ul>
   				<li>once_flag (c++11)</li>
   				<li>call_once (c++11)</li>
   			</ul>
   			
-  			<li>条件変数</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">条件変数</a>
+  			</li>
   			<ul>
   				<li>condition_variable (c++11)</li>
   				<li>condition_vriable_any (c++11)</li>
@@ -357,18 +374,22 @@
   				<li>cv_status (c++11)</li>
   			</ul>
   			
-        <li>フューチャー</li>
+        <li class="accordion-toggle">
+          <a class="menu-link">フューチャー</a>
+        </li>
   			<ul>
   				<li>promise (c++11)</li>
   				<li>packaged_task (c++11)</li>
   				<li>future (c++11)</li>
   				<li>shared_future (c++11)</li>
-  				<li><a href="C++/thread/async.html">async (c++11)</a></li>
+  				<li><a href="C++/thread/async.html" onclick="checkedOff()">async (c++11)</a></li>
   				<li>launch (c++11)</li>
   				<li>future_status (c++11)</li>
   			</ul>
   			
-  			<li>フューチャーのエラー</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">フューチャーのエラー</a>
+  			</li>
   			<ul>
   				<li>future_error (c++11)</li>
   				<li>future_category (c++11)</li>
@@ -377,11 +398,9 @@
   		</ul>
  
 
-      <li class="accordion-toggle">
-        <a class="menu-link">atomic</a>
-      </li>
+      <li class="accordion-toggle"><a class="menu-link">atomic</a></li>
       <ul>
-        <li><a href="C++/atomic/atomic.html">std::atomic (c++11)</a></li>
+        <li><a href="C++/atomic/atomic.html" onclick="checkedOff()">std::atomic (c++11)</a></li>
       </ul>
 
 
@@ -389,14 +408,18 @@
         <a class="menu-link">ファイルシステムライブラリ</a>
       </li>
       <ul>
-  			<li>クラス</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">クラス</a>
+  			</li>
   			<ul>
   				<li>path</li>
   				<li>filesystem_error</li>
   				<li>directory_entry</li>
   			</ul>
   			
-  			<li>非メンバ関数</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">非メンバ関数</a>
+  			</li>
   			<ul>
   				<li>copy</li>
   				<li>copy_file</li>
@@ -407,7 +430,9 @@
   				<li>rename</li>
   			</ul>
 
-  			<li>ファイル種別</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">ファイル種別</a>
+  			</li>
   			<ul>
   				<li>is_block_file</li>
   				<li>is_character_file</li>
@@ -430,13 +455,13 @@
         <li>(empty)</li>
       </ul>
 
-      <li class="accordion-toggle">
-        <a class="menu-link">数学</a>
-      </li>
+      <li class="accordion-toggle"><a class="menu-link">数学</a></li>
       <ul>
-  			<li>乱数生成</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">乱数生成</a>
+  			</li>
   			<ul>
-  				<li class="auto-style1"><a href="C++/Numeric%20library/mt19937.html">mt19937, uniform_int_distribution (c++11)</a></li>
+  				<li><a href="C++/Numeric%20library/mt19937.html" onclick="checkedOff()">mt19937, uniform_int_distribution (c++11)</a></li>
   			</ul>
       </ul>
 
@@ -452,7 +477,9 @@
         <a class="menu-link">メタプログラミング</a>
       </li>
       <ul>
-  			<li class="accordion-toggle">type_traits</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">type_traits</a>
+  			</li>
   			<ul>
   				<li>is_void&lt;T&gt;</li>
   				<li>is_integral&lt;T&gt;</li>
@@ -487,7 +514,9 @@
   			<li>依存名 - SFINAE</li>
       </ul>
 
-      <li class="accordion-toggle"><a class="menu-link">Exceptions</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">Exceptions</a>
+      </li>
       <ul>
   			<li>throw式</li>
   			<li>try-catchブロック</li>
@@ -500,7 +529,7 @@
         <a class="menu-link">他</a>
       </li>
       <ul>
-  			<li><a href="C++/etc/Properties.html">Properties</a></li>
+  			<li><a href="C++/etc/Properties.html" onclick="checkedOff()">Properties</a></li>
       </ul>
 
     </ul>
@@ -524,12 +553,16 @@
     </li>
     <ul>
     
-      <li class="accordion-toggle"><a class="menu-link">環境構築</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">環境構築</a>
+      </li>
       <ul>
-  			<li><a href="boost/install.html">boost library をコンパイル</a></li>
+  			<li><a href="boost/install.html" onclick="checkedOff()">boost library をコンパイル</a></li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">文字列処理</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">文字列処理</a>
+      </li>
       <ul>
   			<li>xpressive</li>
   			<li>regex</li>
@@ -537,7 +570,9 @@
   			<li>format</li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">スマートポインタ</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">スマートポインタ</a>
+      </li>
       <ul>
   			<li>shared_ptr</li>
   			<li>shared_array</li>
@@ -546,46 +581,62 @@
   			<li>weak_ptr</li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">システム</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">システム</a>
+      </li>
       <ul>
   			<li>gregorian</li>
   			<li>posix_time</li>
   			<li>filesystem</li>
-  			<li><a href="boost/thread/thread.html" target="contents">thread</a></li>
-  			<li><a href="boost/thread/mutex,%20scoped_lock,%20condition.html" target="contents">mutex, mutex::scoped_lock, condition</a></li>
+  			<li><a href="boost/thread/thread.html" onclick="checkedOff()">thread</a></li>
+  			<li><a href="boost/thread/mutex,%20scoped_lock,%20condition.html" onclick="checkedOff()">mutex, mutex::scoped_lock, condition</a></li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">入出力</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">入出力</a>
+      </li>
       <ul>
-  			<li><a href="boost/io/property_tree.html">property_tree</a></li>
+  			<li><a href="boost/io/property_tree.html" onclick="checkedOff()">property_tree</a></li>
   			<li>asio</li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">数学</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">数学</a>
+      </li>
       <ul>
-  			<li>乱数生成</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">乱数生成</a>
+  			</li>
   			<ul>
-  				<li class="auto-style1">(empty)</li>
+  				<li>(empty)</li>
   			</ul>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">データ構造と反復子</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">データ構造と反復子</a>
+      </li>
       <ul>
   			<li>array</li>
   			<li>multi_array</li>
   			<li>tuple</li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">関数型プログラミング</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">関数型プログラミング</a>
+      </li>
       <ul>
   			<li>bind</li>
   			<li>function</li>
   			<li>lambda</li>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">メタプログラミング</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">メタプログラミング</a>
+      </li>
       <ul>
-  			<li>type_traits</li>
+  			<li class="accordion-toggle">
+  			  <a class="menu-link">type_traits</a>
+  			</li>
   			<ul type="disc">
   				<li>is_void&lt;T&gt;</li>
   				<li>is_integral&lt;T&gt;</li>
@@ -602,14 +653,16 @@
   			</ul>
       </ul>
       
-      <li class="accordion-toggle"><a class="menu-link">アルゴリズム</a></li>
+      <li class="accordion-toggle">
+        <a class="menu-link">アルゴリズム</a>
+      </li>
       <ul>
   			<li>graph</li>
       </ul>
       
       <li class="accordion-toggle"><a class="menu-link">他</a></li>
       <ul>
-  			<li><a href="boost/etc/method_to_confirm_the_version.html">boost バージョン確認方法</a></li>
+  			<li><a href="boost/etc/method_to_confirm_the_version.html" onclick="checkedOff()">boost バージョン確認方法</a></li>
   			<li>program_options</li>
       </ul>
       
@@ -630,11 +683,13 @@
 <div id="menu-container">
   <ul class="menu-list">
     
-    <li class="accordion-toggle" style="list-style-type:none;"><a class="menu-link">etc</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">etc</a>
+    </li>
     <ul>
-      <li><a href="C++/etc/cppcheck.html">cppcheck</a></li>
-      <li><a href="C++/etc/valgrind.html">valgrind</a></li>
-      <li><a href="C++/etc/online_programing_environment.html">オンラインプログラミング環境</a></li>
+      <li><a href="C++/etc/cppcheck.html" onclick="checkedOff()">cppcheck</a></li>
+      <li><a href="C++/etc/valgrind.html" onclick="checkedOff()">valgrind</a></li>
+      <li><a href="C++/etc/online_programing_environment.html" onclick="checkedOff()">オンラインプログラミング環境</a></li>
     </ul>
   </ul>
 </div>
