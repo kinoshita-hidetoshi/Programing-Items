@@ -67,8 +67,8 @@
           <a href="#6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a><br>
           <a href="#7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a><br>
           <a href="#8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a><br>
-          <a href="#9._設定２_を作る">9. 設定２ を作る</a><br>
-          <a href="#サンプルプログラム">サンプルプログラム</a><br>
+          <a href="#9._設定２_を作る">9. 設定２ を作る</a><br><br>
+          <a href="#サンプルプログラム">サンプルプログラム</a><br><a href="#ライセンス">ライセンス</a><br>
           <a href="#参考">参考</a>
         </p>
       </nav>
@@ -218,7 +218,30 @@
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h3> 3-5. カレンダーの土日を別の色にする</h3>
+  <p> &nbsp;</p>
+  <p> こちらも条件付き書式を使って実現します。こちら比較的簡単なのでラフに記載します。</p>
+  <p> &nbsp;</p>
+  <p> 1. 条件付き書式で新しいルールを作成します。</p>
+  <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
+  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> &nbsp;</p>
+  <p> 2. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
+  <p> 5 の方のみを"$"で指定します。AHに"$"を付けてはいけません。</p>
+  <blockquote>
+    =TEXT(AH$5,"aaa")="土"</blockquote>
+  <p> TEXT 関数で "aaa" の指定は曜日表記のところでも使用しました。便利なのでぜひ覚えていただきたいです。</p>
+  <p> セルの色は［書式(F)...］から水色を設定しました。</p>
+  <p> &nbsp;</p>
+  <p> <img alt="" src="gantchart/img4.jpg"></p>
+  <p> &nbsp;</p>
+  <p> 3. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
+  <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
+  <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$H$106" を設定できています。</p>
+  <p> <img alt="" src="gantchart/img3.jpg"></p>
 <p> &nbsp;</p>
+  <p> 4. 同様に日曜日も同じ手順で進めます。</p>
+  <p> 書式設定の部分で "土" を "日" へ変更するだけなので、説明は割愛します。</p>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
 <p> サンプル： <a href="gantchart/Excel_gantchart_chap-03.xlsm">ダウンロード</a></p>
 <p> &nbsp;</p>
@@ -237,20 +260,300 @@
 <h3> 4-3. ステータスを「WBS終了条件」にしたら、行をグレー化する</h3>
 <p> &nbsp;</p>
 <h3> 4-4. カレンダーの色表示を祝日対応する</h3>
-<p> &nbsp;</p>
+  <p> 土曜日、日曜日に色付けする方法とほとんど同じです。こちらも条件付き書式を使って実現します。</p>
+  <p> &nbsp;</p>
+  <p> 1. 「設定１」シートに祝日とする年月日一覧を準備します。</p>
+  <p> <img alt="" src="gantchart/imgB.jpg"></p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 2. 条件付き書式で新しいルールを作成します。</p>
+  <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
+  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> &nbsp;</p>
+  <p> 2. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
+  <p> "AH$5" の部分について、5 の方のみを"$"で指定します。AHに"$"を付けてはいけません。</p>
+  <p> 祝日との一致確認の方法として、ここでは COUNTIF 関数を使っています。</p>
+  <blockquote>
+    =COUNTIF(設定1!$E$3:$E$311,AH$5)&gt;=1</blockquote>
+  <p> セルの色は［書式(F)...］からオレンジ色を設定しました。</p>
+  <p> <img alt="" src="gantchart/imgA1.jpg"></p>
+  <p> &nbsp;</p>
+  <p> 3. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
+  <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
+  <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$H$106" を設定できています。</p>
+  <p> <img alt="" src="gantchart/imgE.jpg"></p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <hr>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="5._ガントチャート(図)を描画">5. ガントチャート(図)を描画</a></h2>
   <h4>[概要]</h4>
   <p> 計画、実績 の期間を入力したら、その内容に従ってガントチャート（図）を作図する処理を追加します。</p>
 <p> VBA を使います。</p>
-<p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 1.</p>
+  <p> まずは基本的な部分から。</p>
+  <p> 線を描画するには Shapes.AddLine という関数を使用することでできるようです。<br>
+  そのまま直接使ってもよさそうですが、複数個所で使用しそうな気がするので、あとで一括して変更することを想定して標準モジュール内で関数化しました。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    線を引く
+'
+' 引数：    sheet       線を引くシート
+'           beginX      線の起点 X
+'           endX        線の起点 Y
+'           beginY      線の終点 X
+'           endY        線の終点 Y
+' 戻値：    shape       引いた線
+Function drawLine(sheet As Worksheet, beginX As Long, beginY As Long, endX As Long, endY As Long) As shape
+    Set drawLine = sheet.Shapes.AddLine(beginX, beginY, endX, endY)
+End Function</pre>
+  <p> &nbsp;</p>
+  <p> 2.</p>
+  <p> 計画の線を引く、実績の線を引く、という２つの関数を作成します。</p>
+  <p> 開始と終了のセルを指定することでその間に線を描画する、という内容です。</p>
+  <p> ガントチャートシートのVBAとして記載します。</p>
+  <pre class="prettyprint linenums lang-vb">
+Private Const START_DATE_RANGE = 34
+Private Const START_WBS = 7
+Private Const GANTCHART_SHEET_NAME = "ガントチャート（6か月）"
+Private Const SETTING_SHEET_1_NAME = "設定1"
+Private Const SETTING_SHEET_2_NAME = "設定2"
+Private Const NAME_KEIKAKU = "keikaku_"
+Private Const NAME_JISSEKI = "jisseki_"
+
+
+'
+' 概要：    計画の線を一本引く
+'
+Private Function 計画の線を引く(startCell As Range, endCell As Range) As shape
+    Dim thisShape As shape
+    Set thisShape = drawLine(ThisWorkbook.ActiveSheet, startCell.Left + 2, startCell.Top + startCell.Height / 4, endCell.Left + endCell.Width, endCell.Top + endCell.Height / 4)
+    With thisShape.Line
+        .DashStyle = msoLineSolid
+        .ForeColor.ObjectThemeColor = ThisWorkbook.Sheets(SETTING_SHEET_2_NAME).Range("D3")
+        .ForeColor.TintAndShade = ThisWorkbook.Sheets(SETTING_SHEET_2_NAME).Range("D4")
+        .Weight = ThisWorkbook.Sheets(SETTING_SHEET_2_NAME).Range("D5")
+        
+    End With
+    
+    thisShape.name = NAME_KEIKAKU &amp; startCell.Row
+    
+    Set 計画の線を引く = thisShape
+End Function
+
+
+'
+' 概要：    実績の線を一本引く
+'
+Private Function 実績の線を引く(startCell As Range, endCell As Range) As shape
+    Dim thisShape As shape
+    Dim settingSheet As Worksheet
+    
+    Set settingSheet = ThisWorkbook.Sheets(SETTING_SHEET_2_NAME)
+    
+    Set thisShape = drawLine(ThisWorkbook.ActiveSheet, startCell.Left + 2, startCell.Top + startCell.Height * 3 / 4, endCell.Left + endCell.Width, endCell.Top + endCell.Height * 3 / 4)
+    
+    With thisShape.Line
+        .DashStyle = msoLineSolid
+        .ForeColor.ObjectThemeColor = settingSheet.Range("D6")
+        .ForeColor.TintAndShade = settingSheet.Range("D7")
+        .Weight = settingSheet.Range("D8")
+        
+        .BeginArrowheadStyle = msoArrowheadOpen
+        .BeginArrowheadLength = msoArrowheadShort
+        .BeginArrowheadWidth = msoArrowheadNarrow
+        .BeginArrowheadLength = settingSheet.Range("D9").Value   ' msoArrowheadShort
+        .BeginArrowheadWidth = settingSheet.Range("D10").Value   ' msoArrowheadNarrow
+        
+        .EndArrowheadStyle = msoArrowheadOpen
+        .EndArrowheadLength = msoArrowheadShort
+        .EndArrowheadWidth = msoArrowheadNarrow
+        .EndArrowheadLength = settingSheet.Range("D11").Value    ' msoArrowheadShort
+        .EndArrowheadWidth = settingSheet.Range("D12").Value     ' msoArrowheadNarrow
+        
+    End With
+    
+    thisShape.name = NAME_JISSEKI &amp; startCell.Row
+    
+    Set 実績の線を引く = thisShape
+    
+End Function</pre>
+  <p> &nbsp;</p>
+  <p> 3.</p>
+  <p> ガントチャート全体を更新する関数（UpdateGantchar()）を作成します。</p>
+  <p> 「線を一括削除する」関数の部分は後程。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    シート上の線(Line)を全て消す
+'
+Public Sub deleteAllLines()
+    Call 線を一括削除する(ThisWorkbook.Sheets(GANTCHART_SHEET_NAME))
+End Sub
+
+
+'
+' 概要：    ガントチャート表示を更新する
+'
+Public Sub UpdateGantchart()
+    Dim thisShape As shape
+    Dim keikaku_start As Long
+    Dim keikaku_end As Long
+    Dim jisseki_start As Long
+    Dim jisseki_end As Long
+    
+    Dim retStart As Long
+    Dim retEnd As Long
+    
+            
+    ' 全てのラインを消す
+    Call deleteAllLines
+    
+    Dim i As Long
+    For i = START_WBS To getMaxRow(ThisWorkbook.ActiveSheet, 1)
+    
+        ' 計画を描画
+        If Cells(i, "V").Value &lt;&gt; "" And Cells(i, "Y") &lt;&gt; "" Then
+        
+            retStart = SearchDate(Cells(i, "V"))
+            If retStart &lt;&gt; -1 Then
+                keikaku_start = retStart
+            Else
+                keikaku_start = START_DATE_RANGE
+            End If
+            
+            retEnd = SearchDate(Cells(i, "Y"))
+            If retEnd &lt;&gt; -1 Then
+                keikaku_end = retEnd
+            Else
+                keikaku_end = getMaxCol(ThisWorkbook.ActiveSheet, 1)
+            End If
+            
+            If (GetEndDate() - CDate(Cells(i, "V").Value) &gt;= 0) And (CDate(Cells(i, "Y")) - GetStartDate() &gt;= 0) Then
+                Set thisShape = 計画の線を引く(Cells(i, keikaku_start), Cells(i, keikaku_end))
+            End If
+        End If
+        
+        ' 実績を描画
+        If Cells(i, "AB") &lt;&gt; "" And Cells(i, "AE") Then
+            retStart = SearchDate(Cells(i, "AB"))
+            If retStart = -1 Then
+                jisseki_start = START_DATE_RANGE
+            Else
+                jisseki_start = retStart
+            End If
+            
+            retEnd = SearchDate(Cells(i, "AE"))
+            If retEnd = -1 Then
+                jisseki_end = getMaxCol(ThisWorkbook.ActiveSheet, 1)
+            Else
+                jisseki_end = retEnd
+            End If
+            
+            If (GetEndDate() - CDate(Cells(i, "AB").Value) &gt;= 0) And (CDate(Cells(i, "AE")) - GetStartDate() &gt;= 0) Then
+                Set thisShape = 実績の線を引く(Cells(i, jisseki_start), Cells(i, jisseki_end))
+                
+                If retStart = -1 Then
+                    With thisShape.Line
+                        .BeginArrowheadStyle = msoArrowheadNone
+                    End With
+                End If
+                
+                If retEnd = -1 Then
+                    With thisShape.Line
+                        .EndArrowheadStyle = msoArrowheadNone
+                    End With
+                End If
+            End If
+        End If
+    Next i
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> 下記部分について補足です。<br>ここは実績の線を引くときに、開始日や終了日がカレンダー範囲外であるときに矢印の形状を変更しています。</p>
+  <p> 具体的には、例えば → を － へ変更することで終端でないことを表現しています。</p>
+  <pre class="prettyprint linenums lang-vb">
+            If (GetEndDate() - CDate(Cells(i, "AB").Value) &gt;= 0) And (CDate(Cells(i, "AE")) - GetStartDate() &gt;= 0) Then
+                Set thisShape = 実績の線を引く(Cells(i, jisseki_start), Cells(i, jisseki_end))
+                
+                If retStart = -1 Then
+                    With thisShape.Line
+                        .BeginArrowheadStyle = msoArrowheadNone
+                    End With
+                End If
+                
+                If retEnd = -1 Then
+                    With thisShape.Line
+                        .EndArrowheadStyle = msoArrowheadNone
+                    End With
+                End If
+            End If</pre>
+  <p> &nbsp;</p>
+  <p> 4.</p>
+  <p> 上記関数を呼ぶためのトリガーとして、セルの値が更新されたときにガントチャート更新を実施するように Worksheet_Change() 
+  関数を設定します。</p>
+  <p> 具体的には、計画および実績の開始日・終了日を変更することでバーチャートが更新されるイメージです。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    セルに変化があった時のイベント処理
+'
+' 著作：    木下英俊
+' 履歴：
+'           2020-07-08 新規作成
+'
+Private Sub Worksheet_Change(ByVal Target As Range)
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    ' レイアウト更新
+    Call UpdateLayout
+    
+    ' ナンバリングを更新
+    'Call UpdateNumbering
+    Call UpdateNumbering2
+    
+    ' ガントチャートを更新
+    Call UpdateGantchart
+    
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+End Sub</pre>
+  <p> &nbsp;</p>
+  <hr>
 <p> &nbsp;</p>
 <h2> <a name="6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a></h2>
   <h4>[概要]</h4>
-  <p> 描画済みのガントチャート(図)を全て削除する処理を追加します。これが無いとデバッグなどが不便ですよね。</p>
-<p> 「更新」ボタンをクリックすることで、描画済みのガントチャート(図)を全て消してから再度全てを再描画するようにします。</p>
-<p> ただしガントチャート以外の図は消さないようにします。これを行わないとメモなどの図やテキストもすべて削除されてしまうので不便です。</p>
-<p> &nbsp;</p>
+  <p> 描画済みのガントチャート(図)を全て削除する処理を追加します。画面更新するためには、一旦すべての表示済みの線を削除する必要があります。</p>
+  <p> &nbsp;</p>
+  <p> 
+  「線を一括削除する」という関数を作成します。汎用性を考えて標準モジュールとして作成しています。これに伴って引数として対象のシートを渡す必要があります。</p>
+<p> また、ガントチャート以外の図は消さないようにします。これを行わないとメモなどの図やテキストもすべて削除されてしまうので不便です。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    線を一括削除する
+'
+' 引数：    sheet       処理対象のシート
+'
+' 著作：    木下 英俊
+' 履歴：    2020-07-07  新規作成
+' 補足：    Excel画面から手動で描画した線の Type は "msoAutoShape" になって区別できるようです。
+'           "msoAutoShape" の値は 1 です。
+' 参考：    https://docs.microsoft.com/ja-jp/office/vba/api/office.msoshapetype
+'
+Sub 線を一括削除する(sheet As Worksheet)
+  Dim shp As shape
+  For Each shp In sheet.Shapes
+    If shp.Type = msoLine Then
+        shp.Delete
+    End If
+  Next shp
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> このプログラム中で描画する線は Type = msoLine (9) となります。</p>
+  <p> ちなみに Excel で通常描画する線の Type を確認してみたら msoAutoShape (1) でした。<br>
+  このため上記プログラムで線を削除するとガントチャートで自動作成した線のみを削除できます。手動で描いた線は残るので便利で良い感じになりました。</p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
   <h4>[概要]</h4>
@@ -276,7 +579,7 @@
 <h3> 9-3. 線の太さを変える(Weight)</h3>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
-  
+  <hr>
   <p> &nbsp;</p>
   
 </section>
@@ -337,6 +640,42 @@
 
 
 <p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+Copyright (c) 2020-2022  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 
@@ -364,6 +703,9 @@
   	<li>Excel VBAで外部ファイルのモジュールを読み込み実行する方法<br>
   	<a href="https://eijiman.com/execute-external-file-module-excel-vba/" target="_blank">
   	https://eijiman.com/execute-external-file-module-excel-vba/</a></li>
+    <li>MsoShapeType 列挙 (Office) | Microsoft Docs<br>
+    <a href="https://docs.microsoft.com/ja-jp/office/vba/api/office.msoshapetype" target="_blank">
+    https://docs.microsoft.com/ja-jp/office/vba/api/office.msoshapetype</a></li>
   </ul>
 </section>
 
@@ -373,6 +715,25 @@
 <p>&nbsp;</p>
 <h2 style="margin-bottom:5px">記載</h2>
 <table>
+
+  <tr>
+    <td class="td_history_date">2022-05-18</td>
+    <td class="td_history_separator">-</td>
+    <td class="td_history">５章、６章を追記</td>
+  </tr>
+
+  <tr>
+    <td class="td_history_date">&nbsp;</td>
+    <td class="td_history_separator">-</td>
+    <td class="td_history">土日、祝日の色付けについて追記<br>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="td_history_date">&nbsp;</td>
+    <td class="td_history_separator">&nbsp;</td>
+    <td class="td_history">(ここを読んでくれる読者が若干名いるようなので少しがんばってみました。VBAの記述も少しずつ足してみたいです。)</td>
+  </tr>
 
   <tr>
     <td class="td_history_date">2021-09-05</td>
@@ -415,7 +776,7 @@
 <p>&nbsp;</p>
 
 <footer>
-<p><small>&copy; copyright 2020-2021 木下英俊</small></p>
+<p><small>&copy; copyright 2020-2022 木下英俊</small></p>
 </footer>
 
 <p>&nbsp;</p>
