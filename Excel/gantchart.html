@@ -394,6 +394,33 @@ End Sub
 
 
 '
+' 概要：    ガントチャート表示の最初の日を日付型（Date）で取得します。
+'
+' 戻値：    ガントチャート表示の最初の日を日付型（Date）で返します。
+'
+' 補足：    CDate 関数は、文字列や数値などを日付型 (Date) に変換します。
+'           下記では CDate(Cells(5,29)) としていますが、CDate(Cells(5,20)) でも同じ結果となります。
+'
+Function GetStartDate() As Date
+    GetStartDate = CDate(Cells(5, START_DATE_RANGE))
+End Function
+
+
+'
+' 概要：    ガントチャート表示の最後の日を日付型（Date）で取得します。
+'
+' 戻値：    ガントチャート表示の最後の日を日付型（Date）で返します。
+'
+' 補足：    CDate 関数は、文字列や数値などを日付型 (Date) に変換します。
+'           最後の日の見つけ方を１行目の末尾セル（'END'が記載されている場所）として探しているので
+'           １行目の 'END'を消したり'END'以降に何かを書くと正常に動作しません。
+'
+Function GetEndDate() As Date
+    GetEndDate = CDate(Cells(5, getMaxCol(ThisWorkbook.ActiveSheet, 1)))
+End Function
+
+
+'
 ' 概要：    ガントチャート表示を更新する
 '
 Public Sub UpdateGantchart()
@@ -519,7 +546,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Application.ScreenUpdating = True
 End Sub</pre>
   <p> &nbsp;</p>
-  <hr>
 <p> &nbsp;</p>
 <h2> <a name="6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a></h2>
   <h4>[概要]</h4>
@@ -553,13 +579,254 @@ End Sub</pre>
   <p> ちなみに Excel で通常描画する線の Type を確認してみたら msoAutoShape (1) でした。<br>
   このため上記プログラムで線を削除するとガントチャートで自動作成した線のみを削除できます。手動で描いた線は残るので便利で良い感じになりました。</p>
   <p> &nbsp;</p>
+  <p> ここまでの内容で、セルに直接日付を入力すればガントチャート上に線を描画できるように（たぶん）なったはずです。</p>
+  <p> あとはセルを選択してからコンテキストメニューをクリックする、という処理の部分だけですね。</p>
   <p> &nbsp;</p>
+  <hr>
 <p> &nbsp;</p>
 <h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
   <h4>[概要]</h4>
   <p> 独自の右クリックメニュー(コンテキストメニュー)を追加する方法を示します。</p>
 <p> 右クリックメニューとして「計画を設定」「実績を設定」を追加します。</p>
 <p> 合わせて、これらメニューを選択したときに対応する計画および実績のセルを更新します。</p>
+  <p> &nbsp;</p>
+  <p> 1.</p>
+  <p> まずはメニューを追加、削除する関数を作成します。<br>下記部分は 標準モジュール で作成する必要があります。</p>
+  <pre class="prettyprint linenums lang-vb">
+Sub SelectKeikakuPeriodMenu()
+    'MsgBox "計画を設定"
+    Call ThisWorkbook.ActiveSheet.UpdateKeikaku
+End Sub
+
+Sub SelectJissekiPeriodMenu()
+    'MsgBox "実績を設定"
+    Call ThisWorkbook.ActiveSheet.UpdateJisseki
+End Sub
+
+
+'
+' 概要：    コンテキストメニューを追加する
+'
+Sub AddOriginalMenu()
+    With CommandBars("Cell").Controls.Add(Type:=msoControlButton) '右クリックメニューを追加
+        .Caption = "計画を設定"                 ' 追加するメニューの名前
+        .OnAction = "SelectKeikakuPeriodMenu"   ' メニューを押した時に実行されるマクロ名
+        .BeginGroup = True                      ' セパレータを追加
+    End With
+
+    With CommandBars("Cell").Controls.Add(Type:=msoControlButton) '右クリックメニューを追加
+        .Caption = "実績を設定"                 ' 追加するメニューの名前
+        .OnAction = "SelectJissekiPeriodMenu"   ' メニューを押したときに実行されるマクロ名
+    End With
+End Sub
+
+
+'
+' 概要：    コンテキストメニューを削除する
+'
+Sub DeleteOriginalMenu()    'マクロ名
+    On Error Resume Next    ' エラーでも次の行へ...
+    CommandBars("Cell").Controls("計画を設定").Delete
+    CommandBars("Cell").Controls("実績を設定").Delete
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> 2.</p>
+  <p> 続いて、コンテキストメニューを実際に追加する部分を作成します。</p>
+  <p> こちらはシート側の処理として作成します。</p>
+  <p> ワークシートを右クリックしたときの処理から関数 AddOriginalMenu を実行します。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    選択状態のセルが下記条件を満足するかを確認する。
+'           (1) 選択は１行のみであること
+'           (2) ガントチャート表示エリア内であること
+'
+' 戻値：    True    表示エリア内
+'           False   表示エリア外
+'
+Private Function JudgeSelectObjectAndArea() As Boolean
+    JudgeSelectObjectAndArea = False
+
+    ' セルが選択されている？
+    If TypeName(Selection) = "Range" Then                
+        ' 選択範囲は１行？ 複数行ならNG
+        If Selection.Rows.Count = 1 Then
+            ' 選択範囲の最も左側は指定範囲内？
+            If Selection(1).Column >= START_DATE_RANGE Then            
+                ' 選択範囲の最も右側は指定範囲内？
+                If Selection(Selection.Count).Column <= getMaxCol(ThisWorkbook.ActiveSheet, 1) Then
+                    ' 選択範囲は条件を満足する
+                    JudgeSelectObjectAndArea = True
+                End If                
+            End If
+        End If
+    End If
+End Function
+
+
+'
+' 概要：    右クリック時のイベント処理
+'
+' 履歴：
+'           2020-07-08 新規作成
+'
+Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
+
+    ' オリジナルメニューを削除
+    Call DeleteOriginalMenu
+    
+    ' 右クリックエリアがカレンダー内なら、オリジナルメニューを追加
+    If JudgeSelectObjectAndArea() = True Then
+        Call AddOriginalMenu
+    End If
+    
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> JudgeSelectObjectAndArea() の判定があるので、不適切なセル選択を行っている場合はオリジナルメニューを表示しません。</p>
+  <p> &nbsp;</p>
+  <p> 3.</p>
+  <p> 続いて、関数 UpdateKeikaku() と UpdateJisseki() を作ります。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    日付表示範囲を探索して、指定セルと同じ日付のセルを探してその位置を返す
+'
+' 引数：    dateCell：      探索する日付を表記している Cell
+'
+' 戻値：    1以上の値 ：    見つけたセルの水平位置
+'           -1 ：           該当セル無し
+'
+Private Function SearchDate(dateCell As Range) As Long
+    Dim i As Long
+    Dim maxCol As Long
+    
+    Debug.Print "dateCell.value = "; dateCell.Value;
+    
+    maxCol = getMaxCol(ThisWorkbook.ActiveSheet, 1)
+    'Debug.Print "maxCol = "; maxCol;
+    
+    For i = START_DATE_RANGE To maxCol
+        'Debug.Print Cells(5, i).Value
+        If Cells(5, i).Value = dateCell.Value Then
+            SearchDate = i
+            Exit For
+        End If
+    Next i
+    If i &gt; maxCol Then
+        SearchDate = -1
+    End If
+End Function
+
+
+'
+' 概要：    日付表示範囲から、指定する水平位置の日付情報を取得する
+'
+' 引数：    position：      水平位置
+'
+' 戻値：    指定位置の日付情報
+'           ""      指定位置が欄外の場合、"" を返す。
+'
+Private Function GetDate(position As Long) As String
+    ' 日付表示範囲であることを確認
+    If position &gt;= START_DATE_RANGE And position &lt;= getMaxCol(ThisWorkbook.ActiveSheet, 1) Then
+        GetDate = Cells(5, position)
+    Else
+        GetDate = ""
+    End If        
+End Function
+
+
+'
+' 概要：    選択されているセル情報に従って "計画" を更新する
+'
+' 詳細：    選択セルの情報に従って"計画"を更新します。
+'           選択セルが適切な位置であるときのみ実施します。
+'           選択セルが適切でない場合、"計画"の更新を行いません。
+'
+' 補足：    "Selection(1)"               で選択している最初のセルを返します。
+'           "Selection(Selection.Count)" で選択している最後のセルを返します。
+'           "Selection(1).Column"        で選択している最初のセル（左上）の列番号を返します。
+'           "Selection(1).Row"           で選択している最初のセル（左上）の行番号を返します。
+'
+Public Sub UpdateKeikaku()
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    Dim thisShape As shape
+
+    ' 選択セルを確認
+    If JudgeSelectObjectAndArea() = True Then
+    
+        Call 名称指定で図を削除する(ThisWorkbook.ActiveSheet, NAME_KEIKAKU &amp; Selection(1).Row)
+        
+        ' 計画セルを更新
+        Cells(Selection.Row, "V").Value = GetDate(Selection(1).Column)
+        Cells(Selection.Row, "Y").Value = GetDate(Selection(Selection.Count).Column)
+        
+        Set thisShape = 計画の線を引く(Selection(1), Selection(Selection.Count))
+        
+        'Call UpdateGantchart
+        
+    End If
+
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+End Sub
+
+
+'
+' 概要：    選択されているセル情報に従って "実績" を更新する
+'
+' 詳細：    選択セルの情報に従って"実績"を更新します。
+'           選択セルが適切な位置であるときのみ実施します。
+'           選択セルが適切でない場合、"実績"の更新を行いません。
+'
+' 補足：    "Selection(1)"               で選択している最初のセルを返します。
+'           "Selection(Selection.Count)" で選択している最後のセルを返します。
+'           "Selection(1).Column"        で選択している最初のセル（左上）の列番号を返します。
+'           "Selection(1).Row"           で選択している最初のセル（左上）の行番号を返します。
+'
+Public Sub UpdateJisseki()
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+
+    ' 選択セルを確認
+    If JudgeSelectObjectAndArea() = True Then
+    
+        Call 名称指定で図を削除する(ThisWorkbook.ActiveSheet, NAME_JISSEKI &amp; Selection(1).Row)
+        
+        ' 計画セルを更新
+        Cells(Selection.Row, "AB").Value = GetDate(Selection(1).Column)
+        Cells(Selection.Row, "AE").Value = GetDate(Selection(Selection.Count).Column)
+        
+        Set thisShape = 実績の線を引く(Selection(1), Selection(Selection.Count))
+        'Call UpdateGantchart
+        
+    End If
+
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> こちらは標準モジュール側へ実装しました。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    名前を指定して図を削除する
+'
+' 引数：    sheet       処理対象のシート
+'           name        図の名称（Shape.Name）
+'
+' 著作：    木下 英俊
+' 履歴：    2020-07-07  新規作成
+'
+Sub 名称指定で図を削除する(sheet As Worksheet, name As String)
+  Dim shp As shape
+  For Each shp In sheet.Shapes
+    If shp.name = name Then
+        shp.Delete
+    End If
+  Next shp
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> これで大体完成です。</p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a></h2>
@@ -569,15 +836,128 @@ End Sub</pre>
 <p> &nbsp;</p>
 <p> 同様に、別のエクセルブックを使用するなどによりデアクティブになった際の処理を実装します。</p>
 <p> ・独自のコンテキストメニューを削除します。</p>
+  <p> &nbsp;</p>
+  <p> 1.</p>
+  <p> ThisWorkbook の処理として以下を実装します。</p>
+  <p> この処理を行わないと、無関係な Excel ファイルを開いたときにも独自メニューを表示してしまいます。</p>
+  <pre class="prettyprint linenums lang-vb">
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    Call DeleteOriginalMenu
+End Sub
+
+Private Sub Workbook_WindowDeactivate(ByVal Wn As Window)
+    Call DeleteOriginalMenu
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> 2.</p>
+  <p> ガントチャートシートの処理として以下を実装します。</p>
+  <p> この処理を行わないと、無関係なシートを表示したときに独自メニューを表示してしまいます。</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' 概要：    このシートがアクティブになった時のイベント処理
+'
+Private Sub Worksheet_Activate()
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+
+    ' 表示を”標準”に
+    ActiveWindow.View = xlNormalView
+    
+    ' ガントチャートを更新
+    Call UpdateGantchart
+    
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+End Sub
+
+
+'
+' 概要：    このシートがディアクティブになった時のイベント処理
+'           オリジナルメニューの削除を行います。
+'
+Private Sub Worksheet_Deactivate()
+    ' オリジナルメニューを削除
+    Call DeleteOriginalMenu
+End Sub</pre>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="9._設定２_を作る">9. 設定２ を作る</a></h2>
-<h3> 9-1. 線の色を変える (ObjectThemeColor)</h3>
-<p> &nbsp;</p>
-<h3> 9-2. 線の色を変える (TintAndShade)</h3>
-<p> &nbsp;</p>
-<h3> 9-3. 線の太さを変える(Weight)</h3>
-<p> &nbsp;</p>
+  <p> "設定２" のキモは、シートで設定した設定値を画面上にプレビュー表示する、という部分だけですね。</p>
+  <p> "設定２" のシート用に下記 VBA プログラムを準備するだけです。</p>
+  <p> &nbsp;</p>
+  <pre class="prettyprint linenums lang-vb">
+Private Sub Worksheet_Activate()
+    Call UpdateColor
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    Call UpdateColor
+End Sub
+
+Private Sub UpdateColor()
+    On Error Resume Next    ' エラーでも次の行へ...
+
+    Dim thisSheet As Worksheet
+    Dim thisShape As shape
+    Dim thisCell As Range
+    
+    Set thisSheet = ThisWorkbook.Sheets("設定2")
+    
+    Call 線を一括削除する(thisSheet)
+    
+    
+    ' 計画線
+    Set thisCell = Range("E3").MergeArea
+    Set thisShape = drawLine(thisSheet, thisCell.Left + 2, thisCell.Top + thisCell.Height / 2, thisCell.Left + thisCell.Width - 2, thisCell.Top + thisCell.Height / 2)
+    With thisShape.Line
+        .ForeColor.ObjectThemeColor = Range("D3").Value
+        .ForeColor.TintAndShade = Range("D4").Value
+        .Weight = Range("D5").Value
+    End With
+
+    ' 実績線
+    Set thisCell = Range("E6").MergeArea
+    Set thisShape = drawLine(thisSheet, thisCell.Left + 2, thisCell.Top + thisCell.Height / 2, thisCell.Left + thisCell.Width - 2, thisCell.Top + thisCell.Height / 2)
+    With thisShape.Line
+        .ForeColor.ObjectThemeColor = Range("D6").Value
+        .ForeColor.TintAndShade = Range("D7").Value
+        .Weight = Range("D8").Value
+        
+        .BeginArrowheadStyle = msoArrowheadOpen
+        .BeginArrowheadLength = msoArrowheadShort
+        .BeginArrowheadWidth = msoArrowheadNarrow
+        .BeginArrowheadLength = Range("D9").Value   ' msoArrowheadShort
+        .BeginArrowheadWidth = Range("D10").Value   ' msoArrowheadNarrow
+        
+        .EndArrowheadStyle = msoArrowheadOpen
+        .EndArrowheadLength = msoArrowheadShort
+        .EndArrowheadWidth = msoArrowheadNarrow
+        .EndArrowheadLength = Range("D11").Value    ' msoArrowheadShort
+        .EndArrowheadWidth = Range("D12").Value     ' msoArrowheadNarrow
+    End With
+
+    ' ObjectColor
+    For i = 3 To 18
+        Set thisShape = drawLine(thisSheet, Cells(i, "I").Left + 2, Cells(i, "I").Top + Cells(i, "I").Height / 2, Cells(i, "I").Left + Cells(i, "I").Width - 2, Cells(i, "I").Top + Cells(i, "I").Height / 2)
+        With thisShape.Line
+            .Weight = 5
+            .ForeColor.ObjectThemeColor = Cells(i, "H").Value
+        End With
+    Next i
+    
+    ' ThemeColor
+    For i = 3 To 12
+        Cells(i, "L").Interior.ThemeColor = Cells(i, "K")
+    Next i
+    
+    ' ColorIndex
+    For i = 3 To 59
+        Cells(i, "O").Interior.ColorIndex = Cells(i, "N")
+    Next i
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
   <hr>
   <p> &nbsp;</p>
@@ -715,6 +1095,12 @@ SOFTWARE.
 <p>&nbsp;</p>
 <h2 style="margin-bottom:5px">記載</h2>
 <table>
+
+  <tr>
+    <td class="td_history_date">2022-05-19</td>
+    <td class="td_history_separator">-</td>
+    <td class="td_history">７章、８章、９章 を追記</td>
+  </tr>
 
   <tr>
     <td class="td_history_date">2022-05-18</td>
