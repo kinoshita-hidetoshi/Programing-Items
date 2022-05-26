@@ -216,7 +216,7 @@ if not os.path.exists(save_path):
   <h2><a name="2._静止画を画像分類する">2. 静止画を画像分類する</a></h2>
   <h4>[概要]</h4>
   <p>学習済みの VGG モデルを使用し、静止画（JPEGファイル）の画像分類を行ってみます。</p>
-  <p>ここでは入力画像として、 <a href="https://pixabay.com">https://pixabay.com</a> 
+  <p>ここでは入力画像として、 <a href="https://pixabay.com" target="_blank">https://pixabay.com</a> 
   から取得した４つの画像（てんとう虫、ゴールデンレトリバー（犬）、車、デイジー（花））を使用させていただき実験してみます。</p>
   <p>いずれも 商用利用無料、帰属表示必要なし、の画像です。<br>各画像の取得元は、下記ソースコード中に記載の URL を参照ください。</p>
   <p>下記プログラムを実行する際は、ご自身で各画像をダウンロードして事前に data フォルダに保存してください。</p>
@@ -488,7 +488,7 @@ from torchvision import models, transforms</pre>
   <p>&nbsp;</p>
   <p>以下に全ソースコードを記載します。&nbsp;</p>
   <p>&nbsp;</p>
-  <p>[全ソースコード "<a href="https://github.com/ipro-corp/python-examples/blob/main/image_classification_vgg/classification_vgg.py" target="_blank">classsification_vgg.py</a>"]</p>
+  <p>[全ソースコード "classsification_vgg.py"]</p>
   <pre class="prettyprint linenums lang-py">import numpy as np
 import json
 from PIL import Image

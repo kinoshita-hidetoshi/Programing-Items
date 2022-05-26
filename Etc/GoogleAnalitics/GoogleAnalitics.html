@@ -37,10 +37,6 @@
 	
 <h1>Google アナリティクス</h1>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
-<p> &nbsp;</p>
-
 <p>&nbsp;</p>
 <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
   <tr>
@@ -48,9 +44,8 @@
       <nav>
         <h2> 目次</h2>
         <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><br><a href="#ライセンス">ライセンス</a><br>
+        <a href="#1._Googleアナリティクスで自分のアクセスを除外する方法_">1. Googleアナリティクスで自分のアクセスを除外する方法</a><br>
+        2. ***<br><br><a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
         </p>
       </nav>
@@ -61,7 +56,62 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> 1. ***</h2>
+	<h2> <a name="1._Googleアナリティクスで自分のアクセスを除外する方法_">1. 
+    Googleアナリティクスで自分のアクセスを除外する方法 </a></h2>
+    <p> &nbsp;</p>
+    <h3>1-1. IPアドレスを指定して除外する </h3>
+    <p>&nbsp;</p>
+    <p>1.</p>
+    <p>自分のIPアドレスなど、除外したいIPアドレスが何であるかを確認しましょう。<a href="https://www.cman.jp/network/support/go_access.cgi" target="_blank">サーバー監視/ネットワーク監視サービス</a> 
+    にアクセスすると、現在使っているパソコンのIPアドレスが表示されます。 </p>
+    <p>&nbsp;</p>
+    <p>2.</p>
+    <p>Googleアナリティクスのフィルタ機能を使って、自分のIPアドレスのフィルタ設定を行います。<br>
+    Googleアナリティクスの管理画面を開き、「管理」→「全てのフィルタ」の順にクリックします。 </p>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="GoogleAnalitics/imgA.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>「ユニバーサル アナリティクス プロパティ向けのフィルタのみを表示しています。Google アナリティクス 4 
+    プロパティにフィルタを適用することはできません。 」</p>
+    <p>と表示されました。どうやら私が使用している環境では IP アドレスによるフィルタを適用することはできないみたいです。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>1-2. アドオンを使って除外する </h3>
+    <p>
+    自分のアクセスはアドオンを使うことで除外できます。アドオンとは、ソフトウェアなどに追加される拡張機能のことで、Webブラウザには多くのアドオンが用意されています。アクセスを除外するためには、使用しているブラウザへ「Google 
+    Analytics オプトアウト アドオン」を追加します。 </p>
+    <p>&nbsp;</p>
+    <p>1.</p>
+    <p>「<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank">Google 
+    Analytics オプトアウト アドオン</a>」をクリックします。</p>
+    <p>&nbsp;</p>
+    <p>2.</p>
+    <p>下図画面を表示したら赤枠部分をクリックします。 </p>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="GoogleAnalitics/img4.jpg"></p>
+    <p>&nbsp;</p>
+    <p>3.</p>
+    <p>下図画面を表示したら「Chrome に追加」をクリックします。</p>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="GoogleAnalitics/img5.jpg"></p>
+    <p>&nbsp;</p>
+    <p>4.</p>
+    <p>下図ポップアップを表示したら「拡張機能の追加」をクリックします。</p>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="GoogleAnalitics/img7.jpg"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>以上でインストールを完了です。</p>
+    <p>これで Google アナリティクス の分析対象となりません。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> 2. ***</h2>
 	<h4>[概要]</h4>
 	<p> &nbsp;</p>
 	
@@ -70,9 +120,13 @@
 	
 </section>
 	
-<br>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>
 
 <br>
+
+</p>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
@@ -125,6 +179,10 @@ SOFTWARE.
         <li>プライバシーポリシー - OND'U - Panasonic<br>
         <a href="https://tech.panasonic.com/jp/ondu/privacy.html" target="_blank">
         https://tech.panasonic.com/jp/ondu/privacy.html</a></li>
+        <li>Googleアナリティクスで自分のアクセスを除外する2つの方法｜PCとスマホに分けて解説｜アクセス解析ツール「AIアナリスト」ブログ 
+        (wacul-ai.com)<br>
+        <a href="https://wacul-ai.com/blog/access-analysis/google-analytics-setting/exclude-your-access/" target="_blank">
+        https://wacul-ai.com/blog/access-analysis/google-analytics-setting/exclude-your-access/</a></li>
 	</ul>
 </section>
 
@@ -138,7 +196,7 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2022-05-05</td>
+	    <td class="td_history_date">2022-05-24</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
