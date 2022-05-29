@@ -32,10 +32,13 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
-.auto-style1 {
-  color: #FF0000;
-}
-</style>
+    .auto-style1 {
+      color: #FF0000;
+    }
+    .auto-style2 {
+      text-decoration: underline;
+    }
+  </style>
 
 </head>
 
@@ -56,8 +59,10 @@
         <p>
         <a href="#1._インストール">1. インストール</a><br>
         <a href="#2._JPEGヘッダーから認識結果を取り出す">2. JPEGヘッダーから認識結果を取り出す</a><br>
-        <a href="#3._認識結果を赤枠と文字で表示する">3. 認識結果を赤枠と文字で表示する</a><br>
-        <br><a href="#ライセンス">ライセンス</a><br>
+        <a href="#3._認識結果を枠と文字で描画する">3. 認識結果を枠と文字で描画する</a><br>
+        <a href="#4._i-PRO_カメラとつないでリアルタイムで認識結果を表示する">4. i-PRO カメラとつないでリアルタイムで認識結果を表示する</a><br>
+        <br>
+        <a href="#ライセンス">ライセンス</a><br>
         <a href="#参考">参考</a><br>
         </p>
       </nav>
@@ -139,9 +144,11 @@
 <section>
 	<h2> <a name="2._JPEGヘッダーから認識結果を取り出す">2. JPEGヘッダーから認識結果を取り出す</a></h2>
 	<h4>[概要]</h4>
-    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットのヘッダ情報に AI 認識結果が記録されているようです。</p>
+    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
     <p>私の技量では RTSP からこの情報を取り出すのは難があるので、JPEG から取り出しすることにチャレンジしてみます。<br>
-    コメント領域に記録されている模様です。</p>
+    JPEG ヘッダのコメント領域に記録されているということなので、ここから情報を取り出してみます。</p>
+    <p>&nbsp;いきなりカメラと接続してチャレンジするのは大変なので、まずは静止画（JPEG）ファイルを取得し、これをバイナリエディタなどで実際のデータ構造を確認しながら方針や実現方法などを検討していきたいと思います。</p>
+    <p>&nbsp;</p>
 	<p> &nbsp;</p>
 	
 	<h4>[評価環境]</h4>
@@ -154,7 +161,319 @@
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 home,</td>
+	    <td>21H2</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+    <p>&nbsp;</p>
+    <p>(1)</p>
+    <p>「<a href="connect_with_jpeg.html#5._連番の_JPEG_ファイルで保存する">JPEGで画像を取得する - 5.連番のJPEGファイルで保存する</a>」「<a href="connect_with_mjpeg.html#5._連番の_JPEG_ファイルで保存する">MJPEGで画像を取得する - 5.連番のJPEGファイルで保存する</a>」に記載の方法を使って、WV-XAE200W 
+    を動作している状態の JPEG ファイルをPCに保存します。</p>
+    <p>&nbsp;</p>
+    <p>(2)</p>
+    <p>資料<span style="vertical-align: super">[1]</span>、JPEGファイル構造の資料<span style="vertical-align: super">[3]</span>、 (1)で保存したファイルをバイナリエディタで表示した結果を見比べて確認などしていきます。</p>
+    <p>まずは仕様確認です。</p>
+    <p>資料<span style="vertical-align: super">[1]</span>の「i-proカメラ外部インタフェース仕様書ver1.59.pdf 
+    - 13.3.3. JPEG」に下図のように記載されています。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="" class="border" src="connect_to_extensions/img19.jpg"></p>
+    <p>&nbsp;</p>
+    <p class="auto-style2"><strong>ポイント</strong></p>
+    <ul>
+      <li>
+      <p>JPEGファイルは SOI(0xFFD8) で始まる</p>
+      </li>
+      <li>
+      <p>JPEGファイルは EOI(0xFFD9) で終わる</p>
+      </li>
+      <li>
+      <p>付加情報はコメント領域に記録されている（COM(0xFFFE)） </p>
+      </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>資料<span style="vertical-align: super">[1]</span>の「i-VMD_commandインターフェース仕様書 
+    ver1.05.pdf - 2.5. 付加情報について」に下図のように記載されています。</p>
+    <p>
+    <img alt="" class="border" src="connect_to_extensions/img1A.jpg"></p>
+    <p><img alt="" class="border" src="connect_to_extensions/img4.jpg"></p>
+    <p>
+    <img alt="" src="connect_to_extensions/img23.jpg" class="border"></p>
+    <p>&nbsp;</p>
+    <p>(3)</p>
+    <p>以上を踏まえて、実際に取得した JPEG ファイルを解析します。</p>
+    <p>上記資料は2019年が最終更新であり WV-XAE200W の情報記載はありません。若干差異がありそうです。</p>
+    <p>&nbsp;</p>
+    <p>[図： image_000001.jpg バイナリデータ解析結果]</p>
+    <p><img alt="" class="border" src="connect_to_extensions/img2A.jpg"></p>
+    <p>&nbsp;</p>
+    <p>WV-XAE200W に関係する個所に絞って記載するとポイントは以下の通りです。</p>
+    <p>&nbsp;</p>
+    <p class="auto-style2"><strong>ポイント</strong></p>
+    <ul>
+      <li>コメント領域中に "WV-XAE200W 付加情報" が記録されている</li>
+      <li>"WV-XAE200W 付加情報" のタグコードは "0x002F"</li>
+      <li>コメント領域には他の付加情報も保存されている</li>
+      <li>"WV-XAE200W 付加情報" のデータ長は、検知数に応じて変わる可変長</li>
+    </ul>
+    <p>&nbsp;</p>
+    <table class="border-collapse" border="1">
+      <caption style="text-align:left">[表: WV-XAE200W 付加情報部分を解析した結果]</caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="text-align:left">データ</th>
+          <th style="text-align:left">項目</th>
+          <th style="text-align:left">説明</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>00 2F</td>
+        <td>ID (16 bit)</td>
+        <td>付加情報（0x002F）</td>
+      </tr>
+      <tr>
+        <td>00 28</td>
+        <td>Length (16 bit)</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="white-space:nowrap">62 81 E9 F2</td>
+        <td>UtcClock (32 bit)</td>
+        <td>UTC clock 1970年からの通算秒<br><br><hr><br>0x6281E9F2 = 1,652,681,202[秒]<br>= 
+        19,128[日] + 6[時間] + 6[分] + 42[秒]<br>⇨ 2022年5月16日、タイムゾーン(+9)を考慮すると 
+        15時6分42秒、正しそうです。</td>
+      </tr>
+      <tr>
+        <td rowspan="5">09</td>
+        <td>RFU (1 bit)</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>TimeZoneDirection (1 bit)</td>
+        <td>0: プラス、1: マイナス</td>
+      </tr>
+      <tr>
+        <td>SummerTime (1 bit)</td>
+        <td>0: 
+        サマータイム外、1: サマータイム中</td>
+      </tr>
+      <tr>
+        <td>TimeZoneHour (5 
+        bit)</td>
+        <td>TimeZoneHour ; 9</td>
+      </tr>
+      <tr>
+        <td colspan="2">以上から、0x09 はタイムゾーン "+9", "サマータイム外" という意味です。</td>
+      </tr>
+      <tr>
+        <td>00</td>
+        <td>TimeZoneMinute (8 bit)</td>
+        <td>TimeZoneMinute = 0</td>
+      </tr>
+      <tr>
+        <td>00 2E</td>
+        <td>FrameTime (16 bit)</td>
+        <td>Utcclkを補足する10msec単位のカウンタ<br>0x00：&nbsp; 0msec<br>0x01： 10msec<br>～<br>
+        0x63：990msec </td>
+      </tr>
+      <tr>
+        <td>01 00</td>
+        <td>algorithmID (16 bit)</td>
+        <td>"0x0100" 固定</td>
+      </tr>
+      <tr>
+        <td rowspan="4">00 02</td>
+        <td>RFU (6 bit)<br>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><span lang="EN-US">resultinfoflag</span> (1 bit)</td>
+        <td><span>結果情報（枠情報）があるかないか<br>0: 無し<br>1: あり </span></td>
+      </tr>
+      <tr>
+        <td>
+        <span lang="EN-US">uniqueinfoflag</span> (1 bit)</td>
+        <td><span>固有情報があるかないか<br>0: 無し<br>1: あり</span></td>
+      </tr>
+      <tr>
+        <td colspan="2">以上から、0x02 は "検知結果あり" を意味します。</td>
+      </tr>
+      <tr>
+        <td>00 10</td>
+        <td>resultInfoLength (16 bit)</td>
+        <td>結果情報（Result information）の長さ。 Byte 単位。<br><br>0x0010 = 16 [bytes]</td>
+      </tr>
+      <tr>
+        <td rowspan="2">04 10</td>
+        <td>AreaNum (6 bit)<br></td>
+        <td>AreaNum = 1 ; 検知数 1 の意味<br></td>
+      </tr>
+      <tr>
+        <td>AreaLength (10 bit)</td>
+        <td>AreaLength = 0x10 = 16 [bytes]</td>
+      </tr>
+      <tr>
+        <td>03 20</td>
+        <td><span lang="EN-US">Imgwidth</span> (16 bit)</td>
+        <td>画像幅<br><br>0x0320 = 800 [px]</td>
+      </tr>
+      <tr>
+        <td>01 C2</td>
+        <td>Imgheight (16 bit)</td>
+        <td>画像高さ<br><br>0x01C2 = 450 [px]</td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>＝＝＝ この範囲の &lt;resultInfoLength&gt;(16 bytes) を検知した数だけ反復</p>
+    
+    <table class="border-collapse" border="1">
+      <caption style="text-align:left">[表: Result information of the detected area]</caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="text-align:left">データ</th>
+          <th style="text-align:left">項目</th>
+          <th style="text-align:left">説明</th>
+        </tr>
+      </thead>
+    
+      <tr>
+        <td style="white-space:nowrap">0B 6A</td>
+        <td>AreaID (16 bit)<br></td>
+        <td>検出枠のID (0 ～ 65,535)<br><br>0x0B6A = 2,922</td>
+      </tr>
+      <tr>
+        <td>00 01</td>
+        <td>dtctarea (16 bit)<br><br> </td>
+        <td>エリアごとに1ビットを割り当て。<br>検知条件を満足するエリアのビットを '1' とする。<br>&nbsp;<br>
+        0x0001：検知条件1 検出エリア1         <br>0x0002：検知条件1 検出エリア2 <br>0x0004：検知条件1 検出エリア3 <br>0x0008：検知条件1 検出エリア4
+        <br>0x0010：検知条件1 検出エリア5 <br>0x0020：検知条件1 検出エリア6 <br>0x0040：検知条件1 検出エリア7
+        <br>0x0080：検知条件1 検出エリア8 <br>0x0100：検知条件2 検出エリア1 <br>0x0200：検知条件2 検出エリア2
+        <br>0x0400：検知条件2 検出エリア3 <br>0x0800：検知条件2 検出エリア4 <br>0x1000：検知条件2 検出エリア5
+        <br>0x2000：検知条件2 検出エリア6 <br>0x4000：検知条件2 検出エリア7 <br>0x8000：検知条件2 検出エリア8 
+        <br><br><hr><br>0x0001 ; 検知条件1 検出エリア1 で検知</td>
+      </tr>
+      <tr>
+        <td rowspan="3">10 01</td>
+        <td>almtype (4 bit)<br><br><br></td>
+        <td>発報した際の検出種別 <br>0x0(0000b)：RFU (Rest for 
+        Future Use)<br>
+        0x1(0001b)：侵入検知 <br>0x2(0010b)：滞留検知 <br>0x3(0011b)：方向検知 <br>
+        0x4(0100b)：置き去り・持ち去り検知 <br>0x5(0101b)：ラインクロス検知 <br>0x8(1000b)：AI検知 
+        <br>0xF(1111b)：未発報 <br>上記以外：RFU (Rest for Future Use)<br><br><hr><br>almtype= 1 (侵入検知)<br></tr>
+      <tr>
+        <td>dir 
+        (16 bit)</td>
+        <td>方向検知・ラインクロス発報時の方向 <br>0x00：方向なし<br>0x01：上　　　<br>0x02：右上 <br>
+        0x03：右　　　<br>0x04：右下 <br>0x05：下　　　<br>0x06：左下 <br>0x07：左　　<br>0x08：左上 
+        <br>0x10：A→B <br>0x20：B→A <br>0x30：A⇔B <br>上記以外：RFU (Rest for Future 
+        Use)<br><br><hr><br>dir = 0 (方向なし)</td>
+      </tr>
+      <tr>
+        <td><span lang="EN-US">almobj</span> 
+        (4 bit)</td>
+        <td>発報した検知対象物 <br>0x0：種別なし<br>0x1：人物 <br>0x2：車 <br>
+        0x3：二輪車 <br>0x4：不明 <br>0x5～0xF：RFU (Rest for Future Use)<br><br><hr><br>almobj = 1 (人物)</td>
+      </tr>
+      <tr>
+        <td>00 00</td>
+        <td>RFU (16 bit)</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>01 0B</td>
+        <td>hstart (16 bit)</td>
+        <td>0x010B = 267</td>
+      </tr>
+      <tr>
+        <td>00 A7</td>
+        <td>vstart (16 bit)</td>
+        <td>0x00A7 = 167</td>
+      </tr>
+      <tr>
+        <td>00 E3</td>
+        <td>hcnt (16 bit)</td>
+        <td>0x00E3 = 227</td>
+      </tr>
+      <tr>
+        <td>00 D7</td>
+        <td>vcnt (16 bit)</td>
+        <td>0x00D7 = 215</td>
+      </tr>
+    </table>
+    <p>＝＝＝ ここまで</p>
+    <p>&nbsp;</p>
+    <p>(4)</p>
+    <p>ここまでの情報を踏まえて、JPEGファイルを解析して WV-XAE200W 付加情報を取得するプログラムを作成してみます。</p>
+    <p>&nbsp;</p>
+    <p>(4-1) 最初に対象バイナリデータが JPEG ファイルであるかを確認する関数を作成します。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>(4-2) JPEGヘッダ情報を分析してタグ一覧を抽出する関数を作成します。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>(4-3) コメント領域のデータを渡すことで WV-XAE200W 付加情報を取得する関数を作成します。</p>
+    <p>この関数は (4-2) で作成した関数の中から呼び出しするようにします。</p>
+    <p>また関数＊＊＊の戻り値として "WV-XAE200W 付加情報" を返すようにします。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>(4-4) プログラム全体を示します。</p>
+    <p>＊＊＊</p>
+    <p>&nbsp;</p>
+    <p>実行結果です。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p><span class="auto-style1">編集予定 － To Be Edited.</span><br><br><br>
+
+    </p>
+
+</section>
+
+<p>
+
+<br>
+
+</p>
+
+<section>
+	<h2> <a name="3._認識結果を枠と文字で描画する">3. 認識結果を枠と文字で描画する</a></h2>
+    <p> &nbsp;</p>
+	<h4>[概要]</h4>
+    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
+    <p>前の章で JPEG ヘッダから取り出した認識結果を使用して、認識位置に枠を、分類結果として文字を、それぞれ描画して表示するサンプルプログラムを作成してみたいと思います。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[評価環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3" style="height: 17px"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	    <td>Python,</td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -177,13 +496,13 @@
 
 </section>
 
-<br>
+<p>&nbsp;</p>
 
 <section>
-	<h2> <a name="3._認識結果を赤枠と文字で表示する">3. 認識結果を赤枠と文字で表示する</a></h2>
+	<h2> <a name="4._i-PRO_カメラとつないでリアルタイムで認識結果を表示する">4. i-PRO カメラとつないでリアルタイムで認識結果を表示する</a></a></h2>
     <p> &nbsp;</p>
 	<h4>[概要]</h4>
-    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットのヘッダ情報に AI 認識結果が記録されているようです。</p>
+    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
     <p>前の章で JPEG ヘッダから取り出した認識結果を使用して、映像上に認識位置を赤枠で、分類を文字でそれぞれ描画して
       画面に映像を表示するサンプルプログラムを作成してみたいと思います。</p>
 	<p> &nbsp;</p>
@@ -198,7 +517,7 @@
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -261,13 +580,16 @@ SOFTWARE.
 <section>
 	<h2><a name="参考">参考</a></h2>
 	<ul>
-		<li>AI動体検知アプリケーション、AIプライバシーガードアプリケーション、AIプロセッサー解除ライセンス WV-XAE200W / 
+		<li>[1] AI動体検知アプリケーション、AIプライバシーガードアプリケーション、AIプロセッサー解除ライセンス WV-XAE200W / 
         WV-XAE201W / WV-XLE001W - 映像管理ソフト 製品一覧 - 監視・防犯システム - Panasonic<br>
         <a href="https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w" target="_blank">
         https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w</a></li>
-        <li>WV-XAE200W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE200W]<br>
+    <li>[2] WV-XAE200W用ソフトウェア&nbsp;[ファームウェア] [WV_XAE200W]<br>
         <a href="https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092" target="_blank">
         https://archives.connect.panasonic.com/security/cgi-bin/ipro/download/tbookmarka_m.cgi?m=%2520&amp;mm=2020061510085092</a></li>
+    <li>[3] JPEGファイルの構造 (vector.co.jp)<br>
+        <a href="https://hp.vector.co.jp/authors/VA032610/JPEGFormat/StructureOfJPEG.htm" target="_blank">
+        https://hp.vector.co.jp/authors/VA032610/JPEGFormat/StructureOfJPEG.htm</a></li>
 	</ul>
 </section>
 
