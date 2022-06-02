@@ -38,6 +38,9 @@
     .auto-style2 {
       text-decoration: underline;
     }
+  .auto-style3 {
+    background-color: #484800;
+  }
   </style>
 
 </head>
@@ -46,7 +49,7 @@
 	
 <h1>機能拡張ソフトウェア(WV-XAE200W)と接続する</h1>
 
-<p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) を入手したので、JPEG 形式で映像取得して遊んでみます。</p>
+<p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) を入手したので遊んでみます。</p>
 <p> ここではAI機能拡張ソフトウェア (WV-XAE200W) をインストールして遊んでみます。</p>
 <p> &nbsp;</p>
 
@@ -304,7 +307,7 @@
       </tr>
       <tr>
         <td><span lang="EN-US">resultinfoflag</span> (1 bit)</td>
-        <td><span>結果情報（枠情報）があるかないか<br>0: 無し<br>1: あり </span></td>
+        <td><span>結果情報（枠情報）があるかないか<br>0: 無し<br>1: あり</span></td>
       </tr>
       <tr>
         <td>
@@ -317,7 +320,10 @@
       <tr>
         <td>00 10</td>
         <td>resultInfoLength (16 bit)</td>
-        <td>結果情報（Result information）の長さ。 Byte 単位。<br><br>0x0010 = 16 [bytes]</td>
+        <td>結果情報（Result information）の長さ。 Byte 単位。<br><br><hr><br>AreaNum * 16[bytes] 
+        となります。<br>16[bytes] は下記 [表: Result information of the detected area] 
+        が示すデータサイズです。<br>この例では次に記載の AreaNum が 1 なので、resultInfoLength 
+        は0x10(16)バイトとなります。</td>
       </tr>
       <tr>
         <td rowspan="2">04 10</td>
@@ -340,7 +346,7 @@
       </tr>
     </table>
     <p>&nbsp;</p>
-    <p>＝＝＝ この範囲の &lt;resultInfoLength&gt;(16 bytes) を検知した数だけ反復</p>
+    <p>＝＝＝ この範囲を検知した数だけ反復</p>
     
     <table class="border-collapse" border="1">
       <caption style="text-align:left">[表: Result information of the detected area]</caption>
@@ -371,11 +377,11 @@
       <tr>
         <td rowspan="3">10 01</td>
         <td>almtype (4 bit)<br><br><br></td>
-        <td>発報した際の検出種別 <br>0x0(0000b)：RFU (Rest for 
+        <td>発報した際の検出種別 <br>0x0：RFU (Rest for 
         Future Use)<br>
-        0x1(0001b)：侵入検知 <br>0x2(0010b)：滞留検知 <br>0x3(0011b)：方向検知 <br>
-        0x4(0100b)：置き去り・持ち去り検知 <br>0x5(0101b)：ラインクロス検知 <br>0x8(1000b)：AI検知 
-        <br>0xF(1111b)：未発報 <br>上記以外：RFU (Rest for Future Use)<br><br><hr><br>almtype= 1 (侵入検知)<br></tr>
+        0x1：侵入検知 <br>0x2：滞留検知 <br>0x3：方向検知 <br>
+        0x4：置き去り・持ち去り検知 <br>0x5：ラインクロス検知 <br>0x8：AI検知 
+        <br>0xF：未発報 <br>上記以外：RFU (Rest for Future Use)<br><br><hr><br>almtype= 1 (侵入検知)<br></tr>
       <tr>
         <td>dir 
         (16 bit)</td>
@@ -421,31 +427,487 @@
     <p>(4)</p>
     <p>ここまでの情報を踏まえて、JPEGファイルを解析して WV-XAE200W 付加情報を取得するプログラムを作成してみます。</p>
     <p>&nbsp;</p>
+    
     <p>(4-1) 最初に対象バイナリデータが JPEG ファイルであるかを確認する関数を作成します。</p>
+    <p>バイナリデータの先頭が SOI(0xffd8) で末尾が EOI(0xffd9) であればOKとしています。</p>
+    <pre class="prettyprint linenums lang-py">def IsJpegFile(data):
+    '''
+    Check if data is JPEG data.
+    data が JPEG データであることを確認する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        True            Data is JPEG.
+        False           Data is not JPEG.
+    Raises
+        None
+    '''
+    result = False
+
+    length = len(data)
+    if length &gt;= 4:
+        SOI, = struct.unpack('&gt;H', data[0:2])
+        EOI, = struct.unpack('&gt;H', data[length-2:length])
+        if SOI == 0xffd8 and EOI == 0xffd9:
+            result = True
+
+    return result</pre>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>(4-2) JPEGヘッダ情報を分析してタグ一覧を抽出する関数を作成します。</p>
-    <p>&nbsp;</p>
+    
+    <p>(4-2) JPEGヘッダ情報を分析してタグを抽出する関数を作成します。</p>
+    <p>ANS.1 形式と似た TLV 構造になっているので、関数に渡されたデータ先頭から JPEG 仕様に従って Tag, Length, Value 
+    を取り出します。</p>
+    <pre class="prettyprint linenums lang-py">def ParseJpegHeadder(data):
+    '''
+    Get Tag, Length, Value (data_interior), the following data from JPEG header data.
+    JPEG ヘッダデータから Tag, Length, Value(data_interior), 次のデータ を取得する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        result          True:   success
+                        False:  failure
+        tag             Tag
+        length          Length
+        data_interior   Value. If it does not exist, it will be None.
+        data_next       The following data after data_interior. If it does not exist, it will be None.
+    Raises
+        None
+    '''
+    result = False
+    tag = 0
+    length = 0
+    data_length = len(data)
+    data_interior = None
+    data_next = None
+
+    if data_length &gt;= 4:
+        tag, length, = struct.unpack('&gt;HH', data[0:4])
+        if tag &amp; 0xff00 == 0xff00:
+            if length + 2 &lt;= data_length:
+                data_interior = data[4:length+2]
+                data_next = data[length+2:data_length]
+                result = True
+
+    return result, tag, length, data_interior, data_next</pre>
     <p>&nbsp;</p>
     <p>(4-3) コメント領域のデータを渡すことで WV-XAE200W 付加情報を取得する関数を作成します。</p>
-    <p>この関数は (4-2) で作成した関数の中から呼び出しするようにします。</p>
-    <p>また関数＊＊＊の戻り値として "WV-XAE200W 付加情報" を返すようにします。</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>(4-4) プログラム全体を示します。</p>
-    <p>＊＊＊</p>
-    <p>&nbsp;</p>
-    <p>実行結果です。</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p><span class="auto-style1">編集予定 － To Be Edited.</span><br><br><br>
+    <p>WV-XAE200W データのタグは 0x002f なので、これを探します。</p>
+    <p>見つけたらこの後で記載する ParseAivmdResult 関数に渡して詳細分析を行います。</p>
+    <pre class="prettyprint linenums lang-py">def ParseJpegComment(data):
+    '''
+    This function obtains the WV-XAE200W (aivmd) recognition result from the JPEG comment data.
+    JPEG コメントデータから WV-XAE200W (aivmd) 認識結果を取得する。
 
-    </p>
+    Args:
+        data            [i] JPEG comment data.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    The WV-XAE200W (aivmd) recognition result.
+    Raises
+        None
+    '''
+    result = False
+    aivmd_result = None
+    length = len(data)
+
+    while True:
+        if length &gt;= 4:
+            tag, data_length = struct.unpack('&gt;HH', data[0:4])
+            if data_length &lt;= length:
+                data_interior = data[4: data_length]
+                data = data[data_length:]
+                length -= data_length
+
+                if tag == 0x002f:   # 0x002f means AI-VMD meta information.
+                    aivmd_result = ParseAivmdResult(data_interior)
+                    result = True
+                    break
+            else:
+                break
+        else:
+            break
+    
+    return result, aivmd_result</pre>
+    <p>&nbsp;</p>
+    <p>(4-4) 取得した WV-XAE200W 付加情報を渡すと詳細を分析してくれる関数を作成します。</p>
+    <p>各データを切り出しして、辞書形式にして保存します。</p>
+    <pre class="prettyprint linenums lang-py">def ParseAivmdResult(data):
+    '''
+    This function gets the recognition result in dictionary format from the WV-XAE200W (AI-VMD) recognition result.
+    WV-XAE200W (AI-VMD) 認識結果から辞書形式の認識結果を取得する。
+
+    Args:
+        data            [i] WV-XAE200W (aivmd) recognition result.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    the recognition result in dictionary format.
+    Raises
+        None
+    '''
+    result = {}
+    result['detectResult'] = []
+    length = len(data)
+
+    UTCClock, timeZone, timeZoneMinute, frameTime   = struct.unpack('&gt;LBBH', data[ 0: 8])
+    algorithmId, resultInfo, resultInfoLength       = struct.unpack('&gt;HHH',  data[ 8:14])
+    areaInfo, imageWidth, imageHeight               = struct.unpack('&gt;HHH',  data[14:20])
+    areaNum = (areaInfo &gt;&gt; 10) &amp; 0x3f
+    areaLength = areaInfo &amp; 0x3ff
+    timeZoneDirection = (timeZone &gt;&gt; 6) &amp; 0x01
+    summerTime = (timeZone &gt;&gt; 5) &amp; 0x01
+    if timeZoneDirection == 0:
+        timeZoneHour = + (timeZone &amp; 0x1f)
+    else:
+        timeZoneHour = - (timeZone &amp; 0x1f)
+    resultInfoFlag = (resultInfo &gt;&gt; 1) &amp; 0x01
+    uniqueinfoflag = (resultInfo &gt;&gt; 0) &amp; 0x01
+
+    result['UTCClock']          = UTCClock
+    result['timeZoneDirection'] = timeZoneDirection
+    result['summerTime']        = summerTime
+    result['timeZoneHour']      = timeZoneHour
+    result['timeZoneMinute']    = timeZoneMinute
+    result['frameTime']         = frameTime
+    result['algorithmId']       = algorithmId           # 0x0100 fixed.
+    result['resultInfoFlag']    = resultInfoFlag        # 0: detection,  1: no detection
+    result['uniqueinfoflag']    = uniqueinfoflag
+    result['resultInfoLength']  = resultInfoLength      # areaNum * 16 [bytes]
+    result['areaNum']           = areaNum
+    result['areaLength']        = areaLength 
+    result['imageWidth']        = imageWidth
+    result['imageHeight']       = imageHeight
+
+    if (algorithmId==0x0100) and (resultInfoLength == areaNum * 16):
+        for i in range(int((length - 20) / 16)):
+            areaId, detectArea, alarm   = struct.unpack('&gt;HHH10x', data[20+16*i:20+16*(i+1)])
+            hstart, vstart, hcnt, vcnt  = struct.unpack('&gt;8xHHHH', data[20+16*i:20+16*(i+1)])
+            almType = (alarm &gt;&gt; 12) &amp; 0x0f      
+            direction = (alarm &gt;&gt; 8) &amp; 0x0f     
+            almObj = (alarm &amp; 0xff)             
+
+            detectResult = {}
+            detectResult['areaId']      = areaId
+            detectResult['detectArea']  = detectArea
+            detectResult['almType']     = almType       # 1:Intruders, 2:Loitering, 3:Direction, 4:Object, 5:Cross line, 8:AI
+            detectResult['Dir']         = direction     # 1:Up, 2:Up right, 3:Right, 4:Down right, 5:Down, 6:Down left, 7:Left, 8:Up left,
+                                                        # 9:A→B, 10:B→A, 11:A⇔B
+            detectResult['almObj']      = almObj        # 1: Person, 2: Car, 3: Bike, 4: Unknown
+            detectResult['hstart']      = hstart
+            detectResult['vstart']      = vstart
+            detectResult['hcnt']        = hcnt
+            detectResult['vcnt']        = vcnt
+
+            result['detectResult'].append(detectResult)
+
+    return result</pre>
+    <p>&nbsp;</p>
+    <p>(4-5) 以上の関数を使用して全体処理する部分を作成します。</p>
+    <p>概要説明省略、ソースコード中のコメントをご確認ください。</p>
+    <pre class="prettyprint linenums lang-py">def ParseJpegFile(data):
+    '''
+    JPEG データから WV-XAE200W (aivmd) 認識結果を取得する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    The WV-XAE200W (aivmd) recognition result.
+    Raises
+        None
+    '''
+    result = False
+    aivmd_result = None
+
+    if IsJpegFile(data) == True:
+        next_data = data[2:]
+        while True:
+            result, tag, length, data, next_data = ParseJpegHeadder(next_data)
+
+            if tag == 0xffda:   # SOS (Start Of Scan)
+                break
+            if result==False:
+                break
+            if tag == 0xfffe:   # COM (Comment)
+                result, aivmd_result = ParseJpegComment(data)
+                break
+
+    return result, aivmd_result
+
+
+if __name__ == "__main__":
+    '''
+    __main__ function.
+
+    Raises
+        FileNotFoundError
+    '''
+    filename = 'image_000001.jpg'
+
+    with open(filename, 'rb') as fin:
+        binaryData = fin.read()
+
+    result, aivmd_result = ParseJpegFile(binaryData)
+    if result==True:
+        print(aivmd_result)
+    else:
+        print('Failure.')</pre>
+    <p>&nbsp;</p>
+    <p>(4-6) 最後に、プログラム全体を示します。</p>
+    <p>["parse_jpeg.py"]</p>
+    <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    This program extracts the recognition result of WV-XAE200W (AI-VMD) from the JPEG file.
+    WV-XAE200W (AI-VMD) の認識結果を JPEG ファイルから取り出します。
+
+[Details]
+    
+[Author]
+    kinoshita hidetoshi (木下英俊)
+
+[Library install]
+
+'''
+
+import struct
+
+
+def ParseAivmdResult(data):
+    '''
+    This function gets the recognition result in dictionary format from the WV-XAE200W (AI-VMD) recognition result.
+    WV-XAE200W (AI-VMD) 認識結果から辞書形式の認識結果を取得する。
+
+    Args:
+        data            [i] WV-XAE200W (aivmd) recognition result.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    the recognition result in dictionary format.
+    Raises
+        None
+    '''
+    result = {}
+    result['detectResult'] = []
+    length = len(data)
+
+    UTCClock, timeZone, timeZoneMinute, frameTime   = struct.unpack('&gt;LBBH', data[ 0: 8])
+    algorithmId, resultInfo, resultInfoLength       = struct.unpack('&gt;HHH',  data[ 8:14])
+    areaInfo, imageWidth, imageHeight               = struct.unpack('&gt;HHH',  data[14:20])
+    areaNum = (areaInfo &gt;&gt; 10) &amp; 0x3f
+    areaLength = areaInfo &amp; 0x3ff
+    timeZoneDirection = (timeZone &gt;&gt; 6) &amp; 0x01
+    summerTime = (timeZone &gt;&gt; 5) &amp; 0x01
+    if timeZoneDirection == 0:
+        timeZoneHour = + (timeZone &amp; 0x1f)
+    else:
+        timeZoneHour = - (timeZone &amp; 0x1f)
+    resultInfoFlag = (resultInfo &gt;&gt; 1) &amp; 0x01
+    uniqueinfoflag = (resultInfo &gt;&gt; 0) &amp; 0x01
+
+    result['UTCClock']          = UTCClock
+    result['timeZoneDirection'] = timeZoneDirection
+    result['summerTime']        = summerTime
+    result['timeZoneHour']      = timeZoneHour
+    result['timeZoneMinute']    = timeZoneMinute
+    result['frameTime']         = frameTime
+    result['algorithmId']       = algorithmId           # 0x0100 fixed.
+    result['resultInfoFlag']    = resultInfoFlag        # 0: detection,  1: no detection
+    result['uniqueinfoflag']    = uniqueinfoflag
+    result['resultInfoLength']  = resultInfoLength      # areaNum * 16 [bytes]
+    result['areaNum']           = areaNum
+    result['areaLength']        = areaLength 
+    result['imageWidth']        = imageWidth
+    result['imageHeight']       = imageHeight
+
+    if (algorithmId==0x0100) and (resultInfoLength == areaNum * 16):
+        for i in range(int((length - 20) / 16)):
+            areaId, detectArea, alarm   = struct.unpack('&gt;HHH10x', data[20+16*i:20+16*(i+1)])
+            hstart, vstart, hcnt, vcnt  = struct.unpack('&gt;8xHHHH', data[20+16*i:20+16*(i+1)])
+            almType = (alarm &gt;&gt; 12) &amp; 0x0f      
+            direction = (alarm &gt;&gt; 8) &amp; 0x0f     
+            almObj = (alarm &amp; 0xff)             
+
+            detectResult = {}
+            detectResult['areaId']      = areaId
+            detectResult['detectArea']  = detectArea
+            detectResult['almType']     = almType       # 1:Intruders, 2:Loitering, 3:Direction, 4:Object, 5:Cross line, 8:AI
+            detectResult['Dir']         = direction     # 1:Up, 2:Up right, 3:Right, 4:Down right, 5:Down, 6:Down left, 7:Left, 8:Up left,
+                                                        # 9:A→B, 10:B→A, 11:A⇔B
+            detectResult['almObj']      = almObj        # 1: Person, 2: Car, 3: Bike, 4: Unknown
+            detectResult['hstart']      = hstart
+            detectResult['vstart']      = vstart
+            detectResult['hcnt']        = hcnt
+            detectResult['vcnt']        = vcnt
+
+            result['detectResult'].append(detectResult)
+
+    return result
+
+
+def ParseJpegComment(data):
+    '''
+    This function obtains the WV-XAE200W (aivmd) recognition result from the JPEG comment data.
+    JPEG コメントデータから WV-XAE200W (aivmd) 認識結果を取得する。
+
+    Args:
+        data            [i] JPEG comment data.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    The WV-XAE200W (aivmd) recognition result.
+    Raises
+        None
+    '''
+    result = False
+    aivmd_result = None
+    length = len(data)
+
+    while True:
+        if length &gt;= 4:
+            tag, data_length = struct.unpack('&gt;HH', data[0:4])
+            if data_length &lt;= length:
+                data_interior = data[4: data_length]
+                data = data[data_length:]
+                length -= data_length
+
+                if tag == 0x002f:   # 0x002f means AI-VMD meta information.
+                    aivmd_result = ParseAivmdResult(data_interior)
+                    result = True
+                    break
+            else:
+                break
+        else:
+            break
+    
+    return result, aivmd_result
+
+
+def ParseJpegHeadder(data):
+    '''
+    Get Tag, Length, Value (data_interior), the following data from JPEG header data.
+    JPEG ヘッダデータから Tag, Length, Value(data_interior), 次のデータ を取得する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        result          True:   success
+                        False:  failure
+        tag             Tag
+        length          Length
+        data_interior   Value. If it does not exist, it will be None.
+        data_next       The following data after data_interior. If it does not exist, it will be None.
+    Raises
+        None
+    '''
+    result = False
+    tag = 0
+    length = 0
+    data_length = len(data)
+    data_interior = None
+    data_next = None
+
+    if data_length &gt;= 4:
+        tag, length, = struct.unpack('&gt;HH', data[0:4])
+        if tag &amp; 0xff00 == 0xff00:
+            if length + 2 &lt;= data_length:
+                data_interior = data[4:length+2]
+                data_next = data[length+2:data_length]
+                result = True
+
+    return result, tag, length, data_interior, data_next
+
+
+def IsJpegFile(data):
+    '''
+    Check if data is JPEG data.
+    data が JPEG データであることを確認する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        True            Data is JPEG.
+        False           Data is not JPEG.
+    Raises
+        None
+    '''
+    result = False
+
+    length = len(data)
+    if length &gt;= 4:
+        SOI, = struct.unpack('&gt;H', data[0:2])
+        EOI, = struct.unpack('&gt;H', data[length-2:length])
+        if SOI == 0xffd8 and EOI == 0xffd9:
+            result = True
+
+    return result
+
+
+def ParseJpegFile(data):
+    '''
+    JPEG データから WV-XAE200W (aivmd) 認識結果を取得する。
+
+    Args:
+        data            [i] Data to be confirmed.
+    Returns:
+        result          True:   success
+                        False:  failure
+        aivmd_result    The WV-XAE200W (aivmd) recognition result.
+    Raises
+        None
+    '''
+    result = False
+    aivmd_result = None
+
+    if IsJpegFile(data) == True:
+        next_data = data[2:]
+        while True:
+            result, tag, length, data, next_data = ParseJpegHeadder(next_data)
+
+            if tag == 0xffda:   # SOS (Start Of Scan)
+                break
+            if result==False:
+                break
+            if tag == 0xfffe:   # COM (Comment)
+                result, aivmd_result = ParseJpegComment(data)
+                break
+
+    return result, aivmd_result
+
+
+if __name__ == "__main__":
+    '''
+    __main__ function.
+
+    Raises
+        FileNotFoundError
+    '''
+    filename = 'image_000001.jpg'
+
+    with open(filename, 'rb') as fin:
+        binaryData = fin.read()
+
+    result, aivmd_result = ParseJpegFile(binaryData)
+    if result==True:
+        print(aivmd_result)
+    else:
+        print('Failure.')</pre>
+    <p>&nbsp;</p>
+    <p>実行結果の例です。</p>
+    <p><a href="connect_to_extensions/img8.jpg" target="_blank">
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img8.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <table class="border-collapse" width="800">
+    <caption style="text-align:left">[図] プログラム実行結果 例</caption>
+      <tr>
+        <td class="standard_table">{'detectResult': [{'areaId': 2922, 'detectArea': 1, 'almType': 1, 'Dir': 0, 'almObj': 1, 'hstart': 267, 'vstart': 167, 'hcnt': 227, 'vcnt': 215}], 'UTCClock': 1652681202, 'timeZoneDirection': 0, 'summerTime': 0, 'timeZoneHour': 9, 'timeZoneMinute': 0, 'frameTime': 46, 'algorithmId': 256, 'resultInfoFlag': 1, 'uniqueinfoflag': 0, 'resultInfoLength': 16, 'areaNum': 1, 'areaLength': 16, 'imageWidth': 800, 'imageHeight': 450}</td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
 </section>
 
@@ -459,8 +921,8 @@
 	<h2> <a name="3._認識結果を枠と文字で描画する">3. 認識結果を枠と文字で描画する</a></h2>
     <p> &nbsp;</p>
 	<h4>[概要]</h4>
-    <p>資料<span style="vertical-align: super">[1]</span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
-    <p>前の章で JPEG ヘッダから取り出した認識結果を使用して、認識位置に枠を、分類結果として文字を、それぞれ描画して表示するサンプルプログラムを作成してみたいと思います。</p>
+    <p>前の章で JPEG ファイルから認識結果を取り出ししました。</p>
+    <p>この章では、JPEGファイルから取り出した認識結果を使用して画像上の認識位置に枠を、分類結果として文字を、それぞれ描画して表示するサンプルプログラムを作成してみたいと思います。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[評価環境]</h4>
@@ -492,7 +954,161 @@
 	</tbody>
 	</table>
 	
-<br><br><span class="auto-style1">編集予定 － To Be Edited.</span><br><br><br>
+    <p>
+	
+    &nbsp;</p>
+    <p>
+	
+    上記で作成した "parse_jpeg.py" をライブラリとして活用してプログラムを実現します。</p>
+    <p>
+	
+    <span class="cpp-source">from parse_jpeg import ParseJpegFile</span> 
+    という一文を記載することで下記プログラムではこれを行っています。</p>
+    <p>
+	
+    ですので、以下のプログラムと同じ場所に "parse_jpeg.py" を保存するようにしてください。 </p>
+    <p>
+	
+    &nbsp;</p>
+    <p>
+	
+    ["draw_aivmd_rect.py"]</p>
+    <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    This program extracts the recognition result of AI-VMD (WV-XAE200W) from the JPEG file,
+    and the program draws the recognition result on the received video.
+    AI-VMD (WV-XAE200W) の認識結果を JPEG ファイルから取り出し、受信した映像に認識結果を描画します。
+
+[Details]
+    
+[Author]
+    kinoshita hidetoshi (木下英俊)
+
+[Library install]
+    cv2:    pip install opencv-python
+    numpy:  pip install numpy
+
+[Note]
+    You need to save "parse_jpeg.py" in the same location as this program.
+'''
+
+import numpy as np
+import cv2
+<span class="auto-style3">from parse_jpeg import ParseJpegFile</span>
+
+
+def DrawAivmdRect(img, aivmd_result):
+    '''
+    This function draws recognition frames and texts on a given image according to the WV-XAE200W (AI-VMD) recognition result.
+    WV-XAE200W (AI-VMD) 認識結果に従って、与えられた画像に認識枠とテキストを描画する。
+
+    Args:
+        img             [i] OpenCV image
+        aivmd_result    [i] WV-XAE200W (aivmd) recognition result.
+    Returns:
+        img             Image with recognition frames and texts drawn.
+    Raises
+        None
+    '''
+    img_width  = img.shape[1]
+    img_height = img.shape[0]
+    aivmd_image_width = aivmd_result['imageWidth']
+    aivmd_image_height = aivmd_result['imageHeight']
+
+    # Draw rectangles and labels.
+    if len(aivmd_result['detectResult']) != 0:
+        for result in aivmd_result['detectResult']:
+            pos_x = int(result['hstart'] * img_width  / aivmd_image_width)
+            pos_y = int(result['vstart'] * img_height / aivmd_image_height)
+            w     = int(result['hcnt']   * img_width  / aivmd_image_width)
+            h     = int(result['vcnt']   * img_height / aivmd_image_height)
+            type  = int(result['almObj'])
+
+            label = ''
+            if type == 1:
+                label = 'Person'
+                color = (0,0,255)   # red
+            if type == 2:
+                label = 'Car'
+                color = (255,0,0)   # blue
+            if type == 3:
+                label = 'Bike'
+                color = (0,255,0)   # green
+            if label == '':
+                label = 'Unknown'
+                color = (255,255,0) # sky blue
+
+            # draw rectangles.
+            cv2.rectangle(img, (pos_x, pos_y), (pos_x + w, pos_y + h), color, thickness=3)
+
+            # draw text.
+            label_pos_x = pos_x
+            label_pos_y = pos_y - 10
+            if label_pos_y &lt;= 10:
+                label_pos_y = pos_y + h + 30
+            cv2.putText(img,
+                text = label,
+                org = (label_pos_x, label_pos_y),
+                fontFace = cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale = 1.0,
+                color = color,
+                thickness = 2,
+                lineType = cv2.LINE_AA)
+
+    return img
+
+
+if __name__ == "__main__":
+    '''
+    __main__ function.
+    '''
+
+    # Change to the JPEG file you use.
+    filename = 'image_000096.jpg'
+
+    with open(filename, 'rb') as fin:
+        binaryData = fin.read()
+
+    # Convert from binary to ndarray.
+    img_buf= np.frombuffer(binaryData, dtype=np.uint8)
+
+    # Convert from ndarray to OpenCV image.
+    img = cv2.imdecode(img_buf, cv2.IMREAD_UNCHANGED)
+
+    # Extracts the recognition result of WV-XAE200W (AI-VMD) from the JPEG file.
+    result, aivmd_result = ParseJpegFile(binaryData)
+
+    if result==True:
+        # Draws the recognition result on the received video.
+        img = DrawAivmdRect(img, aivmd_result)
+
+    # Please modify the value to fit your PC screen size.
+    resizedImage = cv2.resize(img, (1280, 720))
+
+    # Display video.
+    windowTitle = "AI-VMD detection result."
+    cv2.imshow(windowTitle, resizedImage)
+    cv2.moveWindow(windowTitle, 100, 30)
+    cv2.waitKey(0)      # necessary to display the video by imshow()</pre>
+    <p>
+	
+    &nbsp;</p>
+    <p>
+	
+    実行結果の例を示します。</p>
+    <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    ここでは入力画像として、
+    <a href="https://pixabay.com/" target="_blank">https://pixabay.com</a>
+    から取得した動画（<a href="https://pixabay.com/ja/videos/原付-トラフィック-街-5638/" target="_blank">https://pixabay.com/ja/videos/原付-トラフィック-街-5638/</a>）をテストに使用させていただきました。</p>
+    <p>商用利用無料、帰属表示必要なし、のコンテンツです。</p>
+    <p>PC上で再生表示する動画を i-PRO カメラで接写しているため、画質が荒いこと、認識精度が微妙なこと、はご容赦ください。</p>
+    <p>&nbsp;</p>
+    <img alt="" src="connect_to_extensions/imgC.jpg" width="800"><br>
+    <p>&nbsp;</p>
+    <p>これぐらいの比較的簡単なプログラムで WV-XAE200W の結果を独自のPC表示することができました。<br>
+    これで色や文字を独自に加工することもできますし、この結果を使って様々な応用を行うことも可能になるのではと考えます。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
 </section>
 
