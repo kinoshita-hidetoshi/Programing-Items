@@ -9,8 +9,12 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
+  <!-- タイトル -->
 	<title>Doxygen</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
@@ -45,39 +49,50 @@
 <p> Doxygen (Windows版) の使用方法などをざっくり記載してみます。</p>
 <nav>
 	<p> &nbsp;</p>
-<h2> 目次</h2>
-	<p>
-	<a href="#1._Doxygen_とは">1. Doxygen とは</a><br>
-	<a href="#2._インストール">2. インストール</a><br>&nbsp; <a href="#2-1._Doxygen">2-1. Doxygen</a><br>
-	&nbsp;
-	<a href="#2-2._Graphviz">2-2. Graphviz</a><br>
-	&nbsp;
-	<a href="#2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a><br>
-	<a href="#3._Doxygenを使ってみる">3. Doxygenを使ってみる</a><br>
-	&nbsp;
-	<a href="#3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a><br>
-	&nbsp;
-	<a href="#3-2._Project_を設定する">3-2. Project を設定する</a><br>
-	&nbsp;
-	<a href="#3-3._Mode_を設定する">3-3. Mode を設定する</a><br>
-	&nbsp;
-	<a href="#3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a><br>
-	&nbsp;
-	<a href="#3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する</a><br>
-	&nbsp;
-	<a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a><br>
-	&nbsp;
-	<a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a><br>
-	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>&nbsp;
-	<a href="#4-1._基本操作">4-1. 基本操作</a><br>&nbsp;
-	<a href="#4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a><br>
-	<a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a><br>
-	<a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a><br>
-	<a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
-	<a href="#8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a><br>
-	<a href="#参考">参考</a></p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p>
+      	<a href="#1._Doxygen_とは">1. Doxygen とは</a><br>
+      	<a href="#2._インストール">2. インストール</a><br>&nbsp; <a href="#2-1._Doxygen">2-1. Doxygen</a><br>
+      	&nbsp;
+      	<a href="#2-2._Graphviz">2-2. Graphviz</a><br>
+      	&nbsp;
+      	<a href="#2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a><br>
+      	<a href="#3._Doxygenを使ってみる">3. Doxygenを使ってみる</a><br>
+      	&nbsp;
+      	<a href="#3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a><br>
+      	&nbsp;
+      	<a href="#3-2._Project_を設定する">3-2. Project を設定する</a><br>
+      	&nbsp;
+      	<a href="#3-3._Mode_を設定する">3-3. Mode を設定する</a><br>
+      	&nbsp;
+      	<a href="#3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a><br>
+      	&nbsp;
+      	<a href="#3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する</a><br>
+      	&nbsp;
+      	<a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a><br>
+      	&nbsp;
+      	<a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a><br>
+      	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>&nbsp;
+      	<a href="#4-1._基本操作">4-1. 基本操作</a><br>&nbsp;
+      	<a href="#4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a><br>
+      	<a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a><br>
+      	<a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a><br>
+      	<a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
+      	<a href="#8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a><br><br>
+      	<a href="#ライセンス">ライセンス</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
 </nav>
 
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 
 <h2> <a name="1._Doxygen_とは">1. Doxygen とは</a></h2>
@@ -732,6 +747,43 @@ Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日
 <p>&nbsp;</p>
 </section>
 
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+Copyright (c) 2020  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
 
 <section>
 <h2><a name="参考">参考</a></h2>
@@ -757,12 +809,14 @@ Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日
 		<a href="https://qiita.com/rubytomato@github/items/51779135bc4b77c8c20d" target="_blank">
 		https://qiita.com/rubytomato@github/items/51779135bc4b77c8c20d</a></li>
 	</ul>
+  <p>&nbsp;</p>
 </section>
 
 <hr>
 
 <section>
-	<h2 style="margin-bottom:5px">記載</h2>
+	<p style="margin-bottom:5px">&nbsp;</p>
+    <h2 style="margin-bottom:5px">記載</h2>
 	<table>
 		<tr>
 			<td class="td_history_date">2020-12-01</td>
@@ -780,6 +834,13 @@ Doxygenによる Latex によるPDF出力を試験する目的で2009年5月1日
 			<td class="td_history">新規作成 </td>
 		</tr>
 	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
 </section>
 
 <p>&nbsp;</p>

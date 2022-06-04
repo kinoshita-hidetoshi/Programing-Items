@@ -1,27 +1,53 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>AxoCover</title>
-
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="木下英俊">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <!-- タイトル -->
+  <title>AxoCover</title>
+  
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
+  <link rel="stylesheet" href="../../../design.css" type="text/css">
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+  </style>
 </head>
 
 <!-- Start for 'google-code-prettify' -->
 <body onload="prettyPrint();">
 <!-- End for 'google-code-prettify' -->
 
-<h1 class="auto-style7">
-［AxoCover］</h1>
+<h1 class="auto-style7">［AxoCover］</h1>
 
 <p> .NETフレームワーク向けのフリーのソースコードカバレッジツールである AxoCover について説明します。<br>
 無償ツールながらGUI統合されていて、分岐網羅（C1）のカバレッジが取得できます。</p>
@@ -50,9 +76,23 @@ AxoCover.vsix を取得してインストールすれば VS2019 でもちゃん�
 <a href="https://github.com/axodox/AxoCover/releases/tag/master-1.1.400" target="_blank">
 https://github.com/axodox/AxoCover/releases/tag/master-1.1.400</a></p>
 <p> &nbsp;</p>
-<h2> 目次</h2>
-<p> <a href="#1._とりあえずやってみよう">1. とりあえずやってみよう</a><br>2. ***<br>3. ***</p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p>
+        <a href="#1._とりあえずやってみよう">1. とりあえずやってみよう</a><br><br><a href="#ライセンス">ライセンス</a><br>
+        <a href="#参考">参考</a><br>
+        </p>
+      </nav>
+    </td>
+  </tr>
+</table>
 <p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
 <h2> <a name="1._とりあえずやってみよう">1. とりあえずやってみよう</a></h2>
 <p> [概要]</p>
 <p> AxoCover のインストールからざっくりまずは触ってみます。</p>
@@ -92,54 +132,100 @@ https://github.com/axodox/AxoCover/releases/tag/master-1.1.400</a></p>
 <p> <img alt="" src="AxoCover/img16.jpg"></p>
 <p> &nbsp;</p>
 <p> これが無償で提供されるとは、素晴らしいです。</p>
+  <p> &nbsp;</p>
 <p> &nbsp;</p>
-<h2> 2. ***</h2>
-<p> [概要]</p>
-<p> &nbsp;</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
-	<li>OS: Windows10 home</li>
-</ul>
-<p> &nbsp;</p>
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
+</section>
+	
+<br>
 
-<!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums">
-</pre>
-<!-- End for 'google-code-prettify' -->
-	
-<br>
-	
-<br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+Copyright (c) 2022  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
 <p>
 &nbsp;</p>
 <h2>
-参考</h2>
+<a name="参考">参考</a></h2>
 <ul>
-	<li>AxoCover<br><a href="https://github.com/axodox/AxoCover" target="_blank">
-	https://github.com/axodox/AxoCover</a></li>
-	<li>AxoCoverというVisual Studio拡張のカバレッジツールが素晴らしい<br><a href="http://www.nuits.jp/entry/2017/08/03/105224" target="_blank">
-	http://www.nuits.jp/entry/2017/08/03/105224</a></li>
+	<li>AxoCover<br>
+	  <a href="https://github.com/axodox/AxoCover" target="_blank">
+	  https://github.com/axodox/AxoCover</a></li>
+	<li>AxoCoverというVisual Studio拡張のカバレッジツールが素晴らしい<br>
+	  <a href="http://www.nuits.jp/entry/2017/08/03/105224" target="_blank">
+	  http://www.nuits.jp/entry/2017/08/03/105224</a></li>
 	<li>AxoCover for VS2019<br>
-	<a href="https://github.com/axodox/AxoCover/issues/197" target="_blank">
-	https://github.com/axodox/AxoCover/issues/197</a></li>
+	  <a href="https://github.com/axodox/AxoCover/issues/197" target="_blank">
+	  https://github.com/axodox/AxoCover/issues/197</a></li>
 	<li>Pre-release master-1.1.400 (vs2019対応版？)<br>
-	<a href="https://github.com/axodox/AxoCover/releases/tag/master-1.1.400" target="_blank">
-	https://github.com/axodox/AxoCover/releases/tag/master-1.1.400</a></li>
-    <li>カバレッジ測定ツール AxoCover をVisual Studio 2019で利用する方法 - Qiita<br>
-    <a href="https://qiita.com/murasuke/items/cf377988fbbe3bd14db2">
+	  <a href="https://github.com/axodox/AxoCover/releases/tag/master-1.1.400" target="_blank">
+	  https://github.com/axodox/AxoCover/releases/tag/master-1.1.400</a></li>
+  <li>カバレッジ測定ツール AxoCover をVisual Studio 2019で利用する方法 - Qiita<br>
+    <a href="https://qiita.com/murasuke/items/cf377988fbbe3bd14db2" target="_blank">
     https://qiita.com/murasuke/items/cf377988fbbe3bd14db2</a></li>
 </ul>
+<p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： 木下英俊</font></p>
-<ul>
-	<li>2020年07月24日 更新（概要、参考）</li>
-	<li><font face="Meiryo UI">2018年07月03日 新規作成</font></li>
-</ul>
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-06-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">デザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2020-07-24</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">更新（概要、参照）</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2018-07-03</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+<p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2018-2022 木下英俊</small></p>
+</footer>
+
 </body>
 </html>
