@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
+	<!-- タイトル -->
   <title>機能拡張ソフトウェア(WV-XAE200W)と接続する</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
@@ -180,6 +184,17 @@
 	  <tr>
 	    <td class="td_separate" colspan="3"></td>
 	  </tr>
+	  
+	  <tr>
+	    <td>機能拡張ソフトウェア :</td>
+	    <td>WV-XAE200W,</td>
+	    <td>2.20</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
 	</tbody>
 	</table>
 	
@@ -385,7 +400,7 @@
       <tr>
         <td>dir 
         (16 bit)</td>
-        <td>方向検知・ラインクロス発報時の方向 <br>0x00：方向なし<br>0x01：上　　　<br>0x02：右上 <br>
+        <td>方向検知・ラインクロス検知で発報時の方向 <br>0x00：方向なし<br>0x01：上　　　<br>0x02：右上 <br>
         0x03：右　　　<br>0x04：右下 <br>0x05：下　　　<br>0x06：左下 <br>0x07：左　　<br>0x08：左上 
         <br>0x10：A→B <br>0x20：B→A <br>0x30：A⇔B <br>上記以外：RFU (Rest for Future 
         Use)<br><br><hr><br>dir = 0 (方向なし)</td>
@@ -393,8 +408,9 @@
       <tr>
         <td><span lang="EN-US">almobj</span> 
         (4 bit)</td>
-        <td>発報した検知対象物 <br>0x0：種別なし<br>0x1：人物 <br>0x2：車 <br>
-        0x3：二輪車 <br>0x4：不明 <br>0x5～0xF：RFU (Rest for Future Use)<br><br><hr><br>almobj = 1 (人物)</td>
+        <td>発報した検知対象物<br>0x0：種別なし（almtyp が 0x4 のとき）<br>0x1：人物<br>0x2：車<br>
+        0x3：二輪車<br>0x4：未発報（今後の発報候補。almtype 
+        が 0xF のとき）<br>0x5～0xF：RFU (Rest for Future Use)<br><br><hr><br>almobj = 1 (人物)</td>
       </tr>
       <tr>
         <td>00 00</td>
@@ -948,6 +964,17 @@ if __name__ == "__main__":
 	  <tr>
 	    <td class="td_separate" colspan="3"></td>
 	  </tr>
+	  
+	  <tr>
+	    <td>機能拡張ソフトウェア :</td>
+	    <td>WV-XAE200W,</td>
+	    <td>2.20</td>
+	  </tr>
+    
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	  
 	</tbody>
 	</table>
 	
@@ -977,7 +1004,8 @@ if __name__ == "__main__":
     AI-VMD (WV-XAE200W) の認識結果を JPEG ファイルから取り出し、受信した映像に認識結果を描画します。
 
 [Details]
-    
+    This program has been confirmed to work with WV-XAE200W Ver. 2.20.
+
 [Library install]
     cv2:    pip install opencv-python
     numpy:  pip install numpy
@@ -1016,24 +1044,31 @@ def DrawAivmdRect(img, aivmd_result):
             pos_y = int(result['vstart'] * img_height / aivmd_image_height)
             w     = int(result['hcnt']   * img_width  / aivmd_image_width)
             h     = int(result['vcnt']   * img_height / aivmd_image_height)
-            type  = int(result['almObj'])
+            obj   = int(result['almObj'])
 
             label = ''
-            if type == 1:
+            thickness = 3
+
+            if obj == 1:
+                # Person
                 label = 'Person'
                 color = (0,0,255)   # red
-            if type == 2:
+            if obj == 2:
+                # Car
                 label = 'Car'
                 color = (255,0,0)   # blue
-            if type == 3:
+            if obj == 3:
+                # Bike
                 label = 'Bike'
                 color = (0,255,0)   # green
-            if label == '':
-                label = 'Unknown'
+            if obj == 4:
+                # Future notification candidates
+                label = ''
                 color = (255,255,0) # sky blue
+                thickness = 1
 
             # draw rectangles.
-            cv2.rectangle(img, (pos_x, pos_y), (pos_x + w, pos_y + h), color, thickness=3)
+            cv2.rectangle(img, (pos_x, pos_y), (pos_x + w, pos_y + h), color, thickness=thickness)
 
             # draw text.
             label_pos_x = pos_x
@@ -1055,10 +1090,11 @@ def DrawAivmdRect(img, aivmd_result):
 if __name__ == "__main__":
     '''
     __main__ function.
-    '''
 
-    # Change to the JPEG file you use.
-    filename = 'image_000096.jpg'
+    Raises
+        FileNotFoundError :     Make sure that there is a file to set in FileName.
+    '''
+    filename = 'image_000096.jpg'       # Set the file name you use for the evaluation here.
 
     with open(filename, 'rb') as fin:
         binaryData = fin.read()
@@ -1089,6 +1125,9 @@ if __name__ == "__main__":
     &nbsp;</p>
     <p>
 	
+    &nbsp;</p>
+    <p>
+	
     実行結果の例を示します。</p>
     <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
     ここでは入力画像として、
@@ -1097,7 +1136,8 @@ if __name__ == "__main__":
     <p>商用利用無料、帰属表示必要なし、のコンテンツです。</p>
     <p>PC上で再生表示する動画を i-PRO カメラで接写しているため、画質が荒いこと、認識精度が微妙なこと、はご容赦ください。</p>
     <p>&nbsp;</p>
-    <img alt="" src="connect_to_extensions/imgC.jpg" width="800"><br>
+    <p>
+    <img alt="" class="border_with_drow-shadow" src="connect_to_extensions/img16.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>これぐらいの比較的簡単なプログラムで WV-XAE200W の結果を独自のPC表示することができました。<br>
     これで色や文字を独自に加工することもできますし、この結果を使って様々な応用を行うことも可能になるのではと考えます。</p>
