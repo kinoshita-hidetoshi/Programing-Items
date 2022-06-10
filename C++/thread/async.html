@@ -3,13 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
   
+  <!-- タイトル -->
   <title>std::async</title>
+  
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
   
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
@@ -107,7 +111,7 @@ std::thread は promise, future
 </table>
 <p>&nbsp;</p>
 [プログラムソース &quot;async.cpp&quot;]<br>
-<pre class="prettyprint linenums"><code>#include &lt;stdio.h&gt;
+<pre class="prettyprint linenums lang-cpp"><code>#include &lt;stdio.h&gt;
 #include &lt;tchar.h&gt;
 #include &lt;iostream&gt;
 #include &lt;vector&gt;    // std::vector
@@ -243,7 +247,7 @@ int main()
 </table>
 <p>&nbsp;</p>
 <p>[プログラムソース： &quot;test_async_02.cpp&quot;]</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+<pre class="prettyprint linenums lang-cpp"><code>#include &lt;iostream&gt;
 #include &lt;future&gt;		// std::async
 
 using namespace std;
@@ -336,7 +340,7 @@ main タスク終了時に別スレッドを適切に終了するという処理
 <p> &nbsp;</p>
 
 <p>&quot;test_async_03.cpp&quot;]</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+<pre class="prettyprint linenums lang-cpp"><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;   // vector
 #include &lt;chrono&gt;   // chrono
 #include &lt;thread&gt;   // this_thread
@@ -397,7 +401,7 @@ int main()
     <td>
 MIT License<br><br>
 
-    Copyright (c) 2017  Kinoshita Hidetoshi<br><br>
+    Copyright (c) 2017-2022  Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -443,6 +447,11 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2022-06-10</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザインを更新</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2020-05-31</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">「<a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a>」を追加<br></td>
@@ -462,8 +471,15 @@ SOFTWARE.
 
 <p> &nbsp;</p>
 
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p> &nbsp;</p>
+
 <footer>
-  <p><small>© copyright 2017-2020 木下英俊</small></p>
+  <p><small>© copyright 2017-2022 木下英俊</small></p>
 </footer>
 
 </body>

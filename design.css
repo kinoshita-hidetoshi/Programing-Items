@@ -149,26 +149,34 @@ blockquote{
 
 table{
   max-width: 100%;
-	/*font-size:small;*
-	font-family: sans-serif;
+	/*font-size:small;*/
+	/*font-family: sans-serif;*/
 	font-weight: normal;	
+}
+
+caption{
+  text-align: left;
 }
 
 .table_title{
 	/*font-size: small;*/
 	color: #000000;
-	font-family: sans-serif;
+	/*font-family: sans-serif;*/
 	font-weight: normal;	
 }
 
-td{
-	font-family: sans-serif;
-	font-weight: normal;
-	padding: 1em;
+th{
+  padding: 0.5em 1.0em;
+  text-align:left;
 }
 
-th{
-  padding: 1em;
+td{
+  padding: 0.5em 1.0em;
+  text-align:left;
+}
+
+video{
+   border: thin solid #C0C0C0;
 }
 
 
