@@ -9,8 +9,12 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
+  <!-- タイトル -->
   <title>画像分類 － VGG</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
@@ -41,9 +45,9 @@
   .auto-style4 {
     background-color: #FFFF00;
   }
-  .auto-style5 {
-  text-decoration: underline;
-}
+    .auto-style5 {
+    text-decoration: underline;
+  }
   </style>
 
 </head>
@@ -113,7 +117,7 @@ Group) チームが作成した16層から構成されるネットワークモ�
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -147,8 +151,8 @@ Group) チームが作成した16層から構成されるネットワークモ�
     <p> &nbsp;</p>
     <p> (2)</p>
     <p> 下図のような画面を表示するので、使用される環境を選択します。</p>
-    <p> 私は Windows 環境で、多くの人が動作する例を作成したいので Computer Platform から CPU を選択してみました。<br>
-    Package はなんとなく&nbsp; Pip を選択してみます。</p>
+    <p> 私は Windows 環境で多くの人が動作する例を作成したいので、Computer Platform として CPU を選択してみました。<br>
+    Package はなんとなく&nbsp;Pip を選択してみます。</p>
     <p> commandは <span class="cpp-source">pip3 install torch torchvision 
     torchaudio</span> となりました。</p>
     <p> 
@@ -235,7 +239,7 @@ if not os.path.exists(save_path):
     <tr>
       <td>言語 :</td>
       <td>Python,</td>
-      <td>3.10.2 </td>
+      <td>3.10.4 </td>
     </tr>
     <tr>
       <td class="td_separate" colspan="3"></td>
@@ -740,7 +744,7 @@ VGG(
 	  <tr>
 	    <td>言語 :</td>
 	    <td>Python,</td>
-	    <td>3.10.2 </td>
+	    <td>3.10.4 </td>
 	  </tr>
 		
 	  <tr>
@@ -791,35 +795,43 @@ if __name__ == "__main__":
     print("Result: ", result)</pre>
     
     <p> &nbsp;</p>
-    <p> こちらが新規に作成したプログラムです。<br>"connect_with_rtsp_3_2.py" を元に作成しています。</p>
+    <p> &nbsp;</p>
+    <h3> 3-1. まずはシンプルに作成</h3>
+    <p> "connect_with_rtsp_3_1.py" 
+    を元に、RTSP接続して受信したカメラ映像をリアルタイムに画像分類するプログラムを作成してみます。</p>
+    <p> VGG 
+    の処理負荷はとても高そうなのでちょっと心配ですが、必要に応じてカメラ側の設定でフレームレートや解像度を下げて使用する、という方針で進めます。</p>
     <p> &nbsp;</p>
     
-	  <p>[プログラムソース &quot;classification_with_camera.py&quot;]</p>
+	  <p>[プログラムソース &quot;classification_with_camera_1.py&quot;]</p>
     <pre class="prettyprint linenums lang-py">'''
 [Abstract]
-    Try connecting to an i-PRO camera with RTSP.
-    RTSP で i-PRO カメラと接続してみる
+    Image classification.
+    画像分類を行います。
 
 [Details]
-    image classification.
-
-[Author]
-    kinoshita hidetoshi (木下英俊)
+    This program connects to an i-PRO camera and classifies live images.
+    このプログラムは、i-PRO カメラと接続してライブ映像に対して画像分類を行います。
 
 [Library install]
-    pip install opencv-python
+    torch, torchvision : see https://pytorch.org/get-started/locally/
+    cv2 :           pip install opencv-python
+    matplotlib :    pip install matplotlib
+    numpy :         pip install numpy
+    PIL :           pip install pillow
+    json :          Built-in module in Python, you don’t need to install it with pip.
 '''
 
 import cv2
-import multiprocessing as mp
-from queue import Empty
-<span class="auto-style3">from classification_vgg import ImagenetClassificationVgg</span>
 <span class="auto-style3">from PIL import Image</span>
+<span class="auto-style3">from classification_vgg import ImagenetClassificationVgg</span>    # Local module. See 'classification_vgg.py'.
+
 
 user_id     = "user-id"         # Change to match your camera setting
 user_pw     = "password"        # Change to match your camera setting
 host        = "192.168.0.10"    # Change to match your camera setting
 winname     = "VIDEO"           # Window title
+
 
 # Exception 定義
 BackendError = type('BackendError', (Exception,), {})
@@ -865,6 +877,165 @@ def IsWindowVisible(winname):
 <span class="auto-style3">        new_image = cv2.cvtColor(new_image, cv2.COLOR_BGRA2RGBA)</span>
 <span class="auto-style3">    new_image = Image.fromarray(new_image)</span>
 <span class="auto-style3">    return new_image</span>
+
+
+'''
+[Abstract]
+    main 関数
+'''
+if __name__ == '__main__':
+    # Create an instance of class ImagenetClassificationVgg.
+    <span class="auto-style3">imagenetClassifigationVgg = ImagenetClassificationVgg('./data/imagenet_class_index.json')</span>
+
+    # Create an instance of class cv2.VideoCapture
+    cap = cv2.VideoCapture(f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1")
+
+    # 
+    windowInitialized = False
+
+    while True:
+        try:
+            ret, frame = cap.read()
+            if ret == True:
+                # Image classification
+                pilImage = CV2Pil(frame)
+                <span class="auto-style3">result, score = imagenetClassifigationVgg.do_classification(pilImage)</span>
+
+                if score &gt; 0.15:
+                    print(result, score)
+                else:
+                    print('None')
+
+                # Resize to a display size that fits on your PC screen.
+                width   = 640
+                height  = 480
+                h, w = frame.shape[:2]
+                aspect = w / h
+                if width / height &gt;= aspect:
+                    nh = height
+                    nw = round(nh * aspect)
+                else:
+                    nw = width
+                    nh = round(nw / aspect)
+                frame2 = cv2.resize(frame, (nw, nh))
+            
+                # Display image.
+                cv2.imshow(winname, frame2)
+
+                if windowInitialized==False:
+                    # Specify the display position only at the beginning.
+                    cv2.moveWindow(winname, 100, 100)
+                    windowInitialized = True
+
+            # Press the "q" key to finish.
+            k = cv2.waitKey(1) &amp; 0xff   # necessary to display the video by imshow ()
+            if k == ord("q"):
+                break
+            
+            # Exit if there is no specified window.
+            if not IsWindowVisible(winname):
+                break
+
+        except KeyboardInterrupt:
+            # Press ctrl -c on the console to exit the program.
+            print("KeyboardInterrupt")
+            break
+
+    print("Finish main()")
+    cap.release()
+    cv2.destroyAllWindows()</pre>
+    <p> &nbsp;</p>
+    <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    結果：</p>
+    <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    予想通り VGG の処理がとても重たく、PC性能にもよると思いますが、今回実施しているCPU処理ではフレームレートを 1,3,5fps 
+    程度に設定する必要がありそうです。</p>
+    <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    加えてフレームレートを下げても一定の遅延を発生しました。恐らく10フレーム程度のバッファリングが行われており、例えば 1fps 
+    に設定すると10秒程度の遅延を常に生じます。</p>
+    <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    用途にもよりますが、ちょっと残念。映像表示だけでも10fps以上の通常表示を維持しつつ、画像分類の処理をできるだけ実施するというような改善を考えてみたいところです。</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> 3-2. マルチタスク化して処理を高速化してみる</h3>
+    <p> 
+    <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+    そこで、画像分類の処理を別タスクに分離することで、映像受信と映像デコード処理を止めずにできるだけ顔検知をやってみる、という感じにプログラムを修正してみます。</span></p>
+    <p> multiprocessing, queue というライブラリを使用して実現してみます。</p>
+    <p> こちらが新規に作成したプログラムです。"connect_with_rtsp_3_2.py" を元に作成しています。</p>
+    <p> &nbsp;</p>
+    
+	  <p>[プログラムソース &quot;classification_with_camera_2.py&quot;]</p>
+    <pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Try connecting to an i-PRO camera with RTSP.
+    RTSP で i-PRO カメラと接続してみる
+
+[Details]
+    image classification.
+
+[Author]
+    kinoshita hidetoshi (木下英俊)
+
+[Library install]
+    pip install opencv-python
+'''
+
+import cv2
+<span class="auto-style3">import multiprocessing as mp</span>
+<span class="auto-style3">from queue import Empty</span>
+from classification_vgg import ImagenetClassificationVgg
+from PIL import Image
+
+user_id     = "user-id"         # Change to match your camera setting
+user_pw     = "password"        # Change to match your camera setting
+host        = "192.168.0.10"    # Change to match your camera setting
+winname     = "VIDEO"           # Window title
+
+# Exception 定義
+BackendError = type('BackendError', (Exception,), {})
+
+def IsWindowVisible(winname):
+    '''
+    Check if the target window exists.
+
+    Args:
+        winname :       Window title.
+    Returns:
+        True :          Exist.
+        False :         Not exist.
+    Raise:
+        BackendError :
+    '''
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
+def CV2Pil(image):
+    '''
+    Convert from OpenCV to PIL.Image
+    
+    Params:
+        image:  OpenCV image.
+    Returns:
+        PIL.Image format image.    
+    '''
+    new_image = image.copy()
+    if new_image.ndim == 2:  # モノクロ
+        pass
+    elif new_image.shape[2] == 3:  # カラー
+        new_image = cv2.cvtColor(new_image, cv2.COLOR_BGR2RGB)
+    elif new_image.shape[2] == 4:  # 透過
+        new_image = cv2.cvtColor(new_image, cv2.COLOR_BGRA2RGBA)
+    new_image = Image.fromarray(new_image)
+    return new_image
 
 
 <span class="auto-style3">def ImageClassificationProcess(q):</span>
@@ -948,10 +1119,10 @@ if __name__ == '__main__':
                     cv2.moveWindow(winname, 100, 100)
                     windowInitialized = True
 
-            # Exit if the "z" key is pressed.
-            k = cv2.waitKey(1)      # Note: The imshow () function will not display on the screen without this cv2.waitkey ()!
-            if k == ord("z"):
-                break
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Press the "q" key to finish.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k = cv2.waitKey(1) &amp; 0xff&nbsp;&nbsp; # necessary to display the video by imshow ()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if k == ord("q"):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break
             
             # Exit if there is no specified window.
             if not IsWindowVisible(winname):
@@ -962,10 +1133,10 @@ if __name__ == '__main__':
             print("KeyboardInterrupt")
             break
 
-    # Terminate process p
-    q.put(-1)
-    # Waiting for process p to finish
-    p.join()
+<span class="auto-style3">    # Terminate process p</span>
+<span class="auto-style3">    q.put(-1)</span>
+<span class="auto-style3">    # Waiting for process p to finish</span>
+<span class="auto-style3">    p.join()</span>
 
     print("Finish main()")
     cap.release()
@@ -1014,7 +1185,7 @@ if __name__ == '__main__':
     <tr>
       <td>言語 :</td>
       <td>Python,</td>
-      <td>3.10.2 </td>
+      <td>3.10.4 </td>
     </tr>
     <tr>
       <td class="td_separate" colspan="3"></td>
@@ -1428,6 +1599,12 @@ SOFTWARE.
 	
 	<table>
 	
+	  <tr>
+	    <td class="td_history_date">2022-06-14</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">3.1. を追加</td>
+	  </tr>
+	  	
 	  <tr>
 	    <td class="td_history_date">2022-05-09</td>
 	    <td class="td_history_separator">-</td>
