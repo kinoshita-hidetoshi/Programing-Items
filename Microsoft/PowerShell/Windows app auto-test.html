@@ -1,78 +1,114 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <!-- タイトル -->
+  <title>「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</title>
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	border-style: solid;
-	border-width: 2px;
-}
-.auto-style10 {
-	background-color: #C0C0C0;
-}
-.auto-style11 {
-	border: 1px solid #808080;
-}
-.auto-style12 {
-	border-width: 0;
-}
-.auto-style13 {
-	border: 1px solid #00FF00;
-}
-.auto-style14 {
-	border-collapse: collapse;
-	border-left-style: solid;
-	border-left-width: 1px;
-	border-right: 1px solid #C0C0C0;
-	border-top-style: solid;
-	border-top-width: 1px;
-	border-bottom: 1px solid #C0C0C0;
-}
-.auto-style15 {
-	color: #FFFFFF;
-}
-.auto-style16 {
-	text-decoration: underline;
-}
-.auto-style17 {
-	border-collapse: collapse;
-	border-style: solid;
-	border-width: 1px;
-}
-.auto-style18 {
-	border-collapse: collapse;
-	border: thin solid #C0C0C0;
-}
-</style>
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
+  <style type="text/css">
+    .auto-style8 {
+    	border-style: solid;
+    	border-width: 2px;
+    }
+    .auto-style10 {
+    	background-color: #C0C0C0;
+    }
+    .auto-style11 {
+    	border: 1px solid #808080;
+    }
+    .auto-style12 {
+    	border-width: 0;
+    }
+    .auto-style13 {
+    	border: 1px solid #00FF00;
+    }
+    .auto-style14 {
+    	border-collapse: collapse;
+    	border-left-style: solid;
+    	border-left-width: 1px;
+    	border-right: 1px solid #C0C0C0;
+    	border-top-style: solid;
+    	border-top-width: 1px;
+    	border-bottom: 1px solid #C0C0C0;
+    }
+    .auto-style15 {
+    	color: #FFFFFF;
+    }
+    .auto-style16 {
+    	text-decoration: underline;
+    }
+    .auto-style17 {
+    	border-collapse: collapse;
+    	border-style: solid;
+    	border-width: 1px;
+    }
+    .auto-style18 {
+    	border-collapse: collapse;
+    	border: thin solid #C0C0C0;
+    }
+  </style>
 </head>
-<body onload="prettyPrint();">
-<h1 class="auto-style7">
-「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</h1>
 
-<p> 「UI Automation PowerShell Extensions」 と 「PowerShell」を使って、<br>Windows 
+<body onload="prettyPrint();">
+
+<h1>「UI Automation PowerShell Extension」を使ってWindowsアプリのUI自動テストを行う</h1>
+
+<p> 「UI Automation PowerShell Extensions」 と 「PowerShell」を使って、Windows 
 GUIアプリケーションを自動テストまたは自動操作することを試みます。</p>
-<h2> 目次</h2>
-<p> <a href="#1._環境構築">1. 環境構築</a><br><a href="#2._UIAutomation_のコマンドレット一覧">2. 
-UIAutomation コマンドレット一覧</a><br>
-<a href="#3._まずはやってみよう_－_電卓（calc）を起動して操作する">3. まずはやってみよう － 電卓（calc）を起動して操作する</a><br>
-4. ***</p>
 <p> &nbsp;</p>
+<p> &nbsp;</p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p><a href="#1._環境構築">1. 環境構築</a></p>
+        <p><a href="#2._UIAutomation_のコマンドレット一覧">2. UIAutomation コマンドレット一覧</a></p>
+        <p><a href="#3._まずはやってみよう_－_電卓（calc）を起動して操作する">3. まずはやってみよう － 電卓（calc）を起動して操作する</a></p>
+        <br>
+        <p><a href="#ライセンス">ライセンス</a></p>
+        <p><a href="#参考">参考</a></p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
 <h2> <a name="1._環境構築">1. 環境構築</a></h2>
 <p> まずは環境を構築しましょう。</p>
+<p> &nbsp;</p>
 <h3> 1.1. 環境</h3>
 <p>ここでは以下の環境を使用します。<br>「UI Automation PowerShell Extensions」を使用するには、PowerShell 
 Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は Windows XP 
@@ -98,7 +134,9 @@ Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は W
 		<td style="width: 300px">UI Automation PowerShell Extension</td>
 		<td style="width: 154px">Ver. 0.8.7 Beta 3</td>
 		<td><a href="https://uiautomation.codeplex.com/" target="_blank">https://uiautomation.codeplex.com/</a><br>
-		「UIAutomation.0.8.7B3.NET40.zip」 を使用</td>
+		「UIAutomation.0.8.7B3.NET40.zip」 を使用<br>
+        <br>2022-06-16 追記：<br>上記サイトは閉鎖しました。こちら「<a href="https://www.code-lab.net/?page_id=21648">UI 
+        Automation PowerShell ExtensionsのDownload(再配布) – code-lab.net</a>」から取得してください。)</td>
 	</tr>
 </table>
 <p> &nbsp;</p>
@@ -111,7 +149,8 @@ Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は W
 <p> &nbsp;</p>
 <h3> 1.3. 「UI Automation PowerShell Extension」を準備</h3>
 <p> (1) 「<a href="https://uiautomation.codeplex.com/" target="_blank">https://uiautomation.codeplex.com/</a>」 
-から 「UIAutomation.0.8.7B3.NET40.zip」 をダウンロード</p>
+から 「UIAutomation.0.8.7B3.NET40.zip」 をダウンロード<br>⇨ 2022-06-16 追記：上記サイトは閉鎖しました。こちら「<a href="https://www.code-lab.net/?page_id=21648">UI 
+Automation PowerShell ExtensionsのDownload(再配布) – code-lab.net</a>」から取得してください。)</p>
 <p> (2) 取得したファイルを展開</p>
 <p> (3) 展開した全ファイルについてそれぞれプロパティを開き、「ブロックの解除」にチェックを入れて「OK」ボタンを押します。</p>
 <p> <img alt="" src="Windows%20app%20auto-test/img38.jpg">」</p>
@@ -240,17 +279,23 @@ Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は W
 設定</p>
 
 [profile.ps1 の記載例]
-<table border="1" bordercolor="#808080" style="width: 100%">
-	<tr>
-		<td><span class="comment">#<br># カレントフォルダの指定<br>#</span><br>Set-Location 
-		'C:\users\hoge\Documents\WindowsPowerShell'<br><br><span class="comment">#<br>
-		# import-modules<br>#</span><br>Import-Module 
-		.\modules\UIAutomation\UIAutomation.dll<br><br><span class="comment">#<br>
-		# UIAutomation 設定<br>#<br></span>[UIAutomation.Preferences]::Highlight = 
-		$false&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span class="comment"># UI要素を示す赤枠を表示しない</span><br></td>
-	</tr>
-</table>
+<pre class="prettyprint linenums lang-sh">
+#
+# カレントフォルダの指定<br>
+#
+Set-Location 'C:\users\hoge\Documents\WindowsPowerShell'
+
+#
+# import-modules
+#
+Import-Module .\modules\UIAutomation\UIAutomation.dll
+
+#
+# UIAutomation 設定
+#
+[UIAutomation.Preferences]::Highlight = $false       # UI要素を示す赤枠を表示しない
+</pre>
+
 <p> &nbsp;</p>
 <h3> 1.7. PowerShell ISE を再起動、動作確認</h3>
 <p> PowerShell ISE を再起動します。続けて正しく設定できているかを確認します。</p>
@@ -263,31 +308,12 @@ WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.
 表示されない場合は前述の特に Profile.ps1 の設定周辺を再確認してください。</p>
 <p> <img alt="" src="Windows%20app%20auto-test/img41.jpg"></p>
 <p> 以上で準備は完了です。</p>
+</section>
+
 <p> &nbsp;</p>
-<h3> 1.8. 参照</h3>
-<p> 参照情報を下記に記載します。</p>
-<p>書籍：</p>
-<ul>
-	<li>Windows PowerShell ポケットリファレンス, 出版 技術評論社, ISBN978-4-7741-5542-5</li>
-</ul>
-<p>ホームページ：</p>
-<ul>
-	<li><a href="http://uiautomation.codeplex.com/" target="_blank">UI Automation PowerShell Extensions</a></li>
-	<li>
-	<a href="http://d.sunnyone.org/2014/09/windowsuiui-automation-powershell.html" target="_blank">WindowsアプリのUI自動操作を UI Automation PowerShell Extensions で行う</a></li>
-	<li>
-	<a href="http://www.ka-net.org/blog/?p=4946" target="_blank">UI Automation 
-	PowerShell Extensions を試しに使ってみました。</a></li>
-	<li>
-	<a href="https://msdn.microsoft.com/ja-jp/library/ms747327(v=vs.110).aspx?f=255&amp;MSPPError=-2147217396" target="_blank">UI Automation Overview</a></li>
-	<li>
-	<a href="http://www.atmarkit.co.jp/fdotnet/special/uiautomation/uiautomation_01.html" target="_blank">@IT： UIオートメーションによる自動UIテストの実践</a></li>
-	<li>
-	<a href="http://blogs.msdn.com/b/japan_platform_sdkwindows_sdk_support_team_blog/archive/2011/05/26/ui-automation.aspx" target="_blank">MSDN Blogs： UI Automation のススメ</a></li>
-	<li>
-	<a href="https://en.wikipedia.org/wiki/Microsoft_UI_Automation" target="_blank">WIKIPEDIA： Microsoft UI Automation</a></li>
-</ul>
 <p> &nbsp;</p>
+
+<section>
 <h2> <a name="2._UIAutomation_のコマンドレット一覧">2. UIAutomation のコマンドレット一覧</a></h2>
 <p> 「Get-Command *uia*」でコンソール出力されたコマンドレット一覧を以下に記載します。<br>内容として記載のものは推測交じりです。</p>
 <table cellpadding="5" class="auto-style18" style="border: 2px solid #808080; margin: 5px; width: 800" border="1" bordercolor="#C0C0C0">
@@ -599,7 +625,12 @@ WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.
 		<td>&nbsp;</td>
 	</tr>
 </table>
+</section>
+
 <p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
 <h2> <a name="3._まずはやってみよう_－_電卓（calc）を起動して操作する">3. まずはやってみよう － 電卓（calc）を起動して自動操作する</a></h2>
 <h3> 3.1. 電卓を起動する</h3>
 <p> 電卓(calc.exe)を起動するには以下のようにスクリプトを記載します。</p>
@@ -608,13 +639,14 @@ WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.
 		<td>Start-Process calc</td>
 	</tr>
 </table>
-<h3> 2.2. 「1+2=」を入力する</h3>
+<p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <h3> 3.2. 「1+2=」を入力する</h3>
 <p> 電卓を起動後、「1+2=」を入力して結果が「3」になることを自動テストします。</p>
 <p> スクリプトは以下の通りです。</p>
-<span class="table_title">[&quot;電卓を起動して、1+2=を入力する.ps1&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
+<span class="table_title">[&quot;電卓を起動して、1+2=を入力する.ps1&quot;]</span>
+
+<pre class="prettyprint linenums lang-sh">
 <span class="comment">&lt;#
 概要： 電卓を起動して、&quot;1+2=&quot; を計算する
 前提： Windows10 に添付の電卓用です。Windows7を含む他の電卓用には動作しません。
@@ -684,20 +716,14 @@ WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.
     <span class="comment"># 電卓を終了</span>
     $btnClose | Invoke-UiaButtonClick | Out-Null
 }</pre>
-		</td>
-	</tr>
-</table>
 	
-<br>
-	
-<p> &nbsp;</p>
-<h3> 2.3. キー入力処理、演算結果取得処理、を関数にする</h3>
+  <p>&nbsp;</p>
+  <p> &nbsp;</p>
+  
+<h3> 3.3. キー入力処理、演算結果取得処理、を関数にする</h3>
 
 [入力処理などを関数化する]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-sh">
 &lt;#
 概要： 電卓を起動して、&quot;1+2=&quot; を計算する
 前提： Windows10 に添付の電卓用です。Windows7を含む他の電卓用には動作しません。
@@ -894,75 +920,100 @@ function Judge-Result ( $result, $expect )
     # 電卓を終了
     $script:btnClose | Invoke-UiaButtonClick | Out-Null
 }</pre>
-		</td>
-	</tr>
-</table>
 	
-<p> 実行結果<br>
+<p> &nbsp;</p>
+  <p> 実行結果<br>
 <img alt="" src="Windows%20app%20auto-test/img6.jpg"></p>
 <p> &nbsp;</p>
-<h3> 2.4. 管理者として実行する</h3>
-<p> 管理者としてプログラムを起動する場合は以下のように記載する。</p>
-[電卓を「管理者として実行する」で起動する.ps1]
-<table style="width: 600px" bordercolor="#C0C0C0" cellpadding="5" class="auto-style17">
-	<tr>
-		<td>Start-Process calc -Verb runas</td>
-	</tr>
+</section>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+Copyright (c) 2016-2022  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
 </table>
-<p> &nbsp;</p>
-<p> [概要]</p>
-<p> &nbsp;</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
-	<li>OS: Windows10 home</li>
-</ul>
-<p> &nbsp;</p>
-<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
-</pre>
-		</td>
-	</tr>
-</table>
-	
-<br>
-	
-<br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>(例) http://www.****.com</li>
-</ul>
-<p> [概要]</p>
-<p> &nbsp;</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
-	<li>OS: Windows10 home</li>
-</ul>
-<p> &nbsp;</p>
-<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
-</pre>
-		</td>
-	</tr>
-</table>
-	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+
+<section>
+  <h2><a name="参考">参考</a></h2>
+  <ul>
+    <li>書籍： Windows PowerShell ポケットリファレンス, 出版 技術評論社, ISBN978-4-7741-5542-5</li>
+    <li><a href="http://uiautomation.codeplex.com/" target="_blank">UI Automation PowerShell Extensions</a></li>
+    <li><a href="http://d.sunnyone.org/2014/09/windowsuiui-automation-powershell.html" target="_blank">WindowsアプリのUI自動操作を UI Automation PowerShell Extensions で行う</a></li>
+    <li><a href="http://www.ka-net.org/blog/?p=4946" target="_blank">UI Automation PowerShell Extensions を試しに使ってみました。</a></li>
+    <li><a href="https://msdn.microsoft.com/ja-jp/library/ms747327(v=vs.110).aspx?f=255&amp;MSPPError=-2147217396" target="_blank">UI Automation Overview</a></li>
+    <li><a href="http://www.atmarkit.co.jp/fdotnet/special/uiautomation/uiautomation_01.html" target="_blank">@IT： UIオートメーションによる自動UIテストの実践</a></li>
+    <li><a href="http://blogs.msdn.com/b/japan_platform_sdkwindows_sdk_support_team_blog/archive/2011/05/26/ui-automation.aspx" target="_blank">MSDN Blogs： UI Automation のススメ</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Microsoft_UI_Automation" target="_blank">WIKIPEDIA： Microsoft UI Automation</a></li>
+    <li>UI Automation PowerShell ExtensionsとPesterを使って、電卓アプリのテストを自動化してみた - Qiita<br>
+    <a href="https://qiita.com/Toru-ymgc/items/701b734a5e53831a1a5b" target="_blank">
+    https://qiita.com/Toru-ymgc/items/701b734a5e53831a1a5b</a></li>
+    <li>UI Automation PowerShell ExtensionsのDownload(再配布) – code-lab.net<br>
+    <a href="https://www.code-lab.net/?page_id=21648" target="_blank">
+    https://www.code-lab.net/?page_id=21648</a></li>
+    <li>UI AutomationでWindowsプログラムの自動化などしてみる - Qiita<br>
+    <a href="https://qiita.com/ken_hamada/items/501b164374667319d270" target="_blank">
+    https://qiita.com/ken_hamada/items/501b164374667319d270</a></li>
+  </ul>
+</section>
+
 <p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">記載： 2016年01月23日 木下英俊<br>
-</font></p>
+<p> &nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-06-16</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2016-01-23</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; copyright 2016-2022 木下英俊</small></p>
+</footer>
+
 </body>
 </html>
