@@ -97,6 +97,56 @@ code{
 	font-family:monospace;
 }
 
+div {
+  max-width: 100%;
+}
+
+
+div.status_information{
+  background-color: #DEEBFF;
+}
+
+div.status_warning{
+  background-color: #FFFAE6;  
+}
+
+div.status_invalid{
+  background-color: #FFEBE6;
+}
+
+div.status_ok{
+  background-color: #E3FCEF;
+}
+
+div.status_information,
+div.status_warning,
+div.status_invalid,
+div.status_ok
+{
+  width: 600px;
+  border-radius: 5px;
+  display: flex;
+}
+
+div.status_information img,
+div.status_warning img,
+div.status_invalid img,
+div.status_ok img
+{
+  width: 48px; 
+  height: 48px; 
+  padding: 0.5rem;
+}
+
+div.status_information div,
+div.status_warning div,
+div.status_invalid div,
+div.status_ok div
+{
+  width: 100%;
+  padding: 0.5rem;
+}
+
 img{
   max-width: 100%;
   height: auto;
