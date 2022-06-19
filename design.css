@@ -271,7 +271,6 @@ blockquote{
 開発環境のバージョン情報記載用
 ===
 */
-/*
 td:first-child{
 	padding-left:1em;
 	padding-top:0.5em;
@@ -299,18 +298,22 @@ td:nth-last-child(1){
 	border-top-width:1px;
 	border-top-color:#cccccc;
 }
-*/
 
+/*
+===
+変更履歴用
+===
+*/
 .td_history_date{
 	text-align: left;
-	vertical-align:top;
-	padding:0px !important;
+	vertical-align: top;
+	padding: 0 !important;
 	/*padding-bottom:0px !important;*/
 	white-space: nowrap;	/* 改行禁止 */
 }
 
 .td_history_separator{
-	text-align:center;
+	text-align: center;
 	vertical-align: top;
 	padding: 0px 5px !important;
 }
