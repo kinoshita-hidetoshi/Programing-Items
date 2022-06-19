@@ -137,10 +137,10 @@ struct Data {
 int main()
 {
     {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
+        vector&lt;shared_ptr&lt;Data&gt;&gt; v1;
 
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(1, "foo")));
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(2, "var")));
+        v1.push_back(shared_ptr&lt;Data&gt;(new Data(1, "foo")));
+        v1.push_back(shared_ptr&lt;Data&gt;(new Data(2, "var")));
 
         for (auto data : v1) {
             cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
@@ -148,7 +148,7 @@ int main()
     }
 
     {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v2;
+        vector&lt;shared_ptr&lt;Data&gt;&gt; v2;
 
         v2.emplace_back(new Data(3, "foo"));
         v2.emplace_back(new Data(4, "bar"));
@@ -178,7 +178,7 @@ int main()
     <p>&nbsp;</p>
         
     <table class="border-collapse" border="1" width="300">
-      <caption>[fig.] simple table のサンプル</caption>
+      <caption>[fig.] simple table のサンプル１</caption>
       <thead class="standard_table">
         <tr>
           <th>a</th>
@@ -194,9 +194,52 @@ int main()
     </table>
     
     <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption>[fig.] simple table のサンプル２（colspan, rowspan の例）</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>a</th>
+          <th>b</th>
+          <th>c</th>
+          <th>d</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <th rowspan="2">rowspan 例</th>
+          <th colspan="2">colspan 例</th>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>
+    
+    &nbsp;</p>
+    <p>
+    
+    MessageBox っぽいデザインサンプル</p>
+    <p>
+    
+    <br>
+  
+    </p>
   
     <div class="status_information">
-      <img alt="" src="images/StatusInformation.svg">
+      <div></div>
       <div>
         <p><strong>Information</strong></p>
         <p>&nbsp;</p>
@@ -207,7 +250,7 @@ int main()
     <p>&nbsp;</p>
     
     <div class="status_warning">
-      <img alt="" src="images/StatusWarning.svg">
+      <div></div>
       <div>
         <p><strong>Warning</strong></p>
         <p>&nbsp;</p>
@@ -217,7 +260,7 @@ int main()
 
     <p>&nbsp;</p>  
     <div class="status_invalid">
-      <img alt="" src="images/StatusInvalid.svg">
+      <div></div>
       <div>
         <p><strong>Invalid</strong></p>
         <p>&nbsp;</p>
@@ -228,7 +271,7 @@ int main()
     <p>&nbsp;</p>
     
     <div class="status_ok">
-      <img alt="" src="images/StatusOK.svg">
+      <div></div>
       <div>
         <p><strong>OK</strong></p>
         <p>&nbsp;</p>
@@ -237,7 +280,16 @@ int main()
     </div>
 
     <p>&nbsp;</p>
-    
+    <p>&nbsp;</p>
+    <p>標準的な &lt;img&gt;</p>
+    <p><img alt="" src="images/to_upper_folder.png" width="100"></p>
+    <p>&nbsp;</p>
+    <p>&lt;img class="border"&gt;</p>
+    <p><img alt="" src="images/to_upper_folder.png" width="100" class="border"></p>
+    <p>&nbsp;</p>
+    <p>&lt;img class="border_with_drop-shadow"&gt;</p>
+    <p>
+    <img alt="" src="images/to_upper_folder.png" width="100" class="border_with_drop-shadow"></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
 	

@@ -16,8 +16,8 @@ body{
   height: 100%;
   margin: 0px;
   padding: 0px;
-  background-image:url('images/title.png');
-  background-repeat:no-repeat;
-  background-size:contain;
+  background-image: url('images/title.png');
+  background-repeat: no-repeat;
+  background-size: contain;
   cursor: pointer;
 }

@@ -9,8 +9,12 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>［タイトルを記載します］</title>
+	<!-- タイトル -->
+  <title>VRChat でワールドを作ってみる</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../design.css" type="text/css">
@@ -20,11 +24,22 @@
   <script src="../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
 </head>
 
 <body onload="prettyPrint();">
 	
-<h1>VRChat でワールドを作ってみる </h1>
+<h1>VRChat でワールドを作ってみる</h1>
 
 <p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
 <p> ［概要を記載します］</p>
@@ -55,7 +70,7 @@
 スマホからアクセスします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img8.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img8.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>”Registration” からアカウントを作成します。</p>
@@ -78,7 +93,7 @@
   </div>
   二要素認証の設定画面</p>
   <p>
-  <img alt="" class="border_with_drow-shadow" src="create_vrchat_world/imgA.jpg" width="800"></p>
+  <img alt="" class="border_with_drop-shadow" src="create_vrchat_world/imgA.jpg" width="800"></p>
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -96,7 +111,7 @@ https://docs.vrchat.com/docs/current-unity-version</a> </p>
 <p>
 &nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/imgF.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/imgF.jpg" width="800"></p>
 <div data-layout="center" data-node-type="mediaSingle" data-width="">
   <div data-alt="" data-collection="contentId-748821732" data-context-id="748821732" data-file-mime-type="image/png" data-file-name="image-20220328-004945.png" data-file-size="136488" data-height="750" data-id="a6c7b242-9e25-4669-811f-457d91dedbe8" data-node-type="media" data-type="file" data-width="1186" style="display: inline-block; border-radius: 3px; background: #EBECF0; box-shadow: 0 1px 1px rgba(9, 30, 66, 0.2), 0 0 1px 0 rgba(9, 30, 66, 0.24);" title="Attachment">
   </div>
@@ -108,10 +123,10 @@ https://docs.vrchat.com/docs/current-unity-version</a> </p>
 <h3>Unity Hub をインストール</h3>
 <p>「Click here to install Unity Hub」をクリックしてインストールを行います。</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img10.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img10.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img11.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img11.jpg" width="800"></p>
 <div data-layout="center" data-node-type="mediaSingle" data-width="">
   <div data-alt="" data-collection="contentId-748821732" data-context-id="748821732" data-file-mime-type="image/png" data-file-name="image-20220328-010727.png" data-file-size="108217" data-height="781" data-id="69e4536c-1630-4e21-8536-fe3438a12e39" data-node-type="media" data-type="file" data-width="1033" style="display: inline-block; border-radius: 3px; background: #EBECF0; box-shadow: 0 1px 1px rgba(9, 30, 66, 0.2), 0 0 1px 0 rgba(9, 30, 66, 0.24);" title="Attachment">
   </div>
@@ -124,13 +139,13 @@ https://docs.vrchat.com/docs/current-unity-version</a> </p>
 here to install the current version of Unity via Unity Hub.</span></strong>」をクリックしてVRChatに対応しているUnityをインストールします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img12.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img12.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;これをクリックすると、起動済みの「Unity Hub」画面が下図のようになりました。<br>インストールする Unity 
 のバージョンが上記と一致することを念のために確認しましょう。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img13.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img13.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>必要なアイテムを追加チェックして、［<strong><span class="fabric-text-color-mark" data-text-custom-color="#4c9aff" style="--custom-text-color: #4c9aff">Install</span></strong>］ボタンをクリックします。<br>
 一旦デフォルトのままで私は進めてみます。（私は “Microsoft Visual Studio 2019” の有償版を持っていますしね。）<br>追伸： 
@@ -138,7 +153,7 @@ Language Pack の日本語だけ追加してみました。</p>
 <p>&nbsp;</p>
 <p>インストール中の画面です。&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img15.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img15.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>これでUnity HubとVRChatに対応したUnityのインストールは完了です。</p>
@@ -152,30 +167,30 @@ Language Pack の日本語だけ追加してみました。</p>
 をダウンロードします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img17.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img17.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>私の場合は下記ファイルをダウンロードできました。</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img18.jpg"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img18.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>3-2. 新しいプロジェクトを作成する</h3>
 <p>Unity を起動し、［<strong>New project</strong>］をクリックします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img19.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img19.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>テンプレートから「<strong>3D</strong>」を選択し、”Project name” にあなたのプロジェクト名を入力後、［<strong>Create 
 project</strong>］ボタンをクリックします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img1A.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img1A.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>長めの時間を待つ必要がありますが、準備が進むと下記のような画面を表示して Unity を起動します。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img1B.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img1B.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>ダウンロードした VRCSDK をプロジェクトへインポートします。<br>”Assets” &gt; “Import Package“ &gt; “Custom 
@@ -183,20 +198,20 @@ Package“<br>をクリックし、先ほどダウンロードした SDK3
 (ファイル名の例：”VRCSDK3-WORLD-2022.02.16.19.13_Public.unitypackage”) を選択します。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img1D.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img1D.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>下図のような画面を表示するので、確認して問題なければ［<strong>Import</strong>］ボタンをクリックします。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img1E.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img1E.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>インポートが終わったら『Asset』の中にある『VRChat Exanples』から『Prefabs』の中にある『VRC 
 WORLD』を『Hierarchy』の中にポイっと入れます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img1F.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img1F.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>これで準備完了です。</p>
@@ -205,13 +220,13 @@ WORLD』を『Hierarchy』の中にポイっと入れます。</p>
 <h3>3-3. 床を作る</h3>
 <p>次に床を作ります。<br>「Hierarchy」の所で右クリックし、「3D Object」から「Plane」を選択します。</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img20.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img20.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>これで床が出来ました。床の大きさは『scale』で自由に変えることが出来ます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img21.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img21.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>3-4. 購入したモデルを並べる</h3>
@@ -219,32 +234,32 @@ WORLD』を『Hierarchy』の中にポイっと入れます。</p>
 <p>“free“, “3D“, “Environment“ をキーワードに絞り込んで探します。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img23.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img23.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>今回は下図のような素敵な家を見つけたので、こちらをダウンロードして使用します。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img24.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img24.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>ダウンロードした Assets の中からモデルを選択肢でドラッグ＆ドロップ。少し位置調整をした結果が下図のような感じです。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img25.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img25.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>3-5. 空をデザインする</h3>
 <p>同様に空の色も設定してみます。<br>”skybox” をキーワードに無料のものを探しました。今回は下記のものを採用してみます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img27.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img27.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>好きな Material を選んで Scene へドロップします。これで設定完了です。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img28.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img28.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>&nbsp;</h3>
@@ -252,7 +267,7 @@ WORLD』を『Hierarchy』の中にポイっと入れます。</p>
 <p>床のテクスチャーも同様に無料のものをダウンロードして使ってみます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img29.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img29.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>同様に適当にテクスチャーを選んで、こんな感じになりました。</p>
@@ -266,7 +281,7 @@ WORLD』を『Hierarchy』の中にポイっと入れます。</p>
 World」を選択するとハンドルが出てきますので、ハンドルを動かしてスポーン地点を決めます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img2B.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img2B.jpg" width="800"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <hr>
@@ -277,7 +292,7 @@ World」を選択するとハンドルが出てきますので、ハンドルを
 panel」を選択するとポップアップが出てきます。</p>
 <p>&nbsp;</p>
 <p>
-<img alt="" class="border_with_drow-shadow" src="create_vrchat_world/img2C.jpg" width="800"></p>
+<img alt="" class="border_with_drop-shadow" src="create_vrchat_world/img2C.jpg" width="800"></p>
 <div data-layout="center" data-node-type="mediaSingle" data-width="">
   <div data-alt="" data-collection="contentId-748821732" data-context-id="748821732" data-file-mime-type="image/png" data-file-name="image-20220328-071407.png" data-file-size="1259737" data-height="864" data-id="a3c89f19-3f4c-42b8-9a2f-016604c69f61" data-node-type="media" data-type="file" data-width="1536" style="display: inline-block; border-radius: 3px; background: #EBECF0; box-shadow: 0 1px 1px rgba(9, 30, 66, 0.2), 0 0 1px 0 rgba(9, 30, 66, 0.24);" title="Attachment">
     <br>

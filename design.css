@@ -87,7 +87,7 @@ pre{
 	word-wrap:break-word;
 	background-color:#f5f5f5;
 	border:1px solid #ccc;
-	border-radius:4px;
+	border-radius: 4px;
 	overflow-x: scroll;
 }
 
@@ -101,6 +101,55 @@ div {
   max-width: 100%;
 }
 
+table{
+  max-width: 100%;
+}
+
+caption{
+  text-align: left;
+}
+
+th{
+  padding: 0.5em 1.0em;
+  text-align:left;
+}
+
+td{
+  padding: 0.5em 1.0em;
+  text-align:left;
+}
+
+video{
+  max-width: 100%;
+  max-height: 80%;
+  border: thin solid #C0C0C0;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+/*
+===
+img（図）の飾り
+===
+*/
+img.border{
+	border:1px silver solid;
+}
+
+img.border_with_drop-shadow{
+	border:1px silver solid;
+	box-shadow: 4px 4px 8px gray;
+}
+
+
+/*
+===
+MessageBox っぽいやつ
+===
+*/
 
 div.status_information{
   background-color: #DEEBFF;
@@ -118,6 +167,22 @@ div.status_ok{
   background-color: #E3FCEF;
 }
 
+div.status_information div:first-child{
+  background-image:url('images/StatusInformation.svg');
+}
+
+div.status_warning div:first-child{
+  background-image:url('images/StatusWarning.svg');
+}
+
+div.status_invalid div:first-child{
+  background-image:url('images/StatusInvalid.svg');
+}
+
+div.status_ok div:first-child{
+  background-image:url('images/StatusOK.svg');
+}
+
 div.status_information,
 div.status_warning,
 div.status_invalid,
@@ -128,14 +193,16 @@ div.status_ok
   display: flex;
 }
 
-div.status_information img,
-div.status_warning img,
-div.status_invalid img,
-div.status_ok img
+div.status_information div:first-child,
+div.status_warning div:first-child,
+div.status_invalid div:first-child,
+div.status_ok div:first-child
 {
-  width: 48px; 
-  height: 48px; 
-  padding: 0.5rem;
+  width: 48px;
+  height: 48px;
+  margin: 0.5rem;
+  background-size: contain;
+  background-repeat: no-repeat;  
 }
 
 div.status_information div,
@@ -147,16 +214,8 @@ div.status_ok div
   padding: 0.5rem;
 }
 
-img{
-  max-width: 100%;
-  height: auto;
-}
 
-video{
-  max-width: 100%;
-  max-height: 80%;
-}
-
+/* <blockquote> */
 blockquote{
   background-color: #fafafa;
   color: #555;
@@ -174,6 +233,7 @@ blockquote{
   /*margin-inline-end: 20px;*/
 }
 
+/* class "cpp-source" */
 .cpp-source{
 	display: inline;
 	padding: 0px 1px 0px 1px !important;
@@ -183,6 +243,14 @@ blockquote{
 	background-color: #f5f5f5;
 	border: 1px solid #ccc;
 	border-radius: 4px;
+}
+
+/* class "table_title" */
+.table_title{
+	/*font-size: small;*/
+	color: #000000;
+	/*font-family: sans-serif;*/
+	font-weight: normal;	
 }
 
 .comment {
@@ -197,50 +265,18 @@ blockquote{
 	color: #0000FF;
 }
 
-table{
-  max-width: 100%;
-	/*font-size:small;*/
-	/*font-family: sans-serif;*/
-	font-weight: normal;	
-}
-
-caption{
-  text-align: left;
-}
-
-.table_title{
-	/*font-size: small;*/
-	color: #000000;
-	/*font-family: sans-serif;*/
-	font-weight: normal;	
-}
-
-th{
-  padding: 0.5em 1.0em;
-  text-align:left;
-}
-
-td{
-  padding: 0.5em 1.0em;
-  text-align:left;
-}
-
-video{
-   border: thin solid #C0C0C0;
-}
-
 
 /*
 ===
 開発環境のバージョン情報記載用
 ===
 */
+/*
 td:first-child{
 	padding-left:1em;
 	padding-top:0.5em;
 	padding-right:1em;
 	padding-bottom:0.5em;
-	/*white-space: nowrap;*/	/* 改行禁止 */
 }
 
 td:nth-last-child(2){
@@ -263,24 +299,26 @@ td:nth-last-child(1){
 	border-top-width:1px;
 	border-top-color:#cccccc;
 }
+*/
 
 .td_history_date{
 	text-align: left;
 	vertical-align:top;
 	padding:0px !important;
-	padding-bottom:0px !important;
+	/*padding-bottom:0px !important;*/
 	white-space: nowrap;	/* 改行禁止 */
 }
 
 .td_history_separator{
-	padding: 0px 5px !important;
 	text-align:center;
 	vertical-align: top;
+	padding: 0px 5px !important;
 }
 
 .td_history{
-	vertical-align:top;
-	padding:0px !important;
+	text-align: left;
+	vertical-align: top;
+	padding: 0px !important;
 }
 
 
@@ -304,21 +342,6 @@ tbody.standard_table{
 
 td.standard_table{
 	border:1px silver solid;	
-}
-
-
-/*
-===
-img（図）の飾り
-===
-*/
-img.border{
-	border:1px silver solid;
-}
-
-img.border_with_drow-shadow{
-	border:1px silver solid;
-	box-shadow: 4px 4px 8px gray;
 }
 
 
