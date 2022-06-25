@@ -35,6 +35,15 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #484800;
+  }
+  .auto-style2 {
+  text-decoration: underline;
+}
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -53,6 +62,10 @@
         <p><a href="#1._準備">1. 準備</a></p>
         <p>&nbsp;&nbsp; <a href="#1-1._Pytorch_をインストールする">1-1. PyTorch をインストールする</a></p>
         <p>&nbsp;&nbsp; <a href="#1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストールする</a></p>
+        <p><a href="#2._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
+        <p>3. MobileNetV1-SSD を動かす（i-PRO カメラ）</p>
+        <p>4. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</p>
+        <p>5. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</p>
         <br>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -154,61 +167,129 @@
     <p> &nbsp;</p>
     <p> &nbsp;</p>
     <h3> <a name="1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストール</a></h3>
-    <p> matplotlib を使用するので、下記コマンドによりインストールします。</p>
-    <p> <span class="cpp-source">pip install matplotlib </span></p>
-    <p> <a href="image_classification_vgg/img15.gif" target="_blank">
-    <img alt="" class="auto-style1" src="mobilenet-ssd/img15.gif" width="800"></a></p>
+    <p> opencv を使用するので、下記コマンドによりインストールします。</p>
+    <p> <span class="cpp-source">pip install opencv-python </span></p>
+    <p> &nbsp;</p>
     <p> &nbsp;</p>
 	
 </section>
 	
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 
 <section>
-	<h2> 2. ***</h2>
+	<h2> <a name="2._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></h2>
 	<h4>[概要]</h4>
+    <p>MobileNet-SSD v1 を PyTorch の環境で動かしてみます。</p>
+    <p><a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> というこの内容そのままのものが GitHub で公開されていましたので、これを取得して動作させてみます。</p>
+    <p>&nbsp;</p>
 	<p> &nbsp;</p>
 	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	  <p> &nbsp;</p>
+  <h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>[手順]</h4>
+    <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> から git clone してソースコード一式を入手します。</p>
+    <p>（git を既にインストール済みとして記載します。）</p>
+    <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
+    <p>&nbsp;</p>
+    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。</p>
+    <p>最初の２行は学習済みデータとラベルデータなので、初めて実行するときのみ実施すれば良いです。</p>
+    <pre>wget -P models https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth 
+wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
+python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt </pre>
+    <p>&nbsp;</p>
+    <p>ところで Windows に標準では wget コマンドは無いので、上記を実行してもエラーになります。Windows 用の wget を入手して使っても良いですが、代わりに 
+    bitsadmin コマンドで代用するという方法もあります。</p>
+    <p>&nbsp;</p>
+    <p class="auto-style2">bitsadmin.exe の書き方：</p>
+    
+    <blockquote>
+      <strong>bitsadmin.exe</strong> /transfer ＜ジョブ名＞ ＜URL＞ ＜保存先ファイル名（フルパス）＞</blockquote>
+    
+    <p>上記内容を bitsadmin.exe で置き換えると以下のようになるので、Windows 環境の方はこちらで実施してもOKです。</p>
+    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth c:\{作業フォルダ}\models\mobilenet-v1-ssd-mp-0_675.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\{作業フォルダ}\models\voc-model-labels.txt
+python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
+    <p>&nbsp;</p>
+    <p>3. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
+    <p><a href="mobilenet-ssd/img9.gif" target="_blank">
+    <img alt="" src="mobilenet-ssd/img9.gif" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p>どうやら、box[0], box[1], box[2], box[3] 
+    が浮動小数点なのですがここの引数は整数(int)である必要がある、ということがエラーの理由のようです。<br>エラーとなった 76行目と、同様に 
+    79行目の２カ所を int 型へ変換するように修正します。下図だと4行目、7行目の色付きの場所へ int() を追加しました。<br>
+    これでエラーを解決してプログラムを実行できるようになりました。</p>
+    <p>（気が向いたら作者へ修正版ソースをプルリクエストしておこうと思います。）</p>
+    <pre class="prettyprint linenums lang-py">
+        for i in range(boxes.size(0)):
+        box = boxes[i, :]
+        label = f"{class_names[labels[i]]}: {probs[i]:.2f}"
+        cv2.rectangle(orig_image, (<span class="auto-style1">int(</span>box[0]<span class="auto-style1">)</span>, <span class="auto-style1">int(</span>box[1]<span class="auto-style1">)</span>), (<span class="auto-style1">int(</span>box[2]<span class="auto-style1">)</span>, <span class="auto-style1">int(</span>box[3]<span class="auto-style1">)</span>), (255, 255, 0), 4)
+
+        cv2.putText(orig_image, label,
+                    (<span class="auto-style1">int(</span>box[0]<span class="auto-style1">)</span>+20, <span class="auto-style1">int(</span>box[1]<span class="auto-style1">)</span>+40),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,  # font scale
+                    (255, 0, 255),
+                    2)  # line type</pre>
+    <p>&nbsp;</p>
+    <p>4. 修正したプログラムを動かした様子を以下に示します。</p>
+    <p>カメラはPC内蔵のカメラです。PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
+    <p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv1-ssd-pccam.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+    
+    <p>&nbsp;</p>
+    
+    <p>&nbsp;</p>
+
     <p> &nbsp;</p>
     <p> &nbsp;</p>
     <p> T.B.E. （編集予定）</p>
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
-    <p> &nbsp;</p>
-  	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-    <pre class="prettyprint linenums lang-cpp">
-  	</pre>
     <p> &nbsp;</p>
     <p> &nbsp;</p>
 </section>
