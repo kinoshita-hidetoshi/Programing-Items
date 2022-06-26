@@ -37,10 +37,13 @@
 
   <style type="text/css">
   .auto-style1 {
-    background-color: #484800;
+    background-color: #505000;
   }
   .auto-style2 {
   text-decoration: underline;
+}
+  .auto-style3 {
+  color: #FF0000;
 }
   </style>
 
@@ -182,6 +185,8 @@
     <p>MobileNet-SSD v1 を PyTorch の環境で動かしてみます。</p>
     <p><a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> というこの内容そのままのものが GitHub で公開されていましたので、これを取得して動作させてみます。</p>
+    <p><a href="mobilenet-ssd/imgC.jpg" target="_blank">
+    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/imgC.jpg" width="800"></a></p>
     <p>&nbsp;</p>
 	<p> &nbsp;</p>
 	
@@ -241,14 +246,15 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     <p>ところで Windows に標準では wget コマンドは無いので、上記を実行してもエラーになります。Windows 用の wget を入手して使っても良いですが、代わりに 
     bitsadmin コマンドで代用するという方法もあります。</p>
     <p>&nbsp;</p>
-    <p class="auto-style2">bitsadmin.exe の書き方：</p>
+    <p class="auto-style2"><strong>bitsadmin.exe</strong> の書き方：</p>
     
     <blockquote>
       <strong>bitsadmin.exe</strong> /transfer ＜ジョブ名＞ ＜URL＞ ＜保存先ファイル名（フルパス）＞</blockquote>
     
-    <p>上記内容を bitsadmin.exe で置き換えると以下のようになるので、Windows 環境の方はこちらで実施してもOKです。</p>
-    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth c:\{作業フォルダ}\models\mobilenet-v1-ssd-mp-0_675.pth
-bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\{作業フォルダ}\models\voc-model-labels.txt
+    <p>上記内容を bitsadmin.exe で置き換えると以下のようになるので、Windows 環境の方はこちらで実施してもOKです。<br>
+    <span class="auto-style3">{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
+    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth c:\<span class="auto-style3">{作業フォルダ}</span>\models\mobilenet-v1-ssd-mp-0_675.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt
 python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
     <p>&nbsp;</p>
     <p>3. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
@@ -259,7 +265,6 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     が浮動小数点なのですがここの引数は整数(int)である必要がある、ということがエラーの理由のようです。<br>エラーとなった 76行目と、同様に 
     79行目の２カ所を int 型へ変換するように修正します。下図だと4行目、7行目の色付きの場所へ int() を追加しました。<br>
     これでエラーを解決してプログラムを実行できるようになりました。</p>
-    <p>（気が向いたら作者へ修正版ソースをプルリクエストしておこうと思います。）</p>
     <pre class="prettyprint linenums lang-py">
         for i in range(boxes.size(0)):
         box = boxes[i, :]
@@ -272,12 +277,14 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
                     1,  # font scale
                     (255, 0, 255),
                     2)  # line type</pre>
+    <p>修正を Pull Request しておきましたが、ポスト後に確認したら私を含めて３件の同件修正が Pull Request 
+    されていました。こちらのリポジトリはメンテを終了してそうです。</p>
     <p>&nbsp;</p>
     <p>4. 修正したプログラムを動かした様子を以下に示します。</p>
     <p>カメラはPC内蔵のカメラです。PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
     <p>&nbsp;</p>
     
-  	<p>[動画] プログラムを動作させた様子</p>
+  	<p>[動画] プログラムを動作させた様子（PC 内蔵カメラ）</p>
     <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv1-ssd-pccam.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
     </video>
@@ -361,7 +368,7 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2022-06-25</td>
+	    <td class="td_history_date">2022-06-26</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
