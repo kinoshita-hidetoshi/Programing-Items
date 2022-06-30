@@ -9,16 +9,20 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
   
+  <!-- タイトル -->
   <title>Windows バージョン情報の取得方法</title>
 
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -44,10 +48,32 @@
 Windows バージョン情報の取得方法
 </h1>
 
-<p> <font face="Meiryo UI">Windows のOSバージョン情報取得方法を以下に記載します。</font></p>
+<p>&nbsp;</p>
+
+<p>Windows のOSバージョン情報取得方法を以下に記載します。</p>
 <p> 動作確認済みのOSは以下の通り。ただし過去に評価したことがある、というだけで最新情報で全て確認済みというわけではありません。</p>
+<p> &nbsp;</p>
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p><a href="#対応OSリスト">対応OSリスト</a></p>
+        <p><a href="#ソースコード">ソースコード</a></p>
+        <p>&nbsp;</p>
+        <p><a href="#ライセンス">ライセンス</a></p>
+        <p><a href="#参考">参考</a></p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="対応OSリスト">対応OSリスト</a></h2>
 <ul>
-	<li>Windows 10</li>
+	<li>Windows 11</li>
+  <li>Windows 10</li>
 	<li>Windows 8.1</li>
 	<li>Windows 8</li>
 	<li>Windows 7</li>
@@ -56,16 +82,19 @@ Windows バージョン情報の取得方法
 	<li>Windows 98</li>
 	<li>Windows 95</li>
 </ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <h2>最新評価環境</h2>
 <ul>
-	<li>OS： Windows 10 64bit</li>
-	<li>コンパイラ： VC++2017</li>
+	<li>OS： Windows 11 home 64bit</li>
+	<li>コンパイラ： VC++2019</li>
 	<li>他：<ul>
 		<li>_UNICODE、_MBCS、両方のコンパイルでOK。</li>
 	</ul>
 	</li>
 </ul>
-<p><a href="HowToGetWindowsVersion/GetWindowsVersion.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<p>&nbsp;</p>
+<h2><a name="ソースコード">ソースコード</a></h2>
 <p>&nbsp;</p>
 
 [プログラムソース &quot;GetSystemInformation.h&quot;]<br>
@@ -94,7 +123,7 @@ BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, si
 
 #endif // GET_SYSTEM_INFORMATIONS_H</pre>
 </code>
-<br><br></span>
+<br><br>
 [プログラムソース &quot;GetSystemInformations.cpp&quot;]<br><code>
 <pre class="prettyprint linenums">
 /*=========================================================*/
@@ -111,7 +140,8 @@ BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, si
     @date   2012-11-24 &quot;Windows 8&quot;, &quot;Windows Server 2012&quot; に対応
     @date   2013-10-28 &quot;Windows 8.1&quot;, &quot;Windows Server 2012 R2&quot; に対応
     @date   2017-02-22 &quot;Windows 10&quot;, &quot;Windows Server 2016&quot; に対応
-    */
+<code>    @date   2022-06-03 "Windows 11" に対応</code>
+*/
 /*=========================================================*/
 
 #include &lt;windows.h&gt;                    // LoadLibrary, FreeLibrary
@@ -441,6 +471,7 @@ BOOL GetProductInfo( TCHAR* cProductInfo, size_t dwProductInfo )
     @date   2012-11-24 &quot;Windows 8&quot;, &quot;Windows Server 2012&quot; に対応
     @date   2013-10-28 &quot;Windows 8.1&quot;, &quot;Windows Server 2012 R2&quot; に対応
     @date   2017-02-22 &quot;Windows 10&quot;, &quot;Windows Server 2016&quot; に対応
+    @date   2022-06-03 "Windows 11" に対応
 */
 /*===============================================================================*/
 BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, size_t nVersion, TCHAR* build, size_t nBuild )
@@ -596,15 +627,25 @@ BOOL GetWindowsInformations( TCHAR* windows, size_t nWindows, TCHAR* version, si
             case 10:
                 switch (VersionInformationEx.dwMinorVersion) {
                 case 0:
-                    if (VersionInformationEx.wProductType == VER_NT_WORKSTATION) {
-                        // Windows 10
-                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows 10&quot;), _TRUNCATE);
-                    }
-                    else {
+                    switch (VersionInformationEx.wProductType) {
+                    case VER_NT_WORKSTATION:
+                        if (VersionInformationEx.dwBuildNumber &lt; 22000) {
+                            // Windows 10
+                            _tcsncpy_s(windows, nWindows, _T("Windows 10"), _TRUNCATE);
+                        }
+                        else {
+                            // Windows 11
+                            _tcsncpy_s(windows, nWindows, _T("Windows 11"), _TRUNCATE);
+                        }
+                        break;
+
+                    default:
                         // Windows Server 2016
-                        _tcsncpy_s(windows, nWindows, _T(&quot;Windows Server&nbsp;2016&quot;), _TRUNCATE);
+                        _tcsncpy_s(windows, nWindows, _T("Windows Server 2016"), _TRUNCATE);
+                        break;
                     }
                     break;
+                    
                 default:
                     if (VersionInformationEx.wProductType == VER_NT_WORKSTATION) {
                         // Unknown Windows family
@@ -717,13 +758,15 @@ Windows8.1 以降にもかかわらず Windows8 に見えてしまう。<br><br>
 &lt;assembly&gt;
   &lt;compatibility xmlns=&quot;urn:schemas-microsoft-com:compatibility.v1&quot;&gt;
     &lt;application&gt;
-      &lt;!-- Windows 7 --&gt;
+      &lt;!-- Windows Vista and Windows Server 2008 --&gt;
+      &lt;supportedOS Id=&quot;{e2011457-1546-43c5-a5fe-008deee3d3f0}&quot;/&gt;
+      &lt;!-- Windows 7 and Windows Server 2008 R2 --&gt;
       &lt;supportedOS Id=&quot;{35138b9a-5d96-4fbd-8e2d-a2440225f93a}&quot;/&gt;
-      &lt;!-- Windows 8 --&gt;
+      &lt;!-- Windows 8 and Windows Server 2012 --&gt;
       &lt;supportedOS Id=&quot;{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}&quot;/&gt;
-      &lt;!-- Windows 8.1 --&gt;
+      &lt;!-- Windows 8.1 and Windows Server 2012 R2 --&gt;
       &lt;supportedOS Id=&quot;{1f676c76-80e1-4239-95bb-83d0f6d0da78}&quot;/&gt;
-      &lt;!-- Windows 10 --&gt;
+      &lt;!-- Windows 10, Windows 11, Windows Server 2016, Windows Server 2019 and Windows Server 2022 --&gt;
       &lt;supportedOS Id=&quot;{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}&quot; /&gt;
     &lt;/application&gt;
   &lt;/compatibility&gt;
@@ -732,10 +775,11 @@ Windows8.1 以降にもかかわらず Windows8 に見えてしまう。<br><br>
 
 <br>
 <span class="table_title">[実行結果]<br>
+<img alt="" src="HowToGetWindowsVersion/img9.gif" width="510"><br>図： Windows 11 の例<br><br>
 <img alt="" src="HowToGetWindowsVersion/img2.gif"><br>
-図： Windows10 の例<br><br>
-<img alt="" src="HowToGetWindowsVersion/img5.gif"><br>図：Windows8.1 の例<br><br>
-<img alt="" src="HowToGetWindowsVersion/img8.gif"><br>図：Windows8 の例<br><br></span>
+図： Windows 10 の例<br><br>
+<img alt="" src="HowToGetWindowsVersion/img5.gif"><br>図：Windows 8.1 の例<br><br>
+<img alt="" src="HowToGetWindowsVersion/img8.gif"><br>図：Windows 8 の例<br><br></span>
 
 <table style="border: medium double #C0C0C0; width: 800px" title="Windows7 の例">
 	<tr>
@@ -752,7 +796,47 @@ Windows 7 PRODUCT_PROFESSIONAL, Version 6.1 Service Pack 1, Build 7601
 		</td>
 	</tr>
 </table>
-図：Windows7 の例<br><br><br>
+<p>図：Windows 7 の例</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+The MIT License (MIT)<br><br>
+
+Copyright © 2012-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p><br>
+
+</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -762,17 +846,61 @@ Windows 7 PRODUCT_PROFESSIONAL, Version 6.1 Service Pack 1, Build 7601
         <li>バージョン ヘルパー関数 - Win32 apps | Microsoft Docs<br>
         <a href="https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis" target="_blank">
         https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis</a></li>
+        <li>&nbsp;Application manifests - supportedOS<br>
+        <a href="https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos" target="_blank">
+        https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos</a></li>
+        <li>winapi - What's the supportedOS GUID for Windows 11? - Stack 
+        Overflow<br>
+        <a href="https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11" target="_blank">
+        https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11</a></li>
 	</ul>
 </section>
 
 &nbsp;<hr>
-<p> <font face="Meiryo UI">記載：<br>2017年09月30日 木下英俊<br>・Windows10, Windows Server 
-2016, に対応<br><br>2013年01月09日 木下英俊<br>・Windows8.1 に対応<br><br>2012年11月24日 木下英俊<br>・Windows8 に対応<br><br>2012年 3月11日 木下英俊<br>
-・新規作成</font></p>
-<p>&nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-06-30</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows 11 に対応</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2017-09-30</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows 10, Windows Server 2016 に対応</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2013-01-09</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows 8.1 に対応</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2012-11-24</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">Windows 8 に対応</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2012-03-11</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p> &nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p> &nbsp;</p>
 
 <footer>
-	<p><small>© copyright 2012-2017 木下英俊</small></p>
+	<p><small>© copyright 2012-2022 木下英俊</small></p>
 </footer>
 
 </body>
