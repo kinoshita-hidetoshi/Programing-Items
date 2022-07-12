@@ -9,8 +9,12 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
   
+  <!-- タイトル -->
   <title>std::unique_ptr</title>
 
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
@@ -33,17 +37,9 @@
   
   <style type="text/css">
   .auto-style1 {
-    background-color: #484800;
-  }
-  .auto-style4 {
-    color: #990000;
-    background-color: #FFFF00;
+    background-color: #505000;
   }
   .auto-style2 {
-    text-decoration: underline;
-  }
-  .auto-style3 {
-    background-color: #FFFF00;
     text-decoration: underline;
   }
   </style>
@@ -64,20 +60,27 @@
 	<li><span class="t-mark">template &lt;class T, class Deleter&gt; class 
 	unique_ptr&lt;T[], Deleter&gt;;<br>-&gt; 配列T[]をサポートします。</span></li>
 </ol>
-<p>>参考URL： 
- 
- 
- 
-<a href="http://ja.cppreference.com/w/cpp/memory/unique_ptr" target="_blank">
-http://ja.cppreference.com/w/cpp/memory/unique_ptr</a></p>
 <p>&nbsp;</p>
-<h2>目次：</h2>
-<p><a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a><br>
-<a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a><br>
-<a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr 
-	へ置き換える</a><br><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を 
-	unique_ptr へ置き換える</a><br><a href="#5._make_unique">5. make_unique</a><br>
-<a href="#6._make_unique_配列版">6. make_unique 配列版</a></p>
+<p>&nbsp;</p>
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+  <tr>
+    <td>
+      <nav>
+        <h2>目次</h2>
+        <p><a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a></p>
+        <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
+        <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
+        <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
+        <p><a href="#5._make_unique">5. make_unique</a></p>
+        <p><a href="#6._make_unique_配列版">6. make_unique 配列版</a></p>
+        <p>&nbsp;</p>
+        <p><a href="#ライセンス">ライセンス</a></p>
+        <p><a href="#参考">参考</a></p>
+      </nav>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2>評価環境：</h2>
 <ul>
@@ -265,8 +268,8 @@ void custom_fclose(FILE* fp){
 
 int main(int argc, char* argv[])
 {
-    <span class="auto-style1">std::unique_ptr&lt;FILE, decltype(&amp;custom_fclose)&gt;   fp(fopen("fopen_test.txt", </span><span class="auto-style4">"w"</span><span class="auto-style1">), custom_fclose);</span>
-    <span class="auto-style1">// std::unique_ptr&lt;FILE, void(*)(FILE*)&gt;   fp(fopen("fopen_test.txt", </span><span class="auto-style4">"w"</span><span class="auto-style1">), custom_fclose);</span>
+<span class="auto-style1">    std::unique_ptr&lt;FILE, decltype(&amp;custom_fclose)&gt;   fp(fopen("fopen_test.txt", "w"), custom_fclose);</span>
+<span class="auto-style1">    // std::unique_ptr&lt;FILE, void(*)(FILE*)&gt;   fp(fopen("fopen_test.txt", "w"), custom_fclose);</span>
 
     if (fp.get() != nullptr){
         // fopen成功
@@ -291,7 +294,7 @@ int main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-<span class="auto-style1">    std::unique_ptr&lt;FILE, void(*)(FILE*)&gt;   fp(fopen(</span><span class="auto-style4">"fopen_test.txt"</span><span class="auto-style1">, </span><span class="auto-style4">"w"</span><span class="auto-style1">), [&amp;](FILE* fp){</span>
+<span class="auto-style1">    std::unique_ptr&lt;FILE, void(*)(FILE*)&gt;   fp(fopen("fopen_test.txt", "w"), [&amp;](FILE* fp){</span>
 <span class="auto-style1">        if (fp != nullptr){</span>
 <span class="auto-style1">            fclose(fp);</span>
 <span class="auto-style1">        }</span>
@@ -325,7 +328,7 @@ std::<span class="auto-style1">unique_ptr</span>&lt;std::FILE, void(*)(FILE*)&gt
 &nbsp;&nbsp;&nbsp; // fclose に NULL を渡して実行してはいけない。
 &nbsp;&nbsp;&nbsp; // このため下記のような分岐処理が必要となる。
 &nbsp;&nbsp;&nbsp; std::FILE * const fp = std::fopen(filename, flags);
-&nbsp;&nbsp;&nbsp; <span class="auto-style2">return fp ? std::<span class="auto-style1">unique</span></span><span class="auto-style3">_ptr</span><span class="auto-style2">&lt;std::FILE<font face="Meiryo UI"><code>, void(*)(FILE*)</code></font>&gt;(fp, std::fclose) : std::<span class="auto-style1">unique_ptr</span>&lt;std::FILE<font face="Meiryo UI"><code>, void(*)(FILE*)</code></font>&gt;();</span>
+&nbsp;&nbsp;&nbsp; <span class="auto-style2">return fp ? std::<span class="auto-style1">unique</span></span>_ptr<span class="auto-style2">&lt;std::FILE<font face="Meiryo UI"><code>, void(*)(FILE*)</code></font>&gt;(fp, std::fclose) : std::<span class="auto-style1">unique_ptr</span>&lt;std::FILE<font face="Meiryo UI"><code>, void(*)(FILE*)</code></font>&gt;();</span>
 }
 
 int main()
@@ -559,10 +562,102 @@ int _tmain(int argc, _TCHAR* argv[])
 <p>[実行結果]</p>
 <p><img alt="" src="unique_ptr/imgD.jpg"></p>
 <p>無駄なコンストラクタ、デストラクタ、の発生が気になりますが、この動作で正しいです。</p>
-<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+The MIT License (MIT)<br><br>
+
+Copyright © 2014-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a name="参考">参考</a></h2>
+	<ul>
+		<li> 
+ 
+ 
+ 
+<a href="http://ja.cppreference.com/w/cpp/memory/unique_ptr" target="_blank">
+http://ja.cppreference.com/w/cpp/memory/unique_ptr</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
 
 <hr>
-<p>記載： <br>- 2014年03月09日 新規作成, 木下英俊<br>- 2019年10月26日 「5. make_unique」を追加<br>- 
-2019年11月02日 「6. make_unique 配列版」を追加</p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-07-13</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2019-11-02</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「6. make_unique 配列版」を追加<br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2019-10-26</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「5. make_unique」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2014-03-09</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2014-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+<p>&nbsp;</p>
 </body>
 </html>
