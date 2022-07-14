@@ -15,7 +15,7 @@ body{
 	padding: 0em;
 }
 
-#menu-container{
+.menu-container{
 	width: 600px;
 	max-width: 100%;
 }
