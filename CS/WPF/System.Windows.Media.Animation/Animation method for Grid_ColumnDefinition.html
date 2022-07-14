@@ -1,31 +1,57 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Animation method for Grid.ColumnDefinition</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[WPF] Grid.ColumnDefinition の Width をアニメーションで動かす | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
+  <style type="text/css">
+    .auto-style8 {
+    	background-color: #505000;
+    }
+  </style>
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	background-color: #FFFF00;
-}
-</style>
 </head>
+
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-WPF : Grid.ColumnDefinition の Width をアニメーションで動かす</h1>
+<h1>[WPF] Grid.ColumnDefinition の Width をアニメーションで動かす</h1>
 
 <p> Grid を GridSplitter を使って分割レイアウト表示することがあります。<br>この分割表示をアニメーションで動作する方法を記載します。</p>
+<p> &nbsp;</p>
 <h2> 目次</h2>
 <p> <a href="#1._Grid.ColumnDefinition_の_Width_をアニメーションで動かす">1. 
 Grid.ColumnDefinition の Width をアニメーションで動かす</a></p>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._Grid.ColumnDefinition_の_Width_をアニメーションで動かす">1. 
 Grid.ColumnDefinition の Width をアニメーションで動かす</a></h2>
@@ -35,15 +61,22 @@ Grid.ColumnDefinition の Width をアニメーションで動かす</a></h2>
 この手法はいろいろと応用できそうなので、こちらのプログラミングアイテムに記録を残すことにしました。</p>
 <p> 作成するプログラムは下図の通りです。<br>・画面中央のボタンをクリックすることで、画面レイアウトがアニメーションにより開閉します。<br>
 ・ボタンの矢印も逆方向を向きます。</p>
-<p> 
-<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img12.jpg"></p>
-<p> 
-<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img13.jpg"></p>
 
-<video controls autoplay="y" loop="y" src="Animation method for Grid_ColumnDefinition/animation.mp4">
-<p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
-</video>
+<p> 
+<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img12.jpg" width="600"></p>
+<p> 
+&nbsp;</p>
+<p> 
+<img alt="" src="Animation%20method%20for%20Grid_ColumnDefinition/img13.jpg" width="600"></p>
+<p> 
+&nbsp;</p>
 
+    <video controls muted autoplay="y" loop="y" src="Animation method for Grid_ColumnDefinition/animation.mp4" width="600">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+
+<p> [動画] 動作例です</p>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <h3>[環境]</h3>
 <ul>
@@ -286,9 +319,11 @@ namespace test_GridSplitter_02
 <ul>
 	<li>
 	<a href="http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column" target="_blank">http://stackoverflow.com/questions/9358025/gridsplitter-not-working-after-applying-an-animation-to-a-grid-column</a></li>
+	<li>
+	</li>
 </ul>
 <hr>
-<p> <font face="Meiryo UI">記載： 2017年08月15日 木下英俊、新規作成<br>
-</font></p>
+<p> &nbsp;</p>
+<p> <font face="Meiryo UI">記載： 2017年08月15日 木下英俊、新規作成</font></p>
 </body>
 </html>

@@ -1,15 +1,47 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Boost のコンパイル、インストール方法</title>
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<link href="../design.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Boost のコンパイル、インストール方法 | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+  </style>
 </head>
+
 <body>
 <h1 class="auto-style7">
 boost library のコンパイル、インストール方法</h1>
@@ -33,7 +65,9 @@ b2.exe によるビルド方法</a></p>
 	<li>boost library バージョン：1.54.0</li>
 	<li>コンパイラ：VS2012</li>
 </ul>
+<p>&nbsp;</p>
 <hr>
+<p>&nbsp;</p>
 <p>以下、boost library をx86,x64 用の２つセットアップする方法として記載します。</p>
 <ol>
 	<li>boost library をサイトからダウンロード <br>最新バージョンは以下からダウンロードできます。<br>
@@ -54,6 +88,7 @@ b2.exe によるビルド方法</a></p>
 	<li>あとはVS2012でヘッダとライブラリの所在を設定してお終い。</li>
 </ol>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
 <h2><a name="2._b2_によるビルド方法">2. b2.exe によるビルド方法</a></h2>
 <p>1.47.0 から bjam だけでなく、b2も生成されるようになりました。また公式が bjam から b2 での説明に切り替わっています。<br>
 なので、こちらの b2.exe による方法を使ってビルドするのが正解かもしれません。</p>
@@ -64,7 +99,9 @@ b2.exe によるビルド方法</a></p>
 	<li>boost library バージョン：1.66.0, 1.69.0</li>
 	<li>コンパイラ：VS2017 v15.9.4</li>
 </ul>
+<p>&nbsp;</p>
 <hr>
+<p>&nbsp;</p>
 <ol>
 	<li>boost library をサイトからダウンロード <br>最新バージョンは以下からダウンロードできます。<br>
 	<a href="http://www.boost.org/users/download/#live" target="_blank">
@@ -110,6 +147,7 @@ https://qiita.com/softgate/items/75f123f01ccdee6d36d0</a><br><br>
 <a href="https://boostjp.github.io/" target="_blank">https://boostjp.github.io/</a></p>
 <p>&nbsp;</p>
 <hr>
+<p> &nbsp;</p>
 <p> <font face="Meiryo UI">記載： 木下英俊<br>2013年8月25日 新規作成<br>2018年3月11日 b2.exe 
 の記載を追記<br>2018年12月23日 b2.exe の記述に x86/x64 のビルド方法記述を追記</font></p>
 </body>
