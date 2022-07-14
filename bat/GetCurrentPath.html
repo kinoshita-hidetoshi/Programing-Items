@@ -1,21 +1,54 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Counter (C#、WPF)</title>
-<link rel="stylesheet" href="../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-a,
-a:link,
-a:active,
-a:visited {
-    color: #990000;
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Counter (C#、WPF) | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-</style>
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    a,
+    a:link,
+    a:active,
+    a:visited {
+        color: #990000;
+    }
+  </style>
+
 </head>
+
 <body>
 <h1 class="auto-style7">
 カレントパス を取得する方法</h1>
@@ -27,6 +60,7 @@ a:visited {
 cd する必要がある。どうやって書いたらよいのでしょう？ という問題。</p>
 <p>結果からすると <br>”cd /d %~dp0” <br>と書けばよい。</p>
 <p>さて、調べた結果詳細を以下に記載します。説明は書きませんが必要な人は持って行ってください。</p>
+<p>&nbsp;</p>
 <p>test.bat <br>============================ <br>@echo off <br>cd <br>cd /d 
 %~dp0 <br>echo %~dp0 <br>echo %~dpn0 <br>echo %~dpnx0 <br>pause <br>
 ============================</p>
@@ -44,7 +78,9 @@ C:\Users\英俊\Desktop\test.bat <br>続行するには何かキーを押して�
 /d が無くても動いてしまうので注意。</p>
 <p>参考URL： <br><a href="http://d.hatena.ne.jp/fuzzhead/20080930/p1">
 http://d.hatena.ne.jp/fuzzhead/20080930/p1</a></p>
+<p>&nbsp;</p>
 <hr>
+<p> &nbsp;</p>
 <p> <font face="Meiryo UI">記載： 2013年7月6日 木下英俊</font></p>
 </body>
 </html>
