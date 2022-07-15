@@ -16,19 +16,9 @@
 	
   <!-- CSS -->
 	<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link href="design_items_v2.css" rel="stylesheet">
+  <link href="design_items_v3.css" rel="stylesheet">
 
   <script type="text/javascript">
-  	function sublist( target ) {
-      var TargetList = target.parentNode.getElementsByTagName('ul');
-      if ( TargetList[0].style.display == 'none' ) {
-        TargetList[0].style.display = 'block';
-      }
-      else {
-        TargetList[0].style.display = 'none';
-      }
-    }
-    
     function checkedOff(){
       window.parent.checkedOff();
     }
@@ -37,7 +27,7 @@
   <script src="jquery.js"></script>  
   <script>
     $(function() {
-
+      
       $(".menu-list").find(".accordion-toggle").click(
         function() {
           // リスト開閉
@@ -45,12 +35,10 @@
           // アイコン更新
           $(this).toggleClass("active-tab").find(".menu-link").toggleClass("active");
 
-          /*
           // クリックしたメニュー以外のコンテントを閉じる
           $(".menu-list .accordion-content").not($(this).next()).slideUp("fast").removeClass("open");
           // クリックしたメニュー以外のアイコンを '+' にする
           $(".menu-list .accordion-toggle").not(jQuery(this)).removeClass("active-tab").find(".menu-link").removeClass("active");
-          */
         }
       );
     }); // jQuery load
@@ -61,7 +49,7 @@
 <body>
 
 <!-- Bing Mebmaster Tools 指摘対応 -->
-<h1 class="display-none">python メニュー</h1>
+<h1 class="display-none">top メニュー</h1>
 
 <div class="menu-container">
   <ul class="menu-list">
@@ -151,6 +139,13 @@
   </ul>
 </div>
 	
+<hr>
+	
+<div class="menu-container">
+  <ul class="menu-list">
+    <li style="list-style-type:none;"><a href="ImageMagick/commands.html" onclick="checkedOff();">ImageMagick </a></li>
+  </ul>
+</div>
 
 <hr>
 	
@@ -159,7 +154,7 @@
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">Microsoft</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li>.NET Framework</li>
       <ul>
     		<li><a href="Microsoft/NET%20framework/Download%20page.html" onclick="checkedOff();">ダウンロードページ</a></li>
@@ -193,14 +188,12 @@
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">Web</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
   		<li>http://msdn.microsoft.com/en-us/library/bb249282.aspx</li>
   		<li>http://www.realstream.jp/lecture/2006/05/post_13.html</li>
   		<li>http://www.tohoho-web.com/wwwmmd2.htm</li>
@@ -208,35 +201,23 @@
   </ul>
 </div>
 
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="ImageMagick/commands.html" onclick="checkedOff();">ImageMagick </a></li>
-  </ul>
-</div>
-
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">Bat</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="bat/GetCurrentPath.html" onclick="checkedOff();">batファイルがあるpathへ移動する方法</a></li>          
     </ul>
   </ul>
 </div>
-
-<hr>
 
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">Azure DevOps</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="Etc/Azure_DevOps/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
       <li>Pipelines</li>
       <ul>
@@ -253,7 +234,7 @@
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">Bitbucket</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="Etc/Bitbucket/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証鍵を設定する</a></li>
       <li>Pipelines</li>
       <ul>
@@ -270,7 +251,7 @@
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">GitHub</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="Etc/Github/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
       <li>Pipelines</li>
       <ul>
@@ -283,15 +264,12 @@
   </ul>
 </div>
 
-
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">分類外</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="Etc/Windows%20SDK.html" onclick="checkedOff();">Windows SDK</a></li>
       <li>Doxygen</li>
       <ul>
@@ -336,14 +314,12 @@
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link">アルゴリズム</a>
     </li>
-    <ul>
+    <ul class="menu-submenu accordion-content">
       <li><a href="Algorithm/levenshtein.html" onclick="checkedOff();">レーベンシュタイン距離</a></li>          
     </ul>
   </ul>
