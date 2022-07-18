@@ -55,7 +55,7 @@ li{
 	margin-right: 0em;
 	margin-top: 0px;
   margin-bottom: 0px;
-  padding-left: 0.5em;
+  padding-left: 0em;
   padding-right: 0em;
 	padding-top: 0.1em;
 	padding-bottom: 0.1em;
@@ -74,6 +74,7 @@ li.accordion-toggle{
   margin-bottom: 0px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  padding-left: 0.5em;
 }
 
 a.menu {
