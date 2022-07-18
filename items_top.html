@@ -73,58 +73,99 @@
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_excel.html" target="_self">Excel VBA</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">Excel</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+  		<li><a href="Excel/output_file_list.html" onclick="checkedOff();">ファイル一覧を出力する</a></li>
+  		<li><a href="Excel/Highlight_active_cell_row_and_column.html" onclick="checkedOff();">アクティブセルの行と列を強調表示する</a></li>
+  		<li><a href="Excel/Work_with_multiple_sheets.html" onclick="checkedOff();">複数のシートを操作する</a></li>
+  		<li><a href="Excel/Work_with_multiple_books.html" onclick="checkedOff();">複数のブックを操作する</a></li>
+  		<li><a href="Excel/gantchart.html" onclick="checkedOff();">「Excelガントチャート」ツールを作る</a></li>
+      <li><a href="Excel/vba_password_unlocked.html" onclick="checkedOff();">Excel VBA パスワードの解除方法</a></li>
+    </ul>
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_html.html#html_menu_top" target="_self">HTML</a></li>
-    <li style="list-style-type:none;"><a href="items_html.html#css_menu_top" target="_self">CSS</a></li>
-    <li style="list-style-type:none;"><a href="items_html.html#JavaScript_menu_top" target="_self">JavaScript</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">Python</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+  		<li><a href="Python/install_python.html" onclick="checkedOff()">Python をインストールする</a></li>
+      <li><a href="Python/install_jupyter_notebook.html" onclick="checkedOff()">Jupyter Notebook をインストールする</a></li>
+
+      <li>仮想環境を使用する (venv)</li>
+      <li>i-PRO カメラとPCをつないでみる</li>
+      <ul>
+        <li><a href="Python/connect_surveillance_camera/connect_with_rtsp.html" onclick="checkedOff();">RTSP で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_with_jpeg.html" onclick="checkedOff();">JPEG で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_with_mjpeg.html" onclick="checkedOff();">MJPEG で画像を取得する</a></li>
+        <li><a href="Python/connect_surveillance_camera/connect_to_wv-xae200w.html" onclick="checkedOff();">機能拡張ソフトウェア(WV-XAE200W)と接続する</a></li>
+        <li><a href="Python/connect_surveillance_camera/image_classification_vgg.html" onclick="checkedOff();">画像分類 - VGG16</a></li>
+        <li><a href="Python/connect_surveillance_camera/mobilenet-ssd.html" onclick="checkedOff();">物体検知 - MobileNet-SSD</a></li>
+        <li><a href="AI/first_try_lobe.html" onclick="checkedOff();">"Microsoft Lobe"を試してみよう</a></li>
+      </ul>
+    </ul>
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_python.html" target="_self">Python</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">AI</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+      <li>PyTorch</li>
+      <ul>
+        <li><a href="Python/connect_surveillance_camera/image_classification_vgg.html" onclick="checkedOff();">画像分類 - VGG16</a></li>
+        <li><a href="Python/connect_surveillance_camera/mobilenet-ssd.html" onclick="checkedOff();">物体検知 - MobileNet-SSD</a></li>
+      </ul>
+      
+      <li>TensorFlow</li>
+      <ul>
+        <li>(empty)</li>
+      </ul>
+      
+      <li>Caffe</li>
+      <ul>
+        <li>http://tadaoyamaoka.hatenablog.com/entry/2017/03/15/233723</li>
+        <li>Caffe-ssd
+        <ul>
+  		    <li>https://soralab.space-ichikawa.com/2016/11/caffe-ssd-demo/</li>
+  			</ul>
+  			</li>
+      </ul>
+      
+      <li>Microsoft Lobe</li>
+      <ul>
+        <li><a href="AI/first_try_lobe.html" onclick="checkedOff();">"Microsoft Lobe"を試してみよう</a></li>
+      </ul>
+      
+      <li>他</li>
+      <ul>
+        <li><a href="Python/connect_surveillance_camera/connect_to_wv-xae200w.html" onclick="checkedOff();">機能拡張ソフトウェア(WV-XAE200W)と接続する</a></li>
+      </ul>
+    </ul>
   </ul>
 </div>
 
-<hr>
-
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_installer.html" target="_self">インストーラ</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">HTML,CSS,JavaScript</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+      <li style="list-style-type:none;"><a href="items_html.html#html_menu_top" target="_self">HTML</a></li>
+      <li style="list-style-type:none;"><a href="items_html.html#css_menu_top" target="_self">CSS</a></li>
+      <li style="list-style-type:none;"><a href="items_html.html#JavaScript_menu_top" target="_self">JavaScript</a></li>
+    </ul>
   </ul>
 </div>
 
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_ai.html" target="_self">AI</a></li>
-  </ul>
-</div>
-	
-<hr>
-	
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="ImageMagick/commands.html" onclick="checkedOff();">ImageMagick </a></li>
-  </ul>
-</div>
-
-<hr>
-	
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
@@ -265,6 +306,10 @@
         <li><a href="Etc/coverage/gcov_lcov.html" onclick="checkedOff();">gcov/lcov</a></li>
       </ul>
     
+      <li><a href="ImageMagick/commands.html" onclick="checkedOff();">ImageMagick </a></li>
+      
+      <li><a href="items_installer.html" target="_self">インストーラ</a></li>
+      
       <li>Metaverse</li>
       <ul>
         <li><a href="Metaverse/Meta_Quest.html" onclick="checkedOff();">Meta Quest 雑多情報</a></li>
