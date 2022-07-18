@@ -53,30 +53,23 @@
 
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_csharp.html#CS_menu_top" target="_self">c#</a></li>
-    <li style="list-style-type:none;"><a href="items_csharp.html#Form_menu_top" target="_self">Form</a></li>
-    <li style="list-style-type:none;"><a href="items_csharp.html#WPF_menu_top" target="_self">WPF</a></li>
-    <li style="list-style-type:none;"><a href="items_csharp.html#.net5_menu_top" target="_self">.NET 5-6 関連</a></li>
-    <li style="list-style-type:none;"><a href="items_csharp.html#other_menu_top" target="_self">他</a></li>
-  </ul>
-</div>
-
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_c_c++.html#c_menu_top" target="_self">c</a></li>
-    <li style="list-style-type:none;"><a href="items_c_c++.html#c++_menu_top" target="_self">c++</a></li>
-    <li style="list-style-type:none;"><a href="items_c_c++.html#boost_menu_top" target="_self">boost</a></li>
-    <li style="list-style-type:none;"><a href="items_c_c++.html#etc_menu_top" target="_self">etc</a></li>
-  </ul>
-</div>
-
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_win32.html" target="_self">Win32 (VC++)</a></li>
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">c#,c/c++,win32</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+      <li><a href="items_csharp.html#CS_menu_top" target="_self">c#</a></li>
+      <li><a href="items_csharp.html#Form_menu_top" target="_self">Form</a></li>
+      <li><a href="items_csharp.html#WPF_menu_top" target="_self">WPF</a></li>
+      <li><a href="items_csharp.html#.net5_menu_top" target="_self">.NET 5-6 関連</a></li>
+      <li><a href="items_csharp.html#other_menu_top" target="_self">他</a></li>
+      <hr>
+      <li><a href="items_c_c++.html#c_menu_top" target="_self">c</a></li>
+      <li><a href="items_c_c++.html#c++_menu_top" target="_self">c++</a></li>
+      <li><a href="items_c_c++.html#boost_menu_top" target="_self">boost</a></li>
+      <li><a href="items_c_c++.html#etc_menu_top" target="_self">etc</a></li>
+      <hr>
+      <li><a href="items_win32.html" target="_self">Win32 (VC++)</a></li>
+    </ul>
   </ul>
 </div>
 
@@ -102,24 +95,7 @@
 
 <div class="menu-container">
   <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_cuda.html" target="_self">CUDA</a></li>
-    <li style="list-style-type:none;"><a href="items_opencl.html" target="_self">OpenCL</a></li>
-  </ul>
-</div>
-
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
     <li style="list-style-type:none;"><a href="items_python.html" target="_self">Python</a></li>
-  </ul>
-</div>
-
-<hr>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li style="list-style-type:none;"><a href="items_database.html" target="_self">データベース</a></li>
   </ul>
 </div>
 
@@ -182,22 +158,10 @@
       </ul>
       
       <li><a href="Etc/PowerAutomateDesktop.html" onclick="checkedOff();">Power Automate Desktop</a></li>
+      <li><a href="Etc/Windows%20SDK.html" onclick="checkedOff();">Windows SDK</a></li>
         
     </ul>
     
-  </ul>
-</div>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li class="accordion-toggle" style="list-style-type:none;">
-      <a class="menu-link">Web</a>
-    </li>
-    <ul class="menu-submenu accordion-content">
-  		<li>http://msdn.microsoft.com/en-us/library/bb249282.aspx</li>
-  		<li>http://www.realstream.jp/lecture/2006/05/post_13.html</li>
-  		<li>http://www.tohoho-web.com/wwwmmd2.htm</li>
-    </ul>
   </ul>
 </div>
 
@@ -215,52 +179,60 @@
 <div class="menu-container">
   <ul class="menu-list">
     <li class="accordion-toggle" style="list-style-type:none;">
-      <a class="menu-link">Azure DevOps</a>
+      <a class="menu-link">Git</a>
     </li>
     <ul class="menu-submenu accordion-content">
-      <li><a href="Etc/Azure_DevOps/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
-      <li>Pipelines</li>
-      <ul>
-        <li>c++ (g++)</li>
-        <li><a href="Etc/Azure_DevOps/Pipelines_cs_netframework.html" onclick="checkedOff();">c# (.NET Framework)</a></li>
-        <li>c# (.NET)</li>
-      </ul>
-    </ul>
-  </ul>
-</div>
 
-<div class="menu-container">
-  <ul class="menu-list">
-    <li class="accordion-toggle" style="list-style-type:none;">
-      <a class="menu-link">Bitbucket</a>
-    </li>
-    <ul class="menu-submenu accordion-content">
-      <li><a href="Etc/Bitbucket/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証鍵を設定する</a></li>
-      <li>Pipelines</li>
+      <li><a href="Etc/Git/git.html">Git</a></li>
       <ul>
-        <li><a href="Etc/Bitbucket/Pipelines_c++.html" onclick="checkedOff();">c++ (g++)</a></li>
-        <li>c# (.NET Framework)</li>
-        <li>c# (.NET)</li>
+        <li><a href="Etc/Git/submodule.html" onclick="checkedOff();">submodule</a></li>
       </ul>
-    </ul>
-  </ul>
-</div>
-
-<div class="menu-container">
-  <ul class="menu-list">
-    <li class="accordion-toggle" style="list-style-type:none;">
-      <a class="menu-link">GitHub</a>
-    </li>
-    <ul class="menu-submenu accordion-content">
-      <li><a href="Etc/Github/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
-      <li>Pipelines</li>
-      <ul>
-        <li>c++ (g++)</li>
-        <li>c# (.NET Framework)</li>
-        <li>c# (.NET)</li>
-      </ul>
-    </ul>
             
+      <li>Azure DevOps</li>
+      <ul>
+        <li><a href="Etc/Azure_DevOps/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
+        <li>Pipelines</li>
+        <ul>
+          <li>c++ (g++)</li>
+          <li><a href="Etc/Azure_DevOps/Pipelines_cs_netframework.html" onclick="checkedOff();">c# (.NET Framework)</a></li>
+          <li>c# (.NET)</li>
+        </ul>
+      </ul>
+
+      <li>Bitbucket</li>
+      <ul>
+        <li><a href="Etc/Bitbucket/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証鍵を設定する</a></li>
+        <li>Pipelines</li>
+        <ul>
+          <li><a href="Etc/Bitbucket/Pipelines_c++.html" onclick="checkedOff();">c++ (g++)</a></li>
+          <li>c# (.NET Framework)</li>
+          <li>c# (.NET)</li>
+        </ul>
+      </ul>
+
+      <li>GitHub</li>
+      <ul>
+        <li><a href="Etc/Github/How%20to%20use%20SSH%20key.html" onclick="checkedOff();">SSH認証カギを設定する</a></li>
+        <li>Pipelines</li>
+        <ul>
+          <li>c++ (g++)</li>
+          <li>c# (.NET Framework)</li>
+          <li>c# (.NET)</li>
+        </ul>
+      </ul>
+
+    </ul>
+  </ul>
+</div>
+
+<div class="menu-container">
+  <ul class="menu-list">
+    <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link">アルゴリズム</a>
+    </li>
+    <ul class="menu-submenu accordion-content">
+      <li><a href="Algorithm/levenshtein.html" onclick="checkedOff();">レーベンシュタイン距離</a></li>          
+    </ul>
   </ul>
 </div>
 
@@ -270,7 +242,6 @@
       <a class="menu-link">分類外</a>
     </li>
     <ul class="menu-submenu accordion-content">
-      <li><a href="Etc/Windows%20SDK.html" onclick="checkedOff();">Windows SDK</a></li>
       <li>Doxygen</li>
       <ul>
     		<li><a href="Etc/Doxygen/doxygen_windows.html" onclick="checkedOff();">Windows版</a></li>
@@ -294,11 +265,6 @@
         <li><a href="Etc/coverage/gcov_lcov.html" onclick="checkedOff();">gcov/lcov</a></li>
       </ul>
     
-      <li><a href="Etc/Git/git.html">Git</a></li>
-      <ul>
-        <li><a href="Etc/Git/submodule.html" onclick="checkedOff();">submodule</a></li>
-      </ul>
-            
       <li>Metaverse</li>
       <ul>
         <li><a href="Metaverse/Meta_Quest.html" onclick="checkedOff();">Meta Quest 雑多情報</a></li>
@@ -314,17 +280,6 @@
   </ul>
 </div>
 
-<div class="menu-container">
-  <ul class="menu-list">
-    <li class="accordion-toggle" style="list-style-type:none;">
-      <a class="menu-link">アルゴリズム</a>
-    </li>
-    <ul class="menu-submenu accordion-content">
-      <li><a href="Algorithm/levenshtein.html" onclick="checkedOff();">レーベンシュタイン距離</a></li>          
-    </ul>
-  </ul>
-</div>
-
 <hr size="2">
 
 <div class="menu-container">
@@ -336,14 +291,12 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<div style="display:flex">
-  <div>
+<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">
+  <div class="mail">
     <img style="WIDTH: 40px; HEIGHT: 25px; margin:6px" border="0" alt="" src="Images/mail.gif" width="54" height="34">
+    <label>コメントなど連絡はこちらへ</label>
   </div>
-  <div style="margin:6px">
-    <a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a>
-  </div>
-</div>
+</a>
 
 </body>
 </html>

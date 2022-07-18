@@ -81,6 +81,11 @@ hr{
   display:none;
 }
 
+a{
+  cursor: pointer;
+}
+
+
 /* 戻る */
 li.return{
   list-style-type:none;
@@ -89,6 +94,14 @@ li.return{
   align-items:center;
   max-width: 95%;
 }
+
+div.return{
+  margin:3px;
+  display:flex;
+  align-items:center;
+  max-width: 95%;
+}
+
 
 img.return{
   height: 24px;
@@ -100,6 +113,18 @@ label.return{
    margin:6px;
 }
 /* 戻る */
+
+
+/* mail */
+div.mail{
+  display: flex;
+  align-items: center;
+}
+
+div.mail label{
+  cursor: pointer;
+}
+/* mail*/
 
 
 /* <- accordion-toggle デザイン */
