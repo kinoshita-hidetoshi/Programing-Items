@@ -144,7 +144,7 @@ Ver.2 以降であれば使用できるそうです。<br>PowerShell Ver.2 は W
 Automation PowerShell ExtensionsのDownload(再配布) – code-lab.net</a>」から取得してください。)</p>
 <p> (2) 取得したファイルを展開</p>
 <p> (3) 展開した全ファイルについてそれぞれプロパティを開き、「ブロックの解除」にチェックを入れて「OK」ボタンを押します。</p>
-<p> <img alt="" src="Windows%20app%20auto-test/img38.jpg">」</p>
+<p> <img alt="「ブロックの解除」にチェック" src="Windows%20app%20auto-test/img38.jpg">」</p>
 <p> (4) 展開したファイルを下記フォルダへ保存します。<br><br>
 <table border="1" bordercolor="#808080" style="width: 700px">
 	<tr>
@@ -174,8 +174,9 @@ Automation PowerShell ExtensionsのDownload(再配布) – code-lab.net</a>」�
 
   <p>を実行します。</p>
   <p>&nbsp;</p>
-  <p> <img alt="" src="Windows%20app%20auto-test/img4.jpg"></p>
-  <p> <img alt="" src="Windows%20app%20auto-test/img5.jpg"></p>
+  <p> <img alt="Set-ExecutionPolicy Bypass -Scope CurrentUser [Enter]" src="Windows%20app%20auto-test/img4.jpg"></p>
+  <p> &nbsp;</p>
+  <p> <img alt="実行ポリシーの変更" src="Windows%20app%20auto-test/img5.jpg"></p>
   <p> この画面が表示されたら 「はい(Y)」 または 「すべて続行(A)」 をクリックします。</p>
   <p> &nbsp;</p>
   <p> 補足：</p>
@@ -300,20 +301,23 @@ Import-Module .\modules\UIAutomation\UIAutomation.dll
 [UIAutomation.Preferences]::Highlight = $false       # UI要素を示す赤枠を表示しない
 </pre>
 
-<p> &nbsp;</p>
-<h3> 1.7. PowerShell ISE を再起動、動作確認</h3>
-<p> PowerShell ISE を再起動します。続けて正しく設定できているかを確認します。</p>
   <p> &nbsp;</p>
-<p> (1) WindowsPowerShell のバージョンを確認</p>
-<p> コンソール画面で「$PSVersionTable [Enter]」と入力します。<br>画面に表示される「PSVersion」の値が使用している 
-WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.0」がバージョン番号です。</p>
-<p> <img alt="" src="Windows%20app%20auto-test/img40.jpg"></p>
-<p> &nbsp;</p>
+  
+  <h3> 1.7. PowerShell ISE を再起動、動作確認</h3>
+  <p> PowerShell ISE を再起動します。続けて正しく設定できているかを確認します。</p>
+  <p> &nbsp;</p>
+  
+  <p> (1) WindowsPowerShell のバージョンを確認</p>
+  <p> コンソール画面で「$PSVersionTable [Enter]」と入力します。<br>画面に表示される「PSVersion」の値が使用している 
+  WindowsPowerShell のバージョン番号です。<br>下図では「5.0.10586.0」がバージョン番号です。</p>
+  <p> <img alt="WindowsPowerShell のバージョン確認" src="Windows%20app%20auto-test/img40.jpg"></p>
+  <p> &nbsp;</p>
+
   <p> (2) UIAutomation.dll のロードを確認</p>
-<p> コンソール画面で「Get-Module [Enter]」と入力します。<br>画面にロード済みのモジュール一覧が表示されます。<br>画面の Name 欄に「UIAutomation」が表示されればOKです。<br>
-表示されない場合は前述の特に Profile.ps1 の設定周辺を再確認してください。</p>
-<p> <img alt="" src="Windows%20app%20auto-test/img41.jpg"></p>
-<p> &nbsp;</p>
+  <p> コンソール画面で「Get-Module [Enter]」と入力します。<br>画面にロード済みのモジュール一覧が表示されます。<br>画面の Name 欄に「UIAutomation」が表示されればOKです。<br>
+  表示されない場合は前述の特に Profile.ps1 の設定周辺を再確認してください。</p>
+  <p> <img alt="UIAutomation.dll のロード確認" src="Windows%20app%20auto-test/img41.jpg"></p>
+  <p> &nbsp;</p>
   <p> 以上で準備は完了です。</p>
 </section>
 
@@ -930,7 +934,7 @@ function Judge-Result ( $result, $expect )
 	
 <p> &nbsp;</p>
   <p> 実行結果<br>
-<img alt="" src="Windows%20app%20auto-test/img6.jpg"></p>
+<img alt="電卓のテスト 実行結果" src="Windows%20app%20auto-test/img6.jpg"></p>
 <p> &nbsp;</p>
 </section>
 
