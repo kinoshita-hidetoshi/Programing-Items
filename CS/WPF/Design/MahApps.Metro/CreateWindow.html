@@ -36,10 +36,6 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
-    .auto-style4 {
-    	border-width: 0px;
-    	width:800px;
-    }
     .auto-style7 {
     	font-weight: normal;
     }
@@ -75,18 +71,24 @@
 
 <p> MahApp.Metro を使ってWPFアプリをモダンなウィンドウデザインにしてみます。</p>
 <p> &nbsp;</p>
-<h2> 目次</h2>
-<p>
-<a href="#1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro を使ってウィンドウを作成してみる</a><br>
-<a href="#2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a><br>
-<a href="#3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a><br>
-<a href="#4._その他のウィンドウ属性">4. その他のウィンドウ属性</a><br>
-<a href="#4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a><br>
-<a href="#4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)</a><br>
-<a href="#4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a><br><br>
-<a href="#参考URL">参考URL</a><br><a href="#関連ページ">関連ページ</a></p>
-<p>
-&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+  <p><a href="#1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro を使ってウィンドウを作成してみる</a></p>
+  <p><a href="#2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a></p>
+  <p><a href="#3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a></p>
+  <p><a href="#4._その他のウィンドウ属性">4. その他のウィンドウ属性</a></p>
+  <p style="padding-left: 1em;"><a href="#4.1._ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)">4.1. ウィンドウの位置、サイズ、を自動保存 (SaveWindowPosition)</a></p>
+  <p style="padding-left: 1em;"><a href="#4.2._ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)">4.2. ウィンドウを表示するときスライドするのをオフにする (WindowTransitionEnabled)</a></p>
+  <p style="padding-left: 1em;"><a href="#4.3._ウィンドウタイトルを大文字にする_(TitleCaps)">4.3. ウィンドウタイトルを大文字にする (TitleCaps)</a></p>
+	
+	<br>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._MahApps.Metro_を使ってウィンドウを作成してみる">1. MahApps.Metro 
 を使ってウィンドウを作成してみる</a></h2>
@@ -119,11 +121,9 @@
 &nbsp;</p>
 <h3> 
 1.2. ソース修正</h3>
-<p> 
-以下、上記の変更を行うために行ったソース修正です。</p>
-<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+<p>以下、上記の変更を行うために行ったソース修正です。</p>
+<p>[プログラムソース &quot;MainWindow.xaml&quot;]</p>
+
 <pre class="prettyprint linenums lang-cs">
 &lt;<span class="auto-style8">Controls:MetroWindow</span> x:Class=&quot;ModernWindow.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -139,14 +139,9 @@
     &lt;/Grid&gt;
 &lt;/Controls:MetroWindow&gt;
 </pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
-<span class="table_title">[プログラムソース &quot;MainWindow.xaml.cs&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+<p>[プログラムソース &quot;MainWindow.xaml.cs&quot;]</p>
 <pre class="prettyprint linenums">
 using System;
 using System.Collections.Generic;
@@ -179,17 +174,13 @@ namespace ModernWindow
 	}
 }
 </pre>
-		</td>
-	</tr>
-</table>
 	
 <p>ここまでのプログラム修正で下図のような画面を表示するようになります。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」とちょっと違うみたいですが、まぁいったん良しとしましょう。</p>
 <p><img alt="" src="CreateWindow/img4.gif"></p>
 <p>&nbsp;</p>
 <p>続いて「App.xaml」に &lt;ResourceDictionary&gt; を追加します。<br>以下の通り。</p>
-<span class="table_title">[プログラムソース &quot;App.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+<p>[プログラムソース &quot;App.xaml&quot;]</p>
+
 <pre class="prettyprint linenums">
 &lt;Application x:Class=&quot;ModernWindow.App&quot;
              xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -210,9 +201,6 @@ namespace ModernWindow
 <span class="auto-style8">        &lt;/ResourceDictionary&gt;</span>
     &lt;/Application.Resources&gt;
 &lt;/Application&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
 <p>以上の結果、下図の画面になります。</p>
@@ -235,9 +223,8 @@ namespace ModernWindow
 </table>
 <p><img alt="" src="CreateWindow/img8.jpg"></p>
 <p>そしてVSまたはBlend上のGUIからアイコンを設定する、もしくはXAMLを直接修正してアイコンを設定します。</p>
-<span class="table_title">[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+<p>[プログラムソース &quot;MainWindow.xaml&quot;]</p>
+
 <pre class="prettyprint linenums">
 &lt;Controls:MetroWindow x:Class=&quot;ModernWindow.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -254,9 +241,6 @@ namespace ModernWindow
     &lt;/Grid&gt;
 &lt;/Controls:MetroWindow&gt;
 </pre>
-		</td>
-	</tr>
-</table>
 	
 <p>以上によりこんな感じになりました。</p>
 <p><img alt="" src="CreateWindow/img6.gif"></p>
@@ -311,9 +295,11 @@ MetroWindowがリサイズ可能であることを示すことができないの
 	<li>１つ目は、文字列 &quot;setting&quot; を表示するボタンです。</li>
 	<li>２つ目は、アイコンと文字列&quot;deploy cupcakes&quot;の２つを StackPanel で一体化させたボタンです。</li>
 </ul>
-<span class="table_title">最初に &quot;MainWindow.xaml&quot; に下記のソースを追加します。<br><br>[プログラムソース &quot;MainWindow.xaml&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+
+<p>最初に &quot;MainWindow.xaml&quot; に下記のソースを追加します。</p>
+<p>&nbsp;</p>
+<p>[プログラムソース &quot;MainWindow.xaml&quot;]</p>
+
 <pre class="prettyprint linenums">
 &lt;Controls:MetroWindow x:Class=&quot;ModernWindow.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -362,13 +348,12 @@ MetroWindowがリサイズ可能であることを示すことができないの
     &lt;Grid&gt;
     &lt;/Grid&gt;
 &lt;/Controls:MetroWindow&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
+<p>&nbsp;</p>
 <p>上記のソースのままでは 「Visual = &quot;{StaticResource appbar_cupcake}&quot;」 の部分でエラーになります。<br>
 &quot;appbar_cupcake&quot; のアイコン情報が無いためのエラーです。これは”MahApps.Metro.Resources”に含まれるXAMLアイコンです。</p>
 <p>NuGet で MahApp.Metro.Resource を追加します。</p>
+<p>&nbsp;</p>
 <p><img alt="" src="CreateWindow/imgB1.jpg"></p>
 <p>ソリューションエクスプローラーで確認すると、以下の４つのファイルが追加されます。<br>- Entrypo-license.txt<br>- 
 Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
@@ -384,10 +369,8 @@ Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 <p>&nbsp;</p>
 <h3>2.2. LeftWindowCommands</h3>
 <p>&quot;LeftWindowCommands&quot; を加えます。<br>ボタンの内容は”RightWindowCommands”と同じものを適用します。</p>
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-		<pre class="prettyprint linenums">
+
+<pre class="prettyprint linenums">
 &lt;Controls:MetroWindow.RightWindowCommands&gt;
     &lt;Controls:WindowCommands&gt;
         &lt;Button Content=&quot;settings&quot; /&gt;
@@ -421,9 +404,6 @@ Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 <span class="auto-style8">         	&lt;/Button&gt;</span>
 <span class="auto-style8">    &lt;/Controls:WindowCommands&gt;</span>
 <span class="auto-style8">&lt;/Controls:MetroWindow.LeftWindowCommands&gt;</span></pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 &nbsp;</p>
@@ -472,7 +452,44 @@ TitleCaps = &quot;True&quot; or &quot;False&quot;</p>
 &nbsp;</p>
 <p>
 &nbsp;</p>
-<h2><a name="参考URL">参考URL</a></h2>
+<p>
+&nbsp;</p>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2016-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>
+&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
 <ul>
 	<li>
 	<a href="http://mahapps.com/guides/quick-start.html" target="_blank">
@@ -488,20 +505,46 @@ TitleCaps = &quot;True&quot; or &quot;False&quot;</p>
 	<a href="http://sourcechord.hatenablog.com/entry/2016/02/23/012511" target="_blank">
 	http://sourcechord.hatenablog.com/entry/2016/02/23/012511</a></li>
 </ul>
-<p>&nbsp;</p>
-<h2><a name="関連ページ">関連ページ</a></h2>
-<ul>
-	<li>MahApp.Metro<ul>
-		<li><a href="abstract.html">初めに</a></li>
-		<li><a href="CreateWindow.html">ウィンドウを作成</a></li>
-	</ul>
-	</li>
-</ul>
-<p>&nbsp;</p>
+</section>
+
+<p>
+&nbsp;</p>
 <hr>
 <p> &nbsp;</p>
-<p> <font face="Meiryo UI">記載： 木下英俊<br>
-2016/11/24 誤植修正： (正)WindowTransitionsEnabled ← (誤)WindowTransitionsEnable
-<br>2016/03/13 新規作成</font><br></p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-07-22</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新<br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2016-11-24</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">誤植修正： (正)WindowTransitionsEnabled ← (誤)WindowTransitionsEnable </td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2016-03-13</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2016-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>
