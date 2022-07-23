@@ -102,7 +102,7 @@
 <p> &nbsp;</p>
 <p> Visual Studio で作成したデフォルトのWPFアプリケーションは以下の通りです。<br>ここからスタートで改造していきます。</p>
 <p> 
-<img alt="" src="CreateWindow/imgB.jpg"></p>
+<img alt="Visual Studio で作成したデフォルトのWPFアプリケーション" src="CreateWindow/imgB.jpg"></p>
 <p> 
 &nbsp;</p>
 <p> 
@@ -114,7 +114,7 @@
 <p> 
 ソリューションエクスプローラーでソリューションを右クリックし、「ソリューションのNuGetパッケージの管理」を選択します。パッケージマネージャーが開くので、左上のパッケージソースが「nuget.org」になっていることを確認し、検索ボックスに「MahApps.Metro」と入力して「Enter」キーを押します。MahApps.Metroを選択して「インストール」ボタンを押してアプリに組み込みます。</p>
 <p> 
-<img alt="" src="CreateWindow/img2.jpg"></p>
+<img alt="MahApps.Metroを選択" src="CreateWindow/img2.jpg"></p>
 <p> 
 &nbsp;</p>
 <p> 
@@ -176,7 +176,7 @@ namespace ModernWindow
 </pre>
 	
 <p>ここまでのプログラム修正で下図のような画面を表示するようになります。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」とちょっと違うみたいですが、まぁいったん良しとしましょう。</p>
-<p><img alt="" src="CreateWindow/img4.gif"></p>
+<p><img alt="quick-start（その１）" src="CreateWindow/img4.gif"></p>
 <p>&nbsp;</p>
 <p>続いて「App.xaml」に &lt;ResourceDictionary&gt; を追加します。<br>以下の通り。</p>
 <p>[プログラムソース &quot;App.xaml&quot;]</p>
@@ -205,7 +205,7 @@ namespace ModernWindow
 <p>&nbsp;</p>
 <p>以上の結果、下図の画面になります。</p>
 <p> 
-<img alt="" src="CreateWindow/img9.jpg"></p>
+<img alt="quick-start（その２）" src="CreateWindow/img9.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>1.3. Window Icon を追加</h3>
@@ -217,11 +217,10 @@ namespace ModernWindow
 	<tr>
 		<td>参考：<br>スタティック アイコン の代わりに 最小化/最大化/閉じる 
 		のアイコンは、スタティックアイコンではなく&quot;Marlett&quot;と呼ばれるフォントを使っています。詳しくは 
-		<a href="https://en.wikipedia.org/wiki/Marlett" target="_blank">the 
-		Wikipedia article</a> を参照。</td>
+		<a href="https://en.wikipedia.org/wiki/Marlett" target="_blank">the Wikipedia article</a> を参照。</td>
 	</tr>
 </table>
-<p><img alt="" src="CreateWindow/img8.jpg"></p>
+<p><img alt="mahapps.metro.logo2.ico" src="CreateWindow/img8.jpg"></p>
 <p>そしてVSまたはBlend上のGUIからアイコンを設定する、もしくはXAMLを直接修正してアイコンを設定します。</p>
 <p>[プログラムソース &quot;MainWindow.xaml&quot;]</p>
 
@@ -243,13 +242,13 @@ namespace ModernWindow
 </pre>
 	
 <p>以上によりこんな感じになりました。</p>
-<p><img alt="" src="CreateWindow/img6.gif"></p>
+<p><img alt="quick-start（その３）" src="CreateWindow/img6.gif"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>1.4. TitleBar の表示/非表示</h3>
 <p>ShowTitleBar=&quot;True|False&quot;</p>
 <p>”False” に設定したら下図のようにタイトルバーが無くなりました。</p>
-<p><img alt="" src="CreateWindow/img32.jpg"></p>
+<p><img alt="quick-start（その４）" src="CreateWindow/img32.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>1.5. Resize Grip</h3>
@@ -261,13 +260,13 @@ MetroWindowがリサイズ可能であることを示すことができないの
 	<li>ResizeMode=&quot;CanResizeWithGrip&quot; ; &quot;Resize Grip&quot; を表示する。</li>
 	<li>ResizeMode=&quot;CanResize&quot; ; &quot;Resize Grip&quot; を表示しない。</li>
 </ul>
-<p><img alt="" src="CreateWindow/img30.jpg"></p>
+<p><img alt="quick-start（その５）" src="CreateWindow/img30.jpg"></p>
 <h3>&nbsp;</h3>
 <p>&nbsp;</p>
 <h3>1.6. タイトルバー上のアイコン表示/非表示</h3>
 <p>ShowIconOnTitleBar=&quot;True|False&quot;</p>
 <p>”False”に設定したら下図のようになりました。</p>
-<p><img alt="" src="CreateWindow/img33.jpg"></p>
+<p><img alt="quick-start（その６）" src="CreateWindow/img33.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>1.7. WindowButtonCommands</h3>
@@ -287,7 +286,7 @@ MetroWindowがリサイズ可能であることを示すことができないの
 <h2><a name="2._(Left-/Right-)_WindowCommands">2. (Left-/Right-) WindowCommands</a></h2>
 <p>MahApp.Metro ウィンドウの特徴の一つである &quot;LeftWindowsCommand&quot; または &quot;RightWindowsCommands&quot; は  
 ウィンドのタイトルバーに独自のボタンなどを追加することができる機能です。<br>「<a href="http://mahapps.com/guides/quick-start.html" target="_blank">quick-start</a>」に従ってこれを実装してみます。</p>
-<p><img alt="" src="CreateWindow/imgF.jpg"></p>
+<p><img alt="quick-start（その７）" src="CreateWindow/imgF.jpg"></p>
 <h3>&nbsp;</h3>
 <h3>2.1. RightWindowCommands</h3>
 <p>&quot;RightWindowCommands&quot; として２つのボタンを追加します。</p>
@@ -354,17 +353,19 @@ MetroWindowがリサイズ可能であることを示すことができないの
 &quot;appbar_cupcake&quot; のアイコン情報が無いためのエラーです。これは”MahApps.Metro.Resources”に含まれるXAMLアイコンです。</p>
 <p>NuGet で MahApp.Metro.Resource を追加します。</p>
 <p>&nbsp;</p>
-<p><img alt="" src="CreateWindow/imgB1.jpg"></p>
+<p><img alt="MahApp.Metro.Resource" src="CreateWindow/imgB1.jpg"></p>
+<p>&nbsp;</p>
 <p>ソリューションエクスプローラーで確認すると、以下の４つのファイルが追加されます。<br>- Entrypo-license.txt<br>- 
 Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
-<p><img alt="" src="CreateWindow/imgD.jpg"></p>
+<p>&nbsp;</p>
+<p><img alt="追加されたファイル" src="CreateWindow/imgD.jpg"></p>
 <p>&nbsp;</p>
 <p>&quot;Icons.xaml&quot; のプロパティを確認します。デフォルトのままで修正不要のはずですが、以下の通りです。</p>
-<p><img alt="" src="CreateWindow/img11.jpg"></p>
+<p><img alt="Icons.xaml のプロパティ確認" src="CreateWindow/img11.jpg"></p>
 <p>&nbsp;</p>
 <p>ここまで修正した段階でコンパイルして実行すると、以下ようなウィンドウを表示できるようになります。<br>
 （ボタンを実装しただけでアクションの実装をしていないので、ボタンを押しても何も起こりません。）</p>
-<p><img alt="" src="CreateWindow/imgF.jpg"></p>
+<p><img alt="quick-start（その８）" src="CreateWindow/imgF.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>2.2. LeftWindowCommands</h3>
@@ -410,7 +411,7 @@ Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 <p>
 ウィンドウタイトル ”MAINWINDOW” の左側にボタンが追加されました。</p>
 <p>
-<img alt="" src="CreateWindow/img1C.jpg"></p>
+<img alt="quick-start（その９）" src="CreateWindow/img1C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> <a name="3._ウィンドウの縁を指定">3. ウィンドウの縁を指定</a></h2>
@@ -420,16 +421,16 @@ Entypo.ttf<br>- Icons.xaml<br>- WindowsIcons-license.txt</p>
 <h3> 3.1. Border</h3>
 <p class="auto-style9"> BorderBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
 BorderThickness=&quot;1&quot;</p>
-<p> <img alt="" src="CreateWindow/img28.jpg"></p>
+<p> <img alt="quick-start（その１０）" src="CreateWindow/img28.jpg"></p>
 <p> &nbsp;</p>
 <h3> 3.2. Glow (ぼやっとする)</h3>
 <p class="auto-style9"> GlowBrush=&quot;{DynamicResource AccentColorBrush}&quot;<br>
 BorderThickness=&quot;1&quot;</p>
-<p> <img alt="" src="CreateWindow/img26.jpg"></p>
+<p> <img alt="quick-start（その１１）" src="CreateWindow/img26.jpg"></p>
 <p> &nbsp;</p>
 <h3> 3.3. DropShadow (影をつける)</h3>
 <p class="auto-style9"> EnableDWMDropShadow=&quot;True&quot;<br>GlowBrush=&quot;Black&quot;<br>BorderThickness=&quot;0&quot;</p>
-<p> <img alt="" src="CreateWindow/img2C.jpg"></p>
+<p> <img alt="quick-start（その１２）" src="CreateWindow/img2C.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="4._その他のウィンドウ属性">4. その他のウィンドウ属性</a></h2>
