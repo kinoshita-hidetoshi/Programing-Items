@@ -74,6 +74,7 @@ ol{
 }
 
 pre{
+  max-width: 100%;
 	display:block;
 	padding:4px;
 	margin:0 0 10px;
