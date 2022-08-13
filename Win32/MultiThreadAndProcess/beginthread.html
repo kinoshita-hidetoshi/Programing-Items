@@ -1,14 +1,40 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>_beginthread, _endthread</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>_beginthread, _endthread | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link href="../../design.css" rel="stylesheet" type="text/css">
 </head>
 
 <body onload="prettyPrint();">
@@ -36,13 +62,19 @@ _endthread</font>&nbsp;はこんな感じでとりあえずOKでした。<br>
 #include &lt;stdlib.h&gt;
 #include &lt;iostream&gt;
 #include &lt;string&gt;                // std::string
-#include &lt;boost/bind.hpp&gt; // boost::bind using namespace std; void PrintHello( void* arglist )
+#include &lt;boost/bind.hpp&gt; // boost::bind 
+
+using namespace std;
+
+void PrintHello( void* arglist )
 {
     for ( size_t i=0; i&lt;10; ++i ){
         Sleep(400);
         cout &lt;&lt; &quot;Hello.&quot; &lt;&lt; endl &lt;&lt; flush;
     }     _endthread();
-} void PrintWorld( void* arglist )
+}
+
+void PrintWorld( void* arglist )
 {
     for ( size_t i=0; i&lt;10; ++i ){
         Sleep(500);
@@ -50,6 +82,7 @@ _endthread</font>&nbsp;はこんな感じでとりあえずOKでした。<br>
 &nbsp;&nbsp;&nbsp;&nbsp;} 
     _endthread();
 } 
+
 void PrintString( void* arglist )
 {
     char* pString = (char*)arglist ; 
@@ -59,6 +92,7 @@ void PrintString( void* arglist )
     } 
     _endthread();
 } 
+
 class Printer
 {
 private:
@@ -67,12 +101,14 @@ private:
 public:
     Printer( string strMessage ) : strMessage_(strMessage)
     {
-    } 
+    }
+ 
     static void run( void* arglist )
     {
         reinterpret_cast&lt;Printer*&gt;(arglist)-&gt;print();
         _endthread();
     } 
+
     void print()
     {
         for ( size_t i=0; i&lt;10; ++i ){
@@ -83,19 +119,21 @@ public:
 };
 
 
-
 int main(int argc, char* argv[])
 {
     // 引数なし のスレッド起動
     {
-        HANDLE hThread[2] ; 
+        HANDLE hThread[2] ;
+
         // スレッド起動
         cout &lt;&lt; &quot;[メソッド のスレッド起動] 開始&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( PrintHello, 0, NULL );
         hThread[1] = (HANDLE)_beginthread( PrintWorld, 0, NULL ); 
+
         // スレッド終了待ち
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 2, hThread, TRUE, INFINITE );
+
         switch( dwRet ){
         case WAIT_OBJECT_0:
             cout &lt;&lt; &quot;[引数なし のスレッド起動] 全スレッドを終了完了&quot; &lt;&lt; endl;
@@ -108,18 +146,22 @@ int main(int argc, char* argv[])
             break ;
         }
     } 
+
     // 引数あり のスレッド起動
     {
         HANDLE hThread[2] ;
         char sHello[] = &quot;Hello &quot;;
         char sWorld[] = &quot;World &quot;; 
+
         // スレッド起動
         cout &lt;&lt; &quot;[引数あり のスレッド起動] 開始&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( PrintString, 0, (void*)sHello );
         hThread[1] = (HANDLE)_beginthread( PrintString, 0, (void*)sWorld ); 
+
         // スレッド終了待ち
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 2, hThread, TRUE, INFINITE );
+
         switch( dwRet ){
         case WAIT_OBJECT_0:
             cout &lt;&lt; &quot;[引数あり のスレッド起動] 全スレッドを終了完了&quot; &lt;&lt; endl;
@@ -137,13 +179,16 @@ int main(int argc, char* argv[])
         HANDLE hThread[2] ; 
         Printer cpr1(&quot;Printer.&quot;);
         Printer cpr2(&quot;Run method directly.&quot;); 
+
         // スレッド起動
         cout &lt;&lt; &quot;[メソッド のスレッド起動] 開始&quot; &lt;&lt; endl;
         hThread[0] = (HANDLE)_beginthread( &amp;Printer::run, 0, (void*)&amp;cpr1 );
 //     hThread[1] = (HANDLE)_beginthread( &amp;Printer::print, 0, (void*)&amp;cpr2 ); 
+
         // スレッド終了待ち
         DWORD dwRet ;
         dwRet = WaitForMultipleObjects( 1, hThread, TRUE, INFINITE );
+
         switch( dwRet ){
         case WAIT_OBJECT_0:
             cout &lt;&lt; &quot;[メソッド のスレッド起動] 全スレッドを終了完了&quot; &lt;&lt; endl;
@@ -156,6 +201,7 @@ int main(int argc, char* argv[])
             break ;
         }
     } 
+
     // 後処理
     return EXIT_SUCCESS ;
 }</pre>

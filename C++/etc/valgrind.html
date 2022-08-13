@@ -9,16 +9,20 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>valgrind</title>
+  <!-- タイトル -->
+  <title>valgrind | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
 	
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -31,48 +35,78 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   
+  <style type="text/css">
+  .auto-style1 {
+	background-color: #FFFF00;
+  }
+  .auto-style2 {
+  background-color: #505000;
+}
+  </style>
+  
 </head>
 
 <body onload="prettyPrint();">
 	
 <h1>valgrind</h1>
 
-<p> valgrind についてメモなどを記載します。</p>
+<p> valgrind の使い方などについて記載します。</p>
+<p> &nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._概要">1. 概要</a></p>
+	<p><a href="#2._インストール">2. インストール</a></p>
+	<p>&nbsp;&nbsp; <a href="#2-1._ビルド＆インストール">2-1. ビルド＆インストール</a></p>
+	<p>&nbsp;&nbsp; <a href="#2-2._バイナリインストール">2-2. バイナリインストール</a></p>
+	<p><a href="#3._オプション一覧">3. オプション一覧</a></p>
+	<p><a href="#4._メモリリークを検出する方法">4. メモリリークを検出する方法</a></p>
+	<p><a href="#5._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">5. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></p>
+	<p><a href="#6._メモリ領域外への不正アクセスの検出方法">6. メモリ領域外への不正アクセスの検出方法</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-          <a href="#1._インストール">1. インストール</a><br>
-          &nbsp; <a href="#1-1._ビルド＆インストール">1-1. ビルド＆インストール</a><br>
-          &nbsp; <a href="#1-2._バイナリインストール">1-2. バイナリインストール</a><br>
-          2. ***<br>
-          3. ***<br>
-          <a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="1._インストール">1. インストール</a></h2>
+	<h2> <a name="1._概要">1. 概要</a></h2>
+	<p> 
+	Valgrind（ヴァルグリンド）は、メモリデバッグや、メモリリークの検出、スレッドエラーの検出、プロファイリングなどを行うための仮想機械を利用したソフトウェア開発ツールです。</p>
+	<p> 
+	最もよく利用されている標準のツールは Memcheck です。 Memcheck はほぼすべての命令に特別な計測用のコードを挿入し、「正当性」があり、「アドレス可能」であるかという情報が、それぞれVビットおよびAビットに格納されているかを追跡する。データは移動したり加工されたりするが、計測用のコードは1ビットレベルで正確であるようにA、Vビットを追跡する。</p>
+	<p> 
+	さらに、Memcheck は標準のCメモリアロケータを独自の実装に置き換え、割り当て済みブロックの前後にメモリガードを挿入する。この機能により、Memcheckはプログラムが割り当てられたブロックよりわずかに外側の領域を読み書きする 
+	off-by-one エラーを検出できる。</p>
+	<p> Memcheck が検出や警告可能な問題には、下記のものがある。</p>
+	<ul>
+	  <li>初期化されていないメモリの使用</li>
+	  <li>free されたメモリの読み書き</li>
+	  <li>malloc されたブロックの終端以降への読み書き</li>
+	  <li>メモリリーク</li>
+	</ul>
+	<p>こうした機能への代償として性能が低下する。Memcheckの元で動作するプログラムはValgrindなしで動作する場合と比べて5倍から20倍遅く、より多くのメモリを使用する（メモリ確保ごとにかなりのメモリを追加で消費する）。したがって、ほとんどの開発者は常にMemcheck（あるいは他のValgrindツール）の元でコードを走らせることはしない。特定のバグを解析したり、（Memcheckが検出可能な種類の）潜在的なバグがないことを検証するために使用するのが最も典型的な方法である。</p>
+	<p> &nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2><a name="2._インストール">2. インストール</a></h2>
 	<p> &nbsp;</p>
 	
-  <h3> <a name="1-1._ビルド＆インストール">1-1. ビルド＆インストール</a></h3>
+  <h3> <a name="2-1._ビルド＆インストール">2-1. ビルド＆インストール</a></h3>
   <p> ソースコードを取得してビルド、インストールを行う場合は以下の手順で行います。</p>
   <p> &nbsp;</p>
   <p> (1) 下記URLからソースコード一式を取得します。</p>
-  <p> <a href="https://valgrind.org/">Valgrind Home</a></p>
+  <p> <a href="https://valgrind.org/" target="_blank">Valgrind Home</a></p>
   <p> &nbsp;</p>
   <p> (2) 下記手順で解凍、ビルド、インストールを行います。</p>
 
-<pre>
+<pre style="width: 800px">
 bzip2 -d valgrind-3.10.1.tar.bz2
 tar -xf valgrind-3.10.1.tar
 ./configure
@@ -83,11 +117,11 @@ make install
   <p> &nbsp;</p>
   <p> &nbsp;</p>
 
-  <h3> <a name="1-2._バイナリインストール">1-2. バイナリインストール</a></h3>
+  <h3> <a name="2-2._バイナリインストール">2-2. バイナリインストール</a></h3>
   <p> バイナリファイルをインストールする手順は以下の通りです。Ubuntu の例です。</p>
   <p> &nbsp;</p>
 
-<pre>
+<pre style="width: 800px">
 sudo apt-get install valgrind
 </pre>
 
@@ -95,22 +129,630 @@ sudo apt-get install valgrind
 	
 </section>
 
-<br>
-<br>
+<p>&nbsp;</p>
 
 <section>
-	<h2><a name="参考">参考</a></h2>
+	<h2> <a name="3._オプション一覧">3. オプション一覧</a></h2>
+	<p> オプションは以下の通りです。</p>
+	<p> &nbsp;</p>
+	<pre style="width: 800px; background-color: #000000; color: #FFFFFF;">valgrind --help
+usage: valgrind [options] prog-and-args
+
+  tool-selection option, with default in [ ]:
+    --tool=&lt;name&gt;             use the Valgrind tool named &lt;name&gt; [memcheck]
+
+  basic user options for all Valgrind tools, with defaults in [ ]:
+    -h --help                 show this message
+    --help-debug              show this message, plus debugging options
+    --help-dyn-options        show the dynamically changeable options
+    --version                 show version
+    -q --quiet                run silently; only print error msgs
+    -v --verbose              be more verbose -- show misc extra info
+    --trace-children=no|yes   Valgrind-ise child processes (follow execve)? [no]
+    --trace-children-skip=patt1,patt2,...    specifies a list of executables
+                              that --trace-children=yes should not trace into
+    --trace-children-skip-by-arg=patt1,patt2,...   same as --trace-children-skip=
+                              but check the argv[] entries for children, rather
+                              than the exe name, to make a follow/no-follow decision
+    --child-silent-after-fork=no|yes omit child output between fork &amp; exec? [no]
+    --vgdb=no|yes|full        activate gdbserver? [yes]
+                              full is slower but provides precise watchpoint/step
+    --vgdb-error=&lt;number&gt;     invoke gdbserver after &lt;number&gt; errors [999999999]
+                              to get started quickly, use --vgdb-error=0
+                              and follow the on-screen directions
+    --vgdb-stop-at=event1,event2,... invoke gdbserver for given events [none]
+         where event is one of:
+           startup exit valgrindabexit all none
+    --track-fds=no|yes|all    track open file descriptors? [no]
+                              all includes reporting stdin, stdout and stderr
+    --time-stamp=no|yes       add timestamps to log messages? [no]
+    --log-fd=&lt;number&gt;         log messages to file descriptor [2=stderr]
+    --log-file=&lt;file&gt;         log messages to &lt;file&gt;
+    --log-socket=ipaddr:port  log messages to socket ipaddr:port
+
+  user options for Valgrind tools that report errors:
+    --xml=yes                 emit error output in XML (some tools only)
+    --xml-fd=&lt;number&gt;         XML output to file descriptor
+    --xml-file=&lt;file&gt;         XML output to &lt;file&gt;
+    --xml-socket=ipaddr:port  XML output to socket ipaddr:port
+    --xml-user-comment=STR    copy STR verbatim into XML output
+    --demangle=no|yes         automatically demangle C++ names? [yes]
+    --num-callers=&lt;number&gt;    show &lt;number&gt; callers in stack traces [12]
+    --error-limit=no|yes      stop showing new errors if too many? [yes]
+    --exit-on-first-error=no|yes exit code on the first error found? [no]
+    --error-exitcode=&lt;number&gt; exit code to return if errors found [0=disable]
+    --error-markers=&lt;begin&gt;,&lt;end&gt; add lines with begin/end markers before/after
+                              each error output in plain text mode [none]
+    --show-error-list=no|yes  show detected errors list and
+                              suppression counts at exit [no]
+    -s                        same as --show-error-list=yes
+    --keep-debuginfo=no|yes   Keep symbols etc for unloaded code [no]
+                              This allows saved stack traces (e.g. memory leaks)
+                              to include file/line info for code that has been
+                              dlclose'd (or similar)
+    --show-below-main=no|yes  continue stack traces below main() [no]
+    --default-suppressions=yes|no
+                              load default suppressions [yes]
+    --suppressions=&lt;filename&gt; suppress errors described in &lt;filename&gt;
+    --gen-suppressions=no|yes|all    print suppressions for errors? [no]
+    --input-fd=&lt;number&gt;       file descriptor for input [0=stdin]
+    --dsymutil=no|yes         run dsymutil on Mac OS X when helpful? [yes]
+    --max-stackframe=&lt;number&gt; assume stack switch for SP changes larger
+                              than &lt;number&gt; bytes [2000000]
+    --main-stacksize=&lt;number&gt; set size of main thread's stack (in bytes)
+                              [min(max(current 'ulimit' value,1MB),16MB)]
+
+  user options for Valgrind tools that replace malloc:
+    --alignment=&lt;number&gt;      set minimum alignment of heap allocations [16]
+    --redzone-size=&lt;number&gt;   set minimum size of redzones added before/after
+                              heap blocks (in bytes). [16]
+    --xtree-memory=none|allocs|full   profile heap memory in an xtree [none]
+                              and produces a report at the end of the execution
+                              none: no profiling, allocs: current allocated
+                              size/blocks, full: profile current and cumulative
+                              allocated size/blocks and freed size/blocks.
+    --xtree-memory-file=&lt;file&gt;   xtree memory report file [xtmemory.kcg.%p]
+
+  uncommon user options for all Valgrind tools:
+    --fullpath-after=         (with nothing after the '=')
+                              show full source paths in call stacks
+    --fullpath-after=string   like --fullpath-after=, but only show the
+                              part of the path after 'string'.  Allows removal
+                              of path prefixes.  Use this flag multiple times
+                              to specify a set of prefixes to remove.
+    --extra-debuginfo-path=path    absolute path to search for additional
+                              debug symbols, in addition to existing default
+                              well known search paths.
+    --debuginfo-server=ipaddr:port    also query this server
+                              (valgrind-di-server) for debug symbols
+    --allow-mismatched-debuginfo=no|yes  [no]
+                              for the above two flags only, accept debuginfo
+                              objects that don't "match" the main object
+    --smc-check=none|stack|all|all-non-file [all-non-file]
+                              checks for self-modifying code: none, only for
+                              code found in stacks, for all code, or for all
+                              code except that from file-backed mappings
+    --read-inline-info=yes|no read debug info about inlined function calls
+                              and use it to do better stack traces.
+                              [yes] on Linux/Android/Solaris for the tools
+                              Memcheck/Massif/Helgrind/DRD only.
+                              [no] for all other tools and platforms.
+    --read-var-info=yes|no    read debug info on stack and global variables
+                              and use it to print better error messages in
+                              tools that make use of it (Memcheck, Helgrind,
+                              DRD) [no]
+    --vgdb-poll=&lt;number&gt;      gdbserver poll max every &lt;number&gt; basic blocks [5000] 
+    --vgdb-shadow-registers=no|yes   let gdb see the shadow registers [no]
+    --vgdb-prefix=&lt;prefix&gt;    prefix for vgdb FIFOs [/tmp/vgdb-pipe]
+    --run-libc-freeres=no|yes free up glibc memory at exit on Linux? [yes]
+    --run-cxx-freeres=no|yes  free up libstdc++ memory at exit on Linux
+                              and Solaris? [yes]
+    --sim-hints=hint1,hint2,...  activate unusual sim behaviours [none] 
+         where hint is one of:
+           lax-ioctls lax-doors fuse-compatible enable-outer
+           no-inner-prefix no-nptl-pthread-stackcache fallback-llsc none
+    --fair-sched=no|yes|try   schedule threads fairly on multicore systems [no]
+    --kernel-variant=variant1,variant2,...
+         handle non-standard kernel variants [none]
+         where variant is one of:
+           bproc android-no-hw-tls
+           android-gpu-sgx5xx android-gpu-adreno3xx none
+    --merge-recursive-frames=&lt;number&gt;  merge frames between identical
+           program counters in max &lt;number&gt; frames) [0]
+    --num-transtab-sectors=&lt;number&gt; size of translated code cache [32]
+           more sectors may increase performance, but use more memory.
+    --avg-transtab-entry-size=&lt;number&gt; avg size in bytes of a translated
+           basic block [0, meaning use tool provided default]
+    --aspace-minaddr=0xPP     avoid mapping memory below 0xPP [guessed]
+    --valgrind-stacksize=&lt;number&gt; size of valgrind (host) thread's stack
+                               (in bytes) [1048576]
+    --show-emwarns=no|yes     show warnings about emulation limits? [no]
+    --require-text-symbol=:sonamepattern:symbolpattern    abort run if the
+                              stated shared object doesn't have the stated
+                              text symbol.  Patterns can contain ? and *.
+    --soname-synonyms=syn1=pattern1,syn2=pattern2,... synonym soname
+              specify patterns for function wrapping or replacement.
+              To use a non-libc malloc library that is
+                  in the main exe:  --soname-synonyms=somalloc=NONE
+                  in libxyzzy.so:   --soname-synonyms=somalloc=libxyzzy.so
+    --sigill-diagnostics=yes|no  warn about illegal instructions? [yes]
+    --unw-stack-scan-thresh=&lt;number&gt;   Enable stack-scan unwind if fewer
+                  than &lt;number&gt; good frames found  [0, meaning "disabled"]
+                  NOTE: stack scanning is only available on arm-linux.
+    --unw-stack-scan-frames=&lt;number&gt;   Max number of frames that can be
+                  recovered by stack scanning [5]
+    --resync-filter=no|yes|verbose [yes on MacOS, no on other OSes]
+              attempt to avoid expensive address-space-resync operations
+    --max-threads=&lt;number&gt;    maximum number of threads that valgrind can
+                              handle [500]
+
+  user options for Memcheck:
+    --leak-check=no|summary|full     search for memory leaks at exit?  [summary]
+    --leak-resolution=low|med|high   differentiation of leak stack traces [high]
+    --show-leak-kinds=kind1,kind2,.. which leak kinds to show?
+                                            [definite,possible]
+    --errors-for-leak-kinds=kind1,kind2,..  which leak kinds are errors?
+                                            [definite,possible]
+        where kind is one of:
+          definite indirect possible reachable all none
+    --leak-check-heuristics=heur1,heur2,... which heuristics to use for
+        improving leak search false positive [all]
+        where heur is one of:
+          stdstring length64 newarray multipleinheritance all none
+    --show-reachable=yes             same as --show-leak-kinds=all
+    --show-reachable=no --show-possibly-lost=yes
+                                     same as --show-leak-kinds=definite,possible
+    --show-reachable=no --show-possibly-lost=no
+                                     same as --show-leak-kinds=definite
+    --xtree-leak=no|yes              output leak result in xtree format? [no]
+    --xtree-leak-file=&lt;file&gt;         xtree leak report file [xtleak.kcg.%p]
+    --undef-value-errors=no|yes      check for undefined value errors [yes]
+    --track-origins=no|yes           show origins of undefined values? [no]
+    --partial-loads-ok=no|yes        too hard to explain here; see manual [yes]
+    --expensive-definedness-checks=no|auto|yes
+                                     Use extra-precise definedness tracking [auto]
+    --freelist-vol=&lt;number&gt;          volume of freed blocks queue     [20000000]
+    --freelist-big-blocks=&lt;number&gt;   releases first blocks with size&gt;= [1000000]
+    --workaround-gcc296-bugs=no|yes  self explanatory [no].  Deprecated.
+                                     Use --ignore-range-below-sp instead.
+    --ignore-ranges=0xPP-0xQQ[,0xRR-0xSS]   assume given addresses are OK
+    --ignore-range-below-sp=&lt;number&gt;-&lt;number&gt;  do not report errors for
+                                     accesses at the given offsets below SP
+    --malloc-fill=&lt;hexnumber&gt;        fill malloc'd areas with given value
+    --free-fill=&lt;hexnumber&gt;          fill free'd areas with given value
+    --keep-stacktraces=alloc|free|alloc-and-free|alloc-then-free|none
+        stack trace(s) to keep for malloc'd/free'd areas       [alloc-and-free]
+    --show-mismatched-frees=no|yes   show frees that don't match the allocator? [yes]
+
+  Extra options read from ~/.valgrindrc, $VALGRIND_OPTS, ./.valgrindrc
+
+  Memcheck is Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+  Valgrind is Copyright (C) 2000-2017, and GNU GPL'd, by Julian Seward et al.
+  LibVEX is Copyright (C) 2004-2017, and GNU GPL'd, by OpenWorks LLP et al.
+
+  Bug reports, feedback, admiration, abuse, etc, to: www.valgrind.org.
+</pre>
+	<p> &nbsp;</p>
+    <p> 
+    	<table class="border-collapse"  border="1">
+    	  <thead class="standard_table">
+      		<tr style="box-sizing: border-box;">
+      		  <th>オプション</th>
+      		  <th>意味</th>
+      		</tr>
+    		</thead>
+    		<tbody>
+      		<tr>
+      		  <td>--show-reachable</td>
+      		  <td>yes を指定すると、無害かもしれないメモリリークも出力します。</td>
+      		</tr>
+      		<tr>
+      		  <td>--trace-children</td>
+      		  <td>yes を指定すると、解析中のプログラムがforkっで生成したプロセスも解析対象にします。</td>
+      		</tr>
+      		<tr>
+      		  <td>--track-fds</td>
+      		  <td>yes を指定すると、ファイルディスクリプタの閉じ忘れを報告します。</td>
+      		</tr>
+      		<tr>
+      		  <td>--error-limit</td>
+      		  <td>no を指定すると、エラー数が閾値を超えた場合でも、Valgrindが解析を継続します。</td>
+      		</tr>
+      		<tr>
+      		  <td>--num-callers</td>
+      		  <td>エラー箇所までのバックトレースを何段まで表示するかを指定します。</td>
+      		</tr>
+    		</tbody>
+    	</table>
+  	</p>
+  <p> &nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4._メモリリークを検出する方法">4. メモリリークを検出する方法</a></h2>
+	<h4>[概要]</h4>
+	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind で「メモリリークを検出する方法」を示します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu,</td>
+	    <td>22.04.1 (WSL) </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>ツール：</td>
+	    <td>Valgrind,</td>
+	    <td>&nbsp;valgrind-3.18.1</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	<p>[プログラムソース &quot;memory_leak.cpp&quot;]</p>
+	<pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;iostream&gt;
+
+int main()
+{
+    char *p;
+
+    for ( size_t i=0; i&lt;10; ++i ){
+        p = new char[10];
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+	<p><span class="cpp-source">delete[] p</span> の処理が無いので、 
+	<span class="cpp-source">p = new char[10]</span> で確保した動的メモリが未開放でリークとなります。</p>
+	<p>&nbsp;</p>
+	<p>テストプログラム（memory_leak.cpp）をコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ g++ -Wall -g memory_leak.cpp -o memory_leak
+memory_leak.cpp: In function ‘int main()’:
+memory_leak.cpp:5:11: warning: variable ‘p’ set but not used [-Wunused-but-set-variable]
+    5 |     char *p;</pre>
+	<p>コンパイルすると警告が出力されますが、宣言した変数 p を使用していないだけなので無視してください。 </p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>valgrind を使ってテストプログラム（memory_leak）を実行します。</p>
+	<pre style="width: 1000px">hidetoshi@Laptop4:~$ <strong>valgrind</strong> --leak-check=full --leak-resolution=high --show-reachable=yes ./<strong>memory_leak</strong> 
+==1420== Memcheck, a memory error detector
+==1420== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1420== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1420== Command: ./memory_leak
+==1420== 
+==1420== 
+==1420== HEAP SUMMARY:
+==1420==     in use at exit: 100 bytes in 10 blocks
+==1420==   total heap usage: 11 allocs, 1 frees, 72,804 bytes allocated
+==1420== 
+==1420== <span class="auto-style1">100 bytes in 10 blocks are definitely lost</span> in loss record 1 of 1
+==1420==    at 0x484A2F3: <span class="auto-style1">operator new[](unsigned long)</span> (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1420==    by 0x1091A8: <span class="auto-style1">main (memory_leak.cpp:8)</span>
+==1420== 
+==1420== LEAK SUMMARY:
+==1420==    <span class="auto-style1">definitely lost: 100 bytes in 10 blocks</span>
+==1420==    indirectly lost: 0 bytes in 0 blocks
+==1420==      possibly lost: 0 bytes in 0 blocks
+==1420==    still reachable: 0 bytes in 0 blocks
+==1420==         suppressed: 0 bytes in 0 blocks
+==1420== 
+==1420== For lists of detected and suppressed errors, rerun with: -s
+==1420== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+hidetoshi@Laptop4:~$ </pre>
+	<p>&nbsp;</p>
+	<p>100 bytes のメモリリークを検出できました。（definitely lost: 100 bytes in 10 blocks）</p>
+	<p>リークしているメモリを確保した場所は memory_leak.cpp:8 であることを教えてくれます。この情報を得るにはコンパイル時に -g 
+	を付けている必要があります。</p>
+	<p>&nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="5._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">5. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></h2>
+	<h4>[概要]</h4>
+	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind 
+	で「解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法」を示します。</p>
+	<p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu,</td>
+	    <td>22.04.1 (WSL) </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>ツール：</td>
+	    <td>Valgrind,</td>
+	    <td>&nbsp;valgrind-3.18.1</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	<p>[プログラムソース &quot;invalid_write.cpp&quot;]</p>
+  <pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;chrono&gt;
+
+int main()
+{
+    char *p;
+
+    for ( size_t i=0; i&lt;10; ++i ){
+        p = new char[10];
+        p[0] = 'a';
+        std::chrono::seconds        dura(1);    // 1秒
+        std::this_thread::sleep_for(dura);
+        delete[] p;
+        <span class="auto-style2">p[0] = 'a';</span>
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+	<p> 15行目の <span class="cpp-source">p[0] = 'a'</span> が解放済みメモリー領域への書き込み部分です。</p>
+    <p> &nbsp;</p>
+	<p> テストプログラム（invalid_write.cpp）をコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ g++ -Wall -g invalid_write.cpp -o invalid_write</pre>
+	<p> &nbsp;</p>
+	<p> valgrind を使ってテストプログラム（invalid_write）を実行します。</p>
+	<pre style="width: 1000px">hidetoshi@Laptop4:~$ <strong>valgrind</strong> --leak-check=full --leak-resolution=high --show-reachable=yes ./<strong>invalid_write</strong>
+==2617== Memcheck, a memory error detector
+==2617== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2617== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2617== Command: ./invalid_write
+==2617== 
+==2617== <span class="auto-style1"><strong>Invalid write</strong></span> of size 1
+==2617==    at 0x10926E: main (<span class="auto-style1">invalid_write.cpp:15</span>)
+==2617==  Address 0x4dd2c80 is 0 bytes inside a block of size 10 free'd
+==2617==    at 0x484CA8F: operator delete[](void*) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2617==    by 0x109269: main (invalid_write.cpp:14)
+==2617==  Block was alloc'd at
+==2617==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2617==    by 0x109237: main (invalid_write.cpp:10)
+==2617== 
+==2617== 
+==2617== HEAP SUMMARY:
+==2617==     in use at exit: 0 bytes in 0 blocks
+==2617==   total heap usage: 11 allocs, 11 frees, 72,804 bytes allocated
+==2617== 
+==2617== All heap blocks were freed -- no leaks are possible
+==2617== 
+==2617== For lists of detected and suppressed errors, rerun with: -s
+==2617== ERROR SUMMARY: 10 errors from 1 contexts (suppressed: 0 from 0)
+hidetoshi@Laptop4:~$ </pre>
+	<p> &nbsp;</p>
+	<p> 解放済みメモリへの書き込みを検出できました。（Invalid write of size 1）</p>
+	<p> 書き込み場所は invalid_write.cpp:15 であることを教えてくれています。</p>
+	<p> そして、そのメモリは invalid_write.cpp:14 でメモリ解放されており、 invalid_write.cpp:10 
+	でメモリ取得していることを示しています。</p>
+	<p> &nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="6._メモリ領域外への不正アクセスの検出方法">6. メモリ領域外への不正アクセスの検出方法</a></h2>
+	<h4>[概要]</h4>
+	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind 
+	で「メモリ領域外への不正アクセスの検出方法」を示します。</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Ubuntu,</td>
+	    <td>22.04.1 (WSL) </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>ツール：</td>
+	    <td>Valgrind,</td>
+	    <td>&nbsp;valgrind-3.18.1</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	<p>[プログラムソース &quot;invalid_write_2.cpp&quot;]</p>
+  	
+  <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include <iostream>
+
+int main()
+{
+    char *p;
+
+    for ( size_t i=0; i<10; ++i ){
+        p = new char[10];
+        <span class="auto-style2">p[10] = 'a';</span>
+        delete[] p;
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+
+    <p> &nbsp;</p>
+	<p> 9行目の <span class="cpp-source">p[10] = 'a'</span> がメモリ領域外への不正アクセス部分です。</p>
+    <p> &nbsp;</p>
+	<p> テストプログラム（invalid_write_2.cpp）をコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ g++ -Wall -g invalid_write_2.cpp -o invalid_write_2</pre>
+	<p> &nbsp;</p>
+	<p> valgrind を使ってテストプログラム（invalid_write）を実行します。</p>
+	
+	<pre style="width: 1000px">
+hidetoshi@Laptop4:~$ <strong>valgrind</strong> --leak-check=full --leak-resolution=high --show-reachable=yes ./<strong>invalid_write_2</strong>
+==2919== Memcheck, a memory error detector
+==2919== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2919== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2919== Command: ./invalid_write_2
+==2919== 
+==2919== <span class="auto-style1"><strong>Invalid write of size 1</strong></span>
+==2919==    at 0x1091D5: main (<span class="auto-style1"><strong>invalid_write_2.cpp:9</strong></span>)
+==2919==  Address 0x4dd2c8a is 0 bytes after a block of size 10 alloc'd
+==2919==    at 0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2919==    by 0x1091C8: main (invalid_write_2.cpp:8)
+==2919== 
+==2919== 
+==2919== HEAP SUMMARY:
+==2919==     in use at exit: 0 bytes in 0 blocks
+==2919==   total heap usage: 11 allocs, 11 frees, 72,804 bytes allocated
+==2919== 
+==2919== All heap blocks were freed -- no leaks are possible
+==2919== 
+==2919== For lists of detected and suppressed errors, rerun with: -s
+==2919== ERROR SUMMARY: 10 errors from 1 contexts (suppressed: 0 from 0)
+hidetoshi@Laptop4:~$ 	</pre>
+	
+	<p> &nbsp;</p>
+	<p> メモリ領域外への不正アクセスを検出できました。（Invalid write of size 1）</p>
+	<p> 書き込み場所は invalid_write_2.cpp:9 であることを教えてくれています。</p>
+	<p> そして、そのメモリは invalid_write.cpp_2:8 でメモリ取得していることを示しています。</p>
+	<p> &nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>
+<br>
+
+</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
 	<ul>
 		<li>Valgrind Home<br>
 		  <a href="https://valgrind.org/" target="_blank">
 		    https://valgrind.org/
 		  </a>
     </li>
+		<li>Valgrind - Wikipedia<br>
+		<a href="https://ja.wikipedia.org/wiki/Valgrind" target="_blank">
+		https://ja.wikipedia.org/wiki/Valgrind</a></li>
     <li>c++ - valgrind memcheck options - 解決方法 (i-harness.com)<br>
       <a href="https://code.i-harness.com/ja-jp/q/1bf7227" target="_blank">
         https://code.i-harness.com/ja-jp/q/1bf7227
       </a>
     </li>
+		<li>valgrind(ヴァルグリンド)の使い方 - Qiita<br>
+		<a href="https://qiita.com/hana_shin/items/a90b31c4f742c9cb8019" target="_blank">
+		https://qiita.com/hana_shin/items/a90b31c4f742c9cb8019</a></li>
 	</ul>
 </section>
 
@@ -124,6 +766,11 @@ sudo apt-get install valgrind
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2022-08-13</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">1章、3章、4章、5章、6章 を追加</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2022-01-02</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
@@ -133,8 +780,15 @@ sudo apt-get install valgrind
 
 <p>&nbsp;</p>
 
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>&copy; copyright 2022 木下英俊</small></p>
 </footer>
 
 </body>
