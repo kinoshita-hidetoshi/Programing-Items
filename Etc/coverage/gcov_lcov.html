@@ -9,20 +9,27 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
+	<!-- タイトル -->
   <title>gcov と lcov</title>
+  
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
 	
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <style type="text/css">
   .auto-style1 {
-    background-color: #FFFF00;
+    background-color: #505000;
+  }
+  .auto-style2 {
+	color: #FF0000;
   }
   </style>
 
@@ -38,28 +45,28 @@
 という超有名なツールについて記載します。</p>
 <p> &nbsp;</p>
 
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._gcov_を使ってみる">1. gcov を使ってみる</a></p>
+	<p>&nbsp;&nbsp; <a href="#1-1.オプション一覧">1-1. オプション一覧</a></p>
+	<p>&nbsp;&nbsp; <a href="#1-2._gcov_を試してみる">1-2. gcov を試してみる</a></p>
+	<p><a href="#2._lcov_を使ってみる">2. lcov を使ってみる</a></p>
+	<p>&nbsp;&nbsp; <a href="#2-1._オプション一覧">2-1. オプション一覧</a></p>
+	<p>&nbsp;&nbsp; <a href="#2-2._lcov_を試してみる">2-2. lcov を試してみる</a></p>
+	<p>&nbsp;&nbsp; <a href="#2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) を追加する</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        <a href="#1._gcov_を使ってみる">1. gcov を使ってみる</a><br>
-        <a href="#2._lcov_を使ってみる">2. lcov を使ってみる</a><br>
-        <a href="#3._lcov_の表示に_Branches(c1)_を追加する">3. lcov の表示に Branches(c1) 
-        を追加する</a><br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
 	<h2> <a name="1._gcov_を使ってみる">1. gcov を使ってみる</a></h2>
-	<h4>[概要]</h4>
+	<p> gcov の使用方法について記載します。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -70,9 +77,9 @@
 	  </tr>
 		
 	  <tr>
-	    <td>gcc/g++ :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
 	  </tr>
 		
 	  <tr>
@@ -80,9 +87,19 @@
 	  </tr>
 		
 	  <tr>
-	    <td>gcov :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	    <td>ツール :</td>
+	    <td>gcov,</td>
+	    <td>11.2.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS:</td>
+	    <td>Ubuntu </td>
+	    <td>22.04.1 (WSL)</td>
 	  </tr>
 		
 	  <tr>
@@ -94,12 +111,191 @@
 	
 	<p>&nbsp;</p>
 	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
+	<p> &nbsp;</p>
+	<h3> <a name="1-1.オプション一覧">1-1.オプション一覧</a></h3>
+	<p> gcov のオプション一覧は以下の通りです。</p>
+	<p> &nbsp;</p>
+	<pre style="width: 800px">$ gcov --help
+Usage: gcov [OPTION...] SOURCE|OBJ...
+
+Print code coverage information.
+
+  -a, --all-blocks                Show information for every basic block
+  -b, --branch-probabilities      Include branch probabilities in output
+  -c, --branch-counts             Output counts of branches taken
+                                    rather than percentages
+  -d, --display-progress          Display progress information
+  -D, --debug			    Display debugging dumps
+  -f, --function-summaries        Output summaries for each function
+  -h, --help                      Print this help, then exit
+  -j, --json-format               Output JSON intermediate format
+                                    into .gcov.json.gz file
+  -H, --human-readable            Output human readable numbers
+  -k, --use-colors                Emit colored output
+  -l, --long-file-names           Use long output file names for included
+                                    source files
+  -m, --demangled-names           Output demangled function names
+  -n, --no-output                 Do not create an output file
+  -o, --object-directory DIR|FILE Search for object files in DIR or called FILE
+  -p, --preserve-paths            Preserve all pathname components
+  -q, --use-hotness-colors        Emit perf-like colored output for hot lines
+  -r, --relative-only             Only show data for relative sources
+  -s, --source-prefix DIR         Source prefix to elide
+  -t, --stdout                    Output to stdout instead of a file
+  -u, --unconditional-branches    Show unconditional branch counts too
+  -v, --version                   Print version number, then exit
+  -w, --verbose                   Print verbose informations
+  -x, --hash-filenames            Hash long pathnames
+
+Obsolete options:
+  -i, --json-format               Replaced with -j, --json-format
+  -j, --human-readable            Replaced with -H, --human-readable
+
+For bug reporting instructions, please see:
+&lt;file:///usr/share/doc/gcc-11/README.Bugs&gt;.</pre>
+	<p> &nbsp;</p>
+	<p> 
+	<table border="1" class="border-collapse" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; border: thin solid silver; text-indent: 0px; max-width: 100%; border-collapse: collapse; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	  <thead class="standard_table" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; background-color: rgb(238, 238, 238);">
+		<tr style="background-repeat: no-repeat; box-sizing: border-box; margin: 0px; padding: 0px;">
+		  <th style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  オプション</th>
+		  <th style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  意味</th>
+		</tr>
+	  </thead>
+	  <tbody style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+		<tr style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  -a, --all-blocks&nbsp; </td>
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  基本ブロックごとに個別の実行カウントを書き込みます。<br>
+		  通常、gcovは行のメインブロックのみに実行カウントを出力します。このオプションを使用すると、単一行内のブロックが実行されていないかどうかを判断することができます。</td>
+		</tr>
+		<tr style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  -b, --branch-probabilities</td>
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  分岐の頻度を出力ファイルに書き込み、分岐のサマリー情報を標準出力に書き込みます。<br>
+		  このオプションを使うと、プログラムの各ブランチがどのくらいの頻度で実行されたかを見ることができます。無条件分岐は-uオプションが与えられています。 
+		  </td>
+		</tr>
+		<tr style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  -c, --branch-counts</td>
+		  <td style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0.5em 1em; text-align: left;">
+		  枝の頻度は、取られた枝の割合ではなく、取られた枝の数として書きます。 </td>
+		</tr>
+	</table>
+	</p>
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
+	<h3> <a name="1-2._gcov_を試してみる">1-2. gcov を試してみる</a></h3>
+	<p> テストプログラムを使って、実際に gcov を試してみます。</p>
+	<p> &nbsp;</p>
+	<p> (1) テストプログラムを作成します。ここではこんな感じのテストプログラムを使ってみます。</p>
+	<p> &nbsp;</p>
+	<p> [プログラムソース &quot;coverage_test.c&quot;]</p>
+	<pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int num = 1;
+
+    if ((num % 2) == 0) {
+        printf("%d is even.\n", num);
+    }
+    else {
+        printf("%d is odd.\n", num);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+	<p> &nbsp;</p>
+	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
+	<p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>コンパイルオプションとして「-coverage」ではなく「"-fprofile-arcs" フラグと "-ftest-coverage" 
+		フラグを付けてコードをコンパイルします。」と説明されている記事も多数見かけます。<br>"-coverage" オプションは 
+		"-fprofile-arcs -ftest-coverage -lgcov" と同義（シノムニ）とのことです。詳しくは下記 ULR 中の 
+		"--coverage" 説明を参照。<br>
+		<a href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options" target="_blank">
+		Instrumentation Options (Using the GNU Compiler Collection (GCC))</a></p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+	<p> (3) プログラムを実行します。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+1 is odd.</pre>
+	<p> "coverage_test.gcda" というファイルが出力されます。カバレッジ測定データを保存したバイナリデータのようです。</p>
+	<p> &nbsp;</p>
+	<p> (4) gcov でカバレッジデータを読み込みます。</p>
+	<p> gcov の引数としてソースまたはオブジェクトとなっていますが、ここでは実行ファイルを指定します。<br>オプションとして "-bc" 
+	を指定してみます。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcov -bc coverage_test
+File 'coverage_test.c'
+Lines executed:83.33% of 6
+Branches executed:100.00% of 2
+Taken at least once:50.00% of 2
+Calls executed:50.00% of 2
+Creating 'coverage_test.c.gcov'
+
+Lines executed:83.33% of 6
+hidetoshi@Laptop4:~$ </pre>
+	<p> &nbsp;</p>
+	<p> (5) 出力されたファイル "coverage_test.c.gcov " 
+	をテキストエディターで開くと、下記のような結果を得ることができました。</p>
+	<p> "-bc" をオプション指定したことで、branch の出力も行われています。</p>
+	<pre style="width: 800px">
+        -:    0:Source:coverage_test.c
+        -:    0:Graph:coverage_test.gcno
+        -:    0:Data:coverage_test.gcda
+        -:    0:Runs:1
+        -:    1:#include &lt;stdio.h&gt;
+        -:    2:#include &lt;stdlib.h&gt;
+        -:    3:
+function main called 1 returned 100% blocks executed 80%
+        1:    4:int main() {
+        1:    5:    int num = 1;
+        -:    6:
+        1:    7:    if ((num % 2) == 0) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:    8:        printf("%d is even.\n", num);
+call    0 never executed
+        -:    9:    }
+        -:   10:    else {
+        1:   11:        printf("%d is odd.\n", num);
+call    0 returned 1
+        -:   12:    }
+        -:   13:
+        1:   14:    return EXIT_SUCCESS;
+        -:   15:}</pre>
+	<p> &nbsp;</p>
+	<p> 上記結果から、下記 8行目 の部分が1回も実行されていないことを読み取ることができます。 </p>
+	<blockquote>
+	  8:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("%d is even.\n", num);</blockquote>
+	<p> &nbsp;</p>
+	<p> (6) プログラムを再実行すると、実行回数は先ほど計測済みの値へ追加されていきます。</p>
+	<p> 入力値により分岐などある場合、入力条件を変えながらカバレッジ測定を行うことができます。</p>
+	<p> &nbsp;</p>
+	<p> (7) カウンタを初期化して最初から実行したい場合は、ファイル "*.gcda" を全て削除します。</p>
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
+	<p> とりあえず gcov を以上のような感じで使えそうです。</p>
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
 </section>
 	
 <p>&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
 
 <section>
@@ -108,76 +304,66 @@
 <p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>genhtml というツールとともに使用します。</p>
 	<p> &nbsp;</p>
 	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>gcc/g++ :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>gcov :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>lcov :</td>
-	    <td>1.14</td>
-	    <td></td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>genhtml :</td>
-	    <td>1.14</td>
-	    <td></td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	  
-	</tbody>
-	</table>
-	
 	<p>&nbsp;</p>
-	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+	<h3><a name="2-1._オプション一覧">2-1. オプション一覧</a></h3>
+	<p>lcov のオプション一覧は以下の通りです。</p>
+	<p>&nbsp;</p>
+	<pre style="width: 800px">$ lcov --help
+Usage: lcov [OPTIONS]
 
-<section>
-</section>
-	
-<section>
-	<h2> <a name="3._lcov_の表示に_Branches(c1)_を追加する">3. lcov の表示に Branches(c1) 
-    を追加する</a></h2>
-	<h4>[概要]</h4>
-<p>gcov の出力結果を HTML 形式に変換して可視化してくれる lcov というツールがあります。<br>とても便利なツールですが、デフォルトでは 
-C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
-<p>C1(分岐網羅)のカバレッジを表示するには ~/.lcovrc を以下のように設定して C1 を有効化する必要があります。</p>
+Use lcov to collect coverage data from either the currently running Linux
+kernel or from a user space application. Specify the --directory option to
+get coverage data for a user space program.
+
+Misc:
+  -h, --help                      Print this help, then exit
+  -v, --version                   Print version number, then exit
+  -q, --quiet                     Do not print progress messages
+
+Operation:
+  -z, --zerocounters              Reset all execution counts to zero
+  -c, --capture                   Capture coverage data
+  -a, --add-tracefile FILE        Add contents of tracefiles
+  -e, --extract FILE PATTERN      Extract files matching PATTERN from FILE
+  -r, --remove FILE PATTERN       Remove files matching PATTERN from FILE
+  -l, --list FILE                 List contents of tracefile FILE
+      --diff FILE DIFF            Transform tracefile FILE according to DIFF
+      --summary FILE              Show summary coverage data for tracefiles
+
+Options:
+  -i, --initial                   Capture initial zero coverage data
+  -t, --test-name NAME            Specify test name to be stored with data
+  -o, --output-file FILENAME      Write data to FILENAME instead of stdout
+  -d, --directory DIR             Use .da files in DIR instead of kernel
+  -f, --follow                    Follow links when searching .da files
+  -k, --kernel-directory KDIR     Capture kernel coverage data only from KDIR
+  -b, --base-directory DIR        Use DIR as base directory for relative paths
+      --convert-filenames         Convert filenames when applying diff
+      --strip DEPTH               Strip initial DEPTH directory levels in diff
+      --path PATH                 Strip PATH from tracefile when applying diff
+      --(no-)checksum             Enable (disable) line checksumming
+      --(no-)compat-libtool       Enable (disable) libtool compatibility mode
+      --gcov-tool TOOL            Specify gcov tool location
+      --ignore-errors ERRORS      Continue after ERRORS (gcov, source, graph)
+      --no-recursion              Exclude subdirectories from processing
+      --to-package FILENAME       Store unprocessed coverage data in FILENAME
+      --from-package FILENAME     Capture from unprocessed data in FILENAME
+      --no-markers                Ignore exclusion markers in source code
+      --derive-func-data          Generate function data from line data
+      --list-full-path            Print full path during a list operation
+      --(no-)external             Include (ignore) data for external files
+      --config-file FILENAME      Specify configuration file location
+      --rc SETTING=VALUE          Override configuration file setting
+      --compat MODE=on|off|auto   Set compat MODE (libtool, hammer, split_crc)
+      --include PATTERN           Include files matching PATTERN
+      --exclude PATTERN           Exclude files matching PATTERN
+
+For more information see: http://ltp.sourceforge.net/coverage/lcov.php</pre>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<h3><a name="2-2._lcov_を試してみる">2-2. lcov を試してみる</a></h3>
+	<p> テストプログラムを使って、実際に lcov を試してみます。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -188,9 +374,9 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 	  </tr>
 		
 	  <tr>
-	    <td>gcc/g++ :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
 	  </tr>
 		
 	  <tr>
@@ -198,19 +384,9 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 	  </tr>
 		
 	  <tr>
-	    <td>gcov :</td>
-	    <td>9.3.0, </td>
-	    <td>(Ubuntu 9.3.0-17ubuntu1~20.04)</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>lcov :</td>
+	    <td>ツール :</td>
+	    <td>lcov,</td>
 	    <td>1.14</td>
-	    <td></td>
 	  </tr>
 		
 	  <tr>
@@ -218,18 +394,186 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 	  </tr>
 		
 	  <tr>
-	    <td>genhtml :</td>
+	    <td>&nbsp;</td>
+	    <td>genhtml,</td>
 	    <td>1.14</td>
-	    <td></td>
 	  </tr>
 		
 	  <tr>
 	    <td class="td_separate" colspan="3"></td>
 	  </tr>
-	  
+		
+	  <tr>
+	    <td>OS:</td>
+	    <td>Ubuntu </td>
+	    <td>22.04.1 (WSL)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
 	</tbody>
 	</table>
 	
+	<p>&nbsp;</p>
+	<p> (1) テストプログラムを作成します。ここではこんな感じのテストプログラムを使ってみます。</p>
+	<p> &nbsp;</p>
+	<p> [プログラムソース &quot;coverage_test.c&quot;]</p>
+	<pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int num = 1;
+
+    if ((num % 2) == 0) {
+        printf("%d is even.\n", num);
+    }
+    else {
+        printf("%d is odd.\n", num);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+	<p> &nbsp;</p>
+	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
+	<p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>コンパイルオプションとして「-coverage」ではなく「"-fprofile-arcs" フラグと "-ftest-coverage" 
+		フラグを付けてコードをコンパイルします。」と説明されている記事も多数見かけます。<br>"-coverage" オプションは 
+		"-fprofile-arcs -ftest-coverage -lgcov" と同義（シノムニ）とのことです。詳しくは下記 ULR 中の 
+		"--coverage" 説明を参照。<br>
+		<a href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options" target="_blank">
+		Instrumentation Options (Using the GNU Compiler Collection (GCC))</a></p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+	<p> (3) プログラムを実行します。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+1 is odd.</pre>
+	<p> "coverage_test.gcda" というファイルが出力されます。カバレッジ測定データを保存したバイナリデータのようです。</p>
+	<p> &nbsp;</p>
+	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
+	<pre>$ lcov -d . -c -o coverage_test.info
+Capturing coverage data from .
+Subroutine read_intermediate_text redefined at /usr/bin/geninfo line 2623.
+Subroutine read_intermediate_json redefined at /usr/bin/geninfo line 2655.
+Subroutine intermediate_text_to_info redefined at /usr/bin/geninfo line 2703.
+Subroutine intermediate_json_to_info redefined at /usr/bin/geninfo line 2792.
+Subroutine get_output_fd redefined at /usr/bin/geninfo line 2872.
+Subroutine print_gcov_warnings redefined at /usr/bin/geninfo line 2900.
+Subroutine process_intermediate redefined at /usr/bin/geninfo line 2930.
+Found gcov version: 11.2.0
+Using intermediate gcov format
+Scanning . for .gcda files ...
+Found 1 data files in .
+Processing coverage_test.gcda
+Finished .info-file creation</pre>
+	<p> &nbsp;</p>
+	<p> (6) genhtml を実行します。</p>
+	<pre>$ genhtml coverage_test.info -o ./info
+Reading data file coverage_test.info
+Found 1 entries.
+Found common filename prefix "/home/hidetoshi"
+Writing .css and .png files.
+Generating output.
+Processing file coverage_test/coverage_test.c
+Writing directory view page.
+Overall coverage rate:
+  lines......: 83.3% (5 of 6 lines)
+  functions..: 100.0% (1 of 1 function)</pre>
+	<p> </p>
+	<p> ./info フォルダ中に下図のような多数のファイルを生成してくれます。</p>
+	<p> <img alt="" class="border_with_drop-shadow" src="gcov_lcov/img3C.jpg"></p>
+	<p> &nbsp;</p>
+	<p> (7) ./info ディレクトリ中の index.html をブラウザで開きます。</p>
+	<p> 下図のような画面を表示するので、「coverage_test」の部分をクリックします。</p>
+	<p> <img alt="" src="gcov_lcov/img40.jpg" class="border_with_drop-shadow"></p>
+	<p> &nbsp;</p>
+	<p> 「coverage_test.c」の部分をクリックします。</p>
+	<p> <img alt="" src="gcov_lcov/img41.jpg" class="border_with_drop-shadow"></p>
+	<p> &nbsp;</p>
+	<p> 期待するソースコードカバレッジを表示してくれました。</p>
+	<p> <img alt="" src="gcov_lcov/img42.jpg" class="border_with_drop-shadow"></p>
+	<p> &nbsp;</p>
+	<p> &nbsp;</p>
+	<p> とりあえず lcov を以上のような感じで使えそうです。</p>
+	<p> &nbsp;</p>
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+</section>
+	
+<section>
+	<h3><a name="2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) 
+    を追加する</a></h3>
+	<h4>[概要]</h4>
+<p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>とても便利なツールですが、デフォルトでは 
+C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>gcc/g++,</td>
+	    <td>11.2.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>ツール :</td>
+	    <td>lcov,</td>
+	    <td>1.14</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>genhtml,</td>
+	    <td>1.14</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS:</td>
+	    <td>Ubuntu </td>
+	    <td>22.04.1 (WSL)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+<p>C1(分岐網羅)のカバレッジを表示するには ~/.lcovrc を以下のように設定して C1 を有効化する必要があります。</p>
 	<p>&nbsp;</p>
 	<p>[~/.lcovrc]</p>
 	<pre class="prettyprint linenums">
@@ -239,25 +583,136 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 
 # Specify if branch coverage data should be collected and processed.
 <span class="auto-style1">lcov_branch_coverage = 1</span></pre>
-<br>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。<br>lcover<br>
-<pre><span style="background-color: #FFFF00">--rc lcov_branch_coverage=1</span></pre>
+<br>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。<br><br>lcov<br>
+<pre>--rc lcov_branch_coverage=1</pre>
 genhtml<br>
-<pre><span class="auto-style1">--branch-coverage</span></pre>
-<br>
-<br>
-<br>これを追加して表示した結果を以下に示します。<br>Branches を表示できるようになりました。<br>Lines でみると未実行は 2行 
-だけなんですが、Branches にすると 57.1%(8/14) と一気に成績が悪くなりました。<br>
-<br><img alt="" src="gcov_lcov/img2.jpg"><br>
+<pre>--branch-coverage</pre>
+	<p>&nbsp;</p>
+	<p>後者の例を実際に実行してみます。</p>
+	<p>&nbsp;</p>
+	<p> (1) テストプログラムを作成します。</p>
+	<p> &nbsp;</p>
+	<p> [プログラムソース &quot;coverage_test.c&quot;]</p>
+	<pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int num = 1;
+
+    if ((num % 2) == 0) {
+        printf("%d is even.\n", num);
+    }
+    else {
+        printf("%d is odd.\n", num);
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+	<p> &nbsp;</p>
+	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
+	<p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>コンパイルオプションとして「-coverage」ではなく「"-fprofile-arcs" フラグと "-ftest-coverage" 
+		フラグを付けてコードをコンパイルします。」と説明されている記事も多数見かけます。<br>"-coverage" オプションは 
+		"-fprofile-arcs -ftest-coverage -lgcov" と同義（シノムニ）とのことです。詳しくは下記 ULR 中の 
+		"--coverage" 説明を参照。<br>
+		<a href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options" target="_blank">
+		Instrumentation Options (Using the GNU Compiler Collection (GCC))</a></p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+	<p> (3) プログラムを実行します。</p>
+	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+1 is odd.</pre>
+	<p> "coverage_test.gcda" というファイルが出力されます。</p>
+	<p> &nbsp;</p>
+	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
+	<p> オプションとして "<span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span>" 
+	を付けて実行します。</p>
+	<pre>$ lcov -d . -c <span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span> -o coverage_test.info
+Capturing coverage data from .
+Subroutine read_intermediate_text redefined at /usr/bin/geninfo line 2623.
+Subroutine read_intermediate_json redefined at /usr/bin/geninfo line 2655.
+Subroutine intermediate_text_to_info redefined at /usr/bin/geninfo line 2703.
+Subroutine intermediate_json_to_info redefined at /usr/bin/geninfo line 2792.
+Subroutine get_output_fd redefined at /usr/bin/geninfo line 2872.
+Subroutine print_gcov_warnings redefined at /usr/bin/geninfo line 2900.
+Subroutine process_intermediate redefined at /usr/bin/geninfo line 2930.
+Found gcov version: 11.2.0
+Using intermediate gcov format
+Scanning . for .gcda files ...
+Found 1 data files in .
+Processing coverage_test.gcda
+Finished .info-file creation</pre>
+	<p> &nbsp;</p>
+	<p> (6) genhtml を実行します。</p>
+	<p> オプションとして "<span class="auto-style2"><strong>--branch-coverage</strong></span>" 
+	を付けて実行します。</p>
+	<pre>$ genhtml coverage_test.info <span class="auto-style2"><strong>--branch-coverage</strong></span> -o ./info
+Reading data file coverage_test.info
+Found 1 entries.
+Found common filename prefix "/home/hidetoshi"
+Writing .css and .png files.
+Generating output.
+Processing file coverage_test/coverage_test.c
+Writing directory view page.
+Overall coverage rate:
+  lines......: 83.3% (5 of 6 lines)
+  functions..: 100.0% (1 of 1 function)
+  branches...: 50.0% (1 of 2 branches)</pre>
+	<p> &nbsp;</p>
+	<p> (7) ./info ディレクトリ中の index.html をブラウザで開きます。</p>
+	<p><img alt="" class="border_with_drop-shadow" src="gcov_lcov/img45.jpg"></p>
+	<p>&nbsp;</p>
+	<p>以上の手順で lcov の表示に Branches(c1) を追加できることを確認できました。</p>
+	<p><br>
+	</p>
 </section>
-<br>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2021-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
+<p>
 <br>
-<br>
+
+</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -285,6 +740,11 @@ genhtml<br>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2022-08-15</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">全面更新</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2021-03-20</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
@@ -294,8 +754,15 @@ genhtml<br>
 
 <p>&nbsp;</p>
 
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>Copyright © 2021-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
