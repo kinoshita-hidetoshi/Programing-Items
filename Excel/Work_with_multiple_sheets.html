@@ -53,7 +53,7 @@
     	border: 1px solid #808080;
     }
     .auto-style11 {
-    	background-color: #484800;
+    	background-color: #505000;
     }
   </style>
 </head>
@@ -68,27 +68,23 @@
 <p>複数のシートを操作するVBAを作成します。</p>
 <p>参考・引用元記事： 日経ソフトウェア 2019年9月号 「ビジネスパーソンの Excel VBA 再入門 第4回 複数のシートを操作しよう」</p>
 <p>&nbsp;</p>
-
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._作業日により、月ごとにシートを分割する">1. 作業日により、月ごとにシートを分割する</a></p>
-        <p><a href="#2._一覧以外のシートをすべて削除する">2. 一覧以外のシートをすべて削除する</a></p>
-        <p><a href="#3._”シート一覧”_シートを作成する">3. ”シート一覧”_シートを作成する</a></p>
-        <p><a href="#4._全ソースコード">4. 全ソースコード</a></p>
-        <br>
-        <p><a href="#サンプルプログラム">サンプルプログラム</a></p>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+  	<h2>目次</h2>
+    <p><a href="#1._作業日により、月ごとにシートを分割する">1. 作業日により、月ごとにシートを分割する</a></p>
+    <p><a href="#2._一覧以外のシートをすべて削除する">2. 一覧以外のシートをすべて削除する</a></p>
+    <p><a href="#3._”シート一覧”_シートを作成する">3. ”シート一覧”_シートを作成する</a></p>
+    <p><a href="#4._全ソースコード">4. 全ソースコード</a></p>
+    <br>
+    <p><a href="#サンプルプログラム">サンプルプログラム</a></p>
+    <p><a href="#ライセンス">ライセンス</a></p>
+    <p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
-<p> &nbsp;</p>
-<h2> <a name="1._作業日により、月ごとにシートを分割する">1. 作業日により、月ごとにシートを分割する</a></h2>
+<p>&nbsp;</p>
+
+<h2><a name="1._作業日により、月ごとにシートを分割する">1. 作業日により、月ごとにシートを分割する</a></h2>
 <p> [概要]</p>
 <p> 作業日により、月ごとにシートを分割するVBAマクロを作成します。</p>
 <p> &nbsp;</p>
@@ -127,9 +123,10 @@
 <p> 
 <img alt="" src="Work_with_multiple_sheets/img3.jpg"></p>
 <p> &nbsp;</p>
+<p> 「月分割」という名称のマクロを実行します。</p>
 <p> <img alt="" src="Work_with_multiple_sheets/img9.gif"></p>
 <p> &nbsp;</p>
-<p> 実行結果の例です。</p>
+<p> 実行結果の例です。「2月分」「3月分」「4月分」というシートを生成してそれぞれのシートへ対応するデータのコピーが行われました。</p>
 <p> <img alt="" src="Work_with_multiple_sheets/imgB.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
@@ -490,85 +487,9 @@ End Sub</code></pre>
 <p> &nbsp;</p>
 <h2> <a name="4._全ソースコード">4. 全ソースコード</a></h2>
 
-<p>[プログラムソース &quot;sample.xlsm&quot; - Module1]</p>
-<!-- Start for 'google-code-prettify' -->
-<pre class="prettyprint linenums lang-vb">
-<code>'
-' &quot;シート一覧&quot; を作成する
-'
-Sub シート一覧()
-    Dim i
-    
-    Application.DisplayAlerts = False
-    
-    ' もし &quot;シート一覧&quot; シートがあったら削除
-    If IsExistSheet_Object(&quot;シート一覧&quot;) = True Then
-        ' &quot;シート一覧&quot; シートがあるので削除
-        Worksheets(&quot;シート一覧&quot;).Delete
-    End If
-    
-    Worksheets.Add before:=Worksheets(1)
-    ActiveSheet.Name = &quot;シート一覧&quot;
-    
-    With Worksheets(&quot;シート一覧&quot;)
-        .Cells(1, &quot;A&quot;) = &quot;番号&quot;
-        .Cells(1, &quot;B&quot;) = &quot;シート名&quot;
-        
-        For i = 1 To Worksheets.Count
-            .Cells(i + 1, &quot;A&quot;) = i
-            .Cells(i + 1, &quot;B&quot;) = Worksheets(i).Name
-            .Hyperlinks.Add anchor:=.Cells(i + 1, &quot;B&quot;), Address:=&quot;&quot;, SubAddress:=Worksheets(i).Name &amp; &quot;!A1&quot;
-        Next i
-        
-        .Columns.AutoFit
-        .Range(.Cells(1, &quot;A&quot;), .Cells(1, &quot;B&quot;)).Interior.ColorIndex = 15
-        .UsedRange.Borders.LineStyle = xlContinuous
-        
-    End With
-    
-End Sub
-
-
-'
-' &quot;指定したシート名&quot; のシートの有無を確認する
-' True   : ある
-' False  : ない
-'
-'Public Function IsExistSheet_Object(checkBookNm As String, checkSheetNm As String) As Boolean
-Public Function IsExistSheet_Object(checkSheetNm As String) As Boolean
- 
-    Dim targetSheet As Worksheet    '対象シートをセットする変数
-    Dim ret         As Boolean      'チェック結果
-    
-    'エラー無視
-    On Error Resume Next
-    
-    'オブジェクト変数に、対象シートをセットする
-    'Set targetSheet = Workbooks(checkBookNm).Worksheets(checkSheetNm)
-    Set targetSheet = Worksheets(checkSheetNm)
-    
-    'エラー無視を解除
-    On Error GoTo 0
-    
-    'オブジェクト変数に、シートがセットされているかどうかで存在を判定
-    If targetSheet Is Nothing Then
-        ret = False
-    Else
-        ret = True
-    End If
- 
-    '存在チェックの結果を返す
-    IsExistSheet_Object = ret
-    
-End Function</code></pre>
-<!-- End for 'google-code-prettify' -->
-
-<p>&nbsp;</p>
-
-<p> &nbsp;</p>
 <p> &nbsp;</p>
 
-<p>[プログラムソース &quot;sample.xlsm&quot; - 全体]</p>
+<p>[プログラムソース &quot;sample.xlsm&quot; - 標準モジュール（Module1）全体]</p>
 <!-- Start for 'google-code-prettify' -->
 <pre class="prettyprint linenums lang-vb">
 <code>'
@@ -744,6 +665,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-08-19</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">誤植修正</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-06-04</td>
 	    <td class="td_history_separator">-</td>
