@@ -89,8 +89,7 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
   i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
 </ul>
 <p> &nbsp;</p>
-<p> 
-<img alt="" src="mobilenet-ssd/img10.jpg" class="border_with_drop-shadow" width="400"></p>
+<p><img alt="i-PRO mini" src="mobilenet-ssd/img10.jpg" class="border_with_drop-shadow" width="400"></p>
 <p>&nbsp;</p>
 </section>
 
@@ -144,12 +143,10 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
     <p> 下図のような画面を表示するので、使用される環境を選択します。</p>
     <p> 私は Windows 環境で多くの人が動作する例を作成したいので、Computer Platform として CPU を選択してみました。<br>
     Package はなんとなく&nbsp;Pip を選択してみます。</p>
-    <p> commandは <span class="cpp-source">pip3 install torch torchvision 
-    torchaudio</span> となりました。</p>
-    <p> 
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/img6.jpg" width="800"></p>
-    <p> <a href="mobilenet-ssd/img5.jpg" target="_blank">
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/img5.jpg" width="800"></a></p>
+    <p> commandは <span class="cpp-source">pip3 install torch torchvision torchaudio</span> となりました。</p>
+    <p><img alt="PyTorch ホームページ画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img6.jpg" width="800"></p>
+    <p><a href="mobilenet-ssd/img5.jpg" target="_blank">
+    <img alt="PyTorch ホームページ画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img5.jpg" width="800"></a></p>
     <p> &nbsp;</p>
     <p> ちなみに "CUDA 11.3" を選択すると <span class="cpp-source">pip3 install torch 
     torchvision torchaudio --extra-index-url 
@@ -159,13 +156,13 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
     <p> 表示されたコマンドをコマンドプロンプトなどのターミナルから入力することで Pytorch をインストールします。</p>
     <p> &nbsp;</p>
     <p> <a href="image_classification_vgg/img7.gif" target="_blank">
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/img7.gif" width="800"></a></p>
+    <img alt="PyTorch インストール画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img7.gif" width="800"></a></p>
     <p> &nbsp;</p>
     <p> <a href="image_classification_vgg/img9.jpg" target="_blank">
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/img9.jpg" width="800"></a></p>
+    <img alt="PyTorch インストール画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img9.jpg" width="800"></a></p>
     <p> &nbsp;</p>
     <p> <a href="image_classification_vgg/imgD.gif" target="_blank">
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/imgD.gif" width="800"></a></p>
+    <img alt="PyTorch インストール画面３" class="border_with_drop-shadow" src="mobilenet-ssd/imgD.gif" width="800"></a></p>
     <p> &nbsp;</p>
     <p> これで Pytorch のインストールを完了です。</p>
     <p> &nbsp;</p>
@@ -187,7 +184,7 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
     <p><a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> というこの内容そのままのものが GitHub で公開されていましたので、これを取得して動作させてみます。</p>
     <p><a href="mobilenet-ssd/imgC.jpg" target="_blank">
-    <img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/imgC.jpg" width="800"></a></p>
+    <img alt="pytorch-ssd ホームページ画面" class="border_with_drop-shadow" src="mobilenet-ssd/imgC.jpg" width="800"></a></p>
     <p>&nbsp;</p>
 	<p> &nbsp;</p>
 	
@@ -260,7 +257,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     <p>&nbsp;</p>
     <p>3. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
     <p><a href="mobilenet-ssd/img9.gif" target="_blank">
-    <img alt="" src="mobilenet-ssd/img9.gif" width="800"></a></p>
+    <img alt="pytorch-ssd － run_ssd_live_demo.py エラー発生時の画面" src="mobilenet-ssd/img9.gif" width="800"></a></p>
     <p>&nbsp;</p>
     <p>どうやら、box[0], box[1], box[2], box[3] 
     が浮動小数点なのですがここの引数は整数(int)である必要がある、ということがエラーの理由のようです。<br>エラーとなった 76行目と、同様に 
