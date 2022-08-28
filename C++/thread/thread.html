@@ -1,30 +1,56 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title></title>
-<link href="../../design.css" rel="stylesheet" type="text/css">
-
-<!-- for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- for 'google-code-prettify' -->
-
-<style type="text/css">
-.auto-style5 {
-	background-color: #FFFF00;
-}
-.auto-style6 {
-	color: #990000;
-	background-color: #FFFF00;
-}
-.auto-style7 {
-	text-decoration: line-through;
-}
-.auto-style8 {
-	background-color: #FFFF00;
-	text-decoration: line-through;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <!-- タイトル -->
+  <title>std::thread | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
+  <style type="text/css">
+    .auto-style5 {
+    	background-color: #505000;
+    }
+    .auto-style6 {
+    	color: #990000;
+    	background-color: #505000;
+    }
+    .auto-style7 {
+    	text-decoration: line-through;
+    }
+    .auto-style8 {
+    	background-color: #505000;
+    	text-decoration: line-through;
+    }
+  </style>
 </head>
 
 <!-- for 'google-code-prettify' -->
@@ -38,15 +64,23 @@
 なメソッドなどをいったん間にかませる必要があるのですが、std::threadはこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
 <p>類似の機能として std::async という機能があります。個人見解としては、std::thread を使わずに std::async 
 へすべて統一して使用するほうが良い、と考えます。詳細は <a href="async.html">std::async</a> を参照ください。</p>
-<h4>&nbsp;</h4>
-<h4>内容：</h4>
-<p><a href="#１．引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a><br>
-<a href="#２．引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a><br>
-<a href="#３．メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
-    </a><br><a href="#４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a><br>
-<a href="#5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></p>
 <p>&nbsp;</p>
-<h2><a name="１．引数無し関数をマルチスレッドで実行">１．引数無し関数をマルチスレッドで実行</a></h2>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></p>
+	<p><a href="#2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></p>
+	<p><a href="#3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動)</a></p>
+	<p><a href="#4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></p>
+	<p><a href="#5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2><a name="1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></h2>
 <p>まずは一番シンプルな実装から試します。</p>
 <p>&nbsp;</p>
 
@@ -118,8 +152,9 @@ int main(int argc, char* argv[])
     return EXIT_SUCCESS;
 }</code></pre>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
 <h2>
-<a name="２．引数付き関数をマルチスレッドで実行">２．引数付き関数をマルチスレッドで実行</a></h2>
+<a name="2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></h2>
 <p>
 引数付きの関数実行を同じく std::thread を使ったマルチスレッドで実行する方法を記載します。<br>thread 
 には関数ポインタを渡すのですが、オーバーロードした関数がある場合の記載方法が難しいので、これについても合わせて記載します。結論から言うとキャストで関数詳細情報を記載すればできるようです。<br>
@@ -198,8 +233,10 @@ int main(int argc, char* argv[])
 }</code></pre>
 <p>
 &nbsp;</p>
+<p>
+&nbsp;</p>
 <h2>
-<a name="３．メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">３．メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
+<a name="3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
     </a></h2>
 <p>クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは &amp;hello, 
 &amp;world を引数で渡しています。</p>
@@ -255,8 +292,10 @@ int main(int argc, char* argv[])
 
 <p>
 &nbsp;</p>
+<p>
+&nbsp;</p>
 <h2>
-<a name="４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)">４．メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></h2>
+<a name="4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></h2>
 <p>
 &nbsp;&nbsp; クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは 
 this を引数で渡しています。<br></p>
@@ -313,6 +352,7 @@ int main(int argc, char* argv[])
     }
 }</code>
 </pre>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2><a name="5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></h2>
 <p>一時停止状態のシステムスレッドを作成してみます。<br>
@@ -384,19 +424,93 @@ int main()
 }</code></pre>
 <p>&nbsp;</p>
 <p>[実行結果]</p>
-<p>
-<img alt="" src="thread/img6.gif"></p>
-<p>
-&nbsp;</p>
-<h4>
-参考</h4>
-<ul>
-	<li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
-	<li><a href="https://ja.cppreference.com/w/cpp/thread/thread">https://ja.cppreference.com/w/cpp/thread/thread</a></li>
-</ul>
-<p></p>
+<p><img alt="" src="thread/img6.gif"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2013-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+  	<li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
+  	<li><a href="https://ja.cppreference.com/w/cpp/thread/thread">https://ja.cppreference.com/w/cpp/thread/thread</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
 <hr>
-<p>記載：<br>2020年06月01日 誤植を修正<br>2019年11月20日 <font face="Meiryo UI">「2. 一時停止状態のスレッドを作る」の章を追加</font><br>2013年09月01日 新規作成、木下英俊 （boost::thread の記述をベースに修正）</p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">2022-08-28</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">2020-06-01</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">誤植修正<br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2019-11-20</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「5. 一時停止状態のスレッドを作る」の章を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2013-09-01</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成、（boost::thread の記述をベースに修正）</td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2013-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
 
 </body>
 </html>
