@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>物体検知 － MobileNet-SSD</title>
+  <title>物体検知 － MobileNet-SSD | Programing Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -236,7 +236,7 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
     <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
     <p>&nbsp;</p>
     <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。</p>
-    <p>最初の２行は学習済みデータとラベルデータなので、初めて実行するときのみ実施すれば良いです。</p>
+    <p>最初の２行は学習済みデータとラベルデータの取得なので、初めて実行するときのみ実施すれば良いです。</p>
     <pre>wget -P models https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth 
 wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
 python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt </pre>
@@ -284,6 +284,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
       <div>
         <p>(2022-08-03 追記)</p>
 		<p>私から出した Pull Request (#178) が先ほどマージされました。</p>
+		<p>このためマージ後のソースを取得（git clone）した方はこちら 3 に記載の修正は不要です。</p>
         <p>
 		<a href="https://github.com/qfgaohao/pytorch-ssd/pull/178" target="_blank">Bug fix. 
 		by kinoshita-hidetoshi · Pull Request #178 · qfgaohao/pytorch-ssd · 
@@ -360,19 +361,27 @@ SOFTWARE.
 	<ul>
 		<li>[1] PyTorch<br><a href="https://pytorch.org/" target="_blank">
       https://pytorch.org/</a></li>
-        <li>[2] qfgaohao/pytorch-ssd: MobileNetV1, MobileNetV2, VGG based 
-        SSD/SSD-lite implementation in Pytorch 1.0 / Pytorch 0.4. Out-of-box 
-        support for retraining on Open Images dataset. ONNX and Caffe2 support. 
-        Experiment Ideas like CoordConv. (github.com)<br>
-        <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
-        https://github.com/qfgaohao/pytorch-ssd</a></li>
-        <li>[3] PyTorchでMobileNet SSDによるリアルタイム物体検出｜はやぶさの技術ノート (cpp-learning.com)<br>
-        <a href="https://cpp-learning.com/pytorch_mobilenet-ssd/" target="_blank">
-        https://cpp-learning.com/pytorch_mobilenet-ssd/</a></li>
-        <li>[4] MobilenetSSD : 高速に物体検出を行う機械学習モデル. ailia… | by Kazuki Kyakuno | 
-        axinc | Medium<br>
-        <a href="https://medium.com/axinc/mobilenetssd-高速に物体検出を行う機械学習モデル-be3ca37c411" target="_blank">
-        https://medium.com/axinc/mobilenetssd-高速に物体検出を行う機械学習モデル-be3ca37c411</a></li>
+    <li>[2] qfgaohao/pytorch-ssd: MobileNetV1, MobileNetV2, VGG based 
+      SSD/SSD-lite implementation in Pytorch 1.0 / Pytorch 0.4. Out-of-box 
+      support for retraining on Open Images dataset. ONNX and Caffe2 support. 
+      Experiment Ideas like CoordConv. (github.com)<br>
+      <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+      https://github.com/qfgaohao/pytorch-ssd</a></li>
+    <li>[3] PyTorchでMobileNet SSDによるリアルタイム物体検出｜はやぶさの技術ノート (cpp-learning.com)<br>
+      <a href="https://cpp-learning.com/pytorch_mobilenet-ssd/" target="_blank">
+      https://cpp-learning.com/pytorch_mobilenet-ssd/</a></li>
+    <li>[4] MobilenetSSD : 高速に物体検出を行う機械学習モデル. ailia… | by Kazuki Kyakuno | axinc | Medium<br>
+      <a href="https://medium.com/axinc/mobilenetssd-高速に物体検出を行う機械学習モデル-be3ca37c411" target="_blank">
+      https://medium.com/axinc/mobilenetssd-高速に物体検出を行う機械学習モデル-be3ca37c411</a></li>
+		<li>[5] Everything You Need To Know About Torchvision’s SSDlite Implementation | PyTorch<br>
+      <a href="https://pytorch.org/blog/torchvision-ssdlite-implementation/" target="_blank">
+      https://pytorch.org/blog/torchvision-ssdlite-implementation/</a></li>
+		<li>[6] vision/ssdlite.py at b6f733046c9259f354d060cd808241a558d7d596 · pytorch/vision · GitHub<br>
+  		<a href="https://github.com/pytorch/vision/blob/b6f733046c9259f354d060cd808241a558d7d596/torchvision/models/detection/ssdlite.py#L159-L162" target="_blank">
+	  	https://github.com/pytorch/vision/blob/b6f733046c9259f354d060cd808241a558d7d596/torchvision/models/detection/ssdlite.py#L159-L162</a></li>
+		<li>[7] Models and pre-trained weights — Torchvision main documentation (pytorch.org)<br>
+		  <a href="https://pytorch.org/vision/main/models.html" target="_blank">
+		  https://pytorch.org/vision/main/models.html</a></li>
 	</ul>
 </section>
 
