@@ -45,6 +45,13 @@
   .auto-style3 {
   color: #FF0000;
 }
+  .auto-style4 {
+	background-color: #FFFF00;
+  }
+  .auto-style5 {
+	color: #FF0000;
+	background-color: #FFFF00;
+  }
   </style>
 
 </head>
@@ -67,9 +74,9 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
         <p>&nbsp;&nbsp; <a href="#1-1._Pytorch_をインストールする">1-1. PyTorch をインストールする</a></p>
         <p>&nbsp;&nbsp; <a href="#1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストールする</a></p>
         <p><a href="#2._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
-        <p>3. MobileNetV1-SSD を動かす（i-PRO カメラ）</p>
-        <p>4. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</p>
-        <p>5. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</p>
+        <p><a href="#3._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">3. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></p>
+        <p><a href="#4._MobileNetV2-SSD_を動かす（PC_内蔵カメラ）">4. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+        <p><a href="#5._MobileNetV2-SSD_を動かす（i-PRO_カメラ）">5. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
         <br>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -182,7 +189,8 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
 	<h4>[概要]</h4>
     <p>MobileNetV1-SSD を PyTorch の環境で動かしてみます。</p>
     <p><a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
-    pytorch-ssd</a> というこの内容そのままのものが GitHub で公開されていましたので、これを取得して動作させてみます。</p>
+    pytorch-ssd</a> というこの内容そのままのものが GitHub で公開されていました。これを取得して動作させてみます。</p>
+	<p>ちなみに pytorch-ssd のライセンスは "MIT License" です。</p>
     <p><a href="mobilenet-ssd/imgC.jpg" target="_blank">
     <img alt="pytorch-ssd ホームページ画面" class="border_with_drop-shadow" src="mobilenet-ssd/imgC.jpg" width="800"></a></p>
     <p>&nbsp;</p>
@@ -263,7 +271,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     が浮動小数点なのですがここの引数は整数(int)である必要がある、ということがエラーの理由のようです。<br>エラーとなった 76行目と、同様に 
     79行目の２カ所を int 型へ変換するように修正します。下図だと4行目、7行目の色付きの場所へ int() を追加しました。<br>
     これでエラーを解決してプログラムを実行できるようになりました。</p>
-    <pre class="prettyprint linenums lang-py">
+    <pre class="prettyprint linenums:73 lang-py">
         for i in range(boxes.size(0)):
         box = boxes[i, :]
         label = f"{class_names[labels[i]]}: {probs[i]:.2f}"
@@ -302,23 +310,351 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
   	<p>[動画] プログラムを動作させた様子（PC 内蔵カメラ）</p>
     <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv1-ssd-pccam.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-    </video>
+    </video> <br>
     
-    <p>&nbsp;</p>
-    
-    <p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>プログラム "run_ssd_live_demo.py" 中で PC内蔵カメラ からのキャプチャーを行っている部分は下記の箇所です。</p>
+		    <p><span class="cpp-source">cap = cv2.VideoCapture(0)   # capture from camera</span></p>
+		  </div>
+    </div>
 
-    <p> &nbsp;</p>
-    <p> &nbsp;</p>
-    <p> T.B.E. （編集予定）</p>
-    <p> &nbsp;</p>
-    <p> &nbsp;</p>
-    <p> &nbsp;</p>
+    <p>&nbsp;</p>
+	<p>&nbsp;</p>
+  <p>&nbsp;</p>
+    
 </section>
 	
-<br>
+<p>&nbsp;</p>
 
-<br>
+<section>
+	<h2><a name="3._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">3. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></h2>
+	<h4>[概要]</h4>
+    <p>MobileNetV1-SSD を PyTorch の環境で動かしてみます。</p>
+	<p>本章では i-PRO カメラとPCを LAN 接続してリアルタイムで物体検知してみます。前章と同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> を使って行います。</p>
+    <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+  <h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>[手順]</h4>
+    <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+    <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
+    <p>&nbsp;</p>
+    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
+    <pre>wget -P models https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth 
+wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
+</pre>
+    <p>&nbsp;</p>
+    <p>Windows 環境で bitsadmin.exe を使って実施する場合は下記を実施します。<br>
+    <span class="auto-style3">{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
+    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth c:\<span class="auto-style3">{作業フォルダ}</span>\models\mobilenet-v1-ssd-mp-0_675.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt
+</pre>
+    <p>&nbsp;</p>
+	<p>3. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
+	<p><span class="auto-style3">{user-id}</span>, <span class="auto-style3">
+	{password}</span>, <span class="auto-style3">{ip-address}</span> 
+	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。</p>
+	<p>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</p>
+    <pre>python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt <span class="auto-style4">rtsp://</span><span class="auto-style5">{user-id}</span>:<span class="auto-style5">{password}</span>@<span class="auto-style5">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
+    <p>(例) <span class="cpp-source">python run_ssd_live_demo.py mb1-ssd 
+	models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt 
+	rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</span></p>
+	  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+	<p>4. プログラムを動かした様子を以下に示します。</p>
+	<p>PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
+	<p>i-PRO カメラの設定を 10fps にしています。私のノートPC環境では 30fps 
+	動作させると映像が少しずつ遅延していきました。AI処理なしに映像表示させると 30fps 
+	表示できているので、AI処理に伴うCPU負荷に原因するものと分析します。GPU無しの環境、CPU 版での動作で Full-HD 画像を 10fps 
+	でAI処理できているのですから、私個人の見解ですが、 MobileNet は十分に軽量で高性能な AI だと考えます。</p>
+    <p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子 １（i-PRO カメラ）</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv1-ssd-ipromini_1.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+    
+  	<p>&nbsp;</p>
+	<p>[動画] プログラムを動作させた様子 ２ － 「<a href="https://pixabay.com/ja/videos/人-商業-店-忙しい-モール-6387/" target="_blank">人 
+  商業 店 - Free video on Pixabay</a>」の例（i-PRO カメラ）</p>
+  <p>入力画像として、 <a href="https://pixabay.com/" target="_blank">
+  https://pixabay.com</a> から取得した下記動画をテストに使用させていただきました。商用利用無料、帰属表示必要なし、のコンテンツです。</p>
+  <p>PC上で再生表示する動画を i-PRO カメラで接写しているため、画質が荒いこと、認識精度が微妙なこと、はご容赦ください。</p>
+
+    <p>
+	こちらの例の場合、人が一定より小さいと認識できないようでした。カメラをディスプレに近づけて人のサイズを大きくすることで、AIが人を認識できるようになりました。</p>
+	<p>別ページ紹介の「<a href="connect_to_wv-xae200w.html">機能拡張ソフトウェア(WV-XAE200W)</a>」でも同じ映像を使って評価していますが、こちらの評価では同じ映像で小さい人を認識できています。この比較からも専用商品である 
+	WV-XAE200WUX の画像認識性能の高さを再確認させていただきました。</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv1-ssd-ipromini_2.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+
+    <p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>以上です。というわけで、プログラムを１行も書くことなく i-PRO カメラとPCを接続して MobileNetV1-SSD 
+	を実行することができました。</p>
+	<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>プログラム "run_ssd_live_demo.py" 中で i-PRO カメラからのキャプチャーを行っている部分は下記の箇所です。</p>
+		    <p><span class="cpp-source">cap = cv2.VideoCapture(sys.argv[4])  # capture from file</span></p>
+		  </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4._MobileNetV2-SSD_を動かす（PC_内蔵カメラ）">4. MobileNetV2-SSD を動かす（PC 内蔵カメラ）</a></h2>
+	<h4>[概要]</h4>
+    <p>MobileNetV2-SSD を PyTorch の環境で動かしてみます。</p>
+    <p>MobileNetV1-SSD 同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> に含まれていますので、これを取得して動作させてみます。</p>
+    <p><a href="mobilenet-ssd/imgC.jpg" target="_blank">
+    <img alt="pytorch-ssd ホームページ画面" class="border_with_drop-shadow" src="mobilenet-ssd/imgC.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+  <h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>[手順]</h4>
+    <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+    <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
+    <p>&nbsp;</p>
+    <p>2. README.md 中の "Run the live MobileNetV2 SSD Lite demo" に記載の内容に従って下記を実行します。</p>
+    <p>最初の２行は学習済みデータとラベルデータの取得なので、初めて実行するときのみ実施すれば良いです。また２行目の 
+	"voc-model-labels.txt" は MobileNetV1-SSD と同一のファイルです。</p>
+    <pre>
+wget -P models https://storage.googleapis.com/models-hao/mb2-ssd-lite-mp-0_686.pth
+wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
+python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models/voc-model-labels.txt</pre>
+    <p>&nbsp;</p>
+    
+    <p>上記内容を bitsadmin.exe で置き換えると以下のようになるので、Windows 環境の方はこちらで実施してもOKです。<br>
+    <span class="auto-style3">{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
+    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mb2-ssd-lite-mp-0_686.pth c:\<span class="auto-style3">{作業フォルダ}</span>\models\mb2-ssd-lite-mp-0_686.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt
+python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models/voc-model-labels.txt</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>3. プログラムを動かした様子を以下に示します。</p>
+    <p>カメラはPC内蔵のカメラです。PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
+    <p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子（PC 内蔵カメラ）</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv2-ssd-pccam.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video> <br>
+    
+	<p>&nbsp;</p>
+	<p>MobiletNetV2-ssd-lite で動作させているのは正しいですが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
+	<p>私が触ってみた印象ですが、認識精度が若干向上して CPU 負荷も若干軽くなったという気がします。</p>
+	<p>&nbsp;</p>
+  
+  <p>&nbsp;</p>
+    
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2><a name="5._MobileNetV2-SSD_を動かす（i-PRO_カメラ）">5. MobileNetV2-SSD を動かす（i-PRO カメラ）</a></h2>
+	<h4>[概要]</h4>
+    <p>MobileNetV2-SSD を PyTorch の環境で動かしてみます。</p>
+	<p>本章では i-PRO カメラとPCを LAN 接続してリアルタイムで物体検知してみます。前章と同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> を使って行います。</p>
+    <p>&nbsp;</p>
+	<p> &nbsp;</p>
+	
+  <h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>[手順]</h4>
+    <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
+    pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+    <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
+    <p>&nbsp;</p>
+    
+    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
+    <pre>wget -P models https://storage.googleapis.com/models-hao/mb2-ssd-lite-mp-0_686.pth
+wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt</pre>
+    <p>&nbsp;</p>
+    <p>Windows 環境で bitsadmin.exe を使って実施する場合は下記を実施します。<br>
+    <span class="auto-style3">{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
+    <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/mb2-ssd-lite-mp-0_686.pth c:\<span class="auto-style3">{作業フォルダ}</span>\models\mb2-ssd-lite-mp-0_686.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt</pre>
+    <p>&nbsp;</p>
+    
+	<p>3. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
+	<p><span class="auto-style3">{user-id}</span>, <span class="auto-style3">
+	{password}</span>, <span class="auto-style3">{ip-address}</span> 
+	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。</p>
+	<p>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</p>
+    <pre>python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models/voc-model-labels.txt <span class="auto-style4">rtsp://</span><span class="auto-style5">{user-id}</span>:<span class="auto-style5">{password}</span>@<span class="auto-style5">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
+    <p>(例) <span class="cpp-source">python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models/voc-model-labels.txt 
+	rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</span></p>
+	  <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+	<p>4. プログラムを動かした様子を以下に示します。</p>
+	<p>PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
+	<p>i-PRO カメラの設定を 10fps にしています。私のノートPC環境では 30fps 
+	動作させると映像が少しずつ遅延していきました。AI処理なしに映像表示させると 30fps 
+	表示できているので、AI処理に伴うCPU負荷に原因するものと分析します。GPU無しの環境、CPU 版での動作で Full-HD 画像を 10fps 
+	でAI処理できているのですから、私個人の見解ですが、 MobileNet は十分に軽量で高性能な AI だと考えます。</p>
+    <p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子（i-PRO カメラ）</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv2-ssd-ipromini_1.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+    
+  	<p>&nbsp;</p>
+	<p>MobiletNetV2-ssd-lite で動作させているのは正しいですが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
+	<p>私が触ってみた印象ですが、認識精度が若干向上して CPU 負荷も若干軽くなったという気がします。</p>
+	<p>&nbsp;</p>
+	&nbsp;<p>以上です。というわけで、プログラムを１行も書くことなく i-PRO カメラとPCを接続して MobileNetV2-SSD 
+	も実行することができました。</p>
+	<p>&nbsp;</p>
+  
+    <p>&nbsp;</p>
+    
+</section>
+	
+<p>&nbsp;</p>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
@@ -394,6 +730,21 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-08-30</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「3. MobileNetV1-SSD を動かす（i-PRO カメラ）」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「4. MobileNetV2-SSD を動かす（PC 内蔵カメラ）」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">&nbsp;</td>
+	    <td class="td_history">「5. MobileNetV2-SSD を動かす（i-PRO カメラ）」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-08-03</td>
 	    <td class="td_history_separator">-</td>
