@@ -9,8 +9,12 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
+  <!-- タイトル -->
   <title>Jupyter Notebook をインストールする</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="../design.css" type="text/css">
@@ -31,28 +35,24 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   
-</head>
+  </head>
 
 <body onload="prettyPrint();">
 	
 <h1>Jupyter Notebook をインストールする</h1>
 <p> &nbsp;</p>
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width:100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        <a href="#1._Jupyter_Notebook_をインストールする方法">1. Jupyter Notebool 
-        をインストールする方法</a><br>
-        <br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._Jupyter_Notebook_をインストールする方法">1. Jupyter Notebool をインストールする方法</a></p>
+	<p><a href="#2._Jupyter_Notebook_を起動する">2. Jupyter Notebook を起動する</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -64,14 +64,65 @@
 以下のコマンドを入力することで行います。</p>
 	<p> &nbsp;</p>
 	
-	<pre class="prettyprint linenums">
+	<pre class="prettyprint linenums" style="width: 600px">
 python -m pip install --upgrade pip
 python -m pip install jupyter
 </pre>
 
+  <p>&nbsp;</p>
+	<p>&nbsp;</p>
+
 </section>
 
-<br>
+<p>&nbsp;</p>
+
+<section>
+
+  <h2><a name="2._Jupyter_Notebook_を起動する">2. Jupyter Notebook を起動する</a></h2>
+  <p>コンソールから <span class="cpp-source">jupyter notebook</span> + [Enter] 
+  をインプットすることで起動します。</p>
+  <p><a href="install_jupyter_notebook/img15.jpg" target="_blank">
+  <img alt="" src="install_jupyter_notebook/img15.jpg" width="800" class="border_with_drop-shadow"></a></p>
+  <p>&nbsp;</p>
+  <p>こんな感じで起動しました。</p>
+  <p><a href="install_jupyter_notebook/img19.jpg" target="_blank">
+  <img alt="" class="border_with_drop-shadow" src="install_jupyter_notebook/img19.jpg" width="800"></a></p>
+  <p>&nbsp;</p>
+
+</section>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2021-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -93,6 +144,12 @@ python -m pip install jupyter
 	<table>
 	
 	  <tr>
+	    <td class="td_history_date">2022-09-03</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「2. Jupyter Notebook を起動する」を追加</td>
+	  </tr>
+	  
+	  <tr>
 	    <td class="td_history_date">2021-10-31</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
@@ -111,7 +168,7 @@ python -m pip install jupyter
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>&copy; copyright 2021-2022 木下英俊</small></p>
 </footer>
 
 </body>
