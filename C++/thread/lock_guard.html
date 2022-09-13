@@ -1,17 +1,44 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Programing Items/C++/thread/mutex.html</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+  
+  <!-- タイトル -->
+	<title>std::lock_guard | Programing Items</title>
 
-	<!-- Start for 'google-code-prettify' -->
-	<link href="../../prettify.css" rel="stylesheet" type="text/css">
-	<script src="../../prettify.js" type="text/javascript"></script>
-	<!-- End for 'google-code-prettify' -->
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../design.css" type="text/css">
+	
+  <!-- Start for 'google-code-prettify' -->
+  <link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify/prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->
+    
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
 	<link rel="stylesheet" href="../../design.css" type="text/css">
 	<style type="text/css">
 	.auto-style1 {
-		background-color: #FFFF00;
+		background-color: #505000;
 	}
 	</style>
 </head>
@@ -36,8 +63,16 @@
 メンバ関数を呼び出し、ロックを解除します。</p>
 <p> <strong><em>std::lock_guard</em></strong> クラスはコピー可能ではありません。</p>
 <p> &nbsp;</p>
-<h2> 目次</h2>
-<p> <a href="#1._lock_guard_を使ってみる">1. lock_guard を使ってみる</a></p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p> <a href="#1._lock_guard_を使ってみる">1. lock_guard を使ってみる</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._lock_guard_を使ってみる">1. lock_guard を使ってみる</a></h2>
 <p>[概要]</p>
@@ -114,88 +149,89 @@ int main()
 <p>[実行結果]</p>
 <p><img alt="" src="lock_guard/imgD.jpg"></p>
 <p>&nbsp;</p>
-<h3>
-参考</h3>
-<ul>
-	<li>cppreference.com&nbsp; -&nbsp; lock_guard<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
-	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
-</ul>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2> 2. ***</h2>
-<p>[概要]</p>
-<p> &nbsp;</p>
-
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.2 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
-<p>&nbsp;</p>
-<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	<tr>
-		<td>
-			<video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-				<p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-			</video>
-		</td>
-	</tr>
-</table>
-
-<p> &nbsp;</p>
-<p>[プログラムソース &quot;***.cpp&quot;]</p>
-<pre class="prettyprint linenums">
-</pre>
-	
-<br>
-	
-<br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
 <p>
 &nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
-</ul>
+
+<section>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+MIT License<br><br>
+
+    Copyright (c) 2020-2022  Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="参考">参考</a></h2>
+  <ul>
+  	<li>cppreference.com&nbsp;-&nbsp;lock_guard<br>
+  	<a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">
+  	https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
+  	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
+  	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
+  	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
+  </ul>
+</section>
+
+<p>&nbsp;</p>
 <hr>
-<p>記載： </p>
-<ul>
-	<li>2020年06月13日 新規作成、木下英俊<br></li>
-</ul>
+<p><br></p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">2022-09-13</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2020-06-13</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成</td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2020-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>
