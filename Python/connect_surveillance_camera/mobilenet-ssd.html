@@ -60,10 +60,6 @@
 	
 <h1>物体検知 － MobileNet-SSD</h1>
 
-<p> i-PRO の監視カメラ i-PRO mini (WV-S7130W) と接続してPCで MobileNetV1-SSD, 
-MobileNetV2-SSD-Lite を動かしてみます。</p>
-<p> &nbsp;</p>
-
 <p>&nbsp;</p>
 <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
   <tr>
@@ -73,10 +69,16 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
         <p><a href="#1._準備">1. 準備</a></p>
         <p>&nbsp;&nbsp; <a href="#1-1._Pytorch_をインストールする">1-1. PyTorch をインストールする</a></p>
         <p>&nbsp;&nbsp; <a href="#1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストールする</a></p>
-        <p><a href="#2._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
-        <p><a href="#3._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">3. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></p>
-        <p><a href="#4._MobileNetV2-SSD_を動かす（PC_内蔵カメラ）">4. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
-        <p><a href="#5._MobileNetV2-SSD_を動かす（i-PRO_カメラ）">5. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
+        <p><a href="#2._MobileNetV1-SSD">2. MobileNetV1-SSD</a></p>
+		    <p>&nbsp;&nbsp; <a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2-1. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-2._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></p>
+        <p><a href="#3._MobileNetV2-SSD-Lite">3. MobileNetV2-SSD-Lite</a></p>
+        <p>&nbsp;&nbsp; <a href="#3-1._MobileNetV2-SSD-Lite_を動かす（PC_内蔵カメラ）">3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+        <p>&nbsp;&nbsp; <a href="#3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
+    		<p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
+    		<p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
+    		<p>&nbsp;&nbsp; 4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</p>
+    		<p>&nbsp;&nbsp; 4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</p>
         <br>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -85,21 +87,72 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
   </tr>
 </table>
 <p>&nbsp;</p>
-
-<section>
-<p> 製品紹介ページ： </p>
-<ul>
-  <li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
-  i-pro-mini-lp</a></li>
-  <li>
-  <a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
-  i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
-</ul>
-<p> &nbsp;</p>
-<p><img alt="i-PRO mini" src="mobilenet-ssd/img10.jpg" class="border_with_drop-shadow" width="400"></p>
+<p><strong>MobileNet-SSD</strong> は、高速に物体物体検知を行うAIモデルの一つです。高い認識性能と共に GPU 
+を搭載しない組み込み機器でも動作する軽量なモデルであることに特徴があります。</p>
+<p>本ページでは、<strong>MobileNet-SSD</strong> を使ってカメラ映像を画像処理する方法について記載します。</p>
+<p>MobileNetSSD は V1, V2, V3 まで発表されていますので、これらを１つずつ動作させてみたいと思います。i-PRO 
+カメラと接続して使用する手順についても具体的に紹介していきます。</p>
 <p>&nbsp;</p>
+<p>こちら、私のノートPCで CPU 動作させた例です。GPU無しの動作環境ですが 10fps でリアルタイム動作できています。</p>
+
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv2-ssd-pccam.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+    
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<section>
+  <p class="auto-style2"><strong>"i-PRO mini" 紹介： </strong></p>
+  <ul>
+	<li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
+	i-PRO mini</a></li>
+	<li>
+	<a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130ux" target="_blank">
+	i-PRO mini 有線LANモデル WV-S7130UX</a></li>
+	<li>
+	<a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
+	i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
+	<li>
+	<a href="https://japancs.i-pro.com/space/DLJP/724085590/WV-S7130UX　i-PRO+mini+有線LANモデル" target="_blank">
+	WV-S7130UX　i-PRO mini 有線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
+	<li>
+	<a href="https://japancs.i-pro.com/space/DLJP/724086255/WV-S7130WUX　i-PRO+mini+無線LANモデル" target="_blank">
+	WV-S7130WUX　i-PRO mini 無線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
+  </ul>
+  <p>
+  <a href="images/i-PRO_mini.jpg" target="_blank">
+  <img alt="i-PRO mini 画像" class="border_with_drop-shadow" src="images/i-PRO_mini.jpg" width="348"></a></p>
+  <p>&nbsp;</p>
+  <p class="auto-style2"><strong>"モジュールカメラ" 紹介：</strong></p>
+  <ul>
+	<li><a href="https://moduca.i-pro.com" target="_blank">モジュールカメラ｜ポータルサイト 
+	(i-pro.com)</a></li>
+	<li>
+	<a href="https://moduca.i-pro.com/space/MCT/768743132/各種マニュアル" target="_blank">
+	各種マニュアル - Module Camera Technical Information - モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+  </ul>
+  <p>
+  <a href="images/ai_starter_kit_1.png" target="_blank">
+  <img alt="AIスターターキット画像（その１）" class="border_with_drop-shadow" src="images/ai_starter_kit_1.png" width="404"></a>
+  <a href="images/ai_starter_kit_2.png" target="_blank">
+  <img alt="AIスターターキット画像（その２）" class="border_with_drop-shadow" src="images/ai_starter_kit_2.png" width="444"></a></p>
+  <p>&nbsp;</p>
+  <p>カメラ初期設定についてはカメラ毎の取扱説明書をご確認ください。</p>
+  <p>カメラのIPアドレスを確認・設定できる下記ツールを事前に入手しておくと便利です。</p>
+  <ul>
+	<li>
+	<a href="https://connect.panasonic.com/jp-ja/products-services_security_support_specifications-manuals-firms-tool_2014040315191048" target="_blank">
+	IP簡単設定ソフトウェア</a>&nbsp;（日本国内）</li>
+	<li>
+	<a href="https://bizpartner.panasonic.net/public/file/ip-setting-software" target="_blank">
+	IP Setting Software</a>&nbsp;&nbsp;&nbsp;&nbsp; （グローバル）</li>
+  </ul>
 </section>
 
+<p>&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
 
 <section>
@@ -177,15 +230,18 @@ MobileNetV2-SSD-Lite を動かしてみます。</p>
     <h3> <a name="1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストール</a></h3>
     <p> opencv を使用するので、下記コマンドによりインストールします。</p>
     <p> <span class="cpp-source">pip install opencv-python </span></p>
-    <p> &nbsp;</p>
-    <p> &nbsp;</p>
 	
 </section>
 	
 <p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<h2><a name="2._MobileNetV1-SSD">2. MobileNetV1-SSD</a></h2>
+<p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></h2>
+	<h3> <a name="2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2-1. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></h3>
 	<h4>[概要]</h4>
     <p>MobileNetV1-SSD を PyTorch の環境で動かしてみます。</p>
     <p><a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
@@ -335,7 +391,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
 <p>&nbsp;</p>
 
 <section>
-	<h2><a name="3._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">3. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></h2>
+	<h3><a name="2-2._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></h3>
 	<h4>[概要]</h4>
     <p>MobileNetV1-SSD を PyTorch の環境で動かしてみます。</p>
 	<p>本章では i-PRO カメラとPCを LAN 接続してリアルタイムで物体検知してみます。前章と同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
@@ -420,7 +476,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
     <p>&nbsp;</p>
     
   	<p>[動画] プログラムを動作させた様子 １（i-PRO カメラ）</p>
-    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv1-ssd-ipromini_1.mp4" width="800">
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv1-ssd-ipromini_1.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
     </video>
     
@@ -435,7 +491,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	こちらの例の場合、人が一定より小さいと認識できないようでした。カメラをディスプレに近づけて人のサイズを大きくすることで、AIが人を認識できるようになりました。</p>
 	<p>別ページ紹介の「<a href="connect_to_wv-xae200w.html">機能拡張ソフトウェア(WV-XAE200W)</a>」でも同じ映像を使って評価していますが、こちらの評価では同じ映像で小さい人を認識できています。この比較からも専用商品である 
 	WV-XAE200WUX の画像認識性能の高さを再確認させていただきました。</p>
-    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv1-ssd-ipromini_2.mp4" width="800">
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv1-ssd-ipromini_2.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
     </video>
 
@@ -455,14 +511,19 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
     </div>
 
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
     
 </section>
 	
 <p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<h2><a name="3._MobileNetV2-SSD-Lite">3. MobileNetV2-SSD-Lite</a></h2>
+
+<p>&nbsp;</p>
 
 <section>
-	<h2> <a name="4._MobileNetV2-SSD_を動かす（PC_内蔵カメラ）">4. MobileNetV2-SSD を動かす（PC 内蔵カメラ）</a></h2>
+	<h2> <a name="3-1._MobileNetV2-SSD-Lite_を動かす（PC_内蔵カメラ）">3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></h2>
 	<h4>[概要]</h4>
     <p>MobileNetV2-SSD を PyTorch の環境で動かしてみます。</p>
     <p>MobileNetV1-SSD 同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
@@ -555,9 +616,9 @@ python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models
 <p>&nbsp;</p>
 
 <section>
-	<h2><a name="5._MobileNetV2-SSD_を動かす（i-PRO_カメラ）">5. MobileNetV2-SSD を動かす（i-PRO カメラ）</a></h2>
+	<h3><a name="3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></h3>
 	<h4>[概要]</h4>
-    <p>MobileNetV2-SSD を PyTorch の環境で動かしてみます。</p>
+    <p>MobileNetV2-SSD-lite を PyTorch の環境で動かしてみます。</p>
 	<p>本章では i-PRO カメラとPCを LAN 接続してリアルタイムで物体検知してみます。前章と同様に <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> を使って行います。</p>
     <p>&nbsp;</p>
@@ -640,7 +701,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
     <p>&nbsp;</p>
     
   	<p>[動画] プログラムを動作させた様子（i-PRO カメラ）</p>
-    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/movilenetv2-ssd-ipromini_1.mp4" width="800">
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv2-ssd-ipromini_1.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
     </video>
     
@@ -648,14 +709,151 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	<p>MobiletNetV2-ssd-lite で動作させているのは正しいですが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
 	<p>私が触ってみた印象ですが、認識精度が若干向上して CPU 負荷も若干軽くなったという気がします。</p>
 	<p>&nbsp;</p>
-	&nbsp;<p>以上です。というわけで、プログラムを１行も書くことなく i-PRO カメラとPCを接続して MobileNetV2-SSD 
+	<p>&nbsp;</p>
+	<p>以上です。というわけで、プログラムを１行も書くことなく i-PRO カメラとPCを接続して MobileNetV2-SSD 
 	も実行することができました。</p>
 	<p>&nbsp;</p>
   
+</section>
+	
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<h2><a name="4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></h2>
+
+	<p>MobileNetV3-SSD-Lite は PyTorch に組み込まれていました。"ssdlite320_mobilenet_v3_large" 
+	というモジュールです。同様に学習済みモデルも Pytorch 環境のみで取得可能です。</p>
+    <p>本章では Pytorch および "ssdlite320_mobilenet_v3_large" を使って 
+	MobileNetV3-SSD-Lite を動かしてみたいと思います。</p>
     <p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></h2>
+	<h4>[概要]</h4>
+	<p>PyTorch の資料を参考に、JPEGファイルを読み込んで物体認識する Python プログラムを作成してみます。</p>
+	<p>参考にする元資料は 
+	<a href="https://pytorch.org/vision/main/models.html#object-detection" target="_blank">
+	こちら</a> (Object Detection) です。<br>この元資料の "fasterrcnn_resnet50_fpn_v2" を "<strong>ssdlite320_mobilenet_v3_large</strong>" 
+	へ変更して、課題ある部分をさらに追加修正する、という感じでやってみます。</p>
+	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	&nbsp;</p>
+	<h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+  
+  <p>&nbsp;</p>
+	<p>[run_mobilenetv3-ssdlite_jpeg_demo.py]</p>
+	<pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Create a python program that detects objects in JPEG images using the trained AI model of "MobileNetV3 SSD-Lite".
+
+    "MobileNetV3 SSD-Lite" の学習済みAIモデルを使用して、JPEG画像を対象に物体検知する Python プログラムを作成します。
+
+[Details]
+    This program uses pytorch "ssdlite320_mobilenet_v3_large" and pre-trained model.
+    The program detects 91 classes because the trained model is trained using the COCO dataset.
+    When you run this program for the first time, you will have to wait a lot of time to start the program, as it downloads the trained model.
+
+    このプログラムは pytorch の "ssdlite320_mobilenet_v3_large" および 学習済みモデルを使用します。
+    学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。
+    このプログラムを始めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、あなたはプログラム起動に多くの時間を待つ必要があるでしょう。
+
+[Library install]
+    cv2:        pip install opencv-python
+    pytorch:    pip install torch torchvision torchaudio
+
+[Reference URL]
+    https://pytorch.org/vision/main/models.html#object-detection
+    https://pytorch.org/vision/0.11/auto_examples/plot_visualization_utils.html#visualizing-bounding-boxes
+
+[Image used]
+    dog1.jpg : https://pixabay.com/ja/photos/%e3%83%9e%e3%83%ab%e3%82%bf%e8%aa%9e-%e7%8a%ac-%e5%ad%90%e7%8a%ac-%e5%b0%8f%e5%9e%8b%e7%8a%ac-1123016/
+'''
+
+from pathlib import Path
+from torchvision.io.image import read_image
+from torchvision.models.detection import <span class="auto-style1">ssdlite320_mobilenet_v3_large</span>, <span class="auto-style1">SSDLite320_MobileNet_V3_Large_Weights</span>
+from torchvision.utils import draw_bounding_boxes
+from torchvision.transforms.functional import to_pil_image
+
+img = read_image(str(Path('assets') / 'dog1.jpg'))
+
+# Step 1: Initialize model with the best available weights
+weights = <span class="auto-style1">SSDLite320_MobileNet_V3_Large_Weights</span>.DEFAULT
+model = <span class="auto-style1">ssdlite320_mobilenet_v3_large</span>(weights=weights)
+model = model.eval()
+
+# Step 2: Initialize the inference transforms
+preprocess = weights.transforms()
+
+# Step 3: Apply inference preprocessing transforms
+batch = [preprocess(img)]
+
+# Step 4: Use the model and visualize the prediction
+prediction = model(batch)[0]
+score_threshold = 0.5
+labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
+box = draw_bounding_boxes(img, boxes=prediction["boxes"][prediction["scores"] &gt; score_threshold],
+                          labels=labels,
+                          colors="red",
+                          width=4,
+                          font='arial.ttf', font_size=30)
+im = to_pil_image(box.detach())
+im.show()</pre>
+	<p>&nbsp;</p>
+	<p>動作結果はこちらです。</p>
+	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	評価画像として、<span>&nbsp;</span><a href="https://pixabay.com" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; background-color: transparent;" target="_blank">https://pixabay.com</a><span>&nbsp;提供の</span>画像を使用させていただきました。商用利用無料、帰属表示必要なし、の画像です。<br>
+	<a href="https://pixabay.com/ja/photos/マルタ語-犬-子犬-小型犬-1123016/" target="_blank">https://pixabay.com/ja/photos/%e3%83%9e%e3%83%ab%e3%82%bf%e8%aa%9e-%e7%8a%ac-%e5%ad%90%e7%8a%ac-%e5%b0%8f%e5%9e%8b%e7%8a%ac-1123016/</a></p>
+	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	上記プログラムを実行する際は、ご自身で画像を準備またはダウンロードして事前に "assets" フォルダに "dog1.jpg" 
+	の名称で保存してください。</p>
+	<p><img alt="" src="mobilenet-ssd/img8.jpg" width="800"></p>
     
 </section>
 	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
 
 <section>
@@ -739,19 +937,24 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2022-09-16</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）」を追加</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2022-08-30</td>
 	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「3. MobileNetV1-SSD を動かす（i-PRO カメラ）」を追加</td>
+	    <td class="td_history">「2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）」を追加</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">&nbsp;</td>
 	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「4. MobileNetV2-SSD を動かす（PC 内蔵カメラ）」を追加</td>
+	    <td class="td_history">「3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）」を追加</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">&nbsp;</td>
 	    <td class="td_history_separator">&nbsp;</td>
-	    <td class="td_history">「5. MobileNetV2-SSD を動かす（i-PRO カメラ）」を追加</td>
+	    <td class="td_history">「3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）」を追加</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-08-03</td>
