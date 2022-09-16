@@ -736,6 +736,8 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	<a href="https://pytorch.org/vision/main/models.html#object-detection" target="_blank">
 	こちら</a> (Object Detection) です。<br>この元資料の "fasterrcnn_resnet50_fpn_v2" を "<strong>ssdlite320_mobilenet_v3_large</strong>" 
 	へ変更して、課題ある部分をさらに追加修正する、という感じでやってみます。</p>
+	<p>学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。</p>
+	<p>このプログラムを初めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、プログラム起動に多くの時間を待つ必要があるでしょう。 </p>
 	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
 	&nbsp;</p>
 	<h4>[評価環境]</h4>
@@ -794,7 +796,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 
     このプログラムは pytorch の "ssdlite320_mobilenet_v3_large" および 学習済みモデルを使用します。
     学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。
-    このプログラムを始めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、あなたはプログラム起動に多くの時間を待つ必要があるでしょう。
+    このプログラムを初めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、あなたはプログラム起動に多くの時間を待つ必要があるでしょう。
 
 [Library install]
     cv2:        pip install opencv-python
@@ -838,6 +840,9 @@ box = draw_bounding_boxes(img, boxes=prediction["boxes"][prediction["scores"] &g
                           font='arial.ttf', font_size=30)
 im = to_pil_image(box.detach())
 im.show()</pre>
+	<p>&nbsp;</p>
+	<p>
+	たったこれだけのソースコードで物体検知を実現できます。学習済みモデルのダウンロードを含みますので、必ずインターネットへ接続できる環境で実行してください。</p>
 	<p>&nbsp;</p>
 	<p>動作結果はこちらです。</p>
 	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
