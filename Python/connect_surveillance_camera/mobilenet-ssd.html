@@ -832,8 +832,9 @@ batch = [preprocess(img)]
 # Step 4: Use the model and visualize the prediction
 prediction = model(batch)[0]
 score_threshold = 0.5
-labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
-box = draw_bounding_boxes(img, boxes=prediction["boxes"][prediction["scores"] &gt; score_threshold],
+labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int > score_threshold]
+boxes = prediction["boxes"][prediction["scores"] > score_threshold]
+box = draw_bounding_boxes(img, boxes=boxes,
                           labels=labels,
                           colors="red",
                           width=4,
