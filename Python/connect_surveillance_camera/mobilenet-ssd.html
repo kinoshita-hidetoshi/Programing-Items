@@ -77,8 +77,9 @@
         <p>&nbsp;&nbsp; <a href="#3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
     		<p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
     		<p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
-    		<p>&nbsp;&nbsp; 4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</p>
-    		<p>&nbsp;&nbsp; 4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</p>
+    		<p>&nbsp;&nbsp; <a href="#4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+    		<p>&nbsp;&nbsp; 
+			<a href="#4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></p>
         <br>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -93,13 +94,18 @@
 <p>MobileNetSSD は V1, V2, V3 まで発表されていますので、これらを１つずつ動作させてみたいと思います。i-PRO 
 カメラと接続して使用する手順についても具体的に紹介していきます。</p>
 <p>&nbsp;</p>
-<p>こちら、私のノートPCで CPU 動作させた例です。GPU無しの動作環境ですが 10fps でリアルタイム動作できています。</p>
+<p>こちら、私のノートPCで CPU 動作させた例です。GPU無しの動作環境ですがこれぐらいでリアルタイム動作できています。</p>
 
     <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv2-ssd-pccam.mp4" width="800">
       <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
     </video>
     
 <p>&nbsp;</p>
+
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv3-ssd-ipromini_1.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video>
+    
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
@@ -238,6 +244,57 @@
 <p>&nbsp;</p>
 
 <h2><a name="2._MobileNetV1-SSD">2. MobileNetV1-SSD</a></h2>
+<p>2017年に MobileNet v1 が発表されました。（<a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank">MobileNet 
+V1 の原著論文</a>）</p>
+<p>
+分類・物体検出・セマンティックセグメンテーションを含む画像認識を、モバイル端末などの限られたリソース下で高精度で判別するモデルを作成することを目的として作成しています。</p>
+<p>MobileNetV1 は下記２つの技術により高速化を行っています。</p>
+<ol>
+  <li>Depthwise Separable Convolution</li>
+  <li>Pointwise convolution</li>
+</ol>
+<p>&nbsp;</p>
+<ul>
+  <li>通常の畳み込み層演算処理を空間方向とチャンネル方向の2段階に分けて行う</li>
+  <li>各チャンネル毎に独立して空間方向 (Depthwise, 3x3) のみに畳み込み演算を行う (Depthwise Separable Convolution)</li>
+  <li>1x1フィルターの畳み込みによりチャンネル方向 (Pointwise, 1x1) のみに畳み込み演算を行う (Pointwise convolution)</li>
+  <li>以上の結果、総演算量を 1/8～1/9 に削減</li>
+</ul>
+<p>&nbsp;</p>
+<p><img alt="" src="mobilenet-ssd/img28.jpg" width="800"></p>
+<p>&nbsp;</p>
+<p>MobileNet(V1) のアーキテクチャ構造です。</p>
+<p><img alt="" class="border" src="mobilenet-ssd/img3A.jpg"></p>
+<p>&nbsp;</p>
+<p>MobileNet(V1) の物体検出性能を、COCOデータセット上で評価・比較した結果です。論文からの引用です。</p>
+<p><img alt="" class="border" src="mobilenet-ssd/img24.jpg" width="600"></p>
+<p>引用元： <a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank">MobileNet 
+V1 の原著論文</a></p>
+<p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table] 用語説明</caption>
+      <thead class="standard_table">
+      </thead>
+      <tbody>
+        <tr>
+          <td>mAP</td>
+          <td>認識性能の平均値（mean Average Precision）</td>
+        </tr>
+        <tr>
+          <td>Mult-Adds</td>
+          <td>積和演算の回数</td>
+        </tr>
+        <tr>
+          <td>Parameters</td>
+          <td>重みの数</td>
+        </tr>
+      </tbody>
+    </table>
+    
+<p>&nbsp;</p>
+<p>上記結果から、MobileNet(V1) は、認識性能（mAP）を大きく低下することなく計算量（Mult-Adds）を劇的に削減できていることを読み取れます。</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -319,6 +376,28 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
 bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt
 python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
     <p>&nbsp;</p>
+	<p>学習済みモデルは VOC dataset を使って学習しているので、このプログラムは下記 20クラス を検知します。</p>
+	<pre style="width: 200px">1: aeroplane
+2: bicycle
+3: bird
+4: boat
+5: bottle
+6: bus
+7: car
+8: cat
+9: chair
+10: cow
+11: diningtable
+12: dog
+13: horse
+14: motorbike
+15: person
+16: pottedplant
+17: sheep
+18: sofa
+19: train
+20: tvmonitor</pre>
+	<p>&nbsp;</p>
     <p>3. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
     <p><a href="mobilenet-ssd/img9.gif" target="_blank">
     <img alt="pytorch-ssd － run_ssd_live_demo.py エラー発生時の画面" src="mobilenet-ssd/img9.gif" width="800"></a></p>
@@ -519,7 +598,73 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 <p>&nbsp;</p>
 
 <h2><a name="3._MobileNetV2-SSD-Lite">3. MobileNetV2-SSD-Lite</a></h2>
+<p>2018年に MobileNet v1 の後継モデルとして v2 が発表されました。（<a href="https://arxiv.org/pdf/1801.04381v3.pdf" target="_blank">MobileNet V2 
+の原著論文</a>）</p>
+<p>MobileNet v1 
+の構想およびモデルを基礎にしながら、モジュールを大幅に改良したものです。</p>
+<p>MobileNet v1 
+同様、分類・物体検出・セマンティックセグメンテーションを含む画像認識を、モバイル端末などの限られたリソース下で高精度で判別するモデルを作成することを目的として作成しています。</p>
+<p>&nbsp;</p>
+<p>MobileNetV2 で利用されているモジュールは以下の３つです。本ページでは詳細を割愛します。詳しくは原著論文などを参照ください。</p>
+<ol>
+  <li><strong>Depthwise Separable Convolutions</strong>（深さ方向分離可能畳み込み）<br>MobileNetV2 でも“Depthwise 
+  Separable Convolutions” を利用することで、計算量を減らしています。 </li>
+  <li><strong>Linear Bottlenecks</strong>（線形ボトルネック）<br>
+  活性関数に非線形性をもつ層（ReLU層やSoftmax層、tanh層など）を利用すると、非常に多くの情報が失われることがあきらかになっています。そのため、ReLUにつながる中間部分のチャンネルを拡大する（＝次元を増やす）ことによって、本来つぶれてしまう情報を他のチャンネルに持たせることができ、情報の喪失を防げるという仮説にもとづき 
+  MobileNetV2 では “Bottolneck Convolution” 
+  が実装されている。なお、次元を大きくしすぎてもうまく機能しないことが知られており、論文では拡大率(t)を 6 に設定しています。 </li>
+  <li><strong>Inverted residuals</strong>（反転残差）<br>ReLUの表現力の問題に関連してInverted residulals 
+  blockを考案しています。このblockを基本的に MobileNetV1 の単純な Depthwise Separable 
+  Convolution と置き換えます。<br><br>① Inverted residuals block は3つの convolution 
+  から構成されています。１つ目は、1×1Conv です。そしてこのConvは t倍(tはthe expantion ratio展開率) 
+  に出力チャンネルを写像する役割を持っています。２つ目は、Depthwise Separable Convolutions 
+  です。３つ目は、１つ目と同様に1×1convです。こちらは出力チャンネルを入力時のチャンネル次元数に戻すようなConvolutionになっています。 <br>
+  <br>② 従来の残差ネットワーク（Residual 
+  Network:ResNet）と同様に、ショートカットを使用することで、より高速なトレーニングと精度の向上を可能にしています。 </li>
+</ol>
+<p>&nbsp;</p>
+<p>表現が異なるので単純比較できませんが、V1およびV2のアーキテクチャ構造比較です。</p>
+<p><img alt="" class="border" src="mobilenet-ssd/img2D.jpg"></p>
+<p>&nbsp;</p>
+<ul>
+  <li>上記アーキテクチャ構造について同一インプットサイズのフィルターを V1, V2 
+  で比較すると、V2のチャネル数がとても小さくなっていることがわかります。</li>
+  <li>例えば、Input サイズ 56x56 の部分を比較してみましょう。（水色の部分）<br>V2 では 56×56×24 
+  を3回(n)実施していますが、V1 では 56x56x128 を2回実施しています。少々乱暴ですが、チャネル数で 256(v1) -&gt; 72(v2) 
+  と大幅に削減しています。<br>このチャネル数の削減が計算量の削減に大きく貢献しています。</li>
+</ul>
+<p>&nbsp;</p>
+<p>MobileNetV2とMobileNetV1の物体検出性能を、COCOデータセット上で評価・比較した結果です。論文からの引用です。</p>
+<p><img alt="" src="mobilenet-ssd/img2F.jpg" class="border"></p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table] 用語説明</caption>
+      <thead class="standard_table">
+      </thead>
+      <tbody>
+        <tr>
+          <td>mAP</td>
+          <td>認識性能の平均値（mean Average Precision）</td>
+        </tr>
+        <tr>
+          <td>Mult-Adds</td>
+          <td>積和演算の回数</td>
+        </tr>
+        <tr>
+          <td>Parameters</td>
+          <td>重みの数</td>
+        </tr>
+      </tbody>
+    </table>
+    
+<p>&nbsp;</p>
+<p>以上の結果から、MobileNetV2 SSDLite は最も効率的なモデルであるだけでなく、COCOデータセット上で YOLOv2 
+を上回る20倍の効率性と10倍の小型化を実現していることを読み取れます。 </p>
+<p>&nbsp;</p>
+<p>引用元： <a href="https://arxiv.org/pdf/1801.04381v3.pdf" target="_blank">MobileNet V2 
+の原著論文</a></p>
 
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -605,7 +750,7 @@ python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models
     </video> <br>
     
 	<p>&nbsp;</p>
-	<p>MobiletNetV2-ssd-lite で動作させているのは正しいですが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
+	<p>ちゃんと MobiletNetV2-ssd-lite で動作できていると思いますが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
 	<p>私が触ってみた印象ですが、認識精度が若干向上して CPU 負荷も若干軽くなったという気がします。</p>
 	<p>&nbsp;</p>
   
@@ -706,7 +851,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
     </video>
     
   	<p>&nbsp;</p>
-	<p>MobiletNetV2-ssd-lite で動作させているのは正しいですが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
+	<p>ちゃんと MobiletNetV2-ssd-lite で動作できていると思いますが、こちら映像を見るだけでは V1, V2 の違いはわからないですね。</p>
 	<p>私が触ってみた印象ですが、認識精度が若干向上して CPU 負荷も若干軽くなったという気がします。</p>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
@@ -721,23 +866,156 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 <p>&nbsp;</p>
 
 <h2><a name="4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></h2>
+<p>2019年に MobileNet v2 の後継モデルとして v3 が発表されました。（<a href="https://arxiv.org/pdf/1905.02244.pdf" target="_blank">MobileNet V3 
+の原著論文</a>）</p>
+<p>MobileNetV3 の要点は下記２つの技術です。本ページでは詳細を割愛します。詳しくは原著論文などを参照ください。</p>
+<ol>
+  <li>Squeeze-and-Excite</li>
+  <li>h-swish</li>
+</ol>
+<p>&nbsp;</p>
+<p>MobileNetV3 は Large と Small の２つのモデルを報告しています。アーキテクチャ構造を以下に示します。</p>
+<p><img alt="" class="border" src="mobilenet-ssd/img37.jpg"></p>
+<p>&nbsp;</p>
+<p>MobileNetV3 の物体検出性能を、COCOデータセット上で評価・比較した結果です。論文からの引用です。</p>
+<p><img alt="" src="mobilenet-ssd/img35.jpg"></p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table] 用語説明</caption>
+      <thead class="standard_table">
+      </thead>
+      <tbody>
+        <tr>
+          <td>mAP</td>
+          <td>認識性能の平均値（mean Average Precision）</td>
+        </tr>
+        <tr>
+          <td>Mult-Adds</td>
+          <td>積和演算の回数</td>
+        </tr>
+        <tr>
+          <td>Parameters</td>
+          <td>重みの数</td>
+        </tr>
+      </tbody>
+    </table>
+    
+<p>&nbsp;</p>
+<p>上記結果から V3 (Large) は、V1,V2 と同等の認識性能（mAP）を保持しながら、V1 の約半分、V2 
+の約７割の演算量（MAdds）という軽量なモデルを実現したと読み取れます。</p>
+<p>V3-Small は Large のさらに半分の演算量を実現してますが認識性能は相応に低下するようです。 </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></h2>
+	<h4>[概要]</h4>
 
 	<p>MobileNetV3-SSD-Lite は PyTorch に組み込まれていました。"ssdlite320_mobilenet_v3_large" 
 	というモジュールです。同様に学習済みモデルも Pytorch 環境のみで取得可能です。</p>
     <p>本章では Pytorch および "ssdlite320_mobilenet_v3_large" を使って 
 	MobileNetV3-SSD-Lite を動かしてみたいと思います。</p>
-    <p>&nbsp;</p>
-
-<section>
-	<h2> <a name="4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></h2>
-	<h4>[概要]</h4>
+	<p>&nbsp;</p>
 	<p>PyTorch の資料を参考に、JPEGファイルを読み込んで物体認識する Python プログラムを作成してみます。</p>
 	<p>参考にする元資料は 
 	<a href="https://pytorch.org/vision/main/models.html#object-detection" target="_blank">
 	こちら</a> (Object Detection) です。<br>この元資料の "fasterrcnn_resnet50_fpn_v2" を "<strong>ssdlite320_mobilenet_v3_large</strong>" 
 	へ変更して、課題ある部分をさらに追加修正する、という感じでやってみます。</p>
-	<p>学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。</p>
+	<p>学習済みモデルは COCO dataset を使って学習しているので、このプログラムは下記 91クラス を検知します。</p>
 	<p>このプログラムを初めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、プログラム起動に多くの時間を待つ必要があるでしょう。 </p>
+	<p>&nbsp;</p>
+	<pre style="width: 200px">1: person
+2: bicycle
+3: car
+4: motorcycle
+5: airplane
+6: bus
+7: train
+8: truck
+9: boat
+10: traffic light
+11: fire hydrant
+12: street sign*
+13: stop sign
+14: parking meter
+15: bench
+16: bird
+17: cat
+18: dog
+19: horse
+20: sheep
+21: cow
+22: elephant
+23: bear
+24: zebra
+25: giraffe
+26: hat
+27: backpack
+28: umbrella
+29: shoe
+30: eye glasses
+31: handbag
+32: tie
+33: suitcase
+34: frisbee
+35: skis
+36: snowboard
+37: sports ball
+38: kite
+39: baseball bat
+40: baseball glove
+41: skateboard
+42: surfboard
+43: tennis racket
+44: bottle
+45: plate
+46: wine glass
+47: cup
+48: fork
+49: knife
+50: spoon
+51: bowl
+52: banana
+53: apple
+54: sandwich
+55: orange
+56: broccoli
+57: carrot
+58: hot dog
+59: pizza
+60: donut
+61: cake
+62: chair
+63: couch
+64: potted plant
+65: bed
+66: mirror
+67: dining table
+68: window
+69: desk
+70: toilet
+71: door
+72: tv
+73: laptop
+74: mouse
+75: remote
+76: keyboard
+77: cell phone
+78: microwave
+79: oven
+80: toaster
+81: sink
+82: refrigerator
+83: blender
+84: book
+85: clock
+86: vase
+87: scissors
+88: teddy bear
+89: hair drier
+90: toothbrush
+91: hair brush</pre>
+	<p>&nbsp;</p>
 	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
 	&nbsp;</p>
 	<h4>[評価環境]</h4>
@@ -857,7 +1135,442 @@ im.show()</pre>
 </section>
 	
 <p>&nbsp;</p>
+<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+学習済みモデルは下記に保存されます。'~' はログインしているユーザーのホームディレクトリを意味します。</p>
+<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+&nbsp;</p>
+<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+<a href="https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; background-color: transparent;" target="_blank">
+Where are my downloaded models saved?</a></p>
+<blockquote style="background-repeat: no-repeat; box-sizing: inherit; margin: 2em 0px; padding: 1em; background-color: rgb(250, 250, 250); color: rgb(85, 85, 85); border-left: 8px solid rgb(224, 224, 224); font-size: 13.3px; display: block; margin-block: 1em; font-family: sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+  <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif;">
+  The locations are used in the order of</p>
+  <ul style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 5px 0px 5px 20px; font-family: sans-serif; list-style-position: outside; list-style-type: disc;">
+	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+	Calling<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">hub.set_dir(&lt;PATH_TO_HUB_DIR&gt;)</span></li>
+	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
+	$TORCH_HOME/hub</span>, if environment variable<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">TORCH_HOME</span><span>&nbsp;</span>is 
+	set.</li>
+	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
+	$XDG_CACHE_HOME/torch/hub</span>, if environment variable<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">XDG_CACHE_HOME</span><span>&nbsp;</span>is 
+	set.</li>
+	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
+	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
+	~/.cache/torch/hub</span></li>
+  </ul>
+</blockquote>
+<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+私の場合は下記に ssdlite320_mobilenet_v3_large_coco-a79551df.pth 
+というファイルを保存していました。約13MBのファイルサイズでした。</p>
+<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+"~.cache\torch\hub\checkpoints\ssdlite320_mobilenet_v3_large_coco-a79551df.pth"</p>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></h2>
+	<h4>[概要]</h4>
+	<p>4-1 で作成した JPEG 
+	画像を対象に物体検知するプログラムを元に、ここではPC内蔵カメラの映像をライブで物体検知するプログラムを作成してみます。</p>
+	<p>PC内蔵カメラからの映像取得は OpenCV を使って行います。</p>
+	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	&nbsp;</p>
+	<h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+  
+  <p>&nbsp;</p>
+	<p>[run_mobilenetv3-ssdlite_live_demo.py]</p>
+	<pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Create a python program to detect objects in the camera live video using the trained AI model of "MobileNetV3 SSD-Lite".
+
+    "MobileNetV3 SSD-Lite" の学習済みAIモデルを使用して、カメラライブ映像を物体検知する Python プログラムを作成してみます。
+
+[Details]
+    This program uses pytorch "ssdlite320_mobilenet_v3_large" and pre-trained model.
+    The program detects 91 classes because the trained model is trained using the COCO dataset.
+    When you run this program for the first time, you will have to wait a lot of time to start the program, as it downloads the trained model.
+
+    このプログラムは pytorch の "ssdlite320_mobilenet_v3_large" および 学習済みモデルを使用します。
+    学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。
+    このプログラムを始めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、あなたはプログラム起動に多くの時間を待つ必要があるでしょう。
+
+[Library install]
+    cv2:        pip install opencv-python
+    pytorch:    pip install torch torchvision torchaudio
+'''
+
+import cv2
+from torchvision.models.detection import ssdlite320_mobilenet_v3_large, SSDLite320_MobileNet_V3_Large_Weights
+from torchvision.transforms.functional import convert_image_dtype
+from torchvision import transforms
+
+
+# Step 1: Initialize model with the best available weights
+weights = SSDLite320_MobileNet_V3_Large_Weights.DEFAULT
+model = ssdlite320_mobilenet_v3_large(weights=weights)
+model = model.eval()
+
+# Step 2: Initialize the inference transforms
+preprocess = weights.transforms()
+
+# Initialize variables.
+cap = cv2.VideoCapture(0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Capture from camera.
+#cap.set(3, 1920)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set video stream frame width.&nbsp; Remove '#' and change the value according to your needs.
+#cap.set(4, 1080)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set video stream frame height. Remove '#' and change the value according to your needs.
+winname = "Annotated"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Window title.
+
+# Exception definition.
+BackendError = type('BackendError', (Exception,), {})
+
+
+def IsWindowVisible(winname):
+    '''
+    [Abstract]
+        Check if the target window exists.
+        対象ウィンドウが存在するかを確認する。
+    [Param]
+        winname :       Window title
+    [Return]
+        True :          exist
+                        存在する
+        False :         not exist
+                        存在しない
+    [Exception]
+        BackendError :
+    '''
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
+while True:
+    # Capture image by opencv.
+    ret, orig_image = cap.read()
+    if orig_image is None:
+        continue
+
+    # Convert image from BGR to RGB.
+    rgb_image = cv2.cvtColor(orig_image, cv2.COLOR_BGR2RGB)
+
+    # Convert image from numpy.ndarray to Pillow object.
+    preprocess = transforms.Compose([
+        transforms.ToPILImage(),    # convert from numpy.ndarray to Pillow object.                                
+        transforms.ToTensor(),      # convert to torch.Tensor object.
+    ])
+    input_tensor = preprocess(rgb_image)
+
+    # Step 3: Apply inference preprocessing transforms
+    batch = [preprocess(input_tensor)]
+
+    # Step 4: Use the model and visualize the prediction
+    prediction = model(batch)[0]
+
+    score_threshold = 0.5
+    labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
+    boxes = prediction["boxes"][prediction["scores"] &gt; score_threshold]
+
+    # Draw result.
+    for box, label in zip(boxes, labels):
+        # Debug output.
+        #print(label, box.tolist())
+
+        cv2.rectangle(
+            orig_image,                 # Image.
+            (int(box[0]), int(box[1])), # Vertex of the rectangle.
+            (int(box[2]), int(box[3])), # Vertex of the rectangle opposite to pt1.
+            (255, 255, 0),              # Color.
+            4 )                         # Line type.
+
+        cv2.putText(
+            orig_image,                 # Image.
+            label,                      # Text string to drawn.
+            (int(box[0])+20, int(box[1])+40),
+                                        # Bottom-left corner of the text string in the image.
+            cv2.FONT_HERSHEY_SIMPLEX,   # Font face. - フォント種別
+            0.8,                        # Font scale.
+            (255, 0, 255),              # Color.
+            2)                          # Line type.
+
+    # Debug output.
+    #print()
+
+    # Display video.
+    cv2.imshow(winname, orig_image)
+
+    # Press the "q" key to finish.
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
+
+    # Exit the program if there is no specified window.
+    if not IsWindowVisible(winname):
+        break
+
+cap.release()
+cv2.destroyAllWindows()</pre>
+	<p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子（PC 内蔵カメラ）</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv3-ssd-pccam.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video> <br>
+    
+	<p>&nbsp;</p>
+    
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></h2>
+	<h4>[概要]</h4>
+	<p>4-2 で作成したプログラムを元に i-PRO カメラと接続してカメラ映像をライブで物体検知するプログラムを作成してみます。</p>
+	<p>cv2.VideoCapture の引数を "0" から RTSP表記 へ変更するだけです。</p>
+	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+	&nbsp;</p>
+	<h4>[評価環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.4 </td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.11.0</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>21H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>&nbsp;</p>
+	<p>"user-id", "password", "host" 
+	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正してください。</p>
+	<p>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</p>
+  
+  <p>&nbsp;</p>
+	<p>[run_mobilenetv3-ssdlite_live_i-pro-com_demo.py]</p>
+	<pre class="prettyprint linenums lang-py">'''
+[Abstract]
+    Create a python program to detect objects in the camera live video using the trained AI model of "MobileNetV3 SSD-Lite".
+
+    "MobileNetV3 SSD-Lite" の学習済みAIモデルを使用して、カメラライブ映像を物体検知する Python プログラムを作成してみます。
+
+[Details]
+    This program uses pytorch "ssdlite320_mobilenet_v3_large" and pre-trained model.
+    The program detects 91 classes because the trained model is trained using the COCO dataset.
+    When you run this program for the first time, you will have to wait a lot of time to start the program, as it downloads the trained model.
+
+    このプログラムは pytorch の "ssdlite320_mobilenet_v3_large" および 学習済みモデルを使用します。
+    学習済みモデルは COCO dataset を使って学習しているので、このプログラムは91クラスを検知します。
+    このプログラムを始めて実行するとき、このプログラムは学習済みモデルのダウンロードを行うため、あなたはプログラム起動に多くの時間を待つ必要があるでしょう。
+
+[Library install]
+    cv2:        pip install opencv-python
+    pytorch:    pip install torch torchvision torchaudio
+'''
+
+import cv2
+from torchvision.models.detection import ssdlite320_mobilenet_v3_large, SSDLite320_MobileNet_V3_Large_Weights
+from torchvision.transforms.functional import convert_image_dtype
+from torchvision import transforms
+
+
+# Initialize variables.
+<span class="auto-style1">user_id     = "user-id"             # Change to match your camera setting</span>
+<span class="auto-style1">user_pw     = "password"            # Change to match your camera setting</span>
+<span class="auto-style1">host        = "192.168.0.10"        # Change to match your camera setting</span>
+winname     = "Annotated"           # Window title.
+
+# Step 1: Initialize model with the best available weights
+weights = SSDLite320_MobileNet_V3_Large_Weights.DEFAULT
+model = ssdlite320_mobilenet_v3_large(weights=weights)
+model = model.eval()
+
+# Step 2: Initialize the inference transforms
+preprocess = weights.transforms()
+
+# Capture from camera.
+cap = cv2.VideoCapture(<span class="auto-style1">f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1"</span>)
+#cap.set(3, 1920)               # Set video stream frame width.  Remove '#' and change the value according to your needs.
+#cap.set(4, 1080)               # Set video stream frame height. Remove '#' and change the value according to your needs.
+
+# Exception definition.
+BackendError = type('BackendError', (Exception,), {})
+
+
+def IsWindowVisible(winname):
+    '''
+    [Abstract]
+        Check if the target window exists.
+        対象ウィンドウが存在するかを確認する。
+    [Param]
+        winname :       Window title
+    [Return]
+        True :          exist
+                        存在する
+        False :         not exist
+                        存在しない
+    [Exception]
+        BackendError :
+    '''
+    try:
+        ret = cv2.getWindowProperty(winname, cv2.WND_PROP_VISIBLE)
+        if ret == -1:
+            raise BackendError('Use Qt as backend to check whether window is visible or not.')
+
+        return bool(ret)
+
+    except cv2.error:
+        return False
+
+
+while True:
+    # Capture image by opencv.
+    ret, orig_image = cap.read()
+    if orig_image is None:
+        continue
+
+    # Convert image from BGR to RGB.
+    rgb_image = cv2.cvtColor(orig_image, cv2.COLOR_BGR2RGB)
+
+    # Convert image from numpy.ndarray to Pillow object.
+    preprocess = transforms.Compose([
+        transforms.ToPILImage(),    # convert from numpy.ndarray to Pillow object.                                
+        transforms.ToTensor(),      # convert to torch.Tensor object.
+    ])
+    input_tensor = preprocess(rgb_image)
+
+    # Step 3: Apply inference preprocessing transforms
+    batch = [preprocess(input_tensor)]
+
+    # Step 4: Use the model and visualize the prediction
+    prediction = model(batch)[0]
+
+    score_threshold = 0.5
+    labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
+    boxes = prediction["boxes"][prediction["scores"] &gt; score_threshold]
+
+    # Draw result.
+    for box, label in zip(boxes, labels):
+        # Debug output.
+        #print(label, box.tolist())
+
+        cv2.rectangle(
+            orig_image,                 # Image.
+            (int(box[0]), int(box[1])), # Vertex of the rectangle.
+            (int(box[2]), int(box[3])), # Vertex of the rectangle opposite to pt1.
+            (255, 255, 0),              # Color.
+            4 )                         # Line type.
+
+        cv2.putText(
+            orig_image,                 # Image.
+            label,                      # Text string to drawn.
+            (int(box[0])+20, int(box[1])+40),
+                                        # Bottom-left corner of the text string in the image.
+            cv2.FONT_HERSHEY_SIMPLEX,   # Font face. - フォント種別
+            0.8,                        # Font scale.
+            (255, 0, 255),              # Color.
+            2)                          # Line type.
+
+    # Debug output.
+    #print()
+
+    # Display video.
+    cv2.imshow(winname, orig_image)
+
+    # Press the "q" key to finish.
+    if cv2.waitKey(1) &amp; 0xFF == ord('q'):
+        break
+
+    # Exit the program if there is no specified window.
+    if not IsWindowVisible(winname):
+        break
+
+cap.release()
+cv2.destroyAllWindows()</pre>
+	<p>&nbsp;</p>
+    
+  	<p>[動画] プログラムを動作させた様子（i-PRO カメラ）</p>
+    <video controls muted autoplay="y" loop="y" src="mobilenet-ssd/mobilenetv3-ssd-ipromini_1.mp4" width="800">
+      <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+    </video> <br>
+    
+	<p>&nbsp;</p>
+    
+</section>
+	
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
@@ -930,6 +1643,16 @@ SOFTWARE.
 		<li>[9] PyTorchでObeject Detection (mashykom.com)<br>
       <a href="https://www.koi.mashykom.com/pytorch2.html" target="_blank">
       https://www.koi.mashykom.com/pytorch2.html</a></li>
+		<li>[10] MobileNets: Efficient Convolutional Neural Networks for Mobile 
+		Vision Applications <br>
+		<a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank">
+		https://arxiv.org/pdf/1704.04861.pdf</a></li>
+		<li>[11] MobileNetV2: Inverted Residuals and Linear Bottlenecks <br>
+		<a href="https://arxiv.org/pdf/1801.04381v3.pdf" target="_blank">
+		https://arxiv.org/pdf/1801.04381v3.pdf</a></li>
+		<li>[12] Searching for MobileNetV3 <br>
+		<a href="https://arxiv.org/pdf/1905.02244.pdf" target="_blank">
+		https://arxiv.org/pdf/1905.02244.pdf</a></li>
 	</ul>
 </section>
 
@@ -942,6 +1665,21 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-09-19</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">論文などの技術情報について追記</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-09-16</td>
 	    <td class="td_history_separator">-</td>
@@ -959,7 +1697,7 @@ SOFTWARE.
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">&nbsp;</td>
-	    <td class="td_history_separator">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
 	    <td class="td_history">「3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）」を追加</td>
 	  </tr>
 	  <tr>
