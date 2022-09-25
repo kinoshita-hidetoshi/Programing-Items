@@ -61,32 +61,28 @@
 <h1>物体検知 － MobileNet-SSD</h1>
 
 <p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._準備">1. 準備</a></p>
-        <p>&nbsp;&nbsp; <a href="#1-1._Pytorch_をインストールする">1-1. PyTorch をインストールする</a></p>
-        <p>&nbsp;&nbsp; <a href="#1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストールする</a></p>
-        <p><a href="#2._MobileNetV1-SSD">2. MobileNetV1-SSD</a></p>
-		    <p>&nbsp;&nbsp; <a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2-1. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-2._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></p>
-        <p><a href="#3._MobileNetV2-SSD-Lite">3. MobileNetV2-SSD-Lite</a></p>
-        <p>&nbsp;&nbsp; <a href="#3-1._MobileNetV2-SSD-Lite_を動かす（PC_内蔵カメラ）">3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
-        <p>&nbsp;&nbsp; <a href="#3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
-    		<p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
-    		<p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
-    		<p>&nbsp;&nbsp; <a href="#4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
-    		<p>&nbsp;&nbsp; 
-			<a href="#4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></p>
-        <br>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+    <h2>目次</h2>
+    <p><a href="#1._準備">1. 準備</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-1._Pytorch_をインストールする">1-1. PyTorch をインストールする</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストールする</a></p>
+    <p><a href="#2._MobileNetV1-SSD">2. MobileNetV1-SSD</a></p>
+    <p>&nbsp;&nbsp; <a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">2-1. MobileNetV1-SSD を動かす（PC 内蔵カメラ）</a></p>
+    <p>&nbsp;&nbsp; <a href="#2-2._MobileNetV1-SSD_を動かす（i-PRO_カメラ）">2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）</a></p>
+    <p>&nbsp;&nbsp; <a href="#参考：_GPU動作させる場合のソースコード修正について">参考： GPU動作させる場合のソースコード修正について</a></p>
+    <p><a href="#3._MobileNetV2-SSD-Lite">3. MobileNetV2-SSD-Lite</a></p>
+    <p>&nbsp;&nbsp; <a href="#3-1._MobileNetV2-SSD-Lite_を動かす（PC_内蔵カメラ）">3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+    <p>&nbsp;&nbsp; <a href="#3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
+		<p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
+		<p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
+		<p>&nbsp;&nbsp; <a href="#4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+		<p>&nbsp;&nbsp; <a href="#4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></p>
+    <br>
+    <p><a href="#ライセンス">ライセンス</a></p>
+    <p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
 <p><strong>MobileNet-SSD</strong> は、高速に物体物体検知を行うAIモデルの一つです。高い認識性能と共に GPU 
 を搭載しない組み込み機器でも動作する軽量なモデルであることに特徴があります。</p>
@@ -353,10 +349,14 @@ V1 の原著論文</a></p>
     <h4>[手順]</h4>
     <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> から git clone してソースコード一式を入手します。</p>
+	<p>任意のフォルダで端末（コマンドプロンプト等）を起動して下記コマンドをインプットします。</p>
     <p>（git を既にインストール済みとして記載します。）</p>
     <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
     <p>&nbsp;</p>
-    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。</p>
+	<p>2. "git clone" したフォルダへ移動します。</p>
+	<pre>cd pytorch-ssd</pre>
+	<p>&nbsp;</p>
+    <p>3. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。</p>
     <p>最初の２行は学習済みデータとラベルデータの取得なので、初めて実行するときのみ実施すれば良いです。</p>
     <pre>wget -P models https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth 
 wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
@@ -398,7 +398,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
 19: train
 20: tvmonitor</pre>
 	<p>&nbsp;</p>
-    <p>3. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
+    <p>4. 上記手順でプログラム（"python run_ssd_live_demo.py ･･･" のところ）を実行したところ、私の環境では下図のようなエラーを表示して正常に動作しませんでした。</p>
     <p><a href="mobilenet-ssd/img9.gif" target="_blank">
     <img alt="pytorch-ssd － run_ssd_live_demo.py エラー発生時の画面" src="mobilenet-ssd/img9.gif" width="800"></a></p>
     <p>&nbsp;</p>
@@ -440,7 +440,7 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
       <p>&nbsp;</p>
 	  <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <p>4. 修正したプログラムを動かした様子を以下に示します。</p>
+    <p>5. 修正したプログラムを動かした様子を以下に示します。</p>
     <p>カメラはPC内蔵のカメラです。PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
     <p>&nbsp;</p>
     
@@ -522,9 +522,13 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     <h4>[手順]</h4>
     <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+	<p>任意のフォルダで端末（コマンドプロンプト等）を起動して下記コマンドをインプットします。</p>
     <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
     <p>&nbsp;</p>
-    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
+	<p>2. "git clone" したフォルダへ移動します。</p>
+	<pre>cd pytorch-ssd</pre>
+	<p>&nbsp;</p>
+    <p>3. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
     <pre>wget -P models https://storage.googleapis.com/models-hao/mobilenet-v1-ssd-mp-0_675.pth 
 wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
 </pre>
@@ -535,7 +539,7 @@ wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt
 bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt
 </pre>
     <p>&nbsp;</p>
-	<p>3. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
+	<p>4. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
 	<p><span class="auto-style3">{user-id}</span>, <span class="auto-style3">
 	{password}</span>, <span class="auto-style3">{ip-address}</span> 
 	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。</p>
@@ -545,8 +549,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt 
 	rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</span></p>
 	  <p>&nbsp;</p>
-    <p>&nbsp;</p>
-	<p>4. プログラムを動かした様子を以下に示します。</p>
+	<p>5. プログラムを動かした様子を以下に示します。</p>
 	<p>PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
 	<p>i-PRO カメラの設定を 10fps にしています。私のノートPC環境では 30fps 
 	動作させると映像が少しずつ遅延していきました。AI処理なしに映像表示させると 30fps 
@@ -661,7 +664,8 @@ V2の1階層が対応する、という感じで読むと概ね同じような�
     
 <p>&nbsp;</p>
 <p>以上の結果から、MobileNetV2 SSDLite は最も効率的なモデルであるだけでなく、COCOデータセット上で YOLOv2 
-を上回る20倍の効率性と10倍の小型化を実現していることを読み取れます。 </p>
+を上回る20倍の効率性と10倍の小型化を実現していることを読み取れます。</p>
+<p>V1、V2 の比較についても、V2は認識精度（mAP）を低下することなく計算量（MAdd）を約4割削減できていることがわかります。</p>
 <p>&nbsp;</p>
 <p>引用元： <a href="https://arxiv.org/pdf/1801.04381v3.pdf" target="_blank">MobileNet V2 
 の原著論文</a></p>
@@ -724,9 +728,13 @@ V2の1階層が対応する、という感じで読むと概ね同じような�
     <h4>[手順]</h4>
     <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+	<p>任意のフォルダで端末（コマンドプロンプト等）を起動して下記コマンドをインプットします。</p>
     <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
     <p>&nbsp;</p>
-    <p>2. README.md 中の "Run the live MobileNetV2 SSD Lite demo" に記載の内容に従って下記を実行します。</p>
+	<p>2. "git clone" したフォルダへ移動します。</p>
+	<pre>cd pytorch-ssd</pre>
+	<p>&nbsp;</p>
+    <p>3. README.md 中の "Run the live MobileNetV2 SSD Lite demo" に記載の内容に従って下記を実行します。</p>
     <p>最初の２行は学習済みデータとラベルデータの取得なので、初めて実行するときのみ実施すれば良いです。また２行目の 
 	"voc-model-labels.txt" は MobileNetV1-SSD と同一のファイルです。</p>
     <pre>
@@ -742,7 +750,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models/voc-model-labels.txt</pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <p>3. プログラムを動かした様子を以下に示します。</p>
+    <p>4. プログラムを動かした様子を以下に示します。</p>
     <p>カメラはPC内蔵のカメラです。PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
     <p>&nbsp;</p>
     
@@ -815,10 +823,14 @@ python run_ssd_live_demo.py mb2-ssd-lite models/mb2-ssd-lite-mp-0_686.pth models
     <h4>[手順]</h4>
     <p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
     pytorch-ssd</a> から git clone してソースコード一式を入手します。（前章と同じです。実施済みなら不要です。）</p>
+	<p>任意のフォルダで端末（コマンドプロンプト等）を起動して下記コマンドをインプットします。</p>
     <pre>git clone https://github.com/qfgaohao/pytorch-ssd.git</pre>
     <p>&nbsp;</p>
+	<p>2. "git clone" したフォルダへ移動します。</p>
+	<pre>cd pytorch-ssd</pre>
+	<p>&nbsp;</p>
     
-    <p>2. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
+    <p>3. README.md 中の "Run the live MobilenetV1 SSD demo" に記載の内容に従って下記を実行します。（前章と同じです。実施済みなら不要です。）</p>
     <pre>wget -P models https://storage.googleapis.com/models-hao/mb2-ssd-lite-mp-0_686.pth
 wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt</pre>
     <p>&nbsp;</p>
@@ -828,7 +840,7 @@ wget -P models https://storage.googleapis.com/models-hao/voc-model-labels.txt</p
 bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-labels.txt c:\<span class="auto-style3">{作業フォルダ}</span>\models\voc-model-labels.txt</pre>
     <p>&nbsp;</p>
     
-	<p>3. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
+	<p>4. 下記コマンドを入力してプログラムを起動します。ここでは４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。</p>
 	<p><span class="auto-style3">{user-id}</span>, <span class="auto-style3">
 	{password}</span>, <span class="auto-style3">{ip-address}</span> 
 	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。</p>
@@ -839,7 +851,7 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	  <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-	<p>4. プログラムを動かした様子を以下に示します。</p>
+	<p>5. プログラムを動かした様子を以下に示します。</p>
 	<p>PyTorch は前述の通り CPU 版ですがかなり快適に動作できています。</p>
 	<p>i-PRO カメラの設定を 10fps にしています。私のノートPC環境では 30fps 
 	動作させると映像が少しずつ遅延していきました。AI処理なしに映像表示させると 30fps 
@@ -859,6 +871,21 @@ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/voc-model-l
 	<p>&nbsp;</p>
 	<p>以上です。というわけで、プログラムを１行も書くことなく i-PRO カメラとPCを接続して MobileNetV2-SSD 
 	も実行することができました。</p>
+	<p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+	
+<section>
+	<h3><a name="参考：_GPU動作させる場合のソースコード修正について">参考： GPU動作させる場合のソースコード修正について</a></h3>
+	<p>本ページの紹介は Pytorch 動作を "CPU" 
+	として説明していますが、GPU（CUDA）で動作させた場合に必要となるソースコード修正について参考記載します。</p>
+	<p>MobileNetV1 については CUDA 環境で問題なく動作したのですが、MobileNetV2 について私の環境では下記修正を行う必要がありました。</p>
+	<p>対象ファイルは "vision/ssd/mobilenet_v2_ssd_lite.py" です。</p>
+	<p>&nbsp;</p>
+	<p>
+	<a href="mobilenet-ssd/imgC1.jpg" target="_blank">
+	<img alt="" src="mobilenet-ssd/imgC1.jpg" class="border" width="800"></a></p>
 	<p>&nbsp;</p>
   
 </section>
@@ -1222,8 +1249,23 @@ Where are my downloaded models saved?</a></p>
 </table>
 
   <p>&nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+        <p>OpenCV 形式で取得した画像を PyTorch が扱える形式へ変換する必要があります。</p>
+		<ul>
+		  <li>OpenCVの画像は BGR の並び順になっています。BGR を RGB へ並び替えます。</li>
+		  <li>&nbsp;データの並び順を [width][height][channel] から 
+		  [channel][width][height] へ変換します。</li>
+		  <li>各画素のデータ形式を整数(0-255)から浮動小数点(0.0-1.0)へ変換します。</li>
+		</ul>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
   
-  <p>&nbsp;</p>
 	<p>[run_mobilenetv3-ssdlite_live_demo.py]</p>
 	<pre class="prettyprint linenums lang-py">'''
 [Abstract]
@@ -1246,6 +1288,7 @@ Where are my downloaded models saved?</a></p>
 '''
 
 import cv2
+import torch
 from torchvision.models.detection import ssdlite320_mobilenet_v3_large, SSDLite320_MobileNet_V3_Large_Weights
 from torchvision.transforms.functional import convert_image_dtype
 from torchvision import transforms
@@ -1260,10 +1303,10 @@ model = model.eval()
 preprocess = weights.transforms()
 
 # Initialize variables.
-cap = cv2.VideoCapture(0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Capture from camera.
-#cap.set(3, 1920)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set video stream frame width.&nbsp; Remove '#' and change the value according to your needs.
-#cap.set(4, 1080)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Set video stream frame height. Remove '#' and change the value according to your needs.
-winname = "Annotated"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Window title.
+cap = cv2.VideoCapture(0)       # Capture from camera.
+#cap.set(3, 1920)               # Set video stream frame width.  Remove '#' and change the value according to your needs.
+#cap.set(4, 1080)               # Set video stream frame height. Remove '#' and change the value according to your needs.
+winname = "Annotated"           # Window title.
 
 # Exception definition.
 BackendError = type('BackendError', (Exception,), {})
@@ -1304,18 +1347,17 @@ while True:
     # Convert image from BGR to RGB.
     rgb_image = cv2.cvtColor(orig_image, cv2.COLOR_BGR2RGB)
 
-    # Convert image from numpy.ndarray to Pillow object.
-    preprocess = transforms.Compose([
-        transforms.ToPILImage(),    # convert from numpy.ndarray to Pillow object.                                
-        transforms.ToTensor(),      # convert to torch.Tensor object.
-    ])
-    input_tensor = preprocess(rgb_image)
+    # Convert image from numpy.ndarray to torchvision image format.
+    rgb_image = rgb_image.transpose((2, 0, 1))
+    rgb_image = rgb_image / 255.0
+    rgb_image = torch.FloatTensor(rgb_image)
 
     # Step 3: Apply inference preprocessing transforms
-    batch = [preprocess(input_tensor)]
+    batch = [preprocess(rgb_image)]
 
     # Step 4: Use the model and visualize the prediction
-    prediction = model(batch)[0]
+    with torch.no_grad():
+        prediction = model(batch)[0]
 
     score_threshold = 0.5
     labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
@@ -1323,28 +1365,22 @@ while True:
 
     # Draw result.
     for box, label in zip(boxes, labels):
-        # Debug output.
-        #print(label, box.tolist())
 
         cv2.rectangle(
-            orig_image,                 # Image.
-            (int(box[0]), int(box[1])), # Vertex of the rectangle.
-            (int(box[2]), int(box[3])), # Vertex of the rectangle opposite to pt1.
-            (255, 255, 0),              # Color.
-            4 )                         # Line type.
+            orig_image,                         # Image.
+            (int(box[0]), int(box[1])),         # Vertex of the rectangle.
+            (int(box[2]), int(box[3])),         # Vertex of the rectangle opposite to pt1.
+            (255, 255, 0),                      # Color.
+            4 )                                 # Line type.
 
         cv2.putText(
-            orig_image,                 # Image.
-            label,                      # Text string to drawn.
-            (int(box[0])+20, int(box[1])+40),
-                                        # Bottom-left corner of the text string in the image.
-            cv2.FONT_HERSHEY_SIMPLEX,   # Font face. - フォント種別
-            0.8,                        # Font scale.
-            (255, 0, 255),              # Color.
-            2)                          # Line type.
-
-    # Debug output.
-    #print()
+            orig_image,                         # Image.
+            label,                              # Text string to drawn.
+            (int(box[0])+20, int(box[1])+40),   # Bottom-left corner of the text string in the image.
+            cv2.FONT_HERSHEY_SIMPLEX,           # Font face. - フォント種別
+            0.8,                                # Font scale.
+            (255, 0, 255),                      # Color.
+            2)                                  # Line type.
 
     # Display video.
     cv2.imshow(winname, orig_image)
@@ -1358,7 +1394,8 @@ while True:
         break
 
 cap.release()
-cv2.destroyAllWindows()</pre>
+cv2.destroyAllWindows()
+</pre>
 	<p>&nbsp;</p>
     
   	<p>[動画] プログラムを動作させた様子（PC 内蔵カメラ）</p>
@@ -1419,6 +1456,18 @@ cv2.destroyAllWindows()</pre>
 </table>
 
   <p>&nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+        <p>cv2.VideoCapture 関数の引数として RTSP 
+		と呼ばれる表記でネットワークカメラとの接続情報を渡します。この表記方法はネットワークカメラによって異なります。下記サンプルソースコードの表記は 
+		i-PRO カメラで使用されている表記です。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
 	<p>"user-id", "password", "host" 
 	の部分をご自身が使われる i-PRO カメラの設定に合わせて修正してください。</p>
 	<p>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</p>
@@ -1446,6 +1495,7 @@ cv2.destroyAllWindows()</pre>
 '''
 
 import cv2
+import torch
 from torchvision.models.detection import ssdlite320_mobilenet_v3_large, SSDLite320_MobileNet_V3_Large_Weights
 from torchvision.transforms.functional import convert_image_dtype
 from torchvision import transforms
@@ -1455,6 +1505,8 @@ from torchvision import transforms
 <span class="auto-style1">user_id     = "user-id"             # Change to match your camera setting</span>
 <span class="auto-style1">user_pw     = "password"            # Change to match your camera setting</span>
 <span class="auto-style1">host        = "192.168.0.10"        # Change to match your camera setting</span>
+<span class="auto-style1">resolution  = "1920x1080"           # Resolution</span>
+<span class="auto-style1">framerate   =  5                    # Framerate</span>
 winname     = "Annotated"           # Window title.
 
 # Step 1: Initialize model with the best available weights
@@ -1466,9 +1518,9 @@ model = model.eval()
 preprocess = weights.transforms()
 
 # Capture from camera.
-cap = cv2.VideoCapture(<span class="auto-style1">f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1"</span>)
-#cap.set(3, 1920)               # Set video stream frame width.  Remove '#' and change the value according to your needs.
-#cap.set(4, 1080)               # Set video stream frame height. Remove '#' and change the value according to your needs.
+<span class="auto-style1">url = f"rtsp://{user_id}:{user_pw}@{host}/MediaInput/stream_1"  # H.264/H.265</span>
+<span class="auto-style1">#url = f"http://{user_id}:{user_pw}@{host}/cgi-bin/nphMotionJpeg?Resolution={resolution}&amp;Quality=Standard&amp;Framerate={framerate}"    # MJPEG</span>
+<span class="auto-style1">cap = cv2.VideoCapture(url)</span>
 
 # Exception definition.
 BackendError = type('BackendError', (Exception,), {})
@@ -1509,18 +1561,17 @@ while True:
     # Convert image from BGR to RGB.
     rgb_image = cv2.cvtColor(orig_image, cv2.COLOR_BGR2RGB)
 
-    # Convert image from numpy.ndarray to Pillow object.
-    preprocess = transforms.Compose([
-        transforms.ToPILImage(),    # convert from numpy.ndarray to Pillow object.                                
-        transforms.ToTensor(),      # convert to torch.Tensor object.
-    ])
-    input_tensor = preprocess(rgb_image)
+    # Convert image from numpy.ndarray to torchvision image format.
+    rgb_image = rgb_image.transpose((2, 0, 1))
+    rgb_image = rgb_image / 255.0
+    rgb_image = torch.FloatTensor(rgb_image)
 
     # Step 3: Apply inference preprocessing transforms
-    batch = [preprocess(input_tensor)]
+    batch = [preprocess(rgb_image)]
 
     # Step 4: Use the model and visualize the prediction
-    prediction = model(batch)[0]
+    with torch.no_grad():
+        prediction = model(batch)[0]
 
     score_threshold = 0.5
     labels = [weights.meta["categories"][class_index] + f": {score_int:.2f}" for class_index, score_int in zip(prediction["labels"], prediction["scores"]) if score_int &gt; score_threshold]
@@ -1528,28 +1579,22 @@ while True:
 
     # Draw result.
     for box, label in zip(boxes, labels):
-        # Debug output.
-        #print(label, box.tolist())
 
         cv2.rectangle(
-            orig_image,                 # Image.
-            (int(box[0]), int(box[1])), # Vertex of the rectangle.
-            (int(box[2]), int(box[3])), # Vertex of the rectangle opposite to pt1.
-            (255, 255, 0),              # Color.
-            4 )                         # Line type.
+            orig_image,                         # Image.
+            (int(box[0]), int(box[1])),         # Vertex of the rectangle.
+            (int(box[2]), int(box[3])),         # Vertex of the rectangle opposite to pt1.
+            (255, 255, 0),                      # Color.
+            4 )                                 # Line type.
 
         cv2.putText(
-            orig_image,                 # Image.
-            label,                      # Text string to drawn.
-            (int(box[0])+20, int(box[1])+40),
-                                        # Bottom-left corner of the text string in the image.
-            cv2.FONT_HERSHEY_SIMPLEX,   # Font face. - フォント種別
-            0.8,                        # Font scale.
-            (255, 0, 255),              # Color.
-            2)                          # Line type.
-
-    # Debug output.
-    #print()
+            orig_image,                         # Image.
+            label,                              # Text string to drawn.
+            (int(box[0])+20, int(box[1])+40),   # Bottom-left corner of the text string in the image.
+            cv2.FONT_HERSHEY_SIMPLEX,           # Font face. - フォント種別
+            0.8,                                # Font scale.
+            (255, 0, 255),                      # Color.
+            2)                                  # Line type.
 
     # Display video.
     cv2.imshow(winname, orig_image)
@@ -1585,7 +1630,38 @@ cv2.destroyAllWindows()</pre>
     </div>
 
     <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>私の環境では V3 より V1、V2 の方が動作が軽い印象です。V1、V2 
+		サンプルは10fpsで動作しましたが、V3 は5fpsまでカメラ設定を下げる必要がありました。</p>
+        <p>
+		V1、V2サンプルはVOCデータセットでクラス数が20です。一方、V3サンプルはCOCOデータセットでクラス数が91という違いがあります。<br>
+		加えて、V1、V2サンプルの入力画像サイズは 224x224 ですが、V3サンプルは 320x320 という違いもあります。そもそもベースとなっているプログラムが異なります。</p>
+		<p>以上の理由から、V1、V2、V3 を適正に比較評価できているわけでないこと、ご承知ください。ちゃんと同じ条件で比較したら V3 
+		がやはりもっとも高性能という結果になるのではと期待しています。（クラス数の比が演算数にそのまま影響あるとすると概ね妥当な結果かな、と思っています。）</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
     
+</section>
+	
+<p>&nbsp;</p>
+	
+<section>
+	<h3><a name="参考：_GPU動作させる場合のソースコード修正について0">参考： GPU動作について</a></h3>
+	<p>本ページの紹介は Pytorch 動作を "CPU" 
+	として説明していますが、私の環境で GPU（CUDA）で動作させた場合の概況について参考記載します。</p>
+	<p>上記ソースコードから device を "cuda:0" へ変更するためのソースコード修正を行うことで、私の環境では特にエラーなど発生することなく 
+	CUDA 環境で動作させることができました。しかし残念ながら CPU 
+	動作からパフォーマンス向上を確認することができませんでした。私の実現方法に課題があるのか、または PyTorch 
+	側に問題があるのか、問題の切り分けをまだできておりません。</p>
+	<p>進展あればこちらへ追記していきたいと思います。</p>
+	<p>&nbsp;</p>
+  
 </section>
 	
 <p>&nbsp;</p>
@@ -1660,14 +1736,18 @@ SOFTWARE.
 		<li>[9] PyTorchでObeject Detection (mashykom.com)<br>
       <a href="https://www.koi.mashykom.com/pytorch2.html" target="_blank">
       https://www.koi.mashykom.com/pytorch2.html</a></li>
-		<li>[10] MobileNets: Efficient Convolutional Neural Networks for Mobile 
+		<li>[10] SSDLite MobileNetV3 Backbone Object Detection with PyTorch and 
+		Torchvision - DebuggerCafe<br>
+		<a href="https://debuggercafe.com/ssdlite-mobilenetv3-backbone-object-detection-with-pytorch-and-torchvision/" target="_blank">
+		https://debuggercafe.com/ssdlite-mobilenetv3-backbone-object-detection-with-pytorch-and-torchvision/</a></li>
+		<li>[11] MobileNets: Efficient Convolutional Neural Networks for Mobile 
 		Vision Applications <br>
 		<a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank">
 		https://arxiv.org/pdf/1704.04861.pdf</a></li>
-		<li>[11] MobileNetV2: Inverted Residuals and Linear Bottlenecks <br>
+		<li>[12] MobileNetV2: Inverted Residuals and Linear Bottlenecks <br>
 		<a href="https://arxiv.org/pdf/1801.04381v3.pdf" target="_blank">
 		https://arxiv.org/pdf/1801.04381v3.pdf</a></li>
-		<li>[12] Searching for MobileNetV3 <br>
+		<li>[13] Searching for MobileNetV3 <br>
 		<a href="https://arxiv.org/pdf/1905.02244.pdf" target="_blank">
 		https://arxiv.org/pdf/1905.02244.pdf</a></li>
 	</ul>
