@@ -9,38 +9,61 @@
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>Google Test の使い方</title>
+  <!-- タイトル -->
+  <title>Google Test の使い方 (Ubuntu) | Programing Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #505000;
+  }
+  .auto-style2 {
+    border-width: 0px;
+  }
+  </style>
+
+</head>
 
 <body onload="prettyPrint();">
 	
 <h1>Google Test の使い方 (Ubuntu)</h1>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
 <p> &nbsp;</p>
+<p> Google Test の使い方についてメモしていきます。</p>
 
 <p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
   <tr>
     <td>
       <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
+        <h2>目次</h2>
+        <p><a href="#1._Google_Test_をインストール">1. Google Test をインストール</a></p>
+        <p><a href="#2._Google_Test_の使い方">2. Google Test の使い方</a></p>
+        <p>&nbsp;</p>
+        <p><a href="#ライセンス">ライセンス</a></p>
+        <p><a href="#参考">参考</a></p>
       </nav>
     </td>
   </tr>
@@ -49,8 +72,9 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> 1. ***</h2>
+	<h2> <a name="1._Google_Test_をインストール">1. Google Test をインストール</a></h2>
 	<h4>[概要]</h4>
+    <p>Github から一式を取得後、cmake、make、make install します。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -61,19 +85,9 @@
 	  </tr>
 		
 	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
 	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
+	    <td>Ubunsu,</td>
+	    <td>20.04 (WSL) </td>
 	  </tr>
 	  
 	  <tr>
@@ -85,90 +99,134 @@
 	<p> &nbsp;</p>
 	
 	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+	<p> 1-1. ソースをダウンロード</p>
+    <p> Google Test のリポジトリはこちらです。</p>
+    <p> <a href="https://github.com/google/googletest">google/googletest: 
+    GoogleTest - Google Testing and Mocking Framework (github.com)</a></p>
+    <p> &nbsp;</p>
+    <p> Release はこちら。こちらをお勧め、という記事があったので私もこちらから取得します。</p>
+    <p> <a href="https://github.com/google/googletest/releases">Releases · 
+    google/googletest (github.com)</a></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 1-2. Google Test をビルド</p>
+    <p> 普通に CMake でビルドします。</p>
+    <p> &nbsp;</p>
 	<pre class="prettyprint linenums">
-	</pre>
+$ mkdir temp
+$ cd temp 
+$ wget https://github.com/google/googletest/archive/release-1.12.0.tar.gz
+$ tar zxvf release-1.12.0.tar.gz 
+$ cd /usr/local/src/googletest-release-1.12.0 
+$ mkdir build 
+$ cd build 
+$ cmake .. 
+$ make 
+$ sudo make install </pre>
+
+
+    <p> &nbsp;</p>
+<p>以上でインストール完了です。</p>
+<p>&nbsp;</p>
+<p>インストール先を変更したい場合は、cmake するときに&nbsp; CMAKE_INSTALL_PREFIX を設定します。</p>
+	<pre class="prettyprint linenums">
+･･･
+$ mkdir build
+$ cd build
+$ cmake <span class="auto-style1">-DCMAKE_INSTALL_PREFIX=path/to/install/dir</span> ../
+$ make
+$ sudo make install</pre>
+<p>&nbsp;</p>
 </section>
 	
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 
 <section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+	<h2> <a name="2._Google_Test_の使い方">2. Google Test の使い方</a></h2>
+    <p> &nbsp;</p>
+    <h3> 2-1. 簡単に Google Test する</h3>
+    <p> まずは簡単にちゃんと Google Test をインストールできたかを確認したいと思います。</p>
+    <p> 今回試すコードは以下のような感じです。</p>
+    <p> &nbsp;</p>
+    <p> ["test_gtest.cpp"]</p>
+    <pre class="prettyprint linenums">
+#include &lt;gtest/gtest.h&gt;
+TEST(TestCaseName, TestName){
+     EXPECT_EQ(1, 1); 
+}</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドを入力してビルドします。</p>
+    <pre>$ g++ test_gtest.cpp -o test_gtest -lgtest_main -lgtest -pthread</pre>
+    <p> &nbsp;</p>
+    <p> 実行結果を下図に示します。</p>
+    <p> <a href="GoogleTest_Ubuntu/img6.jpg" target="_blank">
+    <img alt="" class="auto-style2" src="GoogleTest_Ubuntu/img6.jpg" width="800"></a></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> まず CMakeLists.txt を作成します。こんな感じ。これをベースに必要な修正を行っていきます。</p>
+    <p> ["CMakeLists.txt"]</p>
 	<pre class="prettyprint linenums">
-	</pre>
+# 基本的な設定
+cmake_minimum_required(VERSION 3.13)
+
+project(test_project)
+
+# Google Test ライブラリを探す
+find_package(GTest)
+
+# 今回作成する実行ファイル test_project, ソースファイルは main.cpp のみ
+add_executabule(test_project main.cpp)
+
+# gtest, pthread をリンクします
+target_link_library(test_project ${GTEST_BOTH_LIBRARY} pthread)
+target_include_directories(test_project PUBLIC ${GTEST_INCLUDE_DIRS})</pre>
+    <p> &nbsp;</p>
+    <p> GTEST_BOTH_LIBRARY については下記資料を参照。</p>
+    <p> <a href="https://cmake.org/cmake/help/v3.18/module/FindGTest.html">
+    https://cmake.org/cmake/help/v3.18/module/FindGTest.html</a></p>
+    <p> &nbsp;</p>
 </section>
-	
-<br>
-<br>
+
+<p> &nbsp;</p>
 
 <section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
+  <h2><a name="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <tr>
+    <td>
+The MIT License (MIT)<br><br>
+
+Copyright © 2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+    </td>
+  </tr>
+</table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
+<p>
 <br>
-<br>
+
+</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -191,6 +249,9 @@
         <li>
         <a href="https://qiita.com/y-vectorfield/items/f69464ee5d8cd80153bd" target="_blank">
         (続) Google Testを導入してみた - Qiita</a></li>
+        <li>
+        <a href="https://waldeinsamkeit.hatenablog.jp/entry/2020/07/25/212255">
+        Google Testのインストールと使い方 - ネコと和解せよ (hatenablog.jp)</a></li>
 	</ul>
 </section>
 
@@ -201,30 +262,24 @@
 <p style="margin-bottom:5px">&nbsp;</p>
 
 <section>
-	<h2 style="margin-bottom:5px">記載</h2>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2021-08-12</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">なんか変えた。<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date"></td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">こんなことも変えた。</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2021-01-02</td>
+	    <td class="td_history_date">2022-06-30</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
 	</table>
 </section>
 
+</section>
+
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>&copy; copyright 2022 木下英俊</small></p>
 </footer>
 
 </body>
