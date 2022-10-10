@@ -3,22 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
-	  
-  <title>std::vector</title>
+	
+  <!-- タイトル -->
+  <title>std::vector | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
   
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -40,7 +44,7 @@
 		font-size: large;
 	}
 	.auto-style3 {
-		background-color: #FFFF00;
+		background-color: #505000;
 	}
 	.auto-style4 {
 		margin-left: 40px;
@@ -55,22 +59,22 @@
 
 <p> std::vector を試してみます。</p>
 <p> &nbsp;</p>
-
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        	<a href="#1._始めに">1. 始めに (push_back)</a><br><a href="#2._insert">2. insert</a><br>
-        	<a href="#3._emplace_back (c++11)">3. emplace_back (c++11)</a><br>
-        	<a href="#4._emplace (c++11)">4. emplace (c++11)</a><br><a href="#参考">参考</a>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p>
+        	<a href="#1._始めに">1. 始めに (push_back)</a></p>
+	<p><a href="#2._insert">2. insert</a></p>
+	<p>
+        	<a href="#3._emplace_back (c++11)">3. emplace_back (c++11)</a></p>
+	<p>
+        	<a href="#4._emplace (c++11)">4. emplace (c++11)</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -194,6 +198,9 @@ int main()
 8
 25
 13 </pre>
+
+<p>&nbsp;</p>
+</section>
 
 <p>&nbsp;</p>
 
@@ -435,12 +442,9 @@ int main()
 300 300 400 400 200 100 100 100
 501 502 503 300 300 400 400 200 100 100 100</pre>
 <p>&nbsp;</p>
+</section>
 
 <p>&nbsp;</p>
-
-</section>
-
-</section>
 
 <section>
 <h2> <a name="3._emplace_back (c++11)">3. emplace_back (c++11)</a></h2>
@@ -607,7 +611,8 @@ int main()
     }
 }</code></pre>
 	
-<h4>[出力]<br>
+<h4>&nbsp;</h4>
+  <h4>[出力]<br>
 </h4>
 <pre><code>emplace_back:
 I am being constructed.
@@ -626,7 +631,12 @@ Contents:
 Nelson Mandela was elected president of South Africa in 1994.
 Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></pre>
 	
+  <p>&nbsp;</p>
+  <p>
+	
 <br>
+	
+  </p>
 	
 </section>
 
@@ -790,34 +800,88 @@ Boo, Japan, 2021
 Franklin Delano Roosevelt, the USA, 1936
 Foo, Japan, 2020</pre>
 	
-<br>補足：<br>新しい size() が現在の capacity() 
+  <p>&nbsp;</p>
+  <p>補足：<br>新しい size() が現在の capacity() 
 より大きいため、vectorの再構築が発生し、コンテナ内アイテムの移動が発生しているようです。<br>
 アイテムの挿入が頻繁に発生する場合、reserve()で必要な領域を事前確保しておく、または std::list 
-を使用する、などを検討することでペナルティを減らせる場合があります。<br>
-	
+を使用する、などを検討することでペナルティを減らせる場合があります。</p>
+  <p>&nbsp;</p>
+
 </section>
 
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2020-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+  <p><br>
+	
+  </p>
+	
 
 <h2><a name="参考">参考</a></h2>
 <ul>
 	<li>cppreference.com<br>
 	<a href="https://ja.cppreference.com/w/cpp/container/vector" target="_blank">https://ja.cppreference.com/w/cpp/container/vector</a></li>
 </ul>
+<p>&nbsp;</p>
 <hr>
 
-<h2>記載</h2>
-<table>
-	<tr>
-		<td class="td_history">2020-08-11</td>
-		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
-		<td class="td_history">新規作成 </td>
-	</tr>
-</table>
+<p>&nbsp;</p>
 
-<p></p>
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-10-10</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2020-08-11</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
 
 <footer>
-	<p><small>&copy; copyright 2020 木下英俊</small></p>
+	<p><small>Copyright © 2020-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>

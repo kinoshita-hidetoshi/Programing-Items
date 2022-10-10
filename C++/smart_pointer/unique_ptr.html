@@ -62,24 +62,20 @@
 </ol>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a></p>
-        <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
-        <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
-        <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
-        <p><a href="#5._make_unique">5. make_unique</a></p>
-        <p><a href="#6._make_unique_配列版">6. make_unique 配列版</a></p>
-        <p>&nbsp;</p>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+  <h2>目次</h2>
+  <p><a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a></p>
+  <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
+  <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
+  <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
+  <p><a href="#5._make_unique">5. make_unique</a></p>
+  <p><a href="#6._make_unique_配列版">6. make_unique 配列版</a></p>
+  <p>&nbsp;</p>
+  <p><a href="#ライセンス">ライセンス</a></p>
+  <p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2>評価環境：</h2>
@@ -456,7 +452,10 @@ int _tmain(int argc, _TCHAR* argv[])
 <p>[実行結果]</p>
 <p><img alt="" src="unique_ptr/imgB.gif"></p>
 
-<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
 <h2><a name="6._make_unique_配列版">6. make_unique 配列版</a></h2>
 <p>c++14 で追加された <strong>make_unique</strong> は 配列型T に対応しています。Visual Studio は 2013 から対応しているようです。<br>
 make_share は本文記載時点では 配列型T に未対応です。 c++20 で対応予定、VS2019 ver.16.3.6 でも未対応です。</font><br>&nbsp;unique_ptr 
@@ -563,6 +562,8 @@ int _tmain(int argc, _TCHAR* argv[])
 <p><img alt="" src="unique_ptr/imgD.jpg"></p>
 <p>無駄なコンストラクタ、デストラクタ、の発生が気になりますが、この動作で正しいです。</p>
 <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 <section>
