@@ -718,7 +718,7 @@ void custom_fclose(FILE* fp){
 
 int main(int argc, char* argv[])
 {
-    <span class="auto-style1">std::shared_ptr&lt;FILE&gt;   fp(fopen("fopen_test.txt", </span><span class="auto-style4">"w"</span><span class="auto-style1">), custom_fclose);</span>
+    <span class="auto-style1">std::shared_ptr&lt;FILE&gt;   fp(fopen("fopen_test.txt", "w"</span><span class="auto-style1">), custom_fclose);</span>
 
     if (fp.get() != nullptr){
         <span class="comment">// fopen成功</span>
@@ -743,7 +743,7 @@ int main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-<span class="auto-style1">    std::shared_ptr&lt;FILE&gt;   fp(fopen(</span><span class="auto-style4">"fopen_test.txt"</span><span class="auto-style1">, </span><span class="auto-style4">"w"</span><span class="auto-style1">), [&amp;](FILE* fp){</span>
+<span class="auto-style1">    std::shared_ptr&lt;FILE&gt;   fp(fopen("fopen_test.txt", "w"), [&amp;](FILE* fp){</span>
 <span class="auto-style1">        if (fp != nullptr){</span>
 <span class="auto-style1">            fclose(fp);</span>
 <span class="auto-style1">        }</span>
