@@ -1,39 +1,82 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Rectangle をアニメーションする</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Rectangle をアニメーションする | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	text-decoration: underline;
-}
-.auto-style9 {
-	background-color: #FFFF00;
-}
-</style>
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	text-decoration: underline;
+    }
+    .auto-style9 {
+    	background-color: #505000;
+    }
+  </style>
+  
 </head>
+
+
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
+<h1 class="auto-style7">WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
 
 <p> WPF と Blend を使うことで、かっこいいアニメーションを伴うプログラムを比較的楽に実現することができるようになりました。<br>本ページでは、WPFを使ってアニメーションを実現する方法の基本的な手法について記載してみます。</p>
-<h2> 目次</h2>
-<p> <a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a><br>
-<a href="#2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a><br>
-<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a><br>
-<a href="#4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅(Width)と高さ(Height)をアニメーションする － コードビハインド(code-behind)版</a><br>
-<a href="#5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a><br>
-<a href="#6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a><br>
+<p> &nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p> <a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></p>
+	<p>
+<a href="#2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></p>
+	<p>
+<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></p>
+	<p>
+<a href="#4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅(Width)と高さ(Height)をアニメーションする － コードビハインド(code-behind)版</a></p>
+	<p>
+<a href="#5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a></p>
+	<p>
+<a href="#6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a></p>
+	<p>
 <a href="#7._Rectangle_の色を変える_">7. Rectangle の色を変える</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></h2>
 <p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
@@ -43,6 +86,7 @@ WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
 にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで200にします。<br>- ボタン［幅を 100 
 にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで100にします。<br>- 
 アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
+<p> &nbsp;</p>
 <p> <img alt="" src="Animation%20of%20the%20rectangle/img11.jpg">
 <img alt="" src="Animation%20of%20the%20rectangle/img14.jpg"><br>図： (左)起動時および 
 [幅を 100 にする] ボタン押下時、 (右) [幅を 200 にする] ボタン押下時</p>
@@ -50,7 +94,7 @@ WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
 <table style="border-style: solid; border-color: #808080; width: 300px; clip: rect(auto, auto, auto, auto);">
 	<tr>
 		<td>
-<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangleWidth.mp4">
+<video controls muted autoplay="y" loop="y"  src="Animation of the rectangle/ChangeRectangleWidth.mp4">
 <p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
 </video>
 		</td>
@@ -68,10 +112,12 @@ WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
 <p> [作成手順]</p>
 <p><span class="auto-style8">手順１：</span><br>・新規プロジェクトを作成後、２つのボタンと１つのRectangleを画面上に配置します。<br>
 ・ボタンとRectangleに名前を付けて、位置と大きさを整えます。</p>
+<p>&nbsp;</p>
 <p> <span class="auto-style8">手順２：</span><br>・Blend を使って下記２つのストーリーボードを作成します。<br>&nbsp; 
 今回の内容の場合は 1秒後の状態 のみを定めればよいです。0秒時点の状態は未定義にします。<br>&nbsp; (1) Rectangle の幅を 100 
 にするストーリーボード (x:Key=&quot;ChangeToWidth100&quot;)<br>&nbsp; (2) Rectangle の幅を 200 
 にするストーリーボード (x:Key=&quot;ChangeToWidth200&quot;)</p>
+<p> &nbsp;</p>
 <p> 
 <img alt="" src="Animation%20of%20the%20rectangle/img1A.jpg" width="1000"></p>
 <p> &nbsp;</p>
@@ -145,6 +191,7 @@ WPF：Rectangle を DoubleAnimation でアニメーションする</h1>
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 	
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2> <a name="2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></h2>
 <p> [概要]<br>「<a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a>」 
@@ -329,8 +376,10 @@ namespace MoveRectangle_03
     }
 }</code>
 </pre>
-<br>
-<p></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 <h2><a name="3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></h2>
 <p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
 ここでは画面上のボタンをクリックすると Rectangle の幅と高さを１秒の時間をかけてアニメーションすることを例に記載します。<br>
@@ -341,7 +390,7 @@ namespace MoveRectangle_03
 にする］をクリックすると、Rectangleの幅と高さを１秒間のアニメーションで100にします。<br>- 
 アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
 <p>[完成イメージ]<br>動作イメージを以下に示します。</p>
-<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_WidthAndHeight.mp4">
+<video controls muted autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_WidthAndHeight.mp4">
 <p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
 </video>
 
@@ -676,7 +725,7 @@ namespace MoveRectangle_06
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRecangle_Margin.mp4">
+<video controls muted autoplay="y" loop="y" src="Animation of the rectangle/ChangeRecangle_Margin.mp4">
 <p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
 </video><p>[MainWindow.xaml]</p>
 &nbsp;
@@ -800,7 +849,9 @@ namespace MoveRectangle_07
 <p>&nbsp;</p>
 <p>
 <img alt="" src="Animation%20of%20the%20rectangle/img2.jpg"></p>
-<video controls autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_Color.mp4">
+
+<video controls muted autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_Color.mp4">
+
 <p>動画を再生するにはvideoタグをサポートしたブラウザが必要です。</p>
 </video>
 <p>&nbsp;</p>
@@ -921,23 +972,91 @@ namespace MoveRectangle_08
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2018-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>
 	<a href="https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/graphics-multimedia/key-frame-animations-overview" target="_parent">
 	キーフレームアニメーションの概要</a></li>
-	<li>
+		<li>
 	<a href="https://docs.microsoft.com/en-us/dotnet/framework/wpf/graphics-multimedia/how-to-animate-color-by-using-key-frames" target="_blank">How to: Animate Color by Using Key Frames</a></li>
-</ul>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
 <hr>
-<p> <font face="Meiryo UI">変更履歴<br>2018年04月07日 4～7章を追加<br>2018年03月11日 
-「3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版」 を追加<br>2018年02月24日 新規作成<br>記載： 木下英俊</font></p>
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-11-05</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2018-04-07</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">4～7章を追加<br></td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2018-03-11</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版」 を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2018-02-24</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2018-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>
