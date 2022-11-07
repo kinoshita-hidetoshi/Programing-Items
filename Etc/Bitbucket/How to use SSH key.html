@@ -108,21 +108,20 @@
 	
 	<p> &nbsp;</p>
 	
-	<h3>Bitbucket にアカウントを作成</h3>
+	<h3>1-1. Bitbucket にアカウントを作成</h3>
 <p><a href="https://bitbucket.org/">https://bitbucket.org/</a> 
 にアクセスしてアカウントを作ってください。</p>
 <p>詳細は割愛します。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>既に公開鍵が作成されていないかを確認</h3>
+<h3>1-2. 既に公開鍵が作成されていないかを確認</h3>
 <p>SSH認証鍵はホームフォルダ下の &quot;.ssh&quot; フォルダに作成されます。<br>下記コマンドで .ssh 
 フォルダおよびフォルダ内のファイルを確認することで、既に登録されているSSH認証鍵の状態を確認できます。</p>
 <p>
 <pre><code>$ ls ~/.ssh</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
+<h3>1-3. SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
 <p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
 <p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
 <p>
@@ -153,7 +152,6 @@ The key&#39;s randomart image is:
 | . o             |
 +-----------------+
 $</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>これで公開鍵と秘密鍵が作成できました。</p>
 <ul>
@@ -162,11 +160,10 @@ $</code></pre>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>~/.ssh/config にSSH鍵を設定</h3>
+<h3>1-4. ~/.ssh/config にSSH鍵を設定</h3>
 <p>config ファイルに設定を書いていきます。無ければ以下のコマンドで作ることができます。</p>
 <p>
 <pre><code>$ vi ~/.ssh/config</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>config ファイルに以下の情報を書き込みます。</p>
 
@@ -223,7 +220,7 @@ $</code></pre>
 <p>config 設定は以上です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>Bitbucket へ公開鍵を設定</h3>
+<h3>1-5. Bitbucket へ公開鍵を設定</h3>
 <p>Bitbucket にアクセス後、左下のユーザーアイコンを選択すると「Personal settings」が見えるのでこれをクリックします。</p>
 <p><img alt="" src="How%20to%20use%20SSH%20key/imgC.jpg" width="800px"></p>
 <p>&nbsp;</p>
@@ -248,7 +245,7 @@ mail@mail</code></pre>
 <p>「保存」ボタンをクリックしたら設定は以上で完了です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>接続できるか確認</h3>
+<h3>1-6. 接続できるか確認</h3>
 <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
 <p>
 <pre><code>$ ssh -T git@bitbucket.org
@@ -256,10 +253,9 @@ logged in as kinoshita_hidetoshi
 
 You can use git or hg to connect to Bitbucket. Shell access is disabled
 $</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>git clone</h3>
+<h3>1-7. git clone</h3>
 <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
 とします。</p>
 
@@ -304,36 +300,33 @@ $</code></pre>
 
 <section>
 	
-	<h3>Bitbucket にアカウントを作成</h3>
+	<h3>2-1. Bitbucket にアカウントを作成</h3>
 <p><a href="https://bitbucket.org/">https://bitbucket.org/</a> 
 にアクセスしてアカウントを作ってください。</p>
 <p>詳細は割愛します。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>既に公開鍵が作成されていないかを確認</h3>
+<h3>2-2. 既に公開鍵が作成されていないかを確認</h3>
 <p>SSH認証鍵はホームフォルダ下の &quot;.ssh&quot; フォルダに作成されます。<br>下記コマンドで .ssh 
 フォルダおよびフォルダ内のファイルを確認することで、既に登録されているSSH認証鍵の状態を確認できます。</p>
 <p>
 <pre><code>&gt; dir %homedrive%%homepath%\.ssh</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
+<h3>2-3. SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
 <p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
 <p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
-<p>
-<pre>&gt; %homedrive%
+	<p>
+	&nbsp;<pre>&gt; %homedrive%
 &gt; cd %homepath%
 &gt; mkdir .ssh
 &gt; cd .ssh
 &gt; mkdir bitbucket
 &gt; cd bitbucket
-&gt; ssh-keygen -t rsa -C <a href="mailto:hoge@foo.com">hoge@foo.com</a>               <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
+&gt; ssh-keygen -t rsa -C hoge@foo.com               <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
 Generating public/private rsa key pair.
-Enter file in which to save the key (C:\Users\ユーザ名/.ssh/id_rsa): <a href="file:///c:/users/ユーザ名/.ssh/bitbucket/id_rsa">c:\users\ユーザ名/.ssh/bitbucket/id_rsa</a>
+Enter file in which to save the key (C:\Users\ユーザ名/.ssh/id_rsa): c:\users\ユーザ名/.ssh/bitbucket/id_rsa
                                                   <span class="auto-style1">&lt;----- &quot;bitbucket&quot;フォルダへ修正してEnter</span>
-Generating public/private rsa key pair.
-Enter file in which to save the key (C:\Users\kinos/.ssh/id_rsa): c:\Users\kinos/.ssh/bitbucket/id.rsa
 Enter passphrase (empty for no passphrase):       <span class="auto-style1">&lt;-----Enterを押す</span>
 Enter same passphrase again:                      <span class="auto-style1">&lt;-----Enterを押す</span>
 Your identification has been saved in c:\Users\ユーザ名/.ssh/bitbucket/id_rsa.
@@ -354,7 +347,6 @@ The key&#39;s randomart image is:
 +----[SHA256]-----+
 
 C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
-</p>
 <p>&nbsp;</p>
 <p>これで公開鍵と秘密鍵が作成できました。</p>
 <ul>
@@ -363,11 +355,10 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>~/.ssh/config にSSH鍵を設定</h3>
+<h3>2-4. ~/.ssh/config にSSH鍵を設定</h3>
 <p>config ファイルに設定を書いていきます。無ければ以下のコマンドで作ることができます。</p>
-<p>
-<pre>&gt; notepad %homedrive%%homepath%\.ssh\config</pre>
-<p>&nbsp;</p>
+	<p>
+	&nbsp;<pre>&gt; notepad %homedrive%%homepath%\.ssh\config</pre>
 <p>&nbsp;</p>
 <p>config ファイルに以下の情報を書き込みます。</p>
 
@@ -413,7 +404,7 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 <p>config の設定は以上です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>Bitbucket へ公開鍵を設定</h3>
+<h3>2-5. Bitbucket へ公開鍵を設定</h3>
 <p>Bitbucket にアクセス後、左下のユーザーアイコンを選択すると「Personal settings」が見えるのでこれをクリックします。</p>
 <p><img alt="" src="How%20to%20use%20SSH%20key/imgC.jpg" width="800px"></p>
 <p>&nbsp;</p>
@@ -422,15 +413,14 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 <p><img alt="" src="How%20to%20use%20SSH%20key/imgF.jpg" width="800px"></p>
 <p>&nbsp;</p>
 <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
-<p>
-<pre>&gt; type %homedrive%%homepath%\.ssh\bitbucket\id.rsa.pub
+	<p>
+	&nbsp;<pre>&gt; type %homedrive%%homepath%\.ssh\bitbucket\id.rsa.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
 1o8a5iQ8blw3fd43c2qZYjVTIIh7N+lcUWuVXnXyWQNeVNT/IPEoaZaaur9SDAojhcA1kUMODK
 0KuKDlbddxijWqJzzmEqcrZGNFEKUTVfB/ctQFZIgb0ScyGWiJWjIOVUloLqcdy6CEbHSjiLV7
 rxFqPhFU/RO0QbqS58zjxWLVYP7jgJXudJ+QJcwmUlLoH1k22AEH154Q28hRNriupma8D/VyJ5
 2VWWHwtgF+F6jp8G72uhn46aYmQXK3brUIv7vu/k/8lAUUNI32UrPNoxWII6rbs/lU+0vs5peh
 QqVlPcjJd3 hoge@foo.com</pre>
-</p>
 <p>&nbsp;</p>
 <p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
 <p>&quot;Label&quot; は自分がどの公開鍵かわかる名称を付けます。私は端末名を記入してみました。</p>
@@ -440,7 +430,7 @@ QqVlPcjJd3 hoge@foo.com</pre>
 <p>「保存」ボタンをクリックしたら設定は以上で完了です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>接続できるか確認</h3>
+<h3>2-6. 接続できるか確認</h3>
 <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
 <p>
 <pre><code>$ ssh -T git@bitbucket.org
@@ -448,10 +438,9 @@ logged in as kinoshita_hidetoshi
 
 You can use git or hg to connect to Bitbucket. Shell access is disabled
 $</code></pre>
-</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h3>git clone</h3>
+<h3>2-7. git clone</h3>
 <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
 とします。</p>
 
