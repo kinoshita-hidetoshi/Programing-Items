@@ -52,8 +52,10 @@
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
-	<p><a href="#1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a></p>
-	<p><a href="#2._Windowsの場合">2. Windowsの場合</a></p>
+	<p>
+        <a href="#1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a></p>
+	<p>
+        <a href="#2._Windowsの場合">2. Windowsの場合</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -198,8 +200,14 @@ $</code></pre>
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes
-  <span class="auto-style1"><strong>ProxyCommand /usr/bin/corkscrew proxy.mei.co.jp 8080 %h %p</strong></span></pre>
+  <span class="auto-style1"><strong>ProxyCommand /usr/bin/corkscrew proxy.hoge.co.jp 8080 %h %p</strong></span></pre>
 	
+	<p>&nbsp;</p>
+	<ul>
+	  <li>プロキシコマンドとして corkscrew を使用しています。</li>
+	  <li>"proxy.hoge.co.jp" はプロキシアドレスの例です。ネットワーク管理者の指示に従って設定してください。</li>
+	  <li>"8080" はプロキシポート番号の例です。ネットワーク管理者の指示に従って設定してください。</li>
+	</ul>
 	<p>&nbsp;</p>
   
     <div class="status_information">
@@ -366,7 +374,7 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 <p><strong>["config"]</strong></p>
 <pre>Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
   User git
   Port 22
   TCPKeepAlive yes
@@ -376,7 +384,7 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
 	<pre>Host bitbucket.org
   HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
-  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
@@ -388,14 +396,20 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 
 <pre>Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes
-  <span class="auto-style1"><strong>ProxyCommand &quot;C:\Program Files\Git\mingw64\bin\connect.exe&quot; -H http://proxy.mei.co.jp:8080 %h %p</strong></span></pre>
+  <span class="auto-style1"><strong>ProxyCommand &quot;C:\Program Files\Git\mingw64\bin\connect.exe&quot; -H http://proxy.hoge.co.jp:8080 %h %p</strong></span></pre>
   
 <p>&nbsp;</p>
+	<ul>
+	  <li>プロキシコマンドとして connect.exe を使用しています。</li>
+	  <li>"proxy.hoge.co.jp" はプロキシアドレスの例です。ネットワーク管理者の指示に従って設定してください。</li>
+	  <li>"8080" はプロキシポート番号の例です。ネットワーク管理者の指示に従って設定してください。</li>
+	</ul>
+	<p>&nbsp;</p>
 <p>config の設定は以上です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -483,10 +497,14 @@ SOFTWARE.
 <section>
 	<h2><a id="参考">参考</a></h2>
 	<ul>
-		<li><a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
-		<li><a href="https://qiita.com/shimishimizu/items/e057e09325148f455637" target="_blank">BitbucketでSSH接続 - Qiita</a></li>
-		<li><a href="https://qiita.com/0084ken/items/2e4e9ae44ec5e01328f1" target="_blank">.ssh/configファイルでSSH接続を管理する - Qiita</a></li>
-		<li><a href="https://mrkmyki.com/bitbucketのgitリポジトリを作成してwindows10からssh接続でpushする手" target="_blank">
+		<li>
+        <a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
+		<li>
+        <a href="https://qiita.com/shimishimizu/items/e057e09325148f455637" target="_blank">BitbucketでSSH接続 - Qiita</a></li>
+		<li>
+        <a href="https://qiita.com/0084ken/items/2e4e9ae44ec5e01328f1" target="_blank">.ssh/configファイルでSSH接続を管理する - Qiita</a></li>
+		<li>
+        <a href="https://mrkmyki.com/bitbucketのgitリポジトリを作成してwindows10からssh接続でpushする手" target="_blank">
         Bitbucketのgitリポジトリを作成してWindows10からssh接続でpushする手順 | mrkmyki＠フリーランスブログ</a></li>
 	</ul>
 </section>
