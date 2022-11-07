@@ -3,56 +3,64 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>［タイトルを記載します］</title>
+  <!-- タイトル -->
+  <title>[Bitbucket] SSH認証カギを設定する | Programing Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
   .auto-style1 {
-    background-color: #FFFF00;
+	color: #FF0000;
   }
   </style>
 
-  </head>
+</head>
 
 <body onload="prettyPrint();">
 	
 <h1>[Bitbucket] SSH認証カギを設定する</h1>
 
 <p> Bitbucket で SSH認証カギを設定する手順を記載します。</p>
-<p> &nbsp;</p>
-<nav>
+<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a></p>
+	<p><a href="#2._Windowsの場合">2. Windowsの場合</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
   </nav>
+</div>
+<p> &nbsp;</p>
 
-
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        <a href="#1._Linux(Ubuntu)の場合">1. Linux(Ubuntu)の場合</a><br>
-        <a href="#2._Windowsの場合">2. Windowsの場合</a><br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -159,29 +167,52 @@ $</code></pre>
 </p>
 <p>&nbsp;</p>
 <p>config ファイルに以下の情報を書き込みます。</p>
-<p>
-<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-[“config“]</strong><pre><code>Host bitbucket.org
+
+<p><strong>["config"]</strong></p>
+<pre>Host bitbucket.org
   HostName bitbucket.org
   IdentityFile ~/.ssh/bitbucket/id_rsa
   User git
   Port 22
   TCPKeepAlive yes
-  IdentitiesOnly yes</code></pre>
+  IdentitiesOnly yes</pre>
 <p>&nbsp;</p>
-<p>
-<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-[“config“ プロキシ環境下]</strong><pre>未確認</pre>
-</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>設定は以上です。</p>
-<p>&nbsp;</p>
-<p>NOTE:</p>
-<ul>
-  <li>SSHのポート番号は通常 22 を使用しますが、例えば会社のプロキシーが Port 22 を遮断しているなどの場合があります。<br>上記設定で 
-  Port を 443 にすることで接続できるようになった、という記事を見かけたことがあるので、ここに記載します。</li>
-</ul>
+	<p><strong>["config" (port 443 環境)]</strong></p>
+	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
+	<pre>Host bitbucket.org
+  HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
+  IdentityFile ~/.ssh/bitbucket/id_rsa
+  User git
+  Port <span class="auto-style1"><strong>443</strong></span>
+  TCPKeepAlive yes
+  IdentitiesOnly yes</pre>
+	<p>&nbsp;</p>
+	
+	<p><strong>["config" プロキシ環境下]</strong></p>
+	<p>proxy 環境下ではこちらのサンプルを参照ください。"ProxyCommand" の行を追加しています。</p>
+	
+<pre>Host bitbucket.org
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket/id_rsa
+  User git
+  Port 22
+  TCPKeepAlive yes
+  IdentitiesOnly yes
+  <span class="auto-style1"><strong>ProxyCommand /usr/bin/corkscrew proxy.mei.co.jp 8080 %h %p</strong></span></pre>
+	
+	<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>私の環境では corkscrew がインストールされていなかったので、<br><span class="cpp-source">sudo 
+		apt install corkscrew</span><br>でインストールしました。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+<p>config 設定は以上です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>Bitbucket へ公開鍵を設定</h3>
@@ -230,7 +261,7 @@ $</code></pre>
 </section>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
 
 <section>
@@ -331,42 +362,41 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>config ファイルに以下の情報を書き込みます。</p>
-<p>
-<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-[“config“]</strong><pre>Host bitbucket.org
+
+<p><strong>["config"]</strong></p>
+<pre>Host bitbucket.org
   HostName bitbucket.org
   IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes</pre>
-<p></p>
-<p>
-<strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-[“config“ プロキシ環境下]</strong><p>
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-proxy 環境下ではこちらのサンプルを参照ください。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-”ProxyCommand” の行を追加しています。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-プロキシアドレス (“</span><strong data-renderer-mark="true" style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">http://proxy.mei.co.jp:8080</strong><span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">“) 
-は i-PRO 社内環境における例です。</span><pre>Host bitbucket.org
+<p>&nbsp;</p>
+	<p><strong>["config" (port 443 環境)]</strong></p>
+	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
+	<pre>Host bitbucket.org
+  HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
+  IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
+  User git
+  Port <span class="auto-style1"><strong>443</strong></span>
+  TCPKeepAlive yes
+  IdentitiesOnly yes</pre>
+	<p>&nbsp;</p>
+<p><strong>["config" (プロキシ環境)]</strong></p>
+<p>proxy 環境下ではこちらのサンプルを参照ください。<p>
+”ProxyCommand” の行を追加しています。
+
+<pre>Host bitbucket.org
   HostName bitbucket.org
   IdentityFile C:\Users\ユーザ名\.ssh\bitbucket\id_rsa
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes
-  ProxyCommand &quot;C:\Program Files\Git\mingw64\bin\connect.exe&quot; -H http://proxy.mei.co.jp:8080 %h %p</pre>
-<p></p>
+  <span class="auto-style1"><strong>ProxyCommand &quot;C:\Program Files\Git\mingw64\bin\connect.exe&quot; -H http://proxy.mei.co.jp:8080 %h %p</strong></span></pre>
+  
 <p>&nbsp;</p>
-<p>設定は以上です。</p>
-<p>&nbsp;</p>
-<p>NOTE:</p>
-<ul>
-  <li>SSHのポート番号は通常 22 を使用しますが、例えば会社のプロキシーが Port 22 を遮断しているなどの場合があります。<br>上記設定で 
-  Port を 443 にすることで接続できるようになった、という記事を見かけたことがあるので、ここに記載します。</li>
-</ul>
+<p>config の設定は以上です。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3>Bitbucket へ公開鍵を設定</h3>
@@ -418,19 +448,45 @@ $</code></pre>
 </section>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2021-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 <section>
-<h2><a name="参考">参考</a></h2>
+	<h2><a id="参考">参考</a></h2>
 	<ul>
-		<li>
-        <a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
-        <li>
-        <a href="https://qiita.com/shimishimizu/items/e057e09325148f455637" target="_blank">BitbucketでSSH接続 - Qiita</a></li>
-        <li>
-        <a href="https://qiita.com/0084ken/items/2e4e9ae44ec5e01328f1" target="_blank">.ssh/configファイルでSSH接続を管理する - Qiita</a></li>
-        <li>
-        <a href="https://mrkmyki.com/bitbucketのgitリポジトリを作成してwindows10からssh接続でpushする手" target="_blank">
+		<li><a href="https://qiita.com/0084ken/items/e763c85054a5a1e2cc6c" target="_blank">BitbucketにSSH認証鍵を設定する - Qiita</a></li>
+		<li><a href="https://qiita.com/shimishimizu/items/e057e09325148f455637" target="_blank">BitbucketでSSH接続 - Qiita</a></li>
+		<li><a href="https://qiita.com/0084ken/items/2e4e9ae44ec5e01328f1" target="_blank">.ssh/configファイルでSSH接続を管理する - Qiita</a></li>
+		<li><a href="https://mrkmyki.com/bitbucketのgitリポジトリを作成してwindows10からssh接続でpushする手" target="_blank">
         Bitbucketのgitリポジトリを作成してWindows10からssh接続でpushする手順 | mrkmyki＠フリーランスブログ</a></li>
 	</ul>
 </section>
@@ -442,28 +498,37 @@ $</code></pre>
 <p style="margin-bottom:5px">&nbsp;</p>
 
 <section>
-	<h2 style="margin-bottom:5px">記載</h2>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
-	
+	  <tr>
+	    <td class="td_history_date">2022-11-07</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2021-07-04</td>
 	    <td class="td_history_separator">-</td>
-	    <td class="td_history">Windows の情報を追記 </td>
+	    <td class="td_history">Windows の情報を追記</td>
 	  </tr>
-	
 	  <tr>
 	    <td class="td_history_date">2021-02-07</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
-	  
 	</table>
 </section>
 
 <p>&nbsp;</p>
 
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>Copyright © 2021-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
