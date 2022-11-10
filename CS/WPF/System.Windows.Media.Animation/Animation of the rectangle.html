@@ -46,7 +46,7 @@
     	background-color: #505000;
     }
     .auto-style10 {
-    letter-spacing: normal;
+      letter-spacing: normal;
     }
   </style>
   
@@ -419,15 +419,12 @@ namespace MoveRectangle_02
 
 <p>&nbsp;</p>
 <h2> <a name="2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></h2>
-<p> [概要]<br>「<a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a>」 
-で作成したXAML版と同じ内容を、今度は コードビハインド(code-behind)による実装で実現してみます。<br><br>
-プロパティの変化先を動的に変化させたい場合はコードビハインドで作成する必要を生じるため、このテクニックを必要とします。<br>
+	
+	<h4>[概要]</h4>
+	<p> 「<a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a>」 
+で作成したXAML版と同じ内容を、今度は コードビハインド(code-behind)による実装で実現してみます。</p>
+<p> プロパティの変化先を動的に変化させたい場合はコードビハインドで作成する必要を生じるため、このテクニックを必要とします。<br>
 逆にXAMLで作成できる場合は詳細なプロパティ設定を Blend で行える場面が多いため、楽に確実に実装することができるように感じます。</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
-	<li>OS: Windows10 home</li>
-</ul>
 <p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -483,7 +480,7 @@ namespace MoveRectangle_02
 	
 	<p> &nbsp;</p>
 	
-<p> [作成手順]</p>
+	<h4>[作成手順]</h4>
 <p> <span class="auto-style8">手順１： XAML定義</span><br>
 アニメーションはコードビハインドで作成しますが、基本的な画面まではXAMLで作成します。<br>以下に記載します。</p>
 [&quot;MainWindow.xaml&quot;]<br>
@@ -513,6 +510,7 @@ namespace MoveRectangle_02
 下記２つのボタンをクリックしたときのアクションを定義します。<br>- btnToWidth100<br>- btnToWidth200</p>
 <p>
 <img alt="" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
+<p>&nbsp;</p>
 <p>この状態でのコードの状況を以下に示します。</p>
 <p>[&quot;MainWindow.xaml.cs&quot;]</p>
 <pre class="prettyprint linenums">
