@@ -45,6 +45,9 @@
     .auto-style9 {
     	background-color: #505000;
     }
+    .auto-style10 {
+    letter-spacing: normal;
+    }
   </style>
   
 </head>
@@ -57,20 +60,16 @@
 <p> &nbsp;</p>
 <div class="mokuji">
   <nav>
-	<h2>目次</h2>
-	<p> <a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></p>
-	<p>
-<a href="#2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></p>
-	<p>
-<a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></p>
-	<p>
-<a href="#4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅(Width)と高さ(Height)をアニメーションする － コードビハインド(code-behind)版</a></p>
-	<p>
-<a href="#5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a></p>
-	<p>
-<a href="#6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a></p>
-	<p>
-<a href="#7._Rectangle_の色を変える_">7. Rectangle の色を変える</a></p>
+  <h2>目次</h2>
+  <p><a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></p>
+  <p> &nbsp;&nbsp; <a href="#1-1._VS2017版">1-1. VS2017版</a></p>
+  <p> &nbsp;&nbsp; <a href="#1-2._VS2019版">1-2. VS2019版</a></p>
+  <p><a href="#2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></p>
+  <p><a href="#3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></p>
+  <p><a href="#4._Rectangle_の幅と高さをアニメーションする_－_コードビハインド(code-behind)版_">4. Rectangle の幅(Width)と高さ(Height)をアニメーションする － コードビハインド(code-behind)版</a></p>
+  <p><a href="#5. XAMLで定義した Storyboard をコードビハインドから実行する">5. XAMLで定義した Storyboard をコードビハインドから実行する</a></p>
+  <p><a href="#6._Rectangle_の位置を移動する_">6. Rectangle の位置を移動する</a></p>
+  <p><a href="#7._Rectangle_の色を変える_">7. Rectangle の色を変える</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -79,15 +78,18 @@
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a></h2>
-<p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
+	<h4>[概要]</h4>
+	<p> &quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
 ここでは画面上のボタンをクリックすると Rectangle の幅を１秒の時間をかけてアニメーションすることを例に記載します。</p>
-<p> [仕様]<br>- ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
+<p> &nbsp;</p>
+	<h4>[仕様]</h4>
+	<p> - ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
 プログラム起動時、Rectangleの幅を100とします。<br>- ボタン［幅を 200 
 にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで200にします。<br>- ボタン［幅を 100 
 にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで100にします。<br>- 
 アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
 <p> &nbsp;</p>
-<p> <img alt="" src="Animation%20of%20the%20rectangle/img11.jpg">
+<p> <img src="Animation%20of%20the%20rectangle/img11.jpg">
 <img alt="" src="Animation%20of%20the%20rectangle/img14.jpg"><br>図： (左)起動時および 
 [幅を 100 にする] ボタン押下時、 (右) [幅を 200 にする] ボタン押下時</p>
 <p> &nbsp;</p>
@@ -103,13 +105,53 @@
 
 <p> 動画： Rectangle の幅を 100 と 200 に変更するアニメーション処理</p>
 <p> &nbsp;</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
-	<li>OS: Windows10 home</li>
-</ul>
 <p> &nbsp;</p>
-<p> [作成手順]</p>
+
+<section>
+<h3> <a name="1-1._VS2017版">1-1. VS2017版</a></h3>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>Visual Studio 2017 pro.,</td>
+	    <td>Version 16.6.0 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+	      <td>.NET Framework</td>
+	      <td>4.6.1 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows10 home</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[作成手順]</h4>
 <p><span class="auto-style8">手順１：</span><br>・新規プロジェクトを作成後、２つのボタンと１つのRectangleを画面上に配置します。<br>
 ・ボタンとRectangleに名前を付けて、位置と大きさを整えます。</p>
 <p>&nbsp;</p>
@@ -192,6 +234,189 @@
 &lt;/Window&gt;</pre>
 	
 <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+  <h3><a name="1-2._VS2019版">1-2. VS2019版</a></h3>
+	
+	<h4>[概要]</h4>
+	<p>VS2019 から &quot;Blend SDK for Visual Studio&quot; が無くなりました。このため前述の「<a href="#1-1._VS2017版">1-1. 
+	VS2017版</a>」に記載のプログラムは VS2019 では動作しなくなりました。<br>代わりに(?) OSS の 
+<a href="https://github.com/microsoft/XamlBehaviorsWpf" target="_blank">
+Micorosoft.Xaml.Behaviors.Wpf</a> が Github に登録されています。今後はこちらを使え、ってことなんでしょうね。</p>
+  <p>というわけで、Microsoft.Xaml.Behaviors.Wpf を使って前述プログラムを作り直します。</p>
+  <p>&nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>Microsoft Visual Studio Community 2019,</td>
+	    <td>Version 16.11.20</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+	    <td>.NET Framework,</td>
+	    <td>4.6.1</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+		<td>ライブラリ :</td>
+		<td>Microsoft.Xaml.Behaviors.Wpf,</td>
+		<td>Version 1.1.39</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 Home,</td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[作成手順]</h4>
+  <p>Step1:</p>
+	<p>新しいプロジェクトを「WPF アプリ（.NET Framework）」で新規作成します。</p>
+  <p>
+  <img alt="" class="border_with_drop-shadow" src="Animation%20of%20the%20rectangle/img1F.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>Step2:</p>
+  <p>
+  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+  NuGet から ”Microsoft.Xaml.Behaviors.Wpf” をプロジェクトへ設定します。</span></p>
+  <p>
+  <img alt="Microsoft.Xaml.Behaviors.Wpf をプロジェクトへ登録" class="border_with_drop-shadow" src="Animation%20of%20the%20rectangle/img12.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p class="auto-style10">Step3:</p>
+  <p class="auto-style10">２つのボタンと１つの Rectangle を配置し、位置と大きさを適当に調整します。</p>
+  <p class="auto-style10">ボタンには下図のようなラベルを書いてみます。</p>
+  <p class="auto-style10">
+  <img alt="２つのボタンと１つの Rectangle を配置" class="border_with_drop-shadow" src="Animation%20of%20the%20rectangle/img16.jpg"></p>
+  <p>&nbsp;</p>
+  <p>Step4:</p>
+  <p> Blend を使って下記２つのストーリーボードを作成します。<br>今回の内容の場合は 1秒後の状態 のみを定めればよいです。0秒時点の状態は未定義にします。<br>(1) Rectangle の幅を 100 
+にするストーリーボード (x:Key=&quot;ChangeToWidth100&quot;)<br>(2) Rectangle の幅を 200 
+にするストーリーボード (x:Key=&quot;ChangeToWidth200&quot;)</p>
+  <p> &nbsp;</p>
+  <p> 作成した２つのストーリーボードについて、適用するイージング関数を設定します。下記例では EasingFunction として「Power InOut」を設定しています。 </p>
+  <p> 
+  <img alt="" src="Animation%20of%20the%20rectangle/img18.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>Step5:</p>
+  <p>・2つのボタンにビヘイビアーから "ControlStoryboardAction" をドラッグで設定します。</p>
+  <p>・各 "ControlStoryboardAction" のプロパティ設定にて以下を設定します。</p>
+  <p>&nbsp; (1) EventName: ”Click” を選択します。</p>
+  <p>&nbsp; (2) Storyboard: ボタンクリック時に期待する動作となるストーリーボードを選択します。 </p>
+  <p><img alt="" src="Animation%20of%20the%20rectangle/img1B2.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>これで完成です。コードビハインドによる実装はありません。以上の手順で作成したXAMLを以下に示します。</p>
+  <p>namespace の設定部分 <span class="cpp-source">
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"</span> を忘れないようにしましょう。</p>
+  <p>&nbsp;</p>
+
+  <p>["MainWindow.xaml"] </p>
+  <pre class="prettyprint linenums">&lt;Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoveRectangle_02"
+<span class="auto-style9">        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"</span>
+        x:Class="MoveRectangle_02.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="400"&gt;
+    &lt;Window.Resources&gt;
+<span class="auto-style9">        &lt;Storyboard x:Key="ChangeToWidth100"&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="myRect"&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime="0:0:1" Value="100"&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode="EaseInOut"/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+<span class="auto-style9">        &lt;Storyboard x:Key="ChangeWidthTo200"&gt;</span>
+<span class="auto-style9">            &lt;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="myRect"&gt;</span>
+<span class="auto-style9">                &lt;EasingDoubleKeyFrame KeyTime="0:0:1" Value="200"&gt;</span>
+<span class="auto-style9">                    &lt;EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                        &lt;PowerEase EasingMode="EaseInOut"/&gt;</span>
+<span class="auto-style9">                    &lt;/EasingDoubleKeyFrame.EasingFunction&gt;</span>
+<span class="auto-style9">                &lt;/EasingDoubleKeyFrame&gt;</span>
+<span class="auto-style9">            &lt;/DoubleAnimationUsingKeyFrames&gt;</span>
+<span class="auto-style9">        &lt;/Storyboard&gt;</span>
+    &lt;/Window.Resources&gt;
+    &lt;Grid&gt;
+        &lt;Rectangle x:Name="myRect" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="100" Margin="30,30,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" d:LayoutOverrides="VerticalAlignment"/&gt;
+        &lt;Button x:Name="btnToWidth100" Content="幅を 100 にする" HorizontalAlignment="Left" Margin="30,215.828,0,0" VerticalAlignment="Top" Width="100" d:LayoutOverrides="HorizontalAlignment" Height="20"&gt;
+<span class="auto-style9">            &lt;i:Interaction.Triggers&gt;</span>
+<span class="auto-style9">                &lt;i:EventTrigger EventName="Click"&gt;</span>
+<span class="auto-style9">                    &lt;i:ControlStoryboardAction Storyboard="{StaticResource ChangeToWidth100}"/&gt;</span>
+<span class="auto-style9">                &lt;/i:EventTrigger&gt;</span>
+<span class="auto-style9">            &lt;/i:Interaction.Triggers&gt;</span>
+        &lt;/Button&gt;
+        &lt;Button x:Name="btnToWidth200" Content="幅を 200 にする" Margin="190.662,215.828,0,0" VerticalAlignment="Top" Width="100" Height="20" d:LayoutOverrides="Width" HorizontalAlignment="Left"&gt;
+<span class="auto-style9">            &lt;i:Interaction.Triggers&gt;</span>
+<span class="auto-style9">                &lt;i:EventTrigger EventName="Click"&gt;</span>
+<span class="auto-style9">                    &lt;i:ControlStoryboardAction Storyboard="{StaticResource ChangeWidthTo200}"/&gt;</span>
+<span class="auto-style9">                &lt;/i:EventTrigger&gt;</span>
+<span class="auto-style9">            &lt;/i:Interaction.Triggers&gt;</span>
+        &lt;/Button&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;</pre>
+  <p>&nbsp;</p>
+  <p>念のためコードビハインド側も参考記載します。プロジェクト作成直後と同じ状態です。</p>
+  <p>["MainWindow.xaml.cs"]</p>
+  
+  <pre class="prettyprint linenums">using System.Windows;
+
+namespace MoveRectangle_02
+{
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+    }
+}</pre>
+  <p>&nbsp;</p>
+  <p>以上です。</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
 <p>&nbsp;</p>
 <h2> <a name="2._Rectangle_の幅(Width)をアニメーションする_－_コードビハインド(code-behind)版_">2. Rectangle の幅(Width)をアニメーションする － コードビハインド(code-behind)版</a></h2>
 <p> [概要]<br>「<a href="#1._Rectangle_の幅(Width)をアニメーションする_－_XAML版_">1. Rectangle の幅(Width)をアニメーションする － XAML版</a>」 
@@ -204,6 +429,60 @@
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>Microsoft Visual Studio Community 2019,</td>
+	    <td>Version 16.11.20</td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>Microsoft Visual Studio Pro. 2017,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+	    <td>.NET Framework,</td>
+	    <td>4.6.1</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 Home,</td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>Windows 10 Home,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
 <p> [作成手順]</p>
 <p> <span class="auto-style8">手順１： XAML定義</span><br>
 アニメーションはコードビハインドで作成しますが、基本的な画面まではXAMLで作成します。<br>以下に記載します。</p>
@@ -1019,6 +1298,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-11-10</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#1-2._VS2019版">1-2. VS2019版</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-11-05</td>
 	    <td class="td_history_separator">-</td>
