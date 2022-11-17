@@ -658,10 +658,68 @@ namespace MoveRectangle_03
 <p>&nbsp;</p>
 
 <h2><a name="3._Rectangle_の幅と高さをアニメーションする_－_XAML版_">3. Rectangle の幅(Width)と高さ(Height)をアニメーションする － XAML版</a></h2>
-<p> [概要]<br>&quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
+	
+  <h4>[概要]</h4>
+  <p> &quot;DoubleAnimation&quot; というクラスを使って特定のプロパティをアニメーションする方法を説明します。<br>
 ここでは画面上のボタンをクリックすると Rectangle の幅と高さを１秒の時間をかけてアニメーションすることを例に記載します。<br>
 前章までの内容との違いは、<span class="auto-style8">複数のプロパティを同時にアニメーションする</span>、という部分です。</p>
-<p> [仕様]<br>- ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
+<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>Microsoft Visual Studio Community 2019,</td>
+	    <td>Version 16.11.20</td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>Microsoft Visual Studio Pro. 2017,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+	    <td>.NET Framework,</td>
+	    <td>4.6.1</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows 11 Home,</td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>Windows 10 Home,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[仕様]</h4>
+<p> - ２つのボタンと１つのRetangleを画面上に置きます。<br>- 
 プログラム起動時、Rectangleの幅と高さを100にします。<br>- ボタン［幅と高さを 200 
 にする］をクリックすると、Rectangleの幅と高さを１秒間のアニメーションで200にします。<br>- ボタン［幅と高さを 100 
 にする］をクリックすると、Rectangleの幅と高さを１秒間のアニメーションで100にします。<br>- 
@@ -672,24 +730,36 @@ namespace MoveRectangle_03
 </video>
 
 <p>&nbsp;</p>
+	
+	<h4>[作成手順]</h4>
 <p><span class="auto-style8">手順１：</span><br>・新規プロジェクトを作成後、２つのボタンと１つのRectangleを画面上に配置します。<br>
 ・ボタンとRectangleに名前を付けて、位置と大きさを整えます。</p>
-<p><span class="auto-style8">手順２：</span><br>・Blend を使って下記２つのストーリーボードを作成します。<br>&nbsp; 
-今回は「トリガー」を使ってアニメーションしてみます。<br>&nbsp; ２つのボタンのそれぞれをクリックしたときのストーリーボードを Blend 
-を使って指定します。<br>&nbsp; 
-1秒後の状態 のみを定めて、0秒時点の状態を未定義にします。<br>&nbsp; (1) Rectangle の幅・高さを 100 
-にするストーリーボード (&quot;ChangeTo100&quot;)<br>&nbsp; (2) Rectangle の幅・高さを 200 
-にするストーリーボード (&quot;ChangeTo200&quot;)</p>
-<p>
-<img alt="" src="Animation%20of%20the%20rectangle/img1B1.jpg" height="538" width="1000"></p>
 <p>&nbsp;</p>
-<p> <span class="auto-style8">手順３：</span><br>・作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>&nbsp; 
-Width, Height をそれぞれ設定しても良いですし、２つをまとめて設定することもできます。<br>&nbsp; 
-まとめて設定する場合は、[Shift]を押しながらマウスでクリックすれば複数のプロパティを選択可能です。<br>&nbsp; 
-下記例では EasingFunction として「Power InOut」を、Power(次数)として 2 を、それぞれ設定しています。</p>
+<p><span class="auto-style8">手順２：</span></p>
+<p>ここでは Blend を使って編集してみます。</p>
+<p>［トリガー］ウィンドウを表示して、２つのボタンに対してそれぞれ "Click" イベントを追加します。</p>
+<p>
+<img alt="「トリガー」追加" src="Animation%20of%20the%20rectangle/img3.jpg" width="1000"></p>
+<p>&nbsp;</p>
+<p><span class="auto-style8">手順３：</span><br>続いて Blend を使って「ストーリーボード」を追加します。</p>
+<p>「オブジェクトとタイムライン」ウィンドウを表示して、２つのストーリーボードを追加します。ここでは下記２つのストーリーボードを作成します。</p>
+<p>(1) "ChangeTo100"： Rectangle の幅・高さを 100 にするストーリーボード<br>(2) "ChangeTo200"： 
+Rectangle の幅・高さを 200 にするストーリーボード</p>
+<p>「オブジェクトとタイムライン」から「新規作成...」をクリックして新しいストーリーボードを追加します。</p>
+<p>
+<img alt="ストーリーボードを追加" src="Animation%20of%20the%20rectangle/img6.jpg" width="1000"></p>
+<p>&nbsp;</p>
+<p class="auto-style8">手順４：</p>
+<p>ストーリーボード上でアニメーション内容を設定します。<br>ここでは１秒後に Rectangle の Width および Height を 200 
+にするアニメーションを作成しています。</p>
+<p>
+<img alt="ストーリーボード上で rectangle プロパティを調整" src="Animation%20of%20the%20rectangle/img7.jpg" width="1000"></p>
+<p>&nbsp;</p>
+<p> <span class="auto-style8">手順５：</span><br>作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>Width, Height をそれぞれ設定しても良いですし、２つをまとめて設定することもできます。<br>まとめて設定する場合は、[Shift]を押しながらマウスでクリックすれば複数のプロパティを選択可能です。<br>下記例では EasingFunction として「Power InOut」を、Power(次数)として 2 を、それぞれ設定しています。</p>
 <p>
 <img alt="" height="538" src="Animation%20of%20the%20rectangle/img28.jpg" width="1000"></p>
 <p>以上で完成です。わかってしまえばとても簡単です。</p>
+<p>&nbsp;</p>
 <p>出来上がった XAML コードは以下の通りです。<br>１つの Storyboard に対して２つの 
 DoubleAnimationUsingKeyFrames が登録されていることがわかります。</p>
 <pre class="prettyprint linenums">
