@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>[Win32] ウィンドウ位置の取得方法 | Programing Items</title>
+  <title>[Win32] ウィンドウ位置とサイズの取得方法 | Programing Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -46,8 +46,8 @@
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-［Win32］ウィンドウの位置とサイズの取得方法</h1>
+
+<h1 class="auto-style7">Win32］ウィンドウ位置とサイズの取得方法</h1>
 
 <p> ウィンドウの位置とサイズの取得方法について記載します。</p>
 <p> &nbsp;</p>
@@ -56,25 +56,24 @@
       <div></div>
       <div>
         <p><strong>注意</strong></p>
-        <p>Windows Vista 
-以降の Windows 環境でGUIを動作する場合、DWM API を使って正しく実装しないとウィンドウ位置とサイズに誤差を生じます。注意が必要です。</p>
+        <p>Windows Vista 以降の Windows 環境でGUIを動作する場合、DWM API を使って正しく実装しないとウィンドウ位置とサイズに誤差を生じます。注意が必要です。</p>
       </div>
     </div>
 
     <p> &nbsp;</p>
+
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
-	<p> <a href="#1._GetWindowRect_による方法">1. GetWindowRect による方法</a></p>
-	<p>
-<a href="#2._DwmGetWindowAttribute_による方法">2. DwmGetWindowAttribute による方法</a></p>
-	<p>
-<a href="#3._テストプログラム">3. テストプログラム</a></p>
+	<p><a href="#1._GetWindowRect_による方法">1. GetWindowRect による方法</a></p>
+	<p><a href="#2._DwmGetWindowAttribute_による方法">2. DwmGetWindowAttribute による方法</a></p>
+	<p><a href="#3._テストプログラム">3. テストプログラム</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
   </nav>
 </div>
+
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="1._GetWindowRect_による方法">1. GetWindowRect による方法</a></h2>
@@ -143,8 +142,7 @@ rect.bottom - rect.top</p>
 </ul>
 <p>
 &nbsp;</p>
-<p>
-[実行結果]</p>
+<p>[実行結果]</p>
 <p>
 実行結果は下図の通りです。<br>"DwmGetWindowAttribute" で取得した値が期待する正しい値です。<br>
 "GetWindowRect" で取得した値と比べると、左右でそれぞれ 7画素、下に 
@@ -231,14 +229,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		<p>&nbsp;</p>
 	
 <p>&nbsp;</p>
-<h2>
-サンプルプログラム</h2>
+<h2>サンプルプログラム</h2>
 <p>
 サンプルプログラム <a href="WindowPositionAndSize/WindowControlSample.zip">ダウンロード</a></p>
-<p>
-&nbsp;</p>
-<p>
-&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
@@ -269,22 +264,16 @@ SOFTWARE.
   <p>&nbsp;</p>
 </section>
 
-<p>
-&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
 	<h2><a id="参考">参考</a></h2>
 <ul>
-	<li>
-	<a href="https://msdn.microsoft.com/ja-jp/library/Cc364769.aspx?f=255&amp;MSPPError=-2147217396" target="_blank">MSDN：GetWindowRect</a></li>
-	<li>
-	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969518(v=vs.85).aspx" target="_blank">MSDN：DwmIsCompositionEnable</a></li>
-	<li>
-	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969515(v=vs.85).aspx" target="_blank">MSDN：DwmGetWindowAttribute</a></li>
-	<li>
-	<a href="https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja" target="_blank">https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja</a></li>
-	<li>
-	<a href="http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border" target="_blank">http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border</a></li>
+	<li><a href="https://msdn.microsoft.com/ja-jp/library/Cc364769.aspx?f=255&amp;MSPPError=-2147217396" target="_blank">MSDN：GetWindowRect</a></li>
+	<li><a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969518(v=vs.85).aspx" target="_blank">MSDN：DwmIsCompositionEnable</a></li>
+	<li><a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa969515(v=vs.85).aspx" target="_blank">MSDN：DwmGetWindowAttribute</a></li>
+	<li><a href="https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja" target="_blank">https://social.msdn.microsoft.com/Forums/ja-JP/24a29e45-afde-448a-9958-d2fb2dfd4183/windows10?forum=vsgeneralja</a></li>
+	<li><a href="http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border" target="_blank">http://stackoverflow.com/questions/31920709/retrieving-size-of-windows-10-shadowing-border</a></li>
 	<li><a href="http://m.srad.jp/~shuichi/journal/594973" target="_blank">http://m.srad.jp/~shuichi/journal/594973</a></li>
 </ul>
 	<p>&nbsp;</p>

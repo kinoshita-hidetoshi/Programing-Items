@@ -53,22 +53,17 @@ Windows バージョン情報の取得方法
 <p>Windows のOSバージョン情報取得方法を以下に記載します。</p>
 <p> 動作確認済みのOSは以下の通り。ただし過去に評価したことがある、というだけで最新情報で全て確認済みというわけではありません。</p>
 <p> &nbsp;</p>
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#対応OSリスト">対応OSリスト</a></p>
-        <p><a href="#ソースコード">ソースコード</a></p>
-        <p>&nbsp;</p>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#対応OSリスト">対応OSリスト</a></p>
+	<p><a href="#ソースコード">ソースコード</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p> &nbsp;</p>
 <p>&nbsp;</p>
 <h2><a name="対応OSリスト">対応OSリスト</a></h2>
 <ul>
@@ -834,25 +829,28 @@ SOFTWARE.
   <p>&nbsp;</p>
 </section>
 
-<p><br>
-
-</p>
+<p>&nbsp;</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
 	<ul>
+		<li>GetVersionExA 関数 (sysinfoapi.h) - Win32 apps | Microsoft Learn<br>
+		  <a href="https://learn.microsoft.com/ja-jp/windows/win32/api/sysinfoapi/nf-sysinfoapi-getversionexa" target="_blank">
+		  https://learn.microsoft.com/ja-jp/windows/win32/api/sysinfoapi/nf-sysinfoapi-getversionexa</a></li>
+		<li>GetProductInfo function (sysinfoapi.h) - Win32 apps | Microsoft Learn<br>
+		  <a href="https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getproductinfo" target="_blank">
+		  https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getproductinfo</a></li>
 		<li>Windows8.1のバージョン番号 - Null and void (hatenadiary.org)<br>
-<a href="http://d.hatena.ne.jp/chi-bd/20130915/1379207754" target="_blank">http://d.hatena.ne.jp/chi-bd/20130915/1379207754</a></li>
-        <li>バージョン ヘルパー関数 - Win32 apps | Microsoft Docs<br>
-        <a href="https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis" target="_blank">
-        https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis</a></li>
-        <li>&nbsp;Application manifests - supportedOS<br>
-        <a href="https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos" target="_blank">
-        https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos</a></li>
-        <li>winapi - What's the supportedOS GUID for Windows 11? - Stack 
-        Overflow<br>
-        <a href="https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11" target="_blank">
-        https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11</a></li>
+      <a href="http://d.hatena.ne.jp/chi-bd/20130915/1379207754" target="_blank">http://d.hatena.ne.jp/chi-bd/20130915/1379207754</a></li>
+    <li>バージョン ヘルパー関数 - Win32 apps | Microsoft Docs<br>
+      <a href="https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis" target="_blank">
+      https://docs.microsoft.com/ja-jp/windows/win32/sysinfo/version-helper-apis</a></li>
+    <li>&nbsp;Application manifests - supportedOS<br>
+      <a href="https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos" target="_blank">
+      https://docs.microsoft.com/en-us/windows/win32/sbscs/application-manifests#supportedos</a></li>
+    <li>winapi - What's the supportedOS GUID for Windows 11? - Stack Overflow<br>
+      <a href="https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11" target="_blank">
+      https://stackoverflow.com/questions/68240304/whats-the-supportedos-guid-for-windows-11</a></li>
 	</ul>
 </section>
 
