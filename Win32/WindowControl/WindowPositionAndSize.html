@@ -208,7 +208,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                 if (S_OK == result2) {
                     _stprintf_s(str, _T(&quot;left = %d, top = %d, width = %d, height = %d&quot;),
-                        rect2.left, rect2.top, rect2.right - rect2.left, rect2.bottom - rect1.top);
+                        rect2.left, rect2.top, rect2.right - rect2.left, rect2.bottom - rect2.top);
                     TextOut(hdc, 10, 60, title2, _tcslen(title2));
                     TextOut(hdc, 10, 80, str, _tcslen(str));
                 }
@@ -227,6 +227,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }</pre>
 		<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p>NOTE</p>
+        <p>GetWindowRect と DwmGetWindowAttribute は下記違いもありそうです。どう活用したらよいか、難しい・・・。</p>
+        <p>・表示倍率の設定による影響<br>　例えば 150% 表示にすると、DwmGetWindowAttribute 
+		の値の方が約150%大きくなります。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
 	
 <p>&nbsp;</p>
 <h2>サンプルプログラム</h2>
@@ -289,6 +301,11 @@ SOFTWARE.
 	    <td class="td_history_date">2022-10-13</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">誤り修正</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">2015-08-29</td>
