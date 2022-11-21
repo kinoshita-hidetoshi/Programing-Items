@@ -1,33 +1,84 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Counter (Win32)</title>
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	border-collapse: collapse;
-	text-align: justify;
-	font-size: 10.0pt;
-	font-family: Century;
-	border: 1.0pt solid windowtext;
-}
-.auto-style9 {
-	background-color: #FFFF00;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[Win32] Counter | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	border-collapse: collapse;
+    	text-align: justify;
+    	font-size: 10.0pt;
+    	font-family: Century;
+    	border: 1.0pt solid windowtext;
+    }
+    .auto-style9 {
+    	background-color: #505000;
+    }
+  </style>
 </head>
-<body>
+
+<body onload="prettyPrint();">
+
 <h1 class="auto-style7">
-Counter (Win32)</h1>
+[Win32] Counter</h1>
 <p class="auto-style7">
 職場の若手向けお勉強テーマとして作成しました。Win32 で下記の機能を実現しなさい、という内容です。</p>
-<h2>
-１．要求仕様</h2>
-<h3>
-1.1. 機能</h3>
+<p class="auto-style7">
+&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._要求仕様">1. 要求仕様</a></p>
+	<p>&nbsp;&nbsp; <a href="#1.1._機能仕様">1.1. 機能仕様</a></p>
+	<p>&nbsp;&nbsp; <a href="#1.2._画面仕様">1.2. 画面仕様</a></p>
+	<p><a href="#2._プログラム実装">2. プログラム実装</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p class="auto-style7">
+&nbsp;</p>
+<p class="auto-style7">&nbsp;</p>
+
+<h2><a name="1._要求仕様">1. 要求仕様</a></h2>
+<h3><a name="1.1._機能仕様">1.1. 機能仕様</a></h3>
+
 <ul>
 	<li>アプリケーションはカウンタの値を表示する機能を持つ。</li>
 	<li>アプリケーション起動時のカウンタ初期値を０とする。</li>
@@ -40,10 +91,11 @@ Counter (Win32)</h1>
 	<li>カウンタが0のとき、”-”ボタンを無効化すること。</li>
 	<li>カウンタが 10 のとき、”+”ボタンを無効化すること。</li>
 </ul>
-<h3><![if !supportLists]><span style="mso-list:Ignore">
+<p>&nbsp;</p>
+<h3><![if !supportLists]><a name="1.2._画面仕様"><span style="mso-list:Ignore">
 <span style="font-family:
 &quot;Meiryo UI&quot;">1.2. </span></span><![endif]>
-<span style="font-family:&quot;Meiryo UI&quot;">画面仕様<span lang="EN-US"><o:p></o:p></span></span></h3>
+<span style="font-family:&quot;Meiryo UI&quot;">画面仕様</span></a><span lang="EN-US"><o:p></o:p></span></h3>
 <p class="MsoNormal"><span style="font-family:&quot;Meiryo UI&quot;">
 画面仕様は以下の通り。記載事項以外は自由に設計のこと。<span lang="EN-US"><o:p></o:p></span></span></p>
 <ul>
@@ -245,51 +297,51 @@ Counter (Win32)</h1>
 </table>
 </p>
 <p>
-<span lang="EN-US" style="font-size: 10.5pt; mso-bidi-font-size: 12.0pt; font-family: &quot;Meiryo UI&quot;; mso-font-kerning: 1.0pt; mso-ansi-language: EN-US; mso-fareast-language: JA; mso-bidi-language: AR-SA">
-(*1) TabStop </span>
-<span style="font-size: 10.5pt; mso-bidi-font-size: 12.0pt; font-family: &quot;Meiryo UI&quot;; mso-font-kerning: 1.0pt; mso-ansi-language: EN-US; mso-fareast-language: JA; mso-bidi-language: AR-SA">
-を<span lang="EN-US"> False </span>に設定</span></p>
-<p class="MsoNormal"><![if !supportLists]>
-<span lang="EN-US" style="font-family: &quot;Meiryo UI&quot;">
-<span style="mso-list: Ignore">1.<span lang="ja">3</span>.<span style="font: 7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span style="font-family: &quot;Meiryo UI&quot;">
-動作環境、開発環境<span lang="EN-US"><o:p></o:p></span></span></p>
-<p class="MsoNormal"><span style="font-family: &quot;Meiryo UI&quot;">動作環境：<span lang="EN-US"> 
-Windows XP </span>または<span lang="EN-US"> Windows7<o:p><br></o:p>
-</span>開発環境：<span lang="EN-US"> Visual Studio 2008 </span>以降<span lang="EN-US"><o:p><br></o:p>
-</span>開発言語：<span lang="EN-US"> Win32<o:p></o:p></span></span></p>
+(*1) TabStop 
+を False に設定</p>
+<p>
+&nbsp;</p>
+<p>
+&nbsp;</p>
+<h2>
+<a name="2._プログラム実装">2. プログラム実装</a></h2>
+<p>
+要求仕様に記載した内容を Win32 で実装してみます。</p>
+<p>
+&nbsp;</p>
+<h4>[環境]</h4>
+<p>動作環境： Windows XP または Windows7</p>
+<p>開発環境： Visual Studio 2008 以降</p>
+<p>開発言語： Win32</p>
 <p>&nbsp;</p>
 <p>実際に私が作成したプログラムの画面は下図の通り。</p>
 <p><img alt="" height="321" src="Counter/Counter_Win32.png" width="466"></p>
+<p>&nbsp;</p>
 <p><span class="table_title">[プログラムソース（抜粋）]</span></p>
 
-<table style="border: medium double #C0C0C0; width: 800px">
-	<tr>
-		<td>
-		<pre><code>
-<span class="comment">// Windows ヘッダー ファイル:</span>
-<span class="command">#include</span> <span class="string">&lt;windows.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;windowsx.h&gt;</span>       <span class="comment">// SetWindowFont</span>
+<pre class="prettyprint linenums lang-cpp"><code>// Windows ヘッダー ファイル:
+#include &lt;windows.h&gt;
+#include &lt;windowsx.h&gt;       // SetWindowFont
 
-<span class="comment">// C ランタイム ヘッダー ファイル</span>
-<span class="command">#include</span> <span class="string">&lt;stdlib.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;malloc.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;memory.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;tchar.h&gt;</span>          <span class="comment">// _tWinMain, _T</span>
+// C ランタイム ヘッダー ファイル
+#include &lt;stdlib.h&gt;
+#include &lt;malloc.h&gt;
+#include &lt;memory.h&gt;
+#include &lt;tchar.h&gt;          // _tWinMain, _T
 
-<span class="command">#include</span> <span class="string">&quot;Resource.h&quot;</span>
+#include &quot;Resource.h&quot;
 
 
-<span class="comment">/*=========*/
+/*=========*/
 /* #define */
-/*=========*/</span>
-<span class="command">#define</span> USE_SEND_MESSAGE    <span class="comment">// DlgProc 内で使用。機能実装方法の分岐に使用。</span>
+/*=========*/
+#define USE_SEND_MESSAGE    // DlgProc 内で使用。機能実装方法の分岐に使用。
 
 
-<span class="comment">// グローバル変数:</span>
+// グローバル変数:
 int count = 0 ;
 
-<span class="comment">// このコード モジュールに含まれる関数の宣言を転送します</span>
+// このコード モジュールに含まれる関数の宣言を転送します
 LRESULT CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
 
 
@@ -308,9 +360,9 @@ int APIENTRY _tWinMain(HINSTANCE hCurInst,
 
 LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
-    static HFONT font1 ;                    <span class="comment">// IDC_EDIT1 用のフォント</span>
-    static const int nCountMin =  0 ;       <span class="comment">// カウンタ値 下限値</span>
-    static const int nCountMax = 10 ;       <span class="comment">// カウンタ値 上限値</span>
+    static HFONT font1 ;                    // IDC_EDIT1 用のフォント
+    static const int nCountMin =  0 ;       // カウンタ値 下限値
+    static const int nCountMax = 10 ;       // カウンタ値 上限値
 
 
     switch (msg) {
@@ -320,25 +372,25 @@ LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
     case WM_CLOSE:
         if (MessageBox(
             hWnd,
-            (LPCTSTR)_T(<span class="string">&quot;プログラムを終了してよろしいですか？&quot;</span>),
-            (LPCTSTR)_T(<span class="string">&quot;終了確認&quot;</span>),
+            (LPCTSTR)_T(&quot;プログラムを終了してよろしいですか？&quot;),
+            (LPCTSTR)_T(&quot;終了確認&quot;),
             MB_YESNO | MB_ICONQUESTION) == IDNO)
         {
-            <span class="comment">// プログラムを終了しない</span>
+            // プログラムを終了しない
             return FALSE;
         }
 
-        <span class="comment">// プログラムを終了する</span>
+        // プログラムを終了する
         EndDialog(hWnd, IDOK);
         return TRUE ;
 
     case WM_INITDIALOG:
 
-        <span class="comment">/* IDC_EDIT1 のフォントを変更 */</span>
+        /* IDC_EDIT1 のフォントを変更 */
         {
 
             // フォント作成
-            int PointSize = 36 ;    <span class="comment">// 36pt のフォントを作成します。</span>
+            int PointSize = 36 ;    // 36pt のフォントを作成します。
             font1 = CreateFont(
                 -MulDiv(PointSize, GetDeviceCaps(GetDC(hWnd), LOGPIXELSY), 72),
                 0,                          // nWidth
@@ -355,7 +407,7 @@ LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
                 DEFAULT_PITCH | FF_SWISS,   // nPitchAndFamily
                 _T(&quot;Arial&quot;));               // lpszFacename
 
-           <span class="comment"> /* フォントをコントロールへ設定 */
+            /* フォントをコントロールへ設定 */
             /*
             ===============================================================================
                 補足説明：
@@ -363,17 +415,17 @@ LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
                     下記２つの実装は、表現上は異なりますが、マクロを展開すると
                     同じ内容になります。
             ===============================================================================
-            *</span>/
-<span class="command">#ifdef</span> USE_SEND_MESSAGE
+            */
+#ifdef USE_SEND_MESSAGE
             // IDC_EDIT1
             SendMessage( GetDlgItem( hWnd, IDC_EDIT1 ), WM_SETFONT, (WPARAM)font1, (LPARAM)1);
-<span class="command">#else</span>
+#else
             // IDC_EDIT1
             SetWindowFont( GetDlgItem( hWnd, IDC_EDIT1 ), font1, TRUE );
-<span class="command">#endif</span>
+#endif
         }
 
-        <span class="comment">// count を初期状態に</span>
+        // count を初期状態に
         {
             count = 0 ;
             SetDlgItemInt( hWnd, IDC_EDIT1, count, TRUE );
@@ -431,22 +483,15 @@ LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
     }
 
     return FALSE;
-}
-</code></pre>
-		</td>
-	</tr>
-</table>
+}</code></pre>
 
 <br>
 <p> 「Win32 DialogBox」の雛形に使えそうなプログラムです。</p>
 <p> なお、Windows XP 
 以降のコモンコントロールを使用するためにはマニュフェストでコモンコントロールのバージョン情報を記載する必要があるそうです。以下のマニュフェストを準備し、コモンコントロールのバージョンを 
 6.0.0.0 で指定します。<br>このマニュフェストが無いとビジュアル的に古い感じのダイアログになってしまいます。</p>
-<code>
-<table style="border: medium double #C0C0C0; width: 800px">
-	<tr>
-		<td>
-		<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+
+<pre class="prettyprint linenums lang-cpp"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
 &lt;assembly xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; manifestVersion=&quot;1.0&quot;&gt;
 &lt;assemblyIdentity
   version=&quot;1.0.0.0&quot;
@@ -466,16 +511,99 @@ LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 <span class="auto-style9">    /&gt;</span>
   &lt;/dependentAssembly&gt;
 &lt;/dependency&gt;
-&lt;/assembly&gt;</pre>
-		</td>
-		</code>
-	</tr>
-</table>
+&lt;/assembly&gt;</code>
+</pre>
+
+<p> &nbsp;</p>
 <p> 以上です。</p>
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<p> プログラムダウンロード：</p>
 <p> <a href="Counter/Counter_Win32_Dialog_vs2008.zip">サンプルプログラム ダウンロード (vs2008)</a><br>
 <a href="Counter/Counter_Win32_Dialog_vs2012.zip">サンプルプログラム ダウンロード (vs2012)</a></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2012-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2012年5月16日 木下英俊<br>
-更新： 2013年1月&nbsp; 2日 木下英俊</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-11-21</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2013-01-02</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2012-05-16</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2012-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+<p>&nbsp;</p>
 </body>
 </html>
