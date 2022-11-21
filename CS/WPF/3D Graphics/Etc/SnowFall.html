@@ -1,39 +1,60 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>［タイトルを記載します］</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[WPF] 雪を降らす | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
+  </head>
 
-<link rel="stylesheet" href="../../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
-</head>
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-［WPF］雪を降らす</h1>
+
+<h1>［WPF］雪を降らす</h1>
+<p>&nbsp;</p>
 
 <p> WPFを使って画面中に雪を降らせるアプリケーションを作成します。<br>WPF 3D の習作です。<br>&quot;TranslateTransform3D&quot; 
 と &quot;DoubleAnimationUsingKeyFrames&quot; を使って雪が降るアニメーションを実現します。</p>
-<p>
-&nbsp;</p>
+
+<p>&nbsp;</p>
 <p>
 [実行結果１：YouTubeより] <br>
-<iframe height="315" src="https://www.youtube.com/embed/J0P6VUBSDxU" frameborder="0" width="420" allowfullscreen="allowfullscreen"></iframe>
+<iframe src="https://www.youtube.com/embed/J0P6VUBSDxU" frameborder="0" width="600" height="500" allowfullscreen="allowfullscreen"></iframe>
 </p>
+
+<p>&nbsp;</p>
 <p>
 [実行結果２：静止画]<br>
-<img alt="" height="459" src="SnowFall/img6.jpg" width="610"></p>
+<img alt="" src="SnowFall/img6.jpg" width="610" height="459"></p>
 <p>&nbsp;</p>
 
 [プログラムソース "MainWindow.xaml"]
@@ -76,8 +97,7 @@
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 
-<p>
-</p>
+<p>&nbsp;</p>
 	
 [プログラムソース "MainWindow.xaml.cs"]
 
@@ -116,7 +136,7 @@ namespace SnowFall
     }
 }</pre>
 	
-<p></p>
+<p>&nbsp;</p>
 
 [プログラムソース &quot;SnowFall.cs&quot;]
 
@@ -237,15 +257,84 @@ namespace SnowFall
 サンプルプログラム <a href="SnowFall/SnowFall.zip">ダウンロード</a></p>
 <p>
 &nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>
+<p>
+&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2015-2022 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>
 	<a href="https://uchukamen.wordpress.com/2011/08/28/wpf-で雪を降らせてみた/" target="_blank">
 	宇宙仮面の研究室 ー WPFで雪を降らせてみた</a></li>
-</ul>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2015年08月22日 木下英俊<br>
-</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-11-21</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2015-08-22</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2015-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+<p>&nbsp;</p>
 </body>
 </html>
