@@ -73,6 +73,10 @@ ol{
 	padding: 0 0 0 40px;
 }
 
+li{
+  padding: 2px 0 2px 0;
+}
+
 pre{
   max-width: 100%;
 	display:block;
