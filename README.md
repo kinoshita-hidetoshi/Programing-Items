@@ -4,3 +4,5 @@
 
 下記 URL で公開しています。  
 [https://kinoshita-hidetoshi.github.io/Programing-Items/](https://kinoshita-hidetoshi.github.io/Programing-Items/)
+
+2022-11-29 木下英俊
