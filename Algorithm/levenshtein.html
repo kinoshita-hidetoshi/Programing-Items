@@ -56,8 +56,26 @@
 </dev>
 <p>
 &nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._cs_による実装例">1. c# による実装</a></p>
+	<p><a href="#2._c++_による実装例">2. c++ による実装</a></p>
+	<p><a href="#3._python_による実装例">3. Python による実装</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>
 &nbsp;</p>
+<p>
+&nbsp;</p>
+
+<section>
+	<h2> <a name="1._cs_による実装例">1. c# による実装例</a></h2>
+	<p> c# による実装例を以下に記載します。</p>
+	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
 	<table>
@@ -88,10 +106,7 @@
 	</tbody>
 	</table>
 	
-	<p>&nbsp;</p>
-	<p>&nbsp;</p>
-	
-<h4>[C# による実装例]</h4>
+	  <p> &nbsp;</p>
 <pre class="prettyprint linenums">
 <code>using System;
 
@@ -181,9 +196,51 @@ namespace LevenshteinCs
 }</code>
 </pre>
 	
-<p>&nbsp;</p>
+	<p> &nbsp;</p>
+	<p> [実行結果]<br><img alt="実行結果" src="levenshtein/img1D.gif"></p>
+</section>
 	
-<h4>[C/C++ による実装例]</h4>
+<p>
+&nbsp;</p>
+<hr>
+<p>
+&nbsp;</p>
+
+<section>
+	<h2> <a name="2._c++_による実装例">2. c++ による実装例</a></h2>
+	<p> c++ による実装例を以下に記載します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	      <td>Visual Studio 2013 pro.,</td>
+	      <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows8.1 64bit,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
 <p>C/C++ の実装では日本語を含むマルチバイト文字を使用できるように、UNICODE を使用して、<br>
 ロケールを指定したうえでワイドキャラクタ、ワイドストリング（wcout, wchar, wstring) などを使って実装しています。</p>
 
@@ -289,21 +346,93 @@ int _tmain(int argc, _TCHAR* argv[])
 }</code>
 </pre>
 	
+	<p> &nbsp;</p>
+	<h4> [実行結果]<br><img alt="実行結果" src="levenshtein/img1D.gif"></h4>
+</section>
+	
 <p>
 &nbsp;</p>
-<h4>[実行結果]<br><img alt="実行結果" src="levenshtein/img1D.gif"></h4>
+<hr>
+<p>
+&nbsp;</p>
+
+<section>
+	<h2> <a name="3._python_による実装例">3. Python による実装例</a></h2>
+	<p> Python による実装例を以下に記載します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>言語 :</td>
+	      <td>Python,</td>
+	      <td>3.10.7</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>
+		<span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+		Windows 11 home,</span></td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
+	<pre class="prettyprint linenums" lang="py">
+def levenshtein(s1, s2):
+    n = len(s1)
+    m = len(s2)
+
+    table = [[0] * (m + 1) for _ in range(n + 1)]
+
+    for i in range(n + 1):
+        table[i][0] = i
+    for j in range(m + 1):
+        table[0][j] = j
+
+    for i in range(1, n+1):
+        for j in range(1, m+1):
+            a = table[i][j-1] + 1
+            b = table[i-1][j] + 1
+            cost = 0 if s1[i-1] == s2[j-1] else 1
+            c = table[i-1][j-1] + cost
+            table[i][j] = min(a, b, c)
+
+    print(*table, sep='\n')
+    return table[n][m]
+
+
+if __name__ == "__main__":
+    print(levenshtein('うさぎ', 'うなぎ'))
+    print(levenshtein('うさぎ', 'ねこ'))</pre>
+	<p> &nbsp;</p>
+	<h4> [実行結果]</h4>
+	<p> 
+	<img alt="Python 実行結果" class="border_with_drop-shadow" src="levenshtein/img12.gif" width="360"></p>
+	<p> &nbsp;</p>
+</section>
+	
+<p>
+&nbsp;</p>
+<p>
+&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2>
-サンプルプログラム</h2>
-<p>
-上記で説明したプログラムを以下からダウンロードできます。</p>
-<p class="auto-style7">
-<a href="levenshtein/Levenshtein.zip">サンプルプログラム ダウンロード</a></p>
-<p class="auto-style7">
-&nbsp;</p>
-<p>
-&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
@@ -336,15 +465,19 @@ SOFTWARE.
 
 <p>
 &nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>
-	日経ソフトウェア 2014年3月 12~13ページ、第4回 プログラミング入門塾</li>
-	<li>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>日経ソフトウェア 2014年3月号 12~13ページ、第4回 プログラミング入門塾</li>
+		<li>
 	<a href="http://ja.wikipedia.org/wiki/レーベンシュタイン距離" target="_blank">レーベンシュタイン距離(wiki)</a></li>
-</ul>
-<p>&nbsp;</p>
+		<li>日経ソフトウェア 2023年1月号 特集１「絶対に知っておきたい　アルゴリズム10選」</li>
+	</ul>
+</section>
+
+<p>
+&nbsp;</p>
 <hr>
 
 
@@ -353,6 +486,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2022-11-29</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#3._python_による実装例">3. Python による実装例</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-05-22</td>
 	    <td class="td_history_separator">-</td>
