@@ -278,9 +278,26 @@
 
 <section>
 	<h3> <a name="パッケージ_ダウンロード">パッケージ ダウンロード</a></h3>
-	<p> 下記コマンドで、Stable Diffusion および必要なパッケージをインストールします。 </p>
-	<p> <span class="cpp-source">
-	!pip&nbsp;install&nbsp;--upgrade&nbsp;diffusers==0.2.4&nbsp;transformers==4.*&nbsp;scipy==1.*&nbsp;ftfy==6.*</span> </p>
+	<p> 下記コマンドで、Stable Diffusion および必要なパッケージをインストールします。</p>
+	<pre class="prettyprint linenums lang-py" style="width: 800px">!pip install --upgrade diffusers==0.8.0 transformers==4.* scipy==1.* ftfy==6.*
+!pip install accelerate</pre>
+	<p> &nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>2022/11 中は下記コマンドで動作していましたが、2022/12以降は上記へ変更しないとエラーになるようになりました。</p>
+    		<p><span class="cpp-source" spellcheck="false">
+    		  !pip&nbsp;install&nbsp;--upgrade&nbsp;diffusers==<strong>0.2.4</strong>&nbsp;transformers==4.*&nbsp;scipy==1.*&nbsp;ftfy==6.*
+    		</span></p>
+		    <p>See: <a href="https://huggingface.co/CompVis/stable-diffusion-v1-4/discussions/158">
+		      CompVis/stable-diffusion-v1-4 · why bug : getattr(): attribute name must be string? (huggingface.co)</a></p>
+		    <p>今後もこんなことが発生しそうなので素直にメモを残します。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
 	<p class="auto-style1"> 
 	<img alt="パッケージ ダウンロード" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/imgA8.jpg" width="800"></p>
 </section>
@@ -314,9 +331,23 @@ pipe.to("cuda")</pre>
 	<p> &nbsp;</p>
 	<p class="auto-style1"> 
 	<img alt="セットアップ" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/imgB4.gif" width="800"></p>
-</section>
 	
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>model_id を 他のモデル変えることで、ファインチューニングされた違うモデルを適用できるみたいです。 </p>
+  		<p><span class="cpp-source">model_id&nbsp;=&nbsp;"CompVis/stable-diffusion-v1-4"</span></p>
+  		<p><span class="cpp-source">model_id&nbsp;=&nbsp;"Linaqruf/anything-v3.0"</span></p>
+  		<p>m<span class="cpp-source">odel_id&nbsp;=&nbsp;"hakurei/waifu-diffusion"</span></p>
+    </div>
+  </div>
+
+	<p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 <section>
@@ -331,7 +362,8 @@ from torch import autocast
 text = "The train came out of the long tunnel into the snow country"
 num = 3
 for i in range(num):
-  image = pipe(text)["sample"][0]
+  #image = pipe(text)["sample"][0]        # old diffusers format (0.2.4).
+  image = pipe(text).images[0]
   file_name = "{}_{}.png".format(text,i) 
   image.save(file_name)
   display_png(Image(file_name))</pre>
@@ -400,7 +432,8 @@ yyyymmddhhmmss = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 # 指定した回数、画像生成＆保存を繰り返す。
 for i in range(number_of_images):
   with autocast("cuda"):
-    image = pipe(prompt)["sample"][0]
+    #image = pipe(text)["sample"][0]        # old diffusers format (0.2.4).
+    image = pipe(text).images[0]
 
   file_path = os.path.join(drive_directory, f"image-{yyyymmddhhmmss}-{i:03}.png")
   image.save(file_path)
@@ -527,6 +560,16 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">2022-12-03</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">なぜか12月になってからスクリプト実行すると"なぜか"エラーになるようになったので、スクリプトを修正</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">パッケージダウンロードのスクリプトに "!pip install accelerate" を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-11-26</td>
 	    <td class="td_history_separator">-</td>
