@@ -55,9 +55,10 @@
   <nav>
 	<h2>目次</h2>
 	<p><a href="#1._はじめに">1. はじめに</a></p>
-	<p><a href="#2._Hugging_Face_アカウント登録">2. Hugging Face アカウント登録</a></p>
-	<p><a href="#3._Google_Colaboratory_で実行">3. Google olaboratory で実行</a></p>
+	<p>&nbsp;&nbsp; <a href="#Stable_Diffusion_とは">Stable Diffusion とは</a></p>
 	<p>&nbsp;&nbsp; <a href="#Google_Colaboratory_とは">Google Colaboratory とは</a></p>
+	<p><a href="#2._Hugging_Face_アカウント登録">2. Hugging Face アカウント登録</a></p>
+	<p><a href="#3._Google_Colaboratory_で実行（Stable Diffusion 1.4）">3. Google Colaboratory で実行（Stable Diffusion 1.4）</a></p>
 	<p>&nbsp;&nbsp; <a href="#Google_アカウント作成">Google アカウント作成</a></p>
 	<p>&nbsp;&nbsp; <a href="#Google_Colaboratory_を開く">Google Colaboratory を開く</a></p>
 	<p>&nbsp;&nbsp; <a href="#ノートブックを新規作成">ノートブックを新規作成</a></p>
@@ -66,7 +67,20 @@
 	<p>&nbsp;&nbsp; <a href="#セットアップ">セットアップ</a></p>
 	<p>&nbsp;&nbsp; <a href="#画像生成">画像生成</a></p>
 	<p>&nbsp;&nbsp; <a href="#生成した画像をGoogleドライブに保存">生成した画像をGoogleドライブに保存</a></p>
-	<p><a href="#4._文言と作図例">4. 文言と作図例</a></p>
+	<p>&nbsp;&nbsp; <a href="#文言と作図例">文言と作図例</a></p>
+	<p><a href="#4._Google_Colaboratory_で実行（Stable Diffusion 2.0）">4. Google Colaboratory で実行（Stable Diffusion 2.0）</a></p>
+	<p>&nbsp;&nbsp; <a href="#Google_Colaboratory_を開く_2.0">Google Colaboratory 
+	を開く</a></p>
+	<p>&nbsp;&nbsp; <a href="#ノートブックを新規作成_2.0">ノートブックを新規作成</a></p>
+	<p>&nbsp;&nbsp; <a href="#GPU_を使用する_に設定_2.0">"GPU を使用する"に設定</a></p>
+	<p>&nbsp;&nbsp; <a href="#パッケージ_ダウンロード_2.0">パッケージ ダウンロード</a></p>
+	<p>&nbsp;&nbsp; <a href="#xformers_インストール">xformers インストール</a></p>
+	<p>&nbsp;&nbsp; <a href="#セットアップ_2.0">セットアップ</a></p>
+	<p>&nbsp;&nbsp; <a href="#画像生成_2.0">画像生成</a></p>
+	<p>&nbsp;&nbsp; <a href="#文言と作図例_2.0">文言と作図例</a></p>
+	<p><a href="#5._他">5. 他</a></p>
+	<p>&nbsp;&nbsp; <a href="#Waifu_Diffusion">waifu-diffusion</a></p>
+	<p>&nbsp;&nbsp; <a href="#Anything_v3.0">Anything V3.0</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -78,6 +92,8 @@
 <section>
 	<h2> <a name="1._はじめに">1. はじめに</a></h2>
 	<p>オープンソースで公開されて話題の “Stable Diffusion” を “Google Colaboratory” 上で実行するまでの流れを本資料にまとめます。</p>
+	<p>&nbsp;</p>
+	<h3><a name="Stable_Diffusion_とは">Stable Diffusion とは</a></h3>
 	<p>"Stable Diffusion" は、任意のテキスト入力に対して写真のようなリアルな画像を出力する text-to-image のモデルです。ソースコードは Github (<a href="https://github.com/CompVis/stable-diffusion" target="_blank">CompVis/stable-diffusion: 
 	A latent text-to-image diffusion model (github.com)</a>) で公開されています。</p>
 	<p> &nbsp;</p>
@@ -93,6 +109,60 @@
 	を使って作成）<br>
 	文例： "The train came out of the long tunnel into the snow country" </p>
 	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h3> <a name="Google_Colaboratory_とは">Google Colaboratory とは</a></h3>
+	<p> Google 
+	Colaboratory（グーグル・コラボレイトリー）とは、Googleが機械学習の教育及び研究用に提供しているインストール不要かつ、すぐにPythonや機械学習・深層学習の環境を整えることが出来る無料のサービスです。</p>
+	<p> &nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption>表： "Google Colaboratory" 無料版と有料版の比較</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>項目</th>
+          <th>無料版</th>
+          <th>Colab Pro</th>
+          <th>Colab Pro+</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>料金</th>
+          <td>無料</td>
+          <td>1,072円 / 月</td>
+          <td>5,243円 / 月</td>
+        </tr>
+        <tr>
+          <th>GPU</th>
+          <td>自動割当</td>
+          <td>高性能 GPU が割当てられる</td>
+          <td>高性能 GPU が割当てられる</td>
+        </tr>
+        <tr>
+          <th>メモリ</th>
+          <td>通常使用には問題ない</td>
+          <td>大量データ用</td>
+          <td>大量データ用</td>
+        </tr>
+        <tr>
+          <th>使用時間</th>
+          <td>最長12時間</td>
+          <td>最長24時間</td>
+          <td>最長24時間</td>
+        </tr>
+        <tr>
+          <th>バックグラウンド実行</th>
+          <td>×</td>
+          <td>×</td>
+          <td>○</td>
+        </tr>
+      </tbody>
+    </table>
+    
 </section>
 	
 <p>&nbsp;</p>
@@ -150,63 +220,8 @@
 <hr>
 <p> &nbsp;</p>
 
-	<h2> <a name="3._Google_Colaboratory_で実行">3. Google Colaboratory で実行</a> </h2>
+	<h2> <a name="3._Google_Colaboratory_で実行（Stable Diffusion 1.4）">3. Google Colaboratory で実行（Stable Diffusion 1.4）</a> </h2>
 	<p> Stable Diffusion を使うための事前準備を完了したので、Google Colab 上に実行環境を構築していきます。</p>
-	<p> &nbsp;</p>
-
-<section>
-	<h3> <a name="Google_Colaboratory_とは">Google Colaboratory とは</a></h3>
-	<p> Google 
-	Colaboratory（グーグル・コラボレイトリー）とは、Googleが機械学習の教育及び研究用に提供しているインストール不要かつ、すぐにPythonや機械学習・深層学習の環境を整えることが出来る無料のサービスです。</p>
-	<p> &nbsp;</p>
-        
-    <table class="border-collapse" border="1" width="600">
-      <caption>表： "Google Colaboratory" 無料版と有料版の比較</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>項目</th>
-          <th>無料版</th>
-          <th>Colab Pro</th>
-          <th>Colab Pro+</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>料金</th>
-          <td>無料</td>
-          <td>1,072円 / 月</td>
-          <td>5,243円 / 月</td>
-        </tr>
-        <tr>
-          <th>GPU</th>
-          <td>自動割当</td>
-          <td>高性能 GPU が割当てられる</td>
-          <td>高性能 GPU が割当てられる</td>
-        </tr>
-        <tr>
-          <th>メモリ</th>
-          <td>通常使用には問題ない</td>
-          <td>大量データ用</td>
-          <td>大量データ用</td>
-        </tr>
-        <tr>
-          <th>使用時間</th>
-          <td>最長12時間</td>
-          <td>最長24時間</td>
-          <td>最長24時間</td>
-        </tr>
-        <tr>
-          <th>バックグラウンド実行</th>
-          <td>×</td>
-          <td>×</td>
-          <td>○</td>
-        </tr>
-      </tbody>
-    </table>
-    
-</section>
-	
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
@@ -452,11 +467,10 @@ for i in range(number_of_images):
 </section>
 	
 <p>&nbsp;</p>
-<hr>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="4._文言と作図例">4. 文言と作図例</a></h2>
+	<h3> <a name="文言と作図例">文言と作図例</a></h3>
 	<p> 以下、文言と Stable Diffusion が作成した図のペア、の例を紹介します。</p>
 	<p> すべて私自身で文章と図を作成してみた結果です。 </p>
 	<p> &nbsp;</p>
@@ -495,9 +509,334 @@ for i in range(number_of_images):
 	
 <p>&nbsp;</p>
 <hr>
+
 <p>&nbsp;</p>
 
-<br>
+<section>
+	<h2><a name="4._Google_Colaboratory_で実行（Stable Diffusion 2.0）">4. Google Colaboratory で実行（Stable Diffusion 2.0）</a> </h2>
+	<p>&nbsp;</p>
+	<p>英 “Stability AI” は、画像生成AI「Stable Diffusion」の最新版となる「Stable Diffusion 2.0」を 
+	2022年11月24日に公開しました。従来版となる「Stable Diffusion V1」から、新たな機能が複数追加されています。 </p>
+	<p>テキストから画像を生成する際に使われる学習モデルは、Stability AI のサポートのもとで LAION 
+	が開発した新たなテキストエンコーダ「OpenCLIP」を使用して学習させたものになりました。出力解像度は 512×512 ピクセルに加え、768×768 
+	ピクセルも標準で生成できるようになりました。</p>
+	<p>&nbsp;さらに超解像アップスケールに対応したモデルも同梱しています。テキストから画像生成する方法と組み合わせることで、2,048×2,048 
+	ピクセルやそれ以上の解像度の画像生成が可能になったようです。 </p>
+	<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>本書記載時点で CompVis が v2.0 へ未対応だったため、Stability AI/stable-diffusion-2 
+		を使用した手順を記載しています。</p>
+		<p>ComVis が v2.0 へ対応したらもっと簡単に model_id を変更するだけで遊べるかもしれません </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p>“Stable Diffusion 1.4“ の使い方などを調べていたら、ちょうどそのタイミングで 2.0 
+		リリースがあって「これは一緒に調べねば」と思って追加してみました。</p>
+		<p>&nbsp;必要なGPUメモリが増加していますが、2.0の方が綺麗な印象です。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+	<p>&nbsp;</p>
+
+<section>
+	<h3> <a name="Google_Colaboratory_を開く_2.0">Google Colaboratory を開く</a></h3>
+	<p> 次に、Googleアカウントでログインした状態で  
+	<a href="https://colab.research.google.com/" target="_blank">Google Colaboratory</a> へアクセスします。 </p>
+	<p> <a href="https://colab.research.google.com/" target="_blank">Google 
+	Colab</a></p>
+	<p> &nbsp;</p>
+	<p> すると下図のような画面を表示します。</p>
+	<p class="auto-style1"> 
+	<img alt="図： Colaboratory へようこそ" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img8F.jpg" width="800"></p>
+	<p class="auto-style1"> 図： Colaboratory へようこそ</p>
+	<p> &nbsp;</p>
+</section>
+	
+	<p>&nbsp;</p>
+
+<section>
+	<h3> <a name="Google_Colaboratory_を開く_2.0">Google Colaboratory を開く</a></h3>
+	<p> 次に、Googleアカウントでログインした状態で  
+	<a href="https://colab.research.google.com/" target="_blank">Google Colaboratory</a> へアクセスします。 </p>
+	<p> <a href="https://colab.research.google.com/" target="_blank">Google 
+	Colab</a></p>
+	<p> &nbsp;</p>
+	<p> すると下図のような画面を表示します。</p>
+	<p class="auto-style1"> 
+	<img alt="図： Colaboratory へようこそ" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img8F.jpg" width="800"></p>
+	<p class="auto-style1"> 図： Colaboratory へようこそ</p>
+	<p> &nbsp;</p>
+</section>
+	
+	<p>&nbsp;</p>
+
+<section>
+	<h3> <a name="ノートブックを新規作成_2.0">ノートブックを新規作成</a></h3>
+	<p> 「ファイル」⇨「ノートブックを新規作成」をクリックします。 </p>
+	<p> &nbsp;</p>
+	<p class="auto-style1"> 
+	<img alt="ノートブックを新規作成" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img9C.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> 作成したノートブックにいろいろな処理をこれから記載していきます。 </p>
+	<p> &nbsp;</p>
+</section>
+	
+	<p>&nbsp;</p>
+
+<section>
+	<h3> <a name="GPU_を使用する_に設定_2.0">"GPU を使用する" に設定</a> </h3>
+	<p> 実行環境でGPUを使用するために「編集」⇨「ノートブックの設定」からGPUを割り当てます。 </p>
+  <p> &nbsp;</p>
+	<p class="auto-style1"> 
+	<img alt="ノートブック設定" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img97.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p class="auto-style1"> 
+	<img alt="GPU設定" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img98.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> GPU の設定を正しく行えたことを以下のコードで確認します。</p>
+	<p> <span class="cpp-source">!nvidia-smi -L</span></p>
+    <p class="auto-style1"> 
+	<img alt="nvidia-smi -L" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/imgA2.jpg" width="800"></p>
+	<p> または -L 無しで <span class="cpp-source">!nvidia-smi</span> を入力します。</p>
+	<p class="auto-style1"> 
+	<img alt="nvidia-smi" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/imgA4.gif" width="800"></p>
+	<p> &nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>T4 または P100 であることを確認します。 </p>
+      </div>
+    </div>
+    
+  	<p>&nbsp;</p>    
+  </section>
+	
+	<p>&nbsp;</p>
+	
+	<section>
+  	<h3><a name="パッケージ_ダウンロード_2.0">パッケージ ダウンロード</a></h3>
+	  <p>下記コマンドで、Stable Diffusion および必要なパッケージをインストールします。 </p>
+	  <pre class="prettyprint linenums lang-py" style="width: 800px">
+!pip install diffusers[torch]==0.9 transformers
+!pip install --upgrade --pre triton</pre>
+	  <p>&nbsp;</p>
+	  <p class="auto-style1">
+	  <img alt="パッケージダウンロード" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img16.gif" width="800"></p>
+	  <p>&nbsp;</p>
+	</section>
+	
+	<p>&nbsp;</p>
+	
+	<section>
+	  <h3><a name="xformers_インストール">xformers インストール</a></h3>
+	  <p>A100などで使うには、xformersを自分でビルドするか、fast-stable-diffusion 
+	  などで提供されてるビルド済みwheelを使う必要があります。</p>
+	  <p>ここでは下記コマンドによりビルド済み wheel を使用します。 </p>
+	  <p>&nbsp;</p>
+	  <pre class="prettyprint linenums lang-py">
+# xformersのインストール (T4 / P100用)
+!pip install -q https://github.com/metrolobo/xformers_wheels/releases/download/1d31a3ac_various_6/xformers-0.0.14.dev0-cp37-cp37m-linux_x86_64.whl	  </pre>
+	  <p>&nbsp;</p>
+	  <p class="auto-style1">
+	  <img alt="xformers インストール" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img1E.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+	</section>
+	
+	<p>&nbsp;</p>
+	
+	<section>
+	  <h3><a name="セットアップ_2.0">セットアップ</a></h3>
+	  <p>Stable Diffusionのモデルのダウンロードやパイプラインの構築を行います。 </p>
+	  <p>&nbsp;</p>
+	  <pre class="prettyprint linenums lang-py">
+from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
+import torch
+
+# パイプラインの準備
+model_id = "stabilityai/stable-diffusion-2"
+pipe = StableDiffusionPipeline.from_pretrained(
+    model_id, 
+    scheduler=EulerDiscreteScheduler.from_pretrained(
+        model_id, 
+        subfolder="scheduler"
+    ), 
+    torch_dtype=torch.float16,
+    revision="fp16"
+).to("cuda")
+pipe.enable_attention_slicing()	 </pre>
+	  <p>&nbsp;</p>
+	  <p class="auto-style1">
+	  <img alt="セットアップ" class="border_with_drop-shadow" src="stable_diffusion_with_google_colaboratory/img23.gif" width="800"></p>
+	  <p>&nbsp;</p>
+	</section>
+
+	<p>&nbsp;</p>
+	
+	<section>
+	  <h3><a name="画像生成_2.0">画像生成</a></h3>
+	  <p>画像を生成します。<br>生成したい画像の内容を <span class="cpp-source">text</span> 
+	  に記述し、以下のコードを実行します。</p>
+	  <p>下記例では <span class="cpp-source">
+	  "a&nbsp;photo&nbsp;of&nbsp;an&nbsp;astronaut&nbsp;riding&nbsp;a&nbsp;horse&nbsp;on&nbsp;mars"</span> を設定してます。</p>
+	  <p>&nbsp;</p>
+	  <pre class="prettyprint linenums lang-py">
+# 推論の実行
+text = "a photo of an astronaut riding a horse on mars"
+image = pipe(text, height=768, width=768).images[0]
+
+# 保存と表示
+image.save("output.png")
+image</pre>
+	  <p>&nbsp;</p>
+	  <p>
+	  <img alt="“a photo of an astronaut riding a horse on mars“" src="stable_diffusion_with_google_colaboratory/img34.jpg"></p>
+	  <p>&nbsp;</p>
+	</section>
+	
+	<p>&nbsp;</p>
+	
+	<section>
+	  <h3><a name="文言と作図例_2.0">文言と作図例</a></h3>
+	  <p>（日）宇宙飛行士が馬に乗っているプロの写真</p>
+	  <p><span class="cpp-source">
+	  text&nbsp;=&nbsp;"a&nbsp;professional&nbsp;photograph&nbsp;of&nbsp;an&nbsp;astronaut&nbsp;riding&nbsp;a&nbsp;horse"</span></p>
+	  <p>
+	  <img alt="&quot;a professional photograph of an astronaut riding a horse&quot;" src="stable_diffusion_with_google_colaboratory/img38.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）五匹のかわいい猫が庭で遊んでいる</p>
+	  <p><span class="cpp-source">text&nbsp;=&nbsp;"Five&nbsp;cute&nbsp;cats,&nbsp;play&nbsp;in&nbsp;the&nbsp;garden"</span></p>
+	  <p>
+	  <img alt="&quot;Five cute cats, play in the garden&quot;" src="stable_diffusion_with_google_colaboratory/img39.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）カウボーイハットを被ったライオン</p>
+	  <p><span class="cpp-source">text&nbsp;=&nbsp;"a&nbsp;lion&nbsp;wearing&nbsp;a&nbsp;cowboy&nbsp;hat"</span>
+	  </p>
+	  <p>
+	  <img alt="&quot;a lion wearing a cowboy hat&quot;" src="stable_diffusion_with_google_colaboratory/img40.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）ノートルダム寺院、モネ風 </p>
+	  <p><span class="cpp-source">text&nbsp;=&nbsp;"Notre&nbsp;Dame,&nbsp;Monet&nbsp;style" </span></p>
+	  <p>
+	  <img alt="&quot;Notre Dame, Monet style&quot;" src="stable_diffusion_with_google_colaboratory/img3A.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）ダースベーダーが森の中をバイクに乗って走る写真 </p>
+	  <p><span class="cpp-source">
+	  text&nbsp;=&nbsp;"Photo&nbsp;of&nbsp;Darth&nbsp;Vader&nbsp;riding&nbsp;a&nbsp;motorcycle&nbsp;through&nbsp;the&nbsp;woods" </span>
+	  </p>
+	  <p>
+	  <img alt="&quot;Photo of Darth Vader riding a motorcycle through the woods&quot;" src="stable_diffusion_with_google_colaboratory/img3B.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）エッフェル塔を眺めながらのピカチュウ ファイン ダイニング </p>
+	  <p><span class="cpp-source">
+	  text&nbsp;=&nbsp;"a&nbsp;pikachu&nbsp;fine&nbsp;dining&nbsp;with&nbsp;a&nbsp;view&nbsp;to&nbsp;the&nbsp;Eiffel&nbsp;Tower"</span></p>
+	  <p>
+	  <img alt="&quot;a pikachu fine dining with a view to the Eiffel Tower&quot;" src="stable_diffusion_with_google_colaboratory/img3D.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p><span class="cpp-source">
+	  text&nbsp;=&nbsp;"a&nbsp;mecha&nbsp;robot&nbsp;in&nbsp;a&nbsp;favela&nbsp;in&nbsp;expressionist&nbsp;style"</span></p>
+	  <p>
+	  <img alt="&quot;a mecha robot in a favela in expressionist style&quot;" src="stable_diffusion_with_google_colaboratory/img3E.jpg"></p>
+	  <p>&nbsp;</p>
+	  <p>（日）春はあけぼの、ようよう白く成りゆく山際、少し明かりて、紫だちたる雲の細くたなびきたる。 </p>
+	  <p><span class="cpp-source">text = "In the dawn of spring, the mountains 
+	  are turning white, and the purple clouds are trailing thinly with a little 
+	  light."</span></p>
+	  <p>
+	  <img alt="&quot;In the dawn of spring, the mountains are turning white, and the purple clouds are trailing thinly with a little light.&quot;" src="stable_diffusion_with_google_colaboratory/img3F.jpg"></p>
+	  <p>&nbsp;</p>
+	</section>
+	
+</section>
+
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a name="5._他">5. 他</a></h2>
+  <p>Stable Diffusion でファインチューニングされたモデルを一部紹介します。 </p>
+  <p>&nbsp;</p>
+  <section>
+    <h3><a name="Waifu_Diffusion">Waifu Diffusion</a></h3>
+  	<p>Waif Diffusion はキャラクターイラストに特化したモデルです。 </p>
+  	<p><a href="https://huggingface.co/hakurei/waifu-diffusion" target="_blank">
+  	https://huggingface.co/hakurei/waifu-diffusion</a></p>
+	<p>&nbsp;</p>
+	<p>v1.4 のスクリプトをベースに model_id を変更するだけで動作しました。</p>
+	<pre class="prettyprint linenums lang-py">from diffusers import StableDiffusionPipeline
+
+YOUR_TOKEN = "your-access-token"
+#model_id = "CompVis/stable-diffusion-v1-4"
+model_id = "hakurei/waifu-diffusion"
+pipe = StableDiffusionPipeline.from_pretrained(model_id, use_auth_token=YOUR_TOKEN)
+pipe.to("cuda")</pre>
+	<p>&nbsp;</p>
+	<p><span class="cpp-source">text&nbsp;=&nbsp;"1girl"</span></p>
+	<p>
+	<img alt="&quot;1girl&quot; sample 1" src="stable_diffusion_with_google_colaboratory/imgC.jpg">
+	<img alt="&quot;1girl&quot; sample 2" src="stable_diffusion_with_google_colaboratory/imgD.jpg"></p>
+	<p>&nbsp;</p>
+	<p>
+	<span class="cpp-source">text&nbsp;=&nbsp;"1girl,&nbsp;aqua&nbsp;eyes,&nbsp;baseball&nbsp;cap,&nbsp;blonde&nbsp;hair,&nbsp;closed&nbsp;mouth,&nbsp;earrings,&nbsp;green&nbsp;background,&nbsp;hat,&nbsp;hoop&nbsp;earrings,&nbsp;jewelry,&nbsp;looking&nbsp;at&nbsp;viewer,&nbsp;shirt,&nbsp;short&nbsp;hair,&nbsp;simple&nbsp;background,&nbsp;solo,&nbsp;upper&nbsp;body,&nbsp;yellow&nbsp;shirt"</span> </p>
+	<p>
+	<img alt="sample 3" src="stable_diffusion_with_google_colaboratory/imgE.jpg">
+	<img alt="sample 4" src="stable_diffusion_with_google_colaboratory/imgF.jpg"></p>
+	<p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h3><a name="Anything_v3.0">Anything v3.0</a></h3>
+  	<p>Waifu diffusion と同じくキャラクターイラストに特化したモデルです。描写がきれいで高品質、NovelAI や Waifu 
+  	diffusion で崩れやすかったパーツも崩れにくくなっている、と言われています。 </p>
+  	<p>
+  	<a href="https://huggingface.co/spaces/akhaliq/anything-v3.0" target="_blank">
+  	https://huggingface.co/spaces/akhaliq/anything-v3.0</a></p>
+	<p>
+  	&nbsp;</p>
+	<p>
+  	v1.4 のスクリプトをベースに model_id を変更するだけで動作しました。 </p>
+	<pre class="prettyprint linenums lang-py">from diffusers import StableDiffusionPipeline
+
+YOUR_TOKEN = "your-access-token"
+#model_id = "CompVis/stable-diffusion-v1-4"
+model_id = "Linaqruf/anything-v3.0"
+pipe = StableDiffusionPipeline.from_pretrained(model_id, use_auth_token=YOUR_TOKEN)
+pipe.to("cuda")</pre>
+	<p>
+  	&nbsp;</p>
+	<p>
+  	<span class="cpp-source">text = "a girl"</span></p>
+	<p>
+  	<img alt="sample 1" src="stable_diffusion_with_google_colaboratory/img12.jpg">
+	<img alt="sample 2" src="stable_diffusion_with_google_colaboratory/img13.jpg"></p>
+	<p>
+  	&nbsp;</p>
+	<p>
+  	<span class="cpp-source">text&nbsp;=&nbsp;"1girl,&nbsp;aqua&nbsp;eyes,&nbsp;baseball&nbsp;cap,&nbsp;blonde&nbsp;hair,&nbsp;closed&nbsp;mouth,&nbsp;earrings,&nbsp;green&nbsp;background,&nbsp;hat,&nbsp;hoop&nbsp;earrings,&nbsp;jewelry,&nbsp;looking&nbsp;at&nbsp;viewer,&nbsp;shirt,&nbsp;short&nbsp;hair,&nbsp;simple&nbsp;background,&nbsp;solo,&nbsp;upper&nbsp;body,&nbsp;yellow&nbsp;shirt"</span></p>
+	<p>
+  	&nbsp;<img alt="sample 3" src="stable_diffusion_with_google_colaboratory/img14.jpg">
+	<img alt="sample 4" src="stable_diffusion_with_google_colaboratory/img15.jpg"></p>
+  	<p>&nbsp;</p>
+  </section>
+</section>
+
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
@@ -532,25 +871,66 @@ SOFTWARE.
 
 <section>
 	<h2><a id="参考">参考</a></h2>
+	<p>Stable Diffusion 1.4</p>
 	<ul>
 		<li>
-		  <a href="https://github.com/CompVis/stable-diffusion" target="_blank">
-		  CompVis/stable-diffusion: A latent text-to-image diffusion model (github.com)</a></li>
+		  <a href="https://huggingface.co/CompVis/stable-diffusion-v1-4">
+		  CompVis/stable-diffusion-v1-4 · Hugging Face</a></li>
+		<li>
+		  <a href="https://github.com/CompVis/stable-diffusion">
+		  CompVis/stable-diffusion: A latent text-to-image diffusion model 
+		  (github.com)</a></li>
 		<li>
 		  <a href="https://qiita.com/masaka_programming/items/65e3e05e7d4ab38f8a64" target="_blank">
-		  Stable Diffusionによる画像生成をGoogle Colaboratoryで実行する - Qiita</a></li>
+		  https://qiita.com/masaka_programming/items/65e3e05e7d4ab38f8a64</a></li>
 		<li>
-		  <a href="https://colab.research.google.com/?hl=ja" target="_blank">
-		  Colaboratory へようこそ - Colaboratory (google.com)</a></li>
+		  <a href="https://colab.research.google.com/?hl=ja">Colaboratory へようこそ 
+		  - Colaboratory (google.com)</a></li>
 		<li>
-		  <a href="https://huggingface.co/" target="_blank">
-		  Hugging Face – The AI community building the future.</a></li>
+		  <a href="https://huggingface.co/">Hugging Face – The AI community 
+		  building the future.</a></li>
 		<li>
-		  <a href="https://qiita.com/jkff-mv/items/a7edfad9915957d1cec6" target="_blank">
-		  Stable DiffusionをGoogle Colaboratory上で動かして神絵ガチャを回してみる - Qiita</a></li>
+		  <a href="https://qiita.com/jkff-mv/items/a7edfad9915957d1cec6">Stable 
+		  DiffusionをGoogle Colaboratory上で動かして神絵ガチャを回してみる - Qiita</a></li>
 		<li>
-		  <a href="https://gammasoft.jp/blog/simple-way-to-try-stable-diffusion/" target="_blank">
+		  <a href="https://gammasoft.jp/blog/simple-way-to-try-stable-diffusion/">
 		  Stable Diffusion を Google Colab でシンプルに体験する方法 - ガンマソフト (gammasoft.jp)</a></li>
+	</ul>
+	<p>&nbsp;</p>
+	<p>Stable Diffusion 2.0</p>
+	<ul>
+	  <li><a href="https://huggingface.co/stabilityai/stable-diffusion-2">
+	  stabilityai/stable-diffusion-2 · Hugging Face</a></li>
+	  <li><a href="https://note.com/npaka/n/n5fd3d8ecf1e6">Google Colab で Stable 
+	  Diffusion 2.0 を試す - diffusers版｜npaka｜note</a></li>
+	  <li><a href="https://note.com/npaka/n/n2df8efaa99b1">Google Colab で Stable 
+	  Diffusion 2.0 を試す (仮)｜npaka｜note</a></li>
+	  <li>
+	  <a href="https://colab.research.google.com/drive/1TR-s-pA9uumVVf7bTOzUUc5Fc889vCc3?hl=ja#scrollTo=w3Qrgx_JSvt8">
+	  Google Colab</a></li>
+	  <li><a href="https://app.baseten.co/apps/VBlnMVP/operator_views/nBrd8zP">
+	  Stable Diffusion 2 | Baseten</a></li>
+	</ul>
+	<p>&nbsp;</p>
+	<p>他 － waifu-diffusion, Anything V3.0 </p>
+	<ul>
+	  <li><a href="https://huggingface.co/hakurei/waifu-diffusion">
+	  hakurei/waifu-diffusion · Hugging Face</a></li>
+	  <li><a href="https://huggingface.co/spaces/akhaliq/anything-v3.0">Anything 
+	  V3.0 - a Hugging Face Space by akhaliq</a></li>
+	  <li>
+	  <a href="https://programmingforever.hatenablog.com/entry/2022/09/21/174953">
+	  【簡単・無料】Google colabでStable Diffusion / Waifu Diffusionを使う方法 - 
+	  MarkdownとBullet Journal (hatenablog.com)</a></li>
+	  <li>
+	  <a href="https://programmingforever.hatenablog.com/entry/2022/09/22/105537">
+	  【備忘録】Stable Diffusionをcolabで動かすコード一覧 - MarkdownとBullet Journal 
+	  (hatenablog.com)</a></li>
+	  <li><a href="https://prtimes.jp/main/html/rd/p/000000035.000070041.html">
+	  rinna社、日本語に特化した画像生成モデル「Japanese Stable Diffusion」を公開｜rinna株式会社のプレスリリース 
+	  (prtimes.jp)</a></li>
+	  <li><a href="https://zenn.dev/platina/scraps/f684691a707627">Kawaii 
+	  呪文研究【Stable/Waifu Diffusion】 (zenn.dev)</a></li>
 	</ul>
 </section>
 
@@ -563,6 +943,18 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">2022-12-09</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">"<a href="#4._Google_Colaboratory_で実行（Stable Diffusion 2.0）">Stable 
+		Diffusion 2.0</a>" の記事を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date" style="height: 16px">&nbsp;</td>
+	    <td class="td_history_separator" style="height: 16px">-</td>
+	    <td class="td_history" style="height: 16px">"waifu-diffusion", "Anything 
+		V3.0" の記事を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date" style="height: 16px">2022-12-03</td>
 	    <td class="td_history_separator" style="height: 16px">-</td>
