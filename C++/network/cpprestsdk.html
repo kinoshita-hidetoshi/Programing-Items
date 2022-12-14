@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>乱数生成 - mt19937 (c++11) | Programing Items</title>
+  <title>cpprestsdk | Programing Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -35,22 +35,23 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  <style type="text/css">
-    .auto-style1 {
-    	background-color: #505000;
-    }
-    </style>
 </head>
 
 <body onload="prettyPrint();">
+	
+<h1>cpprestsdk</h1>
 
-<h1>乱数生成 - mt19937 (c++11)</h1>
-<p>メルセンヌツイスタによる乱数生成をテストします。</p>
+<p> 標準の c++ には HttpClient や REST、libcurl 
+のようなインターネット通信を行う仕組みがありません。とりあえず何かしらの外部ライブラリを使用する必要があります。</p>
+<p> 本ページでは、Microsoft が OSS として公開している <strong><em>
+<a href="https://github.com/microsoft/cpprestsdk" target="_blank">cpprestsdk</a></em></strong> 
+を試してみて、動作確認できたコードなどを記録に残していきたいと思います。</p>
+
 <p>&nbsp;</p>
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
-	<p><a href="#1._一様分布_(std::uniform_int_distribution)">1. 一様分布 (std::uniform_int_distribution)</a></p>
+	<p>1. ***</p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -60,11 +61,9 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="1._一様分布_(std::uniform_int_distribution)">1. 一様分布 (std::uniform_int_distribution)</a></h2>
-	<p>&nbsp;</p>
+	<h2> 1. ***</h2>
 	<h4>[概要]</h4>
-	<p>一様分布の例をプログラム作成して動かしてみます。std::uniform_int_distribution を使用します。</p>
-  <p>&nbsp;</p>
+	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
 	<table>
@@ -75,8 +74,8 @@
 		
 	  <tr>
 	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2012</td>
-	      <td>&nbsp;</td>
+	      <td>Visual Studio 2019 pro.,</td>
+	      <td>Version 16.6.0 </td>
 	  </tr>
 		
 	  <tr>
@@ -85,8 +84,8 @@
 		
 	  <tr>
 	    <td>OS :</td>
-	    <td>Windows8 64bit 日本語版</td>
-	    <td>&nbsp;</td>
+	    <td>Windows11 home,</td>
+	    <td>21H2 </td>
 	  </tr>
 	  
 	  <tr>
@@ -97,35 +96,8 @@
 	
 	<p> &nbsp;</p>
 	
-	<h4>サンプルプログラム</h4>
-
-<pre class="prettyprint linenums lang-cpp" style="width: 800px"><code>#include &lt;random&gt;
-#include &lt;iostream&gt;
-
-int main()
-{
-    <span class="auto-style1">std::random_device</span> rd;                        <span class="comment">// シードを作成</span>
-    <span class="auto-style1">std::mt19937</span> gen(rd());                       <span class="comment">// 乱数エンジンの宣言と初期化</span>
-    <span class="auto-style1">std::uniform_int_distribution&lt;&gt;</span> dis(1, 10);   <span class="comment">// 1～10の範囲のintを一様分布で生成 </span>
-    for(int n=0; n&lt;10; ++n){
-        std::cout &lt;&lt; <span class="auto-style1">dis(gen)</span> &lt;&lt; ' ';             <span class="comment">// 乱数生成</span>
-    }
-    std::cout &lt;&lt; '\n';
-}</code></pre>
-
-  <p>&nbsp;</p>
-
-  <h4>出力結果<br><img alt="" src="mt19937/img21.gif"></h4>
-  <p>&nbsp;</p>
-  <p>上記プログラムで使用している以下の関数は全て C++11 の規格です。このため Visual Studio 2012 以降の環境を必要とします。</p>
-  <ul>
-  	<li>std::random_device</li>
-  	<li>std::mt19937</li>
-  	<li>std::uniform_int_distribution</li>
-  </ul>
-  <p>&nbsp;</p>
 </section>
-
+	
 <p>&nbsp;</p>
 
 <section>
@@ -134,7 +106,7 @@ int main()
 <div class="license">
 The MIT License (MIT)<br><br>
 
-Copyright © 2012-2022 Kinoshita Hidetoshi<br><br>
+Copyright © 2022 Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -157,22 +129,37 @@ SOFTWARE.
   <p>&nbsp;</p>
 </section>
 
-<p>&nbsp;</p>
+<br>
 
 <section>
 	<h2><a id="参考">参考</a></h2>
 	<ul>
-		<li>擬似乱数生成 - cppreference.com<br>
-		<a href="https://ja.cppreference.com/w/cpp/numeric/random" target="_blank">
-		https://ja.cppreference.com/w/cpp/numeric/random</a></li>
-		<li>std::uniform_int_distribution - cppreference.com<br>
-		<a href="https://ja.cppreference.com/w/cpp/numeric/random/uniform_int_distribution" target="_blank">
-		https://ja.cppreference.com/w/cpp/numeric/random/uniform_int_distribution</a></li>
+		<li>microsoft/cpprestsdk: The C++ REST SDK is a Microsoft project for 
+		cloud-based client-server communication in native code using a modern 
+		asynchronous C++ API design. This project aims to help C++ developers 
+		connect to and interact with services. (github.com)<br>
+		<a href="https://github.com/microsoft/cpprestsdk" target="_blank">
+		https://github.com/microsoft/cpprestsdk</a></li>
+		<li>VC++ 
+		cpprestsdkを使ったHTTP通信 – ほのぼの万事屋 | ほのぼの万事屋 (mihono-bourbon.com)<br>
+		<a href="https://mihono-bourbon.com/vc-cpprestsdk/" target="_blank">
+		https://mihono-bourbon.com/vc-cpprestsdk/</a></li>
+		<li>【C＋＋】C＋＋ REST 
+		SDKを使用したhttp通信してみた – 株式会社ロジカルビート (logicalbeat.jp)<br>
+		<a href="https://logicalbeat.jp/blog/6231/" target="_blank">
+		https://logicalbeat.jp/blog/6231/</a></li>
+		<li>
+		cpprestsdk/authentication_tests.cpp at master · microsoft/cpprestsdk 
+		(github.com)<br>
+		<a href="https://github.com/microsoft/cpprestsdk/blob/master/Release/tests/functional/http/client/authentication_tests.cpp" target="_blank">
+		https://github.com/microsoft/cpprestsdk/blob/master/Release/tests/functional/http/client/authentication_tests.cpp</a></li>
 	</ul>
 </section>
 
 <p>&nbsp;</p>
+
 <hr>
+
 <p>&nbsp;</p>
 
 <section>
@@ -180,11 +167,6 @@ SOFTWARE.
 	<table>
 	  <tr>
 	    <td class="td_history_date">2022-12-14</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2012-12-09</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
@@ -201,7 +183,7 @@ SOFTWARE.
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>Copyright © 2012-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+	<p><small>Copyright © 2022 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
