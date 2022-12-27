@@ -21,6 +21,17 @@
   <script src="../../prettify.js" type="text/javascript"></script>
   <!-- End for 'google-code-prettify' -->
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  
 </head>
 
 <body onload="prettyPrint();">
@@ -558,9 +569,7 @@ $ ./main.out</pre>
 <p>始めに “--recursive“ 付きの git clone を試してみます。</p>
 <p>ここでは下記のようにコマンドを入力しました。</p>
 <p>&nbsp;</p>
-<p>
 <pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git --recursive test1 </pre>
-</p>
 <p>&nbsp;</p>
 <p>クローン下フォルダを vscode で開いた結果を下図に示します。<br>予定通り submodule のフォルダ counter 
 と中身を含んでクローンされました。特記事項ありません。 </p>
@@ -568,13 +577,12 @@ $ ./main.out</pre>
 <p><img alt="" src="submodule/img58.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 <h4>2-5-2. “--recursive“ 無しの git clone</h4>
-<p>&nbsp;次に ““ 無しの git clone を試してみます。ここでは下記のようにコマンドを入力しました。 </p>
+<p>&nbsp;次に “--recursive“ 無しの git clone を試してみます。ここでは下記のようにコマンドを入力しました。 </p>
 <p>&nbsp;</p>
 <pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git test2</pre>
 <p>&nbsp;</p>
-<p>クローン下フォルダを vscode で開いた結果を下図に示します。こちらは counter の中身が空でクローンされました。 </p>
+<p>クローン下フォルダを vscode で開いた結果を下図に示します。こちらは counter の中身が空でクローンされました。実験の意図通りです。</p>
 <p>&nbsp;</p>
 <p><img alt="" src="submodule/img5A.jpg"></p>
 <p>&nbsp;</p>
@@ -605,7 +613,7 @@ $ ./main.out</pre>
     <td>
 The MIT License (MIT)<br><br>
 
-Copyright © 2022 Kinoshita Hidetoshi<br><br>
+Copyright © 2021 Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
