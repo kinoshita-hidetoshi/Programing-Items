@@ -1687,6 +1687,8 @@ cv2.destroyAllWindows()</pre>
 	を認識するようにファインチューニングする、というサンプルのようです。Python 
 	プログラムはもちろん、画像データおよびアノテーションデータなど必要なすべての情報を提供いただいているので、最初に取り組みするには最適な内容と思われます。</p>
 	<p>&nbsp;</p>
+	
+	<section>
 	<h4>5-1-1. Windows の場合</h4>
 	<p>Windows 環境でどこまでできるか不安ですが、作業記録を残しつつ、できるところまで実際にやっていきたいと思います。</p>
 	<p>&nbsp;</p>
@@ -2068,8 +2070,7 @@ class PredictionTransform:
 	<p>&nbsp;</p>
 	<pre>python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	<p>&nbsp;</p>
-	<p>25 Epoch を約１時間で学習したので、全100 Epoch 
-	を４時間程度で実施完了できそうです。（CPU動作の場合。GPU動作の場合はきっともっと高速に動作するでしょう。）</p>
+	<p>100 Epoch を約５時間半で学習できました。（CPU動作の場合です。GPU動作の場合はきっともっと高速に動作するでしょう。）</p>
 	<p>&nbsp;</p>
   
     <div class="status_information">
@@ -2077,21 +2078,29 @@ class PredictionTransform:
       <div>
         <p><strong>NOTE</strong></p>
 		    <p>train_ssd.py を正常に実行できるようにはなりましたが、私の環境では下記警告？が頻繁に出力されます。</p>
-        <p>pytorch-ssd\vision\transforms\transforms.py:247: 
+        <p><span class="cpp-source">pytorch-ssd\vision\transforms\transforms.py:247: 
 		VisibleDeprecationWarning: Creating an ndarray from ragged nested 
 		sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with 
 		different lengths or shapes) is deprecated. If you meant to do this, you 
 		must specify 'dtype=object' when creating the ndarray.<br>&nbsp; mode = 
-		random.choice(self.sample_options)</p>
+		random.choice(self.sample_options)</span></p>
 		<p>このままでも正常に動作するようですが、修正したい場合は下記URLの記事を参照。</p>
 		<p>
-		<a href="https://github.com/amdegroot/ssd.pytorch/issues/498">
-		VisibleDeprecationWarning of augmentations.py · Issue #498 · 
+		<a href="https://github.com/amdegroot/ssd.pytorch/issues/498" target="_blank">VisibleDeprecationWarning of augmentations.py · Issue #498 · 
 		amdegroot/ssd.pytorch (github.com)</a></p>
       </div>
     </div>
 
     <p>&nbsp;</p>
+	<p>"transforms.py" の 247行目を以下のように修正すればよいようです。</p>
+	<pre class="prettyprint linenums lang-py" style="width: 800px">
+# before
+mode = random.choice(self.sample_options)
+
+# after
+random_idx = random.randint(0, len(self.sample_options) - 1)
+mode = self.sample_options[random_idx]</pre>
+	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	<p>8. 学習したデータとサンプル画像を使用して Gun の認識をしてみます。</p>
 	<p>私の学習済みデータとサンプル画像を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
@@ -2182,18 +2191,22 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	<p>&nbsp;</p>
 	<p>こちら Epoch-30 の学習データによる結果です。大分良い感じになってきました。</p>
 	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-30.jpg" width="800"></p>
+	<p>&nbsp;</p>
+	<p>こちら Epoch-99 の学習データによる結果です。これが最終データです。スコアも 0.92 まで伸びました。良い感じです。</p>
+	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-99.jpg" width="800"></p>
 	
 	<p>&nbsp;</p>
+	</section>
+	
 	<p>&nbsp;</p>
-	<p>&nbsp;</p>
-	<p>To Be Edited. </p>
-	<p>&nbsp;</p>
-	<p>&nbsp;</p>
+	
+	<section>
 	<h4>5-1-2. Linux の場合</h4>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	<p>To Be Edited. </p>
 	<p>&nbsp;</p>
+	</section>
 	
 </section>
 	
