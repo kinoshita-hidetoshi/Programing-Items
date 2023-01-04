@@ -1687,6 +1687,38 @@ cv2.destroyAllWindows()</pre>
 	を認識するようにファインチューニングする、というサンプルのようです。Python 
 	プログラムはもちろん、画像データおよびアノテーションデータなど必要なすべての情報を提供いただいているので、最初に取り組みするには最適な内容と思われます。</p>
 	<p>&nbsp;</p>
+	  <p>使用する学習データ数は以下の通りです。</p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>Class name</th>
+          <th width="25%">Train</th>
+          <th width="25%">Test</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hundgun</strong></td>
+          <td>545</td>
+          <td>68</td>
+        </tr>
+        <tr>
+          <td><strong>Shotgun</strong></td>
+          <td>416</td>
+          <td>55</td>
+        </tr>
+        <tr>
+          <td><strong>合計</strong></td>
+          <td>961</td>
+          <td>123</td>
+        </tr>
+      </tbody>
+    </table>
+    
+      <p>&nbsp;</p>
+	<p>&nbsp;</p>
 	
 	<section>
 	<h4>5-1-1. Windows の場合</h4>
@@ -1745,7 +1777,22 @@ cv2.destroyAllWindows()</pre>
 	<p>ターミナルソフトを起動後、 pytorch-ssd をクローンしたフォルダへ移動（"cd pytorch-ssd" など）します。</p>
 	<p>または Explorer で目的フォルダを開いた後、Explorer のアドレスエリアで "cmd" + [Enter] します。</p>
 	<p>&nbsp;</p>
-	<p>4. Download data</p>
+	<p>4. まずは再学習済みデータを使ってデモ動作してみます。</p>
+	<p><a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a> 
+	  では最初に以下の通り記載されています。</p>
+	<pre>wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
+wget -P models https://storage.googleapis.com/models-hao/open-images-model-labels.txt
+python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt ~/Downloads/big.JPG</pre>
+	<p>&nbsp;</p>
+	<p>Windows環境では wget を標準で使用できませんので、bitsadmin.exe へ置き換えると最初の２行を以下のような感じで。<br>
+	<span class="auto-style3">c:\{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
+  <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
+bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/open-images-model-labels.txt <span class="auto-style3">c:\{作業フォルダ}</span>\models\open-images-model-labels.txt
+python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt <span class="auto-style3">{テストするJPEGファイル}</span></pre>
+	<p>※ 記載の手順で進めても "big.JPG" ファイルはありませんでした。GUN のテストデータを必要としますので、後述の「5. 
+	  Download data」を実施後にこの画像ファイルを使って実験した方が良いと思われます。</p>
+	<p>&nbsp;</p>
+	<p>5. Download data</p>
 	<p>インターネットから学習データ一式を取得します。</p>
 	<p>
 	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">資料</a>では下記のように書いていますが、Windowsではうまくいかず、エラーになりました。</p>
@@ -1754,7 +1801,7 @@ cv2.destroyAllWindows()</pre>
 	の指定フォルダを下記のようにすることで無事ダウンロードすることができました。JPEG画像がそれなりの枚数あるので、私の環境で全データのダウンロードに５分ぐらいかかりました。</p>
 	<pre>python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
 	<p>&nbsp;</p>
-	<p>5. 確認</p>
+	<p>6. 確認</p>
 	<p>ダウンロード完了後の様子を下図に示します。</p>
 	<p>指定したフォルダ "./data/open_images" の中に７つの csv ファイルと、３つのフォルダ（test, train, 
 	validation）に多くのJPEG画像ファイルを保存していることがわかります。</p>
@@ -1779,11 +1826,11 @@ cv2.destroyAllWindows()</pre>
 	<p>&nbsp;</p>
 	<p>以上のような構成でデータを準備することで、あたなや私が独自に学習したい物体と画像についても同様に AI 学習データを作成できることがわかりました。</p>
 	<p>&nbsp;</p>
-	<p>6. 学習済みモデルを保存</p>
+	<p>7. 学習済みモデルを保存</p>
 	<p>本ページを上から順に進めてきた人たちは既に models フォルダに学習済みモデルデータを保存済みと思います。まだの方は、<a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a>に記載の内容に従って 
 	"mobilenet-v1-ssd-mp-0_675.pth" をダウンロードしておきます。</p>
 	<p>&nbsp;</p>
-	<p>7. Retrain (再学習)を実行します</p>
+	<p>8. Retrain (再学習)を実行します</p>
 	<p>
 	<a href="https://github.com/qfgaohao/pytorch-ssd#retrain" target="_blank">資料</a>では下記のように書いています。</p>
 	<pre>python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
@@ -2104,8 +2151,23 @@ mode = random.choice(self.sample_options)
 random_idx = random.randint(0, len(self.sample_options) - 1)
 mode = self.sample_options[random_idx]</pre>
 	<p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>"models\open-images-model-labels.txt" は "train_ssd.py" 
+		を実行することで自動的に生成されるようにプログラミングされているようです。</p>
+        <p>dataset_type == 'voc' の場合は "voc-model-labels.txt" を自動的に生成するようです。</p>
+		<p>２つの生成方法は細かい部分でいろいろと差異がありそうです。詳細については "train_ssd.py" を参照してください。</p>
+      </div>
+    </div>
+
+      <p>&nbsp;</p>
+	  <p>&nbsp;</p>
+	  <p>"open-images-model-labels.txt" </p>
 	<p>&nbsp;</p>
-	<p>8. 学習したデータとサンプル画像を使用して Gun の認識をしてみます。</p>
+	<p>9. 学習したデータとサンプル画像を使用して Gun の認識をしてみます。</p>
 	<p>私の学習済みデータとサンプル画像を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
 	
 	
@@ -2190,7 +2252,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	<p>&nbsp;</p>
 	
 	<p>こちら Epoch-10 の学習データによる結果です。評価に使用した画像は上記手順でダウンロードした 
-	<strong class="cpp-source">varidation</strong> フォルダ中にある画像から使用しました。</p>
+	<strong class="cpp-source">varidation</strong> フォルダ中にある画像（validation\018d4a117c1d7e16.jpg）を使用しました。</p>
 	  <p>まだ認識精度は低そうです。</p>
 	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-10.jpg" width="600"></p>
 	<p>&nbsp;</p>
@@ -2319,38 +2381,6 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <p>Normal が最も良い感じの認識結果になりました。一方、"--freeze_base_net" 
 	  は学習時間が約半分に短縮できたうえで認識結果もそこそこ良い感じでした。<br>
 	  この２つの方式を使い分けてみても良いかもしれません、という感じの結果になりました。</p>
-	  <p>&nbsp;</p>
-	  <p>使用した学習データ数は以下の通りでした。</p>
-        
-    <table class="border-collapse" border="1" width="500">
-      <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>Class name</th>
-          <th width="25%">Train</th>
-          <th width="25%">Test</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Hundgun</strong></td>
-          <td>545</td>
-          <td>68</td>
-        </tr>
-        <tr>
-          <td><strong>Shotgun</strong></td>
-          <td>416</td>
-          <td>55</td>
-        </tr>
-        <tr>
-          <td><strong>合計</strong></td>
-          <td>961</td>
-          <td>123</td>
-        </tr>
-      </tbody>
-    </table>
-    
-      <p>&nbsp;</p>
 	  <p>&nbsp;</p>
 	</section>
 	
