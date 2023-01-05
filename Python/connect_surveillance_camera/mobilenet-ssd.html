@@ -77,12 +77,13 @@
     <p>&nbsp;&nbsp; <a href="#3-1._MobileNetV2-SSD-Lite_を動かす（PC_内蔵カメラ）">3-1. MobileNetV2-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
     <p>&nbsp;&nbsp; <a href="#3-2._MobileNetV2-SSD-Lite_を動かす（i-PRO_カメラ）">3-2. MobileNetV2-SSD-Lite を動かす（i-PRO カメラ）</a></p>
     <p>&nbsp;&nbsp; <a href="#参考：_GPU動作させる場合のソースコード修正について">参考： GPU動作させる場合のソースコード修正について</a></p>
-		<p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
-		<p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
-		<p>&nbsp;&nbsp; <a href="#4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
-		<p>&nbsp;&nbsp; <a href="#4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></p>
-	<p><a href="#5._学習">5. 学習</a></p>
-	<p>&nbsp;&nbsp; <a href="#5-1._まずはやってみる">5-1. まずはやってみる</a></p>
+    <p><a href="#4._MobileNetV3-SSD-Lite">4. MobileNetV3-SSD-Lite</a></p>
+    <p>&nbsp;&nbsp; <a href="#4-1._MobileNetV3-SSD-Lite_を動かす（JPEGファイル）">4-1. MobileNetV3-SSD-Lite を動かす（JPEGファイル）</a></p>
+    <p>&nbsp;&nbsp; <a href="#4-2._MobileNetV3-SSD-Lite_を動かす（PC_内蔵カメラ）">4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</a></p>
+    <p>&nbsp;&nbsp; <a href="#4-3._MobileNetV3-SSD-Lite_を動かす（i-PRO_内蔵カメラ）">4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</a></p>
+    <p><a href="#5._学習">5. 学習</a></p>
+    <p>&nbsp;&nbsp; <a href="#5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (open_images)</a></p>
+    <p>&nbsp;&nbsp; <a href="#5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></p>
     <br>
     <p><a href="#ライセンス">ライセンス</a></p>
     <p><a href="#参考">参考</a></p>
@@ -1678,7 +1679,7 @@ cv2.destroyAllWindows()</pre>
 	<p> あなたが用意した画像データを使って独自の MobileNet-SSD 学習データを作成できるようになることを試みます。</p>
 	<p> &nbsp;</p>
 	
-	<h3><a name="5-1._まずはやってみる">5-1. まずはやってみる</a></h3>
+	<h3><a name="5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (open_images)</a></h3>
 	<h4>[概要]</h4>
 	<p>今回も <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
 	pytorch-ssd</a> で紹介されているプログラムと内容を使って進めます。</p>
@@ -2163,10 +2164,8 @@ mode = self.sample_options[random_idx]</pre>
       </div>
     </div>
 
-      <p>&nbsp;</p>
+    <p>&nbsp;</p>
 	  <p>&nbsp;</p>
-	  <p>"open-images-model-labels.txt" </p>
-	<p>&nbsp;</p>
 	<p>9. 学習したデータとサンプル画像を使用して Gun の認識をしてみます。</p>
 	<p>私の学習済みデータとサンプル画像を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
 	
@@ -2174,7 +2173,7 @@ mode = self.sample_options[random_idx]</pre>
 	<pre>python run_ssd_example.py mb1-ssd models\mb1-ssd-Epoch-10-Loss-2.9762498426437376.pth models\open-images-model-labels.txt data\open_images\validation\018d4a117c1d7e16.jpg</pre>
 	<p>&nbsp;</p>
 	<p>ただし run_ssd_example.py は OpenSSL 
-	のバージョンアップに伴って一部修正する必要があります。修正後のソースコードを下記に示します。<br>60, 64行目の部分で４か所 int 
+	のバージョンアップに伴って一部修正する必要があります。修正後のソースコードを下記に示します。<br>60, 64行目の部分で６か所 int 
 	キャストを追加する必要があります。</p>
 	<p>&nbsp;</p>
 	<p>"run_ssd_example.py"</p>
@@ -2264,14 +2263,16 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	
 	<p>&nbsp;</p>
 	  <p>&nbsp;</p>
-	  <p>以下、学習時の引数を変更したときの学習時間、代表的な Epoch における "Validation Loss" の表です。</p>
+	  <p>以下、学習時の引数を変更したときの学習時間、代表的な Epoch における "Validation Loss" の表です。<br>
+	  AI学習は乱数を使っている部分もあるので、私と同じ手順を行っても同じ結果になりません。私自身が同じことを複数回行っても異なる結果になったりします。あくまで参考値ということで。</p>
+	  <p>&nbsp;</p>
         
     <table class="border-collapse" border="1" width="500">
       <caption>[Table.] 引数毎の 学習時間、Validation Loss 比較</caption>
       <thead class="standard_table">
         <tr>
           <th style="white-space: nowrap">Epoch num.</th>
-          <th width="25%" style="white-space: nowrap">Normal</th>
+          <th width="25%" style="white-space: nowrap">Normal<br>(追加引数無し)</th>
           <th width="25%" style="white-space: nowrap">--freeze_net</th>
           <th width="25%" style="white-space: nowrap">--freeze_base_net</th>
         </tr>
@@ -2389,13 +2390,83 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	<section>
 	<h4>5-1-2. Linux の場合</h4>
 	<p>&nbsp;</p>
-	<p>&nbsp;</p>
 	<p>To Be Edited. </p>
 	<p>&nbsp;</p>
 	</section>
 	
 </section>
 	
+<p>&nbsp;</p>
+
+<section>
+<h3><a name="5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></h3>
+	<h4>[概要]</h4>
+  <p>今度は 自身で集めた画像を使ってオリジナルの学習データによる学習を試みます。</p>
+  <p>前節で使用した train_ssd.py は入力データ型として "open_images" と "voc" の２種類に対応しているようです。"open_images" に対応したアノテーションツールで良さそうなものを見つけられなかったので、"voc" 
+  型の出力に対応していて有名なオープンソースツールである 
+  <a href="https://github.com/heartexlabs/labelImg" target="_blank">LabelImg</a> というツールを使用してアノテーションデータを作成してみます。</p>
+  <p>少なめのデータ＆認識精度度外視で、まずは技術的に実現できることまでを目標に進めてみます。</p>
+  <p>&nbsp;</p>
+	  <p>使用する学習データ数は以下の通りです。</p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>Class name</th>
+          <th width="25%">Train</th>
+          <th width="25%">Test</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><strong>合計</strong></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    
+      <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>1. "train_ssd.py" が想定する VOC データセットのフォルダ・ファイルを準備</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>2. 学習用の画像を集めて "JPEGImages" フォルダへ保存</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>3. LabelImg をインストール（必要に応じて修正）</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>4. LabelImg を起動、設定</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>5. LabelImg を使ってアノテーション実施</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>6. "ImageSets\Main\trainval.txt" を設定</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>7. "ImageSets\Main\tet.txt" を設定</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>8. "labels.txt" を設定</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+  <p>9. 学習を実施</p>
+  <p>T.B.E.</p>
+  <p>&nbsp;</p>
+</section>
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
@@ -2496,12 +2567,19 @@ SOFTWARE.
 		<li>[17] 画像を扱う機械学習のためのデータセットまとめ - Qiita<br>
 		<a href="https://qiita.com/leetmikeal/items/7c0d23e39bf38ab8be23" target="_blank">
 		https://qiita.com/leetmikeal/items/7c0d23e39bf38ab8be23</a></li>
-		<li>[18] AIアノテーションツール20選を比較！タグ付け自動化ツールの選び方を紹介 (aismiley.co.jp)<br>
-		<a href="https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/" target="_blank">
-		https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/</a></li>
-		<li>[19]
+		<li>[18]
 		<a href="https://udemy.benesse.co.jp/data-science/deep-learning/transfer-learning.html#:~:text=%E8%BB%A2%E7%A7%BB%E5%AD%A6%E7%BF%92%E3%81%A8%E3%83%95%E3%82%A1%E3%82%A4%E3%83%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%81%AE%E9%81%95%E3%81%84%E3%81%AF%EF%BC%9F%20%E8%BB%A2%E7%A7%BB%E5%AD%A6%E7%BF%92%E3%81%A8%E3%83%95%E3%82%A1%E3%82%A4%E3%83%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%81%AF%E3%80%81%E3%81%A9%E3%81%A1%E3%82%89%E3%82%82%E5%AD%A6%E7%BF%92%E6%B8%88%E3%81%BF%E3%81%AE%E3%83%A2%E3%83%87%E3%83%AB%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%9F%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92%E3%81%AE%E6%89%8B%E6%B3%95%E3%81%A7%E3%81%99%E3%80%82%20%E3%82%88%E3%81%8F%E6%B7%B7%E5%90%8C%E3%81%95%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%84%E3%81%BE%E3%81%99%E3%81%8C%E3%80%81%E3%81%93%E3%81%AE2%E3%81%A4%E3%81%AE%E6%89%8B%E6%B3%95%E3%81%AF%E7%95%B0%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82,%E3%81%9D%E3%82%8C%E3%81%9E%E3%82%8C%E3%81%AE%E9%81%95%E3%81%84%E3%82%92%E8%A6%8B%E3%81%A6%E3%81%84%E3%81%8D%E3%81%BE%E3%81%97%E3%82%87%E3%81%86%E3%80%82%20%E3%83%95%E3%82%A1%E3%82%A4%E3%83%B3%E3%83%81%E3%83%A5%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%E3%81%AF%E3%80%81%E5%AD%A6%E7%BF%92%E6%B8%88%E3%81%BF%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%B1%A4%E3%81%AE%E9%87%8D%E3%81%BF%E3%82%92%E5%BE%AE%E8%AA%BF%E6%95%B4%E3%81%99%E3%82%8B%E6%89%8B%E6%B3%95%E3%81%A7%E3%81%99%E3%80%82%20%E5%AD%A6%E7%BF%92%E6%B8%88%E3%81%BF%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E9%87%8D%E3%81%BF%E3%82%92%E5%88%9D%E6%9C%9F%E5%80%A4%E3%81%A8%E3%81%97%E3%80%81%E5%86%8D%E5%BA%A6%E5%AD%A6%E7%BF%92%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E5%BE%AE%E8%AA%BF%E6%95%B4%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%20%E8%BB%A2%E7%A7%BB%E5%AD%A6%E7%BF%92%E3%81%AF%E3%80%81%E5%AD%A6%E7%BF%92%E6%B8%88%E3%81%BF%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E9%87%8D%E3%81%BF%E3%81%AF%E5%9B%BA%E5%AE%9A%E3%81%97%E3%80%81%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%9F%E5%B1%A4%E3%81%AE%E3%81%BF%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%A6%E5%AD%A6%E7%BF%92%E3%81%97%E3%81%BE%E3%81%99%E3%80%82">
-		転移学習とは？ディープラーニングで期待の「転移学…｜Udemy メディア (benesse.co.jp)</a><br></li>
+		転移学習とは？ディープラーニングで期待の「転移学…｜Udemy メディア (benesse.co.jp)</a></li>
+	</ul>
+	<p>&nbsp;</p>
+	<p>アノテーションツール</p>
+	<ul>
+		<li>heartexlabs/labelImg<br>
+		<a href="https://github.com/heartexlabs/labelImg" target="_blank">
+		https://github.com/heartexlabs/labelImg</a></li>
+		<li>AIアノテーションツール20選を比較！タグ付け自動化ツールの選び方を紹介 (aismiley.co.jp)<br>
+		<a href="https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/" target="_blank">
+		https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/</a><br></li>
 	</ul>
 </section>
 
