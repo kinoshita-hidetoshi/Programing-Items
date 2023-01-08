@@ -137,15 +137,11 @@
 <p> <img alt="" src="gantchart/img19.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
-<p> &nbsp;</p>
 <p> サンプル： <a href="gantchart/Excel_gantchart_chap-02.xlsm">ダウンロード</a></p>
-<p> &nbsp;</p>
   
-  <p>&nbsp;</p>
-
-
-<section>
-
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
 
 <section>
   <h2> <a name="3._カレンダー部分を作る">3. カレンダー部分を作る</a></h2>
@@ -240,25 +236,29 @@
   <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
   <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$H$106" を設定できています。</p>
   <p> <img alt="" src="gantchart/img3.jpg"></p>
-<p> &nbsp;</p>
+  <p> &nbsp;</p>
   <p> 4. 同様に日曜日も同じ手順で進めます。</p>
   <p> 書式設定の部分で "土" を "日" へ変更するだけなので、説明は割愛します。</p>
   <p> &nbsp;</p>
-<p> &nbsp;</p>
-<p> サンプル： <a href="gantchart/Excel_gantchart_chap-03.xlsm">ダウンロード</a></p>
-<p> &nbsp;</p>
-  
   <p> &nbsp;</p>
-<p> &nbsp;</p>
+  <p> サンプル： <a href="gantchart/Excel_gantchart_chap-03.xlsm">ダウンロード</a></p>
 </section>
+
+<p> &nbsp;</p>
+<hr>
+<p> &nbsp;</p>
+
+<section>
   <h2> <a name="4._設定１_を作る">4. 設定１ を作る</a></h2>
   <h4>[概要]</h4>
   <p> 引き続き VBA 無しで、条件付き書式、excelのセルへの関数指定、などでさらにベース部分を作りこみしてみます。</p>
-<p> &nbsp;</p>
-<h3> 4-1. 「担当」を選べるようにする</h3>
+  <p> &nbsp;</p>
+  
+<section>
+  <h3> 4-1. 「担当」を選べるようにする</h3>
   <p> 1. 「設定１」シートに「担当」一覧を準備します。</p>
   <p> １行目を空欄のセルにしておくことをお勧めします。</p>
-  <p> <img alt="設定１ &gt; 担当" src="gantchart/img13.jpg"></p>
+  <p> <img alt="設定１ &gt; 担当" src="gantchart/img13.jpg" width="600"></p>
   <p> &nbsp;</p>
   <p> 2. 担当欄 のセルを設定します。</p>
   <p> 担当を入力するセルを全て選択した状態で Excel メニューから、"データ" &gt; "データの入力規則" &gt; "データの入力規則(V)..." 
@@ -267,50 +267,129 @@
   <p> 3. 表示したダイアログ画面へ下記のように入力後、［OK］ボタンをクリックします。</p>
   <ul>
 	<li>入力値の種類(A)： "リスト" を選択</li>
-	<li>"元の値(S)"： 「設定１」シート中の担当一覧を記載するセル を設定します。</li>
+	<li>"元の値(S)"： 「設定１」シート中の担当一覧を記載するセルを設定します。</li>
   </ul>
-  <p> <img alt="データの入力規則" src="gantchart/img4.jpg"></p>
+  <p> <img alt="データの入力規則" src="gantchart/img4.jpg" width="600"></p>
   <p> &nbsp;</p>
   <p> 以上で設定を完了です。これで下図のようにセル上で担当を選択できるようになりました。</p>
-  <p> <img alt="&quot;担当&quot; を選択できるようになった様子" src="gantchart/img7.jpg"></p>
+  <p> 
+  <img alt="&quot;担当&quot; を選択できるようになった様子" src="gantchart/img7.jpg" width="800"></p>
+  <p> 
+  &nbsp;</p>
+</section>
+
 <p> &nbsp;</p>
+
+<section>
 <h3> 4-2. 「ステータス」を選べるようにする</h3>
+  <p> 1. 「設定１」シートに「ステータス」一覧を準備します。</p>
+  <p> １行目を空欄のセルにしておくことをお勧めします。</p>
+  <p> <img alt="ステータス一覧" src="gantchart/img5.jpg" width="600"></p>
+  <p> &nbsp;</p>
+  <p> 2. ステータス欄 のセルを設定します。</p>
+  <p> ステータスを入力するセルを全て選択した状態で Excel メニューから、"データ" &gt; "データの入力規則" &gt; "データの入力規則(V)..." 
+  をクリックします。</p>
+  <p> &nbsp;</p>
+  <p> 3. 表示したダイアログ画面へ下記のように入力後、［OK］ボタンをクリックします。</p>
+  <ul>
+	<li>入力値の種類(A)： "リスト" を選択</li>
+	<li>"元の値(S)"： 「設定１」シート中のステータス一覧を記載するセルを設定します。</li>
+  </ul>
+  <p> <img alt="データの入力規則" src="gantchart/img15.jpg" width="600">&nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 以上で設定を完了です。これで下図のようにセル上でステータスを選択できるようになりました。</p>
+  <p> <img alt="ステータス選択" src="gantchart/img17.jpg" width="800"></p>
+  <p> &nbsp;</p>
+</section>
+
 <h3> &nbsp;</h3>
+
+<section>
 <h3> 4-3. ステータスを「WBS終了条件」にしたら、行をグレー化する</h3>
+  <p> 1. 「設定１」シートに「WBS終了判定」一覧を準備します。</p>
+  <p> ［重要］必ず "ステータス" 一覧で設定したものと一致する名称を設定してください。</p>
+  <p> <img alt="WBS終了判定 一覧" src="gantchart/img20.jpg" width="600"></p>
+  <p> &nbsp;</p>
+  <p> 2. グレー化する対象の全セルを選択します。ここでは「$A$7:$HI$106」を選択します。</p>
+  <p> &nbsp;</p>
+  <p> 3. 条件付き書式で新しいルールを作成します。</p>
+  <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
+  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> &nbsp;</p>
+  <p> 4. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
+  <p> 設定との一致確認の方法として、ここでは COUNTIF 関数を使っています。</p>
+  <blockquote>
+    =COUNTIF(設定1!$D$3:$D$5,$S7)&gt;=1</blockquote>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>"$S7" の部分について、S のみを"$"で指定します。<span class="auto-style1">7 に "$" を付けてはいけません</span>。</p>
+      </div>
+    </div>
+
+  <p> &nbsp;</p>
+  <p> セルの色は［書式(F)...］から 25% グレーを設定しました。</p>
+  <p> <img alt="条件付き書式設定" src="gantchart/imgF.jpg" width="500"></p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 5. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
+  <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
+  <p> 適用先を色を付ける全ての範囲として、下図では、"$A$7:$HI$106" を設定しています。</p>
+  <p> <img alt="条件付き書式" src="gantchart/img18.jpg" width="800"></p>
+  <p> &nbsp;</p>
+</section>
+
 <p> &nbsp;</p>
+
+<section>
 <h3> 4-4. カレンダーの色表示を祝日対応する</h3>
   <p> 土曜日、日曜日に色付けする方法とほとんど同じです。こちらも条件付き書式を使って実現します。</p>
   <p> &nbsp;</p>
   <p> 1. 「設定１」シートに祝日とする年月日一覧を準備します。</p>
-  <p> <img alt="" src="gantchart/imgB.jpg"></p>
+  <p> <img alt="" src="gantchart/imgB.jpg" width="800"></p>
   <p> &nbsp;</p>
   <p> &nbsp;</p>
   <p> 2. 条件付き書式で新しいルールを作成します。</p>
   <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
   <p> <img alt="" src="gantchart/img6.jpg"></p>
   <p> &nbsp;</p>
-  <p> 2. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
-  <p> "AH$5" の部分について、5 の方のみを"$"で指定します。<span class="auto-style1">AHに"$"を付けてはいけません</span>。</p>
+  <p> 3. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
   <p> 祝日との一致確認の方法として、ここでは COUNTIF 関数を使っています。</p>
   <blockquote>
     =COUNTIF(設定1!$E$3:$E$311,AH$5)&gt;=1</blockquote>
-  <p> セルの色は［書式(F)...］からオレンジ色を設定しました。</p>
-  <p> <img alt="" src="gantchart/imgA1.jpg"></p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>"AH$5" の部分について、5 のみを"$"で指定します。<span class="auto-style1">AH に "$" を付けてはいけません</span>。</p>
+      </div>
+    </div>
+
   <p> &nbsp;</p>
-  <p> 3. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
+  <p> セルの色は［書式(F)...］からオレンジ色を設定しました。</p>
+  <p> <img alt="" src="gantchart/imgA1.jpg" width="500"></p>
+  <p> &nbsp;</p>
+  <p> 4. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
   <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
   <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$HI$106" を設定しています。</p>
-  <p> <img alt="" src="gantchart/imgE.jpg"></p>
+  <p> <img alt="" src="gantchart/imgE.jpg" width="800"></p>
   <p> &nbsp;</p>
   <p> 以上で祝日表示対応の設定を完了です。</p>
-  <p> &nbsp;</p>
-  <hr>
-  <p> &nbsp;</p>
+</section>
+</section>
+
 <p> &nbsp;</p>
-<h2> <a name="5._ガントチャート(図)を描画">5. ガントチャート(図)を描画</a></h2>
+<hr>
+<p> &nbsp;</p>
+
+<section>
+  <h2> <a name="5._ガントチャート(図)を描画">5. ガントチャート(図)を描画</a></h2>
   <h4>[概要]</h4>
   <p> 計画、実績 の期間を入力したら、その内容に従ってガントチャート（図）を作図する処理を追加します。</p>
-<p> VBA を使います。</p>
+  <p> VBA を使います。</p>
   <p> &nbsp;</p>
   <p> 1.</p>
   <p> まずは基本的な部分から。</p>
@@ -565,9 +644,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Application.EnableEvents = True
     Application.ScreenUpdating = True
 End Sub</pre>
-  <p> &nbsp;</p>
+</section>
+
 <p> &nbsp;</p>
-<h2> <a name="6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a></h2>
+<hr>
+<p> &nbsp;</p>
+
+<section>
+  <h2> <a name="6._描画済みガントチャート(図)を全削除">6. 描画済みガントチャート(図)を全削除</a></h2>
   <h4>[概要]</h4>
   <p> 描画済みのガントチャート(図)を全て削除する処理を追加します。画面更新するためには、一旦すべての表示済みの線を削除する必要があります。</p>
   <p> 
@@ -611,14 +695,17 @@ End Sub</pre>
   <p> &nbsp;</p>
   <p> ここまでの内容で、セルに直接日付を入力すればガントチャート上に線を描画できるように（たぶん）なったはずです。</p>
   <p> あとはセルを選択してからコンテキストメニューをクリックする、という処理の部分だけですね。</p>
-  <p> &nbsp;</p>
-  <hr>
+</section>
+
 <p> &nbsp;</p>
-<h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
+<hr>
+<p> &nbsp;</p>
+
+  <h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
   <h4>[概要]</h4>
   <p> 独自の右クリックメニュー(コンテキストメニュー)を追加する方法を示します。</p>
-<p> 右クリックメニューとして「計画を設定」「実績を設定」を追加します。</p>
-<p> 合わせて、これらメニューを選択したときに対応する計画および実績のセルを更新します。</p>
+  <p> 右クリックメニューとして「計画を設定」「実績を設定」を追加します。</p>
+  <p> 合わせて、これらメニューを選択したときに対応する計画および実績のセルを更新します。</p>
   <p> &nbsp;</p>
   <p> 1.</p>
   <p> まずはメニューを追加、削除する関数を作成します。<br>下記部分は 標準モジュール で作成する必要があります。</p>
@@ -975,16 +1062,7 @@ Private Sub UpdateColor()
             .ForeColor.ObjectThemeColor = Cells(i, "H").Value
         End With
     Next i
-    
-    ' ThemeColor
-    For i = 3 To 12
-        Cells(i, "L").Interior.ThemeColor = Cells(i, "K")
-    Next i
-    
-    ' ColorIndex
-    For i = 3 To 59
-        Cells(i, "O").Interior.ColorIndex = Cells(i, "N")
-    Next i
+
 End Sub</pre>
   <p> &nbsp;</p>
   <p> &nbsp;</p>
@@ -1001,11 +1079,21 @@ End Sub</pre>
 <p>
   &nbsp;</p>
 <p>
-  サンプルプログラム <a href="gantchart/Excel_gantchart_v1_03.xlsm">ダウンロード</a></p>
+  サンプルプログラム <a href="gantchart/Excel_gantchart_v1_04.xlsm">ダウンロード</a></p>
   <br>
   
   <h4>変更履歴</h4>
   <table>
+    <tr>
+      <td class="td_history_date">2023-01-98</td>
+      <td class="td_history_separator">-</td>
+      <td class="td_history">v1.04</td>
+    </tr>
+    <tr>
+      <td class="td_history_date">&nbsp;</td>
+      <td class="td_history_separator">&nbsp;</td>
+      <td class="td_history">記事と実装を一致させる、"表示を縮小して全体を表示する"、ゴミ掃除、など微修正</td>
+    </tr>
     <tr>
       <td class="td_history_date">2022-06-25</td>
       <td class="td_history_separator">-</td>
@@ -1135,9 +1223,27 @@ SOFTWARE.
 <table>
 
   <tr>
+    <td class="td_history_date">2023-01-08</td>
+    <td class="td_history_separator">-</td>
+    <td class="td_history"><a href="#サンプルプログラム">サンプルプログラム</a>を v1.04 へバージョンアップ</td>
+  </tr>
+
+  <tr>
+    <td class="td_history_date">&nbsp;</td>
+    <td class="td_history_separator">&nbsp;</td>
+    <td class="td_history">「<a href="#4._設定１_を作る">4．設定１ を作る</a>」を記載</td>
+  </tr>
+
+  <tr>
+    <td class="td_history_date">&nbsp;</td>
+    <td class="td_history_separator">&nbsp;</td>
+    <td class="td_history">「<a href="#9._設定２_を作る">9. 設定２ を作る</a>」をサンプルプログラム v1.04 更新に合わせて余分なコードを削除</td>
+  </tr>
+
+  <tr>
     <td class="td_history_date">2022-06-25</td>
     <td class="td_history_separator">-</td>
-    <td class="td_history">サンプルプログラムを v1.03 へバージョンアップ<br>
+    <td class="td_history"><a href="#サンプルプログラム">サンプルプログラム</a>を v1.03 へバージョンアップ<br>
     ライセンスをMITへ変更。VBAのパスワードを解除。</td>
   </tr>
 
