@@ -40,20 +40,20 @@
     background-color: #505000;
   }
   .auto-style2 {
-  text-decoration: underline;
-}
+    text-decoration: underline;
+  }
   .auto-style3 {
-  color: #FF0000;
-}
+    color: #FF0000;
+  }
   .auto-style4 {
-	background-color: #FFFF00;
+	  background-color: #FFFF00;
   }
   .auto-style5 {
-	color: #FF0000;
-	background-color: #FFFF00;
+	  color: #FF0000;
+	  background-color: #FFFF00;
   }
   .auto-style6 {
-	border-width: 0px;
+	  border-width: 0px;
   }
   </style>
 
@@ -2266,6 +2266,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	
 	<p>&nbsp;</p>
 	  <p>&nbsp;</p>
+	  <p>10. "--freeze_net", "--freeze_base_net" してみる</p>
 	  <p>以下、学習時の引数を変更したときの学習時間、代表的な Epoch における "Validation Loss" の表です。<br>
 	  AI学習は乱数を使っている部分もあるので、私と同じ手順を行っても同じ結果になりません。私自身が同じことを複数回行っても異なる結果になったりします。あくまで参考値ということで。</p>
 	  <p>&nbsp;</p>
@@ -2385,6 +2386,127 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <p>Normal が最も良い感じの認識結果になりました。一方、"--freeze_base_net" 
 	  は学習時間が約半分に短縮できたうえで認識結果もそこそこ良い感じでした。<br>
 	  この２つの方式を使い分けてみても良いかもしれません、という感じの結果になりました。</p>
+	  <p>&nbsp;</p>
+	  <p>&nbsp;</p>
+	  <p>11. スケジューラを "multi-step" にしてみる</p>
+	  <p>上記「cosine」の学習では 30～50 あたりから学習の停滞がみられます。"Validation Loss" の値だと 2.8～2.9 
+	  ぐらいから良くなりません。この辺りに達した後、学習速度をさらに減速することでより良い結果を得られるのではという仮説から、スケジューラを「multi-step」へ変更、--milestones として "50,80" 
+	  を指定して実験してみます。</p>
+	  <p>※ 私が caffe でマルチステップを使うことに慣れているので・・・というのも背景。学習の様子を見て調整がしやすいので好きです。</p>
+	  <p>引数 --milestones で指定した Epoch で学習速度を 0.1倍 へ減速します。下記例は Epoch 0-49 まで初期値、Epoch 50-79 を 0.1倍、Epoch 80-99 をさらに 
+	  0.1倍、つまり初期値の 0.01倍へ減速します。</p>
+	  <pre>python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	  <p>&nbsp;</p>
+	  <p>下記表へ Epoch で99までの学習の様子を記載します。１回のみの結果なので、複数回実施するとまた違う結果になるかもしれません。</p>
+	  <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[Table.] 引数毎の 学習時間、Validation Loss 比較</caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space: nowrap" rowspan="2">Epoch num.</th>
+          <th width="25%" style="white-space: nowrap">Cosine</th>
+          <th width="50%" style="white-space: nowrap" colspan="2">Multi-step (50, 80)</th>
+        </tr>
+        <tr>
+          <th style="white-space: nowrap">Validation Loss</th>
+          <th style="white-space: nowrap">Validation Loss</th>
+          <th style="white-space: nowrap">Average Loss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>0</strong></td>
+          <td>3.77</td>
+          <td>3.68</td>
+          <td>5.86</td>
+        </tr>
+        
+        <tr>
+          <td><strong>10</strong></td>
+          <td>2.98</td>
+          <td>3.10</td>
+          <td>3.40</td>
+        </tr>
+        
+        <tr>
+          <td><strong>20</strong></td>
+          <td>2.98</td>
+          <td>3.08</td>
+          <td>3.10</td>
+        </tr>
+        
+        <tr>
+          <td><strong>30</strong></td>
+          <td>2.82</td>
+          <td>2.81</td>
+          <td>2.94</td>
+        </tr>
+        
+        <tr>
+          <td><strong>40</strong></td>
+          <td>2.75</td>
+          <td>2.92</td>
+          <td>2.91</td>
+        </tr>
+        
+        <tr>
+          <td><strong>50</strong></td>
+          <td>3.00</td>
+          <td>2.72</td>
+          <td>2.69</td>
+        </tr>
+        
+        <tr>
+          <td><strong>60</strong></td>
+          <td>2.83</td>
+          <td>2.75</td>
+          <td>2.27</td>
+        </tr>
+        
+        <tr>
+          <td><strong>70</strong></td>
+          <td>2.89</td>
+          <td>2.72</td>
+          <td>2.17</td>
+        </tr>
+        
+        <tr>
+          <td><strong>80</strong></td>
+          <td>2.80</td>
+          <td>2.72</td>
+          <td>2.10</td>
+        </tr>
+        
+        <tr>
+          <td><strong>90</strong></td>
+          <td>2.86</td>
+          <td>2.75</td>
+          <td>2.01</td>
+        </tr>
+        
+        <tr>
+          <td><strong>99</strong></td>
+          <td>2.84</td>
+          <td><strong>2.72</strong></td>
+          <td>1.99</td>
+        </tr>
+        
+        <tr>
+          <td><strong>学習時間</strong></td>
+          <td style="white-space: nowrap">5時間30分</td>
+          <td style="white-space: nowrap" colspan="2">5時間30分</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+	  <p>&nbsp;</p>
+	  <p>たまたまかもしれないけれど、少し良くなった、かな？ って感じの結果でした。少なくとも "multi-step" による学習はできてそうです。</p>
+	  <p>ここまでと同様に同じ画像を認識させてみた結果を下図に示します。良い感じです。</p>
+	  <p>
+	  <img alt="multi-step_50,80_Epoch-99" src="mobilenet-ssd/run_ssd_example_multi-step-50,80_Epoch-99.jpg" width="600"></p>
+	  <p>[Fig. "--scheduler multi-step --milestones 50,80", Epoch 99]</p>
 	  <p>&nbsp;</p>
 	</section>
 	
