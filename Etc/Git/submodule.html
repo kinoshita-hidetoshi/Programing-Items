@@ -91,7 +91,6 @@
 </table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 
 
 <h2><a name="1._git_submodule_コマンド">1. git submodule コマンド</a></h2>
@@ -117,7 +116,6 @@ $ git commit -a                                                        # 変更�
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 <h3><a name="1-2._git_submodule_update">1-2. &quot;git submodule update&quot;</a></h3>
 <p>submoduleはupdateコマンドで更新しなければならない。</p>
 <ul>
@@ -126,7 +124,6 @@ $ git commit -a                                                        # 変更�
   <li>最悪の場合「親プロジェクトをpullした時にsubmoduleがmodifiedになっていたらsubmodule 
   updateする」というおまじないを覚えておけばなんとかなる。</li>
 </ul>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3><a name="1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだGitレポジトリを &quot;<span class="auto-style2"><em><strong>git clone</strong></em></span>&quot; 
@@ -149,28 +146,29 @@ $ git commit -a                                                        # 変更�
 でサブモジュールのファイルを取得しましょう。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 <h3><a name="1-4._git_submodule_deinit">1-4. &quot;git submodule deinit&quot;</a></h3>
-<p>submodule削除するときはファイルを消すだけではダメ</p>
+<p>submodule削除するときはファイルを消すだけではダメ。</p>
+<p>サブモジュールの情報が複数の場所に保存されているので多少複雑です。 </p>
 <ul>
   <li>git submodule deinitコマンドとgit rmコマンドの２段階で削除する。</li>
   <li>削除の場合は親プロジェクトをpullしただけで、削除が反映される。</li>
 </ul>
 <p>&nbsp;</p>
 
-<pre>$ git submodule deinit submodule/test_app_submodule 
-$ git rm submodule/test_app_submodule</pre>
+<pre>
+$ git submodule deinit -f sub-module                                   # 登録解除
+$ git rm -f sub-module                                                 # ファイルを削除
+$ git config -f .gitmodules --remove-section submodule.sub-module      # 設定ファイルから削除
+$ git commit -a                                                        # 変更を保存（必須！）
+</pre>
 
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h2><a name="2._チュートリアル">2. チュートリアル</a></h2>
-<p>
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-“git submodule“ を実際に使用してみる簡単な例を以下に記載します。c++のプログラムを例に作成してみます。</span></p>
+<p>“git submodule“ を実際に使用してみる簡単な例を以下に記載します。c++のプログラムを例に作成してみます。</p>
 <p>&nbsp;</p>
 <h3><a name="2-1._テスト用に２つのリポジトリを作成する">2-1. テスト用に２つのリポジトリを作成する</a></h3>
 <p>&nbsp;</p>
@@ -196,9 +194,7 @@ $ git rm submodule/test_app_submodule</pre>
 <img alt="" src="submodule/img16.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-counter.h は以下の通りです。</span></p>
+<p>counter.h は以下の通りです。</p>
 <p>&nbsp;</p>
 <pre class="prettyprint linenums">#ifndef COUNTER_H
 #define COUNTER_H
@@ -235,9 +231,7 @@ namespace counter{
 
 #endif</pre>
 <p>&nbsp;</p>
-<p>
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-counter.cpp は以下の通りです。</span></p>
+<p>counter.cpp は以下の通りです。</p>
 
 <pre class="prettyprint linenums">#include &quot;counter.h&quot;
 
@@ -372,24 +366,22 @@ target_include_directories(counter
 <p>&nbsp;</p>
 <h4>&nbsp;2-3-1. PP_testapp_01 をクローンしてフォルダへ cd します。</h4>
 <p>&nbsp;</p>
-<p>
 <pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git
 $ cd pp_testapp_01</pre>
-</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>&nbsp;2-3-2. PP_testlib_01 を git submodule add コマンドにより counter フォルダへ割り付けます。</h4>
 <p>
-<pre>$ git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter
+&nbsp;<pre>$ git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter
 $ git commit -a</pre>
-</p>
 <p>&nbsp;</p>
 <p>.gitmodules” は以下のような記載となっていました。<br>counter が submodule として登録されていることを確認できます。 </p>
 <p><img alt="" src="submodule/img2A.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>2-3-3. プログラムを作成します。</h4>
-<p>&nbsp;vscode で作成した例です。</p>
-<p>&nbsp;下図では counter ライブラリが “git submodule add” で登録した対象です。 <br>”S” という表示は 
+<p>vscode で作成した例です。</p>
+<p>下図では counter ライブラリが “git submodule add” で登録した対象です。 <br>”S” という表示は 
 Submodule の ”S” と思われます。ここに修正がある場合は ”M” (Modify ？) を表示しました。 </p>
 <p>&nbsp;</p>
 <p><img alt="" src="submodule/img2C.jpg"></p>
@@ -453,10 +445,8 @@ add_executable(main.out main.cpp)
 target_link_libraries(main.out counter)</pre>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>
-<span style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
-同じく vscode の「ソース管理」画面です。</span><br style="color: rgb(23, 43, 77); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Noto Sans&quot;, Ubuntu, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: -0.08px; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-vscode では submodule (counter) はアプリ本体と別の管理対象として扱われていることがわかります。</p>
+<p>同じく vscode の「ソース管理」画面です。</p>
+<p>vscode では submodule (counter) はアプリ本体と別の管理対象として扱われていることがわかります。</p>
 <p><img alt="" src="submodule/img2D.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
