@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[Excel VBA] Outlook からメール送信する | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+  <script src="../prettify/lang-vb.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>[Excel VBA] Outlook からメール送信する</h1>
+
+<p> Excel VBA から Outlook を操作してメール送信の自動化に挑戦します。</p>
+<p> 
+リストに用意されている送信先に一斉にメールを送信したり、個々の宛先に連続して送信したり、複数のファイルを添付するなどの方法を実際にやってみたいと思います。</p>
+<p> &nbsp;</p>
+
+<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._Outlook_からメール１通を送信する">1. Outlook_からメール１通を送信する</a></p>
+	<p><a href="#2._複数の宛先へ一斉にメール送信する">2. 複数の宛先へ一斉にメール送信する</a></p>
+	<p><a href="#3._複数の宛先へ連続してメール送信する">3. 複数の宛先へ連続してメール送信する</a></p>
+	<p><a href="#サンプルプログラム">サンプルプログラム</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._Outlook_からメール１通を送信する">1. Outlook からメールを１通 送信する</a></h2>
+	<h4>[概要]</h4>
+	<p> まずは基本となる、Excel ワークシートに設定された情報に従って Outlook からメール送信するマクロを作成してみます。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>Excel :</td>
+	      <td>2021 MSO 64 ビット, </td>
+	      <td>バージョン 2212 ビルド 16.0.15928.20196</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p> 1. [メール設定] というシートに基本となる表を作成します。添付ファイルは作成するブックと同じフォルダーに保存しておきます。</p>
+	<p> 
+	<img alt="メール設定フォーマット" src="send_email/imgB2.jpg" width="800" class="border_with_drop-shadow"></p>
+	<p> &nbsp;</p>
+	<p> 2. "Visual Basic Editor (VBE)" 
+	の「挿入」メニューから「標準モジュール」をクリックし、標準モジュールを追加します。コードウィンドウに下記コードを記述します。</p>
+	<p> [メールを送信するコード]</p>
+	<pre class="prettyprint linenums lang-vb">
+' win32 MessageBoxA を使うための宣言
+Declare PtrSafe Function MessageBox Lib "User32.dll" Alias "MessageBoxA" (ByVal hWnd As Long, ByVal lpText As String, ByVal lpCaption As String, ByVal uType As Long) As Integer
+Const MB_OK As Long = &amp;H0
+Const MB_OKCANCEL As Long = &amp;O1
+Const MB_YESNO As Long = &amp;O4
+Const MB_ICONHAND As Long = &amp;O20
+Const MB_ICONSTOP As Long = &amp;O20
+Const MB_ICONERROR As Long = &amp;O20
+Const MB_ICONQUESTION As Long = &amp;O40
+Const MB_ICONEXCLAMATION As Long = &amp;O30
+Const MB_ICONINFORMATION As Long = &amp;O40
+Const IDOK As Long = &amp;O0
+Const IDCANCEL As Long = &amp;O1
+Const IDABORT As Long = &amp;O2
+Const IDYES As Long = &amp;O6
+Const IDNO As Long = &amp;O7
+Const MB_TOP As Long = &amp;H40000
+
+
+Sub メール送信()
+    
+    Dim ol As Outlook.Application
+    Dim ml, sh
+    
+    ' 連続送信すると、ウェイトを入れないと CreateObject("Outlook.Application") を失敗することがあるようです。
+    Application.Wait [Now() + "00:00:00.1"]
+
+    Set ol = CreateObject("Outlook.Application")    
+    Set sh = Sheets("メール設定")
+    Set ml = ol.CreateItem(0)
+    
+    With ml
+    
+        If sh.Range("D2").Value = "" Then
+            MsgBox "TO が空欄です。この項目を無視します。", vbOKOnly + vbCritical, "確認"
+            Exit Sub
+        End If
+    
+        ' 基本情報
+        .BodyFormat = 2     ' 1: Text, 2: HTML, 3:リッチテキスト
+        .To = sh.Range("D2").Value
+        .Cc = sh.Range("D3").Value
+        .Bcc = sh.Range("D4").Value
+        .Subject = sh.Range("D5").Value
+       
+        ' 署名 を退避。後述の .HtmlBody で戻します。
+        .Display    ' "署名" を signatureString へコピーするために一旦メールを表示する必要があるようです。
+        signatureString = .HtmlBody
+        
+        ' 添付ファイル
+        If sh.Range("D6").Value &lt;&gt; "" Then
+            
+            Dim v, i
+            v = Split(sh.Range("D6").Value, ", ")
+            For i = LBound(v) To UBound(v)
+                .Attachments.Add ThisWorkbook.Path &amp; "\" &amp; v(i)
+            Next i
+            
+        End If
+        
+        ' 補足： .BodyFormat でどれを選択していても、ここで .HtmlBody を使うと強制的に HTML 形式へ変更されるようです。
+        .HtmlBody = "&lt;div style=""font-family:游ゴシック; font-size:11pt;""&gt;" &amp; sh.Range("D7").Value &amp; "&lt;/div&gt;" &amp; signatureString
+        
+        Application.Wait [Now() + "00:00:00.5"]
+        
+        ' メール送信確認
+        ' メッセージボックスを最上位（トップモスト）表示したいので、Win32 の MessageBoxA を使用します。
+        ret = MessageBox(0, "メール送信しますか？", "確認", MB_YESNO + MB_ICONQUESTION + MB_TOP)
+        If ret = IDYES Then
+            .Send
+        Else
+            .Delete
+        End If
+        
+        ' こちら、VBA版の MsgBox による確認ダイアログです。
+'        If MsgBox("メール送信しますか？", vbYesNo + vbQuestion + vbMsgBoxSetForeground + vbDefaultButton2, "確認") = vbYes Then
+'            .Send
+'        Else
+'            .Delete
+'        End If
+        
+    End With
+
+    ' オブジェクトを開放
+    Set ml = Nothing
+    Set ol = Nothing
+    Set sh = Nothing
+    
+End Sub</pre>
+	<p> &nbsp;</p>
+	<p> 3. ［メール送信］ボタンを追加</p>
+	<p> ［メール送信］ボタンを追加して、クリックしたら上記で作成したマクロ "メール送信" を実行するようにします。</p>
+	<p> 
+	<img alt="メール送信ボタンを追加" class="border_with_drop-shadow" src="send_email/img15.jpg" width="800"></p>
+	
+	<p>&nbsp;</p>
+	<p>[メール送信]&nbsp;ボタンをクリックすると、下図のように表示されます。</p>
+	<p>確認ダイアログで［はい(Y)］をクリックすればメール送信されますし、［いいえ(N)］をクリックすればメールは送信されません。</p>
+	<p>送信前に確認できるので安心ですね。プログラム完成度が高くなって信頼できるようになったら、場合によっては確認無しでメール発信するようにプログラム修正もできますね。</p>
+	<p>
+	<img alt="作成されたメール" class="border_with_drop-shadow" src="send_email/img16.jpg" width="500"></p>	
+    <p>&nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._複数の宛先へ一斉にメール送信する">2. 複数の宛先へ一斉にメール送信する</a></h2>
+	<h4>[概要]</h4>
+	<p> メール送信する基本を理解できたので、次はリストにある宛先へ同じ内容のメールを一斉送信マクロに挑戦してみます。</p>
+	<p> マクロ一回の実行で送信するメールは１通です。</p>
+	<p> メールの宛先として、Excel のリストにある全てのメールアドレスを設定して送信します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>Excel :</td>
+	      <td>2021 MSO 64 ビット, </td>
+	      <td>バージョン 2212 ビルド 16.0.15928.20196</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
+	<p> 1. [一斉メール送信] というシートを作成します。下図が作成例です。</p>
+	<p> 
+	<img alt="一斉メール送信" class="border_with_drop-shadow" src="send_email/img1F.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> 2. 以下のコードを "一斉メール送信" のオブジェクトへ記載します。</p>
+	<p> 
+	<img alt="一斉メール送信オブジェクト" src="send_email/img20.jpg" width="800" class="border_with_drop-shadow"></p>
+	<p> &nbsp;</p>
+	<p> ["一斉メール送信" のコード]</p>
+	<pre class="prettyprint linenums lang-vb">
+Sub 一斉メール送信()
+    
+    Dim i, sh
+    Dim wrkTo, wrkCc, wrkBcc
+    
+    Set sh = Sheets("メール設定")
+    
+    ' To list 作成
+    For i = 5 To Cells(Rows.Count, "C").End(xlUp).Row
+        wrkTo = wrkTo &amp; Cells(i, "C").Value &amp; ";"
+    Next i
+    
+    ' Cc list 作成
+    For i = 5 To Cells(Rows.Count, "D").End(xlUp).Row
+        wrkCc = wrkCc &amp; Cells(i, "D").Value &amp; ";"
+    Next i
+    
+    ' Bcc list 作成
+    For i = 5 To Cells(Rows.Count, "E").End(xlUp).Row
+        wrkBcc = wrkBcc &amp; Cells(i, "E").Value &amp; ";"
+    Next i
+    
+    sh.Range("D2").Value = wrkTo
+    sh.Range("D3").Value = wrkCc
+    sh.Range("D4").Value = wrkBcc
+    
+    Call メール送信
+
+End Sub</pre>
+	<p> &nbsp;</p>
+	<p> 3. ［一斉メール送信］のボタンをシートへ追加し、これをクリックすることで上記マクロを実行するように設定します。</p>
+	<p> ボタンをクリックしてマクロを実行すると、下図のような表示となりました。</p>
+	<p> &nbsp;</p>
+	<p> 
+	<img alt="一斉メール送信 のメール" src="send_email/img22.jpg" width="500" class="border_with_drop-shadow"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+</section>
+	
+<br>
+
+<section>
+	<h2> <a name="3._複数の宛先へ連続してメール送信する">3. 複数の宛先へ連続してメール送信する</a></h2>
+	<h4>[概要]</h4>
+	<p>一斉メール送信の次は、複数の宛先へ１つずつ同じ内容のメールを発信するマクロに挑戦してみます。</p>
+	<p>例えば「とても大勢に同じメールを送信したいが、BCC ではなく TO 
+	で送りたい。ただし誰にメール送信したのかを相互に知られないように送りたい。」というシチュエーションを想定しています。</p>
+	<p>BCCで送信すると、後日その送信履歴を確認しても誰に送信したのかわからず困ってしまった、ということが私自身ありました。TO 
+	で送りたいと思いました。</p>
+	<p>またあまりに多くの人へ１つのメールで送信すると、システムやメールソフト制限で送付できない、ということがあります。</p>
+	<p>同じメールを複数のメールに分けて自動送信してくれるマクロは、多くの場面で有益に活用できるかもしれません。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>Excel :</td>
+	      <td>2021 MSO 64 ビット, </td>
+	      <td>バージョン 2212 ビルド 16.0.15928.20196</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+  <p> &nbsp;</p>
+	<p> 1. [連続メール送信] というシートを作成します。下図が作成例です。</p>
+	<p> 
+	<img alt="連続メール送信" class="border_with_drop-shadow" src="send_email/img24.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> 2. 以下のコードを "連続メール送信" のオブジェクトへ記載します。</p>
+	<p> 
+	<img alt="連続メール送信 オブジェクト" class="border_with_drop-shadow" src="send_email/img25.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> ["連続メール送信" のコード]</p>
+	<pre class="prettyprint linenums lang-vb">
+Sub 連続メール送信()
+    
+    Dim i, wrk, sh
+    
+    Set sh = Sheets("メール設定")
+    
+    For i = 5 To Cells(Rows.Count, "C").End(xlUp).Row
+        sh.Range("D2").Value = Cells(i, "C").Value
+        sh.Range("D3").Value = Cells(i, "D").Value
+        sh.Range("D4").Value = Cells(i, "E").Value
+        
+        Call メール送信
+    Next i
+    
+    MsgBox "全てのメール送信を完了しました。", vbOKOnly + vbInformation, "完了"
+
+End Sub</pre>
+	<p> &nbsp;</p>
+	<p> 3. ［連続メール送信］のボタンをシートへ追加し、これをクリックすることで上記マクロを実行するように設定します。</p>
+	<p> [連続メール送信] ボタンをクリックした様子を下図動画で紹介します。</p>
+	<p> 
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="send_email/video_send_email.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video></p>
+	<p> 
+    [動作例]</p>
+	<p> 
+    &nbsp;</p>
+	<p> 
+    確認ダイアログで確認するのが面倒ですが、それでもずいぶん楽になりました。プログラムをある程度信用できるようになったら、確認無しで送信するようにプログラム修正しても良いかもしれません。なお、くれぐれも自己責任で。</p>
+  <p> &nbsp;</p>
+</section>
+	
+<p> &nbsp;</p>
+
+<section>
+  <h2><a name="サンプルプログラム">サンプルプログラム</a></h2>
+  <p> &nbsp;</p>
+  <p> サンプルプログラム <a href="send_email/send_email_from_outlook_v0.02.xlsm">ダウンロード</a></p>
+  <p> &nbsp;</p>
+</section>
+	
+<p> &nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2023 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>日経ソフトウェア 2022年1月号、"ビジネスパーソンの Excel VBA 再入門 － 第18回 Outlook 
+		からメール送信しよう"</li>
+		<li>【VBA】Outlookオブジェクトを用いたメール送信の基本事項 - Qiita<br>
+		<a href="https://qiita.com/t-yama-3/items/c23b700162aa3ede9eb7" target="_blank">
+		https://qiita.com/t-yama-3/items/c23b700162aa3ede9eb7</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2022-01-29</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+</body>
+</html>
