@@ -1820,7 +1820,7 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	  <p>先ほどの手順では "Handgun,Shotgun" 
 	  を指定してデータをダウンロードしましたが、こちらに記録されているクラスを指定して画像およびアノテーションデータをダウンロードできそうです。</p>
 	<p><a href="mobilenet-ssd/img11.jpg" target="_blank">
-	<img alt="" class="auto-style6" src="mobilenet-ssd/img11.jpg" width="800"></a></p>
+	<img alt="class-descriptions-boxable.csv" class="auto-style6" src="mobilenet-ssd/img11.jpg" width="800"></a></p>
 	<p>&nbsp;</p>
 	<p>"sub-test-annotations-bbox.csv" の様子です。画像データおよびアノテーションデータ一覧のようです。</p>
 	<p>XMin,XMax,YMin,YMax の４つは、画像データ上の物体の位置を示しています。それぞれ 0.0～1.0 
@@ -1829,7 +1829,7 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	と紐づけられている情報のようです。"class-descriptions-boxable.csv" で例えば "/m/0gxl3" を検索すると 
 	"Handgun" となっています。</p>
 	<p><a href="mobilenet-ssd/img12.jpg" target="_blank">
-	<img alt="" class="auto-style6" src="mobilenet-ssd/img12.jpg" width="800"></a></p>
+	<img alt="sub-test-annotations-bbox.csv" class="auto-style6" src="mobilenet-ssd/img12.jpg" width="800"></a></p>
 	<p>&nbsp;</p>
 	<p>以上のような構成でデータを準備することで、あたなや私が独自に学習したい物体と画像についても同様に AI 学習データを作成できることがわかりました。</p>
 	<p>&nbsp;</p>
@@ -1851,7 +1851,7 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p><strong>補足</strong>： </p>
 	  <p>上記コマンドに含んでいませんが資料では下記のような説明も記載されていました。</p>
 	<p>
-	<img alt="" class="border_with_drop-shadow" src="mobilenet-ssd/img1B.jpg" width="800"></p>
+	<img alt="--freeze_base_net, --freeze_net" class="border_with_drop-shadow" src="mobilenet-ssd/img1B.jpg" width="800"></p>
 	<p>&nbsp;</p>
 	<p><span class="cpp-source">--freeze_net</span> を指定することで "prediction head" 
 	を除いて全レイヤーをフリーズと記載されています。俗にいう "<strong>転移学習</strong>" 

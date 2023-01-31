@@ -48,6 +48,10 @@ hr{
   margin-bottom: 6px;
 }
 
+.display-none{
+  display:none;
+}
+
 /* 戻る */
 li.return{
   list-style-type:none;
