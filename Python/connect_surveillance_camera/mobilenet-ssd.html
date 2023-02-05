@@ -212,8 +212,11 @@
     <p> &nbsp;</p>
     <p> (2)</p>
     <p> 下図のような画面を表示するので、使用される環境を選択します。</p>
-    <p> 私は Windows 環境で多くの人が動作する例を作成したいので、Computer Platform として CPU を選択してみました。<br>
-    Package はなんとなく&nbsp;Pip を選択してみます。</p>
+    <p> 私は Windows 環境で多くの人が動作する例を作成したいので、Computer Platform として CPU を選択してみました。</p>
+    <p> Package は Conda または Pip を選択する場合が多いと思います。Conda は Anaconda 
+    をインストールしている環境で使用できるコマンドです。Anaconda は 2020/4 
+    より従業員200人以上の営利企業で有償化（ご自身で正しい情報を再確認してください）されたため、社内ルールなどで Anaconda 
+    を利用できない方も多いと思います。ここでは Package として&nbsp;Pip を選択してみます。</p>
     <p> commandは <span class="cpp-source">pip3 install torch torchvision torchaudio</span> となりました。</p>
     <p><img alt="PyTorch ホームページ画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img6.jpg" width="800"></p>
     <p><a href="mobilenet-ssd/img5.jpg" target="_blank">
@@ -237,6 +240,21 @@
     <p> &nbsp;</p>
     <p> これで Pytorch のインストールを完了です。</p>
     <p> &nbsp;</p>
+    <p> ちなみに、インストールされている Pytorch のバージョンを確認したい場合、以下の手順で確認できます。</p>
+    <p> コマンドプロンプトなどのターミナルから python を起動し、"import torch" した後に 
+    "print(torch.__version__)" するだけです。</p>
+
+    <pre>Microsoft Windows [Version 10.0.22621.1194]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\kinos&gt;<span class="auto-style4">python</span>
+Python 3.10.7 (tags/v3.10.7:6cc6b13, Sep  5 2022, 14:08:36) [MSC v.1933 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; <span class="auto-style4">import torch</span>
+&gt;&gt;&gt; <span class="auto-style4">print(torch.__version__)</span>
+1.11.0+cpu
+&gt;&gt;&gt;</pre>
+	  <p> &nbsp;</p>
     <p> &nbsp;</p>
     <h3> <a name="1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストール</a></h3>
     <p> opencv を使用するので、下記コマンドによりインストールします。</p>
@@ -1721,7 +1739,17 @@ cv2.destroyAllWindows()</pre>
       </tbody>
     </table>
     
-      <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>"Hundgun" と "Shutgun" ２クラスの物体検知を行う、という内容です。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
 	<p>&nbsp;</p>
 	
 	<section>
@@ -1847,22 +1875,6 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<pre>python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	<p>&nbsp;</p>
 	
-	<div style="border-radius: 5px; padding: 10px; border: thin solid #C0C0C0; width: 1000px; background-color: #F0F0F0;">
-	<p><strong>補足</strong>： </p>
-	  <p>上記コマンドに含んでいませんが資料では下記のような説明も記載されていました。</p>
-	<p>
-	<img alt="--freeze_base_net, --freeze_net" class="border_with_drop-shadow" src="mobilenet-ssd/img1B.jpg" width="800"></p>
-	<p>&nbsp;</p>
-	<p><span class="cpp-source">--freeze_net</span> を指定することで "prediction head" 
-	を除いて全レイヤーをフリーズと記載されています。俗にいう "<strong>転移学習</strong>" 
-	を行えそうです。これを指定することで演算が軽くなることを期待できるので、例えばCPU動作でも動作可能なレベルになるか、などを後々評価してみたいところです。</p>
-	<p><span class="cpp-source">--freeze_base_net</span> を指定することで "base net 
-	layers" をフリーズするようです。こちらも "<strong>転移学習</strong>" のバリエーションの一つですね。本ページの例では、MobileNet 部分をフリーズして SSD or SSD-Lite 
-	部分をフリーズしない、と読めば良いのかな、と想像しています。</p>
-	  <p>各種ちゃんと動作するようになったらこちらも比較評価してみたいと思います。</p>
-	</div>
-	
-	<p>&nbsp;</p>
 	<p>以下、上記コマンド実行後のコンソール出力内容です。</p>
 	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。</p>
 	<pre>2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
@@ -2127,7 +2139,7 @@ class PredictionTransform:
 	<p>&nbsp;</p>
 	<pre>python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	<p>&nbsp;</p>
-	<p>100 Epoch を約５時間半で学習できました。（CPU動作の場合です。GPU動作の場合はきっともっと高速に動作するでしょう。）</p>
+	<p><span class="auto-style2"><strong>100 Epoch を約５時間半で学習できました</strong></span>。（CPU動作の場合です。GPU動作の場合はもっと高速に学習可能です。）</p>
 	<p>&nbsp;</p>
   
     <div class="status_information">
@@ -2172,18 +2184,19 @@ mode = self.sample_options[random_idx]</pre>
 
     <p>&nbsp;</p>
 	  <p>&nbsp;</p>
-	<p>9. 学習したデータとサンプル画像を使用して Gun の認識をしてみます。</p>
-	<p>私の学習済みデータとサンプル画像を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
-	
-	
-	<pre>python run_ssd_example.py mb1-ssd models\mb1-ssd-Epoch-10-Loss-2.9762498426437376.pth models\open-images-model-labels.txt data\open_images\validation\018d4a117c1d7e16.jpg</pre>
-	<p>&nbsp;</p>
-	<p>ただし run_ssd_example.py は OpenSSL 
-	のバージョンアップに伴って一部修正する必要があります。修正後のソースコードを下記に示します。<br>60, 64行目の部分で６か所 int 
-	キャストを追加する必要があります。</p>
-	<p>&nbsp;</p>
-	<p>"run_ssd_example.py"</p>
-	<pre class="prettyprint linenums lang-py">from vision.ssd.vgg_ssd import create_vgg_ssd, create_vgg_ssd_predictor
+  	<p>9. 学習したデータとテスト画像を使用して Gun の認識をしてみます。</p>
+	  <p>テスト画像は <a href="https://pixabay.com/ja/" target="_blank">Pixabay</a> 
+    から入手した画像を使用します。</p>
+    <p>&nbsp;</p>
+    <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.843603060245514.pth"）とサンプル画像（"sample_image.jpg"）を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
+    <pre>python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
+    <p>&nbsp;</p>
+    <p>ただし <strong>run_ssd_example.py</strong> は OpenSSL 
+  	のバージョンアップに伴って一部修正する必要があります。修正後のソースコードを下記に示します。<br>60, 64行目の部分で６か所 int 
+  	キャストを追加する必要があります。この修正を行わないとプログラム実行時にエラーとなって動作しませんでした。</p>
+    <p>&nbsp;</p>
+    <p>"run_ssd_example.py"</p>
+	  <pre class="prettyprint linenums lang-py">from vision.ssd.vgg_ssd import create_vgg_ssd, create_vgg_ssd_predictor
 from vision.ssd.mobilenetv1_ssd import create_mobilenetv1_ssd, create_mobilenetv1_ssd_predictor
 from vision.ssd.mobilenetv1_ssd_lite import create_mobilenetv1_ssd_lite, create_mobilenetv1_ssd_lite_predictor
 from vision.ssd.squeezenet_ssd_lite import create_squeezenet_ssd_lite, create_squeezenet_ssd_lite_predictor
@@ -2255,21 +2268,56 @@ path = "run_ssd_example_output.jpg"
 cv2.imwrite(path, orig_image)
 print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	<p>&nbsp;</p>
-	
-	<p>こちら Epoch-10 の学習データによる結果です。評価に使用した画像は上記手順でダウンロードした 
-	<strong class="cpp-source">varidation</strong> フォルダ中にある画像（validation\018d4a117c1d7e16.jpg）を使用しました。</p>
-	  <p>まだ認識精度は低そうです。</p>
-	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-10.jpg" width="600"></p>
-	<p>&nbsp;</p>
-	<p>こちら Epoch-30 の学習データによる結果です。大分良い感じになってきました。</p>
-	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-30.jpg" width="600"></p>
-	<p>&nbsp;</p>
-	<p>こちら Epoch-99 の学習データによる結果です。これが最終データです。スコアも 0.92 まで伸びました。良い感じです。</p>
-	<p>	<img alt="再学習データを使って Gun を認識" src="mobilenet-ssd/run_ssd_example_output_Epoch-99.jpg" width="600"></p>
-	
-	<p>&nbsp;</p>
+	  <p>以下、テストした結果をいくつか示します。</p>
 	  <p>&nbsp;</p>
-	  <p>10. "--freeze_net", "--freeze_base_net" してみる</p>
+	  <p>テスト画像１： 入手元 
+	  <a href="https://pixabay.com/ja/photos/ハーレイ-クイン-コスプレ-漫画-5391062/" target="_blank">
+	  Pixabay</a></p>
+	  <p>
+	  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+	  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay 
+	  License</a>" を参照ください。</span></p>
+	  <p>["harley-quinn-5391062_1920.jpg"]</p>
+	  <p>
+	  <img alt="harley-quinn-5391062_1920.jpg" src="mobilenet-ssd/imgA1.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+	  <p>テスト画像２： 入手元 
+	  <a href="https://pixabay.com/ja/photos/銃-フランスの外legion-4222469/" target="_blank">
+	  Pixabay</a></p>
+	  <p>
+	  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+	  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay 
+	  License</a>" を参照ください。</span></p>
+	  <p>["gun-4222469_1920.jpg"]</p>
+	  <p>
+	  <img alt="gun-4222469_1920.jpg" src="mobilenet-ssd/img4.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+	  <p>テスト画像３： 入手元 
+	  <a href="https://pixabay.com/ja/photos/軍-武器-アフガニ-反逆者-60720/" target="_blank">
+	  Pixabay</a></p>
+	  <p>
+	  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+	  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay 
+	  License</a>" を参照ください。</span></p>
+	  <p>["army-60720_1920.jpg"]</p>
+	  <p>
+	  <img alt="army-60720_1920.jpg" src="mobilenet-ssd/img7.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+	  <p>&nbsp;</p>
+	  <p>10. "--freeze_net", "--freeze_base_net"</p>
+	  <p>ホームページ中に下記説明がありました。</p>
+	  <p>
+  	<img alt="--freeze_base_net, --freeze_net" class="border_with_drop-shadow" src="mobilenet-ssd/img1B.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+    <p><span class="cpp-source"><strong>--freeze_net</strong></span> を指定することで "prediction head" 
+    を除いて全レイヤーをフリーズと記載されています。俗にいう "<strong>転移学習</strong>" 
+    を行えそうです。これを指定することで演算が軽くなることを期待できます。</p>
+    <p><span class="cpp-source"><strong>--freeze_base_net</strong></span> を指定することで "base net 
+    layers" をフリーズするようです。こちらも "<strong>転移学習</strong>" のバリエーションの一つですね。本ページの例では、MobileNet 部分をフリーズして SSD or SSD-Lite 
+    部分をフリーズしない、と読めば良いのかな、と想像しています。"--freeze_net" よりは学習の演算量が多いはずです。</p>
+	  <p>&nbsp;</p>
+	  <p>ここでは学習時間の短縮を目的に、引数 "<strong>--freeze_net</strong>", "<strong>--freeze_base_net</strong>" を試してみます。それぞれ 
+	  100 Epoch 学習させたのちの "Validation Loss" についても比較してみます。</p>
 	  <p>以下、学習時の引数を変更したときの学習時間、代表的な Epoch における "Validation Loss" の表です。<br>
 	  AI学習は乱数を使っている部分もあるので、私と同じ手順を行っても同じ結果になりません。私自身が同じことを複数回行っても異なる結果になったりします。あくまで参考値ということで。</p>
 	  <p>&nbsp;</p>
@@ -2372,30 +2420,28 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
       </tbody>
     </table>
     
-      <p>&nbsp;</p>
-	  <p>以下、各引数における Epoch 99 の学習データで認識させてみた結果比較です。</p>
-	  <p>
-	  <img alt="normal" src="mobilenet-ssd/run_ssd_example_output_Epoch-99.jpg" width="600"></p>
-	  <p>[Fig. normal, Eopch 99]</p>
+    <p>&nbsp;</p>
+	  <p>"--freeze_net", "--freeze_base_net" の学習時間は半分以下になりました。</p>
+	  <p>認識性能（Validation Loss）は Normal が最も良い結果となりました。</p>
+	  <p>それぞれメリット／デメリットがありそうなので、用途などに応じて使い分けてみてはいかがでしょうか。</p>
+	  <p>以下、サンプル画像による認識結果例です。</p>
 	  <p>&nbsp;</p>
+	  <p>["Normal" Epoch99 による認識結果例]</p>
 	  <p>
-	  <img alt="freeze_net" src="mobilenet-ssd/gun_freeze_net_epoch-99.jpg" width="600"></p>
-	  <p>[Fig. --freeze_net, Epoch 99]</p>
+	  <img alt="gun-4222469_1920.jpg" src="mobilenet-ssd/img4.jpg" width="800"></p>
 	  <p>&nbsp;</p>
-	  <p>
-	  <img alt="freeze_base_net" src="mobilenet-ssd/gun_freeze_base_net_epoch-99.jpg" width="600"></p>
-	  <p>[Fig. --freeze_base_net, Epoch 99]</p>
+	  <p>["--freeze_net" Epoch99 による認識結果例]</p>
+	  <p><img alt="--freeze_net" src="mobilenet-ssd/img13.jpg" width="800"></p>
 	  <p>&nbsp;</p>
-	  <p>Normal が最も良い感じの認識結果になりました。一方、"--freeze_base_net" 
-	  は学習時間が約半分に短縮できたうえで認識結果もそこそこ良い感じでした。<br>
-	  この２つの方式を使い分けてみても良いかもしれません、という感じの結果になりました。</p>
+	  <p>["--freeze_base_net" Epoch99 による認識結果例]</p>
+	  <p><img alt="--freeze_base_net" src="mobilenet-ssd/img14.jpg" width="800"></p>
 	  <p>&nbsp;</p>
 	  <p>&nbsp;</p>
 	  <p>11. スケジューラを "multi-step" にしてみる</p>
-	  <p>上記「cosine」の学習では 30～50 あたりから学習の停滞がみられます。"Validation Loss" の値だと 2.8～2.9 
+	  <p>"multi-step" は学習速度の減速タイミングを詳細に指示することができます。</p>
+	  <p>スケジューラを「cosine」とした上記学習では、Epoch 30～50 あたりから学習の停滞がみられます。"Validation Loss" の値だと 2.8～2.9 
 	  ぐらいから良くなりません。この辺りに達した後、学習速度をさらに減速することでより良い結果を得られるのではという仮説から、スケジューラを「multi-step」へ変更、--milestones として "50,80" 
 	  を指定して実験してみます。</p>
-	  <p>※ 私が caffe でマルチステップを使うことに慣れているので・・・というのも背景。学習の様子を見て調整がしやすいので好きです。</p>
 	  <p>引数 --milestones で指定した Epoch で学習速度を 0.1倍 へ減速します。下記例は Epoch 0-49 まで初期値、Epoch 50-79 を 0.1倍、Epoch 80-99 をさらに 
 	  0.1倍、つまり初期値の 0.01倍へ減速します。</p>
 	  <pre>python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
@@ -2517,11 +2563,10 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
     </table>
     
 	  <p>&nbsp;</p>
-	  <p>たまたまかもしれないけれど、"Validation Loss" で比較するなら少し良くなった、かな？ って感じの結果でした。少なくとも "multi-step" による学習はできてそうです。</p>
-	  <p>ここまでと同様に同じ画像を認識させてみた結果を下図に示します。良い感じです。</p>
-	  <p>
-	  <img alt="multi-step_50,80_Epoch-99" src="mobilenet-ssd/run_ssd_example_multi-step-50,80_Epoch-99.jpg" width="600"></p>
-	  <p>[Fig. "--scheduler multi-step --milestones 50,80", Epoch 99]</p>
+	  <p>["multistep" Epoch99 による認識結果例]</p>
+	  <p><img alt="multi-step" src="mobilenet-ssd/img15.jpg" width="800"></p>
+	  <p>&nbsp;</p>
+	  <p>少なくとも "multi-step" による学習はできてそうです。枠の位置はこれが最も良い結果に見えます。</p>
 	  <p>&nbsp;</p>
   
     <div class="status_information">
@@ -2614,7 +2659,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   <p>6. "ImageSets\Main\trainval.txt" を設定</p>
   <p>T.B.E.</p>
   <p>&nbsp;</p>
-  <p>7. "ImageSets\Main\tet.txt" を設定</p>
+  <p>7. "ImageSets\Main\test.txt" を設定</p>
   <p>T.B.E.</p>
   <p>&nbsp;</p>
   <p>8. "labels.txt" を設定</p>
@@ -2749,6 +2794,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-05</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#5._学習">5. 学習</a>」内の文書と画像を更新。</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-01-03</td>
 	    <td class="td_history_separator">-</td>
