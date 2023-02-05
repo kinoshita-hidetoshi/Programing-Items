@@ -498,8 +498,6 @@ python run_ssd_live_demo.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/
     </div>
 
     <p>&nbsp;</p>
-	<p>&nbsp;</p>
-  <p>&nbsp;</p>
     
 </section>
 	
@@ -1821,15 +1819,19 @@ cv2.destroyAllWindows()</pre>
 	<p>4. まずは再学習済みデータを使ってデモ動作してみます。</p>
 	<p><a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a> 
 	  では最初に以下の通り記載されています。</p>
-	<pre>wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
+	  
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
 wget -P models https://storage.googleapis.com/models-hao/open-images-model-labels.txt
 python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt ~/Downloads/big.JPG</pre>
+
 	<p>&nbsp;</p>
 	<p>Windows環境では wget を標準で使用できませんので、bitsadmin.exe へ置き換えると最初の２行を以下のような感じで。<br>
 	<span class="auto-style3">c:\{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
-  <pre>bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
+	
+  <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
 bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/open-images-model-labels.txt <span class="auto-style3">c:\{作業フォルダ}</span>\models\open-images-model-labels.txt
 python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt <span class="auto-style3">{テストするJPEGファイル}</span></pre>
+
 	<p>※ 記載の手順で進めても "big.JPG" ファイルはありませんでした。GUN のテストデータを必要としますので、後述の「5. 
 	  Download data」を実施後にこの画像ファイルを使って実験した方が良いと思われます。</p>
 	<p>&nbsp;</p>
@@ -1837,10 +1839,14 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p>インターネットから学習データ一式を取得します。</p>
 	<p>
 	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">資料</a>では下記のように書いていますが、Windowsではうまくいかず、エラーになりました。</p>
-	<pre>python open_images_downloader.py --root ~/data/open_images --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python open_images_downloader.py --root ~/data/open_images --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	
 	<p>"--root" 
 	の指定フォルダを下記のようにすることで無事ダウンロードすることができました。JPEG画像がそれなりの枚数あるので、私の環境で全データのダウンロードに５分ぐらいかかりました。</p>
-	<pre>python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	
 	<p>&nbsp;</p>
 	<p>6. 確認</p>
 	<p>ダウンロード完了後の様子を下図に示します。</p>
@@ -1877,16 +1883,20 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p>8. Retrain (再学習)を実行します</p>
 	<p>
 	<a href="https://github.com/qfgaohao/pytorch-ssd#retrain" target="_blank">資料</a>では下記のように書いています。</p>
-	<pre>python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
 	<p>Windows 環境で動作する場合は少なくとも <span class="cpp-source">--datasets 
 	~/data/open_images</span> 
 	の部分を実際の環境に合わせて修正したほうがよさそうです。ここでは下記コマンドへ修正して実行してみます。</p>
-	<pre>python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
 	<p>&nbsp;</p>
 	
 	<p>以下、上記コマンド実行後のコンソール出力内容です。</p>
 	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。</p>
-	<pre>2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 15:04:07,989 - root - INFO - Prepare training datasets.
 2022-11-13 15:04:08,277 - root - INFO - Dataset Summary:Number of Images: 961
 Minimum Number of Images for a Class: -1
@@ -1909,7 +1919,7 @@ Label Distribution:
 2022-11-13 15:04:08,396 - root - INFO - Uses CosineAnnealingLR scheduler.
 2022-11-13 15:04:08,396 - root - INFO - Start training from epoch 0.
 
-C:\Users\kinos\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\optim\lr_scheduler.py:131: <span class="auto-style3"><strong>UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+C:\Users\foo\AppData\Local\Programs\Python\Python310\lib\site-packages\torch\optim\lr_scheduler.py:131: <span class="auto-style3"><strong>UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
   warnings.warn("Detected call of `lr_scheduler.step()` before `optimizer.step()`. "</strong></span>
 Traceback (most recent call last):
   File "C:\Users\kinos\Documents\Github\pytorch-ssd\train_ssd.py", line 325, in &lt;module&gt;
@@ -1993,7 +2003,7 @@ EOFError: Ran out of input</pre>
   </pre>
 	<p>&nbsp;</p>
 	<p>（修正後）のプログラムを再度実行すると、とりあえず１つ目の警告（UserWarning）は消えました。</p>
-	<pre>C:\Users\kinos\Documents\Github\pytorch-ssd&gt;python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">C:\Users\foo\Documents\Github\pytorch-ssd&gt;python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5
 2022-11-13 16:35:24,380 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 16:35:24,380 - root - INFO - Prepare training datasets.
 2022-11-13 16:35:24,662 - root - INFO - Dataset Summary:Number of Images: 961
@@ -2145,8 +2155,9 @@ class PredictionTransform:
         return image</pre>
 	<p>&nbsp;</p>
 	<p>上記修正を行うことで、下記コマンドを正常に実行できるようになりました。</p>
-	<p>&nbsp;</p>
-	<pre>python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	
 	<p>&nbsp;</p>
 	<p><span class="auto-style2"><strong>100 Epoch を約５時間半で学習できました</strong></span>。（CPU動作の場合です。GPU動作の場合はもっと高速に学習可能です。）</p>
 	<p>&nbsp;</p>
@@ -2198,7 +2209,9 @@ mode = self.sample_options[random_idx]</pre>
     から入手した画像を使用します。</p>
     <p>&nbsp;</p>
     <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.843603060245514.pth"）とサンプル画像（"sample_image.jpg"）を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
-    <pre>python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
+    
+    <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
+    
     <p>&nbsp;</p>
     <p>ただし <strong>run_ssd_example.py</strong> は OpenSSL 
   	のバージョンアップに伴って一部修正する必要があります。修正後のソースコードを下記に示します。<br>60, 64行目の部分で６か所 int 
@@ -2430,7 +2443,8 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
     </table>
     
     <p>&nbsp;</p>
-	  <p>"--freeze_net", "--freeze_base_net" の学習時間は半分以下になりました。</p>
+	  <p>"--freeze_net", "--freeze_base_net" の学習時間は半分以下になりました。認識結果は Normal 
+	  より悪いですがそこそこ認識しています。</p>
 	  <p>認識性能（Validation Loss）は Normal が最も良い結果となりました。</p>
 	  <p>それぞれメリット／デメリットがありそうなので、用途などに応じて使い分けてみてはいかがでしょうか。</p>
 	  <p>以下、サンプル画像による認識結果例です。</p>
@@ -2453,7 +2467,9 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  を指定して実験してみます。</p>
 	  <p>引数 --milestones で指定した Epoch で学習速度を 0.1倍 へ減速します。下記例は Epoch 0-49 まで初期値、Epoch 50-79 を 0.1倍、Epoch 80-99 をさらに 
 	  0.1倍、つまり初期値の 0.01倍へ減速します。</p>
-	  <pre>python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	  
+	  <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	  
 	  <p>&nbsp;</p>
 	  <p>下記表へ Epoch で99までの学習の様子を記載します。１回のみの結果なので、複数回実施するとまた違う結果になるかもしれません。</p>
 	  <p>&nbsp;</p>
@@ -2611,65 +2627,151 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 
 <section>
 <h3><a name="5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></h3>
-	<h4>[概要]</h4>
-  <p>今度は 自身で集めた画像を使ってオリジナルの学習データによる学習を試みます。</p>
-  <p>前節で使用した train_ssd.py は入力データ型として "open_images" と "voc" の２種類に対応しているようです。"open_images" に対応したアノテーションツールで良さそうなものを見つけられなかったので、"voc" 
-  型の出力に対応していて有名なオープンソースツールである 
-  <a href="https://github.com/heartexlabs/labelImg" target="_blank">LabelImg</a> というツールを使用してアノテーションデータを作成してみます。</p>
-  <p>少なめのデータ＆認識精度度外視で、まずは技術的に実現できることまでを目標に進めてみます。</p>
+	<p>&nbsp;</p>
+  <p class="auto-style3">※ 記載途中です。</p>
   <p>&nbsp;</p>
-	  <p>使用する学習データ数は以下の通りです。</p>
+  <h4>[概要]</h4>
+  <p>今度は自身で集めた画像を使ってオリジナルの学習データによる学習を試みます。</p>
+  <p>前節で使用した train_ssd.py は入力データ型として "open_images" と "voc" の２種類に対応しているようです。ここでは "voc" 
+  の出力に対応していて有名なオープンソースツール 
+  <a href="https://github.com/heartexlabs/labelImg" target="_blank">LabelImg</a> を使用してアノテーションデータを作成してみます。</p>
+  <p>そして自身で実際に作成したアノテーションデータを使って学習を行ってみます。少なめのデータで技術的に実現できることまでを目標に進めてみたいと思います。認識性能を高くしたい場合は同じ要領で学習する画像データを増やせば良いので、本ページではあくまで手順の確認と説明まで行うことにします。</p>
+  <p>&nbsp;</p>
+	  <p>準備した画像データは以下の通りです。<a href="https://pixabay.com/ja" target="_blank">pixabay</a> 
+	  から入手させていただきました。</p>
         
     <table class="border-collapse" border="1" width="500">
       <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
       <thead class="standard_table">
         <tr>
           <th>Class name</th>
-          <th width="25%">Train</th>
+          <th width="25%">TrainVal</th>
           <th width="25%">Test</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td><strong>合計</strong></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>bird</td>
+          <td>140</td>
+          <td>60</td>
         </tr>
       </tbody>
     </table>
     
       <p>&nbsp;</p>
+	
+	<h4>[環境]</h4>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>言語 :</td>
+      <td>Python,</td>
+      <td>3.10.7</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>&nbsp;</td>
+      <td>PyTorch,</td>
+      <td>1.12.1+cpu</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+
+    <tr>
+      <td>OS :</td>
+      <td>Windows 11 home,</td>
+      <td>22H2</td>
+    </tr>
+
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+</table>
+
+	<p> &nbsp;</p>
+	
+	<h4>[手順]</h4>
   <p>&nbsp;</p>
   <p>1. "train_ssd.py" が想定する VOC データセットのフォルダ・ファイルを準備</p>
-  <p>T.B.E.</p>
+  <p>voc 形式のフォルダおよびファイル構成は下図の通りです。この構成図に従ってフォルダを作成します。</p>
   <p>&nbsp;</p>
-  <p>2. 学習用の画像を集めて "JPEGImages" フォルダへ保存</p>
-  <p>T.B.E.</p>
+  <p>
+  <img alt="フォルダ、ファイル構成" src="mobilenet-ssd/folder_struct.drawio.svg" width="600"></p>
   <p>&nbsp;</p>
-  <p>3. LabelImg をインストール（必要に応じて修正）</p>
-  <p>T.B.E.</p>
+        
+    <table class="border-collapse" border="1" width="800">
+      <caption>[Table.] フォルダおよびファイル構成</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>名称</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Annotations</td>
+          <td>アノテーション結果を記録した XML ファイルを保存します。</td>
+        </tr>
+        <tr>
+          <td>JPEGImages</td>
+          <td>JPEG ファイルを保存します。</td>
+        </tr>
+        <tr>
+          <td>ImageSets/Main/test.txt</td>
+          <td>テスト用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
+        </tr>
+        <tr>
+          <td>ImageSets/Main/trainval.txt</td>
+          <td>学習用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
+        </tr>
+        <tr>
+          <td>labels.txt</td>
+          <td>ラベル一覧を記録済ます。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>2. 学習用の画像を集めて "JPEGImages" フォルダへ保存します。</p>
+  <p>学習用160枚、テスト用40枚、合計200枚の JPEG ファイルをすべてここに保存しました。</p>
+  <p>&nbsp;</p>
+  <p>3. LabelImg をインストール</p>
+  <p>アノテーションツール LabelImg をインストールします。pip, setuptools を更新した後、pip で labelimg 
+  をインストールします。</p>
+  <pre style="background-color: #000000; color: #CCCCCC; width: 800px;overflow-x: auto;">python -m pip install --upgrade pip setuptools
+pip install labelImg
+</pre>
   <p>&nbsp;</p>
   <p>4. LabelImg を起動、設定</p>
-  <p>T.B.E.</p>
+  <p>LabelImg の起動方法は下記いずれかで行います。</p>
+  <p>[IMAGE_PATH]： JPEG 画像を保存しているパスを指定します。</p>
+  <p>[PRE-DEFINED CLASS FILE]： ラベル名を保存しているテキストファイルのパスを指定します。LabelImg 
+  でアノテーション時に画面でリストから選択するだけでクラスを選択することが可能になります。</p>
+  <pre style="background-color: #000000; color: #CCCCCC; width: 800px;overflow-x: auto;">labelImg
+labelImg [IMAGE_PATH] [PRE-DEFINED CLASS FILE]</pre>
   <p>&nbsp;</p>
   <p>5. LabelImg を使ってアノテーション実施</p>
   <p>T.B.E.</p>
   <p>&nbsp;</p>
   <p>6. "ImageSets\Main\trainval.txt" を設定</p>
   <p>T.B.E.</p>
+  <p>全画像データから 70% を学習用（trainval）に、30% を評価用（test）に使用してみます。</p>
   <p>&nbsp;</p>
   <p>7. "ImageSets\Main\test.txt" を設定</p>
   <p>T.B.E.</p>
+  <p>全画像データから 70% を学習用（trainval）に、30% を評価用（test）に使用してみます。</p>
   <p>&nbsp;</p>
   <p>8. "labels.txt" を設定</p>
   <p>T.B.E.</p>
@@ -2790,7 +2892,12 @@ SOFTWARE.
 		https://github.com/heartexlabs/labelImg</a></li>
 		<li>AIアノテーションツール20選を比較！タグ付け自動化ツールの選び方を紹介 (aismiley.co.jp)<br>
 		<a href="https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/" target="_blank">
-		https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/</a><br></li>
+		https://aismiley.co.jp/ai_news/3-tools-to-perform-overlay-indispensable-for-machine-learning/</a></li>
+		<li>opencv/cvat: Annotate better with CVAT, the industry-leading data 
+		engine for machine learning. Used and trusted by teams at any scale, for 
+		data of any scale. (github.com)<br>
+		<a href="https://github.com/opencv/cvat" target="_blank">
+		https://github.com/opencv/cvat</a><br></li>
 	</ul>
 </section>
 
