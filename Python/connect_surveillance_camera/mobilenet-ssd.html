@@ -204,61 +204,70 @@
 	
 	<p>&nbsp;</p>
 	<p> &nbsp;</p>
-    <h3> <a name="1-1._Pytorch_をインストールする">1-1. Pytorch をインストールする</a></h3>
-    <p> (1)</p>
-    <p> 下記URLを開きます。</p>
-    <p> <a href="https://pytorch.org/get-started/locally/" target="_blank">
-    https://pytorch.org/get-started/locally/</a></p>
-    <p> &nbsp;</p>
-    <p> (2)</p>
-    <p> 下図のような画面を表示するので、使用される環境を選択します。</p>
-    <p> 私は Windows 環境で多くの人が動作する例を作成したいので、Computer Platform として CPU を選択してみました。</p>
-    <p> Package は Conda または Pip を選択する場合が多いと思います。Conda は Anaconda 
-    をインストールしている環境で使用できるコマンドです。Anaconda は 2020/4 
-    より従業員200人以上の営利企業で有償化（ご自身で正しい情報を再確認してください）されたため、社内ルールなどで Anaconda 
-    を利用できない方も多いと思います。ここでは Package として&nbsp;Pip を選択してみます。</p>
-    <p> commandは <span class="cpp-source">pip3 install torch torchvision torchaudio</span> となりました。</p>
-    <p><img alt="PyTorch ホームページ画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img6.jpg" width="800"></p>
-    <p><a href="mobilenet-ssd/img5.jpg" target="_blank">
-    <img alt="PyTorch ホームページ画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img5.jpg" width="800"></a></p>
-    <p> &nbsp;</p>
-    <p> ちなみに "CUDA 11.3" を選択すると <span class="cpp-source">pip3 install torch 
-    torchvision torchaudio --extra-index-url 
-    https://download.pytorch.org/whl/cu113</span> となりました。</p>
-    <p> &nbsp;</p>
-    <p> (3)</p>
-    <p> 表示されたコマンドをコマンドプロンプトなどのターミナルから入力することで Pytorch をインストールします。</p>
-    <p> &nbsp;</p>
-    <p> <a href="image_classification_vgg/img7.gif" target="_blank">
-    <img alt="PyTorch インストール画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img7.gif" width="800"></a></p>
-    <p> &nbsp;</p>
-    <p> <a href="image_classification_vgg/img9.jpg" target="_blank">
-    <img alt="PyTorch インストール画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img9.jpg" width="800"></a></p>
-    <p> &nbsp;</p>
-    <p> <a href="image_classification_vgg/imgD.gif" target="_blank">
-    <img alt="PyTorch インストール画面３" class="border_with_drop-shadow" src="mobilenet-ssd/imgD.gif" width="800"></a></p>
-    <p> &nbsp;</p>
-    <p> これで Pytorch のインストールを完了です。</p>
-    <p> &nbsp;</p>
-    <p> ちなみに、インストールされている Pytorch のバージョンを確認したい場合、以下の手順で確認できます。</p>
-    <p> コマンドプロンプトなどのターミナルから python を起動し、"import torch" した後に 
-    "print(torch.__version__)" するだけです。</p>
+  <h3> <a name="1-1._Pytorch_をインストールする">1-1. Pytorch をインストールする</a></h3>
+  <p> このページでは Pytorch という AI のためのプラットフォームを使用します。以下の手順に従って Pytorch をインストールします。</p>
+	<p> AI はとても重たい処理を伴うので NVIDIA の GPU および CUDA というライブラリを使用する場合が多いのですが、私は Windows 環境で多くの人が動作する例を作成したいので、本ページでは 
+	"Computer Platform" として CPU を選択して TyTorch をインストールします。説明記事も CPU 
+	環境における手順や結果を紹介することを基本とし、時々参考情報として GPU（CUDA） 環境における結果や補足情報も記載したいと思います。</p>
+	<p> &nbsp;</p>
+	<p> (1)</p>
+  <p> 下記URLを開きます。</p>
+  <p> <a href="https://pytorch.org/get-started/locally/" target="_blank">
+  https://pytorch.org/get-started/locally/</a></p>
+  <p> &nbsp;</p>
+  <p> (2)</p>
+  <p> 下図のような画面を表示するので、使用する環境を選択します。ここでは下記項目を選択します。</p>
+	<ul>
+	  <li>PyTorch Build： <strong>Stable(1.11.0)</strong></li>
+	  <li>Your OS： <strong>Windows</strong></li>
+	  <li>Package： <strong>Pip</strong></li>
+	  <li>Language： <strong>Python</strong></li>
+	  <li>Computer Platform： <strong>CPU</strong></li>
+	</ul>
+	<p> commandは <span class="cpp-source">pip3 install torch torchvision torchaudio</span> となりました。</p>
+	<p> &nbsp;</p>
+  <p><img alt="PyTorch ホームページ画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img6.jpg" width="800"></p>
+  <p><a href="mobilenet-ssd/img5.jpg" target="_blank">
+  <img alt="PyTorch ホームページ画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img5.jpg" width="800"></a></p>
+  <p> &nbsp;</p>
+  <p> ちなみに "CUDA 11.3" を選択すると <span class="cpp-source">pip3 install torch 
+  torchvision torchaudio --extra-index-url 
+  https://download.pytorch.org/whl/cu113</span> となりました。</p>
+  <p> &nbsp;</p>
+  <p> (3)</p>
+  <p> 表示されたコマンドをコマンドプロンプトなどのターミナルから入力することで Pytorch をインストールします。</p>
+  <p> &nbsp;</p>
+  <p> <a href="image_classification_vgg/img7.gif" target="_blank">
+  <img alt="PyTorch インストール画面１" class="border_with_drop-shadow" src="mobilenet-ssd/img7.gif" width="800"></a></p>
+  <p> &nbsp;</p>
+  <p> <a href="image_classification_vgg/img9.jpg" target="_blank">
+  <img alt="PyTorch インストール画面２" class="border_with_drop-shadow" src="mobilenet-ssd/img9.jpg" width="800"></a></p>
+  <p> &nbsp;</p>
+  <p> <a href="image_classification_vgg/imgD.gif" target="_blank">
+  <img alt="PyTorch インストール画面３" class="border_with_drop-shadow" src="mobilenet-ssd/imgD.gif" width="800"></a></p>
+  <p> &nbsp;</p>
+  <p> これで Pytorch のインストールを完了です。</p>
+  <p> &nbsp;</p>
+	<p> (4)</p>
+  <p> インストールされている Pytorch のバージョンを確認したい場合、以下の手順で確認できます。</p>
+  <p> コマンドプロンプトなどのターミナルから python を起動し、"import torch" した後に 
+  "print(torch.__version__)" するだけです。</p>
 
     <pre>Microsoft Windows [Version 10.0.22621.1194]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Users\kinos&gt;<span class="auto-style4">python</span>
+C:\Users\foo&gt;<span class="auto-style4">python</span>
 Python 3.10.7 (tags/v3.10.7:6cc6b13, Sep  5 2022, 14:08:36) [MSC v.1933 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; <span class="auto-style4">import torch</span>
 &gt;&gt;&gt; <span class="auto-style4">print(torch.__version__)</span>
 1.11.0+cpu
 &gt;&gt;&gt;</pre>
-	  <p> &nbsp;</p>
-    <p> &nbsp;</p>
-    <h3> <a name="1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストール</a></h3>
-    <p> opencv を使用するので、下記コマンドによりインストールします。</p>
-    <p> <span class="cpp-source">pip install opencv-python </span></p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <h3> <a name="1-2._必要なライブラリをインストール">1-2. 必要なライブラリをインストール</a></h3>
+  <p> opencv を使用するので、下記コマンドによりインストールします。</p>
+  <p> <span class="cpp-source">pip install opencv-python </span></p>
 	
 </section>
 	

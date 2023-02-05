@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Pytorch をインストールする | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+  .auto-style1 {
+	background-color: #FFFF00;
+  }
+  .auto-style2 {
+	text-decoration: underline;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>Pytorch をインストールする</h1>
+
+<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._Windows">1. Windows</a></p>
+	<p>&nbsp; <a href="#1-1._CPU">1-1. CPU</a></p>
+	<p>&nbsp; <a href="#1-2._CUDA">1-2. CUDA&nbsp;</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._Windows">1. Windows</a></h2>
+	
+<section>
+	<h3> <a name="1-1._CPU">1-1. CPU</a></h3>
+	<p> &nbsp;</p>
+	<h4>[概要]</h4>
+	<p>Windows 環境へ Pytorch をインストールする手順、注意事項、などを本ページにまとめます。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[手順]</h4>
+  <p> (1)</p>
+  <p> 下記URLを開きます。</p>
+  <p> <a href="https://pytorch.org/get-started/locally/" target="_blank">
+  https://pytorch.org/get-started/locally/</a></p>
+  <p>&nbsp;</p>
+  <p> (2)</p>
+  <p> 下図のような画面を表示するので、使用する環境を選択します。ここでは下記項目を選択します。</p>
+	<ul>
+	  <li>PyTorch Build： <strong>Stable(1.11.0)</strong></li>
+	  <li>Your OS： <strong>Windows</strong></li>
+	  <li>Package： <strong>Pip</strong></li>
+	  <li>Language： <strong>Python</strong></li>
+	  <li>Computer Platform： <strong>CPU</strong></li>
+	</ul>
+	<p> commandは <span class="cpp-source">pip3 install torch torchvision torchaudio</span> となりました。</p>
+	<p> &nbsp;</p>
+	<p>
+	<img alt="PyTorch ホームページ画面１" class="border_with_drop-shadow" src="install_pytorch/img6.jpg" width="800"></p>
+	<p> 
+	<a href="connect_surveillance_camera/mobilenet-ssd/img5.jpg" target="_blank">
+  <img alt="PyTorch ホームページ画面２" class="border_with_drop-shadow" src="install_pytorch/img5.jpg" width="800"></a></p>
+  <p>&nbsp;</p>
+	<p>ちなみに "CUDA 11.3" を選択すると <span class="cpp-source">pip3 install torch 
+  torchvision torchaudio --extra-index-url 
+  https://download.pytorch.org/whl/cu113</span> となりました。</p>
+	<p>&nbsp;</p>
+  <p> (3)</p>
+  <p> 表示されたコマンドをコマンドプロンプトなどのターミナルから入力することで Pytorch をインストールします。</p>
+	<p> &nbsp;</p>
+	<p> 
+	<a href="connect_surveillance_camera/image_classification_vgg/img7.gif" target="_blank">
+  <img alt="PyTorch インストール画面１" class="border_with_drop-shadow" src="install_pytorch/img7.gif" width="800"></a></p>
+	<p> &nbsp;</p>
+	<p> 
+	<a href="connect_surveillance_camera/image_classification_vgg/img9.jpg" target="_blank">
+  <img alt="PyTorch インストール画面２" class="border_with_drop-shadow" src="install_pytorch/img9.jpg" width="800"></a></p>
+	<p> &nbsp;</p>
+	<p> 
+	<a href="connect_surveillance_camera/image_classification_vgg/imgD.gif" target="_blank">
+  <img alt="PyTorch インストール画面３" class="border_with_drop-shadow" src="install_pytorch/imgD.gif" width="800"></a></p>
+  <p>&nbsp;</p>
+  <p> これで Pytorch のインストールを完了です。</p>
+  <p> &nbsp;</p>
+  <p> (4)</p>
+  <p> インストールされている Pytorch のバージョンを確認したい場合、以下の手順で確認できます。</p>
+  <p> コマンドプロンプトなどのターミナルから python を起動し、"import torch" した後に 
+  "print(torch.__version__)" するだけです。</p>
+
+  <pre>Microsoft Windows [Version 10.0.22621.1194]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\foo&gt;<span class="auto-style1">python</span>
+Python 3.10.7 (tags/v3.10.7:6cc6b13, Sep  5 2022, 14:08:36) [MSC v.1933 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; <span class="auto-style1">import torch</span>
+&gt;&gt;&gt; <span class="auto-style1">print(torch.__version__)</span>
+1.11.0+cpu
+&gt;&gt;&gt;</pre>
+
+  <p> &nbsp;</p>
+</section>
+	
+	<p> &nbsp;</p>
+	
+<section>
+	<h3> <a name="1-2._CUDA">1-2. CUDA</a></h3>
+	<p> ※ 
+	こちら、とりあえず原稿を作成してみましたがまだ完成度が低いと思います。１回だけ試しながらやった手順を残したものなので、今後反復してブラッシュアップできたらと思います。</p>
+	<p> &nbsp;</p>
+	<h4>[概要]</h4>
+	<p>Windows 環境へ Pytorch をインストールする手順、注意事項、などを本ページにまとめます。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	
+	<h4>[手順]</h4>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+        <p>Tytorch を GPU(CUDA) 環境としてインストールする場合、下記４つの条件を合わせる必要があります。</p>
+    		<p>・NVIDIA の GPUドライバー</p>
+    		<p>・CUDA　toolkit</p>
+    		<p>・cuDNN</p>
+    		<p>・Pytorch&nbsp;</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+	<p> (1)</p>
+	<p> Visual Studio をインストールしておく必要があるらしい ･･･ です。Visual Studio 
+	の開発環境を必要とするのか、ランタイムのみ必要とするのか不明。環境構築だけなら Visual Studio は不要という説もあるが、私は Visual 
+	studio 2019 をインストールして以下を進めました。 </p>
+	<p> &nbsp;</p>
+	<p> (2)</p>
+  <p> 下記URLを開きます。</p>
+  <p> <a href="https://pytorch.org/get-started/locally/" target="_blank">
+  https://pytorch.org/get-started/locally/</a></p>
+    <p> &nbsp;</p>
+	<p> "Computer Platform" の欄を確認して、動作する CUDA バージョンを確認します。</p>
+	<p> 下図例だと "CUDA 11.6" または "CUDA 11.7" をインストールする必要があることを意味します。</p>
+	<p>  
+	<img alt="Pytorch インストール" src="install_pytorch/img61.jpg" width="800"></p>
+	<p> &nbsp;</p>
+	<p> (3)</p>
+	<p> "CUDA Toolkit" をダウンロードします。<a href="https://developer.nvidia.com/cuda-downloads" target="_blank">CUDA Toolkit Downloads | NVIDIA Developer</a> へアクセスします。</p>
+	<p> 最新版をダウンロードする、で良い場合は下図から適切な条件を選択してダウンロードします。</p>
+	<p> 
+	<img alt="CUDA Toolkit Download" src="install_pytorch/img59.jpg" width="800"></p>
+	<p> 
+	<span class="auto-style2"><strong>過去のバージョン</strong></span>をダウンロードする場合、画面下段にある 
+	Archive of Previous CUDA Releases をクリックすると、過去の "CUDA Toolkit" 
+	をダウンロードできるページへ移動します。こちらから目的の OS およびバージョンの "CUDA Toolkit" をダウンロードします。 </p>
+	<p> 
+	&nbsp;</p>
+	<p> (4)</p>
+	<p> "CUDA Toolkit" をインストールします。</p>
+	<p> ダウンロードした "CUDA Toolkit" 
+	を実行します。ライセンス条項についての確認があるので、内容を読んで同意し、実行を押します。インストールオプションで高速（推奨）とカスタム（詳細）を選択画面になりますが、特に指定をする必要がない場合は、高速（推奨）を選んで次へを押します。CUDAのインストールが開始して、無事にインストールが管路ゆするとNVIDIAインストーラーが終了しましたと表示されますので「閉じる」を押して、CUDAのインストール完了です。 </p>
+	<p> &nbsp;</p>
+	<p> (5)</p>
+	<p> "cuDNN" をインストールします。</p>
+	<p> &nbsp;<a href="https://developer.nvidia.com/rdp/cudnn-download">https://developer.nvidia.com/rdp/cudnn-download</a> 
+	へアクセスします。NVIDA へユーザー登録する必要があります。</p>
+	<p>インストールした CUDA のバージョンによって、ダウンロードするファイルが異なります。最新版の cuDNN ではなく古い cuDNN 
+	を欲しい場合は「Archived cuDNN Releases」をクリックしてここから探します。</p>
+	<p>&nbsp;</p>
+	<p><img alt="cuDNN インストール" src="install_pytorch/img5F.jpg" width="800"></p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>ダウンロードしたファイルを解凍したら、cuDNN 内の cuda フォルダの中身すべてを任意のフォルダへ保存します。どこでも良いのですが、ここでは 
+	"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\11.7\<strong>cuDNN</strong>" 
+	というフォルダを作成してここへコピーすることとします。 </p>
+	<p> &nbsp;</p>
+	<p> (6) PATH を通す</p>
+	<p> 下記５か所のパスを環境変数として登録します。インストーラにより自動的に登録されているものもあるかもしれませんが確認しましょう。</p>
+	<ol>
+	  <li>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\bin</li>
+	  <li>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\libnvvp </li>
+	  <li>C:\Program Files\NVIDIA GPU Computing 
+	  Toolkit\CUDA\v11.7\extras\CUPTI\lib64 </li>
+	  <li>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\include </li>
+	  <li>C:\Program Files\NVIDIA GPU Computing Toolkit\CUXA\v11.7\cuDNN </li>
+	</ol>
+	<p>&nbsp;</p>
+	<p>これで CUDA のインストールと設定は完了です。</p>
+	<p>&nbsp;</p>
+	<p>(7)</p>
+	<p>CUDA のバージョンに合う Pytorch をインストールします。</p>
+  <p> 下記URLを開きます。</p>
+  <p> <a href="https://pytorch.org/get-started/locally/" target="_blank">
+  https://pytorch.org/get-started/locally/</a></p>
+	<p> &nbsp;</p>
+	<p> 自分の CUDA バージョンを選択して Pip コマンドを作成します。下図例では </p>
+	<pre>pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117</pre>
+	となりました。
+	<p> 
+	<img alt="Pytorch インストール" src="install_pytorch/img61.jpg" width="800"></p>
+	<p>&nbsp;</p>
+	<p>このコマンドをコピペして Pytorch をインストールします。</p>
+	<p>以上で CUDA および Pytorch のインストールを完了です。動作確認を行う前に PC を再起動しておきましょう。</p>
+	<p>&nbsp;</p>
+	<p>(8)</p>
+	<p>CUDA が有効化できているか、を確認します。</p>
+	<p>コマンドプロンプトなどのターミナルから python を起動し、"import torch" した後に 
+  "print(torch.cuda.is_available())" し、結果が "True" となれば成功です。</p>
+
+  <pre>Microsoft Windows [Version 10.0.22621.1194]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\foo&gt;<span class="auto-style1">python</span>
+Python 3.10.7 (tags/v3.10.7:6cc6b13, Sep  5 2022, 14:08:36) [MSC v.1933 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; <span class="auto-style1">import torch</span>
+&gt;&gt;&gt; <span class="auto-style1">print(torch.cuda.is_available())</span>
+True
+&gt;&gt;&gt;</pre>
+
+    <p>&nbsp;</p>
+</section>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    Copyright © 2023 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>[1] PyTorch<br><a href="https://pytorch.org/" target="_blank">
+      https://pytorch.org/</a></li>
+		<li>[2] NVIDIA社GPUToolkit「CUDA」をインストールする方法まとめてみた | AIZINE（エーアイジン）<br>
+		<a href="https://aizine.ai/cuda-install0323/" target="_blank">
+		https://aizine.ai/cuda-install0323/</a></li>
+		<li>[3] windows10でCUDA：GPUを使ってPyTorchを動かすためのポイント - Qiita<br>
+		<a href="https://qiita.com/motoyuki1963/items/a334c9488c2f55a867cf" target="_blank">
+		https://qiita.com/motoyuki1963/items/a334c9488c2f55a867cf</a></li>
+		<li>[4]【Ubuntu】NVIDIAドライバ・CUDA・CUDNNをインストールして深層学習環境を整える – 茱萸note 
+		(sakura.ne.jp)<br>
+		<a href="https://guminote.sakura.ne.jp/archives/328" target="_blank">
+		https://guminote.sakura.ne.jp/archives/328</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-05</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+</body>
+</html>
