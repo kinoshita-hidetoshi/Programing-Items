@@ -248,7 +248,7 @@
     
 	<p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
 	pytorch-ssd</a> をクローンします。（ここまで読まれた方は恐らく完了しているでしょう）</p>
-	<p><a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a> の記載を参考に実施します。</p>
+	<p><a href="mobilenet-ssd.html#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a> の記載を参考に実施します。</p>
 	<p>&nbsp;</p>
 	<p>2. 以下のコマンドで必要なライブラリーをインストールします。これらは後述の "open_images_downloader.py" 
 	で使用しているライブラリです。</p>
@@ -259,8 +259,8 @@
 	<p>または Explorer で目的フォルダを開いた後、Explorer のアドレスエリアで "cmd" + [Enter] します。</p>
 	<p>&nbsp;</p>
 	<p>4. まずは再学習済みデータを使ってデモ動作してみます。</p>
-	<p><a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a> 
-	  では最初に以下の通り記載されています。</p>
+	<p><a href="https://github.com/qfgaohao/pytorch-ssd#retrain-on-open-images-dataset">"Retrain on Open Images Dataset"</a> 
+	の説明では最初に以下の通り記載されています。</p>
 	  
 	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
 wget -P models https://storage.googleapis.com/models-hao/open-images-model-labels.txt
@@ -281,7 +281,7 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p>5. Download data</p>
 	<p>インターネットから学習データ一式を取得します。</p>
 	<p>
-	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">資料</a>では下記のように書いていますが、Windowsではうまくいかず、エラーになりました。</p>
+	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">"Download data"</a>では下記のように書いていますが、Windowsではうまくいかず、エラーになりました。</p>
 	
 	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python open_images_downloader.py --root ~/data/open_images --class_names "Handgun,Shotgun" --num_workers 20</pre>
 	
