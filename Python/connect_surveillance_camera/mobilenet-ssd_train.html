@@ -267,15 +267,16 @@ wget -P models https://storage.googleapis.com/models-hao/open-images-model-label
 python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt ~/Downloads/big.JPG</pre>
 
 	<p>&nbsp;</p>
-	<p>Windows環境では wget を標準で使用できませんので、bitsadmin.exe へ置き換えると最初の２行を以下のような感じで。<br>
+	<p>Windows環境では wget を標準で使用できません。代わりに <strong>bitsadmin.exe</strong> 
+	というコマンドを使用することで下記のような感じで同じ内容を実行することができます。<br>
 	<span class="auto-style3">c:\{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
 	
   <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
 bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/open-images-model-labels.txt <span class="auto-style3">c:\{作業フォルダ}</span>\models\open-images-model-labels.txt
 python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt <span class="auto-style3">{テストするJPEGファイル}</span></pre>
 
-	<p>※ 記載の手順で進めても "big.JPG" ファイルはありませんでした。GUN のテストデータを必要としますので、後述の「5. 
-	  Download data」を実施後にこの画像ファイルを使って実験した方が良いと思われます。</p>
+	<p>※ 記載の手順で進めても "big.JPG" ファイルはありませんでした。上記コマンドのテストに GUN のテストデータを必要としますので、ご自身で評価画像を入手するか、もしくは後述の「5. 
+	  Download data」を実施後にこの画像ファイルを使って実験する、などする必要があります。</p>
 	<p>&nbsp;</p>
 	<p>5. Download data</p>
 	<p>インターネットから学習データ一式を取得します。</p>
