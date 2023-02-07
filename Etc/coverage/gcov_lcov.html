@@ -126,7 +126,7 @@
 	<h3> <a name="1-1.オプション一覧">1-1.オプション一覧</a></h3>
 	<p> gcov のオプション一覧は以下の通りです。</p>
 	<p> &nbsp;</p>
-	<pre style="width: 800px">$ gcov --help
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ gcov --help
 Usage: gcov [OPTION...] SOURCE|OBJ...
 
 Print code coverage information.
@@ -224,7 +224,7 @@ int main() {
 }</pre>
 	<p> &nbsp;</p>
 	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<pre style="width: 800px; background-color: #000000; color: #C0C0C0;">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
 	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
   
@@ -243,14 +243,14 @@ int main() {
 
     <p> &nbsp;</p>
 	<p> (3) プログラムを実行します。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+	<pre style="width: 800px; background-color: #000000; color: #C0C0C0;">hidetoshi@Laptop4:~$ ./coverage_test 
 1 is odd.</pre>
 	<p> "coverage_test.gcda" というファイルが出力されます。カバレッジ測定データを保存したバイナリデータのようです。</p>
 	<p> &nbsp;</p>
 	<p> (4) gcov でカバレッジデータを読み込みます。</p>
 	<p> gcov の引数としてソースまたはオブジェクトとなっていますが、ここでは実行ファイルを指定します。<br>オプションとして "-bc" 
 	を指定してみます。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcov -bc coverage_test
+	<pre style="width: 800px; background-color: #000000; color: #C0C0C0;">hidetoshi@Laptop4:~$ gcov -bc coverage_test
 File 'coverage_test.c'
 Lines executed:83.33% of 6
 Branches executed:100.00% of 2
@@ -319,7 +319,7 @@ call    0 returned 1
 	<h3><a name="2-1._オプション一覧">2-1. オプション一覧</a></h3>
 	<p>lcov のオプション一覧は以下の通りです。</p>
 	<p>&nbsp;</p>
-	<pre style="width: 800px">$ lcov --help
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ lcov --help
 Usage: lcov [OPTIONS]
 
 Use lcov to collect coverage data from either the currently running Linux
@@ -448,7 +448,7 @@ int main() {
 }</pre>
 	<p> &nbsp;</p>
 	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<pre style="width: 800px; background-color: #000000; color: #C0C0C0;">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
 	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
   
@@ -467,12 +467,12 @@ int main() {
 
     <p> &nbsp;</p>
 	<p> (3) プログラムを実行します。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+	<pre style="width: 800px; background-color: #000000; color: #C0C0C0;">hidetoshi@Laptop4:~$ ./coverage_test 
 1 is odd.</pre>
 	<p> "coverage_test.gcda" というファイルが出力されます。カバレッジ測定データを保存したバイナリデータのようです。</p>
 	<p> &nbsp;</p>
 	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
-	<pre style="width: 800px">$ lcov -d . -c -o coverage_test.info
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ lcov -d . -c -o coverage_test.info
 Capturing coverage data from .
 Subroutine read_intermediate_text redefined at /usr/bin/geninfo line 2623.
 Subroutine read_intermediate_json redefined at /usr/bin/geninfo line 2655.
@@ -489,7 +489,7 @@ Processing coverage_test.gcda
 Finished .info-file creation</pre>
 	<p> &nbsp;</p>
 	<p> (6) genhtml を実行します。</p>
-	<pre style="width: 800px">$ genhtml coverage_test.info -o ./info
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ genhtml coverage_test.info -o ./info
 Reading data file coverage_test.info
 Found 1 entries.
 Found common filename prefix "/home/hidetoshi"
@@ -621,7 +621,7 @@ int main() {
 }</pre>
 	<p> &nbsp;</p>
 	<p> (2) プログラムを "<span class="auto-style2"><strong>-coverage</strong></span>" オプション付きでコンパイルします。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">hidetoshi@Laptop4:~$ gcc -g <span class="auto-style2"><strong>-coverage</strong></span> coverage_test.c -o coverage_test</pre>
 	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
   
@@ -640,14 +640,14 @@ int main() {
 
     <p> &nbsp;</p>
 	<p> (3) プログラムを実行します。</p>
-	<pre style="width: 800px">hidetoshi@Laptop4:~$ ./coverage_test 
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">hidetoshi@Laptop4:~$ ./coverage_test 
 1 is odd.</pre>
 	<p> "coverage_test.gcda" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
 	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
 	<p> オプションとして "<span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span>" 
 	を付けて実行します。</p>
-	<pre style="width: 800px">$ lcov -d . -c <span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span> -o coverage_test.info
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ lcov -d . -c <span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span> -o coverage_test.info
 Capturing coverage data from .
 Subroutine read_intermediate_text redefined at /usr/bin/geninfo line 2623.
 Subroutine read_intermediate_json redefined at /usr/bin/geninfo line 2655.
@@ -666,7 +666,7 @@ Finished .info-file creation</pre>
 	<p> (6) genhtml を実行します。</p>
 	<p> オプションとして "<span class="auto-style2"><strong>--branch-coverage</strong></span>" 
 	を付けて実行します。</p>
-	<pre style="width: 800px">$ genhtml coverage_test.info <span class="auto-style2"><strong>--branch-coverage</strong></span> -o ./info
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ genhtml coverage_test.info <span class="auto-style2"><strong>--branch-coverage</strong></span> -o ./info
 Reading data file coverage_test.info
 Found 1 entries.
 Found common filename prefix "/home/hidetoshi"
