@@ -51,6 +51,9 @@
   .auto-style7 {
 	border-width: 1px;
   }
+  .auto-style8 {
+	color: #FFFFFF;
+  }
   </style>
   
 </head>
@@ -63,7 +66,7 @@
 <div class="mokuji">
   <nav>
     <h2>目次</h2>
-	<p>=== 1-4章は別ページ「<a href="mobilenet-ssd.html">物体検知 － MobileNet-SSD (推論編)</a>」で記載の記事です 
+	<p>=== 1-4章は別ページ「<a href="mobilenet-ssd.html">物体検知 － MobileNet-SSD (推論編)</a>」で記載 
 	===</p>
     <p>1. 準備</p>
     <p>&nbsp;&nbsp; 1-1. PyTorch をインストールする</p>
@@ -157,6 +160,8 @@
 	on Open Images Dataset</a>" で説明されている記述に沿って実際にやってみます。学習済みデータをもとに 銃 
 	を認識するようにファインチューニングする、というサンプルのようです。Python 
 	プログラムはもちろん、画像データおよびアノテーションデータなど必要なすべての情報を提供いただいているので、最初に取り組みするには最適な内容と思われます。</p>
+	<p>
+	<img alt="&quot;Retrain on Open Images Dataset&quot; 概要" class="border_with_drop-shadow" src="mobilenet-ssd_train/img3.jpg" width="800"></p>
 	<p>&nbsp;</p>
 	  <p>使用する学習データ数は以下の通りです。</p>
         
@@ -194,7 +199,7 @@
       <div></div>
       <div>
         <p><strong>NOTE</strong></p>
-        <p>"Hundgun" と "Shutgun" ２クラスの物体検知を行う、という内容です。</p>
+        <p>"Hundgun" と "Shutgun" ２クラスで再学習を行う、という内容です。</p>
       </div>
     </div>
 
@@ -203,7 +208,6 @@
 	
 	<section>
 	<h4>5-1-1. Windows の場合</h4>
-	<p>Windows 環境でどこまでできるか不安ですが、作業記録を残しつつ、できるところまで実際にやっていきたいと思います。</p>
 	<p>&nbsp;</p>
 	<h4>[評価環境]</h4>
   <table>
@@ -327,19 +331,19 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p>
 	<a href="https://github.com/qfgaohao/pytorch-ssd#retrain" target="_blank">資料</a>では下記のように書いています。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	
 	<p>Windows 環境で動作する場合は少なくとも <span class="cpp-source">--datasets 
 	~/data/open_images</span> 
 	の部分を実際の環境に合わせて修正したほうがよさそうです。ここでは下記コマンドへ修正して実行してみます。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets <span class="auto-style8"><strong>./data/open_images</strong></span> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	
 	<p>&nbsp;</p>
 	
 	<p>以下、上記コマンド実行後のコンソール出力内容です。</p>
 	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。</p>
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 15:04:07,989 - root - INFO - Prepare training datasets.
 2022-11-13 15:04:08,277 - root - INFO - Dataset Summary:Number of Images: 961
 Minimum Number of Images for a Class: -1
@@ -395,14 +399,14 @@ C:\Users\kinos\Documents\Github\pytorch-ssd&gt;Traceback (most recent call last)
     self = reduction.pickle.load(from_parent)
 EOFError: Ran out of input</pre>
 	<p>&nbsp;</p>
-	<p>"UserWarning: Detected call of `lr_scheduler.step()` before 
+	<p>"<span class="auto-style3">UserWarning: Detected call of `lr_scheduler.step()` before 
 	`optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the 
 	opposite order: `optimizer.step()` before `lr_scheduler.step()`.&nbsp; 
 	Failure to do this will result in PyTorch skipping the first value of the 
 	learning rate schedule. See more details at 
 	https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate<br>&nbsp; 
 	warnings.warn("Detected call of `lr_scheduler.step()` before 
-	`optimizer.step()`." について</p>
+	`optimizer.step()`.</span>" について</p>
 	<p>こちらは、上記文章中に記載の通り "PyTorch 1.1.0" 以降での仕様変更に伴う警告のようです。</p>
 	<p>ソースファイル "train_ssd.py" 中を 323行目 周辺について、下記のとおり変更することで警告されなくなります。</p>
 	<p>（修正後）</p>
@@ -446,7 +450,7 @@ EOFError: Ran out of input</pre>
   </pre>
 	<p>&nbsp;</p>
 	<p>（修正後）のプログラムを再度実行すると、とりあえず１つ目の警告（UserWarning）は消えました。</p>
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">C:\Users\foo\Documents\Github\pytorch-ssd&gt;python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">C:\Users\foo\Documents\Github\pytorch-ssd&gt;python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5
 2022-11-13 16:35:24,380 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 16:35:24,380 - root - INFO - Prepare training datasets.
 2022-11-13 16:35:24,662 - root - INFO - Dataset Summary:Number of Images: 961
@@ -500,21 +504,21 @@ C:\Users\kinos\Documents\Github\pytorch-ssd&gt;Traceback (most recent call last)
     self = reduction.pickle.load(from_parent)
 EOFError: Ran out of input</pre>
 	<p>&nbsp;</p>
-	<p>次に残るエラーを解決します。</p>
+	<p>残るエラー "<span class="auto-style3"><strong>AttributeError: Can't pickle local object 'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;'</strong></span>" を解決します。</p>
 	<p>この問題を解決している記事がありました。</p>
 	<p>&nbsp;</p>
   
-    <div class="status_information">
+    <div class="status_information" style="width: 800px">
       <div></div>
       <div>
         <p><strong>NOTE</strong></p>
-        <p>上記問題のうち 「AttributeError: Can't pickle local object 
-		'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;'」 については下記ページで議論されてそうです。</p>
-		<p>
-		<a href="https://github.com/qfgaohao/pytorch-ssd/issues/71" target="_blank">
-		AttributeError: Can't pickle local object 
-		'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;' · Issue #71 · 
-		qfgaohao/pytorch-ssd (github.com)</a></p>
+        <p>「<span class="auto-style3">AttributeError: Can't pickle local object 'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;</span>'」  
+		について、下記ページで修正方法を紹介しています。</p>
+    		<p>
+    		<a href="https://github.com/qfgaohao/pytorch-ssd/issues/71" target="_blank">
+    		AttributeError: Can't pickle local object 
+    		'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;' · Issue #71 · 
+    		qfgaohao/pytorch-ssd (github.com)</a></p>
       </div>
     </div>
 
@@ -599,7 +603,7 @@ class PredictionTransform:
 	<p>&nbsp;</p>
 	<p>上記修正を行うことで、下記コマンドを正常に実行できるようになりました。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets <strong>./data/open_images</strong> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets <span class="auto-style8"><strong>./data/open_images</strong></span> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	
 	<p>&nbsp;</p>
 	<p><span class="auto-style2"><strong>100 Epoch を約５時間半で学習できました</strong></span>。（CPU動作の場合です。GPU動作の場合はもっと高速に学習可能です。）</p>
@@ -653,7 +657,7 @@ mode = self.sample_options[random_idx]</pre>
     <p>&nbsp;</p>
     <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.843603060245514.pth"）とサンプル画像（"sample_image.jpg"）を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
     
-    <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
+    <pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
     
     <p>&nbsp;</p>
     <p>ただし <strong>run_ssd_example.py</strong> は OpenSSL 
@@ -911,7 +915,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <p>引数 --milestones で指定した Epoch で学習速度を 0.1倍 へ減速します。下記例は Epoch 0-49 まで初期値、Epoch 50-79 を 0.1倍、Epoch 80-99 をさらに 
 	  0.1倍、つまり初期値の 0.01倍へ減速します。</p>
 	  
-	  <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	  <pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets ./data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth <span class="auto-style3"><strong>--scheduler multi-step</strong> <strong>--milestones 50,80</strong></span> --lr 0.01 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	  
 	  <p>&nbsp;</p>
 	  <p>下記表へ Epoch で99までの学習の様子を記載します。１回のみの結果なので、複数回実施するとまた違う結果になるかもしれません。</p>
