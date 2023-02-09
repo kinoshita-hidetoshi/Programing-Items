@@ -295,12 +295,11 @@
       ファイルはカレントフォルダの１つ上位フォルダに保存されている必要があります。</li>
     </ul>
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
     <p> Example/requirements.txt に従って下記をインストールしました。</p>
     <ul>
-      <li>pillow</li>
-      <li>tflite_runtime</li>
-      <li>numpy</li>
+      <li>"pip install pillow==8.2.0"</li>
+      <li>"pip install numpy"</li>
+      <li>"pip install --extra-index-url https://google-coral.github.io/py-repo/ tflite-runtime"</li>
     </ul>
     <p> &nbsp;</p>
     <p> "requirements.txt" の内容は以下の通り。</p>
@@ -367,6 +366,19 @@ numpy==1.19.5</pre>
 	</tbody>
 	</table>
     <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>参考</strong></p>
+        <p>こちら（<a href="https://google-coral.github.io/py-repo/tflite-runtime/" target="_blank">tflite-runtime 
+          wheels (google-coral.github.io)</a> ）を閲覧すると、tflite_runtime 
+          一覧を確認できました。最新版のみかもしれません。</p>
+        <p>これを見ると・・・cp35 から cp38 までが基本のようですね。</p>
+        <p>post1（って何だろ？）だと cp39 もありますが、cp310、cp311 は無いですね。</p>
+      </div>
+    </div>
+
     <p>&nbsp;</p>
 </section>
 
