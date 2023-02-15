@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>pip | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+  .auto-style1 {
+	color: #FF0000;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>pip</h1>
+
+<p> Python と共にインストールされるコマンドツール pip について記載します。</p>
+
+<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._パッケージのインストール">1. パッケージのインストール</a></p>
+	<p><a href="#2._パッケージのアンインストール">2. パッケージのアンインストール</a></p>
+	<p><a href="#3._パッケージのバージョン指定インストール">3. パッケージのバージョン指定インストール</a></p>
+	<p><a href="#4._pip_依存関係の確認">4. pip_依存関係の確認</a></p>
+	<p><a href="#5._インストール済みパッケージを全て出力">5. インストール済みパッケージを全て出力</a></p>
+	<p><a href="#6._アップグレード（バージョンアップ）可能なパッケージを全て出力">6. アップグレード（バージョンアップ）可能なパッケージを全て出力</a></p>
+	<p><a href="#7._最新版のパッケージのみを全て出力">7. 最新版のパッケージのみを全て出力</a></p>
+	<p><a href="#8._インストール済みパッケージ全てを_パッケージ名==バージョン番号_形式で表示">8. インストール済みパッケージ全てを 
+	"パッケージ名"=="バージョン番号" 形式で表示</a></p>
+	<p><a href="#9._パッケージをアップグレード（バージョンアップ）">9. パッケージをアップグレード（バージョンアップ）</a></p>
+	<p><a href="#10._pip_自体をアップグレード（バージョンアップ）">10. pip_自体をアップグレード（バージョンアップ）</a></p>
+	<p><a href="#11._requirements.txt_を使って一括インストール">11. requirements.txt_を使って一括インストール</a></p>
+	<p><a href="#12._パッケージ詳細内容を確認（バージョン、インストール場所など）">12. パッケージ詳細内容を確認（バージョン、インストール場所など）</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._パッケージのインストール">1. パッケージのインストール</a></h2>
+	<p> 最も基本のパッケージインストールの方法です。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install <package-name>&lt;<em>package-name</em>&gt;</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._パッケージのアンインストール">2. パッケージのアンインストール</a></h2>
+	<p> パッケージをアンインストールします。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip uninstall <package-name>&lt;<em>package-name</em>&gt;</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="3._パッケージのバージョン指定インストール">3. パッケージのバージョン指定インストール</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install <package-name>&lt;<em>package-name</em>&gt;<span class="auto-style1">==</span>&lt;<em>version</em>&gt;</pre>
+	<p> (具体例) </p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install django==2.1.2 </pre>
+  <p>&nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="4._pip_依存関係の確認">4. pip 依存関係の確認</a></h2>
+	<p> pip 依存関係の確認を行います。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip check</pre>
+	<p> &nbsp;</p>
+	<p> 問題ない場合、下記のように出力します。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">No broken requirements found.</pre>
+	<p> 依存関係に問題ある場合、下記例のように出力します。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">wagtail 2.6.1 has requirement django-modelcluster&lt;5.0,&gt;=4.2, but you have django-modelcluster 5.0.</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="5._インストール済みパッケージを全て出力">5. インストール済みパッケージを全て出力</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip list</pre>
+	<p> &nbsp;</p>
+	<p> 実行例：</p>
+	<pre style="width: 800px; color: #FFFFFF; background-color: #000000">$ pip list
+Package              Version
+-------------------- -----------
+argon2-cffi          21.3.0
+argon2-cffi-bindings 21.2.0
+asttokens            2.0.8
+attrs                22.1.0
+backcall             0.2.0
+beautifulsoup4       4.11.1
+bleach               5.0.1
+boto3                1.26.8
+botocore             1.29.8
+certifi              2022.6.15
+cffi                 1.15.1
+charset-normalizer   2.1.0
+colorama             0.4.5
+contourpy            1.0.5
+cycler               0.11.0
+･･･</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="6._アップグレード（バージョンアップ）可能なパッケージを全て出力">6. アップグレード（バージョンアップ）可能なパッケージを全て出力</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip list <span class="auto-style1"><strong>-o</strong></span></pre>
+	<p> &nbsp;</p>
+	<p> 実行例：</p>
+	<pre style="width: 800px; background-color: #000000; color: #FFFFFF">$ pip list -o
+Package            Version     Latest    Type
+------------------ ----------- --------- -----
+asttokens          2.0.8       2.2.1     wheel
+attrs              22.1.0      22.2.0    wheel
+beautifulsoup4     4.11.1      4.11.2    wheel
+bleach             5.0.1       6.0.0     wheel
+boto3              1.26.8      1.26.71   wheel
+botocore           1.29.8      1.29.71   wheel
+certifi            2022.6.15   2022.12.7 wheel
+charset-normalizer 2.1.0       3.0.1     wheel
+colorama           0.4.5       0.4.6     wheel
+contourpy          1.0.5       1.0.7     wheel
+debugpy            1.6.3       1.6.6     wheel
+executing          1.0.0       1.2.0     wheel
+fastjsonschema     2.16.1      2.16.2    wheel
+fonttools          4.34.4      4.38.0    wheel
+idna               3.3         3.4       wheel
+･･･</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="7._最新版のパッケージのみを全て出力">7. 最新版のパッケージのみを全て出力</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip list <span class="auto-style1"><strong>-u</strong></span></pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="8._インストール済みパッケージ全てを_パッケージ名==バージョン番号_形式で表示">8. インストール済みパッケージ全てを "パッケージ名"=="バージョン番号" 形式で表示</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip freeze</pre>
+	<p> &nbsp;</p>
+	<p> "requirements.txt" を作成するときに使用します。</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip freeze &gt; requirements.txt</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="9._パッケージをアップグレード（バージョンアップ）">9. パッケージをアップグレード（バージョンアップ）</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install <span class="auto-style1"><strong>-U</strong></span> &lt;<em>package-name</em>&gt</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="10._pip_自体をアップグレード（バージョンアップ）">10. pip 自体をアップグレード（バージョンアップ）</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install <span class="auto-style1"><strong>-U</strong></span> pip</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="11._requirements.txt_を使って一括インストール">11. "requirements.txt" 
+	を使って一括インストール</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip install <span class="auto-style1"><strong>-r</strong></span> requirements.txt</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="12._パッケージ詳細内容を確認（バージョン、インストール場所など）">12. 
+	パッケージ詳細内容を確認（バージョン、インストール場所など）</a></h2>
+	<p> &nbsp;</p>
+	<pre style="overflow-x:auto; width: 800px; background-color: #000000; color: #FFFFFF;">$ pip show &lt;<em>package-name</em>&gt;</pre>
+	<p> &nbsp;</p>
+	<p> 実行例：</p>
+	<pre style="width: 800px; color: #FFFFFF; background-color: #000000">$ pip show opencv-python
+Name: opencv-python
+Version: 4.7.0.68
+Summary: Wrapper package for OpenCV python bindings.
+Home-page: https://github.com/opencv/opencv-python
+Author:
+Author-email:
+License: MIT
+Location: c:\users\[<em>username</em>]\appdata\local\programs\python\python310\lib\site-packages
+Requires: numpy, numpy, numpy, numpy
+Required-by:</pre>
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+Copyright © 2023 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>pipでアップデートするときのコマンド pip update - Qiita<br>
+		<a href="https://qiita.com/HyunwookPark/items/242a8ceea656416b6da8" target="_blank">
+		https://qiita.com/HyunwookPark/items/242a8ceea656416b6da8</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-15</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>Copyright © 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+</body>
+</html>
