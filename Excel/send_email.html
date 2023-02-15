@@ -36,6 +36,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+	background-color: #505000;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -53,6 +59,7 @@
 	<p><a href="#1._Outlook_からメール１通を送信する">1. Outlook_からメール１通を送信する</a></p>
 	<p><a href="#2._複数の宛先へ一斉にメール送信する">2. 複数の宛先へ一斉にメール送信する</a></p>
 	<p><a href="#3._複数の宛先へ連続してメール送信する">3. 複数の宛先へ連続してメール送信する</a></p>
+	<p><a href="#4._投票ボタン付きメールを作成する">4. 投票ボタン付きメールを作成する</a></p>
 	<p><a href="#サンプルプログラム">サンプルプログラム</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
@@ -402,6 +409,146 @@ End Sub</pre>
 </section>
 	
 <p> &nbsp;</p>
+  
+<section>
+	<h2> <a name="4._投票ボタン付きメールを作成する">4. 投票ボタン付きメールを作成する</a></h2>
+	<h4>[概要]</h4>
+	<p> 「<a href="#1._Outlook_からメール１通を送信する">1._Outlook_からメール１通を送信する</a>」の内容をもとに、「投票ボタン付きメール」を作成する方法を説明します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>Excel :</td>
+	      <td>2021 MSO 64 ビット, </td>
+	      <td>バージョン 2212 ビルド 16.0.15928.20196</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p> 1. 「.VotingOptions = "あり;なし"」を "With ml" ～ "With End" の間に追加するだけです。</p>
+	<p> &nbsp;</p>
+	<p> [メールを送信するコード]</p>
+	<pre class="prettyprint linenums lang-vb">
+' win32 MessageBoxA を使うための宣言
+Declare PtrSafe Function MessageBox Lib "User32.dll" Alias "MessageBoxA" (ByVal hWnd As Long, ByVal lpText As String, ByVal lpCaption As String, ByVal uType As Long) As Integer
+Const MB_OK As Long = &amp;H0
+Const MB_OKCANCEL As Long = &amp;O1
+Const MB_YESNO As Long = &amp;O4
+Const MB_ICONHAND As Long = &amp;O20
+Const MB_ICONSTOP As Long = &amp;O20
+Const MB_ICONERROR As Long = &amp;O20
+Const MB_ICONQUESTION As Long = &amp;O40
+Const MB_ICONEXCLAMATION As Long = &amp;O30
+Const MB_ICONINFORMATION As Long = &amp;O40
+Const IDOK As Long = &amp;O0
+Const IDCANCEL As Long = &amp;O1
+Const IDABORT As Long = &amp;O2
+Const IDYES As Long = &amp;O6
+Const IDNO As Long = &amp;O7
+Const MB_TOP As Long = &amp;H40000
+
+
+Sub メール送信()
+    
+    Dim ol As Outlook.Application
+    Dim ml, sh
+    
+    ' 連続送信すると、ウェイトを入れないと CreateObject("Outlook.Application") を失敗することがあるようです。
+    Application.Wait [Now() + "00:00:00.1"]
+
+    Set ol = CreateObject("Outlook.Application")    
+    Set sh = Sheets("メール設定")
+    Set ml = ol.CreateItem(0)
+    
+    With ml
+    
+        If sh.Range("D2").Value = "" Then
+            MsgBox "TO が空欄です。この項目を無視します。", vbOKOnly + vbCritical, "確認"
+            Exit Sub
+        End If
+    
+        ' 基本情報
+        .BodyFormat = 2     ' 1: Text, 2: HTML, 3:リッチテキスト
+        .To = sh.Range("D2").Value
+        .Cc = sh.Range("D3").Value
+        .Bcc = sh.Range("D4").Value
+        .Subject = sh.Range("D5").Value
+        <span class="auto-style1">.VotingOptions = "あり;なし"</span> 
+       
+        ' 署名 を退避。後述の .HtmlBody で戻します。
+        .Display    ' "署名" を signatureString へコピーするために一旦メールを表示する必要があるようです。
+        signatureString = .HtmlBody
+        
+        ' 添付ファイル
+        If sh.Range("D6").Value &lt;&gt; "" Then
+            
+            Dim v, i
+            v = Split(sh.Range("D6").Value, ", ")
+            For i = LBound(v) To UBound(v)
+                .Attachments.Add ThisWorkbook.Path &amp; "\" &amp; v(i)
+            Next i
+            
+        End If
+        
+        ' 補足： .BodyFormat でどれを選択していても、ここで .HtmlBody を使うと強制的に HTML 形式へ変更されるようです。
+        .HtmlBody = "&lt;div style=""font-family:游ゴシック; font-size:11pt;""&gt;" &amp; sh.Range("D7").Value &amp; "&lt;/div&gt;" &amp; signatureString
+        
+        Application.Wait [Now() + "00:00:00.5"]
+        
+        ' メール送信確認
+        ' メッセージボックスを最上位（トップモスト）表示したいので、Win32 の MessageBoxA を使用します。
+        ret = MessageBox(0, "メール送信しますか？", "確認", MB_YESNO + MB_ICONQUESTION + MB_TOP)
+        If ret = IDYES Then
+            .Send
+        Else
+            .Delete
+        End If
+        
+        ' こちら、VBA版の MsgBox による確認ダイアログです。
+'        If MsgBox("メール送信しますか？", vbYesNo + vbQuestion + vbMsgBoxSetForeground + vbDefaultButton2, "確認") = vbYes Then
+'            .Send
+'        Else
+'            .Delete
+'        End If
+        
+    End With
+
+    ' オブジェクトを開放
+    Set ml = Nothing
+    Set ol = Nothing
+    Set sh = Nothing
+    
+End Sub</pre>
+	<p> &nbsp;</p>
+	<p>2. [メール送信]&nbsp;ボタンをクリックすると、下図のように表示されます。</p>
+	<p>
+	<img alt="投票ボタン付きメール" src="send_email/img4.jpg" width="500" class="border_with_drop-shadow"></p>
+	<p>&nbsp;</p>
+	
+</section>
+	
+<p> &nbsp;</p>
 
 <section>
   <h2><a name="サンプルプログラム">サンプルプログラム</a></h2>
@@ -451,6 +598,9 @@ SOFTWARE.
 		<li>【VBA】Outlookオブジェクトを用いたメール送信の基本事項 - Qiita<br>
 		<a href="https://qiita.com/t-yama-3/items/c23b700162aa3ede9eb7" target="_blank">
 		https://qiita.com/t-yama-3/items/c23b700162aa3ede9eb7</a></li>
+		<li>outlookのマクロで、投票ボタン付きの新規メールを作成する方法を教えてく... - Yahoo!知恵袋<br>
+		<a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q13181282118" target="_blank">
+		https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q13181282118</a></li>
 	</ul>
 </section>
 
@@ -463,6 +613,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-12</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#4._投票ボタン付きメールを作成する">4._投票ボタン付きメールを作成する</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-01-29</td>
 	    <td class="td_history_separator">-</td>
