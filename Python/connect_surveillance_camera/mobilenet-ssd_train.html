@@ -1071,11 +1071,11 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 </section>
 	
 <p>&nbsp;</p>
-	<hr>
-	<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
 
 <section>
-<h3><a name="5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></h3>
+  <h3><a name="5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></h3>
 	<p>&nbsp;</p>
   <p class="auto-style3">※ 記載途中です。</p>
   <p>&nbsp;</p>
@@ -1086,67 +1086,67 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   <a href="https://github.com/heartexlabs/labelImg" target="_blank">LabelImg</a> を使用してアノテーションデータを作成してみます。</p>
   <p>そして自身で実際に作成したアノテーションデータを使って学習を行ってみます。少なめのデータで技術的に実現できることまでを目標に進めてみたいと思います。認識性能を高くしたい場合は同じ要領で学習する画像データを増やせば良いので、本ページではあくまで手順の確認と説明まで行うことにします。</p>
   <p>&nbsp;</p>
-	  <p>準備した画像データは以下の通りです。<a href="https://pixabay.com/ja" target="_blank">pixabay</a> 
+	<p>準備した画像データは以下の通りです。<a href="https://pixabay.com/ja" target="_blank">pixabay</a> 
 	  から入手させていただきました。</p>
         
-    <table class="border-collapse" border="1" width="500">
-      <caption>[Table.] 使用した学習データ数</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>Class name</th>
-          <th width="25%">TrainVal</th>
-          <th width="25%">Test</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>bird</td>
-          <td>140</td>
-          <td>60</td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="border-collapse" border="1" width="500">
+    <caption>[Table.] 使用した学習データ数</caption>
+    <thead class="standard_table">
+      <tr>
+        <th>Class name</th>
+        <th width="25%">TrainVal</th>
+        <th width="25%">Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bird</td>
+        <td>140</td>
+        <td>60</td>
+      </tr>
+    </tbody>
+  </table>
     
-      <p>&nbsp;</p>
+  <p>&nbsp;</p>
 	
 	<h4>[環境]</h4>
   <table>
-  <tbody>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>言語 :</td>
-      <td>Python,</td>
-      <td>3.10.7</td>
-    </tr>
+      <tr>
+        <td>言語 :</td>
+        <td>Python,</td>
+        <td>3.10.7</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>&nbsp;</td>
-      <td>PyTorch,</td>
-      <td>1.12.1+cpu</td>
-    </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>PyTorch,</td>
+        <td>1.12.1+cpu</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>OS :</td>
-      <td>Windows 11 home,</td>
-      <td>22H2</td>
-    </tr>
+      <tr>
+        <td>OS :</td>
+        <td>Windows 11 home,</td>
+        <td>22H2</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </tbody>
-</table>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+  </table>
 
 	<p> &nbsp;</p>
 	
@@ -1159,49 +1159,50 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   <img alt="フォルダ、ファイル構成" src="mobilenet-ssd_train/folder_struct.drawio.svg" width="500"></p>
   <p>&nbsp;</p>
         
-    <table class="border-collapse" border="1" width="800">
-      <caption>[Table.] フォルダおよびファイル構成</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>名称</th>
-          <th>説明</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Annotations</td>
-          <td>アノテーション結果を記録した XML ファイルを保存します。</td>
-        </tr>
-        <tr>
-          <td>JPEGImages</td>
-          <td>JPEG ファイルを保存します。</td>
-        </tr>
-        <tr>
-          <td>ImageSets/Main/test.txt</td>
-          <td>テスト用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
-        </tr>
-        <tr>
-          <td>ImageSets/Main/trainval.txt</td>
-          <td>学習用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
-        </tr>
-        <tr>
-          <td>labels.txt</td>
-          <td>ラベル一覧を記録済ます。</td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="border-collapse" border="1" width="800">
+    <caption>[Table.] フォルダおよびファイル構成</caption>
+    <thead class="standard_table">
+      <tr>
+        <th>名称</th>
+        <th>説明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Annotations</td>
+        <td>アノテーション結果を記録した XML ファイルを保存します。</td>
+      </tr>
+      <tr>
+        <td>JPEGImages</td>
+        <td>JPEG ファイルを保存します。</td>
+      </tr>
+      <tr>
+        <td>ImageSets/Main/test.txt</td>
+        <td>テスト用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
+      </tr>
+      <tr>
+        <td>ImageSets/Main/trainval.txt</td>
+        <td>学習用ファイルのファイル名一覧を記録します。拡張子なしで記載します。</td>
+      </tr>
+      <tr>
+        <td>labels.txt</td>
+        <td>ラベル一覧を記録済ます。</td>
+      </tr>
+    </tbody>
+  </table>
     
-    <p>&nbsp;</p>
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>2. 学習用の画像を集めて "JPEGImages" フォルダへ保存します。</p>
   <p>学習用160枚、テスト用40枚、合計200枚の JPEG ファイルをすべてここに保存しました。</p>
   <p>&nbsp;</p>
   <p>3. LabelImg をインストール</p>
-  <p>アノテーションツール LabelImg をインストールします。pip, setuptools を更新した後、pip で labelimg 
-  をインストールします。</p>
-  <pre style="background-color: #000000; color: #CCCCCC; width: 800px;overflow-x: auto;">python -m pip install --upgrade pip setuptools
+  <p>アノテーションツール LabelImg をインストールします。pip, setuptools を更新した後、pip で labelimg をインストールします。</p>
+  
+  <pre style="background-color: #000000; color: #CCCCCC; width: 800px;overflow-x: auto;">python -m pip install --upgrade pip setuptools 
 pip3 install labelImg
 </pre>
+  
   <p>&nbsp;</p>
   <p>4. LabelImg を起動、設定</p>
   <p>LabelImg の起動方法は下記いずれかで行います。</p>
@@ -1215,25 +1216,163 @@ labelImg [IMAGE_PATH] [PRE-DEFINED CLASS FILE]</pre>
   <p>T.B.E.</p>
   <p>&nbsp;</p>
   <p>6. "ImageSets\Main\trainval.txt" を設定</p>
-  <p>T.B.E.</p>
   <p>全画像データから 70% を学習用（trainval）に、30% を評価用（test）に使用してみます。</p>
   <p>&nbsp;</p>
   <p>7. "ImageSets\Main\test.txt" を設定</p>
-  <p>T.B.E.</p>
   <p>全画像データから 70% を学習用（trainval）に、30% を評価用（test）に使用してみます。</p>
   <p>&nbsp;</p>
   <p>8. "labels.txt" を設定</p>
-  <p>T.B.E.</p>
+  <p>"labels.txt" にアノテーションで付与した全ラベルを記載します。</p>
+  <p>ここでの例では "bird" のみ記載します。</p>
+  <pre style="width: 800px">bird</pre>
+  <p>&nbsp;</p>
+    
+  <div class="status_warning">
+    <div></div>
+    <div>
+      <p><strong>注意</strong></p>
+      <p>対象とするアノテーションデータファイル（*.xml）に記載の全てのラベルを "labels.txt" へ記載する必要があります。記載漏れがあると学習実行時にエラーになるので注意が必要です。</p>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>9. 学習を実施</p>
-  <p>T.B.E.</p>
+  <p>下記コマンドにより学習を実行しました。</p>
+  <pre style="color: #FFFFFF; background-color: #000000">$ python train_ssd.py --dataset_type <span class="auto-style3"><strong>voc</strong></span> --datasets ./data/voc --<strong>validation_dataset</strong> ./data/voc --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --debug_steps 25  --base_net_lr 0.001  --batch_size 5</pre>
+  <p>&nbsp;</p>
+  <p>下記表に学習時の精度遷移を参考記載します。</p>
+        
+  <table class="border-collapse" border="1" width="500">
+    <caption>[Table.] 引数毎の 学習時間、Validation Loss 比較</caption>
+    <thead class="standard_table">
+      <tr>
+        <th style="white-space: nowrap" rowspan="2">Epoch num.</th>
+        <th style="white-space: nowrap" class="auto-style7" colspan="2">Cosine</th>
+      </tr>
+      <tr>
+        <th style="white-space: nowrap">Validation Loss</th>
+        <th style="white-space: nowrap">Average Loss</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>0</strong></td>
+        <td>4.67</td>
+        <td>6.15</td>
+      </tr>
+      
+      <tr>
+        <td><strong>10</strong></td>
+        <td>2.74</td>
+        <td>2.35</td>
+      </tr>
+      
+      <tr>
+        <td><strong>20</strong></td>
+        <td>2.78</td>
+        <td>2.11</td>
+      </tr>
+      
+      <tr>
+        <td><strong>30</strong></td>
+        <td>2.48</td>
+        <td>1.83</td>
+      </tr>
+      
+      <tr>
+        <td><strong>40</strong></td>
+        <td>2.40</td>
+        <td>1.60</td>
+      </tr>
+      
+      <tr>
+        <td><strong>50</strong></td>
+        <td>2.18</td>
+        <td>1.50</td>
+      </tr>
+      
+      <tr>
+        <td><strong>60</strong></td>
+        <td>2.15</td>
+        <td>1.28</td>
+      </tr>
+      
+      <tr>
+        <td><strong>70</strong></td>
+        <td>2.13</td>
+        <td>1.24</td>
+      </tr>
+      
+      <tr>
+        <td><strong>80</strong></td>
+        <td>2.16</td>
+        <td>1.33</td>
+      </tr>
+      
+      <tr>
+        <td><strong>90</strong></td>
+        <td>2.09</td>
+        <td>1.16</td>
+      </tr>
+      
+      <tr>
+        <td><strong>99</strong></td>
+        <td>2.07</td>
+        <td>1.22</td>
+      </tr>
+      
+      <tr>
+        <td><strong>学習時間</strong></td>
+        <td style="white-space: nowrap" class="auto-style7" colspan="2">52分 （CPU 環境）</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>10. 学習したデータとテスト画像を使用して認識</p>
+  <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth"）とサンプル画像（"birds-7469509_1920.jpg"）を使った 
+  コマンド実施例 を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
+    
+  <pre style="background-color: #000000; color: #FFFFFF; white-space:pre-wrap;">$ python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth .\models\voc-model-labels.txt .\data\voc\JPEGImages\birds-7469509_1920.jpg</pre>
+    
+  <p>&nbsp;</p>
+  <p>テスト画像１： 入手元
+  <a href="https://pixabay.com/ja/photos/鳥-カモメ-空飛ぶカモメ-空-7469509/" target="_blank">Pixabay</a></p>
+  <p>
+  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</span></p>
+  <p>["birds-7469509_1920.jpg"]</p>
+  <p><img alt="birds-7469509_1920.jpg" src="mobilenet-ssd_train/img70.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>テスト画像２： 入手元 
+  <a href="https://pixabay.com/ja/photos/gray-heron-bird-5077089/" target="_blank">Pixabay</a></p>
+  <p>
+  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</span></p>
+  <p>["gray-heron-5077089_1920.jpg"]</p>
+  <p><img alt="gray-heron-5077089_1920.jpg" src="mobilenet-ssd_train/img76.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>テスト画像３： 入手元 
+  <a href="https://pixabay.com/ja/photos/ヒドリガモ-アヒル-水鳥-動物-4914971/" target="_blank">Pixabay</a></p>
+  <p>
+  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</span></p>
+  <p>["eurasian-wigeon-4914971_1920.jpg"]</p>
+  <p><img alt="eurasian-wigeon-4914971_1920.jpg" src="mobilenet-ssd_train/img7A.jpg" width="800"></p>
+  <p>&nbsp;</p>
+  <p>今回学習に使用した画像枚数は 140枚 という少ないものでしたが、私の予想に反してそこそこ以上の認識性能を実現できました。</p>
+  <p>学習済みデータを元に追加学習を行っていることもこの大きな要因でしょう。短い時間で学習できているのは軽量型のAIモデル（MobileNet）を使っていることも理由の１つでしょう。</p>
+  <p>少ない学習画像枚数、短い学習時間で実現できました。正常認識できない画像を収集して追加学習すればさらなる認識性能向上も見込めます。</p>
+  <p>様々な応用を考えることができそうと思いました。AIを学習したり応用したい人達の参考になれば幸いです。</p>
   <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
 </section>
 
-<p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
 
@@ -1334,6 +1473,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-15</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#5-2._独自の画像を学習してみる_(VOC)">5-2._独自の画像を学習してみる_(VOC)</a>」を更新</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-02-06</td>
 	    <td class="td_history_separator">-</td>
