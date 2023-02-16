@@ -1423,7 +1423,7 @@ def create_target_list(jpeg_path, xml_path):
 
 '''
 [Abstract]
-    特定クラム向けの trainval.txt, test.txt を出力する
+    特定クラス向けの trainval.txt, test.txt を出力する
 '''
 def save_trainval_test_with_class_name(target_files, class_name):
     '''
@@ -1566,6 +1566,19 @@ if __name__ == '__main__':
 2023-02-16 17:48:25,395 - root - INFO - === test.txt ===
 2023-02-16 17:48:25,395 - root - INFO - path : ./data/voc/ImageSets/Main\test.txt
 2023-02-16 17:48:25,395 - root - INFO - size : 60</pre>
+  <p>&nbsp;</p>
+    
+  <div class="status_warning">
+    <div></div>
+    <div>
+      <p><strong>注意</strong></p>
+      <p>ログ出力を確認し、意図通りのオブジェクト名（ここでは ['bird'] 
+      の部分）のみであることを確認しましょう。意図しないオブジェクト名があるとこの後の学習でエラーの原因となります。</p>
+      <p>同様に各出力枚数についても確認し、あなたの期待する値と一致することを確認しましょう。</p>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>"trainval.txt" 出力例です。</p>
   <pre style="width: 400px">grey-heron-6318054_1920
@@ -1789,6 +1802,23 @@ bird-7016926_1920
     </tbody>
   </table>
   
+  <p>&nbsp;</p>
+  
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>参考</strong></p>
+      <p>ゲーミングノートＰＣ環境でも同じ学習を実施。<br>52分 ⇨ <strong>22分</strong> へ短縮できました。</p>
+      <p>[環境]</p>
+      <p>GPU: NVIDIA GeForce GTX 1650 (4GB)</p>
+      <p>CPU: Intel Core i7-9750H</p>
+      <p>Cuda: 11.7</p>
+      <p>Python: 3.10.7</p>
+      <p>PyToch: 1.12+cu116</p>
+      <p>OS: Windows 11 home, 22H2</p>
+    </div>
+  </div>
+
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>10. 学習したデータとテスト画像を使用して認識</p>
