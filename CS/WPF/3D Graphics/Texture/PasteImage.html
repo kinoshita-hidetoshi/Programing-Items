@@ -36,37 +36,33 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
-  .auto-style7 {
-  	font-weight: normal;
-  }
-  .auto-style8 {
-  	background-color: #505000;
-  }
-  .auto-style9 {
-  	margin-bottom: 0px;
-  }
+    .auto-style7 {
+    	font-weight: normal;
+    }
+    .auto-style8 {
+    	background-color: #505000;
+    }
+    .auto-style9 {
+    	margin-bottom: 0px;
+    }
   </style>
 
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-[WPF] テクスチャへイメージの貼り付け</h1>
+
+<h1 class="auto-style7">[WPF] テクスチャへイメージの貼り付け</h1>
 
 <p> ３Ｄモデルの面に、テクスチャでイメージを貼り付けすることができます。</p>
 <p> &nbsp;</p>
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
-	<p> <a href="#1._３Ｄ平面へイメージを貼り付ける">1. ３Ｄ平面へイメージを貼り付ける</a></p>
-	<p>
-<a href="#2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a></p>
-	<p>
-<a href="#3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a></p>
-	<p>
-<a href="#4._３Ｄグラフィックスをマウスドラッグで操作する">4. ３Ｄグラフィックスをマウスドラッグで操作する</a></p>
-	<p>
-<a href="#サンプルプログラム">サンプルプログラム</a></p>
+	<p><a href="#1._３Ｄ平面へイメージを貼り付ける">1. ３Ｄ平面へイメージを貼り付ける</a></p>
+	<p><a href="#2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a></p>
+	<p><a href="#3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a></p>
+	<p><a href="#4._３Ｄグラフィックスをマウスドラッグで操作する">4. ３Ｄグラフィックスをマウスドラッグで操作する</a></p>
+	<p><a href="#サンプルプログラム">サンプルプログラム</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -74,20 +70,18 @@
 </div>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
+
 <h2> <a name="1._３Ｄ平面へイメージを貼り付ける">1. ３Ｄ平面へイメージを貼り付ける</a></h2>
-<p>
-まずはシンプルな四角形へイメージを貼り付けてみます。</p>
-<p>
-[環境]</p>
+
+<p>まずはシンプルな四角形へイメージを貼り付けてみます。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<p>
-[実行結果]<br>
-</p>
-<p>
-<img alt="" src="PasteImage/img24.jpg"></p>
+
+<p>[実行結果]</p>
+<p><img alt="図：３Ｄ平面へイメージを張り付ける" src="PasteImage/img24.jpg"></p>
 <span class="table_title"><br>[&quot;MainWindow.xaml&quot;]<br>・３Ｄの画角は 
 PersectiveCamera の設定で定義しています。</span>
 
@@ -164,22 +158,22 @@ PersectiveCamera の設定で定義しています。</span>
 &lt;/Window&gt;</pre>
 	
 <p>&nbsp;</p>
-<h2>
-<a name="2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a></h2>
-<p>
-Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラフィックスを回転させてみます。</p>
-<p>
-[環境]</p>
+
+<h2><a name="2._３Ｄグラフィックスを自動回転する">2. ３Ｄグラフィックスを自動回転する</a></h2>
+
+<p>Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラフィックスを回転させてみます。</p>
+
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p>[実行結果]<br>連続写真を張ります。わかりますかね？</p>
 <p>
-<img alt="" height="174" src="PasteImage/img2A.jpg" width="237">
-<img alt="" height="175" src="PasteImage/img2B.jpg" width="239"><br>
-<img alt="" height="178" src="PasteImage/img2C.jpg" width="237">
-<img alt="" height="178" src="PasteImage/img2D.gif" width="238"></p>
+<img alt="回転１" height="174" src="PasteImage/img2A.jpg" width="237">
+<img alt="回転２" height="175" src="PasteImage/img2B.jpg" width="239"><br>
+<img alt="回転３" height="178" src="PasteImage/img2C.jpg" width="237">
+<img alt="回転４" height="178" src="PasteImage/img2D.gif" width="238"></p>
 
 <p>要点：<br>・回転させるために必要な 修正/追加 の部分を”黄色”でマーキングします。<br>
 ・回転は、カメラをＹ軸を中心に回転させることで実現しています。&quot;PersectiveCamera.Transform&quot; で設定しています。<br>
@@ -286,33 +280,23 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 	
-<p>
-	
-&nbsp;</p>
-<h2>
-	
-<a name="3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a></h2>
-<p>
-	
-画面上に Slider を２つ付けて、これをマウスで操作することで３Ｄグラフィックスを回転制御できるようにします。</p>
-<p>
-[環境]</p>
+<p>&nbsp;</p>
+
+<h2><a name="3._３Ｄグラフィックスをスライダーで操作する">3. ３Ｄグラフィックスをスライダーで操作する</a></h2>
+
+<p>画面上に Slider を２つ付けて、これをマウスで操作することで３Ｄグラフィックスを回転制御できるようにします。</p>
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<p>
-	
-[実行結果]</p>
-<p>
-	
-画面上と画面左のスライダーで回転を手動制御します。</p>
-<p>
-	
-<img alt="" src="PasteImage/img13.jpg" class="auto-style9"></p>
-<p>
-	
-&nbsp;</p>
+
+<p>[実行結果]</p>
+<p>画面上と画面左のスライダーで回転を手動制御します。</p>
+
+<p><img alt="図：スライダー操作" src="PasteImage/img13.jpg" class="auto-style9"></p>
+<p>&nbsp;</p>
+
 <p>要点：<br>・手動制御のために修正した部分を”黄色”でマーキングします。<br>
 ・&lt;DockPanel&gt;へ変更して、&lt;Slider&gt;を画面の上と左に貼り付けています。<br>
 ・AxisAngleRotation3D の axis とスライダーをデータバインディングします。<br>
@@ -424,43 +408,33 @@ Camera（カメラ）をY軸を中心に回転させることで、３Ｄグラ�
     &lt;/DockPanel&gt;
 &lt;/Window&gt;</pre>
 	
-<p>
-	
-&nbsp;</p>
-<h2>
-	
-4.<a name="4._３Ｄグラフィックスをマウスドラッグで操作する"> ３Ｄグラフィックスをマウスドラッグで操作する</a></h2>
-<p>
-	
-「ModelUIElement3D」を使用して、3Dグラフィックスを画面上でマウスドラッグすることで回転操作します。</p>
-<p>
-[環境]</p>
+<p>&nbsp;</p>
+
+<h2><a name="4._３Ｄグラフィックスをマウスドラッグで操作する">4. ３Ｄグラフィックスをマウスドラッグで操作する</a></h2>
+<p>「ModelUIElement3D」を使用して、3Dグラフィックスを画面上でマウスドラッグすることで回転操作します。</p>
+
+<p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
+<p>&nbsp;</p>
+
 <p>
-	
-&nbsp;</p>
-<p>
-	
 [実行結果]<br>動かないとよくわからないと思いますが、それでも一応張っておきます。<br>
 「画像をマウスでドラッグして見てください。」のメッセージだけ追加してみました。</p>
-<p>
-	
-<img alt="" src="PasteImage/img3.jpg"></p>
-<p>
-	
-&nbsp;</p>
-<p>
-	
+
+<p><img alt="図：ドラッグ操作" src="PasteImage/img3.jpg"></p>
+<p>&nbsp;</p>
+
+<p>	
 要点：<br>・マウスの左ボタンダウンは、3D画像上でのみ受け付けます。&lt;ModelUIElement3D ・・・ MouseLeftButtonDown=&quot;ModelUIElement3D_MouseLeftButtonDown&quot;&gt;<br>
 がこれを意味します。<br>・マウスの移動、左ボタンアップは、ウィンドウ全体が受け付けます。<br>&lt;Window ・・・ 
 MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_MouseMove&quot;&gt;<br>
 がこれを意味します。<br>・他、 Mouse.Capture() の命令によりドラッグ中にマウスがウィンドウがいに出た場合の処理も実装しています。</p>
-<p>
-	
-&nbsp;</p>
+
+<p>&nbsp;</p>
+
 ["MainWindow.xaml"]
 <pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;_3D_Texture_Image_03.MainWindow&quot;
@@ -564,9 +538,7 @@ MouseLeftButtonUp=&quot;Window_MouseLeftButtonUp&quot; MouseMove=&quot;Window_Mo
     &lt;/DockPanel&gt;
 &lt;/Window&gt;</pre>
 	
-<p>
-	
-&nbsp;</p>
+<p>&nbsp;</p>
 <p>
 
 [MainWindow.xaml.cs]
@@ -628,18 +600,12 @@ namespace _3D_Texture_Image_03
     }
 }</pre>
 	
-<p>
-	
-&nbsp;<br>
-</p>
-<h2>
-<a name="サンプルプログラム">サンプルプログラム</a></h2>
-<p>
-サンプルプログラムのダウンロードは <a href="PasteImage/PasteImage_sample.zip">こちら</a>。</p>
-<p>
-&nbsp;</p>
-<p>
-&nbsp;</p>
+<p>&nbsp;<br></p>
+
+<h2><a name="サンプルプログラム">サンプルプログラム</a></h2>
+<p>サンプルプログラムのダウンロードは <a href="PasteImage/PasteImage_sample.zip">こちら</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
@@ -670,10 +636,8 @@ SOFTWARE.
   <p>&nbsp;</p>
 </section>
 
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
+<p>&nbsp;</p>
+<h2>参考</h2>
 <ul>
 	<li>書籍「プログラミングWPF C#編」 第10章 3Dグラフィックス</li>
 	<li>WPFを使ったC#プログラミング：<a href="http://ex.osaka-kyoiku.ac.jp/~fujii/WPF/3D.html" target="_blank">http://ex.osaka-kyoiku.ac.jp/~fujii/WPF/3D.html</a></li>
