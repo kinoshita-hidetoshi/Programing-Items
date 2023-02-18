@@ -66,8 +66,7 @@
 <div class="mokuji">
   <nav>
     <h2>目次</h2>
-	<p>=== 1-4章は別ページ「<a href="mobilenet-ssd.html">物体検知 － MobileNet-SSD (推論編)</a>」で記載 
-	===</p>
+    <p>=== 1-4章は別ページ「<a href="mobilenet-ssd.html">物体検知 － MobileNet-SSD (推論編)</a>」で記載 ===</p>
     <p>1. 準備</p>
     <p>&nbsp;&nbsp; 1-1. PyTorch をインストールする</p>
     <p>&nbsp;&nbsp; 1-2. 必要なライブラリをインストールする</p>
@@ -83,9 +82,10 @@
     <p>&nbsp;&nbsp; 4-2. MobileNetV3-SSD-Lite を動かす（PC 内蔵カメラ）</p>
     <p>&nbsp;&nbsp; 4-3. MobileNetV3-SSD-Lite を動かす（i-PRO カメラ）</p>
     <p>&nbsp;</p>
-	<p><a href="#5._学習">5. 学習</a></p>
-    <p>&nbsp;&nbsp; <a href="#5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (open_images)</a></p>
-    <p>&nbsp;&nbsp; <a href="#5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></p>
+	  <p><a href="#5._学習">5. 学習</a></p>
+    <p>&nbsp;&nbsp; <a href="#5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (Open Images)</a></p>
+    <p>&nbsp;&nbsp; <a href="#5-2._独自の画像を学習してみる_(Pascal/VOC)">5-2. 独自の画像を学習してみる (Pascal/VOC)</a></p>
+    <p>&nbsp;&nbsp; <a href="#5-3._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-3. 学習結果とカメラを使って物体検知してみる (i-PRO カメラ)</a></p>
     <br>
     <p><a href="#ライセンス">ライセンス</a></p>
     <p><a href="#参考">参考</a></p>
@@ -100,17 +100,24 @@
 <section>
 	<h2> <a name="5._学習">5. 学習</a></h2>
 	<h4>[概要]</h4>
-	<p> あなたが用意した画像データを使って独自の MobileNet-SSD 学習データを作成できるようになることを試みます。</p>
+	<p> あなたが用意した画像データを使って独自の MobileNet-SSD 学習データを作成する手順を紹介します。</p>
+  <p> 以下の順序で進めたいと思います。</p>
+  <ol>
+    <li>使用する AI モデル紹介に記載のチュートリアルに従って学習を行ってみる</li>
+    <li>独自の画像を収集し、ツールを使って自身でアノテーションを行い、これら画像とアノテーションデータを使って学習を行ってみる</li>
+    <li>自身で作成した学習データとカメラを使って物体検知を行ってみる</li>
+  </ol>
 	<p> &nbsp;</p>
 	
-	<h3><a name="5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (open_images)</a></h3>
+	<section>
+	<h3><a name="5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (Open Images)</a></h3>
 	<h4>[概要]</h4>
 	<p>今回も <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
 	pytorch-ssd</a> で紹介されているプログラムと内容を使って進めます。</p>
 	<p>ここでは "<a href="https://github.com/qfgaohao/pytorch-ssd#retrain-on-open-images-dataset" target="_blank">Retrain 
-	on Open Images Dataset</a>" で説明されている記述に沿って実際にやってみます。学習済みデータをもとに 銃 
-	を認識するようにファインチューニングする、というサンプルのようです。Python 
-	プログラムはもちろん、画像データおよびアノテーションデータなど必要なすべての情報を提供いただいているので、最初に取り組みするには最適な内容と思われます。</p>
+	on Open Images Dataset</a>" で説明されている記述に従って学習を実際にやってみます。Python 
+    プログラムはもちろん、画像データおよびアノテーションデータなど必要なすべての情報を提供いただいています。こちらの記事は MobileNet-SSD 
+    の学習方法を学ぶ最初の教材として最適な内容です。</p>
 	<p>
 	<img alt="&quot;Retrain on Open Images Dataset&quot; 概要" class="border_with_drop-shadow" src="mobilenet-ssd_train/img3.jpg" width="800"></p>
 	<p>&nbsp;</p>
@@ -155,11 +162,7 @@
     </div>
 
     <p>&nbsp;</p>
-	<p>&nbsp;</p>
-	
-	<section>
-	<h4>5-1-1. Windows の場合</h4>
-	<p>&nbsp;</p>
+	  <p>&nbsp;</p>
 	<h4>[評価環境]</h4>
   <table>
   <tbody>
@@ -214,36 +217,44 @@
 	<p>または Explorer で目的フォルダを開いた後、Explorer のアドレスエリアで "cmd" + [Enter] します。</p>
 	<p>&nbsp;</p>
 	<p>4. まずは再学習済みデータを使ってデモ動作してみます。</p>
+  <p>&nbsp;</p>
+  <p>■Linux の場合</p>
 	<p><a href="https://github.com/qfgaohao/pytorch-ssd#retrain-on-open-images-dataset">"Retrain on Open Images Dataset"</a> 
-	の説明では最初に以下の通り記載されています。</p>
+	の説明では最初に以下の通り記載されています。これを実行します。</p>
 	  
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
-wget -P models https://storage.googleapis.com/models-hao/open-images-model-labels.txt
-python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt ~/Downloads/big.JPG</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">$ wget -P models https://storage.googleapis.com/models-hao/gun_model_2.21.pth
+$ wget -P models https://storage.googleapis.com/models-hao/open-images-model-labels.txt
+$ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt ~/Downloads/big.JPG</pre>
 
 	<p>&nbsp;</p>
+  <p>■Windows の場合</p>
 	<p>Windows環境では wget を標準で使用できません。代わりに <strong>bitsadmin.exe</strong> 
 	というコマンドを使用することで下記のような感じで同じ内容を実行することができます。<br>
 	<span class="auto-style3">c:\{作業フォルダ}</span> の部分をご自身の環境に合わせて修正して実行してください。</p>
 	
-  <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
-bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/open-images-model-labels.txt <span class="auto-style3">c:\{作業フォルダ}</span>\models\open-images-model-labels.txt
-python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt <span class="auto-style3">{テストするJPEGファイル}</span></pre>
+  <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">$ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/gun_model_2.21.pth <span class="auto-style3">c:\{作業フォルダ}</span>\models\gun_model_2.21.pth
+$ bitsadmin /TRANSFER htmldl https://storage.googleapis.com/models-hao/open-images-model-labels.txt <span class="auto-style3">c:\{作業フォルダ}</span>\models\open-images-model-labels.txt
+$ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-model-labels.txt <span class="auto-style3">{テストするJPEGファイル}</span></pre>
 
 	<p>※ 記載の手順で進めても "big.JPG" ファイルはありませんでした。上記コマンドのテストに GUN のテストデータを必要としますので、ご自身で評価画像を入手するか、もしくは後述の「5. 
 	  Download data」を実施後にこの画像ファイルを使って実験する、などする必要があります。</p>
 	<p>&nbsp;</p>
 	<p>5. Download data</p>
 	<p>インターネットから学習データ一式を取得します。</p>
+      <p>&nbsp;</p>
+  <p>■Linux の場合</p>
 	<p>
-	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">"Download data"</a>では下記のように書いていますが、Windowsではうまくいかず、エラーになりました。</p>
+	<a href="https://github.com/qfgaohao/pytorch-ssd#download-data" target="_blank">"Download data"</a>では下記のように書いています。Linux 
+    環境ではこれを実行します。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python open_images_downloader.py --root ~/data/open_images --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">$ python open_images_downloader.py --root ~/data/open_images --class_names "Handgun,Shotgun" --num_workers 20</pre>
 	
-	<p>"--root" 
-	の指定フォルダを下記のようにすることで無事ダウンロードすることができました。JPEG画像がそれなりの枚数あるので、私の環境で全データのダウンロードに５分ぐらいかかりました。</p>
+	<p>&nbsp;</p>
+  <p>■Windows の場合</p>
+  <p>Windows 環境ではエラーになるので、"--root" 
+	の指定フォルダを下記のように変更すると無事ダウンロードすることができました。JPEG画像がそれなりの枚数あるので、私の環境で全データのダウンロードに５分ぐらいかかりました。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">$ python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
 	
 	<p>&nbsp;</p>
 	<p>6. 確認</p>
@@ -257,9 +268,9 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	<p><img alt="test フォルダ内の画像(例)" src="mobilenet-ssd_train/imgF.jpg" width="800"></p>
 	<p>&nbsp;</p>
 	<p>"class-descriptions-boxable.csv" の様子です。分類するクラス一覧を記述しているようです。</p>
-	  <p>"Handgun", "Shot gun" も含んでいました。私がダウンロードしたデータでは 601 種類のクラスを記録していました。</p>
-	  <p>先ほどの手順では "Handgun,Shotgun" 
-	  を指定してデータをダウンロードしましたが、こちらに記録されているクラスを指定して画像およびアノテーションデータをダウンロードできそうです。</p>
+  <p>"Handgun", "Shot gun" も含んでいました。私がダウンロードしたデータでは 601 種類のクラスを記録していました。</p>
+  <p>先ほどの手順では "Handgun,Shotgun" 
+  を指定してデータをダウンロードしましたが、こちらに記録されているクラスを指定して画像およびアノテーションデータをダウンロードできそうです。</p>
 	<p><a href="mobilenet-ssd/img11.jpg" target="_blank">
 	<img alt="class-descriptions-boxable.csv" class="auto-style6" src="mobilenet-ssd_train/img11.jpg" width="800"></a></p>
 	<p>&nbsp;</p>
@@ -279,21 +290,26 @@ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images-m
 	"mobilenet-v1-ssd-mp-0_675.pth" をダウンロードしておきます。</p>
 	<p>&nbsp;</p>
 	<p>8. Retrain (再学習)を実行します</p>
+  <p>&nbsp;</p>
+  <p>■Linux の場合</p>
 	<p>
-	<a href="https://github.com/qfgaohao/pytorch-ssd#retrain" target="_blank">資料</a>では下記のように書いています。</p>
+	<a href="https://github.com/qfgaohao/pytorch-ssd#retrain" target="_blank">資料</a>では下記のように書いています。Linux 
+    環境ではこれを実行します。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">$ python train_ssd.py --dataset_type open_images --datasets ~/data/open_images --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	
-	<p>Windows 環境で動作する場合は少なくとも <span class="cpp-source">--datasets 
+	<p>&nbsp;</p>
+  <p>■Windows の場合</p>
+  <p>Windows 環境では <span class="cpp-source">--datasets 
 	~/data/open_images</span> 
-	の部分を実際の環境に合わせて修正したほうがよさそうです。ここでは下記コマンドへ修正して実行してみます。</p>
+	の部分を実際の環境に合わせて修正します。ここでは下記コマンドへ修正して実行してみます。</p>
 	
-	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python train_ssd.py --dataset_type open_images --datasets <span class="auto-style8"><strong>./data/open_images</strong></span> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
+	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">$ python train_ssd.py --dataset_type open_images --datasets <span class="auto-style8"><strong>./data/open_images</strong></span> --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --base_net_lr 0.001  --batch_size 5</pre>
 	
 	<p>&nbsp;</p>
 	
 	<p>以下、上記コマンド実行後のコンソール出力内容です。</p>
-	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。</p>
+	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。エラー部分を<span class="auto-style3">赤字</span>で表記します。</p>
 	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 15:04:07,989 - root - INFO - Prepare training datasets.
 2022-11-13 15:04:08,277 - root - INFO - Dataset Summary:Number of Images: 961
@@ -456,24 +472,24 @@ C:\Users\kinos\Documents\Github\pytorch-ssd&gt;Traceback (most recent call last)
 EOFError: Ran out of input</pre>
 	<p>&nbsp;</p>
 	<p>残るエラー "<span class="auto-style3"><strong>AttributeError: Can't pickle local object 'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;'</strong></span>" を解決します。</p>
-	<p>この問題を解決している記事がありました。</p>
+	<p>この問題を解決している記事がありました。Linux 環境では発生しない Windows 環境固有の問題と思われます。</p>
 	<p>&nbsp;</p>
   
-    <div class="status_information" style="width: 800px">
-      <div></div>
-      <div>
-        <p><strong>NOTE</strong></p>
-        <p>「<span class="auto-style3">AttributeError: Can't pickle local object 'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;</span>'」  
-		について、下記ページで修正方法を紹介しています。</p>
-    		<p>
-    		<a href="https://github.com/qfgaohao/pytorch-ssd/issues/71" target="_blank">
-    		AttributeError: Can't pickle local object 
-    		'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;' · Issue #71 · 
-    		qfgaohao/pytorch-ssd (github.com)</a></p>
-      </div>
+  <div class="status_information" style="width: 800px">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>「<span class="auto-style3">AttributeError: Can't pickle local object 'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;</span>'」  
+  について、下記ページで修正方法を紹介しています。</p>
+      <p>
+      <a href="https://github.com/qfgaohao/pytorch-ssd/issues/71" target="_blank">
+      AttributeError: Can't pickle local object 
+      'TrainAugmentation.__init__.&lt;locals&gt;.&lt;lambda&gt;' · Issue #71 · 
+      qfgaohao/pytorch-ssd (github.com)</a></p>
     </div>
+  </div>
 
-    <p>&nbsp;</p>
+  <p>&nbsp;</p>
 	<p>上記URLに記載の内容に従って修正した後の「vision/ssd/data_preprocessing.py」を以下に記載します。<br>
 	修正した場所を色付けしています。</p>
 	<p>&nbsp;</p>
@@ -558,8 +574,40 @@ class PredictionTransform:
 	
 	<p>&nbsp;</p>
 	<p><span class="auto-style2"><strong>100 Epoch を約５時間半で学習できました</strong></span>。（CPU動作の場合です。GPU動作の場合はもっと高速に学習可能です。）</p>
+  <p>&nbsp;</p>
+  
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>参考</strong></p>
+      <p>ゲーミングノートＰＣ環境でも同じ学習を実施。<br>5時間30分 ⇨ <strong>55分</strong> へ短縮できました。</p>
+      <p>[環境]</p>
+      <p>GPU: NVIDIA GeForce GTX 1650 (4GB)</p>
+      <p>CPU: Intel Core i7-9750H</p>
+      <p>Cuda: 11.7</p>
+      <p>Python: 3.10.7</p>
+      <p>PyToch: 1.12+cu116</p>
+      <p>OS: Windows 11 home, 22H2</p>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
+
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>"models\open-images-model-labels.txt" は "train_ssd.py" 
+  を実行することで自動的に生成されるようにプログラミングされているようです。</p>
+      <p>dataset_type == 'voc' の場合は "voc-model-labels.txt" を自動的に生成するようです。</p>
+  <p>２つの生成方法は細かい部分でいろいろと差異がありそうです。詳細については "train_ssd.py" を参照してください。</p>
+    </div>
+  </div>
+
 	<p>&nbsp;</p>
   
+  <div style="border-radius: 5px; padding: 1em; border: thin solid #C0C0C0; background-color: #F0FFFF;">
+    <h3>参考</h3>
     <div class="status_information">
       <div></div>
       <div>
@@ -571,36 +619,27 @@ class PredictionTransform:
 		different lengths or shapes) is deprecated. If you meant to do this, you 
 		must specify 'dtype=object' when creating the ndarray.<br>&nbsp; mode = 
 		random.choice(self.sample_options)</span></p>
-		<p>このままでも正常に動作するようですが、修正したい場合は下記URLの記事を参照。</p>
-		<p>
-		<a href="https://github.com/amdegroot/ssd.pytorch/issues/498" target="_blank">VisibleDeprecationWarning of augmentations.py · Issue #498 · 
-		amdegroot/ssd.pytorch (github.com)</a></p>
       </div>
     </div>
 
     <p>&nbsp;</p>
-	<p>"transforms.py" の 247行目を以下のように修正すればよいようです。</p>
-	<pre class="prettyprint linenums lang-py" style="width: 800px; overflow-x:auto;">
+    <p>このままでも正常に動作するようですが、修正したい場合は下記URLの記事を参照。</p>
+    <p>
+    <a href="https://github.com/amdegroot/ssd.pytorch/issues/498" target="_blank">VisibleDeprecationWarning of augmentations.py · Issue #498 · 
+    amdegroot/ssd.pytorch (github.com)</a></p>
+    <p>&nbsp;</p>
+    <p>"transforms.py" の 247行目を以下のように修正すればよいようです。</p>
+    <pre class="prettyprint linenums lang-py" style="width: 800px; overflow-x:auto;">
 # before
 mode = random.choice(self.sample_options)
 
 # after
 random_idx = random.randint(0, len(self.sample_options) - 1)
 mode = self.sample_options[random_idx]</pre>
+  </div>
+  
 	<p>&nbsp;</p>
   
-    <div class="status_information">
-      <div></div>
-      <div>
-        <p><strong>NOTE</strong></p>
-        <p>"models\open-images-model-labels.txt" は "train_ssd.py" 
-		を実行することで自動的に生成されるようにプログラミングされているようです。</p>
-        <p>dataset_type == 'voc' の場合は "voc-model-labels.txt" を自動的に生成するようです。</p>
-		<p>２つの生成方法は細かい部分でいろいろと差異がありそうです。詳細については "train_ssd.py" を参照してください。</p>
-      </div>
-    </div>
-
-    <p>&nbsp;</p>
 	  <p>&nbsp;</p>
   	<p>9. 学習したデータとテスト画像を使用して Gun の認識をしてみます。</p>
 	  <p>テスト画像は <a href="https://pixabay.com/ja/" target="_blank">Pixabay</a> 
@@ -724,7 +763,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <img alt="army-60720_1920.jpg" src="mobilenet-ssd_train/img7.jpg" width="800"></p>
 	  <p>&nbsp;</p>
 	  <p>&nbsp;</p>
-	  <p>10. "--freeze_net", "--freeze_base_net"</p>
+	  <p>10. "--freeze_net", "--freeze_base_net" を試してみる</p>
 	  <p>ホームページ中に下記説明がありました。</p>
 	  <p>
   	<img alt="--freeze_base_net, --freeze_net" class="border_with_drop-shadow" src="mobilenet-ssd_train/img1B.jpg" width="800"></p>
@@ -858,7 +897,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <p><img alt="--freeze_base_net" src="mobilenet-ssd_train/img14.jpg" width="800"></p>
 	  <p>&nbsp;</p>
 	  <p>&nbsp;</p>
-	  <p>11. スケジューラを "multi-step" にしてみる</p>
+	  <p>11. スケジューラ "multi-step" を試してみる</p>
 	  <p>"multi-step" は学習速度の減速タイミングを詳細に指示することができます。</p>
 	  <p>スケジューラを「cosine」とした上記学習では、Epoch 30～50 あたりから学習の停滞がみられます。"Validation Loss" の値だと 2.8～2.9 
 	  ぐらいから良くなりません。この辺りに達した後、学習速度をさらに減速することでより良い結果を得られるのではという仮説から、スケジューラを「multi-step」へ変更、--milestones として "50,80" 
@@ -990,43 +1029,15 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	  <p><img alt="multi-step" src="mobilenet-ssd_train/img15.jpg" width="800"></p>
 	  <p>&nbsp;</p>
 	  <p>少なくとも "multi-step" による学習はできてそうです。枠の位置はこれが最も良い結果に見えます。</p>
-	  <p>&nbsp;</p>
-  
-    <div class="status_information">
-      <div></div>
-      <div>
-        <p><strong>参考</strong></p>
-        <p>ゲーミングノートＰＣ環境でも同じ学習を実施。<br>5時間30分 ⇨ <strong>55分</strong> へ短縮できました。</p>
-    		<p>[環境]</p>
-    		<p>GPU: NVIDIA GeForce GTX 1650 (4GB)</p>
-    		<p>CPU: Intel Core i7-9750H</p>
-    		<p>Cuda: 11.7</p>
-    		<p>Python: 3.10.7</p>
-    		<p>PyToch: 1.12+cu116</p>
-		    <p>OS: Windows 11 home, 22H2</p>
-      </div>
-    </div>
-
-	  <p>&nbsp;</p>
+    <p>&nbsp;</p>
 	</section>
-	
-	<p>&nbsp;</p>
-	<hr>
-	<p>&nbsp;</p>
-	
-	<section>
-	<h4>5-1-2. Linux の場合</h4>
-	<p>&nbsp;</p>
-	<p>To Be Edited. </p>
-	<p>&nbsp;</p>
-</section>
 	
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
 
 <section>
-  <h3><a name="5-2._独自の画像を学習してみる_(VOC)">5-2. 独自の画像を学習してみる (VOC)</a></h3>
+  <h3><a name="5-2._独自の画像を学習してみる_(Pascal/VOC)">5-2. 独自の画像を学習してみる (Pascal/VOC)</a></h3>
 	<p>&nbsp;</p>
   <h4>[概要]</h4>
   <p>今度は自身で集めた画像を使ってオリジナルの学習データによる学習を試みます。</p>
@@ -1037,6 +1048,12 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   <p>&nbsp;</p>
 	<p>準備した画像データは以下の通りです。<a href="https://pixabay.com/ja" target="_blank">pixabay</a> 
 	  から入手させていただきました。</p>
+  <p>
+	  <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+	  全て
+	  商用利用無料、帰属表示必要なし、の画像です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay 
+	  License</a>" を参照ください。</span></p>
+  <p>&nbsp;</p>
         
   <table class="border-collapse" border="1" width="500">
     <caption>[Table.] 使用した学習データ数</caption>
@@ -1105,7 +1122,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   <p>voc 形式のフォルダおよびファイル構成は下図の通りです。この構成図に従ってフォルダを作成します。</p>
   <p>&nbsp;</p>
   <p>
-  <img alt="フォルダ、ファイル構成" src="mobilenet-ssd_train/folder_struct.drawio.svg" width="500"></p>
+  <img alt="フォルダ、ファイル構成" src="mobilenet-ssd_train/folder_struct.drawio.svg" width="600"></p>
   <p>&nbsp;</p>
         
   <table class="border-collapse" border="1" width="800">
@@ -1253,7 +1270,7 @@ $ pip3 install labelImg
   &lt;/object&gt;
 &lt;/annotation&gt;</pre>
   <p>&nbsp;</p>
-  
+  <div style="border-radius: 5px; padding: 1em; border: thin solid #C0C0C0; background-color: #F0FFFF;">
     <div class="status_information">
       <div></div>
       <div>
@@ -1286,15 +1303,23 @@ TypeError: arguments did not match any overloaded call:
   <p>
   <img alt="&quot;Display Labels&quot; を有効化" src="mobilenet-ssd_train/img40.jpg" width="800"></p>
   <p>"Display Labels" を有効化した例</p>
+  </div>
   <p>&nbsp;</p>
     
-  <p>&nbsp;</p>
   <p>8. "ImageSets\Main\trainval.txt"、"ImageSets\Main\test.txt" を設定</p>
-  <p>全画像データから 70% を学習用（trainval）に、30% を評価用（test）に使用します。</p>
-  <p>今回はオブジェクト種類が１つなのでまだ良いのですが、複数の種類を学習するときは種別ごとに適正に配分する必要があるので大変です。今後のことを考えて 
-  trainval.txt と test.txt を自動生成するプログラムを作成しました。下記にソースコードを記載します。</p>
-  <p>使用方法概要です。他のプログラムと同様に下記ソースコードを pytorch-ssd 
-  のルートフォルダに保存します。上記に構成したフォルダ構成のままであればあとはこのプログラムを実行するだけです。パスやファイル名を変更したい場合は、下記表を参考に引数を指定して実行します。</p>
+  <p>全画像データから 70% を学習用（"trainval.txt"）に、30% を評価用（"test.txt"）に使用します。各ファイル（"trainval.txt", 
+  "test.txt"）に拡張子を除いたファイル名一覧を記載します。</p>
+  <p>学習は "trainval.txt" 
+  に記載の順序で行うので、ファイル記載順によってデータに偏りが無い方が良いです。このため一般的にはファイルリストをランダムにシャッフルします。</p>
+  <p>また、今回はオブジェクト種類が１つなのでまだ良いのですが、複数の種類を学習するときは種別ごとに適正に配分する必要があるので大変です。今後のことを考えて 
+  "trainval.txt" と "test.txt" を自動生成するプログラムを作成してみました。下記にソースコードを記載します。</p>
+  <p>使用方法概要です。</p>
+  <ul>
+    <li>他のプログラムと同様に、下記ソースコードを pytorch-ssd 
+  のルートフォルダに保存します。</li>
+    <li>上記に構成したフォルダ構成のままであれば、このプログラムを実行するだけです。</li>
+    <li>パスやファイル名を変更する場合、下記表を参考に引数を指定して実行します。</li>
+  </ul>
   <p>&nbsp;</p>
         
     <table class="border-collapse" border="1" width="800">
@@ -1337,17 +1362,17 @@ TypeError: arguments did not match any overloaded call:
     
     <p>&nbsp;</p>
   <p>["create_imagesets_files.py"]</p>
-  <pre class="prettyprint linenums lang-py">
-'''
+  <pre class="prettyprint linenums lang-py">'''
 [Abstract]
-    アノテーションファイル（XMLファイル）から trainval.txt test.txt を作成する。
+    アノテーションファイル（XMLファイル）から "trainval.txt" "test.txt" を作成する
 
 [Details]
     - jpeg_path と xml_path に保存されているファイルを確認して両方に存在するファイルのみでファイルリストを作成する。
     - XML ファイルの内容を確認し、対象全ファイル中に存在するクラス名の一覧を作成する。
-    - クラス毎に &lt;class_name&gt;_trainval.txt, &lt;class_name&gt;_test.txt を作成する。ファイルの 70% を trainval.txt に、30% を test.txt とする。 
-    - 全ての &lt;class_name&gt;_trainval.txt を集めて trainval.txt として保存する。ファイル一覧はランダムシャッフルする。
-    - 全ての &lt;class_name&gt;_test.txt を集めて test.txt として保存する。ファイル一覧はランダムシャッフルする。
+    - クラス毎に "&lt;class_name&gt;_trainval.txt", "&lt;class_name&gt;_test.txt" を作成する。
+      ファイルの 70% を "&lt;class_name&gt;_trainval.txt" に、30% を "&lt;class_name&gt;_test.txt" に保存する。 
+    - 全ての "&lt;class_name&gt;_trainval.txt" を集めて "trainval.txt" として保存する。ファイル一覧をランダムシャッフルする。
+    - 全ての "&lt;class_name&gt;_test.txt" を集めて "test.txt" として保存する。ファイル一覧をランダムシャッフルする。
 
 [Author]
     kinoshita hidetoshi (木下英俊)
@@ -1363,7 +1388,6 @@ import os
 import glob
 import random
 import xml.etree.ElementTree as ET
-
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -1423,17 +1447,17 @@ def create_target_list(jpeg_path, xml_path):
 
 '''
 [Abstract]
-    特定クラス向けの trainval.txt, test.txt を出力する
+    特定クラス向けの "&lt;class_name&gt;_trainval.txt", "&lt;class_name&gt;_test.txt" を出力する
 '''
 def save_trainval_test_with_class_name(target_files, class_name):
     '''
-    ファイルリストの 30% を test.txt、70% を trainval.txt へ出力
+    ファイルリストの 70% を "&lt;class_name&gt;_trainval.txt" へ、30% を "&lt;class_name&gt;_test.txt" へ出力
     '''
     files_end = len(target_files)
     test_end  = int(files_end * 0.3)
 
     '''
-    &lt;class_name&gt;_test.txt, &lt;class_name&gt;_trainval.txt 出力
+    "&lt;class_name&gt;_test.txt", "&lt;class_name&gt;_trainval.txt" 出力
     '''
     with open( os.path.join( args.imagesets_path, class_name + '_' + args.test_filename), 'w') as f:
         f.write('\n'.join(target_files[0:test_end]))
@@ -1444,39 +1468,13 @@ def save_trainval_test_with_class_name(target_files, class_name):
 
 '''
 [Abstract]
-    main 関数
+    アノテーションファイル（XMLファイル）から "trainval.txt" "test.txt" を作成する
 '''
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Create "ImageSets/Main/trainval.txt", "ImageSets/Main.test.txt" files.')
-
-    parser.add_argument("--jpeg_path", default="./data/voc/JPEGImages", type=str, help='Specify JPEGImages (jpeg files) path.')
-    parser.add_argument("--xml_path", default="./data/voc/Annotations", type=str, help='Specify Annotations (xml files) path.')
-    parser.add_argument("--imagesets_path", default="./data/voc/ImageSets/Main", type=str, help='Specify ImageSets path.')
-    parser.add_argument("--trainval_filename", default="trainval.txt", type=str, help='Specify trainval.txt filename.')
-    parser.add_argument("--test_filename", default="test.txt", type=str, help='Specify test.txt filename.')
-    args = parser.parse_args()
-
-    logging.info('=== args ===')
-    logging.info(args)
-    
-    if os.path.exists( args.jpeg_path ) == False:
-        print("NOT exist " + args.jpeg_path + ".")
-        sys.exit(1)
-
-    if os.path.exists( args.xml_path ) == False:
-        print("NOT exist " + args.xml_path + ".")
-        sys.exit(1)
-
-    if os.path.exists( args.imagesets_path ) == False:
-        print("NOT exist " + args.imagesets_path + ".")
-        sys.exit(1)
-
+def create_imagesets_files():
     '''
-    JPEG, XML 両方に共通であるものだけをリスト化
+    JPEG, XML 両方に共通に存在するファイル名だけをリスト化
     '''
     target_files = create_target_list(args.jpeg_path, args.xml_path)
-
 
     '''
     ラベルリストを作成
@@ -1494,9 +1492,9 @@ if __name__ == '__main__':
     logging.info('=== label_list ===')
     logging.info(label_list)
 
-
     '''
-    ラベル毎のファイルリストを作成
+    ラベル毎の trainval_&lt;label&gt;.txt, test_&lt;label&gt;.txt を作成
+    それぞれ全体の 70%, 30% の比率で出力
     '''
     trainval_files_list = []
     test_files_list = []
@@ -1511,10 +1509,6 @@ if __name__ == '__main__':
                     file_list.append(file)
                     break
         
-        '''
-        ラベル毎の trainval_&lt;label&gt;.txt, test_&lt;label&gt;.txt を作成
-        それぞれ全体の 70%, 30% の比率で出力
-        '''
         save_trainval_test_with_class_name(file_list, label)
         trainval_files_list.append( label + '_' + args.trainval_filename)
         test_files_list.append( label + '_' + args.test_filename)
@@ -1553,7 +1547,38 @@ if __name__ == '__main__':
         f.write('\n'.join(test_files))
         logging.info('=== test.txt ===')
         logging.info('path : ' + filename)
-        logging.info('size : ' + str(len(test_files)))</pre>
+        logging.info('size : ' + str(len(test_files)))
+
+
+'''
+[Abstract]
+    main 関数
+'''
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser( description='Create "ImageSets/Main/trainval.txt", "ImageSets/Main.test.txt" files.')
+    parser.add_argument("--jpeg_path", default="./data/voc/JPEGImages", type=str, help='Specify JPEGImages (jpeg files) path.')
+    parser.add_argument("--xml_path", default="./data/voc/Annotations", type=str, help='Specify Annotations (xml files) path.')
+    parser.add_argument("--imagesets_path", default="./data/voc/ImageSets/Main", type=str, help='Specify ImageSets path.')
+    parser.add_argument("--trainval_filename", default="trainval.txt", type=str, help='Specify trainval.txt filename.')
+    parser.add_argument("--test_filename", default="test.txt", type=str, help='Specify test.txt filename.')
+    args = parser.parse_args()
+
+    logging.info('=== args ===')
+    logging.info(args)
+    
+    if os.path.exists( args.jpeg_path ) == False:
+        print("NOT exist " + args.jpeg_path + ".")
+        sys.exit(1)
+
+    if os.path.exists( args.xml_path ) == False:
+        print("NOT exist " + args.xml_path + ".")
+        sys.exit(1)
+
+    if os.path.exists( args.imagesets_path ) == False:
+        print("NOT exist " + args.imagesets_path + ".")
+        sys.exit(1)
+
+    create_imagesets_files()</pre>
   <p>&nbsp;</p>
   <p>実行後のログ出力例です。</p>
   <pre>2023-02-16 17:48:25,323 - root - INFO - === args ===
@@ -1626,7 +1651,7 @@ animal-1851487_1920
 bird-7016926_1920
 ･･･</pre>
   <p>&nbsp;</p>
-  <p>以上で学習のための事前準備を完了です・</p>
+  <p>以上で学習のための事前準備を完了です。</p>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>9. 学習を実施</p>
@@ -1803,6 +1828,14 @@ bird-7016926_1920
   </table>
   
   <p>&nbsp;</p>
+  <p>52分（CPU 環境）で "100 Epoch" の学習を完了できました。</p>
+  <p>&nbsp;</p>
+  <p>学習データと共に出力された "models/voc-model-labels.txt" の内容を以下に記載します。</p>
+  <p>["models/voc-model-labels.txt" の内容]</p>
+  <pre style="width: 500px">BACKGROUND
+bird</pre>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
   
   <div class="status_information">
     <div></div>
@@ -1855,6 +1888,88 @@ bird-7016926_1920
   <p>今回学習に使用した画像枚数は 140枚 という少ないものでしたが、私の予想に反してそこそこ以上の良い認識性能を実現できました。</p>
   <p>学習済みデータを元に追加学習を行っていることも効率よく学習できた大きな要因でしょう。短い時間で学習できているのは軽量型のAIモデル（MobileNet）を使っていることも理由の１つでしょう。</p>
   <p>少ない学習画像枚数、短い学習時間で実現できました。正常認識できない画像を収集して追加学習すればさらなる認識性能向上も見込めます。様々な応用を考えることができそうと思いました。AIを学習したり応用したい人達の参考になれば幸いです。</p>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<section>
+  <h3><a name="5-3._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-3. 学習結果とカメラを使って物体検知してみる 
+  (i-PRO カメラ)</a></h3>
+  <p>&nbsp;</p>
+  <h4>[概要]</h4>
+  <p>前節で作成した学習結果とカメラを使って物体検知を行ってみます。</p>
+  <p>
+  &nbsp;</p>
+	
+	<h4>[環境]</h4>
+  <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>言語 :</td>
+        <td>Python,</td>
+        <td>3.10.7</td>
+      </tr>
+
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td>PyTorch,</td>
+        <td>1.12.1+cpu</td>
+      </tr>
+
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+
+      <tr>
+        <td>OS :</td>
+        <td>Windows 11 home,</td>
+        <td>22H2</td>
+      </tr>
+
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+  </table>
+
+	<p> &nbsp;</p>
+	
+	<h4>[手順]</h4>
+  <p>&nbsp;記事「<a href="./mobilenet-ssd.html#2-2._MobileNetV1-SSD_%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99%EF%BC%88i-PRO_%E3%82%AB%E3%83%A1%E3%83%A9%EF%BC%89">2-2. MobileNetV1-SSD を動かす（i-PRO カメラ）</a>」の内容に従って行います。</p>
+  <p>元の記事内容からラベルと学習データを変更するだけで、あなたが作成した学習データによる物体検知を行うことができます。</p>
+  <p>環境構築などは既にできていることを前提に詳細説明を割愛します。</p>
+  <p>
+  &nbsp;</p>
+	<p>下記コマンドを入力してプログラムを起動します。</p>
+  <ul>
+    <li>&lt;学習データファイル パス&gt;、&lt;ラベルファイル パス&gt; にあなたが作成したファイルのパスを記載します。</li>
+    <li>４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。<span class="auto-style3">{user-id}</span>, 
+    <span class="auto-style3">{password}</span>, <span class="auto-style3">{ip-address}</span> 
+	  の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。<br>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <pre>$ python run_ssd_live_demo.py mb1-ssd <strong>&lt;学習データファイル パス&gt;</strong> <strong>&lt;ラベルファイル パス&gt;</strong> <span class="auto-style4">rtsp://</span><span class="auto-style5">{user-id}</span>:<span class="auto-style5">{password}</span>@<span class="auto-style5">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
+  <p>(具体例)</p>
+  <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd models/<strong>mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth</strong> models/<strong>voc-model-labels.txt</strong> rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</pre>
+	<p>&nbsp;</p>
+	<p>プログラムを動かした様子を以下に示します。</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p class="auto-style3">T.B.E. (To Be Edited)</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
 </section>
 
