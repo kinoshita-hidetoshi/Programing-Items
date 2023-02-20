@@ -84,15 +84,41 @@
     <p>&nbsp;</p>
 	  <p><a href="#5._学習">5. 学習</a></p>
     <p>&nbsp;&nbsp; <a href="#5-1._まずはやってみる_(open_images)">5-1. まずはやってみる (Open Images)</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-1-1._準備">5-1-1. 準備</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-1-2._学習">5-1-2. 学習</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-1-3._学習結果と静止画を使って推論">5-1-3. 
+    学習結果と静止画を使って推論</a></p>
     <p>&nbsp;&nbsp; <a href="#5-2._独自の画像を学習してみる_(Pascal/VOC)">5-2. 独自の画像を学習してみる (Pascal/VOC)</a></p>
-    <p>&nbsp;&nbsp; <a href="#5-3._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-3. 学習結果とカメラを使って物体検知してみる (i-PRO カメラ)</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-1._準備">5-2-1. 準備</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-2._アノテーション">5-2-2. アノテーション</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-3._trainval.txt、test.txt_を用意">5-2-3. trainval.txt、test.txt_を用意</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-4._学習">5-2-4. 学習</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-5._学習結果と静止画を使って推論">5-2-5. 学習結果と静止画を使って推論</a>&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6. 学習結果とカメラを使って物体検知してみる (i-PRO カメラ)</a></p>
+    <p><a href="#6._後書き">6. 後書き</a></p>
     <br>
     <p><a href="#ライセンス">ライセンス</a></p>
     <p><a href="#参考">参考</a></p>
   </nav>
 </div>
 <p> &nbsp;</p>
-
+<p><strong>MobileNet-SSD</strong> は、高速に物体物体検知を行うAIモデルの一つです。高い認識性能と共に GPU 
+を搭載しない組み込み機器でも動作する軽量なモデルであることに特徴があります。</p>
+<p>本ページでは、<strong>MobileNet-SSD</strong> とあなたが用意した画像データを使って独自の MobileNet-SSD 
+学習データを作成する方法について記載します。</p>
+<p>&nbsp;</p>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="mobilenet-ssd_train/LabelImg_tutorial.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    <p>[動画] アノテーション実施の様子</p>
+  <p>&nbsp;</p>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="mobilenet-ssd_train\bird_21723.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    <p>[動画] 独自の MobileNet-SSD 学習データによる認識テスト例</p>
+    
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
@@ -203,6 +229,8 @@
 </table>
 
   <p>&nbsp;</p>
+      <h4><a name="5-1-1._準備">5-1-1. 準備</a></h4>
+      <p>&nbsp;</p>
     
 	<p>1. <a href="https://github.com/qfgaohao/pytorch-ssd" target="_blank">
 	pytorch-ssd</a> をクローンします。（ここまで読まれた方は恐らく完了しているでしょう）</p>
@@ -288,6 +316,9 @@ $ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images
 	<p>7. 学習済みモデルを保存</p>
 	<p>本ページを上から順に進めてきた人たちは既に models フォルダに学習済みモデルデータを保存済みと思います。まだの方は、<a href="#2-1._MobileNetV1-SSD_を動かす（PC 内蔵カメラ）">こちら</a>に記載の内容に従って 
 	"mobilenet-v1-ssd-mp-0_675.pth" をダウンロードしておきます。</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h4><a name="5-1-2._学習">5-1-2. 学習</a></h4>
 	<p>&nbsp;</p>
 	<p>8. Retrain (再学習)を実行します</p>
   <p>&nbsp;</p>
@@ -309,7 +340,7 @@ $ python run_ssd_example.py mb1-ssd models/gun_model_2.21.pth models/open-images
 	<p>&nbsp;</p>
 	
 	<p>以下、上記コマンド実行後のコンソール出力内容です。</p>
-	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後でエラーとなりました。エラー部分を<span class="auto-style3">赤字</span>で表記します。</p>
+	<p>データ読み込みまでは問題なくできていそうですが、"Start training from epoch 0." の後で１つの警告と１つのエラーを出力して停止しました。これら主力部分を<span class="auto-style3">赤字</span>で表記します。</p>
 	<pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">2022-11-13 15:04:07,989 - root - INFO - Namespace(dataset_type='open_images', datasets=['./data/open_images'], validation_dataset=None, balance_data=False, net='mb1-ssd', freeze_base_net=False, freeze_net=False, mb2_width_mult=1.0, lr=0.01, momentum=0.9, weight_decay=0.0005, gamma=0.1, base_net_lr=0.001, extra_layers_lr=None, base_net=None, pretrained_ssd='models/mobilenet-v1-ssd-mp-0_675.pth', resume=None, scheduler='cosine', milestones='80,100', t_max=100.0, batch_size=5, num_epochs=100, num_workers=4, validation_epochs=5, debug_steps=100, use_cuda=True, checkpoint_folder='models/')
 2022-11-13 15:04:07,989 - root - INFO - Prepare training datasets.
 2022-11-13 15:04:08,277 - root - INFO - Dataset Summary:Number of Images: 961
@@ -639,6 +670,8 @@ mode = self.sample_options[random_idx]</pre>
   </div>
   
 	<p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h4><a name="5-1-3._学習結果と静止画を使って推論">5-1-3. 学習結果と静止画を使って推論</a></h4>
   
 	  <p>&nbsp;</p>
   	<p>9. 学習したデータとテスト画像を使用して Gun の認識をしてみます。</p>
@@ -647,7 +680,7 @@ mode = self.sample_options[random_idx]</pre>
     <p>&nbsp;</p>
     <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.843603060245514.pth"）とサンプル画像（"sample_image.jpg"）を使った場合の例を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
     
-    <pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
+    <pre style="background-color: #000000; color: #CCCCCC; white-space:pre-wrap;">$ python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.843603060245514.pth models\open-images-model-labels.txt .\sample_image.jpg</pre>
     
     <p>&nbsp;</p>
     <p>ただし <strong>run_ssd_example.py</strong> は OpenSSL 
@@ -1118,6 +1151,8 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
 	
 	<h4>[手順]</h4>
   <p>&nbsp;</p>
+  <h4><a name="5-2-1._準備">5-2-1. 準備</a></h4>
+  <p>&nbsp;</p>
   <p>1. "train_ssd.py" が想定する VOC データセットのフォルダ・ファイルを準備</p>
   <p>voc 形式のフォルダおよびファイル構成は下図の通りです。この構成図に従ってフォルダを作成します。</p>
   <p>&nbsp;</p>
@@ -1178,6 +1213,8 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
   </div>
 
   <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h4><a name="5-2-2._アノテーション">5-2-2. アノテーション</a></h4>
   <p>4. LabelImg をインストール</p>
   <p>アノテーションツール LabelImg をインストールします。pip, setuptools を更新した後、pip で labelimg をインストールします。</p>
   
@@ -1305,9 +1342,13 @@ TypeError: arguments did not match any overloaded call:
   <p>"Display Labels" を有効化した例</p>
   </div>
   <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h4><a name="5-2-3._trainval.txt、test.txt_を用意">
+  5-2-3. "trainval.txt"、"test.txt" を用意</a></h4>
+  <p>&nbsp;</p>
     
-  <p>8. "ImageSets\Main\trainval.txt"、"ImageSets\Main\test.txt" を設定</p>
-  <p>全画像データから 70% を学習用（"trainval.txt"）に、30% を評価用（"test.txt"）に使用します。各ファイル（"trainval.txt", 
+  <p>8. "ImageSets\Main\trainval.txt"、"ImageSets\Main\test.txt" を用意します</p>
+  <p>ここでは全画像データから 70% を学習用（"trainval.txt"）に、30% を評価用（"test.txt"）に使用します。各ファイル（"trainval.txt", 
   "test.txt"）に拡張子を除いたファイル名一覧を記載します。</p>
   <p>学習は "trainval.txt" 
   に記載の順序で行うので、ファイル記載順によってデータに偏りが無い方が良いです。このため一般的にはファイルリストをランダムにシャッフルします。</p>
@@ -1319,6 +1360,7 @@ TypeError: arguments did not match any overloaded call:
   のルートフォルダに保存します。</li>
     <li>上記に構成したフォルダ構成のままであれば、このプログラムを実行するだけです。</li>
     <li>パスやファイル名を変更する場合、下記表を参考に引数を指定して実行します。</li>
+    <li>学習用・評価用の比率（70%, 30%）を変更したい場合はプログラム中の定数を直接変更してください。</li>
   </ul>
   <p>&nbsp;</p>
         
@@ -1364,8 +1406,8 @@ TypeError: arguments did not match any overloaded call:
   <p>["create_imagesets_files.py"]</p>
   <pre class="prettyprint linenums lang-py">'''
 [Abstract]
-    アノテーションファイル（XMLファイル）から "trainval.txt" "test.txt" を作成する
-
+    JPEGファイル（*.jpg）、アノテーションファイル（*.xml）から "trainval.txt" "test.txt" を作成する
+    
 [Details]
     - jpeg_path と xml_path に保存されているファイルを確認して両方に存在するファイルのみでファイルリストを作成する。
     - XML ファイルの内容を確認し、対象全ファイル中に存在するクラス名の一覧を作成する。
@@ -1654,7 +1696,19 @@ bird-7016926_1920
   <p>以上で学習のための事前準備を完了です。</p>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
+  <h4><a name="5-2-4._学習">5-2-4. 学習</a></h4>
   <p>9. 学習を実施</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>前節から順番に作業してきている前提で記載しています。</p>
+        <p>"<a href="#5-1-2._学習">5-1-2. 学習</a>" で説明したプログラム修正を必要とするはずです。ご注意ください。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
   <p>下記コマンドにより学習を実行しました。</p>
   <pre style="color: #FFFFFF; background-color: #000000">$ python train_ssd.py --dataset_type <span class="auto-style3"><strong>voc</strong></span> --datasets ./data/voc --<strong>validation_dataset</strong> ./data/voc --net mb1-ssd --pretrained_ssd models/mobilenet-v1-ssd-mp-0_675.pth --scheduler cosine --lr 0.01 --t_max 100 --validation_epochs 5 --num_epochs 100 --debug_steps 25  --base_net_lr 0.001  --batch_size 5</pre>
   <p>&nbsp;</p>
@@ -1854,12 +1908,16 @@ bird</pre>
 
   <p>&nbsp;</p>
   <p>&nbsp;</p>
+  <h4><a name="5-2-5._学習結果と静止画を使って推論">5-2-5. 学習結果と静止画を使って推論</a></h4>
+  <p>&nbsp;</p>
   <p>10. 学習したデータとテスト画像を使用して認識</p>
   <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth"）とサンプル画像（"birds-7469509_1920.jpg"）を使った 
   コマンド実施例 を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
     
   <pre style="background-color: #000000; color: #FFFFFF; white-space:pre-wrap;">$ python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth .\models\voc-model-labels.txt .\data\voc\JPEGImages\birds-7469509_1920.jpg</pre>
     
+  <p>&nbsp;</p>
+  <p>以下、いくつかのサンプル画像による認識結果です。</p>
   <p>&nbsp;</p>
   <p>テスト画像１： 入手元
   <a href="https://pixabay.com/ja/photos/鳥-カモメ-空飛ぶカモメ-空-7469509/" target="_blank">Pixabay</a></p>
@@ -1896,8 +1954,8 @@ bird</pre>
 <p>&nbsp;</p>
 
 <section>
-  <h3><a name="5-3._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-3. 学習結果とカメラを使って物体検知してみる 
-  (i-PRO カメラ)</a></h3>
+  <h4><a name="5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6. 学習結果とカメラを使って物体検知してみる 
+  (i-PRO カメラ)</a></h4>
   <p>&nbsp;</p>
   <h4>[概要]</h4>
   <p>前節で作成した学習結果とカメラを使って物体検知を行ってみます。</p>
@@ -1953,29 +2011,86 @@ bird</pre>
   &nbsp;</p>
 	<p>下記コマンドを入力してプログラムを起動します。</p>
   <ul>
-    <li>&lt;学習データファイル パス&gt;、&lt;ラベルファイル パス&gt; にあなたが作成したファイルのパスを記載します。</li>
+    <li>&lt;<em>学習データファイル パス</em>&gt;、&lt;<em>ラベルファイル パス</em>&gt; にあなたが作成したファイルのパスを記載します。</li>
     <li>４番目の引数として RTSP 表記で i-PRO カメラの接続を記載します。<span class="auto-style3">{user-id}</span>, 
     <span class="auto-style3">{password}</span>, <span class="auto-style3">{ip-address}</span> 
 	  の部分をご自身が使われる i-PRO カメラの設定に合わせて修正して実行してください。<br>その他 RTSP に関しては記事「<a href="connect_with_rtsp.html">RTSP で画像を取得する</a>」を参照ください。</li>
   </ul>
   <p>&nbsp;</p>
-  <pre>$ python run_ssd_live_demo.py mb1-ssd <strong>&lt;学習データファイル パス&gt;</strong> <strong>&lt;ラベルファイル パス&gt;</strong> <span class="auto-style4">rtsp://</span><span class="auto-style5">{user-id}</span>:<span class="auto-style5">{password}</span>@<span class="auto-style5">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
+  <p>(コマンド書式)</p>
+  <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd <strong>&lt;<em>学習データファイル パス</em>&gt;</strong> <strong>&lt;<em>ラベルファイル パス</em>&gt;</strong> <span class="auto-style4">rtsp://</span><span class="auto-style3">{user-id}</span>:<span class="auto-style3">{password}</span>@<span class="auto-style3">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
   <p>(具体例)</p>
   <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd models/<strong>mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth</strong> models/<strong>voc-model-labels.txt</strong> rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</pre>
 	<p>&nbsp;</p>
-	<p>プログラムを動かした様子を以下に示します。</p>
+	<p>以下、いくつかのサンプル動画による認識結果です。</p>
+  <p>※ PC上で再生表示する動画を i-PRO カメラで接写してテストしています。このため画質が荒くなっていますこと、ご容赦ください。 </p>
   <p>&nbsp;</p>
+  
+  <p>テスト動画１： 入手元
+  <a href="https://pixabay.com/ja/videos/ロビン-鳥-森-自然-バネ-21723/" target="_blank">Pixabay</a></p>
+  <p>商用利用無料、帰属表示必要なし、の動画です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</p>
+  <video controls muted autoplay="y" loop="y" width="800">
+    <source src="mobilenet-ssd_train\bird_21723.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+  <p>[動画] テスト動画１</p>
+  
   <p>&nbsp;</p>
-  <p class="auto-style3">T.B.E. (To Be Edited)</p>
+  
+  <p>テスト動画２： 入手元 
+  <a href="https://pixabay.com/ja/videos/スズメ-鳥-ジャンプ-ダンス-38521/" target="_blank">Pixabay</a></p>
+  <p>  商用利用無料、帰属表示必要なし、の動画です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</p>
+  <video controls muted autoplay="y" loop="y" width="800">
+    <source src="mobilenet-ssd_train\bird_38521.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+  <p>[動画] テスト動画２</p>
+  
   <p>&nbsp;</p>
+  
+  <p>テスト動画３： 入手元    
+  <a href="https://pixabay.com/ja/videos/グリーブ-lake-nature-26928/" target="_blank">Pixabay</a></p>
+  <p>商用利用無料、帰属表示必要なし、の動画です。ライセンス詳細は "<a href="https://pixabay.com/ja/service/terms/" target="_blank">Pixabay License</a>" を参照ください。</p>
+  <video controls muted autoplay="y" loop="y" width="800">
+    <source src="mobilenet-ssd_train\bird_26928.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+  <p>[動画] テスト動画３</p>
+  
   <p>&nbsp;</p>
+  <p>今回学習に使用した画像枚数は 140枚 という少ないものでしたが、私の予想に反してそこそこ以上の良い認識性能を実現できました。</p>  
   <p>&nbsp;</p>
+    
+</section>
+
+&nbsp;
+<hr>
+&nbsp;
+
+
+</section>
+
+<section>
+  <h2><a name="6._後書き">6. 後書き</a></h2>
+  <p>MobileNet-SSD とオープンソースツールの LabelImg を使って、あなたが独自の物体検知 AI 
+  を実現する方法と手順について記載しました。とっつきにくい部分、面倒な部分があるかと思いますが決して難しい内容ではないと考えます。意図通りに実際に動いたときの驚き・感動はなかなか良い気持ちを味わえると思います。本文記載の通り、そこそこの性能でよければ100枚ぐらいの画像でも十分実験できると思います。是非チャレンジしてみてください。（たくさんの画像をアノテーションするのは大変ですけどね）</p>
   <p>&nbsp;</p>
+  <p>最後に思いつくままにコツやヒントなどを箇条書きさせていただきます。</p>
+  <ul>
+    <li>認識しない画像は、学習用画像として追加して再学習します。</li>
+    <li>誤検知した画像は、同様に学習用画像として追加して学習します。アノテーション枠を付けていない部分は背景（BACKGROUND）として学習されるので誤検知を減らすことができます。</li>
+    <li>
+    似たような画像をたくさん学習することは避けましょう。学習時間増大の原因となるだけでなく認識精度低下の原因となります。バランスよく学習することはとても重要です。</li>
+    <li>メモリ量などPC環境が許せばバッチサイズを大きめにした方が良い、と言われています。その際は学習率（lr, 
+    base_net_lr）も大きい値を設定したほうが良い、という報告がありました。</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>以上です。このページを訪問いただいた皆さんの参考になれば幸いです。</p>
+  &nbsp;
+  &nbsp;
 </section>
 
 <p>&nbsp;</p>
-</section>
-
 <hr>
 <p>&nbsp;</p>
 
@@ -2076,6 +2191,16 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-20</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)</a>」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">&nbsp;</td>
+	    <td class="td_history">「<a href="#6._後書き">6._後書き</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-02-16</td>
 	    <td class="td_history_separator">-</td>
