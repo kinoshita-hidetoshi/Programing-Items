@@ -1913,7 +1913,11 @@ bird</pre>
   <p>10. 学習したデータとテスト画像を使用して認識</p>
   <p>私の学習済みデータ（"mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth"）とサンプル画像（"birds-7469509_1920.jpg"）を使った 
   コマンド実施例 を以下に記載します。あなたが実際に使用するファイル名およびパスへ修正してください。</p>
-    
+  <p>&nbsp;</p>
+  
+  <p>(コマンド書式)</p>
+  <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_example.py mb1-ssd <strong>&lt;学習データファイル パス&gt;</strong> <strong>&lt;ラベルファイル パス&gt;</strong> <strong>&lt;認識対象画像 パス&gt;</strong></pre>
+  <p>(具体例)</p>
   <pre style="background-color: #000000; color: #FFFFFF; white-space:pre-wrap;">$ python run_ssd_example.py mb1-ssd .\models\mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth .\models\voc-model-labels.txt .\data\voc\JPEGImages\birds-7469509_1920.jpg</pre>
     
   <p>&nbsp;</p>
@@ -2018,7 +2022,7 @@ bird</pre>
   </ul>
   <p>&nbsp;</p>
   <p>(コマンド書式)</p>
-  <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd <strong>&lt;<em>学習データファイル パス</em>&gt;</strong> <strong>&lt;<em>ラベルファイル パス</em>&gt;</strong> <span class="auto-style4">rtsp://</span><span class="auto-style3">{user-id}</span>:<span class="auto-style3">{password}</span>@<span class="auto-style3">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
+  <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd <strong>&lt;学習データファイル パス&gt;</strong> <strong>&lt;ラベルファイル パス&gt;</strong> <span class="auto-style4">rtsp://</span><span class="auto-style3">{user-id}</span>:<span class="auto-style3">{password}</span>@<span class="auto-style3">{ip-address}</span><span class="auto-style4">/MediaInput/stream_1</span></pre>
   <p>(具体例)</p>
   <pre style="color: #FFFFFF; background-color: #000000">$ python run_ssd_live_demo.py mb1-ssd models/<strong>mb1-ssd-Epoch-99-Loss-2.0738580177227655.pth</strong> models/<strong>voc-model-labels.txt</strong> rtsp://admin:Admin12345@192.168.0.10/MediaInput/stream_1</pre>
 	<p>&nbsp;</p>
