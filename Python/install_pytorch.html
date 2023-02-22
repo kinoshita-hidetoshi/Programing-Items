@@ -221,6 +221,7 @@ Type "help", "copyright", "credits" or "license" for more information.
     <p> &nbsp;</p>
 	<p> "Computer Platform" の欄を確認して、動作する CUDA バージョンを確認します。</p>
 	<p> 下図例だと "CUDA 11.6" または "CUDA 11.7" をインストールする必要があることを意味します。</p>
+    <p> 以下、"CUDA 11.7" をインストールするというシナリオで説明します。</p>
 	<p>  
 	<img alt="Pytorch インストール" src="install_pytorch/img61.jpg" width="800" class="border"></p>
 	<p> &nbsp;</p>
@@ -233,26 +234,34 @@ Type "help", "copyright", "credits" or "license" for more information.
 	<span class="auto-style2"><strong>過去のバージョン</strong></span>をダウンロードする場合、画面下段にある 
 	Archive of Previous CUDA Releases をクリックすると、過去の "CUDA Toolkit" 
 	をダウンロードできるページへ移動します。こちらから目的の OS およびバージョンの "CUDA Toolkit" をダウンロードします。 </p>
+    <p> 
+	<img alt="Archive of Previous CUDA Release" src="install_pytorch/img3.jpg" width="800"></p>
+    <p> 
+	&nbsp;</p>
+    <p> 
+	本例では下記「CUDA Toolkit 11.7.1」をクリックしてインストーラをダウンロードします。</p>
+    <p> 
+	<img alt="CUDA Toolkit Archive" class="border_with_drop-shadow" src="install_pytorch/img4.jpg" width="800"></p>
 	<p> 
 	&nbsp;</p>
 	<p> (4) "CUDA Toolkit" をインストール</p>
 	<p> ダウンロードした "CUDA Toolkit" 
 	を実行します。ライセンス条項についての確認があるので、内容を読んで［同意して続行する(A)］をクリックします。</p>
-	<p> 
-	<img alt="NVIDIA インストーラー起動直後" src="install_pytorch/imgBD.jpg" width="800"></p>
-	<p> &nbsp;</p>
+  <p><img alt="NVIDIA インストーラー" src="install_pytorch/img7.jpg" width="800"></p>
+	<p>&nbsp;</p>
 	<p> インストールオプションで高速（推奨）とカスタム（詳細）を選択画面になります。 </p>
 	<p> <span class="auto-style2">"Visual Studio" をインストールしていない場合</span>、インストールオプションの画面で「カスタム 
 	(詳細)(C)」を選択して［次へ(N)］をクリックします。</p>
 	<p> 特に指定をする必要がない場合は［高速 (推奨)(E)］を選んで［次へ(N)］をクリックします。</p>
-	<p> <img alt="インストールオプション" src="install_pytorch/imgC0.jpg" width="800">&nbsp;</p>
+	<p> 
+    <img alt="インストール オプション" src="install_pytorch/img8.jpg" width="800">&nbsp;</p>
 	<p> &nbsp;</p>
 	<p> <span class="auto-style2">"Visual Studio" をインストールしていない場合</span>、「カスタム 
 	インストール オプション」画面のツリーから「CUDA」を展開し、その中にある「<strong>Visual 
 	Studio Integration</strong>」の項目の<strong>チェックを外す</strong>必要があります。</p>
 	<p> チェックを外したら［次へ(N)］をクリックします。</p>
 	<p> 
-	<img alt="カスタム インストール オプション" src="install_pytorch/imgC1.jpg" width="800"></p>
+	<img alt="カスタム インストール オプション" src="install_pytorch/imgA.jpg" width="800">&nbsp;</p>
 	<p> &nbsp;</p>
 	<p> 「インストールの場所」はデフォルトで問題ありません。あとは画面の指示に従って［次へ(N)］などをクリックしていきます。</p>
 	<p> CUDAのインストールが開始して、無事にインストールを完了すると「NVIDIA インストーラーが終了しました」と画面へ表示します。［閉じる］を押して、CUDAのインストールを完了です。</p>
@@ -330,7 +339,7 @@ Python 3.10.7 (tags/v3.10.7:6cc6b13, Sep  5 2022, 14:08:36) [MSC v.1933 64 bit (
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; <span class="auto-style3">import torch</span>
 &gt;&gt;&gt; <span class="auto-style3">print(torch.__version__)</span>
-1.12.1+cu116
+1.12.1+cu117
 &gt;&gt;&gt;</pre>
 
   <p> &nbsp;</p>
@@ -398,6 +407,11 @@ Type "help", "copyright", "credits" or "license" for more information.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2023-02-21</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">図の差し替えなど微修正</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-02-05</td>
 	    <td class="td_history_separator">-</td>
