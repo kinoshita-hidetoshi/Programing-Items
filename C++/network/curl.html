@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>curl | Programing Items</title>
+  <title>libcurl | Programing Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -39,66 +39,441 @@
 
 <body onload="prettyPrint();">
 	
-<h1>curl</h1>
+<h1>libcurl</h1>
 
-<p> curl の使い方などについてメモします。</p>
+<p> libcurl の使い方などについてメモします。</p>
 <p> &nbsp;</p>
 
 <div class="mokuji">
   <nav>
-	<h2>目次</h2>
-	<p>1. ***</p>
-	<p>2. ***</p>
-	<p>3. ***</p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
+  	<h2>目次</h2>
+  	<p><a href="#1._libcurl_をインストールする">1. libcurl をインストールする</a></p>
+    <p>&nbsp; <a href="#1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></p>
+    <p>&nbsp; <a href="#1-2._Windows">1-2.&nbsp;Windows</a></p>
+    <p><a href="#2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
   </nav>
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
-	<h2> 1. ***</h2>
+	<h2><a name="1._libcurl_をインストールする">1. libcurl をインストールする</a></h2>
+  <h3><a name="1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></h3>
 	<h4>[概要]</h4>
+	
+  <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
+  というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
+  URL 転送ライブラリです。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
 	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows11 home,</td>
-	    <td>21H2 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>OS :</td>
+      <td>Ubuntu,</td>
+      <td>22.04</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </table>
+	
+	<p> &nbsp;</p>
+    <p> ■ curl のインストール</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">sudo apt install curl</pre>
+    <p> &nbsp;</p>
+    <p> ■ libcurl のインストール</p>
+    <p> デフォルト版</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">sudo apt-get install libcurl-dev</pre>
+    <p> OpenSSL 版</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">sudo apt-get install libcurl4-openssl-dev</pre>
+    <p> GnuTLS 版</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">sudo apt-get install libcurl4-gnutls-dev</pre>
+	
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3><a name="1-2._Windows">1-2. Windows</a></h3>
+	<h4>[概要]</h4>
+	
+  <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
+  というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
+  URL 転送ライブラリです。Microsoft Visual Studio からも利用可能です。</p>
+  <p>ここでは <strong>Microsoft</strong> が提供する <strong>vcpkg</strong> 
+  というクロスプラットフォームのパッケージマネージャーを使用して libcurl を導入する手順を紹介します。<strong>vcpkg</strong> 
+  を使用することで、c/c++ 
+  の外部ライブラリを利用したい場合に手動でソースコードからビルドすることなくインストールやリンクを簡単に行えるようになります。依存関係も <strong>
+  vcpkg</strong> が解決してインストールしてくれます。<strong>vcpkg</strong> は Windows、Linux および 
+  MacOS に対応しているようです。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>コンパイラ :</td>
+      <td>Visual Studio 2022 pro.,</td>
+      <td>Version 17.5.1</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>ライブラリ ：</td>
+      <td>curl:x64-windows,</td>
+      <td>7.88.1</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>OS :</td>
+      <td>Windows11 home,</td>
+      <td>22H2</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </table>
 	
 	<p> &nbsp;</p>
 	
+  <p>(1) vcpkg をインストール</p>
+  <p>git の clone コマンドを使用し、GitHub から vcpkg リポジトリをクローンします。任意の場所で実施してください。私は 
+  Documents フォルダ内に Github フォルダを作成してここで作業しました。</p>
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px">git clone https://github.com/Microsoft/vcpkg.git</pre>
+  <p>[実行例]</p>
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github&gt;git clone <strong>https://github.com/Microsoft/vcpkg.git</strong>
+Cloning into 'vcpkg'...
+remote: Enumerating objects: 181622, done.
+remote: Total 181622 (delta 0), reused 0 (delta 0), pack-reused 181622
+Receiving objects: 100% (181622/181622), 68.57 MiB | 3.37 MiB/s, done.
+Resolving deltas: 100% (115829/115829), done.
+Updating files: 100% (9787/9787), done.
+
+C:\Users\foo\Documents\Github&gt;</pre>
     <p>&nbsp;</p>
+    <p>(2) vcpkg 実行ファイルを生成</p>
+    <p>クローンした中にある <strong>bootstrap-vcpkg.bat</strong> を実行して実行ファイルを生成します。</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">cd vcpkg
+bootstrap-vcpkg.bat</pre>
+    <p>[実行例]</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github&gt;<strong>cd vcpkg</strong>
+
+C:\Users\foo\Documents\Github\vcpkg&gt;<strong>bootstrap-vcpkg.bat</strong>
+Downloading https://github.com/microsoft/vcpkg-tool/releases/download/2023-02-16/vcpkg.exe -&gt; C:\Users\foo\Documents\Github\vcpkg\vcpkg.exe... done.
+Validating signature... done.
+
+Telemetry
+---------
+vcpkg collects usage data in order to help us improve your experience.
+The data collected by Microsoft is anonymous.
+You can opt-out of telemetry by re-running the bootstrap-vcpkg script with -disableMetrics,
+passing --disable-metrics to vcpkg on the command line,
+or by setting the VCPKG_DISABLE_METRICS environment variable.
+
+Read more about vcpkg telemetry at docs/about/privacy.md
+
+C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+    <p>&nbsp;</p>
+    <p>(3) vcpkg install コマンドで curl をインストール</p>
+    <p><span class="cpp-source">vcpkg install</span> コマンドにより curl 
+    をインストールします。ここでは triplet として "x64-windows" を指定します。</p>
+    <p>triplet とは環境を表す文字列で、対応している triplet は <span class="cpp-source">vcpkg help 
+    triplet</span> コマンドで確認できます。 </p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg install curl:x64-windows</pre>
+    <p>[実行例]</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg install curl:x64-windows</strong>
+Computing installation plan...
+The following packages will be built and installed:
+    curl[core,non-http,schannel,ssl,sspi]:x64-windows -&gt; 7.88.1
+  * zlib[core]:x64-windows -&gt; 1.2.13
+Additional packages (*) will be modified to complete this operation.
+Detecting compiler hash for triplet x64-windows...
+Restored 0 package(s) from C:\Users\foo\AppData\Local\vcpkg\archives in 161 us. Use --debug to see more details.
+Installing 1/2 zlib:x64-windows...
+Building zlib[core]:x64-windows...
+-- Using cached madler-zlib-v1.2.13.tar.gz.
+
+*** 途中省略 ***
+
+-- Fixing pkgconfig file: C:/Users/foo/Documents/Github/vcpkg/packages/curl_x64-windows/debug/lib/pkgconfig/libcurl.pc
+-- Installing: C:/Users/foo/Documents/Github/vcpkg/packages/curl_x64-windows/share/curl/vcpkg-cmake-wrapper.cmake
+-- Installing: C:/Users/foo/Documents/Github/vcpkg/packages/curl_x64-windows/share/curl/copyright
+-- Performing post-build validation
+Stored binary cache: "C:\Users\foo\AppData\Local\vcpkg\archives\0b\0be4e066bb110c9e83d7ab0d78d61cee202eb0797b927e196b1af2e37d0a65d4.zip"
+Elapsed time to handle curl:x64-windows: 1.262 min
+Total install time: 1.423 min
+curl provides CMake targets:
+
+    # this is heuristically generated, and may not be correct
+    find_package(CURL CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE CURL::libcurl)
+
+
+C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+    <p>&nbsp;</p>
+    <p>以上で libcurl のインストールを完了です。</p>
+    <p>&nbsp;</p>
+    <p>(4) Visual Studio へ組み込む</p>
+    <p><span class="cpp-source">vcpkg integrate install</span> 
+    コマンドを実行することで、vcpkgでインストールしたライブラリを Visual Studio 
+    から利用できるようになります。インクルードディレクトリやライブラリディレクトリ、およびライブラリが自動で "Visual Studio" 
+    に追加されます。</p>
+    <p>Visual Studio 環境へ組み込まれることを好まない場合、こちらのコマンドを実行せずにご自身で個別にプロジェクトへ 
+    インクルードディレクトリやライブラリディレクトリ、およびライブラリの設定を行ってください。</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg integrate install</pre>
+    <p>[実行例]</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg integrate install</strong>
+Applied user-wide integration for this vcpkg root.
+CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=C:/Users/foo/Documents/Github/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+All MSBuild C++ projects can now #include any installed libraries. Linking will be handled automatically. Installing new libraries will make them instantly available.
+
+C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+    <p>&nbsp;</p>
+    <p>(5) インストールしたライブラリを確認</p>
+    <p><span class="cpp-source">vcpkg list</span> 
+    コマンドを実行することで、インストールしたライブラリ一覧を表示することができます。</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg list</pre>
+    <p>[実行例]</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg list</strong>
+curl:x64-windows                                  7.88.1              A library for transferring data with URLs
+curl[non-http]:x64-windows                                            Enables protocols beyond HTTP/HTTPS/HTTP2
+curl[schannel]:x64-windows                                            SSL support (Secure Channel)
+curl[ssl]:x64-windows                                                 Default SSL backend
+curl[sspi]:x64-windows                                                SSPI support
+vcpkg-cmake-config:x64-windows                    2022-02-06#1
+vcpkg-cmake:x64-windows                           2022-12-22
+zlib:x64-windows                                  1.2.13              A compression library
+zlib:x86-windows                                  1.2.13              A compression library
+
+C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
     <p>&nbsp;</p>
 	
 </section>
 	
+<p>&nbsp;</p>
+
+<section>
+  <h2>2<a name="2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">. i-PRO カメラと JPEG 
+  接続して映像を表示してみる</a></h2>
+  <h4>[概要]</h4>
+  <p>&nbsp;c++(Visual Studio) と OpenCV, libcurl を使って、PC と i-PRO カメラを JPEG 
+  で接続して映像表示してみます。</p>
+  <p>&nbsp;</p>
+  <h4>[評価環境]</h4>
+  <table>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>コンパイラ :</td>
+      <td>Visual Studio 2022 pro.,</td>
+      <td>Version 17.5.1</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>ライブラリ :</td>
+      <td>OpenCV,</td>
+      <td>4.6.0 </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>curl:x64-windows,</td>
+      <td>7.88.1</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    <tr>
+      <td>OS :</td>
+      <td>Windows11 home,</td>
+      <td>22H2</td>
+    </tr>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>※ "Community edition" でも動作する内容です。</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <h4>[プログラム]</h4>
+  <p>サンプルプログラムのソースコードを以下に示します。</p>
+  <ul>
+    <li>プロジェクトを c++ の「コンソール アプリ」として作成します。</li>
+    <li>user_id, user_pw, host はあなたが使用するカメラの設定に従って変更してください。</li>
+    <li>プログラムを終了するときはキーボードから "q" キーを押す、またはコンソール上で [ctrl]+[c] してください。</li>
+  </ul>
+  <p>&nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p>動作確認は Windows 上の Visual Studio で行っていますが、プログラム内容から恐らく Linux および WSL 
+        環境でも同じソースコードで動作するはずです。</p>
+        <p>opencv, libcurl 環境を必要とするのは Windows も Linux も同じです。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+  <p>[プログラムソース "connect_with_jpeg_1.cpp"]</p>
+  <pre class="prettyprint linenums lang-cpp">/*
+======================================================================================
+[Abstract]
+    Try connecting to an i-PRO camera with JPEG.
+    HTTPで接続してJPEGの連続表示で i-PRO カメラと接続してみる
+
+[Details]
+    Let's try first.
+    まずはやってみる
+
+[Library install]
+    opencv:     See "https://i-pro-corp.github.io/Programing-Items/cpp_vs/install_opencv.html"
+======================================================================================
+*/
+
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;opencv2/core/utility.hpp&gt;
+#include &lt;curl/curl.h&gt;
+
+
+const std::string user_id       = "user-id";         // Change to match your camera setting
+const std::string user_pw       = "password";        // Change to match your camera setting
+const std::string host          = "192.168.0.10";    // Change to match your camera setting
+const std::string resolution    = "1920";
+const std::string winname       = "VIDEO";           // Window title
+const std::string cameraURL     = "http://" + host + "/cgi-bin/camera?resolution=" + resolution;
+
+
+/// &lt;summary&gt;
+/// A curl callback function. Call this function when data is received.
+/// &lt;/summary&gt;
+/// &lt;param name="ptr"&gt;ptr points to the delivered data.&lt;/param&gt;
+/// &lt;param name="size"&gt;size is always 1.&lt;/param&gt;
+/// &lt;param name="nmemb"&gt;the size of the deliverd data is nmemb.&lt;/param&gt;
+/// &lt;param name="userdata"&gt;Pointer to buffer specified by CURLOPT_WRITEDATA&lt;/param&gt;
+/// &lt;returns&gt;
+/// Return the number of bytes actually taken care of.
+/// If that amount differs from the amount passed to your callback function, it will signal an error condition to the library.
+/// This will cause the transfer to get aborted and the libcurl function used will return CURLE_WRITE_ERROR.
+/// &lt;/returns&gt;
+/// &lt;detail&gt;See "https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html" for details.&lt;/detail&gt;
+size_t onReceive(void* ptr, size_t size, size_t nmemb, void* userdata) {
+    std::vector&lt;char&gt;* receiveBuffer = (std::vector&lt;char&gt;*)userdata;
+    const size_t sizes = size * nmemb;
+
+    receiveBuffer-&gt;insert(receiveBuffer-&gt;end(), (char*)ptr, (char*)ptr + sizes);
+
+    return sizes;
+}
+
+
+/// &lt;summary&gt;
+/// Receiving one JPEG image from the i-PRO camera.
+/// &lt;/summary&gt;
+/// &lt;param name="url"&gt;CGI command for 1 shot JPEG&lt;/param&gt;
+/// &lt;param name="receiveBuffer"&gt;A variable to store the received JPEG image&lt;/param&gt;
+/// &lt;retval&gt;true: Success to get JPEG image.&lt;/retval&gt;
+/// &lt;retval&gt;false: Failed to get JPEG image.&lt;/retval&gt;
+bool get_jpeg_image(const std::string url, std::vector&lt;char&gt;&amp; receiveBuffer) {
+    CURL*       curl = NULL;
+    CURLcode    res;
+
+    // initialize curl.
+    curl = curl_easy_init();
+    if (!curl) {
+        printf("curl_easy_init() failed...\n");
+        return false;
+    }
+
+    // curl option for digest authentication
+    curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+    std::string user_id_pw = user_id + ":" + user_pw;
+    curl_easy_setopt(curl, CURLOPT_USERPWD, user_id_pw.c_str());
+
+    // curl option
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &amp;receiveBuffer);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, onReceive);
+
+    // execute
+    res = curl_easy_perform(curl);
+
+    if (res != CURLE_OK) {
+        printf("curl_easy_perform() failed...%s\n", curl_easy_strerror(res));
+        return false;
+    }
+    curl_easy_cleanup(curl);
+    return true;
+}
+
+
+/// &lt;summary&gt;
+/// main function
+/// &lt;/summary&gt;
+/// &lt;returns&gt;Always returns EXIT_SUCCESS(0).&lt;/returns&gt;
+int main() {
+    cv::Mat recv_data;
+    bool isDataReceived;
+    char ret;
+    std::vector&lt;char&gt; receiveBuffer;
+
+    while (true) {
+
+        // get image data by HTTP
+        isDataReceived = get_jpeg_image(cameraURL, receiveBuffer);
+        if (!isDataReceived) {
+            std::cout &lt;&lt; "get_jpeg_image() failed..." &lt;&lt; std::endl;
+            break;
+        }
+
+        // JPEG decode
+        cv::Mat frame = cv::imdecode(receiveBuffer, cv::IMREAD_UNCHANGED);
+
+        // Clear all received data.
+        receiveBuffer.clear();
+
+        // Please modify the value to fit your PC screen size.
+        resize(frame, frame, cv::Size(), 0.5, 0.5);                     // Setting by magnification.
+
+        // Display video.
+        cv::imshow(winname, frame);
+
+        ret = (char)cv::waitKey(1);     // necessary to display the video by cv::imshow().
+
+        // Press the "q" key to finish.
+        if (ret == 'q') {
+            break;
+        }
+    }
+
+    cv::destroyAllWindows();
+
+    return EXIT_SUCCESS;
+}</pre>
+  <p>&nbsp;</p>
+  <p>上記プログラムを動かした様子を動画で示します。</p>
+  <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
+  <video autoplay="y" controls="" loop="y" muted="" width="800">
+  <source src="curl/connect_with_jpeg_sample.mp4" type="video/mp4">
+  </video>
+  <p>[動画] JPEG でカメラと接続して映像表示してみた様子</p>
+  <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 <section>
@@ -143,6 +518,9 @@
 		libcurl offers a myriad of powerful features (github.com)<br>
 		<a href="https://github.com/curl/curl" target="_blank">
 		https://github.com/curl/curl</a></li>
+        <li>vcpkgの使い方 - Qiita<br>
+        <a href="https://qiita.com/Azuryl/items/b3708b17ebb86810bd70" target="_blank">
+        https://qiita.com/Azuryl/items/b3708b17ebb86810bd70</a></li>
 		<li>C++とcurlでHTTP通信処理作ってみた - Qiita<br>
 		<a href="https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f" target="_blank">
 		https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f</a></li>
@@ -162,7 +540,7 @@
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2023-02-08</td>
+	    <td class="td_history_date">2023-03-01</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
