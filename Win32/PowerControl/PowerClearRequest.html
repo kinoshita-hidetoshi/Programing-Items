@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>[Win32] SetThreadExecutionState | Programing Items</title>
+  <title>［Win32］PowerClearRequest | Programing Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -43,10 +43,9 @@
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">［Win32］SetThreadExecutionState</h1>
+<h1 class="auto-style7">［Win32］PowerClearRequest</h1>
 
-<p> Win32 API の SetThreadExecutionState による Windows の Sleep 抑制制御方法について記載します。<br>
-Windows95/98 以降で使用できそうです。</p>
+<p> &nbsp;</p>
 <p> &nbsp;</p>
 <div class="mokuji">
   <nav>
@@ -95,15 +94,113 @@ Windows95/98 以降で使用できそうです。</p>
 	</table>
 	
 	<p> &nbsp;</p>
+    <p> ["availability_requ3st_function.cs"]</p>
+    <pre class="prettyprint linenums lang-cpp">using System.Runtime.InteropServices;
+
+    #region prevent screensaver, display dimming and automatically sleeping
+    POWER_REQUEST_CONTEXT _PowerRequestContext;
+    IntPtr _PowerRequest; //HANDLE
+
+    // Availability Request Functions
+    [DllImport("kernel32.dll")]
+    static extern IntPtr PowerCreateRequest(ref POWER_REQUEST_CONTEXT Context);
+
+    [DllImport("kernel32.dll")]
+    static extern bool PowerSetRequest(IntPtr PowerRequestHandle, PowerRequestType RequestType);
+
+    [DllImport("kernel32.dll")]
+    static extern bool PowerClearRequest(IntPtr PowerRequestHandle, PowerRequestType RequestType);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+    internal static extern int CloseHandle(IntPtr hObject);
+
+    // Availablity Request Enumerations and Constants
+    enum PowerRequestType
+    {
+        PowerRequestDisplayRequired = 0,
+        PowerRequestSystemRequired,
+        PowerRequestAwayModeRequired,
+        PowerRequestMaximum
+    }
+
+    const int POWER_REQUEST_CONTEXT_VERSION = 0;
+    const int POWER_REQUEST_CONTEXT_SIMPLE_STRING = 0x1;
+    const int POWER_REQUEST_CONTEXT_DETAILED_STRING = 0x2;
+
+    // Availablity Request Structures
+    // Note:  Windows defines the POWER_REQUEST_CONTEXT structure with an
+    // internal union of SimpleReasonString and Detailed information.
+    // To avoid runtime interop issues, this version of 
+    // POWER_REQUEST_CONTEXT only supports SimpleReasonString.  
+    // To use the detailed information,
+    // define the PowerCreateRequest function with the first 
+    // parameter of type POWER_REQUEST_CONTEXT_DETAILED.
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct POWER_REQUEST_CONTEXT
+    {
+        public UInt32 Version;
+        public UInt32 Flags;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string
+            SimpleReasonString;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PowerRequestContextDetailedInformation
+    {
+        public IntPtr LocalizedReasonModule;
+        public UInt32 LocalizedReasonId;
+        public UInt32 ReasonStringCount;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string[] ReasonStrings;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct POWER_REQUEST_CONTEXT_DETAILED
+    {
+        public UInt32 Version;
+        public UInt32 Flags;
+        public PowerRequestContextDetailedInformation DetailedInformation;
+    }
+    #endregion
+
+
+
+    /// &lt;summary&gt;
+    /// Prevent screensaver, display dimming and power saving. This function wraps PInvokes on Win32 API. 
+    /// &lt;/summary&gt;
+    /// &lt;param name="enableConstantDisplayAndPower"&gt;True to get a constant display and power - False to clear the settings&lt;/param&gt;
+    private void EnableConstantDisplayAndPower(bool enableConstantDisplayAndPower)
+    {
+        if (enableConstantDisplayAndPower)
+        {
+            // Set up the diagnostic string
+            _PowerRequestContext.Version = POWER_REQUEST_CONTEXT_VERSION;
+            _PowerRequestContext.Flags = POWER_REQUEST_CONTEXT_SIMPLE_STRING;
+            _PowerRequestContext.SimpleReasonString = "Continuous measurement"; // your reason for changing the power settings;
+
+            // Create the request, get a handle
+            _PowerRequest = PowerCreateRequest(ref _PowerRequestContext);
+
+            // Set the request
+            PowerSetRequest(_PowerRequest, PowerRequestType.PowerRequestSystemRequired);
+            PowerSetRequest(_PowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+        }
+        else
+        {
+            // Clear the request
+            PowerClearRequest(_PowerRequest, PowerRequestType.PowerRequestSystemRequired);
+            PowerClearRequest(_PowerRequest, PowerRequestType.PowerRequestDisplayRequired);
+
+            CloseHandle(_PowerRequest);
+        }
+    }</pre>
 	
     <p>&nbsp;</p>
 	
 </section>
 	
-<p>
-	
-<br>
-</p>
+<p>&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
@@ -140,6 +237,12 @@ SOFTWARE.
 <section>
 	<h2><a id="参考">参考</a></h2>
 	<ul>
+  	<li>PowerCreateRequest<br>
+    	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/dd405533(v=vs.85).aspx" target="_blank">
+    	https://msdn.microsoft.com/ja-jp/library/windows/desktop/dd405533(v=vs.85).aspx</a></li>
+  	<li>PowerSetRequest<br>
+    	<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/dd405534(v=vs.85).aspx" target="_blank">
+    	https://msdn.microsoft.com/en-us/library/windows/desktop/dd405534(v=vs.85).aspx</a></li>
   	<li>SetThreadExecutionState<br>
     	<a href="https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa373208(v=vs.85).aspx" target="_blank">
     	https://msdn.microsoft.com/ja-jp/library/windows/desktop/aa373208(v=vs.85).aspx</a></li>
@@ -149,16 +252,21 @@ SOFTWARE.
   	<li>スリープモードを抑制する方法について<br>
     	<a href="https://social.msdn.microsoft.com/Forums/ja-JP/cd241685-fdf2-49f0-809a-f12b19e1d34f?forum=wpfja" target="_blank">
     	https://social.msdn.microsoft.com/Forums/ja-JP/cd241685-fdf2-49f0-809a-f12b19e1d34f?forum=wpfja</a></li>
-  	<li>Prevent windows from going into sleep when my program is 
-    	running?<br>
+  	<li>Prevent windows from going into sleep when my program is running?<br>
     	<a href="http://stackoverflow.com/questions/629240/prevent-windows-from-going-into-sleep-when-my-program-is-running" target="_blank">
     	http://stackoverflow.com/questions/629240/prevent-windows-from-going-into-sleep-when-my-program-is-running</a></li>
+      <li>windows - 設定 - プログラム スリープ - 入門サンプル (code-examples.net)<br>
+      <a href="https://code-examples.net/ja/q/999f8" target="_blank">
+      https://code-examples.net/ja/q/999f8</a></li>
+      <li>availabilityrequests.docx (live.com)<br>
+      <a href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F7%2Fe%2F7%2F7e7662cf-cbea-470b-a97e-ce7ce0d98dc2%2Favailabilityrequests.docx&amp;wdOrigin=BROWSELINK" target="_blank">
+      https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdownload.microsoft.com%2Fdownload%2F7%2Fe%2F7%2F7e7662cf-cbea-470b-a97e-ce7ce0d98dc2%2Favailabilityrequests.docx&amp;wdOrigin=BROWSELINK</a></li>
   </ul>
 </section>
 
 <p>&nbsp;</p>
 <hr>
-<p>&nbsp;</p>
+<p> &nbsp;</p>
 
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
@@ -184,5 +292,6 @@ SOFTWARE.
 	<p><small>Copyright © 2015 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
+<p> &nbsp;</p>
 </body>
 </html>
