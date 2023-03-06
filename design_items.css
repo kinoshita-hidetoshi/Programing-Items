@@ -71,6 +71,18 @@ label.return{
 }
 /* 戻る */
 
+/* mail */
+div.mail{
+  display: flex;
+  align-items: center;
+}
+
+div.mail label{
+  cursor: pointer;
+}
+/* mail*/
+
+
 /* モバイル版 */
 @media (max-width: 600px){
   body{

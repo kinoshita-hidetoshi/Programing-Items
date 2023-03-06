@@ -19,22 +19,22 @@
   </style>
 
   <script type="text/javascript">
-  var ulShowHide = {
-    showHide: function(element) {
-      if (element.parentNode.childNodes.item(2)) {
-        if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
-          var styleDisplay = element.parentNode.childNodes.item(2).style.display;
-          if (styleDisplay == 'block' || styleDisplay == '') {
-            element.parentNode.childNodes.item(2).style.display = "none";
-          }
-          else {
-            element.parentNode.childNodes.item(2).style.display = "block";
+    var ulShowHide = {
+      showHide: function(element) {
+        if (element.parentNode.childNodes.item(2)) {
+          if (element.parentNode.childNodes.item(2).nodeName == 'UL') {
+            var styleDisplay = element.parentNode.childNodes.item(2).style.display;
+            if (styleDisplay == 'block' || styleDisplay == '') {
+              element.parentNode.childNodes.item(2).style.display = "none";
+            }
+            else {
+              element.parentNode.childNodes.item(2).style.display = "block";
+            }
           }
         }
+        return false;
       }
-      return false;
     }
-  }
   </script>
 
   <script type="text/javascript">
@@ -46,6 +46,10 @@
       else {
           TargetList[0].style.display = 'none';
       }
+    }
+    
+    function checkedOff(){
+      window.parent.checkedOff();
     }
   </script>
 
@@ -64,18 +68,18 @@
 	<a href="url" class="menu" onclick="sublist(this); return false;">Win32 (VC++)</a>
 	<ul>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">システム</a><ul>
-			<li><a href="Win32/System/HowToGetWindowsVersion.html">Windows バージョン情報の取得方法</a></li>
+			<li><a href="Win32/System/HowToGetWindowsVersion.html" onclick="checkedOff()">Windows バージョン情報の取得方法</a></li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">Window制御</a><ul>
-			<li><a href="Win32/WindowControl/WindowPositionAndSize.html">ウィンドウ位置とサイズの取得方法</a></li>
-			<li><a href="Win32/WindowControl/AeroGlass.html">グラス フレーム (Aero Glass)</a></li>
+			<li><a href="Win32/WindowControl/WindowPositionAndSize.html" onclick="checkedOff()">ウィンドウ位置とサイズの取得方法</a></li>
+			<li><a href="Win32/WindowControl/AeroGlass.html" onclick="checkedOff()">グラス フレーム (Aero Glass)</a></li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチスレッド／マルチプロセス</a><ul>
 			<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチスレッド</a><ul>
 				<li>
-				<a href="Win32/MultiThreadAndProcess/beginthread.html" target="contents">_beginthread, endthread</a></li>
+				<a href="Win32/MultiThreadAndProcess/beginthread.html" target="contents" onclick="checkedOff()">_beginthread, endthread</a></li>
 			</ul>
 			</li>
 			<li><a href="url" class="menu" onclick="sublist(this); return false;">マルチプロセス</a><ul>
@@ -84,9 +88,9 @@
 			</li>
 			<li>
 			<a href="url" class="menu" onclick="sublist(this); return false;">同期</a><ul>
-				<li><a href="Win32/MultiThreadAndProcess/CriticalSection.html">Critical Section</a></li>
-				<li><a href="Win32/MultiThreadAndProcess/Mutex.html">Mutex</a></li>
-				<li><a href="Win32/MultiThreadAndProcess/Semaphore.html">Semaphore</a></li>
+				<li><a href="Win32/MultiThreadAndProcess/CriticalSection.html" onclick="checkedOff()">Critical Section</a></li>
+				<li><a href="Win32/MultiThreadAndProcess/Mutex.html" onclick="checkedOff()">Mutex</a></li>
+				<li><a href="Win32/MultiThreadAndProcess/Semaphore.html" onclick="checkedOff()">Semaphore</a></li>
 			</ul>
 			</li>
 		</ul>
@@ -96,8 +100,8 @@
 			<li>
 			<a href="Win32/CryptAPI/CryptEnumProviders.html" target="contents">CryptEnumProviders</a></li>
 			<li>
-			<a href="Win32/CryptAPI/CryptEnumProviderTypes.html" target="contents">CryptEnumProviderTypes</a></li>
-			<li><a href="Win32/CryptAPI/AES_by_CryptAPI.html" target="contents">AES</a></li>
+			<a href="Win32/CryptAPI/CryptEnumProviderTypes.html" target="contents" onclick="checkedOff()">CryptEnumProviderTypes</a></li>
+			<li><a href="Win32/CryptAPI/AES_by_CryptAPI.html" target="contents" onclick="checkedOff()">AES</a></li>
 			<li>SHA-1</li>
 			<li>SHA224</li>
 			<li>SHA256</li>
@@ -107,16 +111,16 @@
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">Windows マルチメディア</a>
 		<ul>
-			<li><a href="Win32/Multimedia/Joystick/joyGetPos.html">joyGetPos</a></li>
-			<li><a href="Win32/Multimedia/Joystick/joyGetPosEx.html">joyGetPosEx</a></li>
+			<li><a href="Win32/Multimedia/Joystick/joyGetPos.html" onclick="checkedOff()">joyGetPos</a></li>
+			<li><a href="Win32/Multimedia/Joystick/joyGetPosEx.html" onclick="checkedOff()">joyGetPosEx</a></li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">電力管理</a>
 		<ul>
-			<li><a href="Win32/PowerControl/PowerClearRequest.html">PowerClearRequest</a></li>
-      <li><a href="Win32/PowerControl/PowerCreateRequest.html">PowerCreateRequest</a></li>
-			<li><a href="Win32/PowerControl/PowerSetRequest.html">PowerSetRequest</a></li>
-			<li><a href="Win32/PowerControl/SetThreadExecutionState.html">SetThreadExecutionState</a></li>
+			<li><a href="Win32/PowerControl/PowerClearRequest.html" onclick="checkedOff()">PowerClearRequest</a></li>
+      <li><a href="Win32/PowerControl/PowerCreateRequest.html" onclick="checkedOff()">PowerCreateRequest</a></li>
+			<li><a href="Win32/PowerControl/PowerSetRequest.html" onclick="checkedOff()">PowerSetRequest</a></li>
+			<li><a href="Win32/PowerControl/SetThreadExecutionState.html" onclick="checkedOff()">SetThreadExecutionState</a></li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">複数モニター サポート</a>
@@ -133,8 +137,8 @@
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">MMX/SIMD/SSE</a>
 		<ul>
-			<li><a href="Win32/SIMD/ExtInstCheck.html">SIMD命令のサポート状況確認方法</a></li>
-			<li><a href="Win32/SIMD/Intrinsic.html">Intrinsic</a></li>
+			<li><a href="Win32/SIMD/ExtInstCheck.html" onclick="checkedOff()">SIMD命令のサポート状況確認方法</a></li>
+			<li><a href="Win32/SIMD/Intrinsic.html" onclick="checkedOff()">Intrinsic</a></li>
 		</ul>
 		</li>
 		<li><a href="url" class="menu" onclick="sublist(this); return false;">DirectX</a><ul>
@@ -162,8 +166,8 @@
 	-->
 		<li class="auto-style2">
 		<a href="url" class="menu" onclick="sublist(this); return false;">VS2012 C++ 新機能</a><ul>
-			<li class="auto-style2"><a href="C++/Auto-Vectorizer.html">自動ベクタライザ (Auto-Vectorizer)</a></li>
-			<li class="auto-style2"><a href="C++/Auto-Parallelizer.html">自動パラレライザ (Auto-Parallelizer)</a></li>
+			<li class="auto-style2"><a href="C++/Auto-Vectorizer.html" onclick="checkedOff()">自動ベクタライザ (Auto-Vectorizer)</a></li>
+			<li class="auto-style2"><a href="C++/Auto-Parallelizer.html" onclick="checkedOff()">自動パラレライザ (Auto-Parallelizer)</a></li>
 		</ul>
 		</li>
 		<li class="auto-style2">
@@ -178,10 +182,10 @@
 			<li class="auto-style2"><a href="Win32/Etc/Counter.html">Counter</a></li>
 			<li class="auto-style2">
 			<a href="Win32/Etc/VisualStudioTemplate.html">Visual Studio テンプレート</a></li>
-			<li class="auto-style2"><a href="Win32/Etc/LARGE_ADDRESS_WARE.html">LARGEADDRESSAWARE</a></li>
-			<li class="auto-style2"><a href="Win32/Etc/Globalization.html">国際化(多言語対応)</a></li>
-			<li class="auto-style2"><a href="Win32/Etc/API_Hook.html">IAT書き換えによるAPIフック、DLLインジェクション</a></li>
-			<li class="auto-style2"><a href="Win32/Etc/HowToCrtDbg.html">CRT ライブラリを使用したメモリリークの検出</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/LARGE_ADDRESS_WARE.html" onclick="checkedOff()">LARGEADDRESSAWARE</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/Globalization.html" onclick="checkedOff()">国際化(多言語対応)</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/API_Hook.html" onclick="checkedOff()">IAT書き換えによるAPIフック、DLLインジェクション</a></li>
+			<li class="auto-style2"><a href="Win32/Etc/HowToCrtDbg.html" onclick="checkedOff()">CRT ライブラリを使用したメモリリークの検出</a></li>
 		</ul>
 		</li>
 	</ul>
@@ -189,8 +193,12 @@
 
 <hr size="2">
 
-<p><img style="WIDTH: 40px; HEIGHT: 25px" border="0" alt="" src="Images/mail.gif" width="54" height="34">&nbsp;<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">コメントなど連絡はこちらへ</a><br>
-</p>
+<a href="mailto:kinoshita.hidetoshi@nifty.com?subject=ホームページ見ました">
+  <div class="mail">
+    <img alt="email icon" style="WIDTH: 40px; HEIGHT: 25px; margin:6px" border="0" src="Images/mail.gif" width="54" height="34">
+    <label>コメントなど連絡はこちらへ</label>
+  </div>
+</a>
 
 </body>
 </html>
