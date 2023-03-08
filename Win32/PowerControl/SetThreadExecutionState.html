@@ -43,15 +43,16 @@
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">［Win32］SetThreadExecutionState</h1>
+<h1 class="auto-style7">[Win32] SetThreadExecutionState</h1>
 
-<p> Win32 API の SetThreadExecutionState による Windows の Sleep 抑制制御方法について記載します。<br>
-Windows95/98 以降で使用できそうです。</p>
+<p> Win32 API の <em><strong>SetThreadExecutionState</strong></em> による Windows 
+スクリーンセーバーおよびスリープへの移行を抑制する方法について記載します。</p>
 <p> &nbsp;</p>
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
-	<p>1. ***</p>
+	<p><a href="#1._c++_サンプル">1. c++ サンプル</a></p>
+    <p><a href="#2._cs_サンプル">2. c# サンプル</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -61,8 +62,11 @@ Windows95/98 以降で使用できそうです。</p>
 <p> &nbsp;</p>
 
 <section>
-	<h2> 1. ***</h2>
+	<h2> <a name="1._c++_サンプル">1. c++ サンプル</a></h2>
 	<h4>[概要]</h4>
+    <p>プログラム起動中、スクリーンセーバーおよびスリープを発生しないようにするプログラムを作成します。[Enter] 
+    キーを押してプログラムを終了すると元の状態へ戻ります。</p>
+    <p>コンソールプログラムとして c/c++ でサンプルプログラムを作成します。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -74,8 +78,28 @@ Windows95/98 以降で使用できそうです。</p>
 		
 	  <tr>
 	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
+      <td>Visual Studio 2022 pro.,</td>
+      <td>Version 16.6.0 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>プログラミング言語 :</td>
+      <td>c++</td>
+      <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+      <td>native</td>
+      <td>&nbsp;</td>
 	  </tr>
 		
 	  <tr>
@@ -85,7 +109,7 @@ Windows95/98 以降で使用できそうです。</p>
 	  <tr>
 	    <td>OS :</td>
 	    <td>Windows11 home,</td>
-	    <td>21H2 </td>
+	    <td>22H2 </td>
 	  </tr>
 	  
 	  <tr>
@@ -96,7 +120,194 @@ Windows95/98 以降で使用できそうです。</p>
 	
 	<p> &nbsp;</p>
 	
-    <p>&nbsp;</p>
+  <pre class="prettyprint linenums lang-cpp">//
+// Refer to the following URL for details of api SetThreadExecutionState.
+// https://learn.microsoft.com/ja-jp/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate
+//
+
+#include &lt;iostream&gt;
+#include &lt;windows.h&gt;
+
+int main()
+{
+    EXECUTION_STATE es;
+
+    do {
+        //
+        // Enable away mode and prevent the sleep idle time-out.
+        //
+        std::cout &lt;&lt; "Now enable away mode and prevent the sleep idle time-out." &lt;&lt; std::endl;
+        es = SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+        if (es == NULL) {
+            MessageBox(NULL, L"ERROR happen.", L"ERROR", MB_OK | MB_ICONSTOP);
+            break;
+        }
+
+        std::cout &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Push [Enter] key" &lt;&lt; std::endl;
+        std::cout &lt;&lt; "to clear EXECUTION_STATE flags to disable away mode and allow the system to idle to sleep normally. ";
+        std::cin.get();
+        std::cout &lt;&lt; "Done," &lt;&lt; std::endl;
+    } while (0);
+
+
+    //
+    // Clear EXECUTION_STATE flags (ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED) 
+    // to disable away mode and allow the system to idle to sleep normally.
+    //
+    SetThreadExecutionState(ES_CONTINUOUS);
+
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+	
+</section>
+	
+<p>
+	
+&nbsp;</p>
+
+<section>
+	<h2> <a name="2._cs_サンプル">2. c# サンプル</a></h2>
+	<h4>[概要]</h4>
+    <p>プログラム起動中、スクリーンセーバーおよびスリープを発生しないようにするプログラムを作成します。[Enter] 
+    キーを押してプログラムを終了すると元の状態へ戻ります。</p>
+    <p>コンソールプログラムとして c# でサンプルプログラムを作成します。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+      <td>Visual Studio 2022 pro.,</td>
+      <td>Version 16.6.0 </td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>プログラミング言語 :</td>
+      <td>c#</td>
+      <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>フレームワーク :</td>
+      <td>.NET</td>
+      <td>6.0</td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+      <td>.NET Framework</td>
+      <td>4.8</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>22H2 </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+  <pre class="prettyprint linenums lang-cs">//
+// Refer to the following URL for details of api SetThreadExecutionState.
+// https://learn.microsoft.com/ja-jp/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate
+// https://www.pinvoke.net/default.aspx/kernel32/SetThreadExecutionState.html
+//
+
+using System.Runtime.InteropServices;
+
+
+namespace SetThreadExecutionStateTest
+{
+    class SetThreadExecutionStateTestClass
+    {
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.UserDirectories)]
+        static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
+
+        [FlagsAttribute]
+        public enum EXECUTION_STATE : uint
+        {
+            ES_AWAYMODE_REQUIRED = 0x00000040,
+            ES_CONTINUOUS = 0x80000000,
+            ES_DISPLAY_REQUIRED = 0x00000002,
+            ES_SYSTEM_REQUIRED = 0x00000001
+            // Legacy flag, should not be used.
+            // ES_USER_PRESENT = 0x00000004
+        }
+
+
+        /// &lt;summary&gt;
+        /// 
+        /// &lt;/summary&gt;
+        /// &lt;param name="args"&gt;&lt;/param&gt;
+        static void Main()
+        {
+            PreventMonitorPowerdown();
+
+            // Display the number of command line arguments.
+            Console.WriteLine("Push [Enter] key");
+            Console.Write("to clear EXECUTION_STATE flags to disable away mode and allow the system to idle to sleep normally. ");
+            Console.ReadLine();
+
+            AllowMonitorPowerdown();
+        }
+
+        /// &lt;summary&gt;
+        /// このメソッドを実行することで、スクリーンセーバーおよびスリープへの移行を抑制します。
+        /// 解除する場合はメソッド AllowMonitorPowerdown を実行します。
+        /// &lt;/summary&gt;
+        static void PreventMonitorPowerdown()
+        {
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS | EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_SYSTEM_REQUIRED);
+        }
+
+        /// &lt;summary&gt;
+        /// EXECUTION_STATE 設定を解除します。
+        /// &lt;/summary&gt;
+        static void AllowMonitorPowerdown()
+        {
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
+        }
+
+        /// &lt;summary&gt;
+        /// 退席モードを有効にします。この値は 、ES_CONTINUOUSで指定する必要があります。
+        /// 解除する場合はメソッド AllowMonitorPowerdown を実行します。
+        /// 退席モードは、コンピューターがスリープ状態になっているように見える間、
+        /// デスクトップ コンピューターで重要なバックグラウンド処理を実行する必要がある
+        /// メディア記録およびメディア配布アプリケーションでのみ使用する必要があります。
+        /// &lt;/summary&gt;
+        static void PreventSleep()
+        {
+            // Prevent Idle-to-Sleep (monitor not affected)
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS | EXECUTION_STATE.ES_AWAYMODE_REQUIRED);
+        }
+    }
+}</pre>
+    <p> &nbsp;</p>
 	
 </section>
 	
@@ -111,7 +322,7 @@ Windows95/98 以降で使用できそうです。</p>
 <div class="license">
 The MIT License (MIT)<br><br>
 
-  Copyright © 2015 Kinoshita Hidetoshi<br><br>
+  Copyright 2023 Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -153,6 +364,9 @@ SOFTWARE.
     	running?<br>
     	<a href="http://stackoverflow.com/questions/629240/prevent-windows-from-going-into-sleep-when-my-program-is-running" target="_blank">
     	http://stackoverflow.com/questions/629240/prevent-windows-from-going-into-sleep-when-my-program-is-running</a></li>
+      <li>pinvoke.net: SetThreadExecutionState (kernel32)<br>
+      <a href="https://www.pinvoke.net/default.aspx/kernel32/SetThreadExecutionState.html" target="_blank">
+      https://www.pinvoke.net/default.aspx/kernel32/SetThreadExecutionState.html</a></li>
   </ul>
 </section>
 
@@ -164,7 +378,7 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2015-04-01</td>
+	    <td class="td_history_date">2023-03-08</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
@@ -181,7 +395,7 @@ SOFTWARE.
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>Copyright © 2015 Kinoshita Hidetoshi (木下英俊)</small></p>
+	<p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
