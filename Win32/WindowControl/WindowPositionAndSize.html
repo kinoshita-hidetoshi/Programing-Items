@@ -47,7 +47,7 @@
 
 <body onload="prettyPrint();">
 
-<h1 class="auto-style7">Win32］ウィンドウ位置とサイズの取得方法</h1>
+<h1 class="auto-style7">[Win32] ウィンドウ位置とサイズの取得方法</h1>
 
 <p> ウィンドウの位置とサイズの取得方法について記載します。</p>
 <p> &nbsp;</p>
@@ -231,10 +231,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     <div class="status_information">
       <div></div>
       <div>
-        <p>NOTE</p>
+        <p><strong>NOTE</strong></p>
         <p>GetWindowRect と DwmGetWindowAttribute は下記違いもありそうです。どう活用したらよいか、難しい・・・。</p>
-        <p>・表示倍率の設定による影響<br>　例えば 150% 表示にすると、DwmGetWindowAttribute 
-		の値の方が約150%大きくなります。</p>
+        <ul>
+          <li>表示倍率の設定による影響<br>
+            例えば 150% 表示にすると、DwmGetWindowAttribute の値の方が約150%大きくなります。</li>
+        </ul>
       </div>
     </div>
 

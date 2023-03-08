@@ -143,15 +143,13 @@ using namespace std;
 #endif 
 
 // #define
-#define WM_ALLOC_COMPLETED  (WM_USER+1)     //ユーザー定義メッセージ
+#define WM_ALLOC_COMPLETED  (WM_USER+1)     // ユーザー定義メッセージ
 
 // グローバル変数:
 HINSTANCE       hInst;
 
-// このコード モジュールに含まれる関数の宣言を転送します:
-//LRESULT CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
+// このコード モジュールに含まれる関数の宣言を転送します
 BOOL CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
-
 
 
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
@@ -167,7 +165,6 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
     DialogBox(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, (DLGPROC)DlgProc);
     return 0;
 }
-
 
 
 void AllocMemory( HWND hWnd, vector&lt;char*&gt;&amp; vBuffer, unsigned int bytes, int&amp; allocsize )
@@ -238,7 +235,6 @@ void AllocMemory( HWND hWnd, vector&lt;char*&gt;&amp; vBuffer, unsigned int byte
 //
 //  目的:  メイン ウィンドウのメッセージを処理します。
 //
-//LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 BOOL CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
     static vector&lt;char*&gt;    vBuffer;
