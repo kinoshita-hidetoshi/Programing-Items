@@ -1,29 +1,102 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Large Address Ware</title>
-<link href="../../design.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Large Address Aware | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
 </head>
-<body>
+
+<body onload="prettyPrint();">
+
 <h1>Large Address Aware</h1>
+<p>&nbsp;</p>
+
 <p>Win7 64bit（WoW64） ではプロセスあたり最大4GBを使用できます。<br>Win7 32bit ではプロセスあたり最大2GBを使用できます。<br>
 これはMicrosoftの正式見解です。<br><br>ただし、最大４GBで動作するには若干条件があるようです。<br>
 「IMAGE_FILE_LARGE_ADDRESS_AWARE 指定あり」でコンパイルした32bit exe だと最大4GB 
-ということらしいです。.NET（C#)の場合はコンパイルオプションでの指定はできず、editbin という外部ツールでこのフラグを後付するそうです。<br>
-&quot;editbin /LARGEADDRESSAWARE&quot;<br>
-評価環境やコンパイル環境などの情報があまり記載されていないので、いずれにせよテストプログラム等による確認が必要。ひょっとすると比較的新しい開発環境ではデフォルトで上記オプションが有効化されていたりする場合もあると思います。</p>
-<p>Visual Studio 2012 Update3 と C++ を使ってテストプログラムを作成してみたので、以下結果報告。<br>評価環境は以下の通り。<br>
-========================<br>OS：Windows8 64bit<br>開発環境： Visual Studio 2012 
-Update3<br>言語： Win32、C++<br>========================</p>
+ということらしいです。.NET（C#)の場合はコンパイルオプションでの指定はできず、editbin という外部ツールでこのフラグを後付するそうです。</p>
+<p>&quot;editbin /LARGEADDRESSAWARE&quot;</p>
+<p>評価環境やコンパイル環境などの情報があまり記載されていないので、いずれにせよテストプログラム等による確認が必要。ひょっとすると比較的新しい開発環境ではデフォルトで上記オプションが有効化されていたりする場合もあると思います。</p>
+<p>Visual Studio 2012 Update3 と C++ を使ってテストプログラムを作成してみたので、以下結果報告。<br>評価環境は以下の通り。</p>
+<p>&nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>開発環境 :</td>
+	      <td>Visual Studio 2012,</td>
+	      <td>Update3 </td>
+	  </tr>
+		
+	  <tr>
+	    <td>&nbsp;</td>
+	      <td>Win32, c++</td>
+	      <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows8 64bit</td>
+	    <td>&nbsp;</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
 <p>&nbsp;</p>
 <p>1. x86 + LARGEADDRESSAWARE</p>
 <p>こんなテストプログラムを作成。<br><img alt="" src="LARGE_ADDRESS_WARE/img3.gif"></p>
+<p>&nbsp;</p>
 <p>約3.5GBのメモリを確保できました。&quot;LARGEADDRESSAWARE&quot;無しだと1.3GBぐらいまでしかメモリ確保できませんでした。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img5.gif"></p>
 <p>&nbsp;</p>
 <p>2. x64</p>
 <p>同様に x64 コンパイルして実験。上限を確認してもきりがないので、メモリ取得サイズは8GBにて。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img7.gif"></p>
+<p>&nbsp;</p>
 <p>x64 だとやっぱり8GBなんて楽勝に取得できるみたいです。<br>
 <img alt="" src="LARGE_ADDRESS_WARE/img9.gif"></p>
 <p>&nbsp;</p>
@@ -31,54 +104,330 @@ Update3<br>言語： Win32、C++<br>========================</p>
 <p>上記のテストプログラムを以下からダウンロードできるようにしておきます。<br>プログラムはWin32プロジェクトとして作成していますので、Visual 
 Studio 以外の環境へも移植が容易でしょう。&nbsp;<br><a href="LARGE_ADDRESS_WARE/testLargeWare.zip">
 ダウンロード</a></p>
+<p>&nbsp;</p>
 <p>補足説明１：<br>なお、ソースプログラム中にある以下の記述は Windows XP 
 以降のコモンコントロールを使用するための記述です。マニュフェストでコモンコントロールのバージョン情報を記載する必要があるそうで、VS2005から加わった 
 #pragma の記述だそうです。コモンコントロールのバージョンを 6.0.0.0 
 で指定します。このマニュフェストが無いとビジュアル的に古い感じのダイアログになってしまいます。</p>
-<table style="border: medium solid #C0C0C0; width: 100%">
-	<tr>
-		<td>
-		<pre>#if defined _M_IX86 
-#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+
+		<pre class="prettyprint linenums lang-cpp">#if defined _M_IX86 
+#pragma comment(linker,&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;) 
 #elif defined _M_IA64 
-#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#pragma comment(linker,&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;) 
 #elif defined _M_X64 
-#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#pragma comment(linker,&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;) 
 #else 
-#pragma comment(linker,<span class="string">&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;</span>) 
+#pragma comment(linker,&quot;/manifestdependency:\&quot;type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\&quot;&quot;) 
 #endif </pre>
-		</td>
-	</tr>
-</table>
+
+<p>&nbsp;</p>
 <p>補足説明２：<br>
 マニュフェストファイルを別ファイル指定してコンパイルしています。実行ファイルと同じ場所にあるマニュフェストファイルを消さないでください。</p>
 <p>補足説明３：<br>
 (謎)x86の実行ファイルをデスクトップで実行した場合に、何故か上記補足説明１で有効化したはずのビジュアルスタイルが有効化されずに古いダイアログ形式で表示されました。謎です。</p>
 <p>&nbsp;</p>
-<p>4. 参考URL</p>
-<p>以下、参考URLです。<br>古い記事が大分混ざっているので、Win7やWin8など使用するターゲット環境で再確認のうえでやってみてください。</p>
-<p>参考URL：</p>
-<ul>
-	<li>
-	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop" target="_blank">
-	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop</a></li>
-	<li>
-	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/" target="_blank">
-	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/</a></li>
-	<li>
-	<a href="http://ascii.jp/elem/000/000/480/480200/index-2.html" target="_blank">
-	http://ascii.jp/elem/000/000/480/480200/index-2.html</a></li>
-	<li>
-	<a href="http://www.geocities.jp/hpt_user99/address.html#address_limits" target="_blank">
-	http://www.geocities.jp/hpt_user99/address.html#address_limits</a></li>
-	<li>
-	<a href="http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram" target="_blank">
-	http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram</a></li>
-	<li>
-	<a href="http://www.syuhitu.org/other/memory32/memory32.html" target="_blank">
-	http://www.syuhitu.org/other/memory32/memory32.html</a></li>
-</ul>
+
+<pre class="prettyprint linenums lang-cpp">#include "stdafx.h"
+#include "testLargeWare.h"
+
+using namespace std;
+
+#if defined _M_IX86 
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"") 
+#elif defined _M_IA64 
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\"") 
+#elif defined _M_X64 
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"") 
+#else 
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"") 
+#endif 
+
+// #define
+#define WM_ALLOC_COMPLETED  (WM_USER+1)     //ユーザー定義メッセージ
+
+// グローバル変数:
+HINSTANCE       hInst;
+
+// このコード モジュールに含まれる関数の宣言を転送します:
+//LRESULT CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
+
+
+
+int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
+                     _In_opt_ HINSTANCE hPrevInstance,
+                     _In_ LPTSTR    lpCmdLine,
+                     _In_ int       nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+
+    hInst = hInstance;
+
+    DialogBox(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, (DLGPROC)DlgProc);
+    return 0;
+}
+
+
+
+void AllocMemory( HWND hWnd, vector&lt;char*&gt;&amp; vBuffer, unsigned int bytes, int&amp; allocsize )
+{
+    bool        bSuccess = true;
+
+    // バッファをクリア
+    {
+        for ( size_t i=0; i&lt;vBuffer.size(); ++i){
+            delete[] vBuffer[i];
+            vBuffer[0] = nullptr;
+        }
+        vBuffer.clear();
+        vBuffer.resize(0);
+        vector&lt;char*&gt;(vBuffer).swap(vBuffer);
+        allocsize = 0;
+    }
+
+    // メモリを取得
+    {
+        int         j;
+        int         k;
+        const int   allocBytesUnit = 128 ;  // 128MB単位でメモリを確保
+
+        // allocBytesUnit 単位で確保する個数と余りを算出する
+        j = bytes / allocBytesUnit;
+        k = bytes - ( j * allocBytesUnit );
+
+        try{
+            // allocBytesUnit 単位でメモリ領域を確保する
+            for ( int i = 0; i &lt; j; i++ ) {
+                char *p = new char[ allocBytesUnit * 1024 * 1024 ];
+                if ( nullptr == p ){
+                    break;
+                }
+
+                for ( int l = 0; l &lt; k * 1024 * 1024; l++ ){
+                  ( (char*)p )[l] = 0;
+                }
+                vBuffer.push_back( p );
+                allocsize += allocBytesUnit;
+            }
+
+            // 余りの分を確保する
+            if ( k &gt; 0 ) {
+                char *p = new char[ k * 1024 * 1024 ];
+                if ( nullptr != p ) {
+                    for ( int l = 0; l &lt; k * 1024 * 1024; l++ ){
+                        ( (char*)p )[l] = 0;
+                    }
+                    vBuffer.push_back( p );
+                    allocsize += k;
+                }
+            }
+        }
+        catch( bad_alloc ){
+            _RPTW0(_CRT_WARN, "\"Bad alloc\" happen.");
+            bSuccess = false;
+        }
+    }
+    
+    PostMessage( hWnd, WM_COMMAND, WM_ALLOC_COMPLETED, (LPARAM)bSuccess );
+}
+
+
+//
+//  関数: DlgProc(HWND, UINT, WPARAM, LPARAM)
+//
+//  目的:  メイン ウィンドウのメッセージを処理します。
+//
+//LRESULT CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
+BOOL CALLBACK DlgProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
+{
+    static vector&lt;char*&gt;    vBuffer;
+    static unsigned int     bytes ;
+    static int              allocsize = 0 ;
+    static thread           thr_AllocMemory;
+
+
+    switch (msg) {
+    case WM_DESTROY:
+        if ( thr_AllocMemory.joinable() ){
+            thr_AllocMemory.join();
+        }
+        break ;
+
+    case WM_CLOSE:
+        if (MessageBox(
+            hWnd,
+            (LPCTSTR)_T("プログラムを終了してよろしいですか？"),
+            (LPCTSTR)_T("終了確認"),
+            MB_YESNO | MB_ICONQUESTION) == IDNO)
+        {
+            // プログラムを終了しない
+            return FALSE;
+        }
+
+        // プログラムを終了する
+        EndDialog(hWnd, IDOK);
+        return TRUE ;
+
+    case WM_INITDIALOG:
+        HICON   hIcon;
+        hIcon = (HICON)LoadImage( hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 256, 256, 0);
+        SendMessage(hWnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+
+        SetDlgItemText( hWnd, IDC_MESSAGE, L"" );
+        return TRUE;
+
+    case WM_COMMAND:
+        switch (GET_WM_COMMAND_ID(wp, lp)) {
+        case IDOK:
+            SendMessage( hWnd, WM_CLOSE, 0, 0 );
+            return TRUE;
+
+        case IDC_BUTTON1:
+            {
+
+                // 取得するバイト数をエディットボックスから取得
+                {
+                    bytes = GetDlgItemInt( hWnd, IDC_EDIT1, NULL, FALSE);
+                    _RPTW1(_CRT_WARN, L"%d\n", bytes);
+                }
+
+                // メモリ取得実行
+                {
+                    thread t( &amp;AllocMemory, hWnd, std::ref(vBuffer), bytes, std::ref(allocsize));
+                    thr_AllocMemory.swap(t);
+                }
+
+                SetDlgItemText( hWnd, IDC_MESSAGE, L"メモリ取得中..." );
+                EnableWindow( GetDlgItem( hWnd, IDC_BUTTON1), false );
+                EnableWindow( GetDlgItem( hWnd, IDC_EDIT1), false );
+            }
+            break;
+
+        case WM_ALLOC_COMPLETED:
+            SetDlgItemText( hWnd, IDC_EDIT1, L"");
+            SetDlgItemText( hWnd, IDC_MESSAGE, L"" );
+            EnableWindow( GetDlgItem( hWnd, IDC_BUTTON1), true );
+            EnableWindow( GetDlgItem( hWnd, IDC_EDIT1), true );
+
+            thr_AllocMemory.join();
+
+            _RPTW0( _CRT_WARN, L"Complete memory alloc.\n");
+            // 結果を表示しておく
+            {
+                std::wstringstream  str;
+                bool    bSuccess = (bool)lp;
+
+                if ( !bSuccess ){
+                    str &lt;&lt; L"メモリ取得を失敗しました。\n";
+                }
+                str &lt;&lt; L"要求されたバイト数：" &lt;&lt; bytes &lt;&lt; " (MB)\n" &lt;&lt; L"確保したバイト数" &lt;&lt; allocsize &lt;&lt; " (MB)";
+
+                MessageBox( hWnd,  str.str().c_str(), L"結果", MB_OK|MB_ICONINFORMATION );
+            }
+            break;
+
+        default:
+            break;
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    return FALSE;
+}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+<div class="license">
+The MIT License (MIT)<br><br>
+
+  Copyright 2013 Kinoshita Hidetoshi<br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+  	<li>
+    	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop" target="_blank">
+    	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/?SS=imgview&amp;FD=-2992924&amp;ST=develop</a></li>
+  	<li>
+    	<a href="http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/" target="_blank">
+    	http://itpro.nikkeibp.co.jp/article/COLUMN/20051118/224885/</a></li>
+  	<li>
+    	<a href="http://ascii.jp/elem/000/000/480/480200/index-2.html" target="_blank">
+    	http://ascii.jp/elem/000/000/480/480200/index-2.html</a></li>
+  	<li>
+    	<a href="http://www.geocities.jp/hpt_user99/address.html#address_limits" target="_blank">
+    	http://www.geocities.jp/hpt_user99/address.html#address_limits</a></li>
+  	<li>
+    	<a href="http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram" target="_blank">
+    	http://stackoverflow.com/questions/464458/how-do-i-create-a-32-bit-net-application-to-use-3-gb-ram</a></li>
+  	<li>
+    	<a href="http://www.syuhitu.org/other/memory32/memory32.html" target="_blank">
+    	http://www.syuhitu.org/other/memory32/memory32.html</a></li>
+  </ul>
+</section>
+
+<p>&nbsp;</p>
 <hr>
-<p><font face="Meiryo UI">記載： 2013年5月12日 木下英俊</font></p>
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-03-08</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン刷新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2013-05-12</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© 2013 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>
