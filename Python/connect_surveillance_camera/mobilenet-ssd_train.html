@@ -95,7 +95,8 @@
     <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-4._学習">5-2-4. 学習</a></p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-5._学習結果と静止画を使って推論">5-2-5. 学習結果と静止画を使って推論</a>&nbsp;</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6. 学習結果とカメラを使って物体検知してみる (i-PRO カメラ)</a></p>
-    <p><a href="#6._後書き">6. 後書き</a></p>
+    <p><a href="#6._Convert_models_to_ONNX">6. Convert models to ONNX</a></p>
+    <p><a href="#7._後書き">7. 後書き</a></p>
     <br>
     <p><a href="#ライセンス">ライセンス</a></p>
     <p><a href="#参考">参考</a></p>
@@ -2084,15 +2085,85 @@ bird</pre>
     
 </section>
 
+
+</section>
+
 &nbsp;
 <hr>
 &nbsp;
 
+<section>
+  <h2><a name="6._Convert_models_to_ONNX">6. Convert models to ONNX</a></h2>
+  <p>PyTorch により作成したAI学習データ（拡張子 pth）を <strong>ONNX</strong> というフォーマットへ変換する手順について記載します。</p>
+    
+    <blockquote>
+      <strong>Open Neural Network Exchange</strong>（略称：<strong>ONNX</strong>）とは、オープンソースで開発されている機械学習や人工知能のモデルを表現する為の代表的なフォーマットです。実行エンジンとしてONNX 
+      Runtimeも開発されています。<br>［引用元：<a href="https://ja.wikipedia.org/wiki/Open_Neural_Network_Exchange#:~:text=Open%20Neural%20Network%20Exchange%EF%BC%88%E7%95%A5%E7%A7%B0,%E3%82%82%E9%96%8B%E7%99%BA%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%80%82" target="_blank">Open 
+      Neural Network Exchange - Wikipedia</a>］</blockquote>
+    
+    <p>&nbsp;</p>
+  <h4>[使用方法]</h4>
+  <p>Usage: "python convert_models_to_onnx.py"</p>
+  <p>&nbsp;</p>
+  <p>具体例：</p>
+  <pre style="width: 800px; color: #FFFFFF; background-color: #000000">python convert_models_to_onnx.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
+  <p>出力：</p>
+  <p>models/mb1-ssd.onnx </p>
+  <p>&nbsp;</p>
+  <h4>[ソースコード]</h4>
+  <p>["convert_models_to_onnx.py"]</p>
+  <pre class="prettyprint linenums lang-py">from vision.ssd.vgg_ssd import create_vgg_ssd
+from vision.ssd.mobilenetv1_ssd import create_mobilenetv1_ssd
+from vision.ssd.mobilenetv1_ssd_lite import create_mobilenetv1_ssd_lite
+from vision.ssd.squeezenet_ssd_lite import create_squeezenet_ssd_lite
+from vision.ssd.mobilenet_v2_ssd_lite import create_mobilenetv2_ssd_lite
 
+import sys
+import torch.onnx
+import onnx
+
+
+if len(sys.argv) &lt; 3:
+    print('Usage: python convert_models_to_onnx.py &lt;net type: mobilenet-v1-ssd|others&gt;  &lt;model path&gt;')
+    sys.exit(0)
+
+net_type = sys.argv[1]
+model_path = sys.argv[2]
+label_path = sys.argv[3]
+
+class_names = [name.strip() for name in open(label_path).readlines()]
+num_classes = len(class_names)
+
+if net_type == 'vgg16-ssd':
+    net = create_vgg_ssd(len(class_names), is_test=True)
+elif net_type == 'mb1-ssd':
+    net = create_mobilenetv1_ssd(len(class_names), is_test=True)
+elif net_type == 'mb1-ssd-lite':
+    net = create_mobilenetv1_ssd_lite(len(class_names), is_test=True)
+elif net_type == 'mb2-ssd-lite':
+    net = create_mobilenetv2_ssd_lite(len(class_names), is_test=True)
+elif net_type == 'sq-ssd-lite':
+    net = create_squeezenet_ssd_lite(len(class_names), is_test=True)
+else:
+    print("The net type is wrong. It should be one of vgg16-ssd, mb1-ssd and mb1-ssd-lite.")
+    sys.exit(1)
+
+net.load(model_path)
+net.eval()
+
+model_path = f"models/{net_type}.onnx"
+
+dummy_input = torch.randn(1, 3, 300, 300)
+torch.onnx.export(net, dummy_input, model_path, verbose=False, output_names=['scores', 'boxes'])</pre>
+  <p>&nbsp;</p>
 </section>
 
+&nbsp;
+<hr>
+&nbsp;
+
 <section>
-  <h2><a name="6._後書き">6. 後書き</a></h2>
+  <h2><a name="7._後書き">7. 後書き</a></h2>
   <p>MobileNet-SSD とオープンソースツールの LabelImg を使って、あなたが独自の物体検知 AI 
   を実現する方法と手順について記載しました。とっつきにくい部分、面倒な部分があるかと思いますが決して難しい内容ではないと考えます。意図通りに実際に動いたときの驚き・感動はなかなか良い気持ちを味わえると思います。本文記載の通り、そこそこの性能でよければ100枚ぐらいの画像でも十分実験できると思います。是非チャレンジしてみてください。（たくさんの画像をアノテーションするのは大変ですけどね）</p>
   <p>&nbsp;</p>
@@ -2213,6 +2284,11 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2023-03-09</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#6._Convert_models_to_ONNX">6. Convert models to ONNX</a>」を追加</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2023-02-20</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">「<a href="#5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)</a>」を追加</td>
@@ -2220,7 +2296,7 @@ SOFTWARE.
 	  <tr>
 	    <td class="td_history_date">&nbsp;</td>
 	    <td class="td_history_separator">&nbsp;</td>
-	    <td class="td_history">「<a href="#6._後書き">6._後書き</a>」を追加</td>
+	    <td class="td_history">「<a href="#7._後書き">7._後書き</a>」を追加</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-02-16</td>
