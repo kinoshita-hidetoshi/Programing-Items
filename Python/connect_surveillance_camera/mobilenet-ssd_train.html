@@ -1335,6 +1335,7 @@ $ pip3 install labelImg
         <p>
         "C:\Users\[user-name]\AppData\Local\Programs\Python\Python310\lib\site-packages\libs\shape.py" 
         の131行目の min_x, min_y を int でキャストすることで正常動作するようになりました。</p>
+        <p>※ この修正無しで正常に動作しました、とご連絡くださった方もいらっしゃいました。</p>
       </div>
     </div>
 
@@ -2103,12 +2104,13 @@ bird</pre>
     
     <p>&nbsp;</p>
   <h4>[使用方法]</h4>
-  <p>Usage: "python convert_models_to_onnx.py"</p>
+  <p>Usage: "python convert_models_to_onnx.py&nbsp; &lt;net type: mobilenet-v1-ssd|others&gt;&nbsp; 
+  &lt;model path&gt;"</p>
   <p>&nbsp;</p>
   <p>具体例：</p>
   <pre style="width: 800px; color: #FFFFFF; background-color: #000000">python convert_models_to_onnx.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
   <p>出力：</p>
-  <p>models/mb1-ssd.onnx </p>
+  <p>models/mb1-ssd.onnx</p>
   <p>&nbsp;</p>
   <h4>[ソースコード]</h4>
   <p>["convert_models_to_onnx.py"]</p>
