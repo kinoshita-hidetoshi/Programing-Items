@@ -148,86 +148,87 @@
 	<p>
 	<img alt="&quot;Retrain on Open Images Dataset&quot; 概要" class="border_with_drop-shadow" src="mobilenet-ssd_train/img3.jpg" width="800"></p>
 	<p>&nbsp;</p>
-	  <p>使用する学習データ数は以下の通りです。</p>
-        
-    <table class="border-collapse" border="1" width="500">
-      <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>Class name</th>
-          <th width="25%">Train</th>
-          <th width="25%">Test</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Hundgun</strong></td>
-          <td>545</td>
-          <td>68</td>
-        </tr>
-        <tr>
-          <td><strong>Shotgun</strong></td>
-          <td>416</td>
-          <td>55</td>
-        </tr>
-        <tr>
-          <td><strong>合計</strong></td>
-          <td>961</td>
-          <td>123</td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <p>&nbsp;</p>
+  <p>使用する学習データ数は以下の通りです。</p>
+      
+  <table class="border-collapse" border="1" width="500">
+    <caption>[Table.] 使用した学習データ数（重複画像を削除後の数です）</caption>
+    <thead class="standard_table">
+      <tr>
+        <th>Class name</th>
+        <th width="25%">Train</th>
+        <th width="25%">Test</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Hundgun</strong></td>
+        <td>545</td>
+        <td>68</td>
+      </tr>
+      <tr>
+        <td><strong>Shotgun</strong></td>
+        <td>416</td>
+        <td>55</td>
+      </tr>
+      <tr>
+        <td><strong>合計</strong></td>
+        <td>961</td>
+        <td>123</td>
+      </tr>
+    </tbody>
+  </table>
   
-    <div class="status_information">
-      <div></div>
-      <div>
-        <p><strong>NOTE</strong></p>
-        <p>"Hundgun" と "Shutgun" ２クラスで再学習を行う、という内容です。</p>
-      </div>
-    </div>
+  <p>&nbsp;</p>
 
-    <p>&nbsp;</p>
-	  <p>&nbsp;</p>
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>"Hundgun" と "Shutgun" ２クラスで再学習を行う、という内容です。</p>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
 	<h4>[評価環境]</h4>
   <table>
-  <tbody>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>言語 :</td>
-      <td>Python,</td>
-      <td>3.10.7</td>
-    </tr>
+      <tr>
+        <td>言語 :</td>
+        <td>Python,</td>
+        <td>3.10.7<br>3.7.9</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>&nbsp;</td>
-      <td>PyTorch,</td>
-      <td>1.12.1+cpu</td>
-    </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>PyTorch,</td>
+        <td>1.12.1+cpu</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
 
-    <tr>
-      <td>OS :</td>
-      <td>Windows 11 home,</td>
-      <td>22H2</td>
-    </tr>
+      <tr>
+        <td>OS :</td>
+        <td>Windows 11 home,</td>
+        <td>22H2</td>
+      </tr>
 
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </tbody>
-</table>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+  </table>
 
   <p>&nbsp;</p>
       <h4><a name="5-1-1._準備">5-1-1. 準備</a></h4>
@@ -1136,7 +1137,7 @@ print(f"Found {len(probs)} objects. The output image is {path}")</pre>
       <tr>
         <td>言語 :</td>
         <td>Python,</td>
-        <td>3.10.7</td>
+        <td>3.10.7<br>3.7.9</td>
       </tr>
 
       <tr>
@@ -1991,13 +1992,11 @@ bird</pre>
 <p>&nbsp;</p>
 
 <section>
-  <h4><a name="5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6. 学習結果とカメラを使って物体検知してみる 
-  (i-PRO カメラ)</a></h4>
+  <h4><a name="5-2-6._学習結果とカメラを使って物体検知してみる_(i-PRO_カメラ)">5-2-6. 学習結果とカメラを使って物体検知してみる (i-PRO カメラ)</a></h4>
   <p>&nbsp;</p>
   <h4>[概要]</h4>
   <p>前節で作成した学習結果とカメラを使って物体検知を行ってみます。</p>
-  <p>
-  &nbsp;</p>
+  <p>&nbsp;</p>
 	
 	<h4>[環境]</h4>
   <table>
@@ -2009,7 +2008,7 @@ bird</pre>
       <tr>
         <td>言語 :</td>
         <td>Python,</td>
-        <td>3.10.7</td>
+        <td>3.10.7<br>3.7.9</td>
       </tr>
 
       <tr>
