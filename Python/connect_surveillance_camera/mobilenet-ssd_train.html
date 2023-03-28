@@ -2118,7 +2118,7 @@ bird</pre>
     <p>&nbsp;</p>
   <h4>[使用方法]</h4>
   <p>Usage: "python convert_models_to_onnx.py&nbsp; &lt;net type: mobilenet-v1-ssd|others&gt;&nbsp; 
-  &lt;model path&gt;"</p>
+  &lt;model path&gt;&nbsp; &lt;label path&gt;"</p>
   <p>&nbsp;</p>
   <p>具体例：</p>
   <pre style="width: 800px; color: #FFFFFF; background-color: #000000">python convert_models_to_onnx.py mb1-ssd models/mobilenet-v1-ssd-mp-0_675.pth models/voc-model-labels.txt</pre>
@@ -2139,7 +2139,7 @@ import onnx
 
 
 if len(sys.argv) &lt; 3:
-    print('Usage: python convert_models_to_onnx.py &lt;net type: mobilenet-v1-ssd|others&gt;  &lt;model path&gt;')
+    print('Usage: python convert_models_to_onnx.py &lt;net type: mobilenet-v1-ssd|others&gt;  &lt;model path&gt;  &lt;label path&gt;')
     sys.exit(0)
 
 net_type = sys.argv[1]
