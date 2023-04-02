@@ -99,16 +99,16 @@
   <p> &nbsp;</p>
   <p> &nbsp;</p>
   <p> 図．全体図</p>
-  <p> <img alt="" height="680" src="gantchart/imgA.jpg" width="1336"></p>
+  <p> <img alt="ガントチャートイメージ" height="680" src="gantchart/imgA.jpg" width="1336"></p>
   <p> &nbsp;</p>
   <p> 図．スケジュール更新をコンテキストメニューから行う様子</p>
-  <p> <img alt="" src="gantchart/img11.jpg"></p>
+  <p> <img alt="メニュー例" src="gantchart/img11.jpg"></p>
   <p> &nbsp;</p>
   <p> 図．設定１</p>
-  <p> <img alt="" src="gantchart/imgB1.jpg"></p>
+  <p> <img alt="設定１" src="gantchart/imgB1.jpg"></p>
   <p> &nbsp;</p>
   <p> 図．設定２</p>
-  <p> <img alt="" src="gantchart/imgC.jpg"></p>
+  <p> <img alt="設定２" src="gantchart/imgC.jpg"></p>
   <p> &nbsp;</p>
   <p>&nbsp;</p>
 
@@ -134,7 +134,7 @@
 <p> ここでは下図のような感じでレイアウトを作ってみました。</p>
 <p> 「カテゴリ」はグルーピングなどを意識した項目です。「大分類」「中分類」など複数列にしても良いかもしれません。</p>
 <p> &nbsp;</p>
-<p> <img alt="" src="gantchart/img19.jpg"></p>
+<p> <img alt="レイアウト例" src="gantchart/img19.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <p> サンプル： <a href="gantchart/Excel_gantchart_chap-02.xlsm">ダウンロード</a></p>
@@ -151,14 +151,14 @@
 <h3> 3-1. 「開始日」を指定でカレンダーを更新</h3>
 <p> 最初に日を表示する部分の書式を変更します。<br>&quot;セルの表示設定&quot; を &quot;日のみ&quot;(d) にします。&quot;=date(Y1)&quot; 
 とすることでも同じことをできますが、後で示す曜日の実現でこのセルには年月日の全ての情報を持っていてほしいので、表示形式で&quot;日のみ&quot;の表示を実現します。</p>
-<p> <img alt="" src="gantchart/imgC1.jpg"></p>
+<p> <img alt="表示形式" src="gantchart/imgC1.jpg"></p>
 <p> &nbsp;</p>
 <p> 続いて、カレンダーの最も左側の日付を「開始日」と同じ日にします。</p>
 <p> それ以降の日を、一つ左側のセルの翌日とします。</p>
 <p> 左側から２つ目のセルを設定したらドラッグでOKです。</p>
-<p> <img alt="" src="gantchart/img8.jpg"></p>
+<p> <img alt="表示例" src="gantchart/img8.jpg"></p>
 <p> &nbsp;</p>
-<p> <img alt="" src="gantchart/img9.jpg"></p>
+<p> <img alt="表示例" src="gantchart/img9.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h3> 3-2. 月を表示</h3>
@@ -169,48 +169,48 @@
 <p>・以上の条件以外、空欄</p>
 <p> &nbsp;</p>
 <p> &quot;セルの書式設定&quot; を &quot;月のみ&quot;(m)とします。</p>
-<p> <img alt="" src="gantchart/img10.jpg"></p>
+<p> <img alt="書式設定例" src="gantchart/img10.jpg"></p>
 <p> &nbsp;</p>
 <p> 一番左側のセルは、真下と同じ日付を代入、月をそのまま無条件で表示します。</p>
-<p> <img alt="" src="gantchart/img12.jpg"></p>
+<p> <img alt="表示例" src="gantchart/img12.jpg"></p>
 <p> &nbsp;</p>
 <p> それ以外のセルは、参照するセルを各セルの真下として、日付が１のときだけ日付を代入し、それ以外は空欄を代入します。</p>
-<p> <img alt="" src="gantchart/img14.jpg"></p>
+<p> <img alt="表示例" src="gantchart/img14.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h3> 3-3. 曜日を表示</h3>
 <p> 次に曜日表示です。こちらは全部のセルが同じ手順です。</p>
 <p> 真上のセルを参照し、「=TEXT(AH5, &quot;AAA&quot;)」という式で曜日を計算して表示してくれます。</p>
-<p> <img alt="" src="gantchart/img16.jpg"></p>
+<p> <img alt="曜日 表示例" src="gantchart/img16.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h3> 3-4. 月の部分は 1日なら左側に縦罫線、翌日が&quot;END&quot;なら右側に縦罫線</h3>
 <p> 今のままでは月の切り替わり部分、最終セルの右側、に罫線がありません。</p>
 <p> 美しくないので、ここに罫線を自動追加されるように &quot;条件付き書式&quot; を設定します。</p>
 <p> &nbsp;</p>
-<p> <img alt="" src="gantchart/img1D.jpg"> <img alt="" src="gantchart/img1E.jpg"></p>
+<p> <img alt="罫線 表示例" src="gantchart/img1D.jpg"> <img alt="罫線表示例" src="gantchart/img1E.jpg"></p>
 <p> &nbsp;</p>
 <p> 月部分の全セルを選択後、&quot;条件付き書式&quot;を設定します。</p>
-<p> <img alt="" src="gantchart/img21.jpg"></p>
-<p> <img alt="" src="gantchart/img22.jpg"></p>
+<p> <img alt="書式ルール" src="gantchart/img21.jpg"></p>
+<p> <img alt="書式設定 罫線" src="gantchart/img22.jpg"></p>
 <p> &nbsp;</p>
-<p> <img alt="" src="gantchart/img23.jpg"></p>
+<p> <img alt="書式ルール" src="gantchart/img23.jpg"></p>
 <p> &nbsp;</p>
 <p> これで月の切り替わりに罫線が入りました。</p>
-<p> <img alt="" src="gantchart/img24.jpg"></p>
+<p> <img alt="表示例" src="gantchart/img24.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <p> 同様に、最終列に罫線を加える作業をします。最終列のセルに &quot;END&quot; という表記を入れてこれをマークにして書式指定します。</p>
-<p> <img alt="" src="gantchart/img26.jpg"></p>
+<p> <img alt="書式ルール" src="gantchart/img26.jpg"></p>
 <p> &nbsp;</p>
 <p> この場合は右側に縦の罫線を追加します。</p>
-<p> <img alt="" src="gantchart/img27.jpg"></p>
+<p> <img alt="書式設定 罫線" src="gantchart/img27.jpg"></p>
 <p> &nbsp;</p>
 <p> こういう書式設定を行いました。</p>
-<p> <img alt="" src="gantchart/img29.jpg"></p>
+<p> <img alt="書式ルール" src="gantchart/img29.jpg"></p>
 <p> &nbsp;</p>
 <p> 最終列にも罫線が入りました。</p>
-<p> <img alt="" src="gantchart/img2A.jpg"></p>
+<p> <img alt="表示例 罫線" src="gantchart/img2A.jpg"></p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
@@ -221,7 +221,7 @@
   <p> &nbsp;</p>
   <p> 1. 条件付き書式で新しいルールを作成します。</p>
   <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
-  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> <img alt="条件付き書式" src="gantchart/img6.jpg"></p>
   <p> &nbsp;</p>
   <p> 2. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
   <p> 5 の方のみを"$"で指定します。AHに"$"を付けてはいけません。</p>
@@ -230,12 +230,12 @@
   <p> TEXT 関数で "aaa" の指定は曜日表記のところでも使用しました。便利なのでぜひ覚えていただきたいです。</p>
   <p> セルの色は［書式(F)...］から水色を設定しました。</p>
   <p> &nbsp;</p>
-  <p> <img alt="" src="gantchart/img4.jpg"></p>
+  <p> <img alt="データの入力規則" src="gantchart/img4.jpg"></p>
   <p> &nbsp;</p>
   <p> 3. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
   <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
   <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$H$106" を設定できています。</p>
-  <p> <img alt="" src="gantchart/img3.jpg"></p>
+  <p> <img alt="書式ルール" src="gantchart/img3.jpg"></p>
   <p> &nbsp;</p>
   <p> 4. 同様に日曜日も同じ手順で進めます。</p>
   <p> 書式設定の部分で "土" を "日" へ変更するだけなので、説明は割愛します。</p>
@@ -314,7 +314,7 @@
   <p> &nbsp;</p>
   <p> 3. 条件付き書式で新しいルールを作成します。</p>
   <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
-  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> <img alt="条件付き書式" src="gantchart/img6.jpg"></p>
   <p> &nbsp;</p>
   <p> 4. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
   <p> 設定との一致確認の方法として、ここでは COUNTIF 関数を使っています。</p>
@@ -348,12 +348,12 @@
   <p> 土曜日、日曜日に色付けする方法とほとんど同じです。こちらも条件付き書式を使って実現します。</p>
   <p> &nbsp;</p>
   <p> 1. 「設定１」シートに祝日とする年月日一覧を準備します。</p>
-  <p> <img alt="" src="gantchart/imgB.jpg" width="800"></p>
+  <p> <img alt="祝日" src="gantchart/imgB.jpg" width="800"></p>
   <p> &nbsp;</p>
   <p> &nbsp;</p>
   <p> 2. 条件付き書式で新しいルールを作成します。</p>
   <p> 色付けする範囲を選択後、条件付き書式から「新しいルール」を選択します。</p>
-  <p> <img alt="" src="gantchart/img6.jpg"></p>
+  <p> <img alt="条件付き書式" src="gantchart/img6.jpg"></p>
   <p> &nbsp;</p>
   <p> 3. ルールは「数式を使用して、書式設定をするセルを決定」とし、ルールを下図のように設定します。</p>
   <p> 祝日との一致確認の方法として、ここでは COUNTIF 関数を使っています。</p>
@@ -370,12 +370,12 @@
 
   <p> &nbsp;</p>
   <p> セルの色は［書式(F)...］からオレンジ色を設定しました。</p>
-  <p> <img alt="" src="gantchart/imgA1.jpg" width="500"></p>
+  <p> <img alt="書式ルールの編集" src="gantchart/imgA1.jpg" width="500"></p>
   <p> &nbsp;</p>
   <p> 4. 「条件付き書式ルールの管理」から状態を確認すると、下図のようになっているはずです。</p>
   <p> 書式ルールの表示として「このワークシート」を選択してください。</p>
   <p> 適用先を色を付ける全ての範囲として、下図では、"$AH$5:$HI$106" を設定しています。</p>
-  <p> <img alt="" src="gantchart/imgE.jpg" width="800"></p>
+  <p> <img alt="条件付き書式ルールの管理" src="gantchart/imgE.jpg" width="800"></p>
   <p> &nbsp;</p>
   <p> 以上で祝日表示対応の設定を完了です。</p>
 </section>
