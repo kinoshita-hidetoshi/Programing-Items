@@ -1,59 +1,67 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>CryptEnumProviderTypes (CryptAPI)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>CryptEnumProviderTypes (CryptAPI) | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style1 {
-	font-family: "Meiryo UI";
-}
-.auto-style3 {
-	border-style: groove;
-	border-width: 3px;
-}
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style6 {
-	background-color: #FFFF00;
-}
-.auto-style8 {
-	border: thin none #808080;
-	padding: 1px 4px;
-}
-.auto-style9 {
-	border: 1px solid #808080;
-}
-</style>
+  <style type="text/css">
+    .auto-style6 {
+    	background-color: #505000;
+    }
+  </style>
 </head>
 
 <body onload="prettyPrint();">
 
-<h1>
-CryptEnumProviderTypes (CryptAPI)
-</h1>
+<h1>CryptEnumProviderTypes (CryptAPI)</h1>
+<p>&nbsp;</p>
 
-<p> <font face="Meiryo UI">Windows環境で AES と SHA256 をCryptAPIで使用したくなり、調べ始めました。<br>
-.NETで簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</font></p>
-<p> <span class="auto-style1">まずは CryptEnumProviderTypes() 
-でCSPタイプ一覧を取得する方法です。OSによって実装されているCSPタイプに差異があるので重要な情報です。</span></p>
+<p> Windows環境で AES と SHA256 を CryptAPI で使用したくなり、調べ始めました。<br>
+.NET で簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</p>
+<p> &nbsp;</p>
+<p> まずは CryptEnumProviderTypes() 
+でCSPタイプ一覧を取得する方法です。OSによって実装されているCSPタイプに差異があるので重要な情報です。</p>
 <p> <a href="CryptEnumProviderTypes/EnamerateProviderTypes.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+<p> &nbsp;</p>
 <span class="table_title">[プログラムソース]</span>
 
-<code>
 <pre class="prettyprint linenums">
-<span class="command">#include</span> <span class="string">&lt;windows.h&gt;</span>
-<span class="command">#include</span> <strong><span class="auto-style6">&lt;WinCrypt.h&gt;</span></strong>
-<span class="command">#include</span> <span class="string">&lt;tchar.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;stdio.h&gt;</span>
-<span class="command">#include</span> <span class="string">&lt;stdlib.h&gt;</span>
+#include &lt;windows.h&gt;
+<span class="auto-style6">#include &lt;WinCrypt.h&gt;</span>
+#include &lt;tchar.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 
 
 #define BUF_SIZE        100
@@ -91,12 +99,11 @@ CryptEnumProviderTypes (CryptAPI)
     <span class="command">return</span> EXIT_SUCCESS;
 }
 </pre>
-</code>
 	
 <br>
 <span class="table_title">[実行結果]</span>
-		<code>
-<pre class="prettyprint linenums">
+
+<pre class="prettyprint linenums lang-sh">
 Enamerate CSP(Cryptographic Service Provider) types.
 ===================
  1 - RSA Full (Signature and Key Exchange)
@@ -108,106 +115,184 @@ Enamerate CSP(Cryptographic Service Provider) types.
 ===================
 HIT [enter] KEY !!
 </pre>
-</code>
+
+<p> &nbsp;</p>
 <p> OS: Windows7 64bit Proffesional<br>作成： VC++2008 sp1、32bitコンパイル、/MT(d)</p>
 <p> さて、問題は上記それぞれのCSPタイプで使用できる詳細アルゴリズム。これについては以下の通り。</p>
-<table class="auto-style8" cellspacing="0" cellpadding="5" width="800px">
+<p> &nbsp;</p>
+
+<table class="border-collapse" border="1" width="800px">
+  <thead class="standard_table">
 	<tr>
-		<td class="auto-style9" style="width: 135px">CSPのタイプ</td>
-		<td class="auto-style9" style="width: 38px">値</td>
-		<td class="auto-style9" style="width: 102px">鍵交換</td>
-		<td class="auto-style9" style="width: 120px">電子署名</td>
-		<td class="auto-style9" style="width: 132px">暗号化</td>
-		<td class="auto-style9" style="width: 149px">ハッシュ計算</td>
+		<th style="width: 135px">CSPのタイプ</th>
+		<th style="width: 38px">値</th>
+		<th style="width: 102px">鍵交換</th>
+		<th style="width: 120px">電子署名</th>
+		<th style="width: 132px">暗号化</th>
+		<th style="width: 149px">ハッシュ計算</th>
+	</tr>
+  </thead>
+	<tr>
+		<td style="width: 135px">PROV_RSA_FULL</td>
+		<td style="width: 38px">1</td>
+		<td style="width: 102px">RSA</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">RC2<br>RC4</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_RSA_FULL</td>
-		<td class="auto-style9" style="width: 38px">1</td>
-		<td class="auto-style9" style="width: 102px">RSA</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">RC2<br>RC4</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
-	</tr>
-	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_RSA_AES</td>
-		<td class="auto-style9" style="width: 38px">24</td>
-		<td class="auto-style9" style="width: 102px">RSA</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">RC2<br>RC4<br>AES</td>
-		<td class="auto-style9" style="width: 149px">MD2<br>MD4<br>MD5<br>SHA-1<br>SHA256<sup> 
+		<td style="width: 135px">PROV_RSA_AES</td>
+		<td style="width: 38px">24</td>
+		<td style="width: 102px">RSA</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">RC2<br>RC4<br>AES</td>
+		<td style="width: 149px">MD2<br>MD4<br>MD5<br>SHA-1<br>SHA256<sup> 
 		(*1)</sup><br>SHA384<sup> (*1)</sup><br>SHA512<sup> (*1)</sup></td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_RSA_SIG</td>
-		<td class="auto-style9" style="width: 38px">2</td>
-		<td class="auto-style9" style="width: 102px">None</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">None</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
+		<td style="width: 135px">PROV_RSA_SIG</td>
+		<td style="width: 38px">2</td>
+		<td style="width: 102px">None</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">None</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_RSA_SCHANNEL</td>
-		<td class="auto-style9" style="width: 38px">12</td>
-		<td class="auto-style9" style="width: 102px">RSA</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">RC4<br>DES<br>Triple DES</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
+		<td style="width: 135px">PROV_RSA_SCHANNEL</td>
+		<td style="width: 38px">12</td>
+		<td style="width: 102px">RSA</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">RC4<br>DES<br>Triple DES</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_DSS</td>
-		<td class="auto-style9" style="width: 38px">3</td>
-		<td class="auto-style9" style="width: 102px">None</td>
-		<td class="auto-style9" style="width: 120px">DSS</td>
-		<td class="auto-style9" style="width: 132px">None</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
+		<td style="width: 135px">PROV_DSS</td>
+		<td style="width: 38px">3</td>
+		<td style="width: 102px">None</td>
+		<td style="width: 120px">DSS</td>
+		<td style="width: 132px">None</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_DSS_DH</td>
-		<td class="auto-style9" style="width: 38px">13</td>
-		<td class="auto-style9" style="width: 102px">DSS</td>
-		<td class="auto-style9" style="width: 120px">DSS</td>
-		<td class="auto-style9" style="width: 132px">CYLINK_MEK</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
+		<td style="width: 135px">PROV_DSS_DH</td>
+		<td style="width: 38px">13</td>
+		<td style="width: 102px">DSS</td>
+		<td style="width: 120px">DSS</td>
+		<td style="width: 132px">CYLINK_MEK</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_DH_SCHANNEL</td>
-		<td class="auto-style9" style="width: 38px">18</td>
-		<td class="auto-style9" style="width: 102px">DSS</td>
-		<td class="auto-style9" style="width: 120px">DSS</td>
-		<td class="auto-style9" style="width: 132px">DES<br>Triple DES</td>
-		<td class="auto-style9" style="width: 149px">MD5<br>SHA-1</td>
+		<td style="width: 135px">PROV_DH_SCHANNEL</td>
+		<td style="width: 38px">18</td>
+		<td style="width: 102px">DSS</td>
+		<td style="width: 120px">DSS</td>
+		<td style="width: 132px">DES<br>Triple DES</td>
+		<td style="width: 149px">MD5<br>SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_FORTEZZA</td>
-		<td class="auto-style9" style="width: 38px">4</td>
-		<td class="auto-style9" style="width: 102px">KEA</td>
-		<td class="auto-style9" style="width: 120px">DSS</td>
-		<td class="auto-style9" style="width: 132px">Skipjack</td>
-		<td class="auto-style9" style="width: 149px">SHA-1</td>
+		<td style="width: 135px">PROV_FORTEZZA</td>
+		<td style="width: 38px">4</td>
+		<td style="width: 102px">KEA</td>
+		<td style="width: 120px">DSS</td>
+		<td style="width: 132px">Skipjack</td>
+		<td style="width: 149px">SHA-1</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_MS_EXCHANGE</td>
-		<td class="auto-style9" style="width: 38px">5</td>
-		<td class="auto-style9" style="width: 102px">RSA</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">CAST</td>
-		<td class="auto-style9" style="width: 149px">MD5</td>
+		<td style="width: 135px">PROV_MS_EXCHANGE</td>
+		<td style="width: 38px">5</td>
+		<td style="width: 102px">RSA</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">CAST</td>
+		<td style="width: 149px">MD5</td>
 	</tr>
 	<tr>
-		<td class="auto-style9" style="width: 135px">PROV_SSL</td>
-		<td class="auto-style9" style="width: 38px">6</td>
-		<td class="auto-style9" style="width: 102px">RSA</td>
-		<td class="auto-style9" style="width: 120px">RSA</td>
-		<td class="auto-style9" style="width: 132px">Varies</td>
-		<td class="auto-style9" style="width: 149px">Varies</td>
+		<td style="width: 135px">PROV_SSL</td>
+		<td style="width: 38px">6</td>
+		<td style="width: 102px">RSA</td>
+		<td style="width: 120px">RSA</td>
+		<td style="width: 132px">Varies</td>
+		<td style="width: 149px">Varies</td>
 	</tr>
 </table>
 <p> (*1) Windows Vista, Windows 7 以降 でのみ使用可能</p>
-<p> 参考URL： 
-<a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx" target="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx">
-http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx</a></p>
+<p> &nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2012 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>
+      <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx" target="_blank">
+      http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2012年1月28日 木下英俊<br>
-</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-04-05</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン刷新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2012-01-28</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© 2012 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+<p>&nbsp;</p>
 </body>
 </html>
