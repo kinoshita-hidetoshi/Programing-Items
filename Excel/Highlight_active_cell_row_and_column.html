@@ -99,7 +99,7 @@
 <p> 機能は１つです。<br>（機能１）選択中のセルに対応する行と列を強調表示（色を付ける）する</p>
 <p> 色を以下のようにします。<br>－ 選択中のセル： 黄色 (6)<br>－ 選択中のセル上下左右のセル： ライトイエロー (36)</p>
 <p> 
-<img alt="" src="Highlight_active_cell_row_and_column/img9.jpg"></p>
+<img alt="画面例" src="Highlight_active_cell_row_and_column/img9.jpg"></p>
 <p> 
 &nbsp;</p>
 <p>[&quot;アクティブセルの行と列を強調表示&quot; する部分のVBA]<br></p>
@@ -157,9 +157,9 @@ End Sub</pre>
 <p>
 上部や左側のタイトルエリアが選択された場合、期待する動作は列や行のみの強調表示と考えます。<br>選択セル（ターゲットセル）としてタイトルエリアが選択された場合に、行または列のみが強調表示されるようにVBAを修正します。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img12.jpg"></p>
+<img alt="画面例" src="Highlight_active_cell_row_and_column/img12.jpg"></p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img13.jpg"></p>
+<img alt="画面例" src="Highlight_active_cell_row_and_column/img13.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
@@ -236,7 +236,7 @@ End Sub</pre>
 以下のように色分けしてみます。<br>－ 左上エリア：&nbsp;&nbsp;&nbsp; うすい水色 (34)<br>ー 右上エリア：&nbsp;&nbsp;&nbsp; 
 水色 (37)<br>ー 左下エリア：&nbsp;&nbsp;&nbsp; 水色 (37)</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img10.jpg"></p>
+<img alt="画面例" src="Highlight_active_cell_row_and_column/img10.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
@@ -307,7 +307,7 @@ End Sub</pre>
 <p>
 下図が作成するサンプルです。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img11.jpg"></p>
+<img alt="色テーブル例" src="Highlight_active_cell_row_and_column/img11.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
@@ -371,7 +371,7 @@ End Sub</pre>
 本処理は&quot;設定&quot;シート固有の処理なので、下図の「Sheet2(設定)」にVBAマクロを記載する必要があります。<br>
 シートが有効になったときに処理するために、イベント&quot;Activate&quot;をトリガーとする処理として実装します。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img1F.jpg"></p>
+<img alt="VBAマクロ" src="Highlight_active_cell_row_and_column/img1F.jpg"></p>
 <pre class="prettyprint linenums lang-vb">
 ' 概要： &quot;設定&quot;シートを開いたときに ColorIndex テーブルに従った色を表示する
 ' 説明： &quot;設定&quot;シートのための処理です。
@@ -406,19 +406,19 @@ End Sub
 <p>
 こちらの図がフィルターをしていないデフォルト状態です。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img3.jpg"></p>
+<img alt="フィルター無しのデフォルト状態" src="Highlight_active_cell_row_and_column/img3.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
 こちらが「03 テスト」部分をダブルクリックしたときの状態です。<br>AutoFilter により実現しています。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img4.jpg"></p>
+<img alt="フィルター状態" src="Highlight_active_cell_row_and_column/img4.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
 こちらの図が「07 項目7」をダブルクリックしたときの状態です。<br>こちらは Columns(i).Hidden プロパティで実現しています。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img5.jpg"></p>
+<img alt="フィルター状態" src="Highlight_active_cell_row_and_column/img5.jpg"></p>
 <p>&nbsp;</p>
 <p>以下にVBAコードを示します。</p>
 <p>[ダブルクリックした項目で抽出を行うマクロ]</p>
@@ -518,15 +518,15 @@ End Sub
 まずは対象のエクセルシートの行と列の末尾に「合計」を加えます。これはVBAではなくシートの修正です。<br>例えば３行目の合計欄には 
 「=COUNTIF(C3:L3,&quot;○&quot;)+COUNTIF(C3:L3,&quot;■&quot;)」 という式を記載することでできます。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img6.jpg"></p>
+<img alt="合計欄を追加" src="Highlight_active_cell_row_and_column/img6.jpg"></p>
 <p>
 &nbsp;</p>
 <p>
 この状態で行や列を選択した状態で右クリックメニューから「挿入」をクリックした場合に、自動的にい「合計」と「END」の挿入も行われるようにします。</p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img7.jpg"></p>
+<img alt="行を挿入した時の動作" src="Highlight_active_cell_row_and_column/img7.jpg"></p>
 <p>
-<img alt="" src="Highlight_active_cell_row_and_column/img8.jpg"></p>
+<img alt="列を挿入した時の動作" src="Highlight_active_cell_row_and_column/img8.jpg"></p>
 <p>
 &nbsp;</p>
 <pre class="prettyprint linenums lang-vb">
