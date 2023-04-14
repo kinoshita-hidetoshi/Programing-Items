@@ -1,45 +1,74 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>[WPF] メートル法とヤード・ポンド法の値変換プログラム</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[WPF] メートル法とヤード・ポンド法の値変換プログラム | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-cofavicon.ico">
+  de-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../../design.css" type="text/css">
-<style type="text/css">
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	background-color: #FFFF00;
-}
-</style>
+  <style type="text/css">
+    .auto-style8 {
+    	background-color: #505000;
+    }
+  *{margin:0;padding:0}*,:after,:before{background-repeat:no-repeat;box-sizing:inherit}small{font-size:80%}
+  </style>
 </head>
+
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-[WPF] メートル法 と ヤード・ポンド法 の値変換プログラム</h1>
+
+<h1>[WPF] メートル法 と ヤード・ポンド法 の値変換プログラム</h1>
 
 <p> メートル法 と ヤード・ポンド法 の値変換プログラムを、WPF の データバインディングを使って作成します。<br>
 ここに記載のプログラムは、全て「日経ソフトウェア 2015年9月号」中の「基礎からわかる C# デスクトップアプリ開発 第3回」からの引用です。</p>
 <p>
 &nbsp;</p>
-<h2>
-目次</h2>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._画面を作る">1. 画面を作る</a></p>
+	<p><a href="#2._モデルの基本クラス（ViewModel）を実装">2. モデルの基本クラス（ViewModel）を実装</a></p>
+	<p><a href="#3._コマンドの基本クラス（DelegateCommand）を実装">3. コマンドの基本クラス（DelegateCommand）を実装</a></p>
+    <p><a href="#4._モデルの実装（DistanceUnit.cs）">4. モデルの実装（DistanceUnit.cs）</a></p>
+    <p><a href="#5._ビューモデルの実装（MainWindowViewModel.cs）">5. ビューモデルの実装（MainWindowViewModel.cs）</a></p>
+    <p><a href="#6._ビュー_と_モデル_をデータバインディング">6. ビューとモデルをデータバインディング</a></p>
+    <p><a href="#7._最終結果">7. 最終結果</a></p>
+    <p><a href="#サンプルプログラム">サンプルプログラム</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>
-<a href="#1._画面を作る">1. 画面を作る</a><br><a href="#2._モデルの基本クラス（ViewModel）を実装">2. 
-モデルの基本クラス（ViewModel）を実装</a><br><a href="#3._コマンドの基本クラス（DelegateCommand）を実装">3. 
-コマンドの基本クラス（DelegateCommand）を実装</a><br><a href="#4._モデルの実装（DistanceUnit.cs）">4. 
-モデルの実装（DistanceUnit.cs）</a><br><a href="#5._ビューモデルの実装（MainWindowViewModel.cs）">
-5. アプリのビューモデルの実装（MainWindowViewModel.cs）</a><br>
-<a href="#6._ビュー_と_モデル_をデータバインディング">6. ビュー と モデル をデータバインディング</a><br>
-<a href="#7._最終結果">7. 最終結果</a><br><br><a href="#サンプルプログラム">サンプルプログラム</a></p>
+&nbsp;</p>
 <p>
 &nbsp;</p>
 <h2>
@@ -49,15 +78,12 @@
 <p>
 こんな感じです。画面要素だけで動作にかかわる実装は一切ありません。</p>
 <p>
-<img alt="" src="MeterYardConverter/img7.jpg"></p>
+<img alt="画面イメージ" src="MeterYardConverter/img7.jpg"></p>
 <p>
 &nbsp;</p>
 
 [プログラムソース "MainWindow.xaml"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-xml">
 &lt;Window x:Class=&quot;MeterYardConverter.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -82,9 +108,6 @@
         &lt;/StackPanel&gt;
     &lt;/StackPanel&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 &nbsp;</p>
@@ -97,10 +120,7 @@
 
 
 [プログラムソース "ViewModel.cs"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-			<pre class="prettyprint linenums">
+<pre class="prettyprint linenums">
 using System.ComponentModel;                // INotifyPropertyChanged
 using System.Runtime.CompilerServices;      // CallerMemberName
 
@@ -119,22 +139,15 @@ namespace MeterYardConverter
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
-<p>
-&nbsp;</p>
-<h2>
-<a name="3._コマンドの基本クラス（DelegateCommand）を実装">3. コマンドの基本クラス（DelegateCommand）を実装</a></h2>
-<p>
-データバインディングを実装するために、 ICommand を継承した DelegateCommand を作成します。</p>
+<p>&nbsp;</p>
+
+<h2><a name="3._コマンドの基本クラス（DelegateCommand）を実装">3. コマンドの基本クラス（DelegateCommand）を実装</a></h2>
+
+<p>データバインディングを実装するために、 ICommand を継承した DelegateCommand を作成します。</p>
 
 
 [プログラムソース "DelegateCommand.cs"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
 <pre class="prettyprint linenums">
 using System;
 using System.Windows.Input;         // ICommand
@@ -178,18 +191,14 @@ namespace MeterYardConverter
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
+
 <h2><a name="4._モデルの実装（DistanceUnit.cs）">4. モデルの実装（DistanceUnit.cs）</a></h2>
+
 <p>モデルの実装を行います。<br>各単位の宣言と、単位間の変換を行うめっそっどの実装を行います。</p>
 
 [プログラムソース "DistanceUnit.cs"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
 <pre class="prettyprint linenums">
 using System.Collections.Generic;
 
@@ -249,18 +258,14 @@ namespace MeterYardConverter
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
+
 <h2><a name="5._ビューモデルの実装（MainWindowViewModel.cs）">5. ビューモデルの実装（MainWindowViewModel.cs）</a></h2>
+
 <p>ビューモデルを実装します。</p>
 
 [プログラムソース "MainWindowViewModel.cs"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
 <pre class="prettyprint linenums">
 using System;
 using System.Collections.Generic;
@@ -331,18 +336,14 @@ namespace MeterYardConverter
         }
     }
 }</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
+
 <h2><a name="6._ビュー_と_モデル_をデータバインディング">6. ビュー と モデル をデータバインディング</a></h2>
+
 <p>ここまでに作成してきたモデルをビューに対してバインディングします。<br>下のソースを見てもらうとわかる通り、簡単ですね。</p>
 
 [プログラムソース "MainWindows.xaml"]
-<table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
 <pre class="prettyprint linenums">
 &lt;Window x:Class=&quot;MeterYardConverter.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
@@ -370,15 +371,11 @@ namespace MeterYardConverter
         &lt;/StackPanel&gt;
     &lt;/StackPanel&gt;
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
 <h2><a name="7._最終結果">7. 最終結果</a></h2>
 <p>最終的に完成したアプリケーションは以下の通りです。</p>
-<p>
-<img alt="" src="MeterYardConverter/img29.jpg"></p>
+<p><img alt="アプリケーション 完成画面" src="MeterYardConverter/img29.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 	
@@ -389,14 +386,81 @@ namespace MeterYardConverter
 サンプルプログラム <a href="MeterYardConverter/MeterYardConverter.zip">ダウンロード</a></p>
 <p>
 &nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>日経ソフトウェア 2015年9月号 内の記事「C#デスクトップアプリ開発 第3回 WPFの要であるデータバインディングを体験しよう」<br>
-	注意：雑誌記事のままだとバグがあってうまく動きません。出版社へ連絡済み。</li>
-</ul>
+<p> &nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2015 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+    <ul>
+		<li>日経ソフトウェア 2015年9月号 内の記事「C#デスクトップアプリ開発 第3回 WPFの要であるデータバインディングを体験しよう」<br>
+	注意：雑誌記事のままだとバグがあってうまく動きません。出版社へ連絡済み。(例) http://www.****.com</li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2015年08月25日 木下英俊<br>
-</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-04-14</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2015-08-25</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© 2015 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>
