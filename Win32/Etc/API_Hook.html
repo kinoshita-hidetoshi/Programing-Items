@@ -1,27 +1,55 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>IAT書き換えによるAPIフック、DLLインジェクション</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[Win32] IAT書き換えによるAPIフック、DLLインジェクション | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
+  <style type="text/css">
+    .auto-style4 {
+    	border-width: 0px;
+    	width:800px;
+    }
+    .auto-style7 {
+    	font-weight: normal;
+    }
+  </style>
 </head>
+
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-IAT書き換えによるAPIフック、DLLインジェクション</h1>
+
+<h1 class="auto-style7">[Win32] IAT書き換えによるAPIフック、DLLインジェクション</h1>
+
 <p>「IAT書き換えによるAPIフックを使って、他のプロセスでコードを実行する方法」 について記載します。</p>
 <p>&nbsp;</p>
 <h2> 目次</h2>
@@ -36,67 +64,43 @@ IAT書き換えによるAPIフック、DLLインジェクション</h1>
 	<li>OS: Windows10 home</li>
 </ul>
 <p> &nbsp;</p>
-<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
+
+<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span>
 <pre class="prettyprint linenums">
 </pre>
-		</td>
-	</tr>
-</table>
 	
 <p>&nbsp;</p>
-<h2> 2. ***</h2>
-<p> [概要]</p>
-<p> &nbsp;</p>
-<p>[環境]</p>
-<ul>
-	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
-	<li>OS: Windows10 home</li>
-</ul>
-<p> &nbsp;</p>
-<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
-</pre>
-		</td>
-	</tr>
-</table>
 	
 <br>
 	
 <br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>
-	<a href="http://d.hatena.ne.jp/pakepion/20090612/1244818053" target="_blank">
-	他のプロセスにDLLを注入してちょっと仕事をさせる</a></li>
-	<li>
-	<a href="http://inaz2.hatenablog.com/entry/2015/08/10/193103" target="_blank">
-	IAT書き換えによるAPIフックをやってみる </a></li>
-	<li>
-	<a href="https://www.slideshare.net/furuya02/dll-11047461" target="_blank">
-	64ビット対応 DLLインジェクション ～ 他のプロセスでコードを実行する方法 ～</a></li>
-	<li>
-	<a href="http://furuya02.hatenablog.com/entry/20120114/1326484897" target="_blank">
-	64ビット対応のDLLインジェクション</a></li>
-	<li>
-	<a href="http://nazochu.blogspot.jp/2011/09/64bit32bitdll-injection.html" target="_blank">
-	64bitプロセスから32bitプロセスへDLL Injection (C言語)</a></li>
-	<li>
-	日経ソフトウェア 2013年12月号 &quot;WinAPI &amp; OS 入門 － 第5回 DLL&quot;</li>
-</ul>
+
+<h2>サンプルプログラム</h2>
+
+<p>サンプルプログラム ダウンロード</p>
+
 <p>&nbsp;</p>
+
+<h2>参考</h2>
+<ul>
+	<li><a href="http://d.hatena.ne.jp/pakepion/20090612/1244818053" target="_blank">
+  	他のプロセスにDLLを注入してちょっと仕事をさせる</a></li>
+	<li><a href="http://inaz2.hatenablog.com/entry/2015/08/10/193103" target="_blank">
+  	IAT書き換えによるAPIフックをやってみる </a></li>
+	<li><a href="https://www.slideshare.net/furuya02/dll-11047461" target="_blank">
+	  64ビット対応 DLLインジェクション ～ 他のプロセスでコードを実行する方法 ～</a></li>
+	<li><a href="http://furuya02.hatenablog.com/entry/20120114/1326484897" target="_blank">
+	  64ビット対応のDLLインジェクション</a></li>
+	<li><a href="http://nazochu.blogspot.jp/2011/09/64bit32bitdll-injection.html" target="_blank">
+	  64bitプロセスから32bitプロセスへDLL Injection (C言語)</a></li>
+	<li>日経ソフトウェア 2013年12月号 &quot;WinAPI &amp; OS 入門 － 第5回 DLL&quot;</li>
+</ul>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2017年08月16日 木下英俊、新規作成<br>
-</font></p>
+
+<p>記載： 2017年08月16日 木下英俊、新規作成<br></p>
+
 </body>
 </html>

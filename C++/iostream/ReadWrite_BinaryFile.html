@@ -1,86 +1,157 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title></title>
-<link href="../../design.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>バイナリファイル 読み書き | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
 </head>
-<body>
-<h1>バイナリファイル 
-読み書き</h1>
-<p><font face="Meiryo UI">C++ 標準のみでバイナリファイルの読み書きを行います。<br>
-バイナリデータはコンテナ（vector, 
-list）への格納します。<br>
-<br>
-参考、というかそのまま使わせていただいたのは下記のURLです。<br></font><a title="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx" href="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx"><font color="#0066a7" face="Meiryo UI">http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx</font></a><br>
-<br>
-<font face="Meiryo UI">コードは以下のとおり。</font></p>
 
-<table border="1" cellspacing="0" cellpadding="0">
-  <tr>
-    <td>
-      <font face="Meiryo UI"><code><span class="comment">//<br>
-// ostreambuf_iterator.cpp : コンソール 
-      アプリケーションのエントリ ポイントを定義します。<br>
-// </span> <br>
-<br>
-#include &lt;fstream&gt; // 
-      [io]fstream<br>
-#include &lt;algorithm&gt; // copy, equal<br>
-#include 
-      &lt;vector&gt; // vector<br>
-#include &lt;list&gt; // list<br>
-#include 
-      &lt;iterator&gt; // [io]streambuf_iterator<br>
-#include &lt;cstdlib&gt; // 
-      rand<br>
-#include &lt;cassert&gt; // assert using namespace std;<br><br>int main(int argc, char* 
-      argv[])<br>
-{<br>
-&nbsp;&nbsp;&nbsp; vector&lt;char&gt;&nbsp;&nbsp;&nbsp; 
-      src ;<br><br>&nbsp;&nbsp;&nbsp; // 
-      とりあえず５万文字ほどテキトーに埋める<br>
-&nbsp;&nbsp;&nbsp; for ( int i=0; i&lt;50000; ++i 
-      ){<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-      src.push_back(static_cast&lt;char&gt;(rand()));<br>
-&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp;&nbsp; // 
-      ファイルへバイナリ書き込み<br>
-&nbsp;&nbsp;&nbsp; ofstream&nbsp;&nbsp;&nbsp; 
-      ostrm("test.dat", ios::binary);<br>
-&nbsp;&nbsp;&nbsp; copy( src.begin(), 
-      src.end(), ostreambuf_iterator&lt;char&gt;(ostrm) );<br>
-&nbsp;&nbsp;&nbsp; 
-      ostrm.close();<br><br>&nbsp;&nbsp;&nbsp; // 
-      さっき書いたバイナリファイルを開いて<br>
-&nbsp;&nbsp;&nbsp; ifstream&nbsp;&nbsp;&nbsp; 
-      istrm("test.dat", ios::binary);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;// istreambuf から直接 
-      list&lt;char&gt; を生成してしまう。<br>
-&nbsp;&nbsp;&nbsp; 
-      std::list&lt;char&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-      dest((istreambuf_iterator&lt;char&gt;(istrm)), 
-      (istreambuf_iterator&lt;char&gt;()));<br><br>&nbsp;&nbsp;&nbsp; // 
-      ファイルを閉じる<br>
-&nbsp;&nbsp;&nbsp; istrm.close();<br><br>&nbsp;&nbsp;&nbsp; // 
-      うまくいったか、確認<br>
-&nbsp;&nbsp;&nbsp; assert( src.size() == dest.size() 
-      );<br>
-&nbsp;&nbsp;&nbsp; assert( equal( src.begin(), src.end(), 
-      dest.begin() ) );<br><br>&nbsp;&nbsp;&nbsp; return 
-      EXIT_SUCCESS;<br>
-}</code></font><br>
-	  </td></tr></table>
+<body onload="prettyPrint();">
 
-<p><font face="Meiryo UI">うまく動作したけれども、いまだにちょっと理解不能なのが</font></p>
-<p><font face="Meiryo UI">std::list&lt;char&gt;&nbsp;&nbsp;dest((istreambuf_iterator&lt;char&gt;(istrm)), 
-(istreambuf_iterator&lt;char&gt;()));</font></p>
-<p><font face="Meiryo UI">の部分。各引数部分の括弧をとって</font></p>
-<p><font face="Meiryo UI">std::list&lt;char&gt;&nbsp;&nbsp;dest(istreambuf_iterator&lt;char&gt;(istrm), 
-istreambuf_iterator&lt;char&gt;());</font></p>
-<p><font face="Meiryo UI">と書くとエラーになってしまう。理解不能です。<br>
-気持ち的にはどっちも同じ動作をしてほしいのですけれども。</font></p>
-<p><font face="Meiryo UI">ちなみに評価環境は、VC++2008 SP1 です。OSは Windows7 64ビット 
-なり。</font></p>
+<h1>バイナリファイル 読み書き</h1>
+
+<p>C++ 標準のみでバイナリファイルの読み書きを行います。<br>
+バイナリデータをコンテナ（vector, list）へ格納します。</p>
+<p>&nbsp;</p>
+<p>参考、というかそのまま使わせていただいたのは下記のURLです。<br>
+<a href="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx" target="_blank" title="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx">http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx</a></p>
+<p>コードは以下のとおり。</p>
+
+<pre class="prettyprint linenums lang-cpp">
+#include &lt;fstream&gt;   // [io]fstream
+#include &lt;algorithm&gt; // copy, equal
+#include &lt;vector&gt;    // vector
+#include &lt;list&gt;      // list
+#include &lt;iterator&gt;  // [io]streambuf_iterator
+#include &lt;cstdlib&gt;   // rand
+#include &lt;cassert&gt;   // assert
+
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+    vector&lt;char&gt;&nbsp;&nbsp;&nbsp; src ;
+    
+    // とりあえず５万文字ほどテキトーに埋める
+    for ( int i=0; i&lt;50000; ++i ){
+        src.push_back(static_cast&lt;char&gt;(rand()));
+    }
+    
+    // ファイルへバイナリ書き込み
+    ofstream  ostrm("test.dat", ios::binary);
+    copy( src.begin(), src.end(), ostreambuf_iterator&lt;char&gt;(ostrm) );
+    ostrm.close();
+    
+    // さっき書いたバイナリファイルを開いて
+    ifstream    istrm("test.dat", ios::binary);
+    
+    // istreambuf から直接 list&lt;char&gt; を生成してしまう。
+    std::list&lt;char&gt;    dest((istreambuf_iterator&lt;char&gt;(istrm)), (istreambuf_iterator&lt;char&gt;()));
+    
+    // ファイルを閉じる
+    istrm.close();
+    
+    // うまくいったか、確認
+    assert( src.size() == dest.size() );
+    assert( equal( src.begin(), src.end(), dest.begin() ) );
+    
+    return EXIT_SUCCESS;
+}</pre>
+
+<p>&nbsp;</p>
+
+<p>うまく動作したけれども、いまだにちょっと理解不能なのが</p>
+    
+    <blockquote>
+      std::list&lt;char&gt;&nbsp;&nbsp;dest((istreambuf_iterator&lt;char&gt;(istrm)), 
+(istreambuf_iterator&lt;char&gt;()));</blockquote>
+    
+    <p>の部分。各引数部分の括弧をとって</p>
+    
+    <blockquote>
+      std::list&lt;char&gt;&nbsp;&nbsp;dest(istreambuf_iterator&lt;char&gt;(istrm), 
+istreambuf_iterator&lt;char&gt;());</blockquote>
+    
+    <p>と書くとエラーになってしまう。理解不能です。<br>
+気持ち的にはどっちも同じ動作をしてほしいのですけれども。</p>
+<p>評価環境は、VC++2008 SP1 です。OSは Windows7 64ビット です。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>バイナリ読み書き (wankuma.com)<br>
+        <a href="http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx" target="_blank">
+        http://blogs.wankuma.com/episteme/archive/2009/01/09/166002.aspx</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p><font face="Meiryo UI">記載： 2009年12月20日 木下英俊</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-04-14</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2009-12-20</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© 2009 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
 </body>
 </html>

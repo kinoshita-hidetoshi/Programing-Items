@@ -1,34 +1,64 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>アプリケーションの位置、サイズを保存する</title>
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style7 {
-	font-weight: normal;
-}
-.auto-style8 {
-	border-left-style: solid;
-	border-left-width: 2px;
-	border-right: 2px solid #C0C0C0;
-	border-top-style: solid;
-	border-top-width: 2px;
-	border-bottom: 2px solid #C0C0C0;
-}
-.auto-style9 {
-	background-color: #FFFF00;
-}
-.auto-style10 {
-	border: 2px solid #D5D5D5;
-}
-.auto-style11 {
-	border: 1px solid #D5D5D5;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[WPF] アプリケーションの位置、サイズを保存する | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+    .auto-style8 {
+    	border-left-style: solid;
+    	border-left-width: 2px;
+    	border-right: 2px solid #C0C0C0;
+    	border-top-style: solid;
+    	border-top-width: 2px;
+    	border-bottom: 2px solid #C0C0C0;
+    }
+    .auto-style9 {
+    	background-color: #505000;
+    }
+    .auto-style10 {
+    	border: 2px solid #D5D5D5;
+    }
+    .auto-style11 {
+    	border: 1px solid #D5D5D5;
+    }
+  </style>
 </head>
-<body>
-<h1 class="auto-style7">
-アプリケーションの位置、サイズを保存する</h1>
+
+<body onload="prettyPrint();">
+
+<h1>[WPF] アプリケーションの位置、サイズを保存する</h1>
 
 <p> バインディングを使ってWPFアプリケーションの位置、サイズをアプリケーション終了時に保存する方法を示します。<br>様々な方法がりますが、ここでは 
 Properties.Settings.Default により設定を保存する方法を示します。この方法を応用して様々な属性を保存することが簡単にできます。</p>
@@ -68,11 +98,9 @@ Properties.Settings.Default により設定を保存する方法を示します�
 <p>&nbsp;</p>
 <p><a name="3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a></p>
 <p>XAMLの属性 と 設定 をバインディングします。<br>「xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;」の部分の”<strong>SaveWpfAttribute</strong>”は、プロジェクトの名前空間です。ここはそれぞれのプロジェクトの内容に合わせて変更します。</p>
-<table class="auto-style8" style="width: 100%">
-	<tr>
-		<td>
-		<pre>&lt;Window
-    xmlns=&quot;<a href="http://schemas.microsoft.com/winfx/2006/xaml/presentation">http://schemas.microsoft.com/winfx/2006/xaml/presentation</a>&quot;
+
+<pre class="prettyprint linenums lang-cs">&lt;Window
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
     <span class="auto-style9">xmlns:p=&quot;clr-namespace:<strong>SaveWpfAttribute</strong>.Properties&quot;</span>
     x:Class=&quot;SaveWpfAttribute.MainWindow&quot;
@@ -87,9 +115,7 @@ Properties.Settings.Default により設定を保存する方法を示します�
     &lt;Grid x:Name=&quot;LayoutRoot&quot;/&gt;
 
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
+
 <p>&nbsp;</p>
 <p><a name="4._保存">4. 保存</a></p>
 <p>プログラムを終了するときに現在の属性を保存します。<br>アプリケーションの Closed イベント発生時に 
@@ -97,11 +123,8 @@ Properties.Setting.Default.Save() を行うことで実施します。保存先�
 &quot;C:\Users\%USENAME%\AppData\Local\SaveWpfAttribute\・・・\user.config&quot;<br>
 ちなみに今回は実装しませんが、規定値へ強制的に戻すには Properties.Setting.Default.Reset() で行います。</p>
 [MainWindow.xaml]
-<table class="auto-style10" style="width: 100%" title="aaaa">
-	<tr>
-		<td>
-		<pre>&lt;Window
-    xmlns=&quot;<a href="http://schemas.microsoft.com/winfx/2006/xaml/presentation">http://schemas.microsoft.com/winfx/2006/xaml/presentation</a>&quot;
+<pre class="prettyprint linenums lang-xml">&lt;Window
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
     xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;
     x:Class=&quot;SaveWpfAttribute.MainWindow&quot;
@@ -117,15 +140,11 @@ Properties.Setting.Default.Save() を行うことで実施します。保存先�
     &lt;Grid x:Name=&quot;LayoutRoot&quot;/&gt;
 
 &lt;/Window&gt;</pre>
-		</td>
-	</tr>
-</table>
+
 <br>
+
 [MainWindow.xaml.cs]
-<table class="auto-style11" style="border-width: 2px; border-color: #D5D5D5; width: 100%">
-	<tr>
-		<td>
-		<pre>using System;
+<pre class="prettyprint linenums lang-cs">using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -152,10 +171,9 @@ namespace SaveWpfAttribute
 <span class="auto-style9">        }</span>
     }
 }</pre>
-		</td>
-	</tr>
-</table>
+
 <p>&nbsp;</p>
+
 <p>サンプルプログラム：<a href="SaveWpfAttribute/SaveWpfAttribute.zip">ダウンロード</a><br>&nbsp;&nbsp;&nbsp; 
 作成： Visual Studio 2012</p>
 <hr>
