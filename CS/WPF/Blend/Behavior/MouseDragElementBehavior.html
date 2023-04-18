@@ -110,8 +110,9 @@
 に、&quot;MouseDragElementBehavior&quot; をドロップします。</p>
 <p>rect3 は rect1 と rect2 の重なっている部分を表現するために使用します。ドラッグ操作できるのは rect1 と rect2 の２つです。<br>(2) は Blend を使って行ってください。Visual Studio ではドラッグ操作で登録できません。<br>
 ここまでの実装だけで rect1 と rect2 をドラッグ操作することができます。</p>
-<p><img alt="" src="MouseDragElementBehavior/img2D.jpg"></p>
+<p><img alt="rect へ MouseDragElementBeavior をドラッグ＆ドロップ" src="MouseDragElementBehavior/img2D.jpg"></p>
 
+<p>&nbsp;</p>
 <p>[&quot;MainWindow.xaml&quot;]</p>
 <p>Blend SDK を使用するために、下記２つの名前空間を登録する必要があります。Blendで作業すれば自動的に挿入されるはずです。<br>- &quot;<a href="http://schemas.microsoft.com/expression/2010/interactivity">http://schemas.microsoft.com/expression/2010/interactivity</a>&quot;<br>
 - &quot;<a href="http://schemas.microsoft.com/expression/2010/interactions">http://schemas.microsoft.com/expression/2010/interactions</a>&quot;</p>
@@ -157,7 +158,7 @@
 Files (x86)\Microsoft 
 SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll&quot;</p>
 <p>&nbsp;</p>
-<p><img alt="" src="MouseDragElementBehavior/img42.gif" class="auto-style11"></p>
+<p><img alt="Microsoft.Expression.Interactions" src="MouseDragElementBehavior/img42.gif" class="auto-style11"></p>
 <p>&nbsp;</p>
 <p>ここまでの実装だけで rect1, rect2 をドラッグ操作することができます。<br>いったんここまででビルドして確認してみてください。</p>
 <p>&nbsp;</p>
@@ -502,8 +503,8 @@ Micorosoft/XamlBehaviorsWpf</a> が Github に登録されています。<br>今
 	</tr>
 </table>
 <p>&nbsp;</p>
-<p>最初に NuGet から ”Microsoft.Xaml.Behaviors.Wpf” をプロジェクトへ設定します。</p>
-<p><img alt="" src="MouseDragElementBehavior/img1D.jpg"></p>
+<p>最初に NuGet から "Microsoft.Xaml.Behaviors.Wpf" をプロジェクトへ設定します。</p>
+<p><img alt="NuGet で Microsoft.Xaml.Behaviors.Wpf をインストール" src="MouseDragElementBehavior/img1D.jpg"></p>
 <p>&nbsp;</p>
 <p>コードを以下のように変更します。ほとんど変更ありません。<br>どうやら複数のモジュールを統合した模様で、この例では２つの xmlns 
 が一本化されました。</p>
