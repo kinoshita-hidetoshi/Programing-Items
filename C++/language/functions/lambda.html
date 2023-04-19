@@ -11,6 +11,9 @@
 	
   <title>ラムダ式 (lambda expression) (c++11)</title>
 
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link href="../../../design.css" rel="stylesheet" type="text/css">
@@ -35,13 +38,6 @@
     .auto-style1 {
     	background-color: #CECECE;
     }
-    .auto-style4 {
-    	color: #FFFFFF;
-    	border-style: solid;
-    	border-color: #008080;
-    	background-color: #008080;
-    	text-align: left;
-    }
     .auto-style5 {
     	text-align: left;
     }
@@ -59,27 +55,23 @@
 
 <p>c++ のラムダ式について記載します。</p>
 <p>&nbsp;</p>
-
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-          <a href="#1._ラムダ式の基本">1. ラムダ式の基本</a><br>&nbsp;&nbsp;
-          <a href="#▷キャプチャー">キャプチャー</a><br>&nbsp;&nbsp;
-          <a href="#▷仮引数リスト（省略可能）">仮引数リスト（省略可能）</a><br>&nbsp;&nbsp; 
-          <a href="#▷戻り値の型（省略可能）">戻り値の型（省略可能）</a><br>&nbsp;&nbsp;
-          <a href="#▷複合文">複合文</a><br>
-          <a href="#2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a><br>
-          <a href="#3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a><br>
-          <a href="#4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a><br>
-          <a href="#5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使う</a>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._ラムダ式の基本">1. ラムダ式の基本</a></p>
+  <p>&nbsp;&nbsp;&nbsp; <a href="#▷キャプチャー">キャプチャー</a></p>
+  <p>&nbsp;&nbsp;&nbsp; <a href="#▷仮引数リスト（省略可能）">仮引数リスト（省略可能）</a></p>
+  <p>&nbsp;&nbsp; <a href="#▷戻り値の型（省略可能）">戻り値の型（省略可能）</a></p>
+  <p>&nbsp;&nbsp; <a href="#▷複合文">複合文</a></p>
+	<p><a href="#2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a></p>
+	<p><a href="#3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a></p>
+  <p><a href="#4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a></p>
+  <p><a href="#5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使う</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -380,14 +372,50 @@ int main()
 <p>&nbsp;</p>
 <p>上記の２例について、いずれも同じ結果になります。</p>
 <p>[実行結果]</p>
-<p><img alt="" src="lambda/img19.gif"></p>
+<p><img alt="実行結果" src="lambda/img19.gif"></p>
 <p>&nbsp;</p>
-<p>参考：</p>
-<ul>
-	<li>
-	<a href="https://cpplover.blogspot.com/2010/06/lambda_15.html" target="_blank">
-	https://cpplover.blogspot.com/2010/06/lambda_15.html</a></li>
-</ul>
+<p>&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 
+    2011-2019 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>
+        <a href="https://cpplover.blogspot.com/2010/06/lambda_15.html" target="_blank">https://cpplover.blogspot.com/2010/06/lambda_15.html</a></li>
+	</ul>
+</section>
+
 <p>&nbsp;</p>
 <hr>
 
