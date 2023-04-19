@@ -177,7 +177,7 @@ $ git commit -a                                                        # 変更�
 <p>(2) PP_testlib_01 ： 共有ライブラリ用。PP_testapp_01 で使用します。 </p>
 <p>&nbsp;</p>
 <p>
-<img alt="" src="submodule/img13.jpg"></p>
+<img alt="使用するリポジトリ" src="submodule/img13.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3><a name="2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></h3>
@@ -191,7 +191,7 @@ $ git commit -a                                                        # 変更�
 <p>&nbsp;vscode で作成した例です。プログラム詳細の説明は割愛します。 </p>
 <p>&nbsp;</p>
 <p>
-<img alt="" src="submodule/img16.jpg"></p>
+<img alt="vscode で作成したプログラム例" src="submodule/img16.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>counter.h は以下の通りです。</p>
@@ -376,7 +376,7 @@ $ cd pp_testapp_01</pre>
 $ git commit -a</pre>
 <p>&nbsp;</p>
 <p>.gitmodules” は以下のような記載となっていました。<br>counter が submodule として登録されていることを確認できます。 </p>
-<p><img alt="" src="submodule/img2A.jpg"></p>
+<p><img alt="counter が submodule として登録されている図" src="submodule/img2A.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>2-3-3. プログラムを作成します。</h4>
@@ -384,7 +384,7 @@ $ git commit -a</pre>
 <p>下図では counter ライブラリが “git submodule add” で登録した対象です。 <br>”S” という表示は 
 Submodule の ”S” と思われます。ここに修正がある場合は ”M” (Modify ？) を表示しました。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img2C.jpg"></p>
+<p><img alt="S のアイコン表示" src="submodule/img2C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>main.cpp の内容は以下の通りです。</p>
@@ -447,13 +447,13 @@ target_link_libraries(main.out counter)</pre>
 <p>&nbsp;</p>
 <p>同じく vscode の「ソース管理」画面です。</p>
 <p>vscode では submodule (counter) はアプリ本体と別の管理対象として扱われていることがわかります。</p>
-<p><img alt="" src="submodule/img2D.jpg"></p>
+<p><img alt="ソース管理" src="submodule/img2D.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>Commit, Push 後の状態をブラウザ画面で確認すると、submodule は下図のように表示されました。<br>counter が 
 pp_testlib_01 [c1c852b17dc] へリンクしていることがわかります。 </p>
-<p><img alt="" src="submodule/img2F.jpg"></p>
+<p><img alt="Bitbucket ソース画面" src="submodule/img2F.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -468,7 +468,7 @@ $ make
 $ ./main.out</pre>
 <p>&nbsp;</p>
 <p>ビルドを成功してプログラムもちゃんと動作できました。submodule 内のプログラムをちゃんと使用できています。 </p>
-<p><img alt="" src="submodule/img31.jpg"></p>
+<p><img alt="submodule 動作確認" src="submodule/img31.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -480,7 +480,7 @@ $ ./main.out</pre>
 <h4>2-4-1. ライブラリ側（PP_testlib_01）のリポジトリを単独で開いて変更してみます。</h4>
 <p>&nbsp;ここでは README.md を変更してみました。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img33.jpg"></p>
+<p><img alt="README.md 修正" src="submodule/img33.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -513,31 +513,31 @@ $ ./main.out</pre>
 <p>&nbsp;</p>
 
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img4A.jpg"></p>
+<p><img alt="'git status' コマンド実施結果" src="submodule/img4A.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>「ソース管理」の画面を確認すると、以下のようになっていました。変更が発生していることをここで確認するのが良さそうです。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img4C.jpg"></p>
+<p><img alt="counter が更新されたことを vscode 画面で確認" src="submodule/img4C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>2-4-4. counter をプルします</h4>
 <p>これで counter（submodule）を最新状態にできます。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img4E.jpg"></p>
+<p><img alt="counter をプル" src="submodule/img4E.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>すると、以下のような状態になりました。</p>
 <p>アプリ側（PP_testapp_01）として変更が生じたという扱いになります。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img51.jpg"></p>
+<p><img alt="counter リンク先を変更" src="submodule/img51.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>［ソース管理］画面で確認すると、counter のリンク先が変更になった、という扱いのようです。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img53.jpg"></p>
+<p><img alt="diff | リンク先変更" src="submodule/img53.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -564,7 +564,7 @@ $ ./main.out</pre>
 <p>クローン下フォルダを vscode で開いた結果を下図に示します。<br>予定通り submodule のフォルダ counter 
 と中身を含んでクローンされました。特記事項ありません。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img58.jpg"></p>
+<p><img alt="git clone" src="submodule/img58.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>2-5-2. “--recursive“ 無しの git clone</h4>
@@ -574,7 +574,7 @@ $ ./main.out</pre>
 <p>&nbsp;</p>
 <p>クローン下フォルダを vscode で開いた結果を下図に示します。こちらは counter の中身が空でクローンされました。実験の意図通りです。</p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img5A.jpg"></p>
+<p><img alt="git clone 後の様子" src="submodule/img5A.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>ここで “--recursive“ をつけ忘れたことに気づいた、または他の人が submodule 
@@ -584,7 +584,7 @@ $ ./main.out</pre>
 <p>&nbsp;</p>
 <p>下図の通りちゃんと counter フォルダ内のファイルを取得することができました。 </p>
 <p>&nbsp;</p>
-<p><img alt="" src="submodule/img5C.jpg"></p>
+<p><img alt="counter フォルダ内のファイル" src="submodule/img5C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
