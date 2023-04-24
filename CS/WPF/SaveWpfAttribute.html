@@ -86,15 +86,15 @@ Properties.Settings.Default により設定を保存する方法を示します�
 	<li>WindowStartup： &quot;Manual&quot;</li>
 </ul>
 <p>Visual Studio のこのときの画面状態です。<br>
-<img alt="" height="407" src="SaveWpfAttribute/imgC.jpg" width="761"></p>
+<img alt="Visual Studio 画面" height="407" src="SaveWpfAttribute/imgC.jpg" width="761"></p>
 <p>XAMLの全コードを以下に記載します。当然ながらすかすかです。<br>
-<img alt="" src="SaveWpfAttribute/img8.jpg"></p>
+<img alt="XAML 全コード" src="SaveWpfAttribute/img8.jpg"></p>
 <p>&nbsp;</p>
 <p><a name="2._設定_を作成">2. 設定 を作成</a></p>
 <p>Visual Studio でプロジェクトのプロパティを開き、[設定]タブから下記の通り４つの名前を作成します。<br>posX と posY 
 がWindowの位置、width と height がWindowのサイズ情報を扱います。<br>
 スコープは必ず”ユーザ”にします。”アプリケーション”にした場合は設定の保存を行えず、読み取り専用になります。<br>
-<img alt="" src="SaveWpfAttribute/img1B.jpg"></p>
+<img alt="設定" src="SaveWpfAttribute/img1B.jpg"></p>
 <p>&nbsp;</p>
 <p><a name="3._XAML_と_設定_をバインディング">3. XAML と 設定 をバインディング</a></p>
 <p>XAMLの属性 と 設定 をバインディングします。<br>「xmlns:p=&quot;clr-namespace:SaveWpfAttribute.Properties&quot;」の部分の”<strong>SaveWpfAttribute</strong>”は、プロジェクトの名前空間です。ここはそれぞれのプロジェクトの内容に合わせて変更します。</p>
