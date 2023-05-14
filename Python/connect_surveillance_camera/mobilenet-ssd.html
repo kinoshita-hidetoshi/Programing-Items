@@ -1243,50 +1243,40 @@ im.show()</pre>
 	たったこれだけのソースコードで物体検知を実現できます。学習済みモデルのダウンロードを含みますので、必ずインターネットへ接続できる環境で実行してください。</p>
 	<p>&nbsp;</p>
 	<p>動作結果はこちらです。</p>
-	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-	評価画像として、<span>&nbsp;</span><a href="https://pixabay.com" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; background-color: transparent;" target="_blank">https://pixabay.com</a><span>&nbsp;提供の</span>画像を使用させていただきました。商用利用無料、帰属表示必要なし、の画像です。<br>
-	<a href="https://pixabay.com/ja/photos/マルタ語-犬-子犬-小型犬-1123016/" target="_blank">https://pixabay.com/ja/photos/%e3%83%9e%e3%83%ab%e3%82%bf%e8%aa%9e-%e7%8a%ac-%e5%ad%90%e7%8a%ac-%e5%b0%8f%e5%9e%8b%e7%8a%ac-1123016/</a></p>
-	<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-	上記プログラムを実行する際は、ご自身で画像を準備またはダウンロードして事前に "assets" フォルダに "dog1.jpg" 
-	の名称で保存してください。</p>
+	<p>評価画像として、&nbsp;<a href="https://pixabay.com" target="_blank">https://pixabay.com</a>&nbsp;提供の画像を使用させていただきました。商用利用無料、帰属表示必要なし、の画像です。</p>
+  <p><a href="https://pixabay.com/ja/photos/マルタ語-犬-子犬-小型犬-1123016/" target="_blank">
+    https://pixabay.com/ja/photos/マルタ語-犬-子犬-小型犬-1123016/</a></p>
+  <p>
+    <strong>[注意]</strong>
+    上記プログラムを実行する際は、ご自身で画像を準備またはダウンロードして事前に "assets" フォルダに "dog1.jpg" 
+    の名称で保存してください。</p>
 	<p><img alt="MobileNetV3 静止画による物体検知 実施例" src="mobilenet-ssd/img8.jpg" width="800"></p>
     
+  <p>&nbsp;</p>
+  <p>学習済みモデルは下記に保存されます。'~' はログインしているユーザーのホームディレクトリを意味します。</p>
+  <p>&nbsp;</p>
+  <p><a href="https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved" target="_blank">
+    Where are my downloaded models saved?</a></p>
+
+    <blockquote style="background-repeat: no-repeat; box-sizing: inherit; margin: 2em 0px; padding: 1em; background-color: rgb(250, 250, 250); color: rgb(85, 85, 85); border-left: 8px solid rgb(224, 224, 224); font-size: 13.3px; display: block; margin-block: 1em; font-family: sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+      <p>The locations are used in the order of</p>
+      <ul>
+        <li>Calling&nbsp;<span class="cpp-source">hub.set_dir(&lt;PATH_TO_HUB_DIR&gt;)</span></li>
+        <li><span class="cpp-source">$TORCH_HOME/hub</span>, if environment variable&nbsp;<span class="cpp-source">TORCH_HOME</span>&nbsp;is set.</li>
+        <li><span class="cpp-source">$XDG_CACHE_HOME/torch/hub</span>, if environment variable&nbsp;<span class="cpp-source">XDG_CACHE_HOME</span>&nbsp;is set.</li>
+        <li><span class="cpp-source">~/.cache/torch/hub</span></li>
+      </ul>
+    </blockquote>
+    
+  <p>
+    私の場合は下記に ssdlite320_mobilenet_v3_large_coco-a79551df.pth 
+    というファイルを保存していました。約13MBのファイルサイズでした。</p>
+  <p>
+    "~\.cache\torch\hub\checkpoints\ssdlite320_mobilenet_v3_large_coco-a79551df.pth"</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 	
-<p>&nbsp;</p>
-<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-学習済みモデルは下記に保存されます。'~' はログインしているユーザーのホームディレクトリを意味します。</p>
-<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-&nbsp;</p>
-<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-<a href="https://pytorch.org/docs/stable/hub.html#where-are-my-downloaded-models-saved" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px; background-color: transparent;" target="_blank">
-Where are my downloaded models saved?</a></p>
-<blockquote style="background-repeat: no-repeat; box-sizing: inherit; margin: 2em 0px; padding: 1em; background-color: rgb(250, 250, 250); color: rgb(85, 85, 85); border-left: 8px solid rgb(224, 224, 224); font-size: 13.3px; display: block; margin-block: 1em; font-family: sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-  <p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif;">
-  The locations are used in the order of</p>
-  <ul style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 5px 0px 5px 20px; font-family: sans-serif; list-style-position: outside; list-style-type: disc;">
-	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
-	Calling<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">hub.set_dir(&lt;PATH_TO_HUB_DIR&gt;)</span></li>
-	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
-	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
-	$TORCH_HOME/hub</span>, if environment variable<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">TORCH_HOME</span><span>&nbsp;</span>is 
-	set.</li>
-	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
-	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
-	$XDG_CACHE_HOME/torch/hub</span>, if environment variable<span>&nbsp;</span><span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">XDG_CACHE_HOME</span><span>&nbsp;</span>is 
-	set.</li>
-	<li style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px; padding: 0px;">
-	<span class="cpp-source" style="background-repeat: no-repeat; box-sizing: inherit; margin: 0px 1px !important; padding: 0px 1px !important; display: inline; line-height: 1.42857; color: rgb(0, 0, 204); background-color: rgb(245, 245, 245); border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
-	~/.cache/torch/hub</span></li>
-  </ul>
-</blockquote>
-<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-私の場合は下記に ssdlite320_mobilenet_v3_large_coco-a79551df.pth 
-というファイルを保存していました。約13MBのファイルサイズでした。</p>
-<p style="background-repeat: no-repeat; box-sizing: inherit; margin: 6px 0px; padding: 0px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
-"~\.cache\torch\hub\checkpoints\ssdlite320_mobilenet_v3_large_coco-a79551df.pth"</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
