@@ -32,10 +32,10 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
-.auto-style1 {
-  text-decoration: underline;
-}
-</style>
+    .auto-style1 {
+      text-decoration: underline;
+    }
+  </style>
 
 </head>
 
@@ -73,22 +73,22 @@
 <p>&nbsp;</p>
 <p>1. カウンターを再構築します。 </p>
 <p>[コンソール]</p>
-<pre>cd c:\windows\system32
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">cd c:\windows\system32
 lodctr /R 
 cd c:\windows\sysWOW64
 lodctr /R</pre>
 <p>&nbsp;</p>
 <p>2. 管理インストルメンテーション (WMI) Windowsカウンターを再同期します。 </p>
 <p>[コンソール]</p>
-<pre>WINMGMT.EXE /RESYNCPERF</pre>
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">WINMGMT.EXE /RESYNCPERF</pre>
 <p>&nbsp;</p>
 <p>3. パフォーマンス ログとアラート サービスを停止して再起動します。 </p>
 <p>[PowerShell]</p>
-<pre>Get-Service -Name "pla" | Restart-Service -Verbose</pre>
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">Get-Service -Name "pla" | Restart-Service -Verbose</pre>
 <p>&nbsp;</p>
 <p>4. 管理インストルメンテーション Windowsを停止して再起動します。 </p>
 <p>[PowerShell]</p>
-<pre>Get-Service -Name "winmgmt" | Restart-Service -Force -Verbose</pre>
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">Get-Service -Name "winmgmt" | Restart-Service -Force -Verbose</pre>
 <p>&nbsp;</p>
 <p>5. 新しいデータ コレクター セットを作成します (既存のデータ コレクター セットを使用しない)。 </p>
 <p>&nbsp;</p>
