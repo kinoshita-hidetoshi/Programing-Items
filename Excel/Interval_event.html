@@ -1,0 +1,815 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>[VBA] タイマー起動 と アナログ時計作成 | Programing Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+  <script src="../prettify/lang-vb.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+<h1>[VBA] タイマー起動 と アナログ時計作成</h1>
+
+<p> Excel と VBA による周期イベントタイマーの使い方を記載してみます。</p>
+<p> この手法を使って、デジタル時計とアナログ時計を作成してみます。</p>
+
+<p>&nbsp;</p>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></p>
+	<p><a href="#2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></p>
+	<p><a href="#3._アナログ時計を作成する">3. アナログ時計を作成する</a></p>
+  <p><a href="#ダウンロード">ダウンロード</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>こんな感じのものを作成します。</p>
+<p>
+  <video controls muted autoplay="y" loop="y" width="500">
+    <source src="Interval_event/analog_clock.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></h2>
+	<h4>[概要]</h4>
+    <p>まず最初に、もっとも標準的な Application.OnTime を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
+    <p>ここでは１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>Microsoft Excel</td>
+        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+        <td>64 ビット</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+	</table>
+	
+	<p> &nbsp;</p>
+	<p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet1" に作成しています。</p>
+	
+  <pre class="prettyprint linenums lang-vb">'
+' Application.OnTime を使った周期動作により、デジタル時計 を作成してみます
+'
+
+Option Explicit
+
+Private mOnTime As Date
+
+
+'
+' デジタル時計を表示する
+'
+Private Sub TimerProc()
+
+  Range("A1") = Format(Now, "yyyy/mm/dd hh:mm:ss")
+
+End Sub
+
+
+'
+' 周期タイマー起動
+'
+Sub OnTimeStart()
+    
+    ' デジタル時計 表示更新
+    Call TimerProc
+    
+    ' 次回のタイマー起動を設定 － "Now + TimeSerial(0, 0, 1)" は 現在時刻から１秒後 を意味します。
+    mOnTime = Now + TimeSerial(0, 0, 1)
+    Call Application.OnTime(mOnTime, "Sheet1.OnTimeStart")
+    
+End Sub
+
+
+'
+' 周期タイマー停止
+'
+Sub OnTimeStop()
+
+    ' 同一の Procedure と EarliestTime がないとエラーになる
+    On Error Resume Next
+    Call Application.OnTime(mOnTime, "Sheet1.OnTimeStart", , False)
+    
+End Sub</pre>
+    <p>&nbsp;</p>
+    <p>Sheet1 上にボタンを作成して、スタート／ストップをそれぞれ Sheet1.OnTimeStart／Sheet1.OnTimeStop 
+    を実行するようにすると、下記動画のように動作します。</p>
+<p>
+  <video controls muted autoplay="y" loop="y" width="500">
+    <source src="Interval_event/digital_clock_by_OnTime.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+</p>
+    <p>&nbsp;</p>
+    <p>１秒周期で画面更新することができました。これを応用することで簡単な動画やゲームなどを実現することもできそうです。</p>
+    <p>ところでマウスカーソルが時々 Wait 表示になるところが若干気になります。次章で紹介する SetTimer (Windows API) 
+    を使うとこの問題を解決できます。</p>	
+	<p> &nbsp;</p>
+	
+</section>
+	
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></h2>
+	<h4>[概要]</h4>
+    <p>SetTimer, KillTimer API (Windows API) を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
+    <p>前章同様に１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>Microsoft Excel</td>
+        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+        <td>64 ビット</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+	</table>
+	
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+	<p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet2" に作成しています。</p>
+	
+  <pre class="prettyprint linenums lang-vb">'
+' Win32 API の SetTimer, KillTimer を使った周期動作により、デジタル時計、アナログ時計を作成してみます。
+'
+
+Option Explicit
+
+
+'
+' デジタル時計を表示する
+'
+Sub TimerProc()
+  Range("A1") = Format(Now, "yyyy/mm/dd hh:mm:ss")
+End Sub
+
+
+'
+' 周期タイマー起動
+'
+Sub TimerStart()
+
+    If mTimerID &lt;&gt; 0 Then
+        MsgBox "起動済です。"
+        Exit Sub
+    End If
+    
+    Call StartTimer
+    
+End Sub
+
+
+'
+' 周期タイマー停止
+'
+Sub TimerStop()
+
+    Call StopTimer
+    
+End Sub
+</pre>
+  <p> &nbsp;</p>
+    <p> 下記コードを "標準モジュール" &gt; "Module1" に記載します。</p>
+  
+  <pre class="prettyprint linenums lang-vb">'
+' Win32 API の SetTimer, KillTimer を使って周期動作を実現してみます。
+' 下記内容は Sheet2 のためのVBAプログラムです。
+' Sheet2 内で全てを実現したかったのですが、標準モジュール（Module1）内で記載しないと意図通りに動作してくれませんでした。残念。
+'
+
+Option Explicit
+
+Private Declare PtrSafe Function SetTimer Lib "user32" (ByVal hwnd As LongPtr, ByVal nIDEvent As LongPtr, ByVal uElapse As LongPtr, ByVal lpTimerFunc As LongPtr) As Long
+Private Declare PtrSafe Function KillTimer Lib "user32" (ByVal hwnd As LongPtr, ByVal nIDEvent As Long) As Long
+
+                                        
+Public mTimerID As Long
+
+
+Private Sub TimerProc()
+
+    If mTimerID = 0 Then End    '終了できない時の対策
+    On Error Resume Next        'デバッグ出すとExcelが固まるので
+    
+    Call Sheet2.TimerProc
+    
+End Sub
+
+
+'
+' SetTimer API を使って周期タイマー動作を開始する
+'
+Public Sub StartTimer()
+
+    mTimerID = SetTimer(0&amp;, 1&amp;, 1000&amp;, AddressOf TimerProc)
+    
+End Sub
+
+
+'
+' KillTimer API を使って周期タイマー動作を停止する
+'
+Public Sub StopTimer()
+
+    Call KillTimer(0&amp;, mTimerID)
+    mTimerID = 0
+    
+End Sub</pre>
+    <p> &nbsp;</p>
+    <p>Sheet2 上にボタンを作成して、スタート／ストップをそれぞれ Sheet2.TimerStart／Sheet2.TimerStop 
+    を実行するようにすると、下記動画のように動作します。</p>
+<p>
+  <video controls muted autoplay="y" loop="y" width="500">
+    <source src="Interval_event/digital_clock_by_SetTimer.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video>
+</p>
+    <p>
+    &nbsp;</p>
+    <p>OnTime による実現と異なってマウスカーソルが Wait 状態に頻繁になることが無くなりました。良い感じです。</p>
+    <p>一方、<em>SetTimer</em>, <em>KillTimer</em> を標準モジュール内で使用する必要がありました。Sheet2 
+    内で使用したかったのですが私はうまく実現することができませんでした。</p>
+    <p>&nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+        <p><em>SetTimer</em>, <em>KillTimer </em>を標準モジュール内で実行する必要がありました。</p>
+        <p>Sheet2 内で完結したプログラムにしたかったのですが、私がトライした範疇ではこれらAPIを Sheet2 内で実行すると、Excel 
+        が異常終了するなどしてうまく実現することができませんでした。</p>
+        <p>何か良い方法がわかったらこちら記事を更新したいと思います。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+</section>
+	
+<p> &nbsp;</p>
+
+<section>
+	<h2> <a name="3._アナログ時計を作成する">3. アナログ時計を作成する</a></h2>
+	<h4>[概要]</h4>
+    <p>上記タイマーイベントを使用してアナログ時計を作成します。完成イメージは下図動画の通りです。</p>
+    <p>
+  <video controls muted autoplay="y" loop="y" width="500">
+    <source src="Interval_event/analog_clock.mp4" type="video/mp4">
+    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+  </video></p>
+	<p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>Microsoft Excel</td>
+        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+        <td>64 ビット</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+	</table>
+	
+  <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 3-1. アナログ時計を描く</p>
+    <p> 最初にアナログ時計の絵を描きます。</p>
+    <p> &nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+    <ul>
+      <li>"00:00:00" となるように描きます。<br>各針の位置を Rotation で指示するので、初期位置を "00:00:00" 
+      にしておく必要があります。</li>
+    </ul>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <p> 
+    <img alt="アナログ時計を描く" class="border_with_drop-shadow" src="Interval_event/img57.jpg"></p>
+    <p> &nbsp;</p>
+    
+    <p> &nbsp;</p>
+    <p> 3-2. 各針に名前を付ける</p>
+    <p> 各針に名称を付けます。本ページで紹介するプログラムで付与した名称を下記 table に記載します。</p>
+    <p> &nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="400">
+      <caption>[table.] 各針の名称</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>針</th>
+          <th>名称</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>秒針</td>
+          <td>"second_line"</td>
+        </tr>
+        <tr>
+          <td>分針（長針）</td>
+          <td>"minute_line"</td>
+        </tr>
+        <tr>
+          <td>時針（短針）</td>
+          <td>"hour_line"</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 3-3. 秒針を動かす</p>
+    <p> 指定した秒数に従って秒針を動かす関数を作成します。</p>
+    <p> &nbsp;</p>
+    
+    <div class="status_ok">
+      <div></div>
+      <div>
+        <p><strong>ポイント</strong></p>
+    <ul>
+      <li>秒針の位置指定を Rotation を使って実現します。</li>
+      <li>Rotation は図の中心を軸に回転します。残念ながら回転中央を任意の位置に指定することができません。<br>
+      そこで、回転中央としたい場所が図の中心になるように秒針の高さを一旦２倍にします。Rotation 
+      を使って意図する角度に回転した後、秒針の高さを元の高さ（0.5倍）に戻す、という方法で実現します。</li>
+      <li>秒針の描画テスト用に、関数 test_AnalogTimer を作成します。これを実行することでテスト＆デバッグします。</li>
+    </ul>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <pre class="prettyprint linenums lang-vb">
+'
+' 針（shape）の高さを rate 倍する
+'
+Private Sub ScaleHeight_Update(shape As shape, rate As Double)
+
+    shape.ScaleHeight rate, msoFalse
+
+End Sub
+
+
+'
+' 秒針を更新
+'
+Private Sub UpdateSecond(second As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("second_line")
+    rate = 0.5
+    
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = second * 360 / 60
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+    
+End Sub
+
+
+'
+' アナログ時計の表示テスト用
+'
+Sub test_AnalogTimer()
+
+    UpdateSecond (10)
+
+End Sub
+</pre>
+
+  <p> &nbsp;</p>
+    <p> 上記 "test_AnalogTimer()" を実行した結果は下図の通りです。値を適当に変更しつつ、テスト＆デバッグを行います。</p>
+    <p> 
+    <img alt="test_AnalogTimer() の実行結果" class="border_with_drop-shadow" src="Interval_event/img5E.jpg"></p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 3-4. 分針（長針）を動かす</p>
+    <p> 指定した分数に従って分針を動かす関数を作成します。</p>
+    <p> 秒針とほぼ同じ処理なので、詳細説明を割愛します。</p>
+    <p> &nbsp;</p>
+    <pre class="prettyprint linenums lang-vb">
+'
+' 分針を更新
+'
+Private Sub UpdateMinute(minite As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("minute_line")
+    rate = 0.55
+    
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = minite * 360 / 60
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+    
+End Sub</pre>
+    <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 3-5. 時針（短針）を動かす</p>
+    <p> 指定した時数に従って時針を動かす関数を作成します。</p>
+    <p> 秒針とほぼ同じ処理なので、詳細説明を割愛します。</p>
+    <p> &nbsp;</p>
+    <pre class="prettyprint linenums lang-vb">
+'
+' 時針を更新
+'
+Private Sub UpdateHour(hour As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("hour_line")
+    rate = 0.55
+
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = hour * 360 / 12
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+
+End Sub</pre>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 3-6. 現在時刻に従ってアナログ時計を更新する</p>
+    <p> 現在時刻に従ってアナログ時計を更新する関数を作成します。</p>
+  <p> &nbsp;</p>
+  <pre class="prettyprint linenums lang-vb">
+'
+' アナログ時計を現在時間に従って表示する
+'
+Private Sub AnalogTimerProc()
+
+    Dim dateTime As Date
+    Dim h As Double
+    Dim m As Double
+    Dim s As Double
+    
+    dateTime = Now()
+    h = hour(dateTime)
+    m = minute(dateTime)
+    s = second(dateTime)
+    
+    UpdateHour (h + (m / 60) + (s / 3600))
+    UpdateMinute (m + (s / 60))
+    UpdateSecond (s)
+
+End Sub</pre>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  <p> 3-7. １秒周期で現在時刻を更新する</p>
+    <p> 最後に１秒周期で現在時刻を更新するようにします。</p>
+  <p> １章、２章、で作成した周期イベントの中から上記関数 AnalogTimerProc() をコールするだけです。</p>
+    <p> &nbsp;</p>
+    <p> １章の内容（Sheet1）にアナログ時計表示を加えた全ソースコードを以下に記載します。</p>
+    <p> &nbsp;</p>
+    
+    <pre class="prettyprint linenums lang-vb">
+'
+' Excel VBA の Application.OnTime を使った周期動作により、デジタル時計、アナログ時計を作成してみます。
+'
+
+Option Explicit
+
+Private mOnTime As Date
+
+
+'
+' デジタル時計を表示する
+'
+Private Sub TimerProc()
+
+  Range("A1") = Format(Now, "yyyy/mm/dd hh:mm:ss")
+
+End Sub
+
+
+'
+' 周期タイマー起動
+'
+Sub OnTimeStart()
+    
+    ' デジタル時計 表示更新
+    Call TimerProc
+    
+    ' アナログ時計 表示更新
+    Call AnalogTimerProc
+    
+    ' 次回のタイマー起動を設定
+    mOnTime = Now + TimeSerial(0, 0, 1)
+    'Tm = 200
+    'mOnTime = [Now()] + Tm / 86400000
+    Call Application.OnTime(mOnTime, "Sheet1.OnTimeStart")
+    
+End Sub
+
+
+'
+' 周期タイマー停止
+'
+Sub OnTimeStop()
+
+    ' 同一の Procedure と EarliestTime がないとエラーになる
+    On Error Resume Next
+    Call Application.OnTime(mOnTime, "Sheet1.OnTimeStart", , False)
+    
+End Sub
+
+
+'
+' === 以下、アナログ時計用の処理 ===
+'
+
+'
+' 針（shape）の高さを rate 倍する
+'
+Private Sub ScaleHeight_Update(shape As shape, rate As Double)
+
+    shape.ScaleHeight rate, msoFalse
+
+End Sub
+
+
+'
+' 時針を更新
+'
+Private Sub UpdateHour(hour As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("hour_line")
+    rate = 0.55
+
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = hour * 360 / 12
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+
+End Sub
+
+
+'
+' 分針を更新
+'
+Private Sub UpdateMinute(minite As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("minute_line")
+    rate = 0.55
+    
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = minite * 360 / 60
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+    
+End Sub
+
+
+'
+' 秒針を更新
+'
+Private Sub UpdateSecond(second As Double)
+
+    Dim shp As shape
+    Dim rate As Double
+    
+    Set shp = Sheet1.Shapes("second_line")
+    rate = 0.5
+    
+    ' 元の長さにする
+    Call ScaleHeight_Update(shp, 1# / rate)
+    
+    ' 回転する
+    shp.Rotation = second * 360 / 60
+    
+    ' 長さを半分ぐらいにする
+    Call ScaleHeight_Update(shp, rate)
+    
+End Sub
+
+
+'
+' アナログ時計を現在時間に従って表示する
+'
+Private Sub AnalogTimerProc()
+
+    Dim dateTime As Date
+    Dim h As Double
+    Dim m As Double
+    Dim s As Double
+    
+    dateTime = Now()
+    h = hour(dateTime)
+    m = minute(dateTime)
+    s = second(dateTime)
+    
+    UpdateHour (h + (m / 60) + (s / 3600))
+    UpdateMinute (m + (s / 60))
+    UpdateSecond (s)
+
+End Sub
+
+
+'
+' アナログ時計の表示テスト用
+'
+Sub test_AnalogTimer()
+
+    UpdateHour (10)
+    UpdateMinute (10)
+    UpdateSecond (30)
+
+End Sub</pre>
+    <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  
+</section>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
+	<h2> <a name="ダウンロード">ダウンロード</a></h2>
+    <p> 上記で作成した Excel ファイルを <a href="Interval_event/Excel%20時計_v1.0.xlsm">こちら</a> 
+    からダウンロードできます。</p>
+  <p> &nbsp;</p>
+  
+</section>
+
+<p> &nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2023 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li>VBAでのタイマー処理（SetTimer,OnTime）｜VBA技術解説 (excel-ubara.com)<br>
+        <a href="https://excel-ubara.com/excelvba4/EXCEL299.html" target="_blank">
+        https://excel-ubara.com/excelvba4/EXCEL299.html</a></li>
+        <li>(487) ExcelVBA【実践】アナログ時計を開発・解説【初級/基礎/入門】 - YouTube<br>
+        <a href="https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s" target="_blank">
+        https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
+<hr>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-08-19</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+</body>
+</html>
