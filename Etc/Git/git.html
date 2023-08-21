@@ -408,8 +408,62 @@ name&gt;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>git reset</p>
-<p>概要： 全ての add を取り消し</p>
+<h4>git reset</h4>
+<p>&nbsp;</p>
+<p>(1) 直前のコミットを取り消したい（コミットのみ取り消し）</p>
+<blockquote>
+<p>$ git reset --soft HEAD^ </p>
+</blockquote>
+
+<ul>
+  <li>HEAD^：直前のコミットを意味する。<ul>
+    <li>&nbsp;@^、HEAD~も同じ意味。 </li>
+    <li>HEAD~{n}&nbsp;：n個前のコミットを意味する。 </li>
+    <li>HEAD^ や HEAD~{n} の代わりにコミットのハッシュ値を書いても良い。 </li>
+    <li>gitのv1.8.5からは、「HEAD」のエイリアスとして「＠」が用意されている。 </li>
+    <li>HEAD^^^とHEAD~3とHEAD~~~とHEAD~{3}と@^^^は同じ意味。 </li>
+  </ul>
+  </li>
+  <li><span class="cpp-source">--soft</span> なので、インデックス・ワーキングツリーはそのまま。</li>
+  <li>上書きコミットしたいなら、<span class="cpp-source">git commit --amend</span> を使うとラク！ </li>
+</ul>
+<p>&nbsp;</p>
+<p>(2) 直前のコミットを取り消したい（マルっと消したい）</p>
+<blockquote>
+<p>$ git reset --hard HEAD^ </p>
+</blockquote>
+
+<ul>
+  <li><span class="cpp-source">--hard</span> なので、「インデックス・ワーキングツリー」も1つ前のコミットの状態に戻る。</li>
+</ul>
+<p>&nbsp;</p>
+<p>(3) コミット後の変更を全部消したい</p>
+<blockquote>
+<p>$ git reset --hard HEAD </p>
+</blockquote>
+
+<ul>
+  <li>--hardなので、「HEADの位置・インデックス・ワーキングツリー」を全てHEADの位置に動かす。 
+  <ul>
+    <li>HEADの位置はそのまま。</li>
+    <li>「インデックス・ワーキングツリー」の変更が消せる。 </li>
+  </ul>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p>(4) addを取り消したい </p>
+<blockquote>
+<p>$ git reset --mixed HEAD </p>
+</blockquote>
+
+<ul>
+  <li>--mixed（or オプション無し）なので、「HEADの位置・インデックス」をHEADの位置に動かす。 
+  <ul>
+    <li>HEADの位置はそのまま。</li>
+    <li>従って、インデックスの変更（addした内容）のみ元に戻す。 </li>
+  </ul>
+  </li>
+</ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
