@@ -54,9 +54,40 @@
 でCSPタイプ一覧を取得する方法です。OSによって実装されているCSPタイプに差異があるので重要な情報です。</p>
 <p> <a href="CryptEnumProviderTypes/EnamerateProviderTypes.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
 <p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>VC++2008 sp1,</td>
+	    <td>32bitコンパイル、/MT(d)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows7 64bit Proffesional,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	  <p> &nbsp;</p>
 <span class="table_title">[プログラムソース]</span>
 
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums" style="width: 800px">
 #include &lt;windows.h&gt;
 <span class="auto-style6">#include &lt;WinCrypt.h&gt;</span>
 #include &lt;tchar.h&gt;
@@ -66,44 +97,44 @@
 
 #define BUF_SIZE        100
 
-<span class="command">int</span> _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, _TCHAR* argv[])
 {
     DWORD   dwIndex;
     DWORD   dwProvType;
     DWORD   cbTypeName;
     TCHAR	pszTypeName[BUF_SIZE];
 
-	_tprintf(_T(<span class="string">"Enamerate CSP(Cryptographic Service Provider) types.\n"</span>));
+	_tprintf(_T("Enamerate CSP(Cryptographic Service Provider) types.\n"));
 	_tprintf(_T("===================\n"));
 
     dwIndex = 0;
     cbTypeName = BUF_SIZE;
 
-    <span class="command">while</span>( <strong><span class="auto-style6">CryptEnumProviderTypes</span></strong> (
-                      dwIndex,      <span class="comment">// インデックス番号</span>
-                      NULL,         <span class="comment">// 予約</span>
-                      0,            <span class="comment">// 予約</span>
-                      &amp;dwProvType,  <span class="comment">// CSPタイプ</span>
-                      pszTypeName,  <span class="comment">// CSPタイプ名</span>
-                      &amp;cbTypeName)) <span class="comment">// サイズ</span>
+    while( <strong><span class="auto-style6">CryptEnumProviderTypes</span></strong> (
+                      dwIndex,      // インデックス番号
+                      NULL,         // 予約
+                      0,            // 予約
+                      &amp;dwProvType,  // CSPタイプ
+                      pszTypeName,  // CSPタイプ名
+                      &amp;cbTypeName)) // サイズ
     {
-        _tprintf(_T(<span class="string">"%2d - %s\n"</span>), dwProvType, pszTypeName);
+        _tprintf(_T("%2d - %s\n"), dwProvType, pszTypeName);
         dwIndex++;
         cbTypeName = BUF_SIZE;
     }
 
-    _tprintf(_T(<span class="string">"===================\n"</span>));
-    _tprintf(_T(<span class="string">"HIT [enter] KEY !! "</span>));
+    _tprintf(_T("===================\n"));
+    _tprintf(_T("HIT [enter] KEY !! "));
     getchar();
 
-    <span class="command">return</span> EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 </pre>
 	
 <br>
 <span class="table_title">[実行結果]</span>
 
-<pre class="prettyprint linenums lang-sh">
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">
 Enamerate CSP(Cryptographic Service Provider) types.
 ===================
  1 - RSA Full (Signature and Key Exchange)
@@ -252,7 +283,8 @@ HIT [enter] KEY !!
 <section>
 	<h2><a id="参考">参考</a></h2>
 	<ul>
-		<li>
+		<li><a href="CryptEnumProviders.html">CryptEnumProviders</a></li>
+    <li>
       <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx" target="_blank">
       http://msdn.microsoft.com/en-us/library/windows/desktop/aa380244(v=vs.85).aspx</a></li>
 	</ul>

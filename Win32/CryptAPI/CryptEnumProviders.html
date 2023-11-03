@@ -1,89 +1,132 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>CryptEnumProviders (CryptAPI)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>CryptEnumProviders (CryptAPI) | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<!-- Start for 'google-code-prettify' -->
-<link href="../../prettify.css" rel="stylesheet" type="text/css">
-<script src="../../prettify.js" type="text/javascript"></script>
-<!-- End for 'google-code-prettify' -->
-
-<link rel="stylesheet" href="../../design.css" type="text/css">
-<style type="text/css">
-.auto-style1 {
-	font-family: "Meiryo UI";
-}
-.auto-style3 {
-	border-style: groove;
-	border-width: 3px;
-}
-.auto-style4 {
-	border-width: 0px;
-	width:800px;
-}
-.auto-style6 {
-	background-color: #FFFF00;
-}
-.auto-style7 {
-	font-weight: normal;
-}
-</style>
+  <style type="text/css">
+    .auto-style6 {
+    	background-color: #505000;
+    }
+  </style>
 </head>
 
 <body onload="prettyPrint();">
 
-<h1 class="auto-style7">
-CryptEnumProviders (CryptAPI)
-</h1>
+<h1>CryptEnumProviders (CryptAPI)</h1>
 
-<p> <font face="Meiryo UI">Windows環境で AES と SHA256 をCryptAPIで使用したくなり、調べ始めました。<br>
-.NETで簡単にできることも、CryptAPI単独で実現しようとすると手続きが面倒です。でも時々Win32で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</font></p>
-<p> <span class="auto-style1">まずは CryptEnumProviders() 
-でCSP一覧を取得する方法です。OSによって実装されているCSPに差異があるので重要な情報です。</span></p>
-<p> <a href="CryptEnumProviders/CryptEnumProviders.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
-<span class="table_title">[プログラムソース]</span>
+  <p> Windows環境で AES と SHA256 を CryptAPI で使用したくなり、調べ始めました。<br>
+  .NETで簡単にできることも、CryptAPI 単独で実現しようとすると手続きが面倒です。でも時々 Win32 で実現する必要がある場合もあるので、まぁ情報として有意義ではないかと。</p>
+  <p> まずは CryptEnumProviders() でCSP一覧を取得する方法です。OSによって実装されているCSPに差異があるので重要な情報です。</p>
+  <p> &nbsp;</p>
+  	
+  <p> <a href="CryptEnumProviders/CryptEnumProviders.zip">サンプルプログラム一式 ダウンロード（zip形式）</a></p>
+  <p> &nbsp;</p>
+	
+	<h4>[環境]</h4>
+	<table>
+	<tbody>
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>コンパイラ :</td>
+	    <td>VC++2008 sp1,</td>
+	    <td>32bitコンパイル、/MT(d)</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>OS :</td>
+	    <td>Windows7 64bit Proffesional,</td>
+	    <td>&nbsp;</td>
+	  </tr>
+		
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+	</tbody>
+	</table>
+	
+	<p>&nbsp;</p>
+  <span class="table_title">[プログラムソース]</span>
 
 <code>
-<pre class="prettyprint linenums">
-<span class="command">#include</span> &lt;windows.h&gt;
-<span class="command">#include</span> <strong><span class="auto-style6">&lt;WinCrypt.h&gt;</span></strong>
-<span class="command">#include</span> &lt;tchar.h&gt;
-<span class="command">#include</span> &lt;stdio.h&gt;
-<span class="command">#include</span> &lt;stdlib.h&gt;
+<pre class="prettyprint linenums" style="width: 800px">
+#include &lt;windows.h&gt;
+#include <strong><span class="auto-style6">&lt;WinCrypt.h&gt;</span></strong>
+#include &lt;tchar.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
 
 
 #define BUF_SIZE        256
 
-<span class="command">int </span>_tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, _TCHAR* argv[])
 {
     DWORD       cbName = BUF_SIZE;
     DWORD       dwType;
     DWORD       dwIndex;
     TCHAR       pszName[BUF_SIZE]; 
 
-    _tprintf(_T(<span class="string">"Enamerate CSP(Cryptographic Service Provider).\n"</span>));
-    _tprintf(_T(<span class="string">"===================\n"</span>));
+    _tprintf(_T("Enamerate CSP(Cryptographic Service Provider).\n"));
+    _tprintf(_T("===================\n"));
 
     dwIndex = 0;
 
-    <span class="command">while</span>( <strong><span class="auto-style6">CryptEnumProviders</span></strong> (
-                        dwIndex,        <span class="comment">// インデックス番号</span>
-                        NULL,           <span class="comment">// 予約</span>
-                        0,              <span class="comment">// 予約</span>
-                        &amp;dwType,        <span class="comment">// CSPのタイプ</span>
-                        pszName,        <span class="comment">// CSPの名称</span>
-                        &amp;cbName))       <span class="comment">// 名称のストリング長</span>
+    while( <strong><span class="auto-style6">CryptEnumProviders</span></strong> (
+                        dwIndex,        // インデックス番号
+                        NULL,           // 予約
+                        0,              // 予約
+                        &amp;dwType,        // CSPのタイプ
+                        pszName,        // CSPの名称
+                        &amp;cbName))       // 名称のストリング長
     {
         _tprintf(_T("%2d %s\n"), dwType, pszName);
         dwIndex++;
         cbName = BUF_SIZE;
     }
 
-    _tprintf(_T(<span class="string">"===================\n"</span>));
-    _tprintf(_T(<span class="string">"HIT [enter] KEY !! "</span>));
+    _tprintf(_T("===================\n"));
+    _tprintf(_T("HIT [enter] KEY !! "));
     getchar();
 
-    <span class="command">return </span>EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
 </pre>
 </code>
@@ -91,7 +134,7 @@ CryptEnumProviders (CryptAPI)
 <br>
 <span class="table_title">[実行結果]</span>
 
-<pre class="prettyprint linenums">
+<pre style="color: #FFFFFF; background-color: #000000; width: 800px">
 Enamerate CSP(Cryptographic Service Provider).
 ===================
  1 Microsoft Base Cryptographic Provider v1.0
@@ -107,14 +150,92 @@ Enamerate CSP(Cryptographic Service Provider).
 ===================
 HIT [enter] KEY !!
 </pre>
-</code>
 
+<p> &nbsp;</p>
 <p> 最初に記載されている値は ProviderType を示す値で、使用できるアルゴリズムを示します。<br>詳細は 
 <a href="CryptEnumProviderTypes.html" target="_self">CryptEnumProviderTypes.html</a> 
 を参照。</p>
-<p> OS: Windows7 64bit Proffesional<br>作成： VC++2008 sp1、32bitコンパイル、/MT(d)</p>
+
+<p> &nbsp;</p>
+<p> &nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2012 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<br>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
+	<ul>
+		<li><a href="CryptEnumProviderTypes.html" target="_self">CryptEnumProviderTypes</a></li>
+    <li>暗号化プロバイダーの種類 - Win32 apps | Microsoft Learn<br>
+      <a href="https://learn.microsoft.com/ja-jp/windows/win32/seccrypto/cryptographic-provider-types?redirectedfrom=MSDN" target="_blank">
+      https://learn.microsoft.com/ja-jp/windows/win32/seccrypto/cryptographic-provider-types?redirectedfrom=MSDN</a></li>
+	</ul>
+</section>
+
+<p>&nbsp;</p>
+
 <hr>
-<p> <font face="Meiryo UI">記載： 2012年1月28日 木下英俊<br>
-</font></p>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2 style="margin-bottom:5px">変更履歴</h2>
+	<table>
+	  <tr>
+	    <td class="td_history_date">2023-11-03</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">ページデザイン更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">2012-01-28</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">新規作成 </td>
+	  </tr>
+	</table>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+<p><a href="index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
+<footer>
+	<p><small>© 2012 Kinoshita Hidetoshi (木下英俊)</small></p>
+</footer>
+
+
+
 </body>
 </html>
