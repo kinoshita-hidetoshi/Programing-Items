@@ -3,74 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>async/await 非同期メソッド</title>
+  <!-- タイトル -->
+  <title>async/await 非同期メソッド | Programming Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
-
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
   <style type="text/css">
-    .auto-style4 {
-    	border-width: 0px;
-    	width:800px;
-    }
-    .auto-style7 {
-    	font-weight: normal;
-    }
     .auto-style8 {
-    	background-color: #FFFF00;
+    	background-color: #505000;
     }
     *{padding:0;margin:0}*,:after,:before{background-repeat:no-repeat;box-sizing:inherit}
+  .auto-style9 {
+    color: #FF0000;
+  }
   </style>
-
+  
 </head>
 
 <body onload="prettyPrint();">
 
-<h1 class="auto-style7">
-async/await 非同期メソッド</h1>
+<h1>async/await 非同期メソッド</h1>
 
 <p> .NET Framework 4.5 に対応した C# 5.0 や VB 11.0 
 で搭載された「非同期メソッド」（＝async修飾子とawait演算子を利用したメソッド）による非同期処理実装技術を紹介します。<br>async/await 
 を使うことでこれまで苦労してきたUIタスクの制御がとても楽になるので、ぜひ覚えてほしいテクニックです。</p>
 <p> &nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-          <a href="#1._単純なサンプル_－_ボタンクリックからラベル変更">1. 単純なサンプル － ボタンクリックからラベル変更</a><br>&nbsp;
-          <a href="#1-1._非同期を使わない例（うまく動作できない例）">1-1. 非同期を使わない例（うまく動作できない例）.</a><br>&nbsp;
-          <a href="#1-2._Thread_を使った例_(.NET1.1以降)">1-2. Thread_を使った例_(.NET1.1以降)</a><br>&nbsp;
-          <a href="#1-3._TaskFactory_を使った例_(.NET4.0以降)">1-3. TaskFactory_を使った例_(.NET4.0以降)</a><br>&nbsp;
-          <a href="#1-4._async/await_を使った例（その１）(.NET4.5以降)">1-4. async/await_を使った例（その１）(.NET4.5以降)</a><br>&nbsp;
-          <a href="#1-5._async/await_を使った例（その２）(.NET4.5以降)">1-5. async/await_を使った例（その２）(.NET4.5以降)</a><br>
-          <a href="#2._async/await_で例外を処理するには">2. async/await で例外を処理するには</a><br><br>
-          <a href="#参考">参考</a>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p>
+          <a href="#1._単純なサンプル_－_ボタンクリックからラベル変更">1. 単純なサンプル － ボタンクリックからラベル変更</a></p>
+    <p>&nbsp;&nbsp;
+          <a href="#1-1._非同期を使わない例（うまく動作できない例）">1-1. 非同期を使わない例（うまく動作できない例）.</a></p>
+    <p>&nbsp;&nbsp;
+          <a href="#1-2._Thread_を使った例_(.NET1.1以降)">1-2. Thread_を使った例_(.NET1.1以降)</a></p>
+    <p>&nbsp;&nbsp;
+          <a href="#1-3._TaskFactory_を使った例_(.NET4.0以降)">1-3. TaskFactory_を使った例_(.NET4.0以降)</a></p>
+    <p>&nbsp;&nbsp;
+          <a href="#1-4._async/await_を使った例（その１）(.NET4.5以降)">1-4. async/await_を使った例（その１）(.NET4.5以降)</a></p>
+    <p>&nbsp;&nbsp;
+          <a href="#1-5._async/await_を使った例（その２）(.NET4.5以降)">1-5. async/await_を使った例（その２）(.NET4.5以降)</a></p>
+	<p>
+          <a href="#2._async/await_で例外を処理するには">2. async/await で例外を処理するには</a></p>
+	<p>&nbsp;</p>
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 
 <h2> <a name="1._単純なサンプル_－_ボタンクリックからラベル変更">1. 単純なサンプル － ボタンクリックからラベル変更</a></h2>
+<p> &nbsp;</p>
 <p> [概要]<br>画面上のボタンをクリックすると、画面上のラベルの文字が１秒周期で10秒間書き換わる、というサンプルを例に記載する。</p>
 <p> 
 <img alt="" src="figure/img4.jpg"></p>
+<p> 
+&nbsp;</p>
 <p>[環境]</p>
 <ul>
 	<li>Visual Studio 2017 pro., C#, .NET Framework 4.6.1</li>
@@ -384,30 +400,57 @@ namespace Sample05
 <p> [参考]</p>
 <ul>
 	<li>
-	<a href="http://www.atmarkit.co.jp/ait/articles/1805/16/news018.html" target="_blank">
-	＠IT - NET TIPS： async/await で例外を処理するには？</a></li>
+  	<a href="http://www.atmarkit.co.jp/ait/articles/1805/16/news018.html" target="_blank">
+  	＠IT - NET TIPS： async/await で例外を処理するには？</a></li>
 </ul>
 <p>[環境]</p>
 <ul>
 	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
 	<li>OS: Windows10 home</li>
 </ul>
-<p> &nbsp;</p>
-<span class="table_title">[プログラムソース &quot;***.cpp&quot;]</span><table class="auto-style4" style="border: medium double #C0C0C0; font-family: FixedSys;" width="800px">
-	<tr>
-		<td>
-<pre class="prettyprint linenums">
-</pre>
-		</td>
-	</tr>
-</table>
 	
 <p>
 &nbsp;</p>
+<p class="auto-style9">
+記載途中</p>
 <p>
 &nbsp;</p>
-<h2>
-<a name="参考">参考</a></h2>
+<p>
+&nbsp;</p>
+
+<section>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2017 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
 <ul>
 	<li>
 	<a href="http://www.atmarkit.co.jp/ait/subtop/features/dotnet/app/masterasync_index.html" target="_blank">
@@ -430,7 +473,9 @@ namespace Sample05
 	http://d.hatena.ne.jp/seraphy/20120901</a></li>
 </ul>
 
-<p>&nbsp;</p>
+</section>
+
+  <p>&nbsp;</p>
 
 <hr>
 
@@ -450,8 +495,15 @@ namespace Sample05
 
 <p>&nbsp;</p>
 
+<section>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
 <footer>
-	<p><small>&copy; copyright 2017 木下英俊</small></p>
+	<p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
