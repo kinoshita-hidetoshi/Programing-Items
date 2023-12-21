@@ -3,22 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>cppcheck の使い方</title>
+  <!-- タイトル -->
+  <title>cppcheck の使い方 | Programming Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -31,156 +35,414 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   
+  <style type="text/css">
+  .auto-style1 {
+    text-decoration: underline;
+  }
+  </style>
+  
 </head>
 
 <body onload="prettyPrint();">
 	
 <h1>cppcheck の使い方</h1>
 
-<p> c++ で使用できる無償の静的解析ツール cppcheck というものを見つけたので、これの使用方法などをここに記載します。</p>
-
+<p> Cppcheck&nbsp;は、C&nbsp;および&nbsp;C++&nbsp;プログラミング言語用の静的コード分析ツールです。これは、非標準コードをチェックできる汎用性の高いツールです。作成者兼主任開発者は 
+Daniel Marjamäki です。 Cppcheckは、GNU General Public License に基づくフリーソフトウェアです。</p>
+<p> 本ページでは、cppcheck の使い方などについて記載してみたいと思います。</p>
 <p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-	<h2> 1. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	
+<div class="mokuji">
+  <nav>
+	<h2>目次</h2>
+	<p><a href="#1._インストール">1. インストール</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-1._Windows">1-1. Windows</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-2._Linux">1-2. Linux</a></p>
+	<p><a href="#2._使用方法">2. 使用方法</a></p>
+    <p>&nbsp;&nbsp; <a href="#2-1._GUI_(Windows)">2-1. GUI (Windows)</a></p>
+    <p>&nbsp;&nbsp; <a href="#2-2._CUI">2-2. CUI</a></p>
+	<p><a href="#3._解析結果の例">3. 解析結果の例</a></p>
 	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
+	<p><a href="#ライセンス">ライセンス</a></p>
+	<p><a href="#参考">参考</a></p>
+  </nav>
+</div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
+	<h2> <a name="1._インストール">1. インストール</a></h2>
+  <p> &nbsp;</p>
+  <section>
+    <h3> <a name="1-1._Windows">1-1. Windows</a></h3>
+    <p> Windows 環境へインストールする手順について記載します。</p>
+    <p> &nbsp;</p>
+    <p> 1. 下記ULRからインストーラーを入手します。</p>
+    <p> <a href="https://cppcheck.sourceforge.io/" target="_blank">Cppcheck - A 
+    tool for static C/C++ code analysis (sourceforge.io)</a></p>
+    <p> &nbsp;</p>
+    <p> 本ページ記載時のバージョンは 2.12 でした。</p>
+    <p> <a href="cppcheck/img17.jpg" target="_blank">
+    <img alt="インストーラーを取得" class="border_with_drop-shadow" src="cppcheck/img17.jpg" width="800"></a></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 2. インストーラーを実行します。</p>
+    <p> デフォルトで問題ありません。必要に応じて、インストール場所の変更、"Python addons" の追加、等を行います。</p>
+    <p> &nbsp;</p>
+    <p> <img alt="インストーラー画面１" src="cppcheck/img1C.jpg" width="600"></p>
+    <p> &nbsp;</p>
+    <p> <img alt="インストーラー画面２" src="cppcheck/img1D.jpg" width="600"></p>
+    <p> &nbsp;</p>
+    <p> <img alt="インストーラー画面３" src="cppcheck/img1E.jpg" width="600"></p>
+    <p> &nbsp;</p>
+    <p> <img alt="インストーラー画面４" src="cppcheck/img1F.jpg" width="600"></p>
+    <p> &nbsp;</p>
+    <p> 以上でインストール完了です。</p>
+    <p> &nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+    
+  <section>
+    <h3> <a name="1-2._Linux">1-2. Linux</a></h3>
+    <p> cppcheck は様々なパッケージマネージャーからインストール可能です。使用されている Linux 
+    環境に従って下記コマンドを実行します。</p>
+    <p> &nbsp;</p>
+    <p class="auto-style1"> <strong>Devian / Ubuntu</strong></p>
+    <blockquote>sudo apt-get install cppcheck</blockquote>    
+    <p> &nbsp;</p>
+    <p class="auto-style1"> <strong>Fedrea</strong></p>
+    <blockquote>sudo yum install cppcheck</blockquote>    
+    <p> &nbsp;</p>
+    <p class="auto-style1"> <strong>Mac</strong></p>
+    <blockquote>brew install cppcheck</blockquote>    
+  </section>
 </section>
 	
-<br>
-<br>
+<p> &nbsp;</p>
+<hr>
+<p>&nbsp;</p>
 
 <section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
+	<h2> <a name="2._使用方法">2. 使用方法</a></h2>
+  <p> &nbsp;</p>
+  <section>
+    <h3> <a name="2-1._GUI_(Windows)">2-1. GUI (Windows)</a></h3>
+    <p> GUI 版の使用方法について記載します。</p>
+    <p> &nbsp;</p>
+    <p> 1. cppcheck を起動します。</p>
+    <p> 最初から日本語で表示してくれました。</p>
+    <p> 
+    <img alt="cppcheck 起動直後の画面" class="border_with_drop-shadow" src="cppcheck/img30.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> 2. メニューの [ファイル(F)] → [新規プロジェクト(N)...] でプロジェクトを作成します。 </p>
+    <p> 
+    <img alt="新規プロジェクト(N) 作成" class="border" src="cppcheck/img35.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> ファイルダイアログが表示されるので、保存するプロジェクトファイルのファイル名を指定します。</p>
+    <p> その後、プロジェクトの設定画面（下図）が出てくるので、「パス」 に解析を行うソースファイルの場所を設定します。 </p>
+    <p> <a href="cppcheck/img38.jpg" target="_blank">
+    <img alt="プロジェクトを設定" class="border" src="cppcheck/img38.jpg" width="800"></a></p>
+    <p> &nbsp;</p>
+    <p> 「インクルードパス」には boost 
+    など外部ライブラリーのヘッダー所在を指定します。指定しなくてもチェックできるようですが、指定した方がより良い解析結果を出力してくれるようです。 </p>
+    <p> &nbsp;</p>
+    <p> 解析対象から除外するファイルは下記画面中の「除外するソースファイル」へ登録することで行います。</p>
+    <p> 
+    <img alt="除外するファイル、の設定" src="cppcheck/img3B.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> これらのプロジェクトの設定を後から修正したい場合は [プロジェクトの編集(E)] のメニューを選ぶことでと同じダイアログを表示できます。</p>
+    <p> &nbsp;</p>
+    <p> 3. 下記のようなテストプログラムを作成し、これを cppcheck で解析してみます。</p>
+    <p> [test.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 400px">#include &lt;iostream&gt;
+
+void foo(int x)
+{
+    int buf[10];
+    if (x == 1000){
+        buf[x] = 0; // &lt;- ERROR
+    }
+}
+
+int main()
+{
+    foo(1000);
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+    <p> プロジェクトの新規作成後に [OK] でダイアログを閉じたり、プロジェクトを開くとチェックが始ります。 
+    または「全ファイル再解析(y)」ボタンをクリックすることでも解析を実施してくれます。</p>
+    <p> 解析結果は以下の通りです。ERROR の場所を「Array indel out of bounds.」とちゃんと検出してくれました。</p>
+    <p> <a href="cppcheck/img44.jpg" target="_blank">
+    <img alt="解析結果" class="border_with_drop-shadow" src="cppcheck/img44.jpg" width="800"></a></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+    
+  <section>
+    <h3> <a name="2-2._CUI">2-2. CUI</a></h3>
+    <p> CUI 版の使用方法について記載します。</p>
+    <p> Jenkins や Pipelines などの各種 CI/CD ツールと連携させたい場合などでは CUI(コマンドライン) を使って解析します。</p>
+    <p> &nbsp;</p>
+    <h4> 概要</h4>
+    <p> CUI は次の形式で実行します。 </p>
+    <blockquote>$ cppcheck --enable=all ソース [...]</blockquote>
+    <p>引数としてチェック対象のソースファイルやファイルのあるフォルダーを指定します。フォルダーの場合は再帰的にチェックします。</p>
+    <p>GUI の結果をみるとわかりやすいと思いますが、 cppcheck の検査項目はカテゴリー分けされています。<strong><em>--enable</em></strong>&nbsp;オプションでそのカテゴリーを指定し、<strong><em>all</em></strong>&nbsp;ですべてのカテゴリーが検査対象となります。<strong><em>--enable</em></strong> を指定していないと検査項目が何もないことになるので、 とりあえず 
+    <strong><em>all</em></strong> をつけて使い始め、慣れてきたら必要とする検査項目のみに限定してはいかがでしょうか。 </p>
+    <p>&nbsp;</p>
+    <p>"--enable" オプションで指定できるパラメータは以下の通りです。</p>
+        
+    <table class="border-collapse" border="1" width="800">
+      <caption>[Table.] "<strong><em>--enable</em></strong>" オプションで指定できるパラメータ</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>パラメータ</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>all</strong></td>
+          <td>全てのチェックを有効にします。<br><p>(例) <span class="cpp-source">cppcheck&nbsp; 
+          --enable=all&nbsp; file.c</span></p></td>
+        </tr>
+        <tr>
+          <td><strong>warning</strong></td>
+          <td>warning のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>style</strong></td>
+          <td>style を指定すると warning, performance, portability, style 
+          のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>performance</strong></td>
+          <td>performance のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>portability</strong></td>
+          <td>portability のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>information</strong></td>
+          <td>information のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>unusedFunction</strong></td>
+          <td>unusedFunction のチェックを有効にします。</td>
+        </tr>
+        <tr>
+          <td><strong>missingInclude</strong></td>
+          <td>missingInclude のチェックを有効にします。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>パラメータを複数組み合わせて指定する場合、以下のようにカンマ区切りで併記します。</p>
+    <blockquote>
+    cppcheck --enable=warning,performance file.c
+    </blockquote>
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>unusedFunction チェックは、関数が呼び出されなかったときに警告するチェックなので、プログラム全体をチェックするときのみ "--enable=unusedFunction", 
+        "--enable=all" を使用することを推奨します。関数呼び出しがチェック範囲にみつからなかった、という警告を不要に出力する可能性が高くなるからです。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1">
+      <caption>[Table.] その他 よく使用するオプション</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>機能</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>-h, --help</strong></td>
+          <td>ヘルプ表示</td>
+        </tr>
+        <tr>
+          <td><strong>-q, --quiet</strong></td>
+          <td>ログを出さない(解析結果だけ表示)</td>
+        </tr>
+        <tr>
+          <td><strong>-I</strong></td>
+          <td>インクルードフォルダーのパスを指定 </td>
+        </tr>
+        <tr>
+          <td><strong>-D</strong></td>
+          <td>define を指定 </td>
+        </tr>
+        <tr>
+          <td><strong>-i</strong></td>
+          <td>除外するファイルやフォルダーの指定 </td>
+        </tr>
+        <tr>
+          <td><strong>--xml</strong></td>
+          <td>解析結果の出力を xml 形式にする</td>
+        </tr>
+        <tr>
+          <td><strong>--platform</strong></td>
+          <td>適用する c/c++ 標準を指定する
+            <ul>
+              <li>unix32: 32 bit unix variant</li>
+              <li>unix64: 64 bit unix variant</li>
+              <li>win32A: 32 bit Windows ASCII charactor encoding</li>
+              <li>win32W: 32 bit Windows UNICODE charactor encoding</li>
+              <li>win64: 64 bit Windows</li>
+              <li>avr8: 8 bit AVR microcontrollers</li>
+              <li>elbrus-e1cp: Elbrus e1c+ architecture</li>
+              <li>pic8: 8bit PIC microcontrollers</li>
+              <li>pic8-enhanced:</li>
+              <li>pic16: 16 bit PIC microcontrollers</li>
+              <li>mips32: 32 bit MIPS microcontrollers</li>
+              <li>native: Type sizes of host system are assumed, but no further 
+              assumptions.</li>
+              <li>unspecified: Unknown type sizes</li>
+            </ul>
+            <p>(例) --platform=unix64</p>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>--std</strong></td>
+          <td>
+            適用する c/c++ 標準を指定する
+            <ul>
+              <li>c89</li>
+              <li>c99</li>
+              <li>c11</li>
+              <li>c++03</li>
+              <li>c++11</li>
+              <li>c++14</li>
+              <li>c++17</li>
+              <li>c++20</li>
+            </ul>
+            <p>(例) --std=c++20</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h4> 解析してみる</h4>
+    <p> GUI と同じ下記テストコードを解析してみます。</p>
+    <p> &nbsp;</p>
+    <p> [test.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 400px">#include &lt;iostream&gt;
+
+void foo(int x)
+{
+    int buf[10];
+    if (x == 1000){
+        buf[x] = 0; // &lt;- ERROR
+    }
+}
+
+int main()
+{
+    foo(1000);
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドで解析します。Windows の場合は事前に path を登録して cppcheck を使えるようにしておいてください。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=win64 --std=c++20 test.cpp</pre>
+    <p> &nbsp;</p>
+    <p> 実行結果は以下の通りです。</p>
+    <pre style="background-color: #000000; color: #FFFFFF">C:\Users\foo\Documents\cpp\cppcheck_test&gt;cppcheck --enable=all --suppress=missingIncludeSystem --platform=win64 --std=c++20 test.cpp
+Checking test.cpp ...
+test.cpp:7:12: warning: Either the condition 'x==1000' is redundant or the array 'buf[10]' is accessed at index 1000, which is out of bounds. [arrayIndexOutOfBoundsCond]
+        buf[x] = 0; // &lt;- ERROR
+           ^
+test.cpp:6:11: note: Assuming that condition 'x==1000' is not redundant
+    if (x == 1000){
+          ^
+test.cpp:7:12: note: Array index out of bounds
+        buf[x] = 0; // &lt;- ERROR
+           ^
+test.cpp:5:9: style: The scope of the variable 'buf' can be reduced. [variableScope]
+    int buf[10];
+        ^
+test.cpp:7:16: style: Variable 'buf[x]' is assigned a value that is never used. [unreadVariable]
+        buf[x] = 0; // &lt;- ERROR
+               ^
+Active checkers: 163/565
+
+C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
+    <p> &nbsp;</p>
+    <p> GUI 版と同じ解析結果を出力できていることを確認できました。</p>
+  </section>
+</section>
+	
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+
+<section>
+	<h2> <a name="3._解析結果の例">3. 解析結果の例</a></h2>
+  <p> &nbsp;</p>
+  <section>
+    <h3> 3-1. 例1</h3>
+    <p> &nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+    
+  <section>
+    <h3> 3-2. 例2</h3>
+    <p> &nbsp;</p>
+  </section>
 </section>
 
-<br>
-<br>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
 
 <section>
-	<h2><a name="参考">参考</a></h2>
+  <h2><a id="ライセンス">ライセンス</a></h2>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+    The MIT License (MIT)<br><br>
+    
+    &nbsp; Copyright 2023 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+  </div>
+  <p>&nbsp;</p>
+</section>
+
+<p>&nbsp;</p>
+
+<section>
+	<h2><a id="参考">参考</a></h2>
 	<ul>
 		<li>Cppcheck 
         - A tool for static C/C++ code analysis (sourceforge.net)<br>
@@ -211,7 +473,7 @@
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2021-02-11</td>
+	    <td class="td_history_date">2023-12-21</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
@@ -220,8 +482,15 @@
 
 <p>&nbsp;</p>
 
+<section>
+  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+</section>
+
+<p>&nbsp;</p>
+
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
