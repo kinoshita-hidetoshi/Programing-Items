@@ -3,210 +3,681 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>［タイトルを記載します］</title>
+  <!-- タイトル -->
+  <title>[Azure DevOps] Pipelines で c#(.NET Framework) を使ってみる | Programming Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<script src="../../prettify/lang-yml.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
+  <style type="text/css">
+  .auto-style1 {
+    text-decoration: underline;
+  }
+  .auto-style2 {
+    background-color: #505000;
+  }
+  </style>
+
+</head>
 
 <body onload="prettyPrint();">
+  
+  <h1>[Azure DevOps] Pipelines で c#(.NET Framework) を使ってみる</h1>
+
+  <p> 今更ながら Azure DevOps 環境で c# (.NET Framework) アプリを CI/CD 
+  してみたいと思いまして、トライした内容をこちらで記載してみたいと思います。</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._環境準備">1. 環境準備</a></p>
+    	<p><a href="#2._Pipeline_を作成">2. Pipeline を作成</a></p>
+    	<p><a href="#3._ビルド生成物（artifacts）を登録する">3. ビルド生成物（artifacts）を登録する</a></p>
+      <p><a href="#4._ビルド生成物（artifacts）を_zip_圧縮して登録する">4. ビルド生成物（artifacts）を zip 圧縮して登録する</a></p>
+      <p><a href="#5._Unit_テストを実行する">5. Unit テストを実行する</a></p>
+      <p><a href="#6._カバレッジ計測">6. カバレッジ計測</a></p>
+      <p><a href="#7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <section>
+  	<h2><a name="1._環境準備">1. 環境準備</a></h2>
+    <p>&nbsp;</p>
+  	<section>
+  	  <h3>1.1. "Azure DevOps" に Git プロジェクトを作成</h3>
+      <p>"Azure DevOps" のアカウントを既に所有しているものとして記載します。</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 1</strong></p>
+      <p>［+ New Project］ボタンをクリックします。</p>
+      <p>
+      <img alt="+ New Project" class="border" src="Pipelines_cs_netframework/img13.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 2</strong></p>
+      <p>"Procjet name" など必要事項を記入および選択後、［Create］ボタンをクリックします。</p>
+      <p>私はこの後で超簡単な Counter プログラムを作成してリポジトリへ登録する予定なので、"Project name" を Counter 
+      として作成します。</p>
+      <p>
+      <img alt="Create New Project" class="border" src="Pipelines_cs_netframework/img16.jpg" width="600"></p>
+      <p>&nbsp;</p>
+      <p>下図はプロジェクト作成完了直後の画面です。</p>
+      <p>
+      <img alt="プロジェクト作成直後の画面" class="border" src="Pipelines_cs_netframework/img18.jpg" width="800"></p>
+      <p>&nbsp;</p>
+	  </section>
 	
-<h1>[Azure DevOps] Pipelines で c#(.NET Framework) を使ってみる</h1>
+    <p>&nbsp;</p>
+    
+    <section>
+  	  <h3>1.2. c# (.NET Framework 4.8) プロジェクトを作成</h3>
+      <p>Pipeline を実行する対象となるプロジェクトを作成します。</p>
+      <p>ここでは以下のようなテストプロジェクトを作成して進めました。</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 1</strong></p>
+      <p>先ほど作成した Git プロジェクト（Counter）を Clone します。</p>
+      <p>下図あたりの表示にあるコマンドを使ったり、画面上のボタン操作を行うことで git clone します。</p>
+      <p>
+      <img alt="git clone" class="border" src="Pipelines_cs_netframework/img21.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 2</strong></p>
+      <p>Clone した場所へ Visual Studio で新しい c# プロジェクトを作成します。</p>
+      <p>私は以下のような環境で c# プロジェクトを作成しました。</p>
+      <p>&nbsp;</p>
+	
+	<p><strong>[環境]</strong></p>
+      
+    	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>Visual Studio 2022,</td>
+    	      <td>Version 17.8.4 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>開発言語:</td>
+    	      <td>c#</td>
+    	      <td>&nbsp;</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td>フレームワーク：</td>
+    	      <td>.NET Framework 4.8</td>
+    	      <td>&nbsp;</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>テストフレームワーク：</td>
+    	      <td>MSTest.TestAdapter,</td>
+    	      <td>3.1.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>MSTest.TestFramework,</td>
+    	      <td>3.1.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>NUnit,</td>
+    	      <td>4.0.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>NUnit3TestAdapter,</td>
+    	      <td>4.5.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Windows11 home,</td>
+    	    <td>23H2</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+    	</table>
+	
+      <p>&nbsp;</p>
+      <p>代表的な Unit テストフレームワーク（NUnit、MSTestV1、MSTestV2）についても準備して動作を評価してみます。</p>
+      <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption>[table.] 各プロジェクトの説明</caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space:nowrap">プロジェクト名</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CounterDll</td>
+          <td>値（Integer）を管理する class Counter を提供する dll。<br>class Couter 
+          は、Increment, Decrement, Clear ３つのメソッドを持つ。</td>
+        </tr>
+        <tr>
+          <td>CounterForm</td>
+          <td>class Counter を使った WinForm アプリ。</td>
+        </tr>
+        <tr>
+          <td>CounterWPF</td>
+          <td>class Counter を使った WPF アプリ。</td>
+        </tr>
+        <tr>
+          <td>testCounter1</td>
+          <td>CounterDll をテストする。NUnt 版。</td>
+        </tr>
+        <tr>
+          <td>testCounter2</td>
+          <td>CounterDll をテストする。MSTestV1 版。</td>
+        </tr>
+        <tr>
+          <td>testCounter3</td>
+          <td>CounterDll をテストする。MSTestV2 版。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+      <p>&nbsp;</p>
+      <p>Visual Studio 上の画面の様子です。</p>
+      <p>
+      <img alt="Visual Studio" class="border_with_drop-shadow" src="Pipelines_cs_netframework/img4.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>図： CounterForm 画面例</p>
+      <p>
+      <img alt="CounterForm" src="Pipelines_cs_netframework/imgE.jpg" width="400" class="border_with_drop-shadow"></p>
+      <p>&nbsp;</p>
+      <p>図： CounterWPF 画面例</p>
+      <p>
+      <img alt="CounterWPF" src="Pipelines_cs_netframework/imgD.jpg" width="400" class="border_with_drop-shadow"></p>
+        
+      <p>&nbsp;</p>
+    </section>
+    
+    <p>&nbsp;</p>
+    
+    <section>
+  	  <h3>1.3. Git リポジトリへプロジェクトをコミット＆プッシュ</h3>
+      <p>Git (Azure DevOps) へコミット＆プッシュします。手順については本ページの主たる内容から外れるので記載を割愛します。</p>
+      <p>コミット＆プッシュ後の Azure DevOps 画面です。</p>
+      <p>
+      <img alt="Azure DevOps 画面" class="border" src="Pipelines_cs_netframework/img12.jpg" width="800"></p>
+    </section>
+    
+    <p>&nbsp;</p>
+    
+    <p>以上で Pipelines を操作する前の事前準備を完了です。</p>
+  </section>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
-<p> &nbsp;</p>
-
-<h2> 目次</h2>
-  <nav>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a name="2._Pipeline_を作成">2. Pipeline を作成</a></h2>
+    <p>Pipeline を作成していきます。</p>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 1</strong></p>
+    <p>画面左側の Pipeline ボタンをクリックすると下図のような画面を表示するので、［Create Pipeline］ボタンをクリックします。</p>
     <p>
-    1. ***<br>
-    2. ***<br>
-    3. ***<br><a href="#参考">参考</a><br>
-    </p>
-  </nav>
+    <img alt="Pipeline" class="border" src="Pipelines_cs_netframework/img17.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 2</strong></p>
+    <p>Pipeline の対象となるソースコードの所在を選択します。本ページでは "Azure Repos Git" を選択します。</p>
+    <p>
+    <img alt="Where is your code?" class="border" src="Pipelines_cs_netframework/img19.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 3</strong></p>
+    <p>対象リポジトリを選択します。ここでは Counter を選択します。</p>
+    <p>
+    <img alt="Select repository" src="Pipelines_cs_netframework/img1E.jpg" class="border" width="800"></p>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 4</strong></p>
+    <p>Pipeline を構成するプラットフォームを選択します。ここでは「<strong>.NET Desktop</strong>」を選択します。</p>
+    <p>
+    <img alt="Configure your pipeline" class="border" src="Pipelines_cs_netframework/img22.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 5</strong></p>
+    <p>"azure-pipelines.yml" ファイルを生成してリポジトリへコミットされました。</p>
+    <p>内容を確認して必要に応じて修正します。まずは内容を確認してみましょう。</p>
+    <p>
+    <img alt="Review your pipeline YAML" class="border" src="Pipelines_cs_netframework/img24.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>生成された yml ファイルのコードは以下のとおりです。</p>
+    <p>(1)NuGet パッケージの復元して、(2)ビルドして、(3)ユニットテストする、というような流れです。</p>
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop 
+# Build and run tests for .NET Desktop or Windows classic desktop solutions. 
+# Add&nbsp;steps&nbsp;that&nbsp;publish&nbsp;symbols,&nbsp;save&nbsp;build&nbsp;artifacts,&nbsp;and&nbsp;more: 
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
+trigger: 
+-&nbsp;main
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
+pool:
+ &nbsp;vmImage:&nbsp;'windows-latest'
 
-<section>
-	<h2> 1. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<p>[&quot;*.yml&quot;]</p>
-		<pre class="prettyprint linenums">&nbsp;</pre>
-</section>
-	
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+variables:
+&nbsp;&nbsp;solution:&nbsp;'**/*.sln'
+&nbsp;&nbsp;buildPlatform:&nbsp;'Any&nbsp;CPU'
+&nbsp;&nbsp;buildConfiguration:&nbsp;'Release'
 
-<section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<br>
-<br>
+steps: 
+-&nbsp;task:&nbsp;NuGetToolInstaller@1
 
-<section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
-</section>
+-&nbsp;task:&nbsp;NuGetCommand@2
+&nbsp;&nbsp;inputs:
+ &nbsp;&nbsp;&nbsp;restoreSolution:&nbsp;'$(solution)'
 
-<br>
-<br>
+-&nbsp;task:&nbsp;VSBuild@1
+&nbsp;&nbsp;inputs:
+&nbsp;&nbsp;&nbsp;&nbsp;solution:&nbsp;'$(solution)'
+&nbsp;&nbsp;&nbsp;&nbsp;platform:&nbsp;'$(buildPlatform)'
+&nbsp;&nbsp;&nbsp;&nbsp;configuration:&nbsp;'$(buildConfiguration)'
 
-<section>
-	<h2><a name="参考">参考</a></h2>
-	<ul>
-		<li>
-        <a href="https://aonasuzutsuki.hatenablog.jp/entry/2020/12/03/140531" target="_blank">
-        Azure Pipelines で.Net FrameworkとNUnitのテスト実行とカバレッジ計測してみる - 気まま研究所ブログ 
-        (hatenablog.jp)</a></li>
-        <li>
-        <a href="https://iyemon018.hatenablog.com/entry/2019/03/17/155833" target="_blank">
-        Azure Pipelines で.NET Framework + xUnit のユニットテストの実行と集計方法について - 
-        やる気駆動型エンジニアの備忘録 (hatenablog.com)</a></li>
-        <li>
-        <a href="https://blog.nextscape.net/archives/Date/2019/06/devops-build-1" target="_blank">
-        Azure DevOpsのBuild PipelineでWebAppsにデプロイ（Build編）|ネスケラボ (nextscape.net)</a></li>
-        <li>
-        <a href="https://tsuna-can.hateblo.jp/entry/2020/07/27/080000" target="_blank">
-        Azure Pipelines のビルド結果画面にコードカバレッジの結果を表示する（.NET Core） - ツナ缶雑記 
-        (hateblo.jp)</a></li>
-	</ul>
-</section>
+-&nbsp;task:&nbsp;VSTest@2
+&nbsp;&nbsp;inputs:
+&nbsp;&nbsp;&nbsp;&nbsp;platform:&nbsp;'$(buildPlatform)'
+&nbsp;&nbsp;&nbsp;&nbsp;configuration:&nbsp;'$(buildConfiguration)'
+</pre>
+    <p>&nbsp;</p>
+    <p>一部について説明します。</p>
+        
+    <table class="border-collapse" border="1" width="1000">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space:nowrap">要素</th>
+          <th>内容</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>trigger</td>
+          <td>CI トリガーを取得するブランチを設定します。</td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&amp;tabs=yaml#branches" target="_blank">https://learn.microsoft.com/ja-jp/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&amp;tabs=yaml#branches</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>vmImage</td>
+          <td>ビルドするプラットフォームを設定します。Microsoft によってホストされるエージェントから指定します。</td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/customize-pipeline?view=azure-devops" target="_blank">
+            パイプラインをカスタマイズする - Azure Pipelines | Microsoft Learn</a></li>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/agents/hosted?view=azure-devops&amp;tabs=yaml" target="_blank">
+            Azure Pipelines 用の Microsoft ホステッド エージェント - Azure Pipelines | 
+            Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">NuGetToolInstaller@1</td>
+          <td>インターネットまたはツール キャッシュから特定のバージョンの NuGet を取得し、PATH に追加します。 
+          このタスクを使用して、NuGet タスクで使用される NuGet のバージョンを変更します。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/nuget-tool-installer-v1?view=azure-pipelines" target="_blank">
+            NuGetToolInstaller@1 - NuGet ツール インストーラー v1 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>NuGetCommand@2</td>
+          <td>このタスクを使用して、NuGet パッケージの復元、パック、プッシュ、または NuGet コマンドの実行を行います。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/nuget-command-v2?view=azure-pipelines" target="_blank">
+            NuGetCommand@2 - NuGet v2 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>VSBuild@1</td>
+          <td>このタスクを使用して MSBuild を使用してビルドし、Visual Studio バージョン プロパティを設定します。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/vsbuild-v1?view=azure-pipelines" target="_blank">
+            VSBuild@1 - Visual Studio ビルド v1 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>VSTest@2</td>
+          <td>このタスクを使用して、Visual Studio テスト (VSTest) ランナーを使用して単体テストと機能テスト 
+          (Selenium、Appium、コード化された UI テストなど) を実行します。 Visual Studio テスト 
+          アダプターを持つテスト フレームワークを実行できます。<br>
+          フレームワークの例としては、MSTest、xUnit、NUnit、Chutzpah (QUnit、Mocha、Jasmine を使用する 
+          JavaScript テスト用) などがあります。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/vstest-v2?view=azure-pipelines" target="_blank">
+            VSTest@2 - Visual Studio Test v2 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>Step 6</strong></p>
+    <p>いよいよ［Save and run］してみます。下図［Save and run］ボタンをクリックします。</p>
+    <p>
+    <img alt="Save and run" class="border" src="Pipelines_cs_netframework/img37.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>下図画面を表示するので、もう一度［Save and run］ボタンをクリックします。</p>
+    <p>
+    <img alt="Save and run" class="border" src="Pipelines_cs_netframework/img39.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>Pipeline を実行開始しました。</p>
+    <p>
+    <img alt="Running jobs" class="border" src="Pipelines_cs_netframework/img3B.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>Pipeline を正常に完了ました。完了後の画面を以下に示します。</p>
+    <p>
+    <img alt="Build succeeded" class="border" src="Pipelines_cs_netframework/img3F.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>「✔ Job」のあたりをクリックすることで Job 詳細を確認することができます。</p>
+    <p>どうやら Pipeline は全て正常に処理できたようです。</p>
+    <p>
+    <img alt="Jobs in run" class="border" src="Pipelines_cs_netframework/img41.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>以上から確認できたとりあえずの課題を以下に列挙します。</p>
+    <p>課題：</p>
+    <ol>
+      <li>ビルド生成物（artifacts）を登録できていない。<br>「0 artifacts」 
+      という表示がありますが、ちゃんと設定できるとここからビルド生成物などを取得できるようになります。</li>
+      <li>Unitテストを実施できていない。<strong><br>Warnings</strong> がありますね。どうやら、VSTest 
+      の対象を見つけることができなかった、という内容のようです。<br>少なくともデフォルト状態では "**\bin\**\*test.dll, 
+      **\bin\**\*tests.dll" というファイル名を満足する必要があるようです。</li>
+    </ol>
+    <p>&nbsp;</p>
+    <p>次章からこれら課題を順に解決していきます。</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._ビルド生成物（artifacts）を登録する">3. ビルド生成物（artifacts）を登録する</a></h2>
+    <p>ビルド生成物（artifacts）を登録するように yml ファイルを修正します。</p>
+    <p>使用するコマンドは下記の２つです。</p>
+    <ul>
+      <li>CopyFiles@2</li>
+      <li>PublishBuildArtifacts@1</li>
+    </ul>
+    <p>CopyFiles@2 で登録したいファイルを一か所に集めて、PublishBuildArtifacts@1 
+    でアーティファクト登録する、というような手順です。</p>
+    <p>&nbsp;</p>
+    <p>他：</p>
+    <ul>
+      <li>前回コードからの差分箇所に色付けしています。</li>
+      <li>*.pdb ファイルを除外しています。<br>意図的に２つの記載方法を試しています。</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
-<p>&nbsp;</p>
+trigger:
+- main
 
-<hr>
+pool:
+  vmImage: 'windows-latest'
 
-<p style="margin-bottom:5px">&nbsp;</p>
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
-<section>
-	<h2 style="margin-bottom:5px">記載</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2021-02-07</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
+steps:
+- task: NuGetToolInstaller@1
 
-<p>&nbsp;</p>
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 
-<footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
-</footer>
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+<span class="auto-style2">- task: CopyFiles@2</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    contents: CounterWPF\bin\$(buildConfiguration)\**\!(*.pdb)</span>
+<span class="auto-style2">    targetFolder: $(Build.ArtifactStagingDirectory)</span>
+
+<span class="auto-style2">- task: CopyFiles@2</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    contents: |</span>
+<span class="auto-style2">      CounerForm\bin\$(buildConfiguration)\*.*</span>
+<span class="auto-style2">      !**\*.pdb</span>
+<span class="auto-style2">    targetFolder: $(Build.ArtifactStagingDirectory)</span>
+
+<span class="auto-style2">- task: PublishBuildArtifacts@1</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    pathToPublish: $(Build.ArtifactStagingDirectory)</span>
+<span class="auto-style2">    artifactName: 'MyBuildOutputs'</span>
+<span class="auto-style2">    publishLocation: 'Container'</span></pre>
+    <p>&nbsp;</p>
+    <p>Pipeline 実行完了後の画面です。「<strong>1 published</strong>」に変わりました。</p>
+    <p>
+    <img alt="Summary" class="border" src="Pipelines_cs_netframework/img4A.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>「<strong>1 published</strong>」あたりの画面をクリックすると下図 Artifacts 画面を表示します。</p>
+    <p>[･･･] ボタンウォリックすることであなたが希望する Artifacts をダウンロードなどすることができます。</p>
+    <p>
+    <img alt="Artifacts" class="border" src="Pipelines_cs_netframework/img4D.jpg" width="800">&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="4._ビルド生成物（artifacts）を_zip_圧縮して登録する">4. ビルド生成物（artifacts）を zip 圧縮して登録する</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="5._Unit_テストを実行する">5. Unit テストを実行する</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="6._カバレッジ計測">6. カバレッジ計測</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+          <a href="https://aonasuzutsuki.hatenablog.jp/entry/2020/12/03/140531" target="_blank">
+          Azure Pipelines で.Net FrameworkとNUnitのテスト実行とカバレッジ計測してみる - 気まま研究所ブログ 
+          (hatenablog.jp)</a></li>
+          <li>
+          <a href="https://iyemon018.hatenablog.com/entry/2019/03/17/155833" target="_blank">
+          Azure Pipelines で.NET Framework + xUnit のユニットテストの実行と集計方法について - 
+          やる気駆動型エンジニアの備忘録 (hatenablog.com)</a></li>
+          <li>
+          <a href="https://blog.nextscape.net/archives/Date/2019/06/devops-build-1" target="_blank">
+          Azure DevOpsのBuild PipelineでWebAppsにデプロイ（Build編）|ネスケラボ (nextscape.net)</a></li>
+          <li>
+          <a href="https://tsuna-can.hateblo.jp/entry/2020/07/27/080000" target="_blank">
+          Azure Pipelines のビルド結果画面にコードカバレッジの結果を表示する（.NET Core） - ツナ缶雑記 
+          (hateblo.jp)</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <hr>
+  
+  <p style="margin-bottom:5px">&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-01-18</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
