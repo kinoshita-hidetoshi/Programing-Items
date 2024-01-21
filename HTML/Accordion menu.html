@@ -95,76 +95,11 @@
 	<p> &nbsp;</p>
 	
 	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls muted autoplay="y" loop="y" src="../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
 	
 	<p> &nbsp;</p>
 	<p> &nbsp;</p>
 	
 <p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
-<pre class="prettyprint linenums lang-cpp">
-#include "stdafx.h"
-
-#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;memory&gt;
-#include &lt;vector&gt;
-
-using namespace std;
-
-struct Data {
-    int id;
-    std::string name;
-
-    Data()
-        : Data(0, "") {}
-    Data(int id, const std::string&amp; name)
-        : id(id), name(name)
-    {
-        std::cout &lt;&lt; "ctor" &lt;&lt; std::endl;
-    }
-
-    ~Data()
-    {
-        std::cout &lt;&lt; "dtor" &lt;&lt; std::endl;
-    }
-};
-
-
-int main()
-{
-    {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
-
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(1, "foo")));
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(2, "var")));
-
-        for (auto data : v1) {
-            cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
-        }
-    }
-
-    {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v2;
-
-        v2.emplace_back(new Data(3, "foo"));
-        v2.emplace_back(new Data(4, "bar"));
-
-        for (auto data : v2) {
-            cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
-        }
-    }
-
-    return EXIT_SUCCESS;
-</pre>
 	
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -216,19 +151,35 @@ SOFTWARE.
 	<h2><a name="参考">参考</a></h2>
 	<ul>
 		<li>【初心者向け】WEBデザインで使う「アコーディオンメニュー」って何？ – 株式会社日本デザイン (japan-design.jp)<br>
-        <a href="https://japan-design.jp/design/0036/?msclkid=c9f92424c4f011ec86d543475ea7c469" target="_blank">
-        https://japan-design.jp/design/0036/?msclkid=c9f92424c4f011ec86d543475ea7c469</a></li>
-        <li>Menú despegable estilo acordeón | Accordion Menu (codepen.io)<br>
-        <a href="https://codepen.io/Creaticode/pen/jOXpzd" target="_blank">
-        https://codepen.io/Creaticode/pen/jOXpzd</a></li>
-        <li>Simple acordion (codepen.io)<br>
-        <a href="https://codepen.io/ranginang67/pen/omKxjV" target="_blank">
-        https://codepen.io/ranginang67/pen/omKxjV</a></li>
-        <li>hamburger slide accordion menu (codepen.io)<br>
-        <a href="https://codepen.io/slyka85/pen/LbXYKQ" target="_blank">
-        https://codepen.io/slyka85/pen/LbXYKQ</a></li>
+      <a href="https://japan-design.jp/design/0036/?msclkid=c9f92424c4f011ec86d543475ea7c469" target="_blank">
+      https://japan-design.jp/design/0036/?msclkid=c9f92424c4f011ec86d543475ea7c469</a></li>
+    <li>Menú despegable estilo acordeón | Accordion Menu (codepen.io)<br>
+      <a href="https://codepen.io/Creaticode/pen/jOXpzd" target="_blank">
+      https://codepen.io/Creaticode/pen/jOXpzd</a></li>
+    <li>Simple acordion (codepen.io)<br>
+      <a href="https://codepen.io/ranginang67/pen/omKxjV" target="_blank">
+      https://codepen.io/ranginang67/pen/omKxjV</a></li>
+    <li>hamburger slide accordion menu (codepen.io)<br>
+      <a href="https://codepen.io/slyka85/pen/LbXYKQ" target="_blank">
+      https://codepen.io/slyka85/pen/LbXYKQ</a></li>
+    <li>detailsとsummaryタグで作るアコーディオンUI - アニメーションのより良い実装方法 - ICS MEDIA<br>
+      <a href="https://ics.media/entry/220901/" target="_blank">
+    https://ics.media/entry/220901/</a></li>
+    <li>【CSS不要！】HTML5のdetails/summaryタグを使ったアコーディオンメニュー｜zerosta_web (note.com)<br>
+      <a href="https://note.com/zerosta_web/n/n93cf749a5e40" target="_blank">
+    https://note.com/zerosta_web/n/n93cf749a5e40</a></li>
+    <li>details と 
+      summary 要素 + JavaScript で作るアコーディオン (webdesignleaves.com)<br>
+      <a href="https://www.webdesignleaves.com/pr/plugins/accordion-ui.html" target="_blank">
+    https://www.webdesignleaves.com/pr/plugins/accordion-ui.html</a></li>
+    <li>
+    <p>CSSすら不要！detailsとsummaryタグで作る簡単アコーディオン | Webクリエイターボックス (webcreatorbox.com)<br>
+    <a href="https://www.webcreatorbox.com/tech/details-summary" target="_blank">
+    https://www.webcreatorbox.com/tech/details-summary</a></p></li>
 	</ul>
-    <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
