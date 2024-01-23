@@ -499,6 +499,44 @@ steps:
       <li>*.pdb ファイルを除外しています。<br>意図的に２つの記載方法を試しています。</li>
     </ul>
     <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="1000">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space:nowrap">要素</th>
+          <th>内容</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CopyFiles@2</td>
+          <td>一致パターンを使用してソース フォルダーからターゲット フォルダーにファイルをコピーします。 (一致パターンは、フォルダー 
+          パスではなく、ファイル パスにのみ一致します)。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/copy-files-v2?view=azure-pipelines&amp;tabs=yaml" target="_blank">
+            CopyFiles@2 - ファイル v2 タスクをコピーする | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">PublishBuildArtifacts@1</td>
+          <td>ビルド パイプラインでこのタスクを使用して、ビルド成果物を Azure Pipelines、TFS、またはファイル共有に発行します。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-build-artifacts-v1?view=azure-pipelines" target="_blank">
+            PublishBuildArtifacts@1 - ビルド成果物 v1 タスクを発行する | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
     <p>["azure-pipelines.yml"]</p>
     <pre class="prettyprint linenums lang-yml" style="width: 800px">
 # .NET Desktop
@@ -543,7 +581,7 @@ steps:
 <span class="auto-style2">- task: CopyFiles@2</span>
 <span class="auto-style2">  inputs:</span>
 <span class="auto-style2">    contents: |</span>
-<span class="auto-style2">      CounerForm\bin\$(buildConfiguration)\*.*</span>
+<span class="auto-style2">      CounterForm\bin\$(buildConfiguration)\*.*</span>
 <span class="auto-style2">      !**\*.pdb</span>
 <span class="auto-style2">    targetFolder: $(Build.ArtifactStagingDirectory)</span>
 
@@ -553,6 +591,7 @@ steps:
 <span class="auto-style2">    artifactName: 'MyBuildOutputs'</span>
 <span class="auto-style2">    publishLocation: 'Container'</span></pre>
     <p>&nbsp;</p>
+        
     <p>Pipeline 実行完了後の画面です。「<strong>1 published</strong>」に変わりました。</p>
     <p>
     <img alt="Summary" class="border" src="Pipelines_cs_netframework/img4A.jpg" width="800"></p>
@@ -570,6 +609,128 @@ steps:
   
   <section>
     <h2><a name="4._ビルド生成物（artifacts）を_zip_圧縮して登録する">4. ビルド生成物（artifacts）を zip 圧縮して登録する</a></h2>
+    <p>前章では Artifacts 
+    として各ファイルを保存する例を紹介しました。しかしながら実際の運用ではアプリケーションは多くのファイルから構成されており、個別ファイルよりも必要となるファイル一式を 
+    zip などで圧縮したものを Artifacts として登録する方が都合が良い場合が多いと考えます。</p>
+    <p>本章では、事前に zip 圧縮したビルド生成物（artifacts）を登録するように yml ファイルを修正します。</p>
+    <p>使用するコマンドは下記の２つです。</p>
+    <ul>
+      <li>ArchiveFiles@2</li>
+      <li>PublishBuildArtifacts@1</li>
+    </ul>
+    <p>ArchiveFiles@2 でフォルダをまとめて zip 圧縮して、PublishBuildArtifacts@1 
+    でアーティファクト登録する、というような手順です。</p>
+    <p>&nbsp;</p>
+    <p>他：</p>
+    <ul>
+      <li>下記例では、変数 $(<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml#build-variables-devops-services" target="_blank">Build.BuildId</a>) 
+      を使って zip ファイル名に Pipelines のビルドIDを追加しています。</li>
+    </ul>
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="1000">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space:nowrap">要素</th>
+          <th>内容</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ArchiveFiles@2 </td>
+          <td>.7z、.tar、.gz、.zipなどの圧縮形式を使用してファイルをアーカイブします。</td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/archive-files-v2?view=azure-pipelines" target="_blank">
+            ArchiveFiles@2 - アーカイブ ファイル v2 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">PublishBuildArtifacts@1</td>
+          <td>ビルド パイプラインでこのタスクを使用して、ビルド成果物を Azure Pipelines、TFS、またはファイル共有に発行します。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-build-artifacts-v1?view=azure-pipelines" target="_blank">
+            PublishBuildArtifacts@1 - ビルド成果物 v1 タスクを発行する | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+<span class="auto-style2">- task: ArchiveFiles@2</span>
+<span class="auto-style2">  displayName: "Archive files"</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)</span>
+<span class="auto-style2">    includeRootFolder: true</span>
+<span class="auto-style2">    archiveType: 'zip'</span>
+<span class="auto-style2">    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'</span>
+
+<span class="auto-style2">- task: PublishBuildArtifacts@1</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'</span>
+<span class="auto-style2">    artifactName: 'MyBuildOutputs - zip'</span>
+<span class="auto-style2">    publishLocation: Container</span>
+
+<span class="auto-style2">- task: ArchiveFiles@2</span>
+<span class="auto-style2">  displayName: "Archive files"</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    rootFolderOrFile: CounterForm\bin\$(buildConfiguration)</span>
+<span class="auto-style2">    includeRootFolder: true</span>
+<span class="auto-style2">    archiveType: 'zip'</span>
+<span class="auto-style2">    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'</span>
+
+<span class="auto-style2">- task: PublishBuildArtifacts@1</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'</span>
+<span class="auto-style2">    artifactName: 'MyBuildOutputs - zip'</span>
+<span class="auto-style2">    publishLocation: Container</span></pre>
+    <p>&nbsp;</p>
+    <p>Pipelines 実行完了後の Artifacts 画面の様子は以下の通りです。</p>
+    <p>
+    <img alt="Artifacts" class="border" src="Pipelines_cs_netframework/imgE1.jpg" width="800"></p>
     <p>&nbsp;</p>
   </section>
 
@@ -579,7 +740,142 @@ steps:
   
   <section>
     <h2><a name="5._Unit_テストを実行する">5. Unit テストを実行する</a></h2>
+    <p>Unitテストを実行できるようにします。</p>
+    <p>現在の Warnings メッセージを見るとテスト用 dll 
+    のファイル名を変更するだけでもある程度動作しそうですが、任意のファイル名でテストできる方が今後の応用のためにも良いでしょう。そんな方向で進めてみます。</p>
     <p>&nbsp;</p>
+    <p>
+    <img alt="VSTest Warnings" class="border" src="Pipelines_cs_netframework/img14.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>具体的には、<strong>VSTest@2</strong> の <strong>inputs</strong> にて <strong>
+    testAssemblyVer2</strong> という要素でテストアセンブリを具合的に指定することで解決できました。<br>詳細は下記例を参照ください。</p>
+        
+    <table class="border-collapse" border="1" width="1000">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space:nowrap">要素</th>
+          <th>内容</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VSTest@2</td>
+          <td>このタスクを使用して、Visual Studio テスト (VSTest) ランナーを使用して単体テストと機能テスト 
+          (Selenium、Appium、コード化された UI テストなど) を実行します。 Visual Studio テスト 
+          アダプターを持つテスト フレームワークを実行できます。<br>
+          フレームワークの例としては、MSTest、xUnit、NUnit、Chutzpah (QUnit、Mocha、Jasmine を使用する 
+          JavaScript テスト用) などがあります。 </td>
+          <td>
+          <ul>
+            <li>
+            <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/vstest-v2?view=azure-pipelines" target="_blank">
+            VSTest@2 - Visual Studio Test v2 タスク | Microsoft Learn</a></li>
+          </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+<span class="auto-style2">    testAssemblyVer2: |</span>
+<span class="auto-style2">      **\$(BuildConfiguration)\testCounter1.dll</span>
+<span class="auto-style2">      **\$(BuildConfiguration)\testCounter2.dll</span>
+<span class="auto-style2">      **\$(BuildConfiguration)\testCounter3.dll</span>
+<span class="auto-style2">      !**\obj\**</span>
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterForm\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container</pre>
+    <p>&nbsp;</p>
+    <p>以下、Pipelines 実行後の画面です。</p>
+    <p>Warnings が消えました。</p>
+    <p>
+    <img alt="Summary" class="border" src="Pipelines_cs_netframework/img20.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>16個のテストを実行して全てをパスしたことがわかります。</p>
+    <p>VSTest@2 で NUnit, MSTestV1, MSTestV2 を全部実行してくれたことがうれしい感じでした。</p>
+    <p>
+    <img alt="Tests" class="border" src="Pipelines_cs_netframework/img23.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>"Code Coverage" は空でした。</p>
+    <p>
+    <img alt="Code Coverage" class="border" src="Pipelines_cs_netframework/img1A.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>次章ではこの "Code Coverage" を有効化してみたいと思います。</p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>参考</strong></p>
+        <p>VSTest@2 は恐らく "vstest.console.exe" だと思われます。<br>ローカルPC上のコンソールにて下記コマンドにより同様に16個のテストを実行して同じ結果を得らえました。</p>
+        <blockquote>
+          vstest.console.exe ./testCounter*/bin/debug/testCounter*.dll
+        </blockquote>
+      </div>
+    </div>
+
   </section>
 
   <p>&nbsp;</p>
@@ -588,6 +884,206 @@ steps:
   
   <section>
     <h2><a name="6._カバレッジ計測">6. カバレッジ計測</a></h2>
+    <p>コード カバレッジは、ソースがどれくらいテストされているかを確認するのに役立つ指標および手法やツールのことを意味します。</p>
+    <p>本章では、前章で空だった "Code Coverage" タブで確認結果を表示できるようになるようにします。</p>
+    <p>&nbsp;</p>
+    <p>VSTest@2 に「<strong>codeCoverageEnabled: true</strong>」の１行を追加するだけです。</p>
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+  # .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    testAssemblyVer2: |
+      **\$(BuildConfiguration)\testCounter1.dll
+      **\$(BuildConfiguration)\testCounter2.dll
+      **\$(BuildConfiguration)\testCounter3.dll
+      !**\obj\**
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    <span class="auto-style2">codeCoverageEnabled: true</span>
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterForm\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container</pre>
+    <p>&nbsp;</p>
+    <p>Pipelines 実行後の「Code Coverage」画面です。</p>
+    <p>評価対象である CounterDll.dll および関係するアセンブリのコードカバレッジ結果を確認することができるようになりました。</p>
+    <p><a href="Pipelines_cs_netframework/img25.jpg" target="_blank">
+    <img alt="Code Coverage" class="border" src="Pipelines_cs_netframework/img25.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p>ですが不要なモジュール「nunit3.testadapter.dll 
+    」のカバレッジ結果も含んでいます。関係はしているので含まれることは正常な動作と思いますが、これを削除したいと思いました。</p>
+    <p>これを実現する方法を説明したページがありました。</p>
+    <ul>
+      <li>
+      <a href="https://stackoverflow.com/questions/72616684/excluding-files-from-code-coverage-analysis-in-azure-devops-pipeline" target="_blank">
+      unit testing - Excluding files from code coverage analysis in Azure devops 
+      pipeline - Stack Overflow</a></li>
+    </ul>
+    <p>この内容に従って以下の修正を行います。</p>
+    <p>".runsetting" というファイルを新規に作成し、CodeCoverage の対象から除外したいファイルを 
+    &lt;Exclude&gt;～&lt;/Exclude&gt; の部分に記載します。ファイル名は別の名称でも問題ありません。</p>
+    <p>&nbsp;</p>
+    <p>[".runsetting"]</p>
+    <pre class="prettyprint linenums lang-xml" style="width: 800px">
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;RunSettings&gt;
+  &lt;DataCollectionRunSettings&gt;
+    &lt;DataCollectors&gt;
+      &lt;DataCollector friendlyName="Code Coverage"&gt;
+        &lt;Configuration&gt;
+          &lt;CodeCoverage&gt;
+            &lt;ModulePaths&gt;
+              &lt;Exclude&gt;
+                <span class="auto-style2">&lt;ModulePath&gt;nunit3.testadapter.dll&lt;/ModulePath&gt;</span>
+                &lt;!-- Add more ModulePath nodes here. --&gt;
+              &lt;/Exclude&gt;
+            &lt;/ModulePaths&gt;
+          &lt;/CodeCoverage&gt;
+        &lt;/Configuration&gt;
+      &lt;/DataCollector&gt;
+    &lt;/DataCollectors&gt;
+  &lt;/DataCollectionRunSettings&gt;
+&lt;/RunSettings&gt;</pre>
+    <p>&nbsp;</p>
+    <p>そして、VSTest@2 に「<strong>runSettingsFile: '.\.runsettings'</strong>」の１行を追加するだけです。</p>
+    <p>&nbsp;</p>
+    <p>["azure-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    testAssemblyVer2: |
+      **\$(BuildConfiguration)\testCounter1.dll
+      **\$(BuildConfiguration)\testCounter2.dll
+      **\$(BuildConfiguration)\testCounter3.dll
+      !**\obj\**
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    codeCoverageEnabled: true
+    <span class="auto-style2">runSettingsFile: '.\.runsettings'</span>
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterForm\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container</pre>
+    <p>&nbsp;</p>
+    <p>以上の修正により、不要なモジュールの結果を除外することができました。</p>
+    <p><a href="Pipelines_cs_netframework/img33.jpg" target="_blank">
+    <img alt="Code Coverage" class="border" src="Pipelines_cs_netframework/img33.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p>以上の手順により、一応カバレッジを計測して結果を見ることができました。しかし、出力結果は HTML や XML ではなく .coverage 
+    拡張子なので、"Code Coverage" 
+    画面上でソースコードと対比してのカバレッジ確認をすることはできませんでした。結果をダウンロードすることもできますが、カバレッジ計測に対応している 
+    "Visual Studio Enterprise" 以外ではどちらにせよ内容を見られない、ということのようです。</p>
+    <p>ここまで頑張ってみましたが残念でした。</p>
+    <p>&nbsp;</p>
+    <p>なんとか無料環境でコードカバレッジ結果を確認することを目指して、次章では OpenCover 
+    を使ってカバレッジ計測を行う方法について取り組みしてみます。</p>
     <p>&nbsp;</p>
   </section>
 
@@ -597,6 +1093,59 @@ steps:
   
   <section>
     <h2><a name="7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></h2>
+    <p>無料環境でコードカバレッジ結果を確認することを目指して、本章では OpenCover を使ってカバレッジ計測を行う方法について取り組みしてみます。</p>
+    <p>&nbsp;</p>
+    <p>Azure で動作させる前にローカルPCで OpenCover によるカバレッジ計測できるようになってから、次に Azure の 
+    Pipelines でも OpenCover できるようにする、という順序で進めてみます。</p>
+    <p>&nbsp;</p>
+    <h3>7.1. ローカルPCで OpenCover</h3>
+    <p>&nbsp;</p>
+    <p>NuGet を使って下記２つのパッケージを追加します。</p>
+    <ul>
+      <li>OpenCover</li>
+      <li>ReportGenerator</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="NuGet" class="border" src="Pipelines_cs_netframework/img44.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>"<strong>OpenCover.Console.exe</strong>" から "<strong>vstest.console.exe</strong>" 
+    を実行してテストを実行し、カバレッジ計測を行います。</p>
+    <p>そして出力されたカバレッジ計測結果を "<strong>ReportGenerator.exe</strong>" を使って HTML 
+    レポートを作成します。</p>
+    <p>作成したバッチファイル例を記載します。</p>
+    <p>&nbsp;</p>
+    <p>["OpenCover.bat"]</p>
+    <pre class="prettyprint linenums lang-bsh" style="width: 800px; white-space:pre-wrap">
+rem Microsoft Visual Studio 2022 環境設定
+call "C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\Tools\VsDevCmd.bat"
+
+rem OpenCoverの実行
+.\packages\OpenCover.4.7.1221\tools\OpenCover.Console.exe -register:Path64 -target:"vstest.console.exe" -targetargs:"./testCounter*/bin/debug/testCounter*.dll" -targetdir:"." -filter:"+[CounterDll]*" -output:OpenCoverReport.xml
+
+rem OpenCover の出力レポートを整形出力
+.\packages\ReportGenerator.5.2.0\tools\net47\ReportGenerator.exe -reports:".\OpenCoverReport.xml" -reporttypes:html -targetdir:".\CoverageReport"
+
+rem レポートを表示
+.\CoverageReport\index.htm
+
+pause</pre>
+    <p>&nbsp;</p>
+    <p>上記バッチファイルを実行した様子の例です。</p>
+    <p><a href="Pipelines_cs_netframework/img47.jpg" target="_blank">
+    <img alt="OpenCover.bat 実行結果" class="border_with_drop-shadow" src="Pipelines_cs_netframework/img47.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p>出力されたレポート例です。</p>
+    <p><a href="Pipelines_cs_netframework/img49.jpg" target="_blank">
+    <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img49.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p><a href="Pipelines_cs_netframework/img4A1.jpg" target="_blank">
+    <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img4A1.jpg" width="800"></a></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>7.2. "Azure DevOps" で OpenCover</h3>
+    <p>記載途中です。</p>
     <p>&nbsp;</p>
   </section>
 
@@ -653,6 +1202,13 @@ steps:
           <a href="https://tsuna-can.hateblo.jp/entry/2020/07/27/080000" target="_blank">
           Azure Pipelines のビルド結果画面にコードカバレッジの結果を表示する（.NET Core） - ツナ缶雑記 
           (hateblo.jp)</a></li>
+        <li>
+          <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml" target="_blank">
+          事前定義済み変数 - Azure Pipelines | Microsoft Learn</a></li>
+        <li>
+          <a href="https://stackoverflow.com/questions/72616684/excluding-files-from-code-coverage-analysis-in-azure-devops-pipeline" target="_blank">
+          unit testing - Excluding files from code coverage analysis in Azure 
+          devops pipeline - Stack Overflow</a></li>
   	</ul>
   </section>
   
