@@ -65,6 +65,8 @@
       <p><a href="#5._Unit_テストを実行する">5. Unit テストを実行する</a></p>
       <p><a href="#6._カバレッジ計測">6. カバレッジ計測</a></p>
       <p><a href="#7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></p>
+      <p>&nbsp;&nbsp; <a href="#7.1._ローカルPCで_OpenCover">7-1. ローカルPCで_OpenCover</a></p>
+      <p>&nbsp;&nbsp; <a href="#7.2._Azure_DevOps_で_OpenCover">7-2. Azure DevOps で OpenCover</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -207,6 +209,21 @@
     	</tbody>
     	</table>
 	
+      <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>上記「テストフレームワーク」に記載の４つは、必ず <strong>NuGet</strong> で登録を行います。</p>
+        <p><strong>NuGet</strong> 以外の方法で環境に登録すると、後述の Pipelines 
+        で期待する動作をすることが難しくなります。</p>
+      </div>
+    </div>
+
+      <p>&nbsp;</p>
+      <p>
+      <img alt="NuGet パッケージ" class="border" src="Pipelines_cs_netframework/img3.jpg" width="800"></p>
       <p>&nbsp;</p>
       <p>代表的な Unit テストフレームワーク（NUnit、MSTestV1、MSTestV2）についても準備して動作を評価してみます。</p>
       <p>&nbsp;</p>
@@ -1098,27 +1115,144 @@ steps:
     <p>Azure で動作させる前にローカルPCで OpenCover によるカバレッジ計測できるようになってから、次に Azure の 
     Pipelines でも OpenCover できるようにする、という順序で進めてみます。</p>
     <p>&nbsp;</p>
-    <h3>7.1. ローカルPCで OpenCover</h3>
-    <p>&nbsp;</p>
-    <p>NuGet を使って下記２つのパッケージを追加します。</p>
-    <ul>
-      <li>OpenCover</li>
-      <li>ReportGenerator</li>
-    </ul>
-    <p>&nbsp;</p>
-    <p>
-    <img alt="NuGet" class="border" src="Pipelines_cs_netframework/img44.jpg" width="800"></p>
-    <p>&nbsp;</p>
-    <p>"<strong>OpenCover.Console.exe</strong>" から "<strong>vstest.console.exe</strong>" 
-    を実行してテストを実行し、カバレッジ計測を行います。</p>
-    <p>そして出力されたカバレッジ計測結果を "<strong>ReportGenerator.exe</strong>" を使って HTML 
-    レポートを作成します。</p>
-    <p>作成したバッチファイル例を記載します。</p>
-    <p>&nbsp;</p>
-    <p>["OpenCover.bat"]</p>
-    <pre class="prettyprint linenums lang-bsh" style="width: 800px; white-space:pre-wrap">
+    
+    <section>
+      <h3><a name="7.1._ローカルPCで_OpenCover">7.1. ローカルPCで OpenCover</a></h3>
+      <p>&nbsp;</p>
+      <p>NuGet を使って下記２つのパッケージを追加します。</p>
+      <ul>
+        <li>OpenCover</li>
+        <li>ReportGenerator</li>
+      </ul>
+      <p>&nbsp;</p>
+      <p>
+      <img alt="NuGet" class="border" src="Pipelines_cs_netframework/img44.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>現在の環境を更新して以下に記載します。</p>
+      <p>&nbsp;</p>
+	
+    	<p><strong>[環境]</strong></p>
+      
+    	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>Visual Studio 2022,</td>
+    	      <td>Version 17.8.4 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>開発言語:</td>
+    	      <td>c#</td>
+    	      <td>&nbsp;</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td>フレームワーク：</td>
+    	      <td>.NET Framework 4.8</td>
+    	      <td>&nbsp;</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>テスト：</td>
+    	      <td>MSTest.TestAdapter,</td>
+    	      <td>3.1.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>MSTest.TestFramework,</td>
+    	      <td>3.1.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>NUnit,</td>
+    	      <td>4.0.1</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>&nbsp;</td>
+    	      <td>NUnit3TestAdapter,</td>
+    	      <td>4.5.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td><strong></strong></td>
+    	      <td><strong>OpenCover</strong></td>
+    	      <td><strong>4.7.1221</strong></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td><strong></strong></td>
+    	      <td><strong>ReportGenerator</strong></td>
+    	      <td><strong>5.2.0</strong></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Windows11 home,</td>
+    	    <td>23H2</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+    	</table>
+	
+      <p>&nbsp;</p>
+    
+      <p>"<strong>OpenCover.Console.exe</strong>" から "<strong>vstest.console.exe</strong>" 
+      を実行してテストを実行し、カバレッジ計測を行います。</p>
+      <p>そして出力されたカバレッジ計測結果を "<strong>ReportGenerator.exe</strong>" を使って HTML 
+      レポートを作成します。</p>
+      <p>作成したバッチファイル例を記載します。</p>
+      <p>&nbsp;</p>
+      <p>["OpenCover.bat"]</p>
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px; white-space:pre-wrap">
 rem Microsoft Visual Studio 2022 環境設定
-call "C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\Tools\VsDevCmd.bat"
+call "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat"
 
 rem OpenCoverの実行
 .\packages\OpenCover.4.7.1221\tools\OpenCover.Console.exe -register:Path64 -target:"vstest.console.exe" -targetargs:"./testCounter*/bin/debug/testCounter*.dll" -targetdir:"." -filter:"+[CounterDll]*" -output:OpenCoverReport.xml
@@ -1127,25 +1261,35 @@ rem OpenCover の出力レポートを整形出力
 .\packages\ReportGenerator.5.2.0\tools\net47\ReportGenerator.exe -reports:".\OpenCoverReport.xml" -reporttypes:html -targetdir:".\CoverageReport"
 
 rem レポートを表示
-.\CoverageReport\index.htm
+.\CoverageReport\index.html
 
 pause</pre>
+      <p>&nbsp;</p>
+      <p>上記バッチファイルを実行した様子の例です。</p>
+      <p><a href="Pipelines_cs_netframework/img47.jpg" target="_blank">
+      <img alt="OpenCover.bat 実行結果" class="border_with_drop-shadow" src="Pipelines_cs_netframework/img47.jpg" width="800"></a></p>
+      <p>&nbsp;</p>
+      <p>出力されたレポート例です。</p>
+      <p><a href="Pipelines_cs_netframework/img49.jpg" target="_blank">
+      <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img49.jpg" width="800"></a></p>
+      <p>&nbsp;</p>
+      <p><a href="Pipelines_cs_netframework/img4A1.jpg" target="_blank">
+      <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img4A1.jpg" width="800"></a></p>
+      <p>&nbsp;</p>
+      <p>実際の出力例を 
+      <a href="Pipelines_cs_netframework/CoverageReport/index.html" target="_blank">
+      <strong>こちら</strong></a> から閲覧できるようにしてみました。よかったらどうぞ。</p>
+      <p>&nbsp;</p>
+    </section>
+    
     <p>&nbsp;</p>
-    <p>上記バッチファイルを実行した様子の例です。</p>
-    <p><a href="Pipelines_cs_netframework/img47.jpg" target="_blank">
-    <img alt="OpenCover.bat 実行結果" class="border_with_drop-shadow" src="Pipelines_cs_netframework/img47.jpg" width="800"></a></p>
-    <p>&nbsp;</p>
-    <p>出力されたレポート例です。</p>
-    <p><a href="Pipelines_cs_netframework/img49.jpg" target="_blank">
-    <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img49.jpg" width="800"></a></p>
-    <p>&nbsp;</p>
-    <p><a href="Pipelines_cs_netframework/img4A1.jpg" target="_blank">
-    <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img4A1.jpg" width="800"></a></p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h3>7.2. "Azure DevOps" で OpenCover</h3>
-    <p>記載途中です。</p>
+    
+    <section>
+      <h3><a name="7.2._Azure_DevOps_で_OpenCover">7.2. "Azure DevOps" で OpenCover</a></h3>
+      <p>記載途中です。</p>
+      <p>&nbsp;</p>
+    </section>
+    
     <p>&nbsp;</p>
   </section>
 
@@ -1188,35 +1332,37 @@ pause</pre>
   	<h2><a id="参考">参考</a></h2>
   	<ul>
   		<li>
-          <a href="https://aonasuzutsuki.hatenablog.jp/entry/2020/12/03/140531" target="_blank">
-          Azure Pipelines で.Net FrameworkとNUnitのテスト実行とカバレッジ計測してみる - 気まま研究所ブログ 
-          (hatenablog.jp)</a></li>
-          <li>
-          <a href="https://iyemon018.hatenablog.com/entry/2019/03/17/155833" target="_blank">
-          Azure Pipelines で.NET Framework + xUnit のユニットテストの実行と集計方法について - 
-          やる気駆動型エンジニアの備忘録 (hatenablog.com)</a></li>
-          <li>
-          <a href="https://blog.nextscape.net/archives/Date/2019/06/devops-build-1" target="_blank">
-          Azure DevOpsのBuild PipelineでWebAppsにデプロイ（Build編）|ネスケラボ (nextscape.net)</a></li>
-          <li>
-          <a href="https://tsuna-can.hateblo.jp/entry/2020/07/27/080000" target="_blank">
-          Azure Pipelines のビルド結果画面にコードカバレッジの結果を表示する（.NET Core） - ツナ缶雑記 
-          (hateblo.jp)</a></li>
-        <li>
-          <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml" target="_blank">
-          事前定義済み変数 - Azure Pipelines | Microsoft Learn</a></li>
-        <li>
-          <a href="https://stackoverflow.com/questions/72616684/excluding-files-from-code-coverage-analysis-in-azure-devops-pipeline" target="_blank">
-          unit testing - Excluding files from code coverage analysis in Azure 
-          devops pipeline - Stack Overflow</a></li>
+        Azure DevOps Services | Microsoft Azure<br>
+        <a href="https://azure.microsoft.com/ja-jp/products/devops/" target="_blank">
+        https://azure.microsoft.com/ja-jp/products/devops/</a></li>
+      <li>
+        <a href="https://aonasuzutsuki.hatenablog.jp/entry/2020/12/03/140531" target="_blank">
+        Azure Pipelines で.Net FrameworkとNUnitのテスト実行とカバレッジ計測してみる - 気まま研究所ブログ 
+        (hatenablog.jp)</a></li>
+      <li>
+        <a href="https://iyemon018.hatenablog.com/entry/2019/03/17/155833" target="_blank">
+        Azure Pipelines で.NET Framework + xUnit のユニットテストの実行と集計方法について - 
+        やる気駆動型エンジニアの備忘録 (hatenablog.com)</a></li>
+      <li>
+        <a href="https://blog.nextscape.net/archives/Date/2019/06/devops-build-1" target="_blank">
+        Azure DevOpsのBuild PipelineでWebAppsにデプロイ（Build編）|ネスケラボ (nextscape.net)</a></li>
+      <li>
+        <a href="https://tsuna-can.hateblo.jp/entry/2020/07/27/080000" target="_blank">
+        Azure Pipelines のビルド結果画面にコードカバレッジの結果を表示する（.NET Core） - ツナ缶雑記 
+        (hateblo.jp)</a></li>
+      <li>
+        <a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml" target="_blank">
+        事前定義済み変数 - Azure Pipelines | Microsoft Learn</a></li>
+      <li>
+        <a href="https://stackoverflow.com/questions/72616684/excluding-files-from-code-coverage-analysis-in-azure-devops-pipeline" target="_blank">
+        unit testing - Excluding files from code coverage analysis in Azure 
+        devops pipeline - Stack Overflow</a></li>
   	</ul>
   </section>
   
   <p>&nbsp;</p>
-  
   <hr>
-  
-  <p style="margin-bottom:5px">&nbsp;</p>
+  <p>&nbsp;</p>
   
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
