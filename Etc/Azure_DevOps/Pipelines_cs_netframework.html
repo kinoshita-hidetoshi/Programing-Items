@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>[Azure DevOps] Pipelines で c#(.NET Framework) を使ってみる | Programming Items</title>
+  <title>[Azure DevOps] c#(.NET Framework) を Pipelines する | Programming Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -49,7 +49,7 @@
 
 <body onload="prettyPrint();">
   
-  <h1>[Azure DevOps] Pipelines で c#(.NET Framework) を使ってみる</h1>
+  <h1>[Azure DevOps] c#(.NET Framework) を Pipelines する </h1>
 
   <p> 今更ながら Azure DevOps 環境で c# (.NET Framework) アプリを CI/CD 
   してみたいと思いまして、トライした内容をこちらで記載してみたいと思います。</p>
@@ -1097,7 +1097,7 @@ steps:
     拡張子なので、"Code Coverage" 
     画面上でソースコードと対比してのカバレッジ確認をすることはできませんでした。結果をダウンロードすることもできますが、カバレッジ計測に対応している 
     "Visual Studio Enterprise" 以外ではどちらにせよ内容を見られない、ということのようです。</p>
-    <p>ここまで頑張ってみましたが残念でした。</p>
+    <p>ここまで頑張ってみましたが、ソースコードと対比してカバレッジを確認できないのは残念でした。</p>
     <p>&nbsp;</p>
     <p>なんとか無料環境でコードカバレッジ結果を確認することを目指して、次章では OpenCover 
     を使ってカバレッジ計測を行う方法について取り組みしてみます。</p>
@@ -1111,15 +1111,13 @@ steps:
   <section>
     <h2><a name="7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></h2>
     <p>無料環境でコードカバレッジ結果を確認することを目指して、本章では OpenCover を使ってカバレッジ計測を行う方法について取り組みしてみます。</p>
-    <p>&nbsp;</p>
-    <p>Azure で動作させる前にローカルPCで OpenCover によるカバレッジ計測できるようになってから、次に Azure の 
-    Pipelines でも OpenCover できるようにする、という順序で進めてみます。</p>
+    <p>ローカルPCで OpenCover によるカバレッジ計測をできるようになってから、次に Azure の 
+    Pipelines で OpenCover できるようにする、という順序で進めてみます。</p>
     <p>&nbsp;</p>
     
     <section>
       <h3><a name="7.1._ローカルPCで_OpenCover">7.1. ローカルPCで OpenCover</a></h3>
-      <p>&nbsp;</p>
-      <p>NuGet を使って下記２つのパッケージを追加します。</p>
+      <p>最初に NuGet を使って下記２つのパッケージを追加します。</p>
       <ul>
         <li>OpenCover</li>
         <li>ReportGenerator</li>
