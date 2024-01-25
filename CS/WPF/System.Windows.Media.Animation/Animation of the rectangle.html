@@ -89,8 +89,8 @@
 にする］をクリックすると、Rectangleの幅を１秒間のアニメーションで100にします。<br>- 
 アニメーションに使用するイージング関数としてここでは&quot;PowerEase&quot;を使用します。</p>
 <p> &nbsp;</p>
-<p> <img src="Animation%20of%20the%20rectangle/img11.jpg">
-<img alt="" src="Animation%20of%20the%20rectangle/img14.jpg"><br>図： (左)起動時および 
+<p> <img alt="アニメーション前" src="Animation%20of%20the%20rectangle/img11.jpg">
+<img alt="アニメーション後" src="Animation%20of%20the%20rectangle/img14.jpg"><br>図： (左)起動時および 
 [幅を 100 にする] ボタン押下時、 (右) [幅を 200 にする] ボタン押下時</p>
 <p> &nbsp;</p>
 <table style="border-style: solid; border-color: #808080; width: 300px; clip: rect(auto, auto, auto, auto);">
@@ -161,18 +161,18 @@
 にするストーリーボード (x:Key=&quot;ChangeToWidth200&quot;)</p>
 <p> &nbsp;</p>
 <p> 
-<img alt="" src="Animation%20of%20the%20rectangle/img1A.jpg" width="1000"></p>
+<img alt="手順２" src="Animation%20of%20the%20rectangle/img1A.jpg" width="1000"></p>
 <p> &nbsp;</p>
 <p> <span class="auto-style8">手順３：</span><br>・作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>&nbsp; 
 下記例では EasingFunction として「Power InOut」を設定しています。</p>
 <p> 
-<img alt="" src="Animation%20of%20the%20rectangle/img1B.jpg" width="1000"></p>
+<img alt="手順３" src="Animation%20of%20the%20rectangle/img1B.jpg" width="1000"></p>
 <p> &nbsp;</p>
 <p> <span class="auto-style8">手順４：</span><br>・2つのボタンにビヘイビアーから &quot;ControlStoryboardAction&quot; をドラッグで設定します。 <br>・各 
 &quot;ControlStoryboardAction&quot; のプロパティ設定にて以下を設定します。<br>&nbsp; (1) EventName: ”Click” 
 を選択します。<br>&nbsp; (2) Storyboard: ボタンクリック時に期待する動作となるストーリーボードを選択します。</p>
 <p> 
-<img alt="" src="Animation%20of%20the%20rectangle/img1C.jpg" width="1000"></p>
+<img alt="手順４" src="Animation%20of%20the%20rectangle/img1C.jpg" width="1000"></p>
 <p>&nbsp;</p>
 <p>これで完成です。コードビハインドによる実装はありません。<br>以上の手順で作成したXAMLを以下に示します。</p>
 [&quot;MainWindow.xaml&quot;]
@@ -304,7 +304,7 @@ Micorosoft.Xaml.Behaviors.Wpf</a> が Github に登録されています。今�
   <p>Step1:</p>
 	<p>新しいプロジェクトを「WPF アプリ（.NET Framework）」で新規作成します。</p>
   <p>
-  <img alt="" class="border_with_drop-shadow" src="Animation%20of%20the%20rectangle/img1F.jpg" width="800"></p>
+  <img alt="新しいプロジェクトを「WPF アプリ（.NET Framework）」で新規作成" class="border_with_drop-shadow" src="Animation%20of%20the%20rectangle/img1F.jpg" width="800"></p>
   <p>&nbsp;</p>
   <p>Step2:</p>
   <p>
@@ -326,14 +326,14 @@ Micorosoft.Xaml.Behaviors.Wpf</a> が Github に登録されています。今�
   <p> &nbsp;</p>
   <p> 作成した２つのストーリーボードについて、適用するイージング関数を設定します。下記例では EasingFunction として「Power InOut」を設定しています。 </p>
   <p> 
-  <img alt="" src="Animation%20of%20the%20rectangle/img18.jpg" width="800"></p>
+  <img alt="イージング関数を設定" src="Animation%20of%20the%20rectangle/img18.jpg" width="800"></p>
   <p>&nbsp;</p>
   <p>Step5:</p>
   <p>・2つのボタンにビヘイビアーから "ControlStoryboardAction" をドラッグで設定します。</p>
   <p>・各 "ControlStoryboardAction" のプロパティ設定にて以下を設定します。</p>
   <p>&nbsp; (1) EventName: ”Click” を選択します。</p>
   <p>&nbsp; (2) Storyboard: ボタンクリック時に期待する動作となるストーリーボードを選択します。 </p>
-  <p><img alt="" src="Animation%20of%20the%20rectangle/img1B2.jpg" width="800"></p>
+  <p><img alt="ControlStoryboardAction プロパティを設定" src="Animation%20of%20the%20rectangle/img1B2.jpg" width="800"></p>
   <p>&nbsp;</p>
   <p>これで完成です。コードビハインドによる実装はありません。以上の手順で作成したXAMLを以下に示します。</p>
   <p>namespace の設定部分 <span class="cpp-source">
@@ -509,7 +509,7 @@ namespace MoveRectangle_02
 <p><span class="auto-style8">手順２： ボタンクリック時のイベントアクションを定義</span><br class="auto-style8">
 下記２つのボタンをクリックしたときのアクションを定義します。<br>- btnToWidth100<br>- btnToWidth200</p>
 <p>
-<img alt="" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
+<img alt="イベントアクションを定義" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
 <p>&nbsp;</p>
 <p>この状態でのコードの状況を以下に示します。</p>
 <p>[&quot;MainWindow.xaml.cs&quot;]</p>
@@ -758,7 +758,7 @@ Rectangle の幅・高さを 200 にするストーリーボード</p>
 <p>&nbsp;</p>
 <p> <span class="auto-style8">手順５：</span><br>作成した２つのストーリーボードについて、適用するイージング関数を設定します。<br>Width, Height をそれぞれ設定しても良いですし、２つをまとめて設定することもできます。<br>まとめて設定する場合は、[Shift]を押しながらマウスでクリックすれば複数のプロパティを選択可能です。<br>下記例では EasingFunction として「Power InOut」を、Power(次数)として 2 を、それぞれ設定しています。</p>
 <p>
-<img alt="" height="538" src="Animation%20of%20the%20rectangle/img28.jpg" width="1000"></p>
+<img alt="イージング関数を設定" height="538" src="Animation%20of%20the%20rectangle/img28.jpg" width="1000"></p>
 <p>以上で完成です。わかってしまえばとても簡単です。</p>
 <p>&nbsp;</p>
 <p>出来上がった XAML コードは以下の通りです。<br>１つの Storyboard に対して２つの 
@@ -864,7 +864,7 @@ DoubleAnimationUsingKeyFrames が登録されていることがわかります�
 <p><span class="auto-style8">手順２： ボタンクリック時のイベントアクションを定義</span><br class="auto-style8">
 下記２つのボタンをクリックしたときのアクションを定義します。<br>- btnToWidth100<br>- btnToWidth200</p>
 <p>
-<img alt="" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
+<img alt="イベントアクションを定義" src="Animation%20of%20the%20rectangle/img36.jpg" width="1000"></p>
 <p>&nbsp;</p>
 <p>この状態でのコードの状況を以下に示します。</p>
 <p>[&quot;MainWindow.xaml.cs&quot;]</p>
@@ -1196,7 +1196,7 @@ namespace MoveRectangle_07
 </ul>
 <p>&nbsp;</p>
 <p>
-<img alt="" src="Animation%20of%20the%20rectangle/img2.jpg"></p>
+<img alt="Rectangle の色を変える、画面" src="Animation%20of%20the%20rectangle/img2.jpg"></p>
 
 <video controls muted autoplay="y" loop="y" src="Animation of the rectangle/ChangeRectangle_Color.mp4">
 
