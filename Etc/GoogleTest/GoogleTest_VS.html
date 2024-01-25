@@ -24,197 +24,204 @@
 
 <body onload="prettyPrint();">
 	
-<h1>Google Test の使い方 (Visual Studio)</h1>
+  <h1>Google Test の使い方 (Visual Studio)</h1>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
-<p> &nbsp;</p>
+  <p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
+  <p> ［概要を記載します］</p>
+  <p> &nbsp;</p>
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
+    <tr>
+      <td>
+        <nav>
+          <h2> 目次</h2>
+          <p>
+          1. ***<br>
+          2. ***<br>
+          3. ***<br><a href="#参考">参考</a><br>
+          </p>
+        </nav>
+      </td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<section>
-	<h2> 1. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <section>
+    <h2> 1. ***</h2>
+    <h4>[概要]</h4>
+    <p> &nbsp;</p>
+    
+    <h4>[環境]</h4>
+    <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>コンパイラ :</td>
+          <td>Visual Studio 2019 pro.,</td>
+          <td>Version 16.6.0 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>OS :</td>
+        <td>Windows10 home,</td>
+        <td>Version 1909 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p>&nbsp;</p>
+    <p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+    <table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+      <tr>
+        <td>
+          <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
+            <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+          </video>
+        </td>
+      </tr>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    
+    <p>[プログラムソース &quot;***.cpp&quot;]</p>
+    <pre class="prettyprint linenums">
+    </pre>
+  </section>
+    
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<br>
-<br>
+  <section>
+    <h2> 2. ***</h2>
+    <h4>[概要]</h4>
+    <p> &nbsp;</p>
+    
+    <h4>[環境]</h4>
+    <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>コンパイラ :</td>
+        <td>Visual Studio 2019 pro.,</td>
+        <td>Version 16.6.0 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>OS :</td>
+        <td>Windows10 home,</td>
+        <td>Version 1909 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
+    <table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
+      <tr>
+        <td>
+          <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
+            <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
+          </video>
+        </td>
+      </tr>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p>[プログラムソース &quot;***.cpp&quot;]</p>
+    <pre class="prettyprint linenums">
+    </pre>
+  </section>
+    
+  <br>
+  <br>
 
-<section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
-</section>
+  <section>
+    <h2>サンプルプログラム</h2>
+    <p>サンプルプログラム ダウンロード</p>
+  </section>
 
-<br>
-<br>
+  <br>
+  <br>
 
-<section>
-	<h2><a name="参考">参考</a></h2>
-	<ul>
-		<li><a href="http://opencv.jp/googletestdocs/index.html">Google Test — 
-        Google Test ドキュメント日本語訳 (opencv.jp)</a></li>
-        <li>
-        <a href="https://docs.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2019#add-a-google-test-project-in-visual-studio-2019" target="_blank">
-        C++ 用の Google Test を使用する方法 - Visual Studio | Microsoft Docs</a></li>
-        <li>
+  <section>
+    <h2><a name="参考">参考</a></h2>
+    <ul>
+      <li><a href="http://opencv.jp/googletestdocs/index.html">Google Test — 
+          Google Test ドキュメント日本語訳 (opencv.jp)</a></li>
+      <li>
+        C++ 用の Google Test で単体テストを作成して実行する - Visual Studio 2022 (Windows) | 
+        Microsoft Learn<br>
+        <a href="https://learn.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2022" target="_blank">
+        https://learn.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2022</a></li>
+      <li>
+        C++ 用の Google Test で単体テストを作成して実行する - Visual Studio 2019 (Windows) | 
+        Microsoft Learn<br>
+        <a href="https://learn.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2019" target="_blank">
+        https://learn.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2019</a></li>
+      <li>
         <a href="https://qiita.com/km-san/items/6390bd64442f7d18c199" target="_blank">
         Visual StudioでC++のGoogle Testを使ってみた - Qiita</a></li>
-	</ul>
-<p>&nbsp;</p>
-</section>
+    </ul>
+    <p>&nbsp;</p>
+  </section>
 
-<hr>
+  <hr>
 
-<p style="margin-bottom:5px">&nbsp;</p>
+  <p style="margin-bottom:5px">&nbsp;</p>
 
-<section>
-	<h2 style="margin-bottom:5px">記載</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2021-08-12</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">なんか変えた。<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date"></td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">こんなことも変えた。</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2021-01-02</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
+  <section>
+    <h2 style="margin-bottom:5px">記載</h2>
+    <table>
+      <tr>
+        <td class="td_history_date">2021-08-12</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">なんか変えた。<br></td>
+      </tr>
+      <tr>
+        <td class="td_history_date"></td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">こんなことも変えた。</td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2021-01-02</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">新規作成 </td>
+      </tr>
+    </table>
+  </section>
 
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
-</footer>
+  <footer>
+    <p><small>&copy; copyright 2021 木下英俊</small></p>
+  </footer>
 
 </body>
 </html>

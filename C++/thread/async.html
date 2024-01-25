@@ -46,8 +46,7 @@
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-std::async (c++11)</h1>
+<h1 class="auto-style7">std::async (c++11)</h1>
 <p> c++11 でスレッド関連のライブラリが大幅に拡張されました。 <a href="thread.html">std::thread</a> と並んで代表的な std::async について記載します。<br>
 std::thread は promise, future 
 を併用しないとスレッドから呼び出し元へ値を戻すことができません。また例外が発生した場合を伝えることもできません。<br>std::async 
@@ -56,6 +55,7 @@ std::thread は promise, future
 <p> &quot;Effective Modern C++&quot; の項目35 にも「スレッドベースよりもタスクベースプログラミングを優先する」って書いてありますしね。<br>
 これの意味は「std::thread よりも std::async を使いましょう」という内容です。</p>
 <p> &nbsp;</p>
+
 <div class="mokuji">
   <nav>
 	<h2>目次</h2>
@@ -70,44 +70,47 @@ std::thread は promise, future
 	<p><a href="#参考">参考</a></p>
   </nav>
 </div>
-<p> &nbsp;</p>
+
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <section>
-<h2> <a name="1._シンプルな例">1. シンプルな例</a></h2>
-<p> [概要]</p>
-<p> まずはシンプルなサンプルを作ってみます。<br>少し処理の重たい関数 worker() を準備して、これを std::async で実行します。</p>
-<p>[評価環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2017 pro.,</td>
-		<td>Version 15.4.2 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS :</td>
-		<td>Windows10 home,</td>
-		<td>Version 1803 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-[プログラムソース &quot;async.cpp&quot;]<br>
-<pre class="prettyprint linenums lang-cpp"><code>#include &lt;stdio.h&gt;
+  <h2> <a name="1._シンプルな例">1. シンプルな例</a></h2>
+  <p> [概要]</p>
+  <p> まずはシンプルなサンプルを作ってみます。<br>少し処理の重たい関数 worker() を準備して、これを std::async で実行します。</p>
+  <p>[評価環境]</p>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>コンパイラ :</td>
+      <td>Visual Studio 2017 pro.,</td>
+      <td>Version 15.4.2 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>OS :</td>
+      <td>Windows10 home,</td>
+      <td>Version 1803 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+  </table>
+  <p>&nbsp;</p>
+  [プログラムソース &quot;async.cpp&quot;]<br>
+
+  <pre class="prettyprint linenums lang-cpp"><code>
+#include &lt;stdio.h&gt;
 #include &lt;tchar.h&gt;
 #include &lt;iostream&gt;
 #include &lt;vector&gt;    // std::vector
@@ -187,17 +190,14 @@ int main()
 	<li>同期実行であることが明確な場合は、状態を確認する必要ありません。<br>f.get() を実行するまで処理自体が行われません。</li>
 	<li>どちらで実行しているかがわからない場合、両方を考慮した実装を行う必要があります。</li>
 </ul>
+
 <br>
-	
 <br>
-<h4>
-サンプルプログラム</h4>
-<p>
-サンプルプログラム ダウンロード</p>
-<p>
-&nbsp;</p>
-<h4>
-参考URL</h4>
+
+<h4>サンプルプログラム</h4>
+<p>サンプルプログラム ダウンロード</p>
+<p>&nbsp;</p>
+<h4>参考URL</h4>
 <ul>
 	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
 	http://ja.cppreference.com/w/cpp/thread/async</a></li>
@@ -209,41 +209,44 @@ int main()
 <p>&nbsp;</p>
 
 <section>
-<h2><a name="2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a></h2>
-<p>一時停止状態のシステムスレッドを作成してみます。<br>
-すなわち、スレッドで何かを処理する時が来たらすぐに開始できるようにあらかじめスレッドを作成しておき、作成のスレッドのオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらのせえっていを行う必要があるため一時停止状態のスレッドを作成する場合もあるでしょう。<br>
-スレッドを一度だけ一時停止状態にしたい場合、void future を用いるのが妥当な選択です。この技法の要点を以下に示します。</p>
-<p>[評価環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.3.10 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<p>[プログラムソース： &quot;test_async_02.cpp&quot;]</p>
-<pre class="prettyprint linenums lang-cpp"><code>#include &lt;iostream&gt;
+  <h2><a name="2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a></h2>
+  <p>一時停止状態のシステムスレッドを作成してみます。<br>
+  すなわち、スレッドで何かを処理する時が来たらすぐに開始できるようにあらかじめスレッドを作成しておき、作成のスレッドのオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらのせえっていを行う必要があるため一時停止状態のスレッドを作成する場合もあるでしょう。<br>
+  スレッドを一度だけ一時停止状態にしたい場合、void future を用いるのが妥当な選択です。この技法の要点を以下に示します。</p>
+  <p>[評価環境]</p>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>コンパイラ :</td>
+      <td>Visual Studio 2019 pro.,</td>
+      <td>Version 16.3.10 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>OS: </td>
+      <td>Windows10 home,</td>
+      <td>Version 1909 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+  </table>
+
+  <p>&nbsp;</p>
+
+  <p>[プログラムソース： &quot;test_async_02.cpp&quot;]</p>
+  <pre class="prettyprint linenums lang-cpp">
+#include &lt;iostream&gt;
 #include &lt;future&gt;		// std::async
 
 using namespace std;
@@ -264,79 +267,78 @@ int main()
     int wait_count = 5;
 
     future&lt;int&gt; f = async(launch::async, [=,&amp;p]
-        {
-            <span class="auto-style8">p.get_future().wait();</span>                          // p.set_value() の実行まで待機
-            return react(wait_count);                       // react() を実行
-        } );
+    {
+      <span class="auto-style8">p.get_future().wait();</span>                                // p.set_value() の実行まで待機
+      return react(wait_count);                             // react() を実行
+    });
 
     this_thread::sleep_for(chrono::seconds(1));             // 何か・・・をしてから、
     <span class="auto-style8">p.set_value();</span>                                          // スレッドを起動します。
 
     cout &lt;&lt; &quot;f.get() = &quot; &lt;&lt; f.get() &lt;&lt; endl;                // react() の完了を待って戻り値を取得
     cout &lt;&lt; &quot;Confirmed termination of react().&quot; &lt;&lt; endl;
-}</code></pre>
-<p>&nbsp;</p>
-<p>[実行結果]</p>
-<p>
-<img alt="実行結果" src="async/img5.gif"></p>
-<p>
-&nbsp;</p>
-<h4>
-参考</h4>
-<ul>
-	<li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
-	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
-	http://ja.cppreference.com/w/cpp/thread/async</a></li>
-</ul>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+}</pre>
+
+  <p>&nbsp;</p>
+  <p>[実行結果]</p>
+  <p><img alt="実行結果" src="async/img5.gif"></p>
+  <p>&nbsp;</p>
+  <h4>参考</h4>
+  <ul>
+    <li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
+    <li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
+    http://ja.cppreference.com/w/cpp/thread/async</a></li>
+  </ul>
+
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
 
 <section>
-<h2>
-<a name="3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
-<p>[概要]</p>
-<p> std::thread だと join または detatch が必須です。<br>std::async の場合は detatch 
-に相当する機能がないけれど、終了確認せずに worker スレッドを放置したらどうなるのでしょうか。<br>確認してみました。</p>
-<p> どうやら特に考慮は不要みたいです。<br>main タスクが終了しても async タスクの動作は継続しました。<br>逆に main タスクが終了したにもかかわらず async タスク側が残ってしまう場合があるので、必要に応じて 
-main タスク終了時に別スレッドを適切に終了するという処理が必要そうです。</p>
-<p> &nbsp;</p>
+  <h2><a name="3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
+  <p>[概要]</p>
+  <p> std::thread だと join または detatch が必須です。<br>std::async の場合は detatch 
+  に相当する機能がないけれど、終了確認せずに worker スレッドを放置したらどうなるのでしょうか。<br>確認してみました。</p>
+  <p> どうやら特に考慮は不要みたいです。<br>main タスクが終了しても async タスクの動作は継続しました。<br>逆に main タスクが終了したにもかかわらず async タスク側が残ってしまう場合があるので、必要に応じて 
+  main タスク終了時に別スレッドを適切に終了するという処理が必要そうです。</p>
+  <p> &nbsp;</p>
 
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
+  <p>[環境]</p>
+  <table>
+  <tbody>
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>コンパイラ :</td>
+      <td>Visual Studio 2019 pro.,</td>
+      <td>Version 16.6.0 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+    
+    <tr>
+      <td>OS: </td>
+      <td>Windows10 home,</td>
+      <td>Version 1909 </td>
+    </tr>
+    
+    <tr>
+      <td class="td_separate" colspan="3"></td>
+    </tr>
+  </tbody>
+  </table>
 
-<p> &nbsp;</p>
+  <p> &nbsp;</p>
 
-<p>&quot;test_async_03.cpp&quot;]</p>
-<pre class="prettyprint linenums lang-cpp"><code>#include &lt;iostream&gt;
+  <p>&quot;test_async_03.cpp&quot;]</p>
+  <pre class="prettyprint linenums lang-cpp"><code>
+#include &lt;iostream&gt;
 #include &lt;vector&gt;   // vector
 #include &lt;chrono&gt;   // chrono
 #include &lt;thread&gt;   // this_thread
@@ -378,53 +380,52 @@ int main()
 
     return EXIT_SUCCESS;
 }</code>
-</pre>
-	
-<p>&nbsp;</p>
-<p>[実行結果]</p>
-<p><img alt="実行結果" src="async/imgA.jpg"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  </pre>
+    
+  <p>&nbsp;</p>
+  <p>[実行結果]</p>
+  <p><img alt="実行結果" src="async/imgA.jpg"></p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-MIT License<br><br>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+    <tr>
+      <td>
+  MIT License<br><br>
 
-    Copyright (c) 2017-2022  Kinoshita Hidetoshi<br><br>
+      Copyright (c) 2017-2022  Kinoshita Hidetoshi<br><br>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:<br><br>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.<br><br>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+      </td>
+    </tr>
+  </table>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
 </section>
 
-<p>
-&nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -434,10 +435,9 @@ SOFTWARE.
 	</ul>
 </section>
 
-<p>
-&nbsp;</p>
+<p>&nbsp;</p>
 <hr>
-<p> &nbsp;</p>
+<p>&nbsp;</p>
 
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
@@ -472,7 +472,7 @@ SOFTWARE.
 <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
 </section>
 
-<p> &nbsp;</p>
+<p>&nbsp;</p>
 
 <footer>
   <p><small>© copyright 2017-2022 木下英俊</small></p>

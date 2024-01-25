@@ -43,6 +43,10 @@
   .auto-style2 {
     background-color: #505000;
   }
+  .auto-style3 {
+    white-space: nowrap;
+    border-width: 1px;
+  }
   </style>
 
 </head>
@@ -65,7 +69,7 @@
       <p><a href="#5._Unit_テストを実行する">5. Unit テストを実行する</a></p>
       <p><a href="#6._カバレッジ計測">6. カバレッジ計測</a></p>
       <p><a href="#7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></p>
-      <p>&nbsp;&nbsp; <a href="#7.1._ローカルPCで_OpenCover">7-1. ローカルPCで_OpenCover</a></p>
+      <p>&nbsp;&nbsp; <a href="#7.1._ローカルPCで_OpenCover">7-1. ローカルPCで OpenCover</a></p>
       <p>&nbsp;&nbsp; <a href="#7.2._Azure_DevOps_で_OpenCover">7-2. Azure DevOps で OpenCover</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
@@ -405,6 +409,7 @@ steps:
             Azure Pipelines 用の Microsoft ホステッド エージェント - Azure Pipelines | 
             Microsoft Learn</a></li>
           </ul>
+          <p>今回の例は VS2022 を使っているので 'windows-2022' を指定してもOKです。</p>
           </td>
         </tr>
         <tr>
@@ -1263,6 +1268,99 @@ rem レポートを表示
 
 pause</pre>
       <p>&nbsp;</p>
+        
+      <table class="border-collapse" border="1" width="800">
+        <caption>[Table: OpenCover パラメータについて説明]</caption>
+        <thead class="standard_table">
+          <tr>
+            <th style="white-space:nowrap">パラメータ</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>-target</td>
+            <td>OpenCover が実行するアプリケーションを指定します。今回は "VSTest.console.exe" を指定しています。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px">-register</td>
+            <td style="height: 29px">"Path64" または "Path32" を指定します。この指定に従って 
+            "OpenCover.Console.exe" と同じディレクトリにある {x86/x64}\OpenCover.Profile.dll 
+            を使い分けるようです。 </td>
+          </tr>
+          <tr>
+            <td>-targetargs</td>
+            <td>"-target" で指定したアプリケーションに対する引数を指定します。<br>上記例では "VSTest.console.exe" 
+            の引数としてテストプロジェクトの dll ファイルをワイルドカードを使って指定しています。</td>
+          </tr>
+          <tr>
+            <td>-targetdir</td>
+            <td>テストプロジェクトの dll があるディレクトリを指定します。ここで指定した場所からの相対パスで扱われる、と思われるので本例では 
+            "." を指定してみました。</td>
+          </tr>
+          <tr>
+            <td class="auto-style3">-returntargetcode</td>
+            <td>これを指定すると、"-target" で指定したアプリケーションからの戻り値を OpenCover の戻り値として扱います。</td>
+          </tr>
+          <tr>
+            <td>-output</td>
+            <td>カバレッジ情報を出力する XML ファイル名を指定します。上記例では "OpenCoverReport.xml" 
+            というファイル名を指定しています。</td>
+          </tr>
+          <tr>
+            <td>-filter</td>
+            <td>カバレッジ計測する名前空間を指定します。<br>本例では "CounterDll" という名前空間を対象として指定しています。<br>
+            書式については 
+            <a href="https://github.com/OpenCover/opencover/wiki/Usage#understanding-filters" target="_blank">
+            OpenCover の資料</a> や様々なインターネット記事を参照してください。</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <p>&nbsp;</p>
+        
+      <table class="border-collapse" border="1" width="800">
+        <caption>[Table: reportgenerator 引数について]</caption>
+        <thead class="standard_table">
+          <tr>
+            <th style="white-space:nowrap">パラメータ</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>-reports</td>
+            <td>OpenCover が出力した解析結果（XMLファイル）を指定します。 <br>本ページ例では 
+            ".\OpenCoverReport.xml" を指定します。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px">-targetdir</td>
+            <td style="height: 29px">結果を出力するディレクトリを指定します。 <br>本ページ例では 
+            ".\CoverageReport" を指定します。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px">-reporttypes</td>
+            <td style="height: 29px">出力するレポートタイプを指定します。複数指定することが可能です。<br>本ページ例では 
+            "html" を指定します。<br>指定できるタイプはとてもたくさんあります。<a href="https://reportgenerator.io/usage" target="_blank">こちら</a> 
+            を参照。</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <p>&nbsp;</p>
+      <p>ReportGenerator に関する参照ページ：</p>
+      <ul>
+        <li>
+        <a href="https://marketplace.visualstudio.com/items?itemName=Palmmedia.reportgenerator" target="_blank">
+        ReportGenerator - Visual Studio Marketplace</a></li>
+        <li><a href="https://reportgenerator.io/usage" target="_blank">Usage 
+        (reportgenerator.io)</a></li>
+        <li>
+        <a href="https://github.com/danielpalme/ReportGenerator/#usage--command-line-parameters" target="_blank">
+        Usage: command line parameters</a></li>
+      </ul>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
       <p>上記バッチファイルを実行した様子の例です。</p>
       <p><a href="Pipelines_cs_netframework/img47.jpg" target="_blank">
       <img alt="OpenCover.bat 実行結果" class="border_with_drop-shadow" src="Pipelines_cs_netframework/img47.jpg" width="800"></a></p>
@@ -1271,6 +1369,7 @@ pause</pre>
       <p><a href="Pipelines_cs_netframework/img49.jpg" target="_blank">
       <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img49.jpg" width="800"></a></p>
       <p>&nbsp;</p>
+      <p>上図のクラス名（赤字部分）をクリックすると、下図のようなカバレッジ詳細を閲覧することができます。</p>
       <p><a href="Pipelines_cs_netframework/img4A1.jpg" target="_blank">
       <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img4A1.jpg" width="800"></a></p>
       <p>&nbsp;</p>
@@ -1284,7 +1383,442 @@ pause</pre>
     
     <section>
       <h3><a name="7.2._Azure_DevOps_で_OpenCover">7.2. "Azure DevOps" で OpenCover</a></h3>
-      <p>記載途中です。</p>
+      <p>ローカルPCで確認した手順を参考に、今度は "Azure DevOps" の Pipelines 
+      上でコードカバレッジを表示できるようにします。</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 1</strong></p>
+      <p>VSTest@2 をコメントアウト（または削除）します。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml" (修正箇所のみの略記)]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 800px">
+・・・
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+#<span class="auto-style2"> - task: VSTest@2</span>
+<span class="auto-style2">#   inputs:</span>
+<span class="auto-style2">#     testAssemblyVer2: |</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter1.dll</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter2.dll</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter3.dll</span>
+<span class="auto-style2">#       !**\obj\**</span>
+<span class="auto-style2">#     platform: '$(buildPlatform)'</span>
+<span class="auto-style2">#     configuration: '$(buildConfiguration)'</span>
+<span class="auto-style2">#     codeCoverageEnabled: true</span>
+<span class="auto-style2">#     runSettingsFile: '.\.runsettings'</span>
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+
+・・・</pre>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 2</strong></p>
+      <p>"VSTest &amp; OpenCover" の処理を追加します。"<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/cmd-line-v2?view=azure-pipelines" target="_blank">CmdLine@2</a>" 
+      というタスクを使って実現します。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml"]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 1200px">
+・・・
+
+<span class="auto-style2">- task: CmdLine@2</span>
+<span class="auto-style2">  displayName: "VSTest &amp; OpenCover"</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    script: &gt;</span>
+<span class="auto-style2">      packages\OpenCover.4.7.1221\tools\OpenCover.Console.exe</span>
+<span class="auto-style2">      -target:"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"</span>
+<span class="auto-style2">      -targetargs:".\testCounter*\bin\$(BuildConfiguration)\testCounter*.dll /logger:trx;LogFileName=TestResult.xml"</span>
+<span class="auto-style2">      -targetdir:"."</span>
+<span class="auto-style2">      -register:Path64</span>
+<span class="auto-style2">      -filter:"+[CounterDll]*"</span>
+<span class="auto-style2">      -output:"OpenCoverReport.xml"</span>
+<span class="auto-style2">      -returntargetcode</span>
+
+・・・</pre>
+      <p>&nbsp;</p>
+        
+      <table class="border-collapse" border="1" width="800">
+        <caption>[Table: OpenCover 引数について]</caption>
+        <thead class="standard_table">
+          <tr>
+            <th style="white-space:nowrap">属性</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>-target</td>
+            <td>OpenCover が実行するアプリケーションを指定します。今回は "VSTest.console.exe" を指定しています。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px">-register</td>
+            <td style="height: 29px">"Path64" または "Path32" を指定します。この指定に従って 
+            "OpenCover.Console.exe" と同じディレクトリにある {x86/x64}\OpenCover.Profile.dll 
+            を使い分けるようです。 </td>
+          </tr>
+          <tr>
+            <td>-targetargs</td>
+            <td>
+            "-target" で指定したアプリケーションに対する引数を指定します。<br>
+            上記例では "VSTest.console.exe" の引数として下記２つを指示しています。
+            <ul>
+              <li>テストプロジェクトの dll ファイルをワイルドカード("*")を使って指定</li>
+              <li>テスト結果を 
+              "TestResult.xml" というファイル名で出力するように指定</li>
+            </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>-targetdir</td>
+            <td>テストプロジェクトの dll があるディレクトリを指定します。ここで指定した場所からの相対パスで扱われる、と思われるので本例では 
+            "." を指定してみました。</td>
+          </tr>
+          <tr>
+            <td class="auto-style3">-returntargetcode</td>
+            <td>これを指定すると、"-target" で指定したアプリケーションからの戻り値を OpenCover の戻り値として扱います。</td>
+          </tr>
+          <tr>
+            <td>-output</td>
+            <td>カバレッジ情報を出力する XML ファイル名を指定します。上記例では "OpenCoverReport.xml" 
+            というファイル名を指定しています。</td>
+          </tr>
+          <tr>
+            <td>-filter</td>
+            <td>カバレッジ計測する名前空間を指定します。<br>本例では "CounterDll" という名前空間を対象として指定しています。<br>
+            書式については 
+            <a href="https://github.com/OpenCover/opencover/wiki/Usage#understanding-filters" target="_blank">
+            OpenCover の資料</a> や様々なインターネット記事を参照してください。</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 3</strong></p>
+      <p>"VSTest@2" を削除しているので、新たにテスト結果の発行処理を追加します。"<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-test-results-v2?view=azure-pipelines&amp;tabs=trx%2Ctrxattachments%2Cyaml" target="_blank">PublishTestResults@2</a>" 
+      というタスクを使って実現します。</p>
+      <p>このタスク無しだと、"Tests" でのテスト結果表示が無くなります。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml"]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 800px">
+・・・
+
+<span class="auto-style2">- task: PublishTestResults@2</span>
+<span class="auto-style2">  displayName: "Publish Test Result"</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    testResultsFormat: 'VSTest'</span>
+<span class="auto-style2">    testResultsFiles: '**\TestResult.xml'</span>
+
+・・・</pre>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 4</strong></p>
+      <p>ReportGenerator を使って OpenCover の出力レポートを整形します。</p>
+      <p>ReportGenerator は Azure DevOps 初期状態では使用できません。下記手順で Marketplace 
+      から無料で入手してインストールしておく必要があります。</p>
+      <p>&nbsp;</p>
+      <p>［<strong>Browse marketplace</strong>］メニューをクリックします。</p>
+      <p>[Fig: "Marketplace" ボタン位置]</p>
+      <p>
+      <img alt="Marketplace ボタン" class="border" src="Pipelines_cs_netframework/img27.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>下図のような画面を表示します。</p>
+      <p>
+      <img alt="Marketplace 画面" class="border" src="Pipelines_cs_netframework/img28.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>"ReportGenerator" で検索して、下図例では左側にある "ReportGenerator" 
+      をクリックします。</p>
+      <p>
+      <img alt="ReportGenerator" class="border" src="Pipelines_cs_netframework/img29.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p><strong>［Get it free］</strong>ボタンをクリックします。</p>
+      <p>
+      <img alt="&quot;Get it free&quot; をクリック" class="border" src="Pipelines_cs_netframework/img2D.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p><strong>［Install］</strong>ボタンをクリックします。</p>
+      <p>
+      <img alt="Install ボタンをクリック" class="border" src="Pipelines_cs_netframework/img2E.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>こちらの画面を表示したらインストールを完了です。［Proceed to 
+      organization］のボタンをクリックして元の画面へ戻る、またはこの画面を閉じても良いです。</p>
+      <p>
+      <img alt="インストール完了" class="border" src="Pipelines_cs_netframework/img2F.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>これで Pipelines で "ReportGenerator" を使用できるようになりました。</p>
+      <p>"ReportGenerator" を使って OpenCover の出力レポートを整形します。"reportgenerator@5" 
+      というタスクを使って実現します。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml"]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 800px">
+・・・
+
+<span class="auto-style2">- task: reportgenerator@5</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    reports: '**\OpenCoverReport.xml'</span>
+<span class="auto-style2">    targetdir: 'CoverageReport'
+</span>
+<span class="auto-style2">    reporttypes: HtmlInline_AzurePipelines;Cobertura</span>
+
+・・・</pre>
+      <p>&nbsp;</p>
+        
+      <table class="border-collapse" border="1" width="800">
+        <caption>[Table: reportgenerator@5 引数について]</caption>
+        <thead class="standard_table">
+          <tr>
+            <th style="white-space:nowrap">属性</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>reports</td>
+            <td>OpenCover が出力した解析結果（XMLファイル）を指定します。 <br>本ページ例では 
+            "OpenCoverReport.xml" を指定します。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px">targetdir</td>
+            <td style="height: 29px">結果を出力するディレクトリを指定します。 <br>本ページ例では 
+            "CoverageReport" を指定します。</td>
+          </tr>
+          <tr>
+            <td style="height: 29px" class="auto-style3">-reporttypes</td>
+            <td style="height: 29px">出力するレポートタイプを指定します。複数指定することが可能です。<br>本ページ例では 
+            "HtmlInline_AzurePipelines;Cobertura" を指定します。<br>
+            指定できるタイプはとてもたくさんあります。"HtmlInline_AzurePipelines_Dark" 
+            へ変更するとダーク色をテーマとするページを出力してくれます。詳細は 
+            <a href="https://reportgenerator.io/usage" target="_blank">こちら</a> 
+            を参照。</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <p>&nbsp;</p>
+      <p>ReportGenerator に関する参照ページ：</p>
+      <ul>
+        <li>
+        <a href="https://marketplace.visualstudio.com/items?itemName=Palmmedia.reportgenerator" target="_blank">
+        ReportGenerator - Visual Studio Marketplace</a></li>
+        <li><a href="https://reportgenerator.io/usage" target="_blank">Usage 
+        (reportgenerator.io)</a></li>
+        <li>
+        <a href="https://github.com/danielpalme/ReportGenerator/#usage--command-line-parameters" target="_blank">
+        Usage: command line parameters</a></li>
+      </ul>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p class="auto-style1"><strong>Step 5</strong></p>
+      <p>カバレッジ結果の発行処理を追加します。"<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-code-coverage-results-v1?view=azure-pipelines" target="_blank">PublishCodeCoverageResults@1</a>" 
+      というタスクを使って実現します。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml"]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 800px">
+・・・
+
+<span class="auto-style2">- task: PublishCodeCoverageResults@1</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    codeCoverageTool: 'Cobertura'</span>
+<span class="auto-style2">    summaryFileLocation: 'CoverageReport\Cobertura.xml'</span>
+<span class="auto-style2">    reportDirectory: 'CoverageReport'</span>
+<span class="auto-style2">  env:</span>
+<span class="auto-style2">    DISABLE_COVERAGE_AUTOGENERATE: 'true'</span>
+
+・・・</pre>
+      <p>&nbsp;</p>
+        
+      <table class="border-collapse" border="1" width="800">
+        <caption>[Table: PublishCodeCoverageResult@1 引数について]</caption>
+        <thead class="standard_table">
+          <tr>
+            <th style="white-space:nowrap">属性</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CodeCoverageTool</td>
+            <td>カバレッジレポートを生成したツールを指定します。 </td>
+          </tr>
+          <tr>
+            <td style="height: 29px" class="auto-style3">summaryFileLocation</td>
+            <td style="height: 29px">
+            サマリーファイルを指定します。ReportGenerator が出力する XML ファイルを指定します。ReportGenerator 
+            に対して出力するファイル名を指定することはできませんが、ReportGenerator の targetdir の場所に 
+            "フォーマット名.xml" で保存されています。 </td>
+          </tr>
+          <tr>
+            <td style="height: 29px">reportDIrectory</td>
+            <td style="height: 29px">
+            レポートとして公開するディレクトリを指定します。<br>
+            index.html または index.htm があればそれを表示していると思われます。 </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>&nbsp;</p>
+      <p>また下記指定を行うことで Coverage の自動生成をしないように設定します。</p>
+    
+      <blockquote>
+        env:<br>&nbsp;
+          DISABLE_COVERAGE_AUTOGENERATE: 'true'
+      </blockquote>
+    
+      <p>これを設定しないと下図のような Warnings を出力します。</p>
+      <p>
+      <img alt="Warnings" class="border" src="Pipelines_cs_netframework/img40.jpg" width="800"></p>
+      <p>&nbsp;</p>
+    
+      <div class="status_warning">
+        <div></div>
+        <div>
+          <p><strong>注意</strong></p>
+          <p>"<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-code-coverage-results-v2?view=azure-pipelines" target="_blank">PublishCodeCoverageResults@2</a>" 
+          という新しいタスクが既に公開されて使用可能ですが、これを使ってこの処理を期待通りに動作させることができませんでした。"<a href="https://learn.microsoft.com/ja-jp/azure/devops/pipelines/tasks/reference/publish-code-coverage-results-v1?view=azure-pipelines" target="_blank">PublishCodeCoverageResults@1</a>" 
+          を使用するようにしてください。</p>
+          <p>解決方法を見つけたらこちらページの情報を更新したいと思います。</p>
+        </div>
+      </div>
+
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>ここまでの内容を全て反映した "azure-pipelines.yml" の全体を以下に記載します。</p>
+      <p>&nbsp;</p>
+      <p>["azure-pipelines.yml"]</p>
+      <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+<span class="auto-style2"># - task: VSTest@2</span>
+<span class="auto-style2">#   inputs:</span>
+<span class="auto-style2">#     testAssemblyVer2: |</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter1.dll</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter2.dll</span>
+<span class="auto-style2">#       **\$(BuildConfiguration)\testCounter3.dll</span>
+<span class="auto-style2">#       !**\obj\**</span>
+<span class="auto-style2">#     platform: '$(buildPlatform)'</span>
+<span class="auto-style2">#     configuration: '$(buildConfiguration)'</span>
+<span class="auto-style2">#     codeCoverageEnabled: true</span>
+<span class="auto-style2">#     runSettingsFile: '.\.runsettings'</span>
+
+<span class="auto-style2">- task: CmdLine@2</span>
+<span class="auto-style2">  displayName: "VSTest &amp; OpenCover"</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    script: &gt;</span>
+<span class="auto-style2">      packages\OpenCover.4.7.1221\tools\OpenCover.Console.exe</span>
+<span class="auto-style2">      -target:"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"</span>
+<span class="auto-style2">      -targetargs:".\testCounter*\bin\$(BuildConfiguration)\testCounter*.dll /logger:trx;LogFileName=TestResult.xml"</span>
+<span class="auto-style2">      -targetdir:"."</span>
+<span class="auto-style2">      -register:Path64</span>
+<span class="auto-style2">      -filter:"+[CounterDll]*"</span>
+<span class="auto-style2">      -output:"OpenCoverReport.xml"</span>
+<span class="auto-style2">      -returntargetcode</span>
+
+<span class="auto-style2">- task: PublishTestResults@2</span>
+<span class="auto-style2">  displayName: "Publish Test Result"</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    testResultsFormat: 'VSTest'</span>
+<span class="auto-style2">    testResultsFiles: '**\TestResult.xml'</span>
+
+<span class="auto-style2">- task: reportgenerator@5</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    reports: '**\OpenCoverReport.xml'</span>
+<span class="auto-style2">    targetdir: 'CoverageReport'</span>
+<span class="auto-style2">    reporttypes: HtmlInline_AzurePipelines_Dark;Cobertura</span>
+
+<span class="auto-style2">- task: PublishCodeCoverageResults@1</span>
+<span class="auto-style2">  condition: always()</span>
+<span class="auto-style2">  inputs:</span>
+<span class="auto-style2">    codeCoverageTool: 'Cobertura'</span>
+<span class="auto-style2">    summaryFileLocation: 'CoverageReport\Cobertura.xml'</span>
+<span class="auto-style2">    reportDirectory: 'CoverageReport'</span>
+<span class="auto-style2">  env:</span>
+<span class="auto-style2">    DISABLE_COVERAGE_AUTOGENERATE: 'true'</span>
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterWPF\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterWPF_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container
+
+- task: ArchiveFiles@2
+  displayName: "Archive files"
+  inputs:
+    rootFolderOrFile: CounterForm\bin\$(buildConfiguration)
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\CounterForm_$(Build.BuildId).zip'
+    artifactName: 'MyBuildOutputs - zip'
+    publishLocation: Container</pre>
+      <p>&nbsp;</p>
+      <p>Pipelines 実行後の結果を以下に紹介します。</p>
+      <p>［Summary］画面の様子です。</p>
+      <p>
+      <img alt="Summary" class="border" src="Pipelines_cs_netframework/img50.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>［Tests］画面の様子です。</p>
+      <p>
+      <img alt="Tests" class="border" src="Pipelines_cs_netframework/img4F.jpg" width="800">&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>［Code Coverage］画面の様子です。</p>
+      <p>
+      <img alt="Code coverage" class="border" src="Pipelines_cs_netframework/img4A2.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>"HtmlInline_AzurePipelines_Dark" を指定した場合の［Code Coverage］画面の様子です。</p>
+      <p>
+      <img alt="Code coverage" class="border" src="Pipelines_cs_netframework/img4B.jpg" width="800"></p>
       <p>&nbsp;</p>
     </section>
     
@@ -1366,7 +1900,7 @@ pause</pre>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
   	  <tr>
-  	    <td class="td_history_date">2024-01-18</td>
+  	    <td class="td_history_date">2024-01-25</td>
   	    <td class="td_history_separator">-</td>
   	    <td class="td_history">新規作成 </td>
   	  </tr>
