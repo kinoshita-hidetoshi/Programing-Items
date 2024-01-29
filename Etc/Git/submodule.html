@@ -16,10 +16,10 @@
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -46,45 +46,40 @@
     <td>
       <nav>
         <h2> 目次</h2>
-      <p>
-        <a href="#1._git_submodule_コマンド">1. git submodule コマンド</a></p>
-		<p>
-        &nbsp;&nbsp; 
-        <a href="#1-1._git_submodule_add">1-1. git submodule add</a></p>
-		<p>
-        &nbsp;&nbsp; 
-        <a href="#1-2._git_submodule_update">1-2. git submodule update</a></p>
-		<p>
-        &nbsp;&nbsp; 
-        <a href="#1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだ Git リポジトリを git clone する</a></p>
-		<p>
-        &nbsp;&nbsp;
-        <a href="#1-4._git_submodule_deinit">1-4. git submodule deinit</a></p>
-		<p>
-        <a href="#2._チュートリアル">2. チュートリアル</a></p>
-		<p>
-        &nbsp;&nbsp; 
-        <a href="#2-1._テスト用に２つのリポジトリを作成する">2-1. テスト用に２つのリポジトリを作成する</a></p>
-		<p>
-        &nbsp;&nbsp;
-        <a href="#2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></p>
-		<p>
-        &nbsp;&nbsp;
-        <a href="#2-3._PP_testapp_01_としてメインアプリを作成する_">2-3. PP_testapp_01 としてメインアプリを作成する</a></p>
-		<p>
-        &nbsp;&nbsp;
-        <a href="#2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる</a></p>
-		<p>
-        &nbsp;&nbsp;
-        <a href="#2-5.“git_clone“_してみる_">2-5. "git clone" してみる</a><br>
-        </p>
-		<p>
-        &nbsp;</p>
-		<p>
-        <a href="#ライセンス">ライセンス</a></p>
-		<p>
-        <a href="#参考">参考</a><br>
-        </p>
+        <p>
+          <a href="#1._git_submodule_コマンド">1. git submodule コマンド</a></p>
+		    <p>
+          &nbsp;&nbsp; 
+          <a href="#1-1._git_submodule_add">1-1. git submodule add</a></p>
+		    <p>
+          &nbsp;&nbsp; 
+          <a href="#1-2._git_submodule_update">1-2. git submodule update</a></p>
+		    <p>
+          &nbsp;&nbsp; 
+          <a href="#1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだ Git リポジトリを git clone する</a></p>
+		    <p>
+          &nbsp;&nbsp;
+          <a href="#1-4._git_submodule_deinit">1-4. git submodule deinit</a></p>
+		    <p>
+          <a href="#2._チュートリアル">2. チュートリアル</a></p>
+		    <p>
+          &nbsp;&nbsp; 
+          <a href="#2-1._テスト用に２つのリポジトリを作成する">2-1. テスト用に２つのリポジトリを作成する</a></p>
+		    <p>
+          &nbsp;&nbsp;
+          <a href="#2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></p>
+		    <p>
+          &nbsp;&nbsp;
+          <a href="#2-3._PP_testapp_01_としてメインアプリを作成する_">2-3. PP_testapp_01 としてメインアプリを作成する</a></p>
+		    <p>
+          &nbsp;&nbsp;
+          <a href="#2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる</a></p>
+		    <p>
+          &nbsp;&nbsp;
+          <a href="#2-5.“git_clone“_してみる_">2-5. "git clone" してみる</a><br></p>
+		    <p>&nbsp;</p>
+		    <p><a href="#ライセンス">ライセンス</a></p>
+		    <p><a href="#参考">参考</a><br></p>
       </nav>
     </td>
   </tr>
@@ -104,15 +99,17 @@
 </ul>
 <p>&nbsp;</p>
 
-<pre><code>$ git submodule add https://example.com/sub-modules                    # .gitmodules ファイルが更新される
-$ git commit -a                                                        # 変更を保存（必須！）</code></pre>
+<pre style="color: #FFFFFF; background-color: #000000"><code>
+$ git submodule add https://example.com/sub-modules                    # .gitmodules ファイルが更新される
+$ git commit -a                                                        # 変更を保存（必須！）</code>
+</pre>
 
 <p>&nbsp;</p>
 <p>上記の場合、追加するリポジトリ名がフォルダ名になります。<br>自身が指定するフォルダ名で追加する場合は以下のように行います。</p>
 
-<pre><code>$ git submodule add https://example.com/sub-modules [folder-name]      # .gitmodules ファイルが更新される
+<pre style="color: #FFFFFF; background-color: #000000"><code>$ git submodule add https://example.com/sub-modules [folder-name]      # .gitmodules ファイルが更新される
 $ git commit -a                                                        # 変更を保存（必須！）</code></pre>
-<p>(ex) <span class="cpp-source">git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter</span></p>
+<p>(ex) <span class="cpp-source">git submodule add git@bitbucket.org:username/pp_testlib_01.git counter</span></p>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -126,11 +123,13 @@ $ git commit -a                                                        # 変更�
 </ul>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
 <h3><a name="1-3._サブモジュールを含んだGitレポジトリを_git_clone_する">1-3. サブモジュールを含んだGitレポジトリを &quot;<span class="auto-style2"><em><strong>git clone</strong></em></span>&quot; 
 する</a></h3>
+
 <p><strong><em>--recursive</em></strong> オプションをつけてください。</p>
 
-<pre>git clone https://example.com/repo-with-sub-modules <span class="auto-style1"><strong><em>--recursive</em></strong></span></pre>
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">git clone https://example.com/repo-with-sub-modules <span class="auto-style1"><strong><em>--recursive</em></strong></span></pre>
 
 <p>すると、サブモジュールのファイルも自動で取得されます。</p>
 <p>&nbsp;</p>
@@ -138,7 +137,7 @@ $ git commit -a                                                        # 変更�
 <p>git clone に <strong><em>--recursive</em></strong> 
 を付けないとサブモジュールのファイルが取得されませんが、<span class="cpp-source">git submodule update --init</span> で後からチェックアウトできます。</p>
 
-<pre>git submodule update --init</pre>
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">git submodule update --init</pre>
 
 <p>&nbsp;</p>
 <p>新しいバージョンを &quot;git checkout&quot; したら、他の人がサブモジュールを追加していた。</p>
@@ -155,7 +154,7 @@ $ git commit -a                                                        # 変更�
 </ul>
 <p>&nbsp;</p>
 
-<pre>
+<pre style="color: #FFFFFF; background-color: #000000">
 $ git submodule deinit -f sub-module                                   # 登録解除
 $ git rm -f sub-module                                                 # ファイルを削除
 $ git config -f .gitmodules --remove-section submodule.sub-module      # 設定ファイルから削除
@@ -183,9 +182,11 @@ $ git commit -a                                                        # 変更�
 <h3><a name="2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></h3>
 <p>&nbsp;ライブラリ側（PP_testlib_01）として動的ライブラリ（libcounter.so）を作成してみます。</p>
 <p>&nbsp;</p>
+
 <h4>2-2-1. PP_testlib_01 をクローンします。</h4>
-<p>&nbsp;<pre><code>$ git clone git@bitbucket.org:iproiot/pp_testlib_01.git</code>&nbsp; </pre>
-</p>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px"><code>$ git clone git@bitbucket.org:username/pp_testlib_01.git</code>&nbsp; </pre>
+
 <p>&nbsp;</p>
 <h4>2-2-2. プログラムを作成します。</h4>
 <p>&nbsp;vscode で作成した例です。プログラム詳細の説明は割愛します。 </p>
@@ -195,7 +196,8 @@ $ git commit -a                                                        # 変更�
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>counter.h は以下の通りです。</p>
-<p>&nbsp;</p>
+<p>["counter.h"]</p>
+
 <pre class="prettyprint linenums">#ifndef COUNTER_H
 #define COUNTER_H
 
@@ -230,10 +232,13 @@ namespace counter{
 }
 
 #endif</pre>
+
 <p>&nbsp;</p>
 <p>counter.cpp は以下の通りです。</p>
+<p>["counter.cpp"]</p>
 
-<pre class="prettyprint linenums">#include &quot;counter.h&quot;
+<pre class="prettyprint linenums">
+#include &quot;counter.h&quot;
 
 namespace counter{
 
@@ -326,12 +331,14 @@ namespace counter{
      */
     const size_t counter::DefaultCount = 0;     // (b) c++11 以前
 }</pre>
+
 <p>&nbsp;</p>
 
 <p>このサンプルプログラムでは cmake を使ってビルドしています。<br>
 ”CMakeLists.txt” の内容は以下の通りです。（可読性を優先して余分な処理を削除しています。）</p>
 
-<pre class="prettyprint linenums"># このバージョン以上のCMAKEを使うよう宣言
+<pre class="prettyprint linenums">
+# このバージョン以上のCMAKEを使うよう宣言
 cmake_minimum_required(VERSION 3.10)
 
 # プロジェクト名．C++言語であることを宣言
@@ -356,7 +363,9 @@ add_library(counter SHARED counter.cpp)
 # PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
 target_include_directories(counter
   PUBLIC ${PROJECT_SOURCE_DIR}
-  )</pre>
+  )
+</pre>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -366,19 +375,26 @@ target_include_directories(counter
 <p>&nbsp;</p>
 <h4>&nbsp;2-3-1. PP_testapp_01 をクローンしてフォルダへ cd します。</h4>
 <p>&nbsp;</p>
-<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git
-$ cd pp_testapp_01</pre>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">
+$ git clone git@bitbucket.org:username/pp_testapp_01.git
+$ cd pp_testapp_01
+</pre>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h4>&nbsp;2-3-2. PP_testlib_01 を git submodule add コマンドにより counter フォルダへ割り付けます。</h4>
-<p>
-&nbsp;<pre>$ git submodule add git@bitbucket.org:iproiot/pp_testlib_01.git counter
-$ git commit -a</pre>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git submodule add git@bitbucket.org:username/pp_testlib_01.git counter
+$ git commit -a
+</pre>
+
 <p>&nbsp;</p>
 <p>.gitmodules” は以下のような記載となっていました。<br>counter が submodule として登録されていることを確認できます。 </p>
 <p><img alt="counter が submodule として登録されている図" src="submodule/img2A.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
 <h4>2-3-3. プログラムを作成します。</h4>
 <p>vscode で作成した例です。</p>
 <p>下図では counter ライブラリが “git submodule add” で登録した対象です。 <br>”S” という表示は 
@@ -388,7 +404,9 @@ Submodule の ”S” と思われます。ここに修正がある場合は ”
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>main.cpp の内容は以下の通りです。</p>
-<pre>#include &lt;iostream&gt;
+
+<pre class="prettyprint linenums lang-cpp">
+#include &lt;iostream&gt;
 #include &lt;memory&gt;
 #include &quot;counter.h&quot;
 
@@ -409,13 +427,17 @@ int main( int argc, char*argv[])
     }
     
     return EXIT_SUCCESS;
-}</pre>
+}
+</pre>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>このサンプルプログラムでは cmake を使ってビルドしています。</p>
 <p>&nbsp;”CMakeLists.txt” の内容は以下の通りです。ここで submodule である counter 
 を指定しています。（可読性を優先して余分な処理を削除しています。） </p>
-<pre>cmake_minimum_required(VERSION 3.10)
+
+<pre class="prettyprint linenums">
+cmake_minimum_required(VERSION 3.10)
 
 project(main CXX)
 
@@ -442,7 +464,9 @@ add_subdirectory(counter)
 add_executable(main.out main.cpp)
 
 # main.outをコンパイルする際に counter をリンクする
-target_link_libraries(main.out counter)</pre>
+target_link_libraries(main.out counter)
+</pre>
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>同じく vscode の「ソース管理」画面です。</p>
@@ -450,38 +474,38 @@ target_link_libraries(main.out counter)</pre>
 <p><img alt="ソース管理" src="submodule/img2D.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>Commit, Push 後の状態をブラウザ画面で確認すると、submodule は下図のように表示されました。<br>counter が 
 pp_testlib_01 [c1c852b17dc] へリンクしていることがわかります。 </p>
 <p><img alt="Bitbucket ソース画面" src="submodule/img2F.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
 <h4>2-3-4. プログラムをビルドして動かします。</h4>
 <p>&nbsp;cmake のお作法に従って、以下の通り入力します。 </p>
-<pre>$ mkdir build
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">
+$ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ./main.out</pre>
+$ ./main.out
+</pre>
+
 <p>&nbsp;</p>
 <p>ビルドを成功してプログラムもちゃんと動作できました。submodule 内のプログラムをちゃんと使用できています。 </p>
 <p><img alt="submodule 動作確認" src="submodule/img31.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<h3><a name="2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる  
-</a> </h3>
+
+<h3><a name="2-4._ライブラリ側（PP_testlib_01）を変更してみる_">2-4. ライブラリ側（PP_testlib_01）を変更してみる</a> </h3>
 <p>
 ライブラリ側（PP_testlib_01）を単独で修正してコミット、プッシュ後、アプリ本体側（PP_testapp_01）がどうなるかを確認してみます。合わせてアプリ側（PP_testapp_01）へこの修正を取り込む手順などを確認します。 </p>
 <p>&nbsp;</p>
+
 <h4>2-4-1. ライブラリ側（PP_testlib_01）のリポジトリを単独で開いて変更してみます。</h4>
 <p>&nbsp;ここでは README.md を変更してみました。 </p>
 <p>&nbsp;</p>
 <p><img alt="README.md 修正" src="submodule/img33.jpg"></p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -521,12 +545,11 @@ $ ./main.out</pre>
 <p><img alt="counter が更新されたことを vscode 画面で確認" src="submodule/img4C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+
 <h4>2-4-4. counter をプルします</h4>
 <p>これで counter（submodule）を最新状態にできます。 </p>
 <p>&nbsp;</p>
 <p><img alt="counter をプル" src="submodule/img4E.jpg"></p>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>すると、以下のような状態になりました。</p>
@@ -540,7 +563,7 @@ $ ./main.out</pre>
 <p><img alt="diff | リンク先変更" src="submodule/img53.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+
 <h4>2-4-5. アプリ側（PP_testapp_01）をコミット／プッシュします</h4>
 <p>&nbsp;アプリ側をコミット／プッシュします。詳細の記載は割愛します。</p>
 <p>&nbsp;以上でライブラリ側変更の取り込みを完了です。 </p>
@@ -554,12 +577,15 @@ $ ./main.out</pre>
 をそれぞれ行って比べてみます。 </p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
 <h4>2-5-1. ”--recursive” 付きの git clone </h4>
 <p>&nbsp;</p>
 <p>始めに “--recursive“ 付きの git clone を試してみます。</p>
 <p>ここでは下記のようにコマンドを入力しました。</p>
 <p>&nbsp;</p>
-<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git --recursive test1 </pre>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git clone git@bitbucket.org:username/pp_testapp_01.git --recursive test1 </pre>
+
 <p>&nbsp;</p>
 <p>クローン下フォルダを vscode で開いた結果を下図に示します。<br>予定通り submodule のフォルダ counter 
 と中身を含んでクローンされました。特記事項ありません。 </p>
@@ -567,10 +593,13 @@ $ ./main.out</pre>
 <p><img alt="git clone" src="submodule/img58.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+
 <h4>2-5-2. “--recursive“ 無しの git clone</h4>
 <p>&nbsp;次に “--recursive“ 無しの git clone を試してみます。ここでは下記のようにコマンドを入力しました。 </p>
 <p>&nbsp;</p>
-<pre>$ git clone git@bitbucket.org:iproiot/pp_testapp_01.git test2</pre>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git clone git@bitbucket.org:username/pp_testapp_01.git test2</pre>
+
 <p>&nbsp;</p>
 <p>クローン下フォルダを vscode で開いた結果を下図に示します。こちらは counter の中身が空でクローンされました。実験の意図通りです。</p>
 <p>&nbsp;</p>
@@ -580,56 +609,59 @@ $ ./main.out</pre>
 <p>ここで “--recursive“ をつけ忘れたことに気づいた、または他の人が submodule 
 を追加したことに気づいた、ということにします。下記コマンドを入力して、サブモジュールのファイルを取得しましょう。 </p>
 <p>&nbsp;</p>
-<pre>$ git submodule update --init</pre>
+
+<pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git submodule update --init</pre>
+
 <p>&nbsp;</p>
 <p>下図の通りちゃんと counter フォルダ内のファイルを取得することができました。 </p>
 <p>&nbsp;</p>
 <p><img alt="counter フォルダ内のファイル" src="submodule/img5C.jpg"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+
 <p>以上です。 </p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+
 <hr>
 <p>&nbsp;</p>
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-The MIT License (MIT)<br><br>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+    <tr>
+      <td>
+  The MIT License (MIT)<br><br>
 
-Copyright © 2021 Kinoshita Hidetoshi<br><br>
+  Copyright © 2021 Kinoshita Hidetoshi<br><br>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:<br><br>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.<br><br>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+      </td>
+    </tr>
+  </table>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
+
 <h2><a name="参考">参考</a></h2>
 <ul style="background-repeat: no-repeat; box-sizing: inherit; padding: 5px 0px 5px 40px; margin: 0px; font-size: small; font-family: sans-serif; list-style-position: outside; list-style-type: disc; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
   <li style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px;">
@@ -652,7 +684,6 @@ SOFTWARE.
   <a href="https://www.m3tech.blog/entry/git-submodule" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
   git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
 </ul>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -682,18 +713,14 @@ SOFTWARE.
 <p>&nbsp;</p>
 
 <section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
 </section>
 
 <p>&nbsp;</p>
 
 <footer>
-
-<footer>
 	<p><small>Copyright © 2021 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
-
 </footer>
 
 </body>
