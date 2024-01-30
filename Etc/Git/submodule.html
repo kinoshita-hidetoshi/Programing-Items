@@ -176,7 +176,7 @@ $ git commit -a                                                        # 変更�
 <p>(2) PP_testlib_01 ： 共有ライブラリ用。PP_testapp_01 で使用します。 </p>
 <p>&nbsp;</p>
 <p>
-<img alt="使用するリポジトリ" src="submodule/img13.jpg"></p>
+<img alt="使用するリポジトリ" src="submodule/img13.jpg" class="border"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3><a name="2-2._PP_testlib_01_として動的ライブラリ（libcounter.so）を作成する">2-2. PP_testlib_01 として動的ライブラリ（libcounter.so）を作成する</a></h3>
@@ -476,7 +476,7 @@ target_link_libraries(main.out counter)
 <p>&nbsp;</p>
 <p>Commit, Push 後の状態をブラウザ画面で確認すると、submodule は下図のように表示されました。<br>counter が 
 pp_testlib_01 [c1c852b17dc] へリンクしていることがわかります。 </p>
-<p><img alt="Bitbucket ソース画面" src="submodule/img2F.jpg"></p>
+<p><img alt="Bitbucket ソース画面" src="submodule/img2F.jpg" class="border"></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
@@ -569,9 +569,7 @@ $ ./main.out
 <p>&nbsp;以上でライブラリ側変更の取り込みを完了です。 </p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
 <h3><a name="2-5.“git_clone“_してみる_">2-5.“git clone“ してみる </a> </h3>
-<p>&nbsp;</p>
 <p>以上のコミット結果を別フォルダへ “git clone“ してみます。</p>
 <p>せっかくなので、”--recursive” オプションありの git clone と、”--recursive” オプション無しの git clone 
 をそれぞれ行って比べてみます。 </p>
@@ -582,7 +580,6 @@ $ ./main.out
 <p>&nbsp;</p>
 <p>始めに “--recursive“ 付きの git clone を試してみます。</p>
 <p>ここでは下記のようにコマンドを入力しました。</p>
-<p>&nbsp;</p>
 
 <pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git clone git@bitbucket.org:username/pp_testapp_01.git --recursive test1 </pre>
 
@@ -596,7 +593,6 @@ $ ./main.out
 
 <h4>2-5-2. “--recursive“ 無しの git clone</h4>
 <p>&nbsp;次に “--recursive“ 無しの git clone を試してみます。ここでは下記のようにコマンドを入力しました。 </p>
-<p>&nbsp;</p>
 
 <pre style="color: #FFFFFF; background-color: #000000; width:800px">$ git clone git@bitbucket.org:username/pp_testapp_01.git test2</pre>
 
@@ -657,7 +653,7 @@ $ ./main.out
     </tr>
   </table>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
+
 </section>
 
 <p>&nbsp;</p>
@@ -684,7 +680,6 @@ $ ./main.out
   <a href="https://www.m3tech.blog/entry/git-submodule" style="background-repeat: no-repeat; box-sizing: inherit; padding: 0px; margin: 0px; background-color: transparent;">
   git submodule はトモダチ！怖くないよ！ （チートシート付き） - エムスリーテックブログ (m3tech.blog)</a></li>
 </ul>
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <hr>
