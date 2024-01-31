@@ -1115,6 +1115,9 @@ steps:
   
   <section>
     <h2><a name="7._OpenCover_でカバレッジ計測">7. OpenCover でカバレッジ計測</a></h2>
+  
+  <p><strong><em>OpenCover</em></strong> は、.NET 2 以上（Windows OSのみ - MONOを除く）に対応したコードカバレッジツールです。32ビットと64ビットのプロセスをサポートし、ブランチとシーケンスポイントの両方をカバーします。</p>
+  
     <p>無料環境でコードカバレッジ結果を確認することを目指して、本章では OpenCover を使ってカバレッジ計測を行う方法について取り組みしてみます。</p>
     <p>ローカルPCで OpenCover によるカバレッジ計測をできるようになってから、次に Azure の 
     Pipelines で OpenCover できるようにする、という順序で進めてみます。</p>
@@ -1373,10 +1376,6 @@ pause</pre>
       <p><a href="Pipelines_cs_netframework/img4A1.jpg" target="_blank">
       <img alt="カバレッジ結果レポート" class="border" src="Pipelines_cs_netframework/img4A1.jpg" width="800"></a></p>
       <p>&nbsp;</p>
-      <p>実際の出力例を 
-      <a href="Pipelines_cs_netframework/CoverageReport/index.html" target="_blank">
-      <strong>こちら</strong></a> から閲覧できるようにしてみました。よかったらどうぞ。</p>
-      <p>&nbsp;</p>
     </section>
     
     <p>&nbsp;</p>
@@ -1493,10 +1492,10 @@ pause</pre>
           </tr>
           <tr>
             <td>-filter</td>
-            <td>カバレッジ計測する名前空間を指定します。<br>本例では "CounterDll" という名前空間を対象として指定しています。<br>
-            書式については 
-            <a href="https://github.com/OpenCover/opencover/wiki/Usage#understanding-filters" target="_blank">
-            OpenCover の資料</a> や様々なインターネット記事を参照してください。</td>
+          <td>カバレッジ結果にアセンブリとクラスを選択的に含めたり除外したりするために適用するフィルターのリストを指定します。<br>本例では "CounterDll" というアセンブリに含む全てのクラスを対象として指定しています。<br>
+          書式については 
+          <a href="https://github.com/OpenCover/opencover/wiki/Usage#understanding-filters" target="_blank">
+          OpenCover の資料</a> や様々なインターネット記事を参照してください。</td>
           </tr>
         </tbody>
       </table>
