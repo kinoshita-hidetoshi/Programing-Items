@@ -1,0 +1,681 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>XML ファイルを読む | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>XML ファイルを読む</h1>
+  
+  <p> XML ファイルを読み込む c# 実装例をいくつか紹介してみたいと思います。</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._XmlDocument">1. XmlDocument</a></p>
+  	<p><a href="#2._XDocument_(LINQ_to_Xml)">2. XDocument (LINQ to Xml)</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._XmlDocument">1. XmlDocument</a></h2>
+  	<h4>[概要]</h4>
+    <p>XmlDocument によるプログラム例を記載します。</p>
+    <p>&nbsp;</p>
+    <p>本方式の特徴は下記の通りだそうです。</p>
+    <ul>
+      <li>データをキャッシュするため、最初にドキュメント全体を読み込む必要がある。（ファイルサイズが大きい場合は多くのメモリを消費する）</li>
+      <li>キャッシュされたドキュメントは変更可能</li>
+      <li>簡単にプログラムを記述できる。</li>
+    </ul>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>Visual Studio 2022 pro.,</td>
+  	      <td>Version 17.9.0 </td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td style="height: 30px">言語：</td>
+  	      <td style="height: 30px">C#</td>
+  	      <td style="height: 30px"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>フレームワーク：</td>
+  	      <td>.NET 8.0</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows11 home,</td>
+  	    <td>22H2 </td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+  	
+    <p>XML ファイルサンプル ["sample.xml"]</p>
+    <pre class="prettyprint linenums lang-xml" style="width: 800px">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;repositories&gt;
+
+  &lt;!-- Application 1 --&gt;
+  &lt;repository name="Application 1"&gt;
+    &lt;host_pc&gt;HOST1&lt;/host_pc&gt;
+    &lt;host_pc_ip&gt;192.168.0.11&lt;/host_pc_ip&gt;
+    &lt;branches&gt;
+      &lt;branch name="main"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="develop"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="feature/add_new_feature"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="bug/memory_leak_happen"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="release/release_candidate_2024-02"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+    &lt;/branches&gt;
+  &lt;/repository&gt;
+
+  &lt;!-- Application 2 --&gt;
+  &lt;repository name="Application 2"&gt;
+    &lt;host_pc&gt;HOST2&lt;/host_pc&gt;
+    &lt;host_pc_ip&gt;192.168.0.12&lt;/host_pc_ip&gt;
+    &lt;branches&gt;
+      &lt;branch name="main"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-lm -Wall -g3 -O0 -coverage"&gt;
+            &lt;build_directory&gt;debug&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-lm -Wall -O3"&gt;
+            &lt;build_directory&gt;release&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="develop"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-lm -Wall -g3 -O0 -coverage"&gt;
+            &lt;build_directory&gt;debug&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-lm -Wall -O3"&gt;
+            &lt;build_directory&gt;release&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+    &lt;/branches&gt;
+  &lt;/repository&gt;
+
+&lt;/repositories&gt;</pre>
+    <p>&nbsp;</p>
+    <p>["Program.cs"]</p>
+    <pre class="prettyprint linenums lang-cs">
+//
+// XmlDocument による実装
+//
+
+using System.Xml;
+
+namespace ReadXmlFile
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            var xmlPath = @"sample.xml";
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlPath);
+            XmlNode? root = xmlDoc.DocumentElement;
+
+            if (root != null)
+            {
+                {
+                    // リポジトリ一覧 取得
+                    Console.WriteLine("=== &lt;repository&gt; ==="); 
+                    
+                    foreach (XmlNode childNode in root.ChildNodes)
+                    {
+                        if (childNode.NodeType == XmlNodeType.Element &amp;&amp; childNode.LocalName == "repository")
+                        {
+                            Console.WriteLine(childNode?.Attributes?["name"]?.Value);
+                        }
+                    }
+
+                    Console.WriteLine();
+                }
+
+                {
+                    // ブランチ一覧 取得
+                    Console.WriteLine("=== [Application 1].&lt;branches&gt;.&lt;branch&gt; ===");
+
+                    XmlNode? branches = root.SelectSingleNode("descendant::repository[@name='Application 1']/branches");
+
+                    if (branches != null)
+                    {
+                        foreach (XmlNode branch in branches)
+                        {
+                            Console.WriteLine(branch.Attributes?["name"]?.Value);
+                        }
+                    }
+
+                    Console.WriteLine();
+                }
+
+                {
+                    // ビルドオプション一覧 取得
+                    Console.WriteLine("=== [Application 2].[main].&lt;build_option&gt; ===");
+
+                    XmlNode? build_options = root.SelectSingleNode("descendant::repository[@name='Application 2']/branches/branch[@name='main']/build_options");
+
+                    if (build_options != null)
+                    {
+                        foreach (XmlNode build_option in build_options.ChildNodes)
+                        {
+                            if (build_option.NodeType == XmlNodeType.Element)
+                            {
+                                Console.WriteLine(build_option.Attributes?["name"]?.Value);
+                            }
+                        }
+                    }
+                    
+                    Console.WriteLine();
+                }
+
+            }
+
+            Console.Write("Push Enter key ! ");
+            Console.ReadLine();
+        }
+    }
+}</pre>
+    <p>&nbsp;</p>
+    <p>実行結果</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">=== &lt;repository&gt; ===
+Application 1
+Application 2
+
+=== [Application 1].&lt;branches&gt;.&lt;branch&gt; ===
+main
+develop
+feature/add_new_feature
+bug/memory_leak_happen
+release/release_candidate_2024-02
+
+=== [Application 2].[main].&lt;build_option&gt; ===
+-lm -Wall -g3 -O0 -coverage
+-lm -Wall -O3
+
+Push Enter key !</pre>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._XDocument_(LINQ_to_Xml)">2. XDocument (LINQ to Xml)</a></h2>
+  
+  	<h4>[概要]</h4>
+  	<p>XDocument と LINQ によるプログラム例を記載します。</p>
+    <p>&nbsp;</p>
+    <p>本方式の特徴は下記の通りだそうです。</p>
+    <ul>
+      <li>統合言語クエリ (LINQ)を使用したシンプルな記述が可能</li>
+      <li>データをキャッシュするため、基本的には最初にドキュメント全体を読み込む必要がある。（XmlReader と IEnumerable 
+      を組み合わせて読み込まずに照会できる方法もあるらしい） </li>
+      <li>XmlDocumentで実施できることのほとんどを軽量に実現 </li>
+    </ul>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>Visual Studio 2022 pro.,</td>
+  	      <td>Version 17.9.0 </td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td style="height: 30px">言語：</td>
+  	      <td style="height: 30px">C#</td>
+  	      <td style="height: 30px"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>フレームワーク：</td>
+  	      <td>.NET 8.0</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows11 home,</td>
+  	    <td>22H2 </td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+  	
+  	<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>XML ファイルサンプル ["sample.xml"]</p>
+    <pre class="prettyprint linenums lang-xml" style="width: 800px">&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;repositories&gt;
+
+  &lt;!-- Application 1 --&gt;
+  &lt;repository name="Application 1"&gt;
+    &lt;host_pc&gt;HOST1&lt;/host_pc&gt;
+    &lt;host_pc_ip&gt;192.168.0.11&lt;/host_pc_ip&gt;
+    &lt;branches&gt;
+      &lt;branch name="main"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="develop"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="feature/add_new_feature"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="bug/memory_leak_happen"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 1gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_1g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-r 4gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_4g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="release/release_candidate_2024-02"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-r 2gb -f 512mb"&gt;
+            &lt;build_directory&gt;app_2g_512m&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+    &lt;/branches&gt;
+  &lt;/repository&gt;
+
+  &lt;!-- Application 2 --&gt;
+  &lt;repository name="Application 2"&gt;
+    &lt;host_pc&gt;HOST2&lt;/host_pc&gt;
+    &lt;host_pc_ip&gt;192.168.0.12&lt;/host_pc_ip&gt;
+    &lt;branches&gt;
+      &lt;branch name="main"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-lm -Wall -g3 -O0 -coverage"&gt;
+            &lt;build_directory&gt;debug&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-lm -Wall -O3"&gt;
+            &lt;build_directory&gt;release&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+
+      &lt;branch name="develop"&gt;
+        &lt;build_options&gt;
+          &lt;build_option name="-lm -Wall -g3 -O0 -coverage"&gt;
+            &lt;build_directory&gt;debug&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+          &lt;build_option name="-lm -Wall -O3"&gt;
+            &lt;build_directory&gt;release&lt;/build_directory&gt;
+          &lt;/build_option&gt;
+        &lt;/build_options&gt;
+      &lt;/branch&gt;
+    &lt;/branches&gt;
+  &lt;/repository&gt;
+
+&lt;/repositories&gt;</pre>
+    <p>&nbsp;</p>
+    <p>["Program.cs"]</p>
+    <pre class="prettyprint linenums lang-cs">
+//
+// XDocument による実装
+//
+
+using System.Xml.Linq;
+
+namespace ReadXmlFile
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            var xmlPath = @"sample.xml";
+            var xmlDoc = XDocument.Load(xmlPath);
+
+            {
+                // リポジトリ一覧 取得
+                Console.WriteLine("=== &lt;repositories&gt;.&lt;repository&gt; ===");
+
+                var repositories = xmlDoc.Descendants("repository");
+
+                foreach (var repository in repositories)
+                {
+                    Console.WriteLine(repository.Attribute("name")?.Value);
+                }
+
+                Console.WriteLine();
+            }
+
+            {
+                // ブランチ一覧 取得
+                Console.WriteLine("=== [Application 1].&lt;branches&gt;.&lt;branch&gt; ===");
+
+                var branches = xmlDoc.Descendants("repository")
+                    .Where(q =&gt; q.Attribute("name")?.Value == "Application 1")
+                    .Elements("branches")
+                    .Elements("branch");
+
+                foreach (var branch in branches)
+                {
+                    Console.WriteLine(branch.Attribute("name")?.Value);
+                }
+
+                Console.WriteLine();
+            }
+
+            {
+                // ビルドオプション一覧 取得
+                Console.WriteLine("=== [Application 2].[main].&lt;build_options&gt;.&lt;build_option&gt; ===");
+
+                var build_options = xmlDoc.Descendants("repository")
+                    .Where(q =&gt; q.Attribute("name")?.Value == "Application 2")
+                    .Elements("branches")
+                    .Elements("branch")
+                    .Where(q =&gt; q.Attribute("name")?.Value == "main")
+                    .Elements("build_options")
+                    .Elements("build_option");
+
+                foreach (var build_option in build_options)
+                {
+                    Console.WriteLine(build_option.Attribute("name")?.Value);
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.Write("Push Enter key ! ");
+            Console.ReadLine();
+        }
+    }
+}</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>実行結果</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">=== &lt;repository&gt; ===
+Application 1
+Application 2
+
+=== [Application 1].&lt;branches&gt;.&lt;branch&gt; ===
+main
+develop
+feature/add_new_feature
+bug/memory_leak_happen
+release/release_candidate_2024-02
+
+=== [Application 2].[main].&lt;build_option&gt; ===
+-lm -Wall -g3 -O0 -coverage
+-lm -Wall -O3
+
+Push Enter key !</pre>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>【C#】XMLの読み込み方法いろいろまとめてみた - KENTEM TechBlog<br>
+        <a href="https://tech.kentem.jp/entry/2023/12/14/090000" target="_blank">
+        https://tech.kentem.jp/entry/2023/12/14/090000</a></li>
+        <li>
+        <a href="https://learn.microsoft.com/ja-jp/dotnet/api/system.xml.xmlnode?view=net-8.0&amp;devlangs=csharp&amp;f1url=%3FappId%3DDev16IDEF1%26l%3DJA-JP%26k%3Dk(System.Xml.XmlNode)%3Bk(DevLang-csharp)%26rd%3Dtrue" target="_blank">XmlNode Class (System.Xml) | Microsoft Learn</a></li>
+        <li><a href="https://jp-seemore.com/sys/17505/" target="_blank">C#でリソースを埋め込む方法10選！初心者向け完全ガイド | Japanシーモア (jp-seemore.com)</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-02-14</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
