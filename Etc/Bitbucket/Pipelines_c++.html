@@ -3,104 +3,185 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>[Bitbucket Pipelines] c++(g++) をビルドする</title>
+  <!-- タイトル -->
+  <title>[Bitbucket Pipelines] c++(g++) をビルドする | Programming Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<script src="../../prettify/lang-yaml.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
+  <style type="text/css">
+  .auto-style1 {
+    color: #FF0000;
+  }
+  .auto-style2 {
+    background-color: #505000;
+  }
+  </style>
+
+</head>
 
 <body onload="prettyPrint();">
 	
-<h1>[Bitbucket Pipelines] c++(g++) をビルドする</h1>
+  <h1>[Bitbucket Pipelines] c++(g++) をビルドする</h1>
+  <p><strong>Bitbucket Pipelines</strong> を使って c++(g++) をビルドする手順について記載します。</p>
+  <p>&nbsp;</p>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
-<p> &nbsp;</p>
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._事前準備">1. 事前準備</a></p>
+  	<p><a href="#2._ビルドする">2. ビルドする</a></p>
+  	<p><a href="#3._アーティファクトを登録する">3. アーティファクトを登録する</a></p>
+      <p><a href="#4._デプロイする">4. デプロイする</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
 
-<h2> 目次</h2>
-  <nav>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <section>
+  	<h2> <a name="1._事前準備">1. 事前準備</a></h2>
+    <h3>1-1. リポジトリを作成</h3>
+    <p>リポジトリを作成します。詳細割愛。</p>
     <p>
-    1. ***<br>
-    2. ***<br>
-    3. ***<br><a href="#参考">参考</a><br>
+    &nbsp;</p>
+    
+    <h3>1-2. リポジトリをクローン</h3>
+    <p>リポジトリをローカルＰＣへクローンします。</p>
+    <p><img alt="git clone" src="Pipelines_c++/img2E.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    
+    <h3>1-3. サンプルソース（c++）を作成</h3>
+    <p>ソースコードを作成します。下記は例です。</p>
+    <p>
+    <img alt="sample source" src="Pipelines_c++/img30.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>プログラム例（”hello.cpp”） </p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::cout &lt;&lt; "Hello world." &lt;&lt; std::endl;
+    return EXIT_SUCCESS;
+}</pre>
+    <p>&nbsp;</p>
+    
+    <h3>1-4. コミット＆プッシュ</h3>
+    <p>作成したソースコードをコミット＆プッシュします。 </p>
+    <p><img alt="コミット＆プッシュ" src="Pipelines_c++/img3C.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p><img alt="コミット＆プッシュ" src="Pipelines_c++/img3D.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>クラウド側に登録を完了 </p>
+    <p>
+    <img alt="コミット＆プッシュ" class="border" src="Pipelines_c++/img3E.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    
+    <h3>1-5. Pipelines を有効化</h3>
+    <p>以下の手順で Pipelines を有効化します。 </p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>リポジトリの管理者権限を持つ人のみが以下を実施可能です。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>(1) ”Repository settings” をクリックします。 </p>
+    <p>
+    <img alt="Repository settings" class="border" src="Pipelines_c++/img51.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(2) “PIPELINES“ の中の "Settings“ をクリックします。</p>
+    <p>
+    <img alt="Settings" class="border" src="Pipelines_c++/img53.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) “Enable Pipelines“ をチェック状態にします。 </p>
+    <p>
+    <img alt="Enable Pipelines" class="border" src="Pipelines_c++/img54.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>これで Pipelines が有効になりました。 </p>
+    <p>&nbsp;</p>
+    <p>(4) ”bitbucket-pipelines.yml” の雛形を準備します。ここでは下記手順で雛形を準備してみました。 </p>
+    <p>「パイプライン」⇨「Build C++ Application」 </p>
+    <p>
+    <img alt="Build C++ Application" class="border" src="Pipelines_c++/img56.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>内容を確認後［Commit file］ボタンをクリックします。 </p>
+    <p>
+    <img alt="Commit file" class="border" src="Pipelines_c++/img58.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>すると・・・初めての Pipelines が実行されました。 </p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="Start Pipelines" class="border" src="Pipelines_c++/img5B.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>当然ながら <span class="auto-style1"><strong>Failed</strong></span> となりました。 
     </p>
-  </nav>
-
-
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-
-<section>
-	<h2> 1. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>&nbsp;</p>
-	
-	<p>[&quot;bitbucket-pipelines.yml&quot;]</p>
-		<pre class="prettyprint linenums"><code># Template C++ Application
+    <p>&nbsp;</p>
+    <p>こんなメールが私へ届きました。これは良いですね。</p>
+    <p>複数メンバーがいるときなど、このメールは誰に対して送信されるのかが気になりましたが、ここでは一旦忘れて進めます。 </p>
+    <p>
+    <img alt="mail 受信" class="border_with_drop-shadow" src="Pipelines_c++/img5E.jpg" width="600"></p>
+    <p>&nbsp;</p>
+    <p>”パイプライン” メニューをクリックすると Status が ”<span class="auto-style1"><strong>Failed</strong></span>” 
+    のものがあります。 </p>
+    <p>
+    <img alt="Failed on pipeline menu" class="border" src="Pipelines_c++/img5F.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>クリックして内容を確認してみると・・・ make に check の記載がされていない ・・・ということらしいです。そもそも makefile 
+    を準備していないので、エラーになって当然の状況です。</p>
+    <p>
+    <img alt="Cause of error" class="border" src="Pipelines_c++/img62.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>「ソース」を確認すると、とりあえず ”bitbucket-pipelines.yml” ファイルが追加されています。 </p>
+    <p>
+    <img alt="bitbucket-pipelines.yml" class="border" src="Pipelines_c++/img64.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>現時点の yml ファイル内容を以下に記載します。今後このファイルを編集していくことで Pipelines を実際に動くようにしていきます。</p>
+    
+    <p>["bitbucket-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+# Template C++ Application
 
 # This template allows you to validate your C++ application.
 # The workflow allows running tests and code linting on the default branch.
 
+
 image: gcc:10.2
+
 
 pipelines:
   default:
@@ -113,85 +194,346 @@ pipelines:
             name: Lint
             script:
               # apt update &amp;&amp; apt -y install cppcheck &amp;&amp; cppcheck .
-              - apt-get update
-              - apt-get -y install cppcheck
               - make lint
         - step:
             name: Build and Run
             script:
               - make compile
               # Execute your C++ application after compilation to check success
-              - make distcheck</code></pre>
-</section>
+              - make distcheck</pre>
+    <p>&nbsp;</p>
+    <p>以上で 事前準備 を完了とします。</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+    
+  <section>
+    <h2><a name="2._ビルドする">2. ビルドする</a></h2>
+    <p>“bitbucket-pipelines.yml” を編集することで、基本的なビルド＆デプロイを実装していきます。</p>
+    <p>&nbsp;</p>
+    
+    <h3>2-1. image を ubuntu:18.04 に設定</h3>
+    <p>ここでは例として実行環境（Docker Image）を ubuntu:18.04 に設定します。</p>
+    <p>（新）<span class="cpp-source">image: ubuntu:18.04</span> </p>
+    <p>（旧）<span class="cpp-source">image: gcc:10.2</span> </p>
+    <p>ちゃんと “Ubuntu 18.04” になったか確認のため、"<span class="cpp-source">cat 
+    /etc/lsb-release"</span> の一文も追加します。 </p>
+    <p>&nbsp;</p>
+    
+    <h3>2-2. 開発環境（gcc/g++ など － “build-essential”）をインストール</h3>
+    <p>下記２行を追加します。</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+- apt-get update
+- apt-get -y install build-essential</pre>
+    <p>&nbsp;</p>
+    
+    <h3>2-3. ソースコードをビルドする</h3>
+    <p>下記１行を追加します。</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+- g++ hello.cpp -o hello</pre>
+    <p>&nbsp;</p>
+    
+    <h3>2-4. “parallel” 処理をやめて同時実行を１つのみに修正</h3>
+    <p>Pipelines の実施をシンプルにすることを目的に、”Test” の step のみを残して他の step 
+    を削除して簡略化します。詳細説明を割愛。修正後の内容は後述の ”bitbucket-pipelines.yml” を参照。</p>
+    <p>（parallel は高速な実行を実現できるとても魅力的な機能ですが、この機能を使用するのは Pipelines 
+    をある程度使用できるようになってから検討しましょう。）</p>
+    <p>&nbsp;</p>
+    
+    <h3>2-5. 以上の修正を実施後の “bitbucket-pipelines.yml“</h3>
+    <p>以上の修正を行った結果の ”bitbucket-pipelines.yml” を以下に示します。 </p>
+    <p>["bitbucket-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - g++ hello.cpp -o hello</pre>
+    <p>&nbsp;</p>
+    <p>上記修正で Pipelines 実行を正常に完了できるようになりました。OS も “Ubuntu 18.04.6 LTS“ 
+    を意図通りにロードできていることを確認できました。</p>
+    <p>
+    <img alt="Pipelines 実行 Success" src="Pipelines_c++/img86.jpg" class="border" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>本書記載時点、正常終了した Pipelines に対するメールは届きませんでした。</p>
+    <p>&nbsp;機能拡張「Jira and Bitbucket (Atlassian Labs)」をインストールした “VS code” 
+    から正常終了した Pipelines を下図のように確認することができました。</p>
+    <p><img alt="VS code の様子" src="Pipelines_c++/img88.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>以上で正常動作する “bitbucket-pipelines.yml” を構築できました。</p>
+    <p>&nbsp;この後は少しずつ機能を加えていく感じで修正を行っていきたいと思います。 </p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._アーティファクトを登録する">3. アーティファクトを登録する</a></h2>
+    <p>
+    アーティファクトは、ステップによって作成されるファイルです。パイプライン設定で定義したら、以降のステップで共有したり、エクスポートしてステップの完了後にアーティファクトを保持したりすることができます。たとえば、ビルド 
+    ステップで生成された JAR ファイルまたはレポートを、後のデプロイメント 
+    ステップで使用できます。ステップで生成されたアーティファクトをダウンロードしたり、外部ストレージにアップロードすることもできます。 </p>
+    <p>次の点に留意する必要があります。</p>
+    <ul>
+      <li>&nbsp;ステップの最後に <strong>BITBUCKET_CLONE_DIR</strong> 
+      にあるファイルをアーティファクトとして構成できます。<strong>BITBUCKET_CLONE_DIR</strong> 
+      は、リポジトリが最初にクローンされるディレクトリです。</li>
+      <li>glob パターンを使用してアーティファクトを定義できます。* で開始される glob パターンは、引用句で囲む必要があります。<br>注: 
+      これらは glob パターンのため、パス セグメント "." および ".." を使用できません。ビルド ディレクトリに相対的なパスを使用します。 
+      </li>
+      <li>アーティファクトのパスは、<strong>BITBUCKET_CLONE_DIR </strong>からの相対パスになります。 </li>
+      <li>ステップ中で作成されたアーティファクトは、以降のすべてのステップで使用できます。 </li>
+      <li>アーティファクトは、生成から 14 日後に削除されます。 </li>
+      <li>アーティファクトは、１ファイル当たりのファイルサイズ 1GB 
+      という上限があります。このサイズを超えるファイルをアーティファクトとして登録できません。 </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>ここまで作成した “bitbucket-pipelines.yml“ にアーティファクト指定を加えてみます。 </p>
+    <p>["bitbucket-pipelines.yml"] ファイルをアーティファクトへ登録した例</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - g++ hello.cpp -o hello
+<span class="auto-style2">        artifacts:</span>
+<span class="auto-style2">          - hello</span></pre>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml"] フォルダーをアーティファクトへ登録した例</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential zip
+          - mkdir out
+          - g++ hello.cpp -o out/hello
+<span class="auto-style2">        artifacts:</span>
+<span class="auto-style2">          - out/**</span></pre>
+    <p>&nbsp;</p>
+    <p>パイプラインを実行後の画面です。”Artifacs” の画面から “hello“ をダウンロードすることができます。</p>
+    <p>
+    <img alt="Artifact" class="border" src="Pipelines_c++/img91.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p><strong>参考：</strong></p>
+    <ul>
+      <li>
+      <a href="https://ja.confluence.atlassian.com/bitbucket/using-artifacts-in-steps-935389074.html#Usingartifactsinsteps-artifact_expiry">
+      Using artifacts in steps | Bitbucket Cloud | Atlassian Documentation</a></li>
+    </ul>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="4._デプロイする">4. デプロイする</a></h2>
+    <p>&nbsp;</p>
+    
+    <h3>ステップ１： リポジトリ所有者向けにアプリパスワードを作成する</h3>
+    <p>&nbsp;</p>
+    
+    <h3>ステップ２： 認証トークンを使用して Pipelines 変数を作成する</h3>
+    <p>&nbsp;</p>
+    
+    <h3>ステップ３a： Bitbucket-upload-file パイプを使用したアーティファクトのデプロイ</h3>
+    <p>&nbsp;</p>
+    
+    <h3>ステップ３b： curl および Bitbucket REST API を使用したアーティファクトのデプロイ</h3>
+    <p>&nbsp;</p>
+    
+    <h3>(参考) curl コマンドでダウンロードへ登録したファイルを取得する</h3>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+    
+  <section>
+    <h2>5. パイプライントリガー</h2>
+    <p>&nbsp;</p>
+    
+    <h3>5-1. 手動でパイプラインを実行する</h3>
+    <p>&nbsp;</p>
+    
+    <h4>5-1-1. 手動実行のみ可能なパイプラインを設定する</h4>
+    <p>&nbsp;</p>
+    
+    <h4>5-1-2. ブランチとパイプランを選んで手動でパイプラインを実行する</h4>
+    <p>&nbsp;</p>
+    
+    <h5>方法１</h5>
+    <p>&nbsp;</p>
+    
+    <h5>方法２</h5>
+    <p>&nbsp;</p>
+    
+    <h4>5-1-3. 特定コミットをパイプライン実行する</h4>
+    <p>&nbsp;</p>
+    
+    <h3>5-2. 特定ブランチへのコミットをトリガーにパイプラインを実行する</h3>
+    <p>&nbsp;</p>
+    
+    <h3>5-3. “Pull Request” をトリガーにパイプラインを実行する</h3>
+    <p>&nbsp;</p>
+    
+    <h3>5-4. スケジュールでパイプラインを実行する</h3>
+    <p>&nbsp;</p>
+    
+    <h4>パイプラインのスケジュールを作成する</h4>
+    <p>&nbsp;</p>
+    
+    <h4>スケジュールの削除</h4>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2>6. パイプラインで git clone する</h2>
+    <h3><br>6-1. public リポジトリを git clone する</h3>
+    <p>&nbsp;</p>
+    <h3><br>6-2. 他の Bitbucket private リポジトリを git clone する</h3>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+    
+  <section>
+    <h2>7. アーティファクトのファイル名にビルド番号を付ける</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2>8. ユニットテストを行う</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+ 
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2>9. ユニットテストへ動的解析を加える (valgrind)</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2>10. ユニットテストへソースコードカバレッジを加える</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2>11. 静的解析を行う (cppcheck)</h2>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2>Appendix</h2>
+    <p>&nbsp;</p>
+    <h3>A.1. Pipelines の step における失敗によりスクリプト停止を避ける方法</h3>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>&nbsp;</h3>
+    <h3>A.2. Pipelines 最長実行時間を変更する方法</h3>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+              
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
 	
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<br>
-<br>
-
-<section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
-</section>
-
-<br>
-<br>
-
-<section>
-	<h2><a name="参考">参考</a></h2>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
 	<ul>
 		<li>
         <a href="https://support.atlassian.com/ja/bitbucket-cloud/resources/" target="_blank">
@@ -214,40 +556,34 @@ pipelines:
         <a href="https://qiita.com/keisuke-nakata/items/cb3d436519dab2868c39" target="_blank">
         Bitbucket Pipelines の cache の使い方 - Qiita</a></li>
 	</ul>
-</section>
-
-<p>&nbsp;</p>
-
-<hr>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">記載</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2021-08-12</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">なんか変えた。<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date"></td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">こんなことも変えた。</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2021-01-02</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
-</footer>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-02-20</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
