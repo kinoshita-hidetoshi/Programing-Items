@@ -55,14 +55,34 @@
 
   <div class="mokuji">
     <nav>
-  	<h2>目次</h2>
-  	<p><a href="#1._事前準備">1. 事前準備</a></p>
-  	<p><a href="#2._ビルドする">2. ビルドする</a></p>
-  	<p><a href="#3._アーティファクトを登録する">3. アーティファクトを登録する</a></p>
+    	<h2>目次</h2>
+    	<p><a href="#1._事前準備">1. 事前準備</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-1._リポジトリを作成">1-1. リポジトリを作成</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-2._リポジトリをクローン">1-2. リポジトリをクローン</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-3._サンプルソース（c++）を作成">1-3. サンプルソース (c++) を作成</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-4._コミット＆プッシュ">1-4. コミット＆プッシュ</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-5._Pipelines_を有効化">1-5. Pipelines を有効化</a> </p>
+    	<p><a href="#2._ビルドする">2. ビルドする</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-1._image_を_ubuntu:18.04_に設定">2-1. image を ubuntu:18.04 に設定</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-2._開発環境（gcc/g++_など_－_“build-essential”）をインストール">2-2. 開発環境（gcc/g++ など － "build-essential"）をインストール</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-3._ソースコードをビルドする">2-3. ソースコードをビルドする</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-4._“parallel”_処理をやめて同時実行を１つのみに修正">2-4. "parallel" 処理をやめて同時実行を1つのみに修正</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-5._以上の修正を実施後の_bitbucket-pipelines.yml">2-5. 以上の修正を実施後の "bitbucket-pipelines.yml"</a></p>
+    	<p><a href="#3._アーティファクトを登録する">3. アーティファクトを登録する</a></p>
       <p><a href="#4._デプロイする">4. デプロイする</a></p>
-  	<p>&nbsp;</p>
-  	<p><a href="#ライセンス">ライセンス</a></p>
-  	<p><a href="#参考">参考</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-1._ステップ１：_リポジトリ所有者向けにアプリパスワードを作成する">4-1. ステップ１: リポジトリ所有者向けにアプリパスワードを作成する</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-2._ステップ２：_認証トークンを使用して_Pipelines_変数を作成する">4-2. ステップ２: 認証トークンを使用して Pipelines 変数を作成する</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-3._ステップ３a：_Bitbucket-upload-file_パイプを使用したアーティファクトのデプロイ">4-3. ステップ３a: Bitbucket-upload-file パイプを使用したアーティファクトのデプロイ</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-4._ステップ３b：_curl_および_Bitbucket_REST_API_を使用したアーティファクトのデプロイ">4-4. ステップ３b: curl および Bitbucket REST API を使用したアーティファクトのデプロイ</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-5._(参考)_curl_コマンドでダウンロードへ登録したファイルを取得する">4-5. (参考) curl コマンドでダウンロードへ登録したファイルを取得する</a></p>
+      <p><a href="#5._パイプライントリガー">5. パイプライントリガー</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-1._手動でパイプラインを実行する">5-1. 手動でパイプラインを実行する</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-2._特定ブランチへのコミットをトリガーにパイプラインを実行する">5-2. 特定ブランチへのコミットをトリガーにパイプラインを実行する</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-3._Pull_Request_をトリガーにパイプラインを実行する">5-3. Pull Request をトリガーにパイプラインを実行する</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-4._スケジュールでパイプラインを実行する">5-4. スケジュールでパイプラインを実行する</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
     </nav>
   </div>
 
@@ -71,17 +91,17 @@
 
   <section>
   	<h2> <a name="1._事前準備">1. 事前準備</a></h2>
-    <h3>1-1. リポジトリを作成</h3>
+    <h3><a name="1-1._リポジトリを作成">1-1. リポジトリを作成</a></h3>
     <p>リポジトリを作成します。詳細割愛。</p>
     <p>
     &nbsp;</p>
     
-    <h3>1-2. リポジトリをクローン</h3>
+    <h3><a name="1-2._リポジトリをクローン">1-2. リポジトリをクローン</a></h3>
     <p>リポジトリをローカルＰＣへクローンします。</p>
     <p><img alt="git clone" src="Pipelines_c++/img2E.jpg" width="1000"></p>
     <p>&nbsp;</p>
     
-    <h3>1-3. サンプルソース（c++）を作成</h3>
+    <h3><a name="1-3._サンプルソース（c++）を作成">1-3. サンプルソース（c++）を作成</a></h3>
     <p>ソースコードを作成します。下記は例です。</p>
     <p>
     <img alt="sample source" src="Pipelines_c++/img30.jpg" width="1000"></p>
@@ -97,7 +117,7 @@ int main()
 }</pre>
     <p>&nbsp;</p>
     
-    <h3>1-4. コミット＆プッシュ</h3>
+    <h3><a name="1-4._コミット＆プッシュ">1-4. コミット＆プッシュ</a></h3>
     <p>作成したソースコードをコミット＆プッシュします。 </p>
     <p><img alt="コミット＆プッシュ" src="Pipelines_c++/img3C.jpg" width="1000"></p>
     <p>&nbsp;</p>
@@ -108,7 +128,7 @@ int main()
     <img alt="コミット＆プッシュ" class="border" src="Pipelines_c++/img3E.jpg" width="1000"></p>
     <p>&nbsp;</p>
     
-    <h3>1-5. Pipelines を有効化</h3>
+    <h3><a name="1-5._Pipelines_を有効化">1-5. Pipelines を有効化</a></h3>
     <p>以下の手順で Pipelines を有効化します。 </p>
   
     <div class="status_information">
@@ -214,7 +234,7 @@ pipelines:
     <p>“bitbucket-pipelines.yml” を編集することで、基本的なビルド＆デプロイを実装していきます。</p>
     <p>&nbsp;</p>
     
-    <h3>2-1. image を ubuntu:18.04 に設定</h3>
+    <h3><a name="2-1._image_を_ubuntu:18.04_に設定">2-1. image を ubuntu:18.04 に設定</a></h3>
     <p>ここでは例として実行環境（Docker Image）を ubuntu:18.04 に設定します。</p>
     <p>（新）<span class="cpp-source">image: ubuntu:18.04</span> </p>
     <p>（旧）<span class="cpp-source">image: gcc:10.2</span> </p>
@@ -222,27 +242,27 @@ pipelines:
     /etc/lsb-release"</span> の一文も追加します。 </p>
     <p>&nbsp;</p>
     
-    <h3>2-2. 開発環境（gcc/g++ など － “build-essential”）をインストール</h3>
+    <h3><a name="2-2._開発環境（gcc/g++_など_－_“build-essential”）をインストール">2-2. 開発環境（gcc/g++ など － “build-essential”）をインストール</a></h3>
     <p>下記２行を追加します。</p>
     <pre class="prettyprint linenums lang-yml" style="width: 800px">
 - apt-get update
 - apt-get -y install build-essential</pre>
     <p>&nbsp;</p>
     
-    <h3>2-3. ソースコードをビルドする</h3>
+    <h3><a name="2-3._ソースコードをビルドする">2-3. ソースコードをビルドする</a></h3>
     <p>下記１行を追加します。</p>
     <pre class="prettyprint linenums lang-yml" style="width: 800px">
 - g++ hello.cpp -o hello</pre>
     <p>&nbsp;</p>
     
-    <h3>2-4. “parallel” 処理をやめて同時実行を１つのみに修正</h3>
+    <h3><a name="2-4._“parallel”_処理をやめて同時実行を１つのみに修正">2-4. “parallel” 処理をやめて同時実行を１つのみに修正</a></h3>
     <p>Pipelines の実施をシンプルにすることを目的に、”Test” の step のみを残して他の step 
     を削除して簡略化します。詳細説明を割愛。修正後の内容は後述の ”bitbucket-pipelines.yml” を参照。</p>
     <p>（parallel は高速な実行を実現できるとても魅力的な機能ですが、この機能を使用するのは Pipelines 
     をある程度使用できるようになってから検討しましょう。）</p>
     <p>&nbsp;</p>
     
-    <h3>2-5. 以上の修正を実施後の “bitbucket-pipelines.yml“</h3>
+    <h3><a name="2-5._以上の修正を実施後の_bitbucket-pipelines.yml">2-5. 以上の修正を実施後の "bitbucket-pipelines.yml"</a></h3>
     <p>以上の修正を行った結果の ”bitbucket-pipelines.yml” を以下に示します。 </p>
     <p>["bitbucket-pipelines.yml"]</p>
     <pre class="prettyprint linenums lang-yml" style="width: 800px">
@@ -338,8 +358,7 @@ pipelines:
     <p><strong>参考：</strong></p>
     <ul>
       <li>
-      <a href="https://ja.confluence.atlassian.com/bitbucket/using-artifacts-in-steps-935389074.html#Usingartifactsinsteps-artifact_expiry">
-      Using artifacts in steps | Bitbucket Cloud | Atlassian Documentation</a></li>
+      <a href="https://ja.confluence.atlassian.com/bitbucket/using-artifacts-in-steps-935389074.html#Usingartifactsinsteps-artifact_expiry" target="_blank">Using artifacts in steps | Bitbucket Cloud | Atlassian Documentation</a></li>
     </ul>
     <p>&nbsp;</p>
   </section>
@@ -350,23 +369,323 @@ pipelines:
 
   <section>
     <h2><a name="4._デプロイする">4. デプロイする</a></h2>
+    <p>アーティファクトは保存期間14日以内という制約がありました。<br>アーティファクトを14日以上保存する必要がある場合は他の場所へ<strong>デプロイ</strong>する必要があります。</p>
+    <p>AWS へ保存する、ftp で保存する、など様々な方法を Bitbucket 
+    は提供していますが、ここでは「ダウンロード」メニューからビルド結果を取得できるようにする方法を紹介します。<br>言い換えると、Pipelines 
+    にダウンロードサイトへ <strong>デプロイ</strong> する処理を追加します。 </p>
     <p>&nbsp;</p>
     
-    <h3>ステップ１： リポジトリ所有者向けにアプリパスワードを作成する</h3>
+    <h3><a name="4-1._ステップ１：_リポジトリ所有者向けにアプリパスワードを作成する">4-1. ステップ１： リポジトリ所有者向けにアプリパスワードを作成する</a></h3>
+    <p>アプリパスワードを作成します。</p>
+    <p>&nbsp;</p>
+    <p>(1) Bitbucket にログイン後、①設定アイコン 、②［<strong>Personal Bitbucket settings</strong>］を順にクリックします。</p>
+    <p>
+    <img alt="Personal Bitbucket settings" class="border" src="Pipelines_c++/img5.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(2) メニューから [<strong>アクセス管理</strong>] のグループ中にある［<strong>アプリパスワード</strong>］を選択します。</p>
+    <p>
+    <img alt="アプリパスワード" class="border" src="Pipelines_c++/img6.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) [<strong>アプリパスワードの作成</strong>] ボタンをクリックします。</p>
+    <p>&nbsp;</p>
+    <p>(4) 下図中の ①、② を記入後、③をクリックします。</p>
+    <p>①の Label はユーザーの識別用に使用されるため「Pipelines」などの任意の名前を設定できます。</p>
+    <p>ここでは評価に使用しているリポジトリ名をそのまま使用します。 </p>
+    <p>
+    <img alt="アプリパスワード" class="border" src="Pipelines_c++/img7.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(5) 「新しいアプリ パスワード」を表示するので記録します。</p>
+    <p><img alt="新しいアプリパスワード" src="Pipelines_c++/img8.jpg"></p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-    <h3>ステップ２： 認証トークンを使用して Pipelines 変数を作成する</h3>
+    <h3><a name="4-2._ステップ２：_認証トークンを使用して_Pipelines_変数を作成する">4-2. ステップ２： 認証トークンを使用して Pipelines 変数を作成する</a></h3>
+    <p>Bitbucket Downloads にファイルをアップロードするには、以下の変数を設定する必要があります。</p>
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>パラメータ名</th>
+          <th>値</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>BITBUCKET_USERNAME</strong></td>
+          <td>リポジトリを所有、かつアーティファクトをアップロードするユーザーの Bitbucket ユーザー名 </td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap"><strong>BITBUCKET_APP_PASSWORD </strong> </td>
+          <td>Bitbucket が生成したアプリパスワード </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>(1) リポジトリの設定で、特定のデプロイメント環境に対してこれらの変数を定義します。</p>
+    <p>&nbsp;［<strong>Repository settings</strong>］ &gt; “PIPELINES“ の［<strong>Repository 
+    variables</strong>］ をクリックします。</p>
+    <p>
+    <img alt="Repository variables" class="border" src="Pipelines_c++/img14.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(2) 下記内容を "Repository variables" へ登録します。</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>BITBUCKET_USERNAME</strong></td>
+          <td>リポジトリを所有、かつアーティファクトをアップロードするユーザーの Bitbucket ユーザー名 </td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap"><strong>BITBUCKET_APP_PASSWORD </strong> </td>
+          <td>Bitbucket が生成したアプリパスワード </td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p>&nbsp;</p>
     
-    <h3>ステップ３a： Bitbucket-upload-file パイプを使用したアーティファクトのデプロイ</h3>
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>BITBUCKET_USERNAME として設定するのは、下図赤枠に表示の "<strong>ユーザー名</strong>"<strong>
+        </strong>です。その上の "<strong>名前</strong>" ではありません。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>
+    <img alt="BITBUCKET_USERNAME" class="border" src="Pipelines_c++/img17.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>設定後の様子(例)です。</p>
+    <p>
+    <img alt="Repository variables" class="border" src="Pipelines_c++/img18.jpg" width="1000"></p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-    <h3>ステップ３b： curl および Bitbucket REST API を使用したアーティファクトのデプロイ</h3>
+    <h3><a name="4-3._ステップ３a：_Bitbucket-upload-file_パイプを使用したアーティファクトのデプロイ">4-3. ステップ３a： Bitbucket-upload-file パイプを使用したアーティファクトのデプロイ</a></h3>
+    <p>アーティファクトを Bitbucket Downloads にアップロードするには、<a href="https://bitbucket.org/atlassian/bitbucket-upload-file" target="_blank">bitbucket-upload-file</a> 
+    パイプを使用します。必要な作業は、アップロードするファイルをビルドのアウトプットから参照するだけです。</p>
+    <ul>
+      <li>FILENAME には “glob patterns“ を使用できます。例えば ‘*.html’ や '**/*.txt' 
+      というような表記をあなたは使用することができます。ただし最大10ファイルまで。もし上限に達した場合はビルドエラーになる、と説明に記載されていました。</li>
+      <li>&nbsp;<a href="https://bitbucket.org/atlassian/bitbucket-upload-file/src/master/">bitbucket-upload-file</a> 
+      の使用方法など、詳細な説明は 
+      <a href="https://bitbucket.org/atlassian/bitbucket-upload-file/src/master/">
+      こちら</a> を参照ください。</li>
+    </ul>
+    <p>ここまでに作成した “bitbucket-pipelines.yml“ へ “bitbucket-upload-file“ 
+    パイプの処理を追加します。ここでは “step” を加える形で追加してみます。 “name: Deploy“ としました。</p>
+    <p>&nbsp;下記例で FILENAME をフルパス表記で記載していますが、説明資料を見る限り ${BITBUCKET_CLONE_DIR} 
+    からの相対パスの表記で大丈夫そうです。ただし私は未確認ですのでご自身で試してみてください。 </p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - g++ hello.cpp -o hello
+        artifacts:
+          - hello
+<span class="auto-style2">    - step:</span>
+<span class="auto-style2">        name: Deploy</span>
+<span class="auto-style2">        script:</span>
+<span class="auto-style2">          - echo $BITBUCKET_CLONE_DIR</span>
+<span class="auto-style2">          - pipe: atlassian/bitbucket-upload-file:0.3.3</span>
+<span class="auto-style2">            variables:</span>
+<span class="auto-style2">              BITBUCKET_USERNAME: $BITBUCKET_USERNAME</span>
+<span class="auto-style2">              BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD</span>
+<span class="auto-style2">              FILENAME: "${BITBUCKET_CLONE_DIR}/hello"</span></pre>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>“BITBUCKET_CLONE_DIR“ はカレントパスを示す変数です。これを使用することでフルパス表記で FILENAME 
+        を記載しています。詳細は資料 “<a href="https://ja.confluence.atlassian.com/bitbucket/variables-in-pipelines-794502608.html" target="_blank">Variables 
+        in pipelines | Bitbucket Cloud | Atlassian Documentation</a>” 
+        を参照してください。パイプラインで使用できる他の変数も確認することができます。 </p>
+      </div>
+    </div>
+
     <p>&nbsp;</p>
     
-    <h3>(参考) curl コマンドでダウンロードへ登録したファイルを取得する</h3>
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>2022/10/14 時点、スクリプト最新バージョンは 0.3.3 
+        です。時々バージョンアップを行うようなので、注意しつつ原則最新版の使用をご検討ください。</p>
+        <p><span class="cpp-source">- pipe: 
+        atlassian/bitbucket-upload-file:0.3.3</span></p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>この “bitbucket-pipelines.yml“ によりパイプラインを実行した結果を以下に記載します。</p>
+    <p>こちらは パイプライン実行を成功 (Successful) した例です。</p>
+    <p><img src="Pipelines_c++/wp28jh6u.jpg" class="border" width="1000">&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="pipelines" class="border" src="Pipelines_c++/img22.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>［ダウンロード］をクリックすると、”hello” をダウンロードできるようになっていることを確認できます。</p>
+    <p>
+    <img alt="ダウンロード" class="border" src="Pipelines_c++/img24.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>複数のファイルを登録する場合、事前に zip コマンドで圧縮したファイルを登録することを推奨します。 </p>
+      </div>
+    </div>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    
+    <h3><a name="4-4._ステップ３b：_curl_および_Bitbucket_REST_API_を使用したアーティファクトのデプロイ">
+    4-4. ステップ３b： curl および Bitbucket REST API を使用したアーティファクトのデプロイ</a></h3>
+    <p>前述「ステップ３a」の pipe 処理部分を curl コマンドにより実行する方法を紹介します。</p>
+    <p>詳細は 
+    <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/deploy-build-artifacts-to-bitbucket-downloads/" target="_blank">
+    こちら</a> 資料の「ステップ３ｂ」を参照ください。</p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px; white-space: pre-wrap;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - g++ hello.cpp -o hello
+        artifacts:
+          - hello
+    - step:
+        name: Deploy
+        script:
+          - echo $BITBUCKET_CLONE_DIR
+          - <span class="auto-style2">curl -X POST "https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"hello"</span></pre>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>Atlassian ドキュメント中に変数 <span class="cpp-source"><strong>
+        BITBUCKET_REPO_OWNER</strong></span> の説明を見つけられませんでしたが、上記 YAML 
+        コードでちゃんと動作することを確認できました。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>REST API 詳細については 
+        <a href="https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-group-downloads" target="_blank">
+        The Bitbucket Cloud REST API (atlassian.com)</a> を参照ください。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="4-5._(参考)_curl_コマンドでダウンロードへ登録したファイルを取得する">4-5. (参考) curl コマンドでダウンロードへ登録したファイルを取得する</a></h3>
+    <p>ダウンロードへ登録したファイルを下記 <strong>curl</strong> 
+    コマンドによりダウンロードすることができます。任意の端末からダウンロードする、各種自動化などで活用する、Pipelines 
+    実行時にビルド済み最新ライブラリを別リポジトリからダウンロードしてくる、など活用の可能性がいろいろありそうです。 </p>
+    <p>&nbsp;</p>
+    <p>■一般書式１</p>
+    <pre style="color: #FFFFFF; background-color: #000000">curl --user $USER_ID:$APP_PASSWORD -s -L https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/downloads/{filename} -o {filename}</pre>
+    <p>■一般書式２</p>
+    <pre style="color: #FFFFFF; background-color: #000000">curl --user $USER_ID:$APP_PASSWORD -s -L https://api.bitbucket.org/2.0/repositories/{workspace}/{repo_slug}/downloads/{filename} &gt; {filename}</pre>
+    <p>&nbsp;</p>
+    <p>■具体例</p>
+        
+    <table class="border-collapse" border="1" width="800">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>項目</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$USER_ID</td>
+          <td>ログインユーザのIDを記載します。ここでは私のID Hidetoshi_Kinoshita を例示します。</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap">$APP_PASSWORD</td>
+          <td>$USER_ID で取得済みのアプリパスワードです。例示では **** としていますが実際に使用時は取得したパスワードを入力します。<br>
+          アプリパスワードの権限はリポジトリへ "書き込み" でテストしましたが、ファイル取得だけなら "読み取り" 権限だけでも良いかもしれません。<br>
+          basic 認証では正常に動作しませんでした。アプリパスワードを使う必要があります。 </td>
+        </tr>
+        <tr>
+          <td>{workspace}</td>
+          <td>ワークスペース名を記載します。下記例では "Hidetoshi_Kinoshita" を指定しています。</td>
+        </tr>
+        <tr>
+          <td>{repo_slug}</td>
+          <td>リポジトリ名を記載します。下記例では "test_repository" を指定しています。</td>
+        </tr>
+        <tr>
+          <td>{filename}</td>
+          <td>取得するファイル名です。 下記では "hello" を指定しています。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <pre style="color: #FFFFFF; background-color: #000000">curl --user Hidetoshi_Kinoshita:************************************ -s -L https://api.bitbucket.org/2.0/repositories/Hidetoshi_Kinoshita/test_repository/downloads/hello -o hello</pre>
+    <p>&nbsp;</p>
+    <p>※ 上記コマンドによる動作確認は、Ubuntu 22.04 にて行いました。</p>
+    <p>&nbsp;</p>
+    <p><strong>参考：</strong></p>
+    <ul>
+      <li>&nbsp;<a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/deploy-build-artifacts-to-bitbucket-downloads/">Bitbucket 
+      ダウンロードにビルド アーティファクトをデプロイする | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a>
+      </li>
+      <li>
+      <a href="https://bitbucket.org/atlassian/bitbucket-upload-file/src/master/">
+      atlassian / bitbucket-upload-file — Bitbucket</a> </li>
+      <li>
+      <a href="https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-group-downloads">
+      The Bitbucket Cloud REST API (atlassian.com)</a> </li>
+      <li>
+      <a href="https://qiita.com/k-yamada-github/items/1c7422f1c2c0e2d6fdb9">
+      bitbucketのAPIを使って、ダウンロードファイルの作成/取得を行う - Qiita</a> </li>
+      <li>
+      <a href="https://developer.atlassian.com/cloud/bitbucket/rest/api-group-downloads/#api-repositories-workspace-repo-slug-downloads-filename-get">
+      The Bitbucket Cloud REST API (atlassian.com)</a> </li>
+    </ul>
     <p>&nbsp;</p>
   </section>
     
@@ -375,42 +694,334 @@ pipelines:
   <p>&nbsp;</p>
     
   <section>
-    <h2>5. パイプライントリガー</h2>
+    <h2><a name="5._パイプライントリガー">5. パイプライントリガー</a></h2>
+    <p>Pipelines のビルド構成は bitbucket-pipelines.yml ファイルで定義できます。Pipelines 
+    を初めて利用される場合は、<a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/" target="_blank">Bitbucket 
+    Pipelines を使い始める</a> のドキュメントをご確認ください。 </p>
+    <p><img alt="パイプライントリガー" src="Pipelines_c++/img45.jpg"></p>
     <p>&nbsp;</p>
     
-    <h3>5-1. 手動でパイプラインを実行する</h3>
+    <h3><a name="5-1._手動でパイプラインを実行する">5-1. 手動でパイプラインを実行する</a></h3>
+    <p>ブラウザ画面で Bitbucket のリポジトリを表示して、この画面から希望するブランチやコミットを対象にパイプライン実行することができます。</p>
     <p>&nbsp;</p>
     
     <h4>5-1-1. 手動実行のみ可能なパイプラインを設定する</h4>
+    <p>パイプラインを手動でのみ実行したい場合、カスタム パイプラインを使用します。カスタム 
+    パイプラインは、ブランチへのコミットでは自動的に実行されません。カスタム パイプラインを定義するには、bitbucket-pipelines.yml 
+    ファイルの custom セクションにパイプライン構成を追加します。カスタム 
+    パイプラインとして定義されていないパイプラインは、ブランチへのプッシュが発生したときに自動的に実行されます。 </p>
+    <p>カスタム パイプラインのもう 1 つのメリットは、変数の値を一時的に追加または更新できる点です。バージョン番号を追加したり、1 
+    回のみ使用する値を提供したりするために使用できます。詳細は 
+    <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/pipeline-triggers/" target="_blank">
+    パイプライン トリガー | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a> を参照してください。 
+    </p>
+    <p>パイプラインを手動で実行し、Bitbucket Cloud UI からトリガーするには、リポジトリへの書き込み権限が必要です。</p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  <strong><span class="auto-style2">custom</span></strong>: # Pipelines that can only be triggered manually
+    - step:
+        name: Build
+        script:
+          - echo "This script can only be triggerd manually (custom)."
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - g++ hello.cpp -o hello
+        artifacts:
+          - hello</pre>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <h4>5-1-2. ブランチとパイプランを選んで手動でパイプラインを実行する</h4>
+    <p>ブラウザ画面から、ブランチとパイプランを選んで手動でパイプラインを実行する、手順を記載します。 </p>
+    <p>下記のような bitbucket-pipelines.yml ファイルを登録している場合を例に説明します。 </p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential zip
+          - g++ hello.cpp -o hello
+        artifacts:
+          - hello
+    - step:
+        name: Deploy
+        script:
+          - pwd &amp;&amp; ls -al
+          - echo $BITBUCKET_CLONE_DIR
+          - pipe: atlassian/bitbucket-upload-file:0.3.2
+            variables:
+              BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+              BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+              FILENAME: "${BITBUCKET_CLONE_DIR}/hello"
+
+  <span class="auto-style2"><strong>custom</strong></span>: # Pipelines that can only be triggered manually
+    custom-build:
+      - step:
+          script:
+            - echo "This script can only be triggerd manually (custom)."
+            - cat /etc/lsb-release
+            - apt-get update
+            - apt-get -y install build-essential
+            - g++ hello.cpp -o hello
+          artifacts:
+            - hello</pre>
     <p>&nbsp;</p>
     
     <h5>方法１</h5>
+    <p>(1) ［パイプライン］メニューを選択します。 </p>
+    <p>(2) ［Run pipeline］ をクリックします。 </p>
+    <p>
+    <img alt="custom-build" class="border" src="Pipelines_c++/img4E.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) ”Branch” と ”Pipeline” を選択後、［Run］ボタンをクリックします。</p>
+    <p><img alt="custom-build" src="Pipelines_c++/img4F.jpg" width="600"></p>
+    <p>&nbsp;</p>
+    <p>以上の操作により、選択したブランチのコミット HEAD に対してパイプラインを実行します。 </p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <h5>方法２</h5>
+    <p>(1) ［ブランチ］メニューを選択します。</p>
+    <p>&nbsp;(2) パイプランを実行するブランチの ［･･･］ &gt; ［Run pipelines for a branch］ をクリックします。</p>
+    <p>
+    <img alt="custom-build" class="border" src="Pipelines_c++/img50.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) ”Pipeline” を選択後、［Run］ボタンをクリックします。</p>
+    <p><img alt="custom-build" src="Pipelines_c++/img52.jpg" width="600"></p>
+    <p>&nbsp;</p>
+    <p>以上の操作により、選択したブランチのコミット HEAD に対してパイプラインを実行します。 </p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <h4>5-1-3. 特定コミットをパイプライン実行する</h4>
+    <p>以下の手順で行います。</p>
+    <p>(1) ［コミット］メニューを選択します。 </p>
+    <p>(2) パイプラインを実行するコミットを選択します。 </p>
+    <p>
+    <img alt="custom-build" class="border" src="Pipelines_c++/img55.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) 「Run pipeline」をクリックします。</p>
+    <p>
+    <img alt="custom-build" class="border" src="Pipelines_c++/img57.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(4) "Pipeline" を選択後、［Run］ボタンをクリックします。</p>
+    <p><img alt="custom-build" src="Pipelines_c++/img59.jpg" width="600"></p>
+    <p>&nbsp;</p>
+    <p>以上の操作により、コミットに対してパイプラインを実行します。</p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>当然のことですが、コミット時点の bitbucket-pipelines.yml ファイルに設定されている Pipelines 
+        構成からのみ選択可能です。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-    <h3>5-2. 特定ブランチへのコミットをトリガーにパイプラインを実行する</h3>
+    <h3><a name="5-2._特定ブランチへのコミットをトリガーにパイプラインを実行する">5-2. 特定ブランチへのコミットをトリガーにパイプラインを実行する</a></h3>
+    <p>プッシュ先のブランチに応じてパイプラインの動作を変えることができます。これを行うには、bitbucket-pipelines.yml 
+    ファイル内にブランチ固有の設定を含める必要があります。</p>
+    <p>「<a href="https://ja.confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html" target="_blank">bitbucket-pipelines.yml 
+    を設定する</a>」も参照してください。</p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例] </p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        script:
+          - echo "This script runs on all branches that don't have any specific pipeline assigned in 'branches'."
+  <strong><span class="auto-style2">branches</span></strong>:
+    main:
+      - step:
+          name: Build
+          script:
+            - echo "This script runs only on commit to the main branch."
+            - cat /etc/lsb-release
+            - apt-get update
+            - apt-get -y install build-essential
+            - g++ hello.cpp -o hello
+          artifacts:
+            - hello
+    feature/*:
+      - step:
+          script:
+            - echo "This script runs only on commit to branches with names that match the feature/* pattern."</pre>
+    <p>&nbsp;</p>
+    <ul>
+      <li><strong>main</strong> の定義は、main へのコミットで実行する命令を意味します。 </li>
+      <li><strong>feature/*</strong>&nbsp;定義は、任意の <strong>feature</strong> 
+      ブランチへのコミットで実行される命令を意味します。 </li>
+      <li><strong>default</strong> の定義は、<strong>main</strong> または <strong>
+      feature</strong> 以外の任意のブランチへのコミットで実行される命令を意味します。 </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>以上の設定により、条件を満たすブランチへのコミットに対してパイプラインを実行します。 </p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>プルリクエストからのマージもコミットとして使われます。</p>
+        <p>具体例として、例えば feature/add_function1 ブランチを develop ブランチへマージした場合は devekop 
+        ブランチへのコミットとして扱われて該当するパイプラインがあれば実行されます。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>複数のブランチ条件で同一の steps を実行する方法について下記で紹介されていました。 </p>
+        <p>
+        <a href="https://stackoverflow.com/questions/42304478/bitbucket-pipelines-multiple-branches-with-same-steps" target="_blank">
+        git - Bitbucket Pipelines - multiple branches with same steps - Stack 
+        Overflow</a> </p>
+      </div>
+    </div>
+
+    <p>こんな感じで複数条件を記載すれば良いようです。</p>
+    <p>注意事項として '{rev,staging}' 内にスペースを加えてはいけないと記載されていました。</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+pipelines:
+  branches:
+    <span class="auto-style2"><strong>'{release/**,hotfix/**}'</strong></span>:
+      - step:
+        script:
+          - echo 'step'</pre>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-    <h3>5-3. “Pull Request” をトリガーにパイプラインを実行する</h3>
+    <h3><a name="5-3._Pull_Request_をトリガーにパイプラインを実行する">5-3. "Pull Request" をトリガーにパイプラインを実行する</a></h3>
+    <p>"Pull Request" をトリガーにパイプラインを実行する例について記載します。</p>
+    <ul>
+      <li>&nbsp;"bitbucket-pipelines.yml" で pull-requests 
+      の中に記載するブランチ名は、プルリクエストする際の from 側のブランチ名です。</li>
+      <li>プルリクエスト状態で新たにコミットを実施した場合、パイプライントリガーは pull-requests と branches 
+      の両方を対象として実行されます。それぞれでパイプラインのトリガー条件を満足する場合は一回のコミットで２つのパイプラインを実行します。 </li>
+      <li>pull-requests の条件で ‘**’ を設定した場合、下記例に示すように他で設定してしていないあらゆるブランチからの 
+      pull-requests を対象とします。'**' と ‘*' は異なる意味を持ちます。’*' は ‘/' を含みませんが ‘**’ は '/’ 
+      を含みます。</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  <strong><span class="auto-style2">pull-requests</span></strong>:
+    '**':
+      - step:
+          script:
+            - echo "This script runs on pull-requests to any branch not elsewhere defined."
+    feature/*:
+      - step:
+          name: Build
+          script:
+            - echo "This script runs only on pull-requests to the main branch."
+            - cat /etc/lsb-release
+            - apt-get update
+            - apt-get -y install build-essential
+            - g++ hello.cpp -o hello
+          artifacts:
+            - hello</pre>
+    <p>&nbsp;</p>
+    <p>以上の操作により、条件を満足するブランチのプルリクエストおよびプルリクエスト中のコミットに対してパイプラインを実行します。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
-    <h3>5-4. スケジュールでパイプラインを実行する</h3>
+    <h3><a name="5-4._スケジュールでパイプラインを実行する">5-4. スケジュールでパイプラインを実行する</a></h3>
+    <p>
+    スケジュールされたパイプラインを使用すると、パイプラインを時間、日、または週単位で実行できます。パイプラインを例えば毎晩０時に実行する、というスケジュールによるパイプライン実行はよく使用されるパイプライン運用方法の一つです。</p>
+    <ul>
+      <li>スケジュールされたパイプラインは、コミットや手動操作でトリガーされるあらゆるビルドに追加して実行できます。</li>
+      <li>&nbsp;"bitbucket-pipelines.yml" ファイルで定義したすべてのパイプラインに対してスケジュールを作成できます。 
+      </li>
+      <li>カスタム パイプラインを作成した場合、それはスケジュールされたときまたは手動でトリガされたときにのみ実行されます。 </li>
+    </ul>
     <p>&nbsp;</p>
     
     <h4>パイプラインのスケジュールを作成する</h4>
+    <p>以下の手順でパイプラインのスケジュールを作成します。</p>
+    <p>&nbsp;(1) Bitbucket のリポジトリに移動します。 </p>
+    <p>(2) [<strong>パイプライン</strong>] &gt; [<strong>Schedules</strong>] (右上) 
+    をクリックします。</p>
+    <p>
+    <img alt="pipelines - schedules" class="border" src="Pipelines_c++/img76.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(3) [New schedule] をクリックします。</p>
+    <p>
+    <img alt="pipelines - schedules" class="border" src="Pipelines_c++/img77.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>(4) スケジュールを登録したいブランチとパイプラインを選択します。 </p>
+    <ul>
+      <li>スケジュール実行は、ブランチの HEAD コミットに対して実行します。 </li>
+      <li>選択したブランチの bitbucket-pipelines.yml でパイプラインが定義されている必要があります。</li>
+    </ul>
+    <p>
+    <img alt="pipelines - schedules" src="Pipelines_c++/img79.jpg" width="600"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    (5) スケジュールを設定します。 </p>
+    <ul>
+      <li>パイプラインの実行間隔を選択します (時間、日、または週単位)。 </li>
+      <li>ご利用のタイムゾーンで時間を選択します。パイプラインは UTC 時刻でスケジュールされます (夏時間の影響を受けません)。 </li>
+      <li>
+      スケジュールされたパイプラインは、選択した期間内の任意のタイミングで実行されます。これは、その期間にスケジュールされたパイプラインのトリガーを分散させるためです。 
+      </li>
+    </ul>
+    <p>
+    <img alt="pipelines - schedules" src="Pipelines_c++/img7F.jpg" width="600"></p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="pipelines - schedules" src="Pipelines_c++/img80.jpg" width="600"></p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <h4>スケジュールの削除</h4>
+    <p>[パイプライン] &gt; [スケジュール] (画面右上の) に移動して、リポジトリのすべてのスケジュールを確認します。 </p>
+    <ul>
+      <li>スケジュールの右側にあるゴミ箱アイコンを使用してスケジュールを削除します。</li>
+      <li>&nbsp;API を使用して作成されたスケジュールは、Cron 表現 (0 10 15 * *など) で表示されます。</li>
+    </ul>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <p><strong>参考：</strong></p>
+    <ul>
+      <li>
+      <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/pipeline-triggers/">
+      パイプライン トリガー | Bitbucket Cloud | アトラシアン サポート (atlassian.com)</a> </li>
+      <li>
+      <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/">
+      bitbucket-pipelines.yml を設定する | Bitbucket Cloud | アトラシアン サポート 
+      (atlassian.com)</a> </li>
+      <li>
+      <a href="https://stackoverflow.com/questions/42304478/bitbucket-pipelines-multiple-branches-with-same-steps">
+      git - Bitbucket Pipelines - multiple branches with same steps - Stack 
+      Overflow</a> </li>
+    </ul>
     <p>&nbsp;</p>
   </section>
     
