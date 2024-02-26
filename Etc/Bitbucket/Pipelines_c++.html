@@ -43,6 +43,9 @@
   .auto-style2 {
     background-color: #505000;
   }
+  .auto-style3 {
+    text-decoration: underline;
+  }
   </style>
 
 </head>
@@ -80,6 +83,15 @@
       <p>&nbsp;&nbsp; <a href="#5-2._特定ブランチへのコミットをトリガーにパイプラインを実行する">5-2. 特定ブランチへのコミットをトリガーにパイプラインを実行する</a></p>
       <p>&nbsp;&nbsp; <a href="#5-3._Pull_Request_をトリガーにパイプラインを実行する">5-3. Pull Request をトリガーにパイプラインを実行する</a></p>
       <p>&nbsp;&nbsp; <a href="#5-4._スケジュールでパイプラインを実行する">5-4. スケジュールでパイプラインを実行する</a></p>
+        <p><a href="#6._パイプラインで_git_clone_する">6. パイプラインで git clone する</a></p>
+        <p><a href="#7._アーティファクトのファイル名にビルド番号を付ける">7. アーティファクトのファイル名にブル度番号を付ける</a></p>
+        <p><a href="#8._ユニットテストを行う">8. ユニットテストを行う</a></p>
+        <p><a href="#9._ユニットテストへ動的解析を加える_(Valgrind)">9. ユニットテストへ動的解析を加える (Valgrind)</a></p>
+        <p><a href="#10._ユニットテストへソースコードカバレッジを加える">10. ユニットテストへソースコードカバレッジを加える</a></p>
+        <p><a href="#11._静的解析を行う_(cppcheck)">11. 静的解析を行う (cppcheck)</a></p>
+        <p><a href="#Appendix">Appendix</a></p>
+        <p>&nbsp;&nbsp; <a href="#A.1._Pipelines_の_step_における失敗によるスクリプト停止を避ける方法">A.1. Pipelines の step における失敗よるスクリプト停止を避ける方法</a></p>
+        <p>&nbsp;&nbsp; <a href="#A.2._Pipelines_最長実行時間を変更する方法">A.2. Pipelines 最長実行時間を変更する方法</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -1030,11 +1042,152 @@ pipelines:
   <p>&nbsp;</p>
   
   <section>
-    <h2>6. パイプラインで git clone する</h2>
+    <h2><a name="6._パイプラインで_git_clone_する">6. パイプラインで git clone する</a></h2>
     <h3><br>6-1. public リポジトリを git clone する</h3>
+    <p>public リポジトリを “git clone“ する例として “google test“ のリポジトリを対象に git clone してみます。 </p>
+    <p>下記にサンプルを記載します。</p>
     <p>&nbsp;</p>
-    <h3><br>6-2. 他の Bitbucket private リポジトリを git clone する</h3>
+    <p>["bitbucket-pipelines.yml" 例] </p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: git clone
+        script:
+          - apt-get update &amp;&amp; apt-get -y install tzdata
+          - export TZ="Asia/Tokyo" &amp;&amp; date
+          - apt-get -y install git
+          - git clone https://github.com/google/googletest.git
+          - ls
+          - cd googletest
+          - ls</pre>
     <p>&nbsp;</p>
+    <p>説明をかなり割愛しますが、public リポジトリはこんな感じで簡単に git clone できます。</p>
+    <p>下図の通り、このパイプラインを全て正常に実行することができました。</p>
+    <p>
+    <img alt="Pipelines 中で git clone" class="border" src="Pipelines_c++/img9.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>上記例では、下記２行を入れることが正しく動作させるためのコツです。</p>
+        <p>これら無しだと git インストール中に入力待ちとなって無限に Pipelines を終わらなくなるので注意してください。</p>
+        <p>またこの状態になってしまったら <span class="auto-style3">手動で中止</span> 
+        する必要があることも注意してください。 </p>
+        <p><span class="cpp-source">- apt-get update &amp;&amp; apt-get -y install 
+        tzdata</span> </p>
+        <p><span class="cpp-source">- export TZ="Asia/Tokyo" &amp;&amp; date</span> </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>6-2. 他の Bitbucket private リポジトリを git clone する</h3>
+    <p>パイプラインの中で他の Bitbucket private リポジトリを git clone する手順について説明します。</p>
+    <p>下記のようなことをすることを想定します。Hidetoshi_Kinoshita/pipelines_test1.git はこの評価のために私が準備した実験用の 
+    private リポジトリです。</p>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: git clone
+        script:
+          - apt-get update &amp;&amp; apt-get -y install tzdata
+          - export TZ="Asia/Tokyo" &amp;&amp; date
+          - apt-get -y install git
+          - <span class="auto-style2">git clone git@bitbucket.org:Hidetoshi_Kinoshita/pipelines_test1.git</span>
+          - ls
+          - cd pp_pipelines_test1
+          - ls</pre>
+    <p>&nbsp;</p>
+    <p>まずはこのままパイプラインを実行して結果を確認してみます。 </p>
+    <p>&nbsp;</p>
+    <p><img alt="実行結果" class="border" src="Pipelines_c++/img13.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p><img alt="実行結果" class="border" src="Pipelines_c++/img14.gif" width="800"></p>
+    <p>&nbsp;</p>
+    <p>予想通りですが、「Permission denied (publickey) .」となって "git clone" 
+    を失敗しました。パイプラインに対して SSH 鍵を登録してリポジトリへアクセスできるようにする必要がある、ということです。</p>
+    <p>以下、パイプラインに対して SSH 鍵を登録する手順の説明です。</p>
+    <p>&nbsp;</p>
+    <p>(1) パイプラインを実行する側のリポジトリ設定から「SSH keys」メニューをクリックします。</p>
+    <p>&nbsp;</p>
+    <p>(2) [Generate keys] または [Use my own keys] ボタンをクリックします。</p>
+    <p>ここでは [Generate keys] ボタンをクリックして進みます。</p>
+    <p>
+    <img alt="Generate keys" class="border" src="Pipelines_c++/img19.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>(3) "Private key" と "Public key" を生成して下図のような画面へ表示します。</p>
+    <p>
+    <img alt="SSH keys" src="Pipelines_c++/img1A.jpg" class="border" width="800"></p>
+    <p>&nbsp;</p>
+    <p>(4) [<strong>Copy public key</strong>] ボタンをクリックして ”public key” をコピーします。</p>
+    <p>
+    <img alt="SSH keys" class="border" src="Pipelines_c++/img1E.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>(5) ターゲットリポジトリへ “public key“ 
+    を登録します。リポジトリ("pipelines_test1")へ移動して、[Repository settings] &gt; [一般] &gt; [アクセスキー] 
+    をクリックします。 </p>
+    <p>
+    <img alt="SSH keys" class="border" src="Pipelines_c++/img20.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>(6) [Add key] ボタンをクリックします。</p>
+    <p>
+    <img alt="SSH keys" class="border" src="Pipelines_c++/img23.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>(7) 下図のような画面を表示するので、必要事項を記入後に [Add SSH key] ボタンをクリックします。 </p>
+    <ul>
+      <li>Label : 後で何の鍵かを特定できる名前を付けましょう </li>
+      <li>Key : (4) でコピーした公開鍵をここに貼ります</li>
+    </ul>
+    <p><img alt="SSH keys" src="Pipelines_c++/img26.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>ここでは下図のように入力してみました。[Add SSH key] ボタンをクリックします。</p>
+    <p><img alt="SSH keys" src="Pipelines_c++/img27.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>するとこんな感じの画面表示となりました。</p>
+    <p>
+    <img alt="SSH keys" class="border" src="Pipelines_c++/img2A.jpg" width="800"></p>
+    <p>&nbsp;</p>
+    <p>以上で SSH 鍵の設定を完了です。</p>
+    <p>&nbsp;</p>
+    <p>(8) 先程失敗（Failed）となったパイプラインを再度実行してみます。</p>
+    <p>[Run pipelines] ボタンをクリックします。</p>
+    <p>
+    <img alt="Run pipeline" src="Pipelines_c++/img2D.jpg" class="border" width="800"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    下図画面を表示するので［Run］ボタンをクリックします。</p>
+    <p>
+    <img alt="Run pipeline" src="Pipelines_c++/img32.jpg" width="800"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    <img alt="Run pipeline" class="border" src="Pipelines_c++/img33.jpg" width="800"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    パイプライン実行を成功です。</p>
+    <p>
+    以上の手順により、他の Bitbucket private リポジトリから git clone できることを確認できました。 </p>
+    <p>
+    &nbsp;</p>
+    <p>
+    <strong>参考：</strong></p>
+    <ul>
+      <li>
+      <a href="https://bitbucket.org/blog/cloning-another-bitbucket-repository-in-bitbucket-pipelines" target="_blank">
+      Cloning another Bitbucket repository in Bitbucket Pipelines - Bitbucket</a></li>
+    </ul>
   </section>
 
   <p>&nbsp;</p>
@@ -1042,10 +1195,75 @@ pipelines:
   <p>&nbsp;</p>
     
   <section>
-    <h2>7. アーティファクトのファイル名にビルド番号を付ける</h2>
+    <h2><a name="7._アーティファクトのファイル名にビルド番号を付ける">7. アーティファクトのファイル名にビルド番号を付ける</a></h2>
+    <p>変数 <strong>BITBUCKET_BUILD_NUMBER</strong> 
+    によりパイプライン中でビルド番号を使うことができます。これを使うことでパイプラインを実行する度にファイル名やフォルダ名を変えることが可能になります。</p>
     <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential
+          - mkdir out
+          - g++ hello.cpp -o out/hello_$BITBUCKET_BUILD_NUMBER
+          - ls out
+        artifacts:
+          - out/**</pre>
     <p>&nbsp;</p>
+    <p>これを実行することで <strong>hello_6</strong> というファイルを出力することができました。<strong>6</strong> 
+    という値はビルド番号 <strong>#6</strong> からくるものです。</p>
+    <p>
+    <img alt="BITBUCKET_BUILD_NUMBER 使用方法" class="border" src="Pipelines_c++/img36.jpg" width="800"></p>
     <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>'artifacts' で <span class="cpp-source">$BITBUCKET_BUILD_NUMBER</span> 
+        を使うことはできないように見えます。</p>
+        <p>下記のようなサンプルで実験しましたが、 <span class="cpp-source">
+        out_$BITBUCKET_BUILD_NUMBER/**</span> を artifacts へ登録できませんでした。'script' 
+        を全て正常に動作できていることから、 artifacts 固有の問題と推測しています。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:18.04
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        script:
+          - cat /etc/lsb-release
+          - apt-get update
+          - apt-get -y install build-essential zip
+          - mkdir out
+          - mkdir out_$BITBUCKET_BUILD_NUMBER
+          - g++ hello.cpp -o out/hello_$BITBUCKET_BUILD_NUMBER
+          - cp out/hello_$BITBUCKET_BUILD_NUMBER out_$BITBUCKET_BUILD_NUMBER/hello_$BITBUCKET_BUILD_NUMBER
+          - ls out
+          - ls out_$BITBUCKET_BUILD_NUMBER
+        artifacts:
+          - out/**
+          - <span class="auto-style2">out_$BITBUCKET_BUILD_NUMBER/**</span></pre>
+    <p>&nbsp;</p>
+    <p><strong>参考：</strong></p>
+    <ul>
+      <li>
+      <a href="https://ja.confluence.atlassian.com/bitbucket/variables-in-pipelines-794502608.html" target="_blank">
+      Variables in pipelines | Bitbucket Cloud | Atlassian Documentation</a></li>
+    </ul>
   </section>
     
   <p>&nbsp;</p>
@@ -1053,7 +1271,168 @@ pipelines:
   <p>&nbsp;</p>
   
   <section>
-    <h2>8. ユニットテストを行う</h2>
+    <h2><a name="8._ユニットテストを行う">8. ユニットテストを行う</a></h2>
+    <p>Pipelines 上でユニットテストを実施します。</p>
+    <p>cmake でユニットテストを構成済みであることを前提として以下を記載します。</p>
+    <p>&nbsp;</p>
+    <ul>
+      <li>ユニットテストの実施は、下記で行っています。<br><span class="cpp-source">ctest 
+      --output-on-failure</span> </li>
+      <li>この例では、ユニットテストを googletest により実施しています。<br>googletest 
+      をサイトから取得したソース一式（release-1.12.0.tar.gz）をリポジトリへ保存しておき、pipelines 
+      によりビルド＆インストールしています。<br>"apt-get install" 
+      などを使ってインストールしても良いのですが、バージョンアップに伴う仕様変更を懸念して常に同一のソフトを使う、という例とさせていただきました。 
+      </li>
+      <li>ユニットテスト実装および詳細については、本ページでは説明を割愛します。</li>
+      <li>cmake および ctest などについては、本ページでは説明を割愛します。インターネット上の記事などで学習してください。 </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:22.04
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: build and unit-test
+          script:
+            - apt-get update &amp;&amp; apt-get -y install tzdata
+            - export TZ="Asia/Tokyo" &amp;&amp; date
+            - apt-get -y install build-essential cmake
+            - gcc --version &amp;&amp; cmake --version &amp;&amp; lcov --version &amp;&amp; cppcheck --version
+            # build and install googletest.
+            - tar zxvf release-1.12.0.tar.gz   &nbsp;# googletest
+            - cd googletest-release-1.12.0
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - make install
+            - cd ..
+            - cd ..
+            # build and tests.
+            - mkdir build
+            - cd build
+            - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=ON ..
+            - make
+            # do unit-tests.
+            - ctest --output-on-failure</pre>
+    <p>&nbsp;</p>
+    <p>以下、CMakeLists.txt の部分の身参考記載します。</p>
+    <p>[(参考) "CMakeLists.txt" 例]</p>
+    <pre class="prettyprint linenums" style="width: 800px;">
+# このバージョン以上のCMAKEを使うよう宣言
+cmake_minimum_required(VERSION 3.10)
+
+# プロジェクト名．c/c++言語であることを宣言
+#project(sample CXX)
+project(sample C)
+
+# バージョン番号
+set(serial "1.0.0")
+
+# c++17 が必要
+set(CMAKE_CXX_STANDARD 17)
+
+# デバッグ出力
+message(STATUS "PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
+message(STATUS "PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
+message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
+
+# 共通オプション
+set(CMAKE_CXX_FLAGS "--coverage")
+set(CMAKE_C_FLAGS "--coverage")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+
+# ビルドの種類によってオプションを変える
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -O0 -g")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_MINSIZEREL "-Wall -Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Wall -O2 -g -DNDEBUG")
+set(CMAKE_C_FLAGS_DEBUG "-Wall -O0 -g")
+set(CMAKE_C_FLAGS_RELEASE "-Wall -O3 -DNDEBUG")
+set(CMAKE_C_FLAGS_MINSIZEREL "-Wall -Os -DNDEBUG")
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "-Wall -O2 -g -DNDEBUG")
+
+include_directories(include)
+
+add_subdirectory(PfLogPrintf)
+
+# ライブラリの作成を指示．SHARED で共有ライブラリ
+# sample.c を元に、libsample.so という名前で作成
+add_library(sample SHARED sample.c)
+
+# sample.so をビルドする際に PfLogPrintf をリンクする
+target_link_libraries(sample PfLogPrintf)
+
+if(BUILD_TESTING)
+  # ctest を valgrind ありで実行するために下記が必要
+  include(CTest)
+
+  # テストを有効化
+  enable_testing()
+  # サブディレクトリを指定．指定したディレクトリ内のCMakeLists.txt が実行される
+  add_subdirectory(test)
+endif()
+
+# capability ライブラリのインクルードディレクトリを教えてあげる
+# PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
+target_include_directories( sample
+  PUBLIC ${PROJECT_SOURCE_DIR}/include
+  )</pre>
+    <p>&nbsp;</p>
+    <p>[(参考) test フォルダ内の "CMakeLists.txt" 例]</p>
+    <pre class="prettyprint linenums" style="width: 800px;">
+# このバージョン以上のCMAKEを使うよう宣言
+cmake_minimum_required(VERSION 3.10)
+
+# プロジェクト名．c/c++言語であることを宣言
+project(test_sample CXX)
+#project(test_sample C)
+
+# To use the googletest
+find_package(GTest REQUIRED)
+
+# デバッグ出力
+message(STATUS "PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
+message(STATUS "PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
+message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
+
+# 共通オプション
+set(CMAKE_CXX_FLAGS "--coverage")
+set(CMAKE_C_FLAGS "--coverage")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+
+# ビルドの種類によってオプションを変える
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -O0 -g")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_MINSIZEREL "-Wall -Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Wall -O2 -g -DNDEBUG")
+
+# リンクディレクトリの指定
+#link_directories(PfLogPrintf)
+
+# 今回作成する実行ファイル test_sample, ソースファイル３つ
+add_executable(
+    test_sample
+    function1_test.cpp
+    function2_test.cpp
+    function3_test.cpp
+    )
+ 
+# gtest, pthread をリンクします
+target_link_libraries(
+    test_sample 
+    ${GTEST_BOTH_LIBRARIES} 
+    pthread
+    sample)
+
+#target_link_libraries(test_sample GTest::GTest GTest::Main)
+target_include_directories(test_sample PUBLIC ${GTEST_INCLUDE_DIRS})
+
+include(GoogleTest)
+gtest_add_tests(TARGET test_sample)</pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>
@@ -1063,7 +1442,69 @@ pipelines:
   <p>&nbsp;</p>
 
   <section>
-    <h2>9. ユニットテストへ動的解析を加える (valgrind)</h2>
+    <h2><a name="9._ユニットテストへ動的解析を加える_(Valgrind)">9. ユニットテストへ動的解析を加える (<em>Valgrind</em>)</a></h2>
+    <p><strong><em>Valgrind</em></strong>（ヴァルグリンド）は、メモリデバッグや、メモリリークの検出、スレッドエラーの検出、プロファイリングなどを行うための仮想機械を利用したソフトウェア開発ツールです。</p>
+    <p>ユニットテストと <strong><em>Valgrind</em></strong> を併用するのはとても有益で良い方法の１つです。</p>
+    <p><strong><em>Valgrind</em></strong> で最もよく利用されている標準のツールは <strong><em>
+    Memcheck</em></strong> です。 <strong><em>Memcheck</em></strong> 
+    はほぼすべての命令に特別な計測用のコードを挿入し、「正当性」があり、「アドレス可能」であるかという情報が、それぞれVビットおよびAビットに格納されているかを追跡します。データは移動したり加工されたりするが、計測用のコードは1ビットレベルで正確であるようにA、Vビットを追跡します。</p>
+    <p>さらに、<strong><em>Memcheck</em></strong> 
+    は標準のCメモリアロケータを独自の実装に置き換え、割り当て済みブロックの前後にメモリガードを挿入します。この機能により、<strong><em>Memcheck</em></strong> 
+    はプログラムが割り当てられたブロックよりわずかに外側の領域を読み書きする off-by-one エラーを検出できます。</p>
+    <p><strong><em>Memcheck</em></strong> が検出や警告可能な問題には、下記のものがあります。</p>
+    <ul>
+      <li>初期化されていないメモリの使用 </li>
+      <li>free されたメモリの読み書き </li>
+      <li>malloc されたブロックの終端以降への読み書き </li>
+      <li>メモリリーク </li>
+    </ul>
+    <p>
+    こうした機能への代償として処理性能が低下します。Memcheckの元で動作するプログラムはValgrindなしで動作する場合と比べて5倍から20倍遅く、また多くのメモリを使用します。（メモリ確保ごとにかなりのメモリを追加で消費します）。したがって、ほとんどの開発者は常にMemcheck（あるいは他のValgrindツール）の元でコードを走らせることはしません。特定のバグを解析したり、（Memcheckが検出可能な種類の）潜在的なバグがないことを検証するために使用するのが最も典型的な方法です。</p>
+    <p>&nbsp;</p>
+    <p>ユニットテストの実行を <strong><em>Valgrind</em></strong> で実施する手順を以下に記載します。ここでは 
+    <strong><em>ctest</em></strong> のオプション指定を変更することで実施する例を示します。（<strong><em>ctest</em></strong> 
+    は標準で <strong><em>Valgrind</em></strong> をサポートしています。）</p>
+    <p>&nbsp;</p>
+    <ol>
+      <li>apt-get install で <strong><em>Valgrind</em></strong> を追加します。<br>
+      <span class="cpp-source">apt-get install -y valgrind</span></li>
+      <li>前述のユニットテストを下記の通り変更します。<br>(新) <span class="cpp-source">ctest 
+      --output-on-failure -T MemCheck --overwrite 
+      MemoryCheckCommandOptions="--leak-check=full --error-exitcode=1"</span><br>
+      (旧) <span class="cpp-source">ctest --output-on-failure</span></li>
+    </ol>
+    <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:22.04
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: build and unit-test, coverage
+          script:
+            - apt-get update &amp;&amp; apt-get -y install tzdata
+            - export TZ="Asia/Tokyo" &amp;&amp; date
+            - apt-get -y install build-essential cmake valgrind lcov cppcheck zip
+            - gcc --version &amp;&amp; cmake --version &amp;&amp; lcov --version &amp;&amp; cppcheck --version
+            # build and install googletest.
+            - tar zxvf release-1.12.0.tar.gz   &nbsp;# googletest
+            - cd googletest-release-1.12.0
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - make install
+            - cd ..
+            - cd ..
+            # build IoGeneral and tests.
+            - mkdir build
+            - cd build
+            - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON <span class="auto-style2">-DBUILD_TESTING=ON</span> ..
+            - make
+            # do unit-tests.
+            - ctest --output-on-failure <span class="auto-style2">-T MemCheck --overwrite MemoryCheckCommandOptions="--leak-check=full --error-exitcode=1"</span></pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>
@@ -1073,8 +1514,86 @@ pipelines:
   <p>&nbsp;</p>
 
   <section>
-    <h2>10. ユニットテストへソースコードカバレッジを加える</h2>
+    <h2><a name="10._ユニットテストへソースコードカバレッジを加える">10. ユニットテストへソースコードカバレッジを加える</a></h2>
+    <p>ソースコードカバレッジ処理を追加する例を以下に記載します。</p>
+    <ul>
+      <li>gcc/g++ ビルド時に "-coverage" オプションを付けています。詳細説明割愛。</li>
+      <li>lcov というツールによりユニットテストを実行した結果のソースコードカバレッジを可視化（html）しています。</li>
+    </ul>
     <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:22.04
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: build and unit-test, coverage
+          script:
+            - apt-get update &amp;&amp; apt-get -y install tzdata
+            - export TZ="Asia/Tokyo" &amp;&amp; date
+            - apt-get -y install build-essential cmake valgrind lcov cppcheck zip
+            - gcc --version &amp;&amp; cmake --version &amp;&amp; lcov --version &amp;&amp; cppcheck --version
+            # build and install googletest.
+            - tar zxvf release-1.12.0.tar.gz   &nbsp;# googletest
+            - cd googletest-release-1.12.0
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - make install
+            - cd ..
+            - cd ..
+            # build sample and tests.
+            - mkdir build
+            - cd build
+            - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=ON ..
+            - make
+            # do unit-tests.
+            - ctest --output-on-failure
+          after-script:
+            # source code coverage &lt;-
+            - pwd &amp;&amp; ls
+            - pushd build/CMakeFiles/sample.dir
+            - lcov -d . -c -o sample.info --rc lcov_branch_coverage=1
+            - lcov -r sample.info */googletest/* test/* */c++/* -o sampleFiltered.info --rc lcov_branch_coverage=1
+            - genhtml -o lcovHtml --num-spaces 4 -s --legend sampleFiltered.info --branch-coverage
+            - popd
+            # -&gt;
+            # deploy results of source code coverage.
+            - echo $BITBUCKET_CLONE_DIR
+            - zip -r lcovHtml_IoGeneral.zip build/CMakeFiles/sample.dir/lcovHtml
+            - pipe: atlassian/bitbucket-upload-file:0.3.2
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: "${BITBUCKET_CLONE_DIR}/lcovHtml_sample.zip"
+            # -&gt;
+
+          artifacts:
+            - build/CMakeFiles/sample.dir/lcovHtml/**</pre>
+    <p>&nbsp;</p>
+    <p>ソースコードカバレッジ測定の主たる実行部分は下記３行です。</p>
+    <pre class="prettyprint linenums:34 lang-yml" style="width: 800px;">
+            - lcov -d . -c -o sample.info --rc lcov_branch_coverage=1
+            - lcov -r sample.info */googletest/* test/* */c++/* -o sampleFiltered.info --rc lcov_branch_coverage=1
+            - genhtml -o lcovHtml --num-spaces 4 -s --legend sampleFiltered.info --branch-coverage</pre>
+    <p>&nbsp;</p>
+    <ul>
+      <li>下記処理により、ソースコードカバレッジの結果から googletest/, test/, c++/ を除外するように指定しています。<br>
+        <p><span class="cpp-source">- lcov -r sample.info */googletest/* test/* 
+        */c++/* -o sample.info --rc lcov_branch_coverage=1</span></p>
+      </li>
+      <li>上記例では、カバレッジ計測結果をアーティファクトへ登録、ダウンロードへ登録、を行っています。</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>以上の処理により下図のような結果を取得することができます。</p>
+    <p>
+    <img alt="カバレッジ結果" class="border" src="Pipelines_c++/img73.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="カバレッジ結果" class="border" src="Pipelines_c++/img78.jpg" width="1000"></p>
     <p>&nbsp;</p>
   </section>
 
@@ -1083,8 +1602,54 @@ pipelines:
   <p>&nbsp;</p>
   
   <section>
-    <h2>11. 静的解析を行う (cppcheck)</h2>
+    <h2><a name="11._静的解析を行う_(cppcheck)">11. 静的解析を行う (<em>cppcheck</em>)</a></h2>
+    <p>オープンソースの静的解析ツール（<strong><em>cppcheck</em></strong>）を pipelines 
+    中で適用する例を紹介します。</p>
+    <ul>
+      <li>"apt-get -y install cppcheck" で <strong><em>cppcheck</em></strong> 
+      をインストールしています。</li>
+      <li><span class="cpp-source">cppcheck --project=compile_commands.json 
+      --enable=all --error-exitcode=1 --inline-suppr --force 
+      --suppressions-list=../suppressions_list.txt -i$BITBUCKET_CLONE_DIR/test/</span> 
+      で <strong><em>cppcheck</em></strong> を実施しています。 </li>
+      <li><strong><em>cppcheck</em></strong> を適用するソースファイルは cmake により <strong>
+      compile_commands.json</strong> というファイルを出力してこれを使用しています。</li>
+      <li>&nbsp;"-i" により静的解析の対象から除外する対象を指定できます。<br>例では <span class="cpp-source">
+      -i$BITBUCKET_CLONE_DIR/test/</span> という記載により "test/" 
+      フォルダを静的解析の対象から除外しています。<br>いろいろ実験してみましたが、フルパス表記で指定する必要がありそうです。このため <strong>
+      $BITBUCKET_CLONE_DIR</strong> という環境変数を使用しています。 </li>
+    </ul>
     <p>&nbsp;</p>
+    <p>["bitbucket-pipelines.yml" 例]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+image: ubuntu:22.04
+
+pipelines:
+  default:
+    - parallel:           
+      - step:
+          name: cppcheck
+          script:
+            - apt-get update &amp;&amp; apt-get -y install tzdata
+            - export TZ="Asia/Tokyo" &amp;&amp; date
+            - apt-get -y install build-essential cmake valgrind lcov cppcheck
+            - cppcheck --version
+            # build and install googletest.
+            - tar zxvf release-1.12.0.tar.gz   &nbsp;# googletest
+            - cd googletest-release-1.12.0
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - make install
+            - cd ..
+            - cd ..
+            # build sample
+            - mkdir build
+            - cd build
+            - cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_TESTING=ON ..
+            # cppcheck
+            - cppcheck --project=compile_commands.json --enable=all --error-exitcode=1 --inline-suppr --force --suppressions-list=../suppressions_list.txt -i$BITBUCKET_CLONE_DIR/test/</pre>
     <p>&nbsp;</p>
   </section>
     
@@ -1093,16 +1658,46 @@ pipelines:
   <p>&nbsp;</p>
 
   <section>
-    <h2>Appendix</h2>
+    <h2><a name="Appendix">Appendix</a></h2>
     <p>&nbsp;</p>
-    <h3>A.1. Pipelines の step における失敗によりスクリプト停止を避ける方法</h3>
+    <h3><a name="A.1._Pipelines_の_step_における失敗によるスクリプト停止を避ける方法">A.1. Pipelines の step における失敗によるスクリプト停止を避ける方法</a></h3>
+    <p>Pipelines は Linux 上でbash / 
+    shellコマンドを実行しているだけです。スクリプトランナーは、各コマンドの戻り状況コードを探して成功したか失敗したかを確認します。したがって、さまざまな手法を使用してこのステータスコードを制御できます。</p>
+    <p>&nbsp;</p>
+    <h5>方法１</h5>
+    <p>あなたのコマンドの末尾に " || true" を加える、という方法があります。</p>
+    <p>(例) <span class="cpp-source">./gradlew -DBASE_URL=qa2 clean BSchrome_win 
+    || true</span> </p>
+    <p>&nbsp;</p>
+    <h5>方法２</h5>
+    <p>必ず実行したいステップを after-script へ記載すると、前のステップの成功/失敗ステータスに関係なく常に実行することができます。</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+- step:
+    name: Hoge
+    script:
+      - 何か処理する
+      - 何か処理する
+    after-script:
+      - cd config/geb # You may need this, if the current working directory is reset. Check with 'pwd'
+      - cd build/reports
+      - zip -r testresult.zip BSchrome_winTest </pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3>&nbsp;</h3>
-    <h3>A.2. Pipelines 最長実行時間を変更する方法</h3>
+    <h3><a name="A.2._Pipelines_最長実行時間を変更する方法">A.2. Pipelines 最長実行時間を変更する方法</a></h3>
+    <p>Pipelines は step １つに対して最長 120分 を実行することができます。max-time 
+    を設定することでこの値を変更することができ、(1-120) の範囲でこの値を変更可能です。</p>
     <p>&nbsp;</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 800px;">
+options:  
+   max-time: 60</pre>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <ul>
+      <li><strong><em>max-time</em></strong> 無指定時のデフォルト値は 120分 です。</li>
+      <li><strong><em>max-time</em></strong> について詳しくはドキュメント 
+      <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/global-options/#Max-time" target="_blank">
+      グローバル オプション | Bitbucket Cloud | アトラシアン サポート</a> を参照ください。 </li>
+    </ul>
   </section>
               
   <p>&nbsp;</p>
@@ -1118,7 +1713,7 @@ pipelines:
     <div class="license">
       The MIT License (MIT)<br><br>
       
-      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      &nbsp; Copyright 2021 Kinoshita Hidetoshi<br><br>
       
       Permission is hereby granted, free of charge, to any person obtaining a copy
       of this software and associated documentation files (the "Software"), to deal
@@ -1177,7 +1772,7 @@ pipelines:
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
   	  <tr>
-  	    <td class="td_history_date">2024-02-20</td>
+  	    <td class="td_history_date">2021-04-10</td>
   	    <td class="td_history_separator">-</td>
   	    <td class="td_history">新規作成 </td>
   	  </tr>
@@ -1193,7 +1788,7 @@ pipelines:
   <p>&nbsp;</p>
   
   <footer>
-  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  	<p><small>&copy; 2021 Kinoshita Hidetoshi (木下英俊)</small></p>
   </footer>
 
 </body>
