@@ -45,39 +45,35 @@
 
 <body onload="prettyPrint();">
 	
-<h1>Google Code Prettify</h1>
-
-<p> &quot;Google Code Prettify&quot; について使用方法などについて記載します。</p>
-<p> &nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._概要">1. 概要</a></p>
-        <p><a href="#2._言語指定方法と指定できる言語">2. 言語指定方法と指定できる言語</a></p>
-        <p>&nbsp;</p>
-    		<p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
-
-<nav>
-	<p>
-	&nbsp;</p>
-</nav>
-
-<p> &nbsp;</p>
-
-<section>
-<h2> <a name="1._概要">1. 概要</a></h2>
+  <h1>Google Code Prettify</h1>
+  
+  <p> &quot;Google Code Prettify&quot; について使用方法などについて記載します。</p>
   <p> &nbsp;</p>
-<p> &nbsp;</p>
-
-<p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
-<pre class="prettyprint linenums lang-cpp">
+  <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+    <tr>
+      <td>
+        <nav>
+          <h2>目次</h2>
+          <p><a href="#1._概要">1. 概要</a></p>
+          <p><a href="#2._言語指定方法と指定できる言語">2. 言語指定方法と指定できる言語</a></p>
+          <p><a href="#3._行番号を表示">3. 行番号を表示</a></p>
+          <p>&nbsp;</p>
+      		<p><a href="#ライセンス">ライセンス</a></p>
+          <p><a href="#参考">参考</a></p>
+        </nav>
+      </td>
+    </tr>
+  </table>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+    <h2> <a name="1._概要">1. 概要</a></h2>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  
+    <p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
+    <pre class="prettyprint linenums lang-cpp">
 #include "stdafx.h"
 
 #include &lt;iostream&gt;
@@ -130,39 +126,40 @@ int main()
         }
     }
 
-    return EXIT_SUCCESS;
-</pre>
-</section>
+    return EXIT_SUCCESS;</pre>
+  </section>
 	
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
 
-<section>
-<h2> <a name="2._言語指定方法と指定できる言語">2. 言語指定方法と指定できる言語</a></h2>
-  <p> &nbsp;</p>
-  <p> "lang-" で始まるこんな感じで指定します。</p>
-  <pre class="prettyprint lang-html">
+  <section>
+    <h2> <a name="2._言語指定方法と指定できる言語">2. 言語指定方法と指定できる言語</a></h2>
+    <p> &nbsp;</p>
+    <p> "lang-" で始まるこんな感じで指定します。</p>
+    <pre class="prettyprint lang-html">
 &lt;pre class="prettyprint lang-html"&gt;
 なんかかく
 &lt;/pre&gt;</pre>
-  <p> &nbsp;</p>
-  <p> 標準で内蔵されている言語は以下の通り。</p>
-  <p> &nbsp;</p>
-  <p> "bsh", "c", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java",</p>
-  <p> "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", 
-  "xml","xsl"</p>
-  <p> &nbsp;</p>
-  <p> 標準にない場合、もしあれば追加の js スクリプトを &lt;head&gt; 内で以下のように読み込んで使用します。&nbsp;</p>
-  
-  <pre class="prettyprint lang-html">
+
+    <p> &nbsp;</p>
+    <p> 標準で内蔵されている言語は以下の通り。</p>
+    <p> &nbsp;</p>
+    <p> "bsh", "c", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java",</p>
+    <p> "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", "xml","xsl"</p>
+    <p> &nbsp;</p>
+    <p> 標準にない場合、もしあれば追加の js スクリプトを &lt;head&gt; 内で以下のように読み込んで使用します。&nbsp;</p>
+    
+    <pre class="prettyprint lang-html">
 &lt;!-- Start for 'google-code-prettify' --&gt;
 &lt;link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css"&gt;
 &lt;script src="../prettify/prettify.js" type="text/javascript"&gt;&lt;/script&gt;
 <span class="auto-style1">&lt;script src="../prettify/lang-vb.js" type="text/javascript"&gt;&lt;/script&gt;</span>
 &lt;!-- End for 'google-code-prettify' --&gt;</pre>
-  <p> &nbsp;</p>
-  <p> 標準外で登録されている言語リストは本書記載時点で以下のような感じでした。</p>
-  <pre>lang-aea.js
+    <p> &nbsp;</p>
+    <p> 標準外で登録されている言語リストは本書記載時点で以下のような感じでした。</p>
+    
+    <pre style="width: 400px">lang-aea.js
 lang-agc.js
 lang-apollo.js
 lang-basic.js
@@ -218,108 +215,152 @@ lang-vhdl.js
 lang-wiki.js
 lang-xq.js
 lang-xquery.js
-lang-yaml.js
-lang-yml.js</pre>
-  <p> &nbsp;</p>
-</section>
-<p>&nbsp;</p>
+lang-yaml.js</pre>
+    <p> &nbsp;</p>
+  </section>
 
-<section>
-  <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-The MIT License (MIT)<br><br>
-
-Copyright © 2020-2022 Kinoshita Hidetoshi<br><br>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
   <p>&nbsp;</p>
+  <hr>
   <p>&nbsp;</p>
-</section>
 
-<p>&nbsp;</p>
+  <section>
+    <h2><a name="3._行番号を表示">3. 行番号を表示</a></h2>
+    <p>クラスに "linenums" を追加すると行番号を表示することができます。</p>
+    <p style="padding: 10px; background-color: #000000; color: #D0D0D0; width: 400px; font-family: monospace;">
+    &lt;pre 
+    class="prettyprint <strong>linenums</strong>"&gt;<br>console.log('Hello World')<br>
+    console.log('Hello World')<br>console.log('Hello World')<br>
+    console.log('Hello World')<br>console.log('Hello World')<br>&lt;/pre&gt;</p>
+    <p>こんな感じで表示してくれます。</p>
+    <pre class="prettyprint linenums" style="width: 400px">
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')</pre>
+    <p>&nbsp;</p>
+    <p>行番号の開始値を指定する場合は linenums の後にコロンを挟んで数値で指定します。15 から始めたい場合は次のように "linenums:15" と指定します。</p>
+    <p style="padding: 10px; background-color: #000000; color: #D0D0D0; width: 400px; font-family: monospace;">
+    &lt;pre 
+    class="prettyprint <strong>linenums:15</strong>"&gt;<br>console.log('Hello World')<br>
+    console.log('Hello World')<br>console.log('Hello World')<br>
+    console.log('Hello World')<br>console.log('Hello World')<br>&lt;/pre&gt;</p>
+    <p>こんな感じで表示してくれます。</p>
+    <pre class="prettyprint linenums:15" style="width: 400px">
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')
+console.log('Hello World')</pre>
+    <p>&nbsp;</p>
+  </section>
 
-<section>
-	<h2><a name="参考">参考</a></h2>
-<ul>
-	<li>
-	<a href="https://github.com/googlearchive/code-prettify" target="_blank">
-	googlearchive/code-prettify: An embeddable script that makes source-code 
-	snippets in HTML prettier. (github.com)</a></li>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+
+  <section>
+    <h2><a name="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+      <tr>
+        <td>
+    The MIT License (MIT)<br><br>
+    
+    Copyright © 2020-2022 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a name="参考">参考</a></h2>
+  <ul>
+  	<li>
+      <a href="https://github.com/googlearchive/code-prettify" target="_blank">
+      googlearchive/code-prettify: An embeddable script that makes source-code 
+      snippets in HTML prettier. (github.com)</a></li>
     <li>
-	Google Code-Prettify シンタックスハイライト (webdesignleaves.com)<br>
-    <a href="https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html" target="_blank">
-    https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html</a></li>
-	<li>
-	<a href="https://rfs.jp/sb/javascript/js-lab/code-prettify.html" target="_blank">
-	Google Code Prettifyでソースコードを読みやすく色分けする - JavaScriptテックラボ - [SMART] (rfs.jp)</a></li>
-	<li>
-	<a href="http://kihon-no-ki.com/customize-google-code-prettify" target="_blank">
-	シンタックスハイライター「Google Code Prettify」のカスタマイズ | きほんのき (kihon-no-ki.com)</a></li>
-	<li>white-space - CSS: カスケーディングスタイルシート | MDN (mozilla.org)<br>
-    <a href="https://developer.mozilla.org/ja/docs/Web/CSS/white-space" target="_blank">
-    https://developer.mozilla.org/ja/docs/Web/CSS/white-space</a></li>
-	<li>Google Code-Prettifyについて - 電脳情報局 (omakase.net)<br>
-	<a href="https://www.omakase.net/blog/2022/01/google-code-prettify.html" target="_blank">
-	https://www.omakase.net/blog/2022/01/google-code-prettify.html</a></li>
-</ul>
-</section>
-
-<p>&nbsp;</p>
-
-<hr>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2022-07-14</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2020-11-27</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2020-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  	Google Code-Prettify シンタックスハイライト (webdesignleaves.com)<br>
+      <a href="https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html" target="_blank">
+      https://www.webdesignleaves.com/pr/plugins/google_code_prettify.html</a></li>
+  	<li>
+      <a href="https://rfs.jp/sb/javascript/js-lab/code-prettify.html" target="_blank">
+      Google Code Prettifyでソースコードを読みやすく色分けする - JavaScriptテックラボ - [SMART] (rfs.jp)</a></li>
+  	<li>
+      <a href="http://kihon-no-ki.com/customize-google-code-prettify" target="_blank">
+      シンタックスハイライター「Google Code Prettify」のカスタマイズ | きほんのき (kihon-no-ki.com)</a></li>
+  	<li>white-space - CSS: カスケーディングスタイルシート | MDN (mozilla.org)<br>
+      <a href="https://developer.mozilla.org/ja/docs/Web/CSS/white-space" target="_blank">
+      https://developer.mozilla.org/ja/docs/Web/CSS/white-space</a></li>
+  	<li>Google Code-Prettifyについて - 電脳情報局 (omakase.net)<br>
+      <a href="https://www.omakase.net/blog/2022/01/google-code-prettify.html" target="_blank">
+      https://www.omakase.net/blog/2022/01/google-code-prettify.html</a></li>
+  </ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <hr>
+  
+  <p style="margin-bottom:5px">&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-02-28</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#3._行番号を表示">3. 行番号を表示</a>」を追加</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2022-07-14</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2020-11-27</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p style="margin-bottom:5px">&nbsp;</p>
+  
+  <section>
+  <p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p style="margin-bottom:5px">&nbsp;</p>
+  
+  <footer>
+  	<p><small>Copyright © 2020 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
