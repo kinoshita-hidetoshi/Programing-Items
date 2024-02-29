@@ -127,40 +127,92 @@
     
     <p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
     <p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
-
+    
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">$ mkdir ~/.ssh
 $ cd ~/.ssh
 $ mkdir bitbucket
 $ cd bitbucket
-$ ssh-keygen -t rsa -C hoge@foo.com              <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/hidetoshi/.ssh/id_rsa):/home/hidetoshi/.ssh/bitbucket/id_rsa
-                                                 <span class="auto-style1">&lt;----- &quot;bitbucket&quot;フォルダへ修正してEnter</span>
+$ ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;--- "hoge@foo.com" は自分のメールアドレス</span>
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/home/[ユーザ名]/.ssh/id_ed25519):/home/[ユーザ名]/.ssh/bitbucket/id_ed25519
+                                                 <span class="auto-style1">&lt;----- "bitbucket"フォルダへ修正してEnter</span>
 Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
 Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
-Your identification has been saved in /home/hidetoshi/.ssh/bitbucket/id_rsa.
-Your public key has been saved in /home/hidetoshi/.ssh/bitbucket/id_rsa.pub.
+Your identification has been saved in /home/[ユーザ名]/.ssh/bitbucket/id_ed25519.
+Your public key has been saved in /home/[ユーザ名]/.ssh/bitbucket/id_ed25519.pub.
 The key fingerprint is:
-0f:19:40:a4:36:b4:89:42:b0:e2:f4:b2:5b:ce:85:39 mail@mail
-The key&#39;s randomart image is:
-+--[ RSA 2048]----+
-| o  .   .  o  +  |
-|.  .  o  +   .   |
-|+..   *    .     |
-|   + . .. .   o  |
-|       o  .   S  |
-| o  o        o   |
-|    .    E   . . |
-|         =     o |
-| . o             |
-+-----------------+
+SHA256:Z5I/tXZlSEIvrQgZ2jFq8vUa6FHkmxbW+jps24D9WqU hoge@foo.com
+The key's randomart image is:
++--[ED25519 256]--+
+|        =   .    |
+|       * * . o   |
+|    . + X . o +  |
+|     + = O . = . |
+|      + S = + . o|
+|     . = O + . o |
+|      o.+ E o .  |
+|        +* o .   |
+|       .++o      |
++----[SHA256]-----+
 $</pre>
     <p>&nbsp;</p>
-    <p>これで公開鍵と秘密鍵が作成できました。</p>
+
+    <p>これで公開鍵と秘密鍵を作成できました。</p>
     <ul>
-      <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
-      <li>id_rsa.pub: 公開鍵</li>
+      <li>id_ed25519:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+      <li>id_ed25519.pub: 公開鍵</li>
     </ul>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>説明を <span class="cpp-source">ssh-keygen -t ed25519</span> 
+        へ変更しました。動作確認済みです。</p>
+        <ul>
+          <li>Ed25519 は「エドワーズ曲線デジタル署名」と呼ばれる RSA より強力なアルゴリズムです。 </li>
+          <li>Bitbucket はクライアント キー用に、Ed25519、ECDSA、RSA、DSA 
+          の４つの暗号化アルゴリズムをサポートしています。 </li>
+        </ul>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>キーのタイプ</th>
+          <th>最小キーサイズ (bit)</th>
+          <th>例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ed25519 (ed25519)</td>
+          <td>256</td>
+          <td>ssh-keygen -t ed25519 -b 256</td>
+        </tr>
+        <tr>
+          <td>ECDSA (ecdsa)</td>
+          <td>256</td>
+          <td>ssh-keygen -t ecdsa -b 256</td>
+        </tr>
+        <tr>
+          <td>RSA (rsa)</td>
+          <td>2048</td>
+          <td>ssh-keygen -t rsa -b 2048</td>
+        </tr>
+        <tr>
+          <td>DSA / DSS (dsa)</td>
+          <td>1024</td>
+          <td>ssh-keygen -t dsa -b 1024</td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p>&nbsp;</p>
     <p>&nbsp;</p>
 
@@ -176,7 +228,7 @@ $</pre>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile ~/.ssh/bitbucket/id_rsa
+  IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -186,7 +238,7 @@ Host bitbucket.org
   	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
   	<pre style="color: #FFFFFF; background-color: #000000; width: 800px;">Host bitbucket.org
   HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
-  IdentityFile ~/.ssh/bitbucket/id_rsa
+  IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
@@ -199,7 +251,7 @@ Host bitbucket.org
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile ~/.ssh/bitbucket/id_rsa
+  IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -240,8 +292,8 @@ Host bitbucket.org
     <p>&nbsp;</p>
     <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-$ cat ~/.ssh/bitbucket/id_rsa.pub
-ssh-rsa
+$ cat ~/.ssh/bitbucket/id_ed25519.pub
+ed25519
 **************************************************************************
 **************************************************************************
 mail@mail</pre>
@@ -250,21 +302,23 @@ mail@mail</pre>
     <p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
     <p>&quot;Label&quot; は自分がどの公開鍵かわかる名称を付けます。私は端末名を記入してみました。</p>
     <p>複数の端末を持つ場合も共通の鍵を使用するのではなくそれぞれ異なる鍵を生成して使用するほうが良いと思います。</p>
-    <p><img alt="" src="How%20to%20use%20SSH%20key/img10.jpg" width="800px"></p>
+    <p>
+    <img alt="SSH 鍵を編集" src="How%20to%20use%20SSH%20key/img10.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>「保存」ボタンをクリックしたら設定は以上で完了です。</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3>1-6. 接続できるか確認</h3>
     <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
-    <p>
-    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;"><code>$ ssh -T git@bitbucket.org
-logged in as kinoshita_hidetoshi
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+$ ssh -T git@bitbucket.org
+authenticated via ssh key.
 
-You can use git or hg to connect to Bitbucket. Shell access is disabled
-$</code></pre>
+You can use git to connect to Bitbucket. Shell access is disabled
+$</pre>
+
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <p>
     <h3>1-7. git clone</h3>
     <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
     とします。</p>
@@ -329,45 +383,93 @@ $</code></pre>
     
     <p>複数のSSH認証鍵を登録することを想定して、Bitbucket専用フォルダに鍵を登録する手順として記載します。</p>
     <p>下記手順でSSH認証鍵をホーム配下の .ssh/bitbucket フォルダ内に生成します。</p>
-    <p>&nbsp;</p>
-  	<pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-&gt; %homedrive%
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">&gt; %homedrive%
 &gt; cd %homepath%
 &gt; mkdir .ssh
 &gt; cd .ssh
 &gt; mkdir bitbucket
 &gt; cd bitbucket
-&gt; ssh-keygen -t rsa -C hoge@foo.com               <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
-Generating public/private rsa key pair.
-Enter file in which to save the key (C:\Users\ユーザ名/.ssh/id_rsa): c:\users\ユーザ名/.ssh/bitbucket/id_rsa
-                                                  <span class="auto-style1">&lt;----- &quot;bitbucket&quot;フォルダへ修正してEnter</span>
-Enter passphrase (empty for no passphrase):       <span class="auto-style1">&lt;-----Enterを押す</span>
-Enter same passphrase again:                      <span class="auto-style1">&lt;-----Enterを押す</span>
-Your identification has been saved in c:\Users\ユーザ名/.ssh/bitbucket/id_rsa.
-Your public key has been saved in c:\Users\ユーザ名/.ssh/bitbucket/id_rsa.pub.
+&gt; ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;--- "hoge@foo.com" は自分のメールアドレス</span>
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (C:\Users\[ユーザ名]/.ssh/id_ed25519): c:\users\[ユーザ名]/.ssh/bitbucket/id_ed25519
+                                                 <span class="auto-style1">&lt;----- "bitbucket"フォルダへ修正してEnter</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Your identification has been saved in c:\Users\[ユーザ名]/.ssh/bitbucket/id_ed25519.
+Your public key has been saved in c:\Users\[ユーザ名]/.ssh/bitbucket/id_ed25519.pub.
 The key fingerprint is:
-SHA256:sxNXQxxEEMuuB+zYuX95RVRKkpe4zn3zRbDe/88z+nQ hoge@foo.com
-The key&#39;s randomart image is:
-+---[RSA 2048]----+
-| o**+..o|
-| . o+o+..|
-| o oo.+ |
-| . . .... o|
-| S oo o + |
-| + O o o.=|
-| . B . . +E|
-| + o o++|
-| .... oo.O|
+SHA256:Z5I/tXZlSEIvrQgZ2jFq8vUa6FHkmxbW+jps24D9WqU hoge@foo.com
+The key's randomart image is:
++--[ED25519 256]--+
+|        =   .    |
+|       * * . o   |
+|    . + X . o +  |
+|     + = O . = . |
+|      + S = + . o|
+|     . = O + . o |
+|      o.+ E o .  |
+|        +* o .   |
+|       .++o      |
 +----[SHA256]-----+
 
-C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
-
+C:\Users\[ユーザ名]\.ssh\bitbucket&gt;</pre>
     <p>&nbsp;</p>
     <p>これで公開鍵と秘密鍵が作成できました。</p>
     <ul>
-      <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
-      <li>id_rsa.pub: 公開鍵</li>
+      <li>id_ed25519:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+      <li>id_ed25519.pub: 公開鍵</li>
     </ul>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>説明を <span class="cpp-source">ssh-keygen -t ed25519</span> 
+        へ変更しました。動作確認済みです。</p>
+        <ul>
+          <li>Ed25519 は「エドワーズ曲線デジタル署名」と呼ばれる RSA より強力なアルゴリズムです。 </li>
+          <li>Bitbucket はクライアント キー用に、Ed25519、ECDSA、RSA、DSA 
+          の４つの暗号化アルゴリズムをサポートしています。 </li>
+        </ul>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="600">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>キーのタイプ</th>
+          <th>最小キーサイズ (bit)</th>
+          <th>例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ed25519 (ed25519)</td>
+          <td>256</td>
+          <td>ssh-keygen -t ed25519 -b 256</td>
+        </tr>
+        <tr>
+          <td>ECDSA (ecdsa)</td>
+          <td>256</td>
+          <td>ssh-keygen -t ecdsa -b 256</td>
+        </tr>
+        <tr>
+          <td>RSA (rsa)</td>
+          <td>2048</td>
+          <td>ssh-keygen -t rsa -b 2048</td>
+        </tr>
+        <tr>
+          <td>DSA / DSS (dsa)</td>
+          <td>1024</td>
+          <td>ssh-keygen -t dsa -b 1024</td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     
@@ -382,7 +484,7 @@ C:\Users\ユーザ名\.ssh\bitbucket&gt;</pre>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -395,7 +497,7 @@ Host bitbucket.org
   	<pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Host bitbucket.org
   HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
-  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
@@ -409,7 +511,7 @@ Host bitbucket.org
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Host bitbucket.org
   HostName bitbucket.org
-  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -440,8 +542,8 @@ Host bitbucket.org
     <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
 
 	  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-&gt; type %homedrive%%homepath%\.ssh\bitbucket\id.rsa.pub
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
+&gt; type %homedrive%%homepath%\.ssh\bitbucket\id_ed25519.pub
+ssh-ed25519 AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
 1o8a5iQ8blw3fd43c2qZYjVTIIh7N+lcUWuVXnXyWQNeVNT/IPEoaZaaur9SDAojhcA1kUMODK
 0KuKDlbddxijWqJzzmEqcrZGNFEKUTVfB/ctQFZIgb0ScyGWiJWjIOVUloLqcdy6CEbHSjiLV7
 rxFqPhFU/RO0QbqS58zjxWLVYP7jgJXudJ+QJcwmUlLoH1k22AEH154Q28hRNriupma8D/VyJ5
@@ -538,6 +640,11 @@ $ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.gi
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-02-29</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">SSH鍵アルゴリズムを RSA から Ed25519 へ記載変更、他</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2022-11-07</td>
   	    <td class="td_history_separator">-</td>
