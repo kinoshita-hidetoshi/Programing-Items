@@ -22,7 +22,7 @@
 	<!-- Start for 'google-code-prettify' -->
 	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
 	<script src="../../prettify/prettify.js" type="text/javascript"></script>
-	<script src="../../prettify/lang-yml.js" type="text/javascript"></script>
+	<script src="../../prettify/lang-yaml.js" type="text/javascript"></script>
 	<!-- End for 'google-code-prettify' -->	
 	
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -56,7 +56,9 @@
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1._環境準備">1. 環境準備</a></p>
-        <p><a href="#2._Pipeline_を作成">2. Pipeline を作成</a></p>
+      <p><a href="#2._Actions_を有効化する">2. Actions を有効化する</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-1._Actions_を有効化する">2-1. Actions を有効化する</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-2._ビルド、アーティファクト登録">2-2. ビルド、アーティファクト登録</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -271,8 +273,240 @@
   <p>&nbsp;</p>
   
   <section>
-    <h2><a name="2._Pipeline_を作成">2. Pipeline を作成</a></h2>
-    <p>記事作成中</p>
+    <h2><a name="2._Actions_を有効化する">2. Actions を有効化する</a></h2>
+    <p>Github にプログラムをコミットされている状態からスタートします。</p>
+    <p>&nbsp;</p>
+    <h3><a name="2-1._Actions_を有効化する">2-1. Actions を有効化する</a></h3>
+    <p>まずは Actions を有効化するまで進めましょう。</p>
+    <p>Github メニュー上にある「Actions」をクリックします。</p>
+    <p>
+    <img alt="github &gt; actions" class="border" src="Actions_cs_netframework/img3.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>"Suggested for this repository" として ".NET Desktop" をご提案頂いています。これの［<strong>Configure</strong>］ボタンをクリックしてみます。</p>
+    <p>
+    <img alt="Suggested for this repository" class="border" src="Actions_cs_netframework/img6.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>"dotnet-desktop.yml" を自動生成してくれました。出力されたままの情報を以下に記載します。</p>
+    <p>["dotnet-desktop.yml"]</p>
+    
+    <pre class="prettyprint linenums lang-yml" style="width: 1000px">
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will build, test, sign and package a WPF or Windows Forms desktop application
+# built on .NET Core.
+# To learn how to migrate your existing application to .NET Core,
+# refer to https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+#
+# To configure this workflow:
+#
+# 1. Configure environment variables
+# GitHub sets default environment variables for every workflow run.
+# Replace the variables relative to your project in the "env" section below.
+#
+# 2. Signing
+# Generate a signing certificate in the Windows Application
+# Packaging Project or add an existing signing certificate to the project.
+# Next, use PowerShell to encode the .pfx file using Base64 encoding
+# by running the following Powershell script to generate the output string:
+#
+# $pfx_cert = Get-Content '.\SigningCertificate.pfx' -Encoding Byte
+# [System.Convert]::ToBase64String($pfx_cert) | Out-File 'SigningCertificate_Encoded.txt'
+#
+# Open the output file, SigningCertificate_Encoded.txt, and copy the
+# string inside. Then, add the string to the repo as a GitHub secret
+# and name it "Base64_Encoded_Pfx."
+# For more information on how to configure your signing certificate for
+# this workflow, refer to https://github.com/microsoft/github-actions-for-desktop-apps#signing
+#
+# Finally, add the signing certificate password to the repo as a secret and name it "Pfx_Key".
+# See "Build the Windows Application Packaging project" below to see how the secret is used.
+#
+# For more information on GitHub Actions, refer to https://github.com/features/actions
+# For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
+# refer to https://github.com/microsoft/github-actions-for-desktop-apps
+
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Solution_Name: your-solution-name                         # Replace with your solution name, i.e. MyWpfApp.sln.
+      Test_Project_Path: your-test-project-path                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Wap_Project_Directory: your-wap-project-directory-name    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
+      Wap_Project_Path: your-wap-project-path                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    # Execute all unit tests in the solution
+    - name: Execute unit tests
+      run: dotnet test
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Decode the base 64 encoded pfx and save the Signing_Certificate
+    - name: Decode the pfx
+      run: |
+        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+        $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
+        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+
+    # Create the app package by building and packaging the Windows Application Packaging project
+    - name: Create the app package
+      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+      env:
+        Appx_Bundle: Always
+        Appx_Bundle_Platforms: x86|x64
+        Appx_Package_Build_Mode: StoreUpload
+        Configuration: ${{ matrix.configuration }}
+
+    # Remove the pfx
+    - name: Remove the pfx
+      run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: MSIX Package
+        path: ${{ env.Wap_Project_Directory }}\AppPackages</pre>
+    <p>&nbsp;</p>
+    <p>この yml ファイルをコミットすることで Actions も実行されますが、当然ながらエラーになります。</p>
+    <p>エラーではありますが一旦これで Actions を動作できるようになりました。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3><a name="2-2._ビルド、アーティファクト登録">2-2. ビルド、アーティファクト登録</a></h3>
+    <p>デフォルトのままではビルドも通らずエラーで終わってしまうので、まずはビルドしてアーティファクトへ登録するまで yml ファイルを修正します。</p>
+    <p>こんな感じ。これで正常にビルドしてアーティファクト登録できました。</p>
+    <p>&nbsp;</p>
+    <p>["dotnet-desktop.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 1000px">
+
+name: Build Counter App
+ 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+ 
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+ 
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 0
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Setup NuGet.exe for use with actions
+      # You may pin to the exact commit or the version.
+      # uses: NuGet/setup-nuget@a21f25cd3998bf370fde17e3f1b4c12c175172f9
+      uses: NuGet/setup-nuget@v2.0.0
+      
+    - name: Restore NuGet Packages
+      run: nuget restore Counter.sln
+      
+    - name: Build Counter App
+      run: msbuild Counter.sln /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Upload GitHub Pages artifact - CounterWPF
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        # Artifact name
+        name: CounterWPF_${{ matrix.configuration }}
+        # Path of the directory containing the static assets.
+        path: CounterWPF\bin\${{ matrix.configuration }}
+
+    - name: Upload GitHub Pages artifact - CounterForm
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        # Artifact name
+        name: CounterForm_${{ matrix.configuration }}
+        # Path of the directory containing the static assets.
+        path: CounterForm\bin\${{ matrix.configuration }}</pre>
+    <p>&nbsp;</p>
+    <p class="auto-style1"><strong>補足説明</strong></p>
+    <ul>
+      <li>runs-on: <span class="cpp-source">windows-latest</span><br>
+      windows-latest 以外に windows-2022, windows-2019 を設定できます。<br>詳細は 
+      <a href="https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on" target="_blank">
+      Workflow syntax for GitHub Actions - GitHub Docs</a> を参照。<br>
+      <ul>
+        <li><span class="cpp-source">windows-latest</span>: 本書記載時点は "Visual 
+        Studio 2022 Enterprise"</li>
+        <li><span class="cpp-source">windows-2022</span>: "Visual Studio 2022 
+        Enterprise"</li>
+        <li><span class="cpp-source">windows-2019</span>: "Visual Studio 2019 
+        Enterprise"</li>
+      </ul>
+      </li>
+    </ul>
+    <p>「Actions」をクリックしたときの画面です。</p>
+    <p>
+    <img alt="Actions" class="border" src="Actions_cs_netframework/img21.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>一番上の結果をクリックして表示した画面です。Artifacts として４つ登録されていることがわかります。</p>
+    <p>各 Artifacts をクリックすると zip 圧縮されたビルド結果をダウンロードすることができます。</p>
+    <p>
+    <img alt="Summary" class="border" src="Actions_cs_netframework/img27.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>「Matrix: build」の部分をクリックしていくと下図のような画面を表示します。</p>
+    <p>エラーになっている場合はこちらの画面上で詳細を確認できます。</p>
+    <p>
+    <img alt="build (Release)" class="border" src="Actions_cs_netframework/img29.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>こちら、試行錯誤中のエラー画面例です。こんな感じでエラー発生場所および詳細を確認することができます。</p>
+    <p>
+    <img alt="ERROR 例" class="border" src="Actions_cs_netframework/img2A.jpg" width="1000"></p>
+    <p>&nbsp;</p>
   </section>
   
   <p>&nbsp;</p>
@@ -332,6 +566,15 @@
         <a href="https://github.com/hsytkm/WpfReleaseActionDemo/blob/main/.github/workflows/cicd.yml">
         WpfReleaseActionDemo/.github/workflows/cicd.yml at main · 
         hsytkm/WpfReleaseActionDemo</a></li>
+        <li>
+        GitHub Actions で ASP.NET MVC ( .NET Framework 4.8 ) を Azure App Service 
+        (Web App) へデプロイ - BEACHSIDE BLOG<br>
+        <a href="https://blog.beachside.dev/entry/2022/12/19/183000" target="_blank">
+        https://blog.beachside.dev/entry/2022/12/19/183000</a></li>
+        <li>
+        Using GitHub Actions for .NET Framework apps (timheuer.com)<br>
+        <a href="https://timheuer.com/blog/building-net-framework-apps-using-github-actions/" target="_blank">
+        https://timheuer.com/blog/building-net-framework-apps-using-github-actions/</a></li>
   	</ul>
   </section>
   
@@ -343,7 +586,7 @@
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
   	  <tr>
-  	    <td class="td_history_date" style="width: 68px">2024-01-27</td>
+  	    <td class="td_history_date" style="width: 68px">2024-03-05</td>
   	    <td class="td_history_separator">-</td>
   	    <td class="td_history">新規作成 </td>
   	  </tr>
