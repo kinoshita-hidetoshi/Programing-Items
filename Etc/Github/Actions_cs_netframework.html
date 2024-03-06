@@ -40,6 +40,12 @@
   .auto-style1 {
     text-decoration: underline;
   }
+  .auto-style2 {
+    background-color: #505000;
+  }
+  .auto-style3 {
+  border-width: 0px;
+}
   </style>
 
 </head>
@@ -57,8 +63,8 @@
     	<h2>目次</h2>
     	<p><a href="#1._環境準備">1. 環境準備</a></p>
       <p><a href="#2._Actions_を有効化する">2. Actions を有効化する</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-1._Actions_を有効化する">2-1. Actions を有効化する</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-2._ビルド、アーティファクト登録">2-2. ビルド、アーティファクト登録</a></p>
+      <p><a href="#3._ビルド、アーティファクト登録">3. ビルド、アーティファクト登録</a></p>
+        <p><a href="#4._UnitTest">4. UnitTest</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -75,11 +81,8 @@
   	  <h3>1.1. "Github" にプロジェクトを作成</h3>
       <p>"Github" のアカウントを既に所有しているものとして記載します。</p>
       <p>&nbsp;</p>
-      <p>&nbsp;</p>
 	  </section>
 	
-    <p>&nbsp;</p>
-    
     <section>
   	  <h3>1.2. c# (.NET Framework 4.8) プロジェクトを作成</h3>
       <p>Pipeline を実行する対象となるプロジェクトを作成します。</p>
@@ -274,10 +277,7 @@
   
   <section>
     <h2><a name="2._Actions_を有効化する">2. Actions を有効化する</a></h2>
-    <p>Github にプログラムをコミットされている状態からスタートします。</p>
-    <p>&nbsp;</p>
-    <h3><a name="2-1._Actions_を有効化する">2-1. Actions を有効化する</a></h3>
-    <p>まずは Actions を有効化するまで進めましょう。</p>
+    <p>Github にプログラムをコミットされている状態からスタートします。まずは Actions を有効化するまで進めましょう。</p>
     <p>Github メニュー上にある「Actions」をクリックします。</p>
     <p>
     <img alt="github &gt; actions" class="border" src="Actions_cs_netframework/img3.jpg" width="1000"></p>
@@ -409,8 +409,15 @@ jobs:
     <p>この yml ファイルをコミットすることで Actions も実行されますが、当然ながらエラーになります。</p>
     <p>エラーではありますが一旦これで Actions を動作できるようになりました。</p>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h3><a name="2-2._ビルド、アーティファクト登録">2-2. ビルド、アーティファクト登録</a></h3>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+    
+    
+  <section>
+    <h2><a name="3._ビルド、アーティファクト登録">3. ビルド、アーティファクト登録</a></h2>
     <p>デフォルトのままではビルドも通らずエラーで終わってしまうので、まずはビルドしてアーティファクトへ登録するまで yml ファイルを修正します。</p>
     <p>こんな感じ。これで正常にビルドしてアーティファクト登録できました。</p>
     <p>&nbsp;</p>
@@ -514,6 +521,107 @@ jobs:
   <p>&nbsp;</p>
   
   <section>
+    <p>&nbsp;</p>
+    <h2><a name="4._UnitTest">4. UnitTest</a></h2>
+    <p>ユニットテスト（UnitTest）の実施を追加します。</p>
+    <p>ここでは "<a href="https://github.com/marketplace/actions/vstest-action" target="_blank">vstest-action 
+    v1.0.0</a>" を使用して実現します。</p>
+    <p>&nbsp;</p>
+    <p>補足説明：</p>
+    <ul>
+      <li>testCounter1.dll : NUnit によるユニットテストです。</li>
+      <li>testCounter2.dll : MSTestV1 によるユニットテストです。</li>
+      <li>testCounter3.dll : MSTestV2 によるユニットテストです。</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>["dotnet-desktop.yml"]</p>
+    <pre class="prettyprint linenums lang-yml" style="width: 1000px">
+name: Build Counter App
+ 
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+ 
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+ 
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 0
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Setup NuGet.exe for use with actions
+      # You may pin to the exact commit or the version.
+      # uses: NuGet/setup-nuget@a21f25cd3998bf370fde17e3f1b4c12c175172f9
+      uses: NuGet/setup-nuget@v2.0.0
+      
+    - name: Restore NuGet Packages
+      run: nuget restore Counter.sln
+      
+    - name: Build Counter App
+      #run: msbuild Counter.sln /p:Configuration=Release
+      run: msbuild Counter.sln /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+<span class="auto-style2">    - name: vstest-action</span>
+<span class="auto-style2">      uses: microsoft/vstest-action@v1.0.0</span>
+<span class="auto-style2">      with:</span>
+<span class="auto-style2">        # Run tests from the specified files</span>
+<span class="auto-style2">        testAssembly: |</span>
+<span class="auto-style2">          **\${{ matrix.configuration }}\testCounter1.dll</span>
+<span class="auto-style2">          **\${{ matrix.configuration }}\testCounter2.dll</span>
+<span class="auto-style2">          **\${{ matrix.configuration }}\testCounter3.dll</span>
+<span class="auto-style2">          !**\obj\**</span>
+       
+    - name: Upload GitHub Pages artifact - CounterWPF
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        # Artifact name
+        name: CounterWPF_${{ matrix.configuration }}
+        # Path of the directory containing the static assets.
+        path: CounterWPF\bin\${{ matrix.configuration }}
+
+    - name: Upload GitHub Pages artifact - CounterForm
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        # Artifact name
+        name: CounterForm_${{ matrix.configuration }}
+        # Path of the directory containing the static assets.
+        path: CounterForm\bin\${{ matrix.configuration }}</pre>
+    <p>&nbsp;</p>
+    <p>UnitTest を実行した結果画面です。</p>
+    <p>期待する16個のテストを実施し、全てパスしていることを画面上で確認できます。</p>
+    <p>
+    <img alt="vstest-action result." class="border" src="Actions_cs_netframework/img13.jpg" width="1200"></p>
+    <p>&nbsp;</p>
+    <p>うまく動作してそうです。</p>
+    <p>"<strong><em>microsoft/vstest-action@v1.0.0</em></strong>" 
+    について、下図のような警告表示がありました。解決策が良くわからないので一旦無視したいと思います。</p>
+    <p>解決情報など見つけたらここの記事を更新するようにします。</p>
+    <p><a href="Actions_cs_netframework/img18.jpg">
+    <img alt="Warning" class="auto-style3" src="Actions_cs_netframework/img18.jpg" width="1200"></a></p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
     <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
     <div class="license">
@@ -575,6 +683,14 @@ jobs:
         Using GitHub Actions for .NET Framework apps (timheuer.com)<br>
         <a href="https://timheuer.com/blog/building-net-framework-apps-using-github-actions/" target="_blank">
         https://timheuer.com/blog/building-net-framework-apps-using-github-actions/</a></li>
+        <li>
+        GitHub Actions で .NETプロジェクトのコードカバレッジを計測する (zenn.dev)<br>
+        <a href="https://zenn.dev/shimat/articles/03ad92427cbed6" target="_blank">
+        https://zenn.dev/shimat/articles/03ad92427cbed6</a></li>
+        <li>
+        vstest-action · Actions · GitHub Marketplace<br>
+        <a href="https://github.com/marketplace/actions/vstest-action" target="_blank">
+        https://github.com/marketplace/actions/vstest-action</a></li>
   	</ul>
   </section>
   
@@ -585,6 +701,11 @@ jobs:
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date" style="width: 68px">2024-03-06</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#4._UnitTest">4._UnitTest</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date" style="width: 68px">2024-03-05</td>
   	    <td class="td_history_separator">-</td>
