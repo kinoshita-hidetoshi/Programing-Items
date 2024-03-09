@@ -54,7 +54,7 @@
   
   <h1>[Github Actions] c#(.NET Framework) を ビルドする</h1>
 
-  <p> 今更ながら Azure DevOps 環境で c# (.NET Framework) アプリを CI/CD 
+  <p> 今更ながら "Github Actions" 環境で c# (.NET Framework) アプリを CI/CD 
   してみたいと思いまして、トライした内容をこちらで記載してみたいと思います。</p>
   <p> &nbsp;</p>
   
@@ -107,7 +107,7 @@
     	  <tr>
     	    <td>コンパイラ :</td>
     	      <td>Visual Studio 2022,</td>
-    	      <td>Version 17.8.4 </td>
+    	      <td>Version 17.9.2 </td>
     	  </tr>
     		
     	  <tr>
@@ -127,7 +127,7 @@
     	  <tr>
     	    <td>フレームワーク：</td>
     	      <td>.NET Framework 4.8</td>
-    	      <td>&nbsp;</td>
+    	      <td>4.8.09032</td>
     	  </tr>
     		
     	  <tr>
@@ -529,9 +529,9 @@ jobs:
     <p>&nbsp;</p>
     <p>補足説明：</p>
     <ul>
-      <li>testCounter1.dll : NUnit によるユニットテストです。</li>
-      <li>testCounter2.dll : MSTestV1 によるユニットテストです。</li>
-      <li>testCounter3.dll : MSTestV2 によるユニットテストです。</li>
+      <li>testCounter1.dll : NUnit によるユニットテストです。テスト項目数 6。</li>
+      <li>testCounter2.dll : MSTestV1 によるユニットテストです。テスト項目数 5。</li>
+      <li>testCounter3.dll : MSTestV2 によるユニットテストです。テスト項目数 5。</li>
     </ul>
     <p>&nbsp;</p>
     <p>["dotnet-desktop.yml"]</p>
@@ -608,12 +608,30 @@ jobs:
     <p>
     <img alt="vstest-action result." class="border" src="Actions_cs_netframework/img13.jpg" width="1200"></p>
     <p>&nbsp;</p>
-    <p>うまく動作してそうです。</p>
-    <p>"<strong><em>microsoft/vstest-action@v1.0.0</em></strong>" 
-    について、下図のような警告表示がありました。解決策が良くわからないので一旦無視したいと思います。</p>
-    <p>解決情報など見つけたらここの記事を更新するようにします。</p>
+    <p>うまく動作してそうです。全テスト（16項目）が実行されて Passed になっていることを確認できました。</p>
+    <p>なお、"<strong><em>microsoft/vstest-action@v1.0.0</em></strong>" 
+    について、下図のような警告表示がありました。</p>
     <p><a href="Actions_cs_netframework/img18.jpg">
     <img alt="Warning" class="auto-style3" src="Actions_cs_netframework/img18.jpg" width="1200"></a></p>
+    <p>&nbsp;</p>
+    <p>具体的な文章は下記の通り。Node.js 関連みたいに読めます。</p>
+    
+    <blockquote>
+      Node.js 16 actions are deprecated. Please update the following actions to 
+      use Node.js 20: microsoft/vstest-action@v1.0.0. For more information see:
+      <a href="https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/" target="_blank">
+      https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/</a>.</blockquote>
+    
+    <blockquote>
+      The following actions uses node12 which is deprecated and will be forced 
+      to run on node16: microsoft/vstest-action@v1.0.0. For more info:
+      <a href="https://github.blog/changelog/2023-06-13-github-actions-all-actions-will-run-on-node16-instead-of-node12-by-default/" target="_blank">
+      https://github.blog/changelog/2023-06-13-github-actions-all-actions-will-run-on-node16-instead-of-node12-by-default/</a>
+    </blockquote>
+    
+    <p>vstest-action は最新版 v1.0.0 
+    を使っているし、説明文の内容からたぶん実害無いと判断。解決策もわからないので一旦無視したいと思います。解決情報など見つけたらこちらの記事を更新するようにします。</p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>
   
