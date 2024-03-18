@@ -126,16 +126,16 @@ sudo apt-get install git
 
 <p>［実施例］ </p>
 <blockquote>
-<p>$ git config --global http.proxy http://proxy.mei.co.jp:8080</p>
-<p>$ git config --global https.proxy https://proxy.mei.co.jp:8080</p>
+<p>$ git config --global http.proxy http://proxy.hoge.co.jp:8080</p>
+<p>$ git config --global https.proxy https://proxy.hoge.co.jp:8080</p>
 </blockquote>
 
 <p>このコマンド入力により、”~/.gitconfig” ファイルに下記情報が記載されます。 </p>
 <blockquote>
 <p>[http]</p>
-<p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = http://proxy.mei.co.jp:8080</p>
+<p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = http://proxy.hoge.co.jp:8080</p>
 <p>[https]</p>
-<p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = https://proxy.mei.co.jp:8080</p>
+<p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = https://proxy.hoge.co.jp:8080</p>
 </blockquote>
 
 <p>補足： </p>
@@ -149,15 +149,15 @@ sudo apt-get install git
 
 <p>［実施例］</p>
 <blockquote>
-<p>$ git config --global user.name "Ipro Taro" </p>
-<p>$ git config --global user.email "ipro.taro@jp.panasonic.com" </p>
+<p>$ git config --global user.name "foo boo" </p>
+<p>$ git config --global user.email "foo.boo@hoge..com" </p>
 </blockquote>
 
 <p>特定リポジトリのみ別の設定としたい場合は、そのリポジトリ配下にいる状態で ”--global” を “--local“ 
 へ置き換えて上記コマンドを実施することで実施できます。 </p>
 <blockquote>
-<p>$ git config --local user.name "Ipro Taro" </p>
-<p>$ git config --local user.email "ipro.taro@jp.panasonic.com" </p>
+<p>$ git config --local user.name "foo boo" </p>
+<p>$ git config --local user.email "foo.boo@hoge.com" </p>
 </blockquote>
 
 <p>&nbsp;</p>
