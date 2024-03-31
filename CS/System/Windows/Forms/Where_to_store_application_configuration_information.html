@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>アプリケーション設定情報を保存する場所 | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+.auto-style1 {
+  background-color: #505000;
+}
+</style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>アプリケーション設定情報を保存する場所</h1>
+  
+  <p> .NET アプリケーションでその設定情報を保存する際の主要な格納方法として、「レジストリ」「XMLファイル」「INIファイル」「独自ファイル」の４種類を利用できる。更にその保存場所によりファイル（XMLファイル、INIファイル、独自ファイル）とレジストリの２種類に分類できる。</p>
+  <p> さて、具体的にどのパス（ディレクトリまたはレジストリ・キー）に設定情報を保存すればよいのだろうか。</p>
+  <p> 本稿ではこの設定情報を格納する先のパスを決定する方法について記載する。</p>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._はじめに">1. はじめに</a></p>
+    	<p><a href="#2._Application.CommonAppDataPath">2. Application.CommonAppDataPath</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._はじめに">1. はじめに</a></h2>
+  	<p>.NET では、このようなパス決定機能が基本機能として提供されている。具体的には、次の表にある <strong>Application</strong> 
+    クラス (System.Windows.Forms 名前空間) のプロパティとして提供されており、これを使用することで適切な場所へ情報を保存することで 
+    Windows のマナーに沿ったアプリケーションを作成することが可能となっている。</p>
+    <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="1000">
+      <caption>[table.] .NET が提供する保存場所プロパティ</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>プロパティ</th>
+          <th>種別</th>
+          <th>用途</th>
+          <th>得られるパスの例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap">Application.CommonAppDataPath</td>
+          <td>ファイル</td>
+          <td>ユーザー共通の設定情報（ローミング<sup>(*1)</sup> しない）</td>
+          <td>"C:\ProgramData\CommonAppDataPath\<em>&lt;Company&gt;</em>\<em>&lt;Product&gt;</em>\<em>&lt;Version&gt;</em>"</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">Application.UserAppDataPath</td>
+          <td>ファイル</td>
+          <td>ユーザー個別の設定情報（ローミング<sup>(*1)</sup> する）</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">Application.LocalUserAppDataPath</td>
+          <td>ファイル</td>
+          <td>ユーザー個別の設定情報（ローミング<sup>(*1)</sup> しない）</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">Application.CommonAppDataRegistry</td>
+          <td style="white-space: nowrap">レジストリ</td>
+          <td>ユーザー共通の設定情報</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">Application.UserAppDataRegistry</td>
+          <td>レジストリ</td>
+          <td>ユーザー個別の設定情報</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  	<p>&nbsp;</p>
+    <p>(*1) 大きな企業や学校などで多数の PC をドメイン機能でまとめて管理してる場合に、どの PC 
+    でログインしてもアプリケーションのデータを引き継いで扱えるようにしているのがローミング機能です。 </p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._Application.CommonAppDataPath">2. Application.CommonAppDataPath</a></h2>
+  	<h4>[概要]</h4>
+    <p><strong>Application.CommonAppDataPath</strong> の情報を取得して画面表示してみます。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>Visual Studio 2022,</td>
+  	      <td>Version 17.9.5 </td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>プログラミング言語：</td>
+  	      <td>c#</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>フレームワーク：</td>
+  	      <td>.NET 8.0</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows11 home,</td>
+  	    <td>23H2 </td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
+    <p>プログラム</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 1000px">
+namespace CommonAppDataPath
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Application.CommonAppDataPath = \"" + Application.CommonAppDataPath + "\"");
+
+            Console.Write("HIT [Enger] key ");
+            Console.ReadLine();
+        }
+    }
+}</pre>
+    <p>&nbsp;</p>
+    <p>["CommonAppDataPath.csproj"]</p>
+    <p>色のついているあたりを追加設定しています。</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 1000px">
+ &lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;net8.0-windows&lt;/TargetFramework&gt;
+    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
+    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+<span class="auto-style1">    &lt;UseWindowsForms&gt;true&lt;/UseWindowsForms&gt;</span>
+<span class="auto-style1">    &lt;Company&gt;Company&lt;/Company&gt;</span>
+<span class="auto-style1">    &lt;Product&gt;Product&lt;/Product&gt;</span>
+<span class="auto-style1">    &lt;Authors&gt;Authors&lt;/Authors&gt;</span>
+<span class="auto-style1">    &lt;Version&gt;1.0.0&lt;/Version&gt;</span>
+<span class="auto-style1">    &lt;AssemblyVersion&gt;1.0.0.0&lt;/AssemblyVersion&gt;</span>
+  &lt;/PropertyGroup&gt;
+
+&lt;/Project&gt;</pre>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>".NET 8" では <span class="cpp-source">&lt;UseWindowsForms&gt;true&lt;/UseWindowsForms&gt;</span> 
+        の部分を直接 csproj ファイルへ記載する必要がありました。</p>
+        <p>".NET Framework" では参照として "System.Windows.Forms.dll" を追加すればOKです。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>実行結果</p>
+    <p>
+    <img alt="実行結果" src="Where_to_store_application_configuration_information/img2D.jpg" width="1000"></p>
+  	<p>&nbsp;</p>
+    <p>&nbsp;</p>	
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://learn.microsoft.com/ja-jp/dotnet/api/system.windows.forms.application.commonappdatapath?view=windowsdesktop-8.0" target="_blank">
+        Application.CommonAppDataPath Property (System.Windows.Forms) | 
+        Microsoft Learn</a></li>
+        <li>
+        <a href="https://qiita.com/sakai3578/items/245652225895bb56b4fb" target="_blank">
+        System.Windows.Formsを.NET環境のクラスライブラリで使おう #C# - Qiita</a></li>
+        <li>
+        <a href="http://var.blog.jp/archives/78945670.html#:~:text=AppData%20%E3%81%AE%20Roaming%20%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%AF%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%8C%E3%83%AD%E3%82%B0%E3%82%A2%E3%82%A6%E3%83%88%E6%99%82%E3%81%AB%E5%90%8C%E6%9C%9F%E3%81%95%E3%82%8C%E3%82%8B%E3%81%AE%E3%81%A7%20%E6%AC%A1%E3%81%AB%E5%88%A5%E3%81%AE%20PC%20%E3%81%A7%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%97%E3%81%A6%E3%82%82%E5%89%8D%E5%9B%9E%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8C%E6%AE%8B%E3%81%A3%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99,%E9%80%86%E3%81%AB%20Local%20%E3%81%AF%E5%88%A5%E3%81%AE%20PC%20%E3%81%AB%E3%81%AF%E5%90%8C%E6%9C%9F%E3%81%95%E3%81%9B%E3%81%AA%E3%81%84%E3%81%9D%E3%81%AE%20PC%20%E5%9B%BA%E6%9C%89%E3%81%AE%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A7%E3%81%99" target="_blank">
+        AppData の Roaming と Local と LocalLow (blog.jp)</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-03-31</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  <p><a href="../../../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
