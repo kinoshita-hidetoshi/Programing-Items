@@ -333,6 +333,7 @@ usage: valgrind [options] prog-and-args
   Bug reports, feedback, admiration, abuse, etc, to: www.valgrind.org.
 </pre>
 	<p> &nbsp;</p>
+    <p> 重要そうなオプションを特記します。</p>
     <p> 
     	<table class="border-collapse"  border="1">
     	  <thead class="standard_table">
@@ -361,6 +362,14 @@ usage: valgrind [options] prog-and-args
       		<tr>
       		  <td>--num-callers</td>
       		  <td>エラー箇所までのバックトレースを何段まで表示するかを指定します。</td>
+      		</tr>
+      		<tr>
+      		  <td>--exit-on-first-error</td>
+      		  <td>yes を指定すると、最初のエラーが発生した時点でプログラムの実行を直ちに停止します。<span class="cpp-source">--exit-on-first-error=yes</span>というように使用します。</td>
+      		</tr>
+      		<tr>
+      		  <td>--error-exitcode</td>
+      		  <td>エラーで終了した場合に特定の終了コードを返すために使用します。<span class="cpp-source">--error-exitcode=1</span>という感じで使用します。</td>
       		</tr>
     		</tbody>
     	</table>
@@ -760,6 +769,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2024-07-24</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">微修正</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-08-13</td>
 	    <td class="td_history_separator">-</td>
