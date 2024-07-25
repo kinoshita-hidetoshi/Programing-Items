@@ -74,6 +74,7 @@
   <p><a href="#7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></p>
   <p><a href="#8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a></p>
   <p><a href="#9._設定２_を作る">9. 設定２ を作る</a></p>
+  <p><a href="#10._既知の問題">10. 既知の問題</a></p>
   <br>
   <p><a href="#サンプルプログラム">サンプルプログラム</a></p>
   <p><a href="#ライセンス">ライセンス</a></p>
@@ -104,7 +105,7 @@
   <p> <img alt="メニュー例" src="gantchart/img11.jpg" width="1000"></p>
   <p> &nbsp;</p>
   <p> 図．設定１</p>
-  <p> <img alt="設定１" src="gantchart/imgB1.jpg" width="1000"></p>
+  <p> <img alt="設定１" class="border" src="gantchart/img25.jpg" width="800"></p>
   <p> &nbsp;</p>
   <p> 図．設定２</p>
   <p> <img alt="設定２" src="gantchart/imgC.jpg" width="1000"></p>
@@ -704,6 +705,7 @@ End Sub</pre>
 <hr>
 <p> &nbsp;</p>
 
+<section>
   <h2> <a name="7._独自のコンテキストメニューを追加">7. 独自のコンテキストメニューを追加</a></h2>
   <h4>[概要]</h4>
   <p> 独自の右クリックメニュー(コンテキストメニュー)を追加する方法を示します。</p>
@@ -754,6 +756,7 @@ End Sub</pre>
   <p> 続いて、コンテキストメニューを実際に追加する部分を作成します。</p>
   <p> こちらはシート側の処理として作成します。</p>
   <p> ワークシートを右クリックしたときの処理から関数 AddOriginalMenu を実行します。</p>
+  
   <pre class="prettyprint linenums lang-vb">
 '
 ' 概要：    選択状態のセルが下記条件を満足するかを確認する。
@@ -771,9 +774,9 @@ Private Function JudgeSelectObjectAndArea() As Boolean
         ' 選択範囲は１行？ 複数行ならNG
         If Selection.Rows.Count = 1 Then
             ' 選択範囲の最も左側は指定範囲内？
-            If Selection(1).Column >= START_DATE_RANGE Then            
+            If Selection(1).Column &gt;= START_DATE_RANGE Then            
                 ' 選択範囲の最も右側は指定範囲内？
-                If Selection(Selection.Count).Column <= getMaxCol(ThisWorkbook.ActiveSheet, 1) Then
+                If Selection(Selection.Count).Column &lt;= getMaxCol(ThisWorkbook.ActiveSheet, 1) Then
                     ' 選択範囲は条件を満足する
                     JudgeSelectObjectAndArea = True
                 End If                
@@ -800,11 +803,13 @@ Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
     End If
     
 End Sub</pre>
+
   <p> &nbsp;</p>
   <p> JudgeSelectObjectAndArea() の判定があるので、不適切なセル選択を行っている場合はオリジナルメニューを表示しません。</p>
   <p> &nbsp;</p>
   <p> 3.</p>
   <p> 続いて、関数 UpdateKeikaku() と UpdateJisseki() を作ります。</p>
+  
   <pre class="prettyprint linenums lang-vb">
 '
 ' 概要：    日付表示範囲を探索して、指定セルと同じ日付のセルを探してその位置を返す
@@ -924,9 +929,10 @@ Public Sub UpdateJisseki()
 
     Application.EnableEvents = True
     Application.ScreenUpdating = True
-End Sub</pre>
+End Sub </pre>
   <p> &nbsp;</p>
   <p> こちらは標準モジュール側へ実装しました。</p>
+  
   <pre class="prettyprint linenums lang-vb">
 '
 ' 概要：    名前を指定して図を削除する
@@ -947,15 +953,20 @@ Sub 名称指定で図を削除する(sheet As Worksheet, name As String)
 End Sub</pre>
   <p> &nbsp;</p>
   <p> これで大体完成です。</p>
+</section>
+  
 <p> &nbsp;</p>
+<hr>
 <p> &nbsp;</p>
-<h2> <a name="8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a></h2>
+
+<section>
+  <h2> <a name="8._ワークブック終了処理、デアクティブ時の処理">8. ワークブック終了処理、デアクティブ時の処理</a></h2>
   <h4>[概要]</h4>
   <p> エクセルワークブックを閉じる際の後処理を実装します。</p>
-<p> ・独自のコンテキストメニューを削除します。</p>
-<p> &nbsp;</p>
-<p> 同様に、別のエクセルブックを使用するなどによりデアクティブになった際の処理を実装します。</p>
-<p> ・独自のコンテキストメニューを削除します。</p>
+  <p> ・独自のコンテキストメニューを削除します。</p>
+  <p> &nbsp;</p>
+  <p> 同様に、別のエクセルブックを使用するなどによりデアクティブになった際の処理を実装します。</p>
+  <p> ・独自のコンテキストメニューを削除します。</p>
   <p> &nbsp;</p>
   <p> 1.</p>
   <p> ThisWorkbook の処理として以下を実装します。</p>
@@ -999,10 +1010,16 @@ Private Sub Worksheet_Deactivate()
     ' オリジナルメニューを削除
     Call DeleteOriginalMenu
 End Sub</pre>
-  <p> &nbsp;</p>
-<p> &nbsp;</p>
-<p> &nbsp;</p>
-<h2> <a name="9._設定２_を作る">9. 設定２ を作る</a></h2>
+
+</section>  
+
+
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+  
+<section>
+  <h2> <a name="9._設定２_を作る">9. 設定２ を作る</a></h2>
   <p> "設定２" のキモは、シートで設定した設定値を画面上にプレビュー表示する、という部分だけですね。</p>
   <p> "設定２" のシート用に下記 VBA プログラムを準備するだけです。</p>
   <p> &nbsp;</p>
@@ -1068,21 +1085,45 @@ Private Sub UpdateColor()
 
 End Sub</pre>
   <p> &nbsp;</p>
-  <p> &nbsp;</p>
-<p> &nbsp;</p>
-  <hr>
-  <p> &nbsp;</p>
   
 </section>
+
+<p> &nbsp;</p>
+<hr>
+<p> &nbsp;</p>
+
+<section>
+  <h2><a name="10._既知の問題">10. 既知の問題</a></h2>
+  <p>&nbsp;</p>
+  <h3>10-1. マルチディスプレイ環境下でバー表示位置がずれる場合がある</h3>
+  <p>ＰＣに複数のディスプレイを接続して表示している場合に、バー（ガントチャート横棒）の表示位置がずれる場合があることを確認しています。</p>
+  <ul>
+    <li>全てのディスプレイ表示倍率が同じ場合、問題を発生しません（例：表示倍率が全て100%）</li>
+    <li>
+    メインディスプレイと表示倍率が異なるディスプレイ上で本アプリケーションを表示したとき、バー表示位置がずれる場合があります（例：メインディスプレイ 
+    125%、サブディスプレイ 100%）</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p class="auto-style1"><strong>解決方法</strong></p>
+  <p>Excelの［オプション］を開き、［全般］タブの［ユーザーインターフェイスのオプション］-［複数ディスプレイを使用する場合］の設定を「互換性に対応した最適化(アプリケーションの再起動が必要)」に設定して、Excel 
+  を再起動します。</p>
+  <p><img alt="互換性に対応した最適化" src="gantchart/img2F.jpg" width="1000"></p>
+  <p>&nbsp;</p>
+  <p>私の環境ではこれで問題解決できました。お試しください。</p>
+  <p>&nbsp;</p>
+</section>
+
+<p> &nbsp;</p>
+<hr>
+<p> &nbsp;</p>
+
 <section>
   <h2><a name="サンプルプログラム">サンプルプログラム</a></h2>
-  <p>
-  以上の内容を全て（＋アルファ？）した <strong>Excelガントチャート</strong> を以下からダウンロードできます。<br>
+  <p>以上の内容を全て（＋アルファ？）した <strong>Excelガントチャート</strong> を以下からダウンロードできます。<br>
   私自身が業務で使用することを目的にこれをブラッシュアップしているので、ここのが一番完成度が高いです。</p>
-<p>
-  &nbsp;</p>
-<p>
-  サンプルプログラム <a href="gantchart/Excel_gantchart_v1_05.xlsm">ダウンロード</a></p>
+  <p>&nbsp;</p>
+  <p>サンプルプログラム <a href="gantchart/Excel_gantchart_v1_05.xlsm">ダウンロード</a></p>
+  <br>
   <br>
   
   <h4>変更履歴</h4>
@@ -1234,6 +1275,12 @@ End Sub</pre>
   <h2 style="margin-bottom:5px">変更履歴</h2>
 
   <table>
+  
+    <tr>
+      <td class="td_history_date">2024-07-25</td>
+      <td class="td_history_separator">-</td>
+      <td class="td_history">「<a href="#10._既知の問題">10._既知の問題</a>」を記載</td>
+    </tr>
   
     <tr>
       <td class="td_history_date">2024-05-09</td>
