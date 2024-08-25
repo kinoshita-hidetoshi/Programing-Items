@@ -337,27 +337,28 @@ int main()
           <td>
             <p>いくつかのプロジェクトファイルやビルド設定を Cppcheck にインポートできます。</p>
             <ul>
-              <li>CppCheck GUI プロジェクト<br>CppCheck GUI プロジェクトファイルをインポートして利用できます。<br>
-              (例) cppcheck --project=foobar.cppcheck<br></li>
-              <li>CMake<br>cmake で作成したコンパイルデータベースを利用できます。<br>(例) cmake 
-              -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<br>&nbsp;&nbsp;&nbsp;&nbsp; 
-              cppcheck --project=compile_commands.json<br></li>
-              <li>Visual Studio<br>Cppcheck は、個々のプロジェクトファイル (*.vcxproj) 
+              <li><strong>CppCheck GUI プロジェクト</strong><br>CppCheck GUI プロジェクトファイルをインポートして利用できます。<br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.cppcheck</span><br>&nbsp;</li>
+              <li><strong>CMake</strong><br>cmake で作成したコンパイルデータベースを利用できます。<br>
+              (例) 
+              <span class="cpp-source">cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .</span><br>&nbsp;&nbsp;&nbsp;&nbsp; 
+              <span class="cpp-source">cppcheck --project=compile_commands.json</span><br>&nbsp;</li>
+              <li><strong>Visual Studio</strong><br>Cppcheck は、個々のプロジェクトファイル (*.vcxproj) 
               またはソリューション全体 (*.sln) に対して実行できます。<br><br>Visual Studio ソリューション全体で 
-              Cppcheck を実行する: <br>(例) cppcheck --project=foobar.sln<br><br>
-              Visual Studio プロジェクトでの Cppcheck の実行: <br>(例) cppcheck 
-              --project=foobar.vcxproj<br><br>
+              Cppcheck を実行する: <br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.sln</span><br><br>
+              Visual Studio プロジェクトでの Cppcheck の実行: <br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.vcxproj</span><br><br>
               どちらのオプションでも、プロジェクトで使用可能なすべてのコンフィギュレーションが解析されます。<br><br>
               １つの構成を指定して解析する:<br>下記例のように指定することで１つの構成を指定して解析することを可能とすることができます。<br>
-              (例) cppcheck --project=foobar.sln 
-              "--project-configuration=Release|Win32"<br><br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.sln "--project-configuration=Release|Win32"</span><br><br>
               プロジェクト内の特定のフォルダを無視するには、-i オプションを使用します。下記例では "foo" 
-              フォルダ内のソースファイルの分析がスキップされます。 <br>(例) cppcheck 
-              --project=foobar.vcxproj -ifoo<br></li>
-              <li>C++ Builder 6<br>Cppcheck は、C++ Builder 6 プロジェクトに対して解析を実行できます。<br>
-              (例) cppcheck --project=foobar.bpr<br><br>プロジェクト内の特定のフォルダを無視するには、-i 
-              オプションを使用します。下記例では "foo" フォルダ内のソースファイルの分析がスキップされます。 <br>(例) 
-              cppcheck --project=foobar.bpr -ifoo <br></li>
+              フォルダ内のソースファイルの分析がスキップされます。 <br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.vcxproj -ifoo</span><br>&nbsp;<br></li>
+              <li><strong>C++ Builder 6</strong><br>Cppcheck は、C++ Builder 6 プロジェクトに対して解析を実行できます。<br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.bpr</span><br><br>プロジェクト内の特定のフォルダを無視するには、-i 
+              オプションを使用します。下記例では "foo" フォルダ内のソースファイルの分析がスキップされます。 <br>
+              (例) <span class="cpp-source">cppcheck --project=foobar.bpr -ifoo</span><br>&nbsp;</li>
             </ul>
           </td>
         </tr>
