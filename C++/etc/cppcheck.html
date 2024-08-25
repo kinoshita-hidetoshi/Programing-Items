@@ -332,6 +332,35 @@ int main()
             <p>(例) --std=c++20</p>
           </td>
         </tr>
+        <tr>
+          <td><strong>--procect</strong></td>
+          <td>
+            <p>いくつかのプロジェクトファイルやビルド設定を Cppcheck にインポートできます。</p>
+            <ul>
+              <li>CppCheck GUI プロジェクト<br>CppCheck GUI プロジェクトファイルをインポートして利用できます。<br>
+              (例) cppcheck --project=foobar.cppcheck<br></li>
+              <li>CMake<br>cmake で作成したコンパイルデータベースを利用できます。<br>(例) cmake 
+              -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .<br>&nbsp;&nbsp;&nbsp;&nbsp; 
+              cppcheck --project=compile_commands.json<br></li>
+              <li>Visual Studio<br>Cppcheck は、個々のプロジェクトファイル (*.vcxproj) 
+              またはソリューション全体 (*.sln) に対して実行できます。<br><br>Visual Studio ソリューション全体で 
+              Cppcheck を実行する: <br>(例) cppcheck --project=foobar.sln<br><br>
+              Visual Studio プロジェクトでの Cppcheck の実行: <br>(例) cppcheck 
+              --project=foobar.vcxproj<br><br>
+              どちらのオプションでも、プロジェクトで使用可能なすべてのコンフィギュレーションが解析されます。<br><br>
+              １つの構成を指定して解析する:<br>下記例のように指定することで１つの構成を指定して解析することを可能とすることができます。<br>
+              (例) cppcheck --project=foobar.sln 
+              "--project-configuration=Release|Win32"<br><br>
+              プロジェクト内の特定のフォルダを無視するには、-i オプションを使用します。下記例では "foo" 
+              フォルダ内のソースファイルの分析がスキップされます。 <br>(例) cppcheck 
+              --project=foobar.vcxproj -ifoo<br></li>
+              <li>C++ Builder 6<br>Cppcheck は、C++ Builder 6 プロジェクトに対して解析を実行できます。<br>
+              (例) cppcheck --project=foobar.bpr<br><br>プロジェクト内の特定のフォルダを無視するには、-i 
+              オプションを使用します。下記例では "foo" フォルダ内のソースファイルの分析がスキップされます。 <br>(例) 
+              cppcheck --project=foobar.bpr -ifoo <br></li>
+            </ul>
+          </td>
+        </tr>
       </tbody>
     </table>
     
@@ -472,6 +501,11 @@ C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2024-08-25</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"--project" オプションに関する記載を追記</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-12-21</td>
 	    <td class="td_history_separator">-</td>
