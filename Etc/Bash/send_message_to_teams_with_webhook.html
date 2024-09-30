@@ -1,0 +1,538 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>Teams チャネルへメッセージ送信する方法 | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #505000;
+  }
+  </style>
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>Teams チャネルへメッセージ送信する方法</h1>
+  
+  <p> Webhook と curl コマンドを使って Teams チャネルへメッセージ送信する方法について紹介します。</p>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._Microsoft_Teams_チャネルのポスト_Webhook_URL_を生成する">1. Microsoft Teams チャネルのポスト Webhook URL を生成する</a></p>
+        <p><a href="#2._最初のサンプル_-_Hello_World">2. 最初のサンプル - Hello World</a></p>
+        <p><a href="#3._表示を全幅にする">3. 表示を全幅にする</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._Microsoft_Teams_チャネルのポスト_Webhook_URL_を生成する">1. Microsoft Teams チャネルのポスト Webhook URL を生成する</a></h2>
+  	<h4>[概要]</h4>
+    <p>最初に、Microsoft Teams チャネルのポスト Webhook URL を生成する手順、について記載します。</p>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>Workflows アプリが Microsoft Teams 組織に追加されていない場合は、[アプリ]セクションで見つけ（またはリンクをたどって）、[追加]をクリックします。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[手順]</h4>
+    <p>Microsoft Teams で Webhook URL&nbsp;を生成するには、次の手順に従います。</p>
+    <p>&nbsp;</p>
+    <p>1. Microsoft Teams を開き、通知を受信するチャネルに移動します。</p>
+    <p>2. チャネル名の横にある&nbsp;3 つのドット メニュー (...)&nbsp;をクリックし、ドロップダウン メニューから&nbsp;[ワークフロー] を選択します。</p>
+    <p>
+    <img alt="Create workflow" class="border_with_drop-shadow" src="send_message_to_teams_with_webhook/img31.jpg" width="300"></p>
+    <p>&nbsp;</p>
+    <p>3. [ワークフロー]&nbsp;ウィンドウで、「Webhook リクエストを受信したときにチャネルに投稿する」テンプレートを検索してクリックします。</p>
+    <p>
+    <img alt="Create workflow" src="send_message_to_teams_with_webhook/img36.jpg" width="700" class="border_with_drop-shadow"></p>
+    <p>&nbsp;</p>
+    <p>4. ワークフローを初めて作成する場合は、必要な権限を受け入れてます。</p>
+  	<p>
+    <img alt="Create workflow" src="send_message_to_teams_with_webhook/img3B.jpg" width="800" class="border_with_drop-shadow"></p>
+    <p>&nbsp;</p>
+    <p>5. 
+    必要に応じて、ワークフローの名前を変更して、他のユーザーが理解を深められるように、明確でわかりやすい名前を付けることができます。その後、[次へ] 
+    をクリックします。</p>
+    <p>
+    <img alt="Create workflow" src="send_message_to_teams_with_webhook/img3D.jpg" class="border_with_drop-shadow" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>6. 適切な Microsoft Teams チームとチャネルが選択されていることを確認します。</p>
+    <p>
+    <img alt="Create workflow" src="send_message_to_teams_with_webhook/img3E.jpg" class="border_with_drop-shadow" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>7. 「ワークフローを追加」ボタンをクリックして、新しいワークフローの作成を送信します。</p>
+    <p>8. 生成された&nbsp;Webhook 
+    URL&nbsp;をコピーします。このURLはWebhookに固有であり、特定のチャネルにメッセージを送信するために使用されます。</p>
+    <p>
+    <img alt="Create workflow" src="send_message_to_teams_with_webhook/img3F.jpg" width="1000" class="border_with_drop-shadow"></p>
+    <p>&nbsp;</p>
+    <p>9. Webhook URLがコピーされたら、[完了]ボタンをクリックしてワークフローの作成を終了します。 </p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._最初のサンプル_-_Hello_World">2. 最初のサンプル - "Hello World"</a></h2>
+  	<h4>[概要]</h4>
+    <p>最初のサンプルとして "Hello World" というテキストを Teams 上に表示する例を紹介します。</p>
+    <p>bash のシェルスクリプトで curl コマンドを使って実現します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS ：</td>
+  	      <td>Ubuntu24.04,</td>
+  	      <td>WSL version 2.2.4.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
+  	
+  	<h4>[サンプルコード]</h4>
+    <p>サンプルソースコードを以下に記載します。</p>
+    <p>メッセージ送信先の Teams チャネルで作成したワークフローの "Webhook URL" を下記ソースコードの WEBHOOK_URL 
+    内容に張り付けて実行するだけです。</p>
+    <p>&nbsp;</p>
+    <p>["webhook_test1.sh&quot;]</p>
+    <pre class="prettyprint linenums lang-sh" style="width: 800px; white-space: pre-wrap;">
+#!/usr/bin/bash
+
+# 変数設定（適宜書き換え）
+WEBHOOK_URL="https://prod-29.japaneast.logic.azure.com:443/workflows/4f8b************************d787/triggers/manual/paths/invoke?api-version=2016-06-01&amp;sp=%2Ftriggers%2Fmanual%2Frun&amp;sv=1.0&amp;sig=9OPr****************rE5vGEIHsT_in9W****L3I0"
+
+# 投稿テスト
+curl -s -i -H "Content-Type: application/json" --data-binary @- "$WEBHOOK_URL" &lt;&lt; '__EOF__'
+   {
+      "type":"message",
+      "attachments":[
+         {
+            "contentType":"application/vnd.microsoft.card.adaptive",
+            "contentUrl":null,
+            "content":{
+               "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
+               "type":"AdaptiveCard",
+               "version":"1.4",
+               "body":[
+                  {
+                     "type": "TextBlock",
+                     "text": "Hello World"
+                  }
+               ]
+            }
+         }
+      ]
+   }
+__EOF__</pre>
+    <p>&nbsp;</p>
+    <h4>&nbsp;[実行結果]</h4>
+    <h4>
+    <img alt="&quot;Hello World&quot; 実行結果" class="border_with_drop-shadow" src="send_message_to_teams_with_webhook/img4B.jpg"><br>
+    </h4>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="3._表示を全幅にする">3. 表示を全幅にする</a></h2>
+  	<h4>[概要]</h4>
+    <p>
+    最初のサンプルでは画面左側のみへの表示となりました。メッセージ送信する情報量が増えてきた場合は全幅で表示したくなりますので、この辺を修正していきます。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS ：</td>
+  	      <td>Ubuntu24.04,</td>
+  	      <td>WSL version 2.2.4.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
+  	
+  	<h4>[サンプルコード]</h4>
+    <p>"msTeams" 専用のプロパティ指定を使って "width" を "full" に指定するだけで対応できます。</p>
+    <p>&nbsp;</p>
+    <p>["webhook_test2.sh&quot;]</p>
+    <pre class="prettyprint linenums lang-sh" style="width: 800px; white-space: pre-wrap;">
+#!/usr/bin/bash
+
+# 変数設定（適宜書き換え）
+WEBHOOK_URL="https://prod-29.japaneast.logic.azure.com:443/workflows/4f8b************************d787/triggers/manual/paths/invoke?api-version=2016-06-01&amp;sp=%2Ftriggers%2Fmanual%2Frun&amp;sv=1.0&amp;sig=9OPr****************rE5vGEIHsT_in9W****L3I0"
+
+# 投稿テスト
+curl -s -i -H "Content-Type: application/json" --data-binary @- "$WEBHOOK_URL" &lt;&lt; '__EOF__'
+   {
+      "type":"message",
+      "attachments":[
+         {
+            "contentType":"application/vnd.microsoft.card.adaptive",
+            "contentUrl":null,
+            "content":{
+               "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
+               "type":"AdaptiveCard",
+               "version":"1.4",
+<span class="auto-style1">               "msTeams": {</span>
+<span class="auto-style1">                  "width": "full"</span>
+<span class="auto-style1">               },</span>
+               "body":[
+                  {
+                     "type": "TextBlock",
+                     "text": "Hello World"
+                  }
+               ]
+            }
+         }
+      ]
+   }
+__EOF__</pre>
+    <p>&nbsp;</p>
+    <h4>&nbsp;[実行結果]</h4>
+    <h4>
+    <img alt="&quot;width&quot;: &quot;full&quot;" class="border_with_drop-shadow" src="send_message_to_teams_with_webhook/img4F.jpg"><br>
+    </h4>
+    <p>&nbsp;</p>
+    <p>期待通りに表示してくれるようになりました。</p>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> 4<a name="3._表示を全幅にする0">. </a>文字に色・太さを追加、ボタン追加、など</h2>
+  	<h4>[概要]</h4>
+  	<p> 実際に活用することを想定したサンプルを例示したいと思います。</p>
+    <p> ここでは下記のような要素を追加してみます。</p>
+    <ul>
+      <li>行毎にタイトル、内容を成立して表示： "width" で幅を指定してみます</li>
+      <li>文字に色を追加： "color": "Warning" で赤になります</li>
+      <li>文字を太文字： 文字の前後へ ** を加えると太文字になります</li>
+      <li>ボタンを追加： ボタンクリックで特定のホームページを表示してみます</li>
+    </ul>
+    <p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS ：</td>
+  	      <td>Ubuntu24.04,</td>
+  	      <td>WSL version 2.2.4.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
+  	
+  	<h4>[サンプルコード]</h4>
+    <p>詳細はサンプルコードを参照ください。</p>
+    <p>&nbsp;</p>
+    <p>["webhook_test3.sh&quot;]</p>
+    <pre class="prettyprint linenums lang-sh" style="width: 800px; white-space: pre-wrap;">
+#!/usr/bin/bash
+
+# 変数設定（適宜書き換え）
+WEBHOOK_URL="https://prod-29.japaneast.logic.azure.com:443/workflows/4f8b************************d787/triggers/manual/paths/invoke?api-version=2016-06-01&amp;sp=%2Ftriggers%2Fmanual%2Frun&amp;sv=1.0&amp;sig=9OPr****************rE5vGEIHsT_in9W****L3I0"
+
+# 投稿テスト
+curl -s -i -H "Content-Type: application/json" --data-binary @- "$WEBHOOK_URL" &lt;&lt; '__EOF__'
+    {
+        "type": "Application/JSON",
+        "attachments": [
+            {
+                "contentType": "object",
+                "content": {
+                    "type": "AdaptiveCard",
+                    "version": "1.4",
+                    "msTeams": {
+                        "width": "full"
+                    },
+                    "body": [
+                        {
+                            "type": "TextBlock",
+                            "text": "【通知】新しい記事を公開",
+                            "size": "Large",
+                            "isSubtle": false,
+                            "wrap": true,
+                            "weight": "Bolder",
+                            "spacing": "None",
+                            "color":"Warning" 
+                        },
+                        {
+                            "type": "TextBlock",
+                            "text": "新しい記事を公開しました。",
+                            "isSubtle": false,
+                            "wrap": true,
+                            "weight": "Lighter",
+                            "spacing": "None",
+                            "color":"default"
+                        },
+
+                        {
+                            "type": "ColumnSet",
+                            "columns": [
+                                {
+                                    "type": "Column",
+                                    "width": "100px",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "**概要**",
+                                            "wrap": true,
+                                            "weight": "Bolder"
+                                        }
+                                    ],
+                                    "separator": true
+                                },
+                                {
+                                    "type": "Column",
+                                    "width": "stretch",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Teams チャネルへメッセージ送信する方法",
+                                            "wrap": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                        {
+                            "type": "ColumnSet",
+                            "columns": [
+                                {
+                                    "type": "Column",
+                                    "width": "100px",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "**説明**",
+                                            "wrap": true,
+                                            "weight": "Bolder"
+                                        }
+                                    ],
+                                    "separator": true
+                                },
+                                {
+                                    "type": "Column",
+                                    "width": "stretch",
+                                    "items": [
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Webhook と curl コマンドを使って Teams チャネルへメッセージ送信する方法について紹介します。",
+                                            "wrap": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+
+                        {
+                            "type": "TextBlock",
+                            "text": "💡 詳細は [**記事を表示**] ボタンをクリックしてください",
+                            "wrap": true,
+                            "size": "Small",
+                            "weight": "Lighter",
+                            "color": "Attention"
+                        }
+                    ],
+
+                    "actions": [
+                        {
+                            "type": "Action.OpenUrl",
+                            "title": "記事を表示",
+                            "url": "http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Bash/send_message_to_teams_with_webhook.html"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+__EOF__</pre>
+    <p>&nbsp;</p>
+    <h4>&nbsp;[実行結果]</h4>
+    <p>
+    <img alt="実行結果" class="border_with_drop-shadow" src="send_message_to_teams_with_webhook/img69.jpg"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>Retirement of Office 365 connectors within Microsoft Teams<br>
+        <a href="https://devblogs.microsoft.com/microsoft365dev/retirement-of-office-365-connectors-within-microsoft-teams/" target="_blank">
+        https://devblogs.microsoft.com/microsoft365dev/retirement-of-office-365-connectors-within-microsoft-teams/</a></li>
+        <li>TeamsのIncomming Webhookコネクタが廃止されるようなのでPowerAutomateのワークフローに移行してみる 
+        #MicrosoftTeams - Qiita<br>
+        <a href="https://qiita.com/fukasawah/items/896c3638c203a973c2f0" target="_blank">
+        https://qiita.com/fukasawah/items/896c3638c203a973c2f0</a></li>
+        <li>Microsoft TeamsのIncoming Webhookが廃止になるので、Workflows(Power 
+        Automate)で通知する方法を調べた - Devplatform blog (techmatrix.jp)<br>
+        <a href="https://blog.devplatform.techmatrix.jp/blog/teams_workflows_notification/" target="_blank">
+        https://blog.devplatform.techmatrix.jp/blog/teams_workflows_notification/</a></li>
+        <li>How to create webhook URL with Workflows app? (moveworkforward.com)<br>
+        <a href="https://help.moveworkforward.com/microsoft-teams/how-to-create-webhook-url-with-workflows-app" target="_blank">
+        https://help.moveworkforward.com/microsoft-teams/how-to-create-webhook-url-with-workflows-app</a></li>
+        <li>Designer | Adaptive Cards<br>
+        <a href="https://adaptivecards.io/designer/" target="_blank">
+        https://adaptivecards.io/designer/</a></li>
+        <li>【Power Automate】初心者向けアダプティブカードの作り方【Teams】 | てじらぼ (teijitaisya.com)<br>
+        <a href="https://www.teijitaisya.com/adaptivecards/" target="_blank">
+        https://www.teijitaisya.com/adaptivecards/</a></li>
+        <li>tutorials / markdowndemo — Bitbucket<br>
+        <a href="https://bitbucket.org/tutorials/markdowndemo/src/master/" target="_blank">
+        https://bitbucket.org/tutorials/markdowndemo/src/master/</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2024-09-30</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2024 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
