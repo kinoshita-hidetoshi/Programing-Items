@@ -8,473 +8,563 @@
 
 
 <url>
-  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/</loc>
-  <lastmod>2023-02-09T11:58:34+00:00</lastmod>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/index.html</loc>
+  <lastmod>2023-08-30T21:56:53+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/install_python.html</loc>
-  <lastmod>2023-02-07T02:17:54+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/install_jupyter_notebook.html</loc>
-  <lastmod>2023-02-07T02:17:54+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/install_pytorch.html</loc>
-  <lastmod>2023-03-05T13:14:39+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/pip.html</loc>
-  <lastmod>2023-02-15T02:47:37+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/connect_with_rtsp.html</loc>
-  <lastmod>2023-02-05T04:37:04+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:16+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/connect_with_jpeg.html</loc>
-  <lastmod>2023-02-05T04:37:03+00:00</lastmod>
+  <lastmod>2023-09-13T21:56:32+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/connect_with_mjpeg.html</loc>
-  <lastmod>2023-02-05T04:37:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:16+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/connect_to_wv-xae200w.html</loc>
-  <lastmod>2023-02-05T04:37:03+00:00</lastmod>
+  <lastmod>2024-01-13T05:30:38+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/image_classification_vgg.html</loc>
-  <lastmod>2023-02-05T04:37:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:17+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/mobilenet-ssd.html</loc>
-  <lastmod>2023-02-20T04:23:59+00:00</lastmod>
+  <lastmod>2024-08-19T02:19:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/connect_surveillance_camera/mobilenet-ssd_train.html</loc>
-  <lastmod>2023-03-04T12:49:05+00:00</lastmod>
+  <lastmod>2024-08-19T02:18:57+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/AI/first_try_lobe.html</loc>
-  <lastmod>2023-02-08T11:07:30+00:00</lastmod>
+  <lastmod>2023-08-30T21:56:55+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/algorithm/mandelbrot.html</loc>
+  <lastmod>2023-08-30T21:59:15+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Python/opencv/template_matching.html</loc>
+  <lastmod>2024-05-09T06:02:23+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/AI/stable_diffusion_with_google_colaboratory.html</loc>
-  <lastmod>2022-12-10T00:58:22+00:00</lastmod>
+  <lastmod>2023-08-30T21:56:55+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/output_file_list.html</loc>
-  <lastmod>2023-01-29T09:41:08+00:00</lastmod>
+  <lastmod>2024-03-12T04:28:45+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/Highlight_active_cell_row_and_column.html</loc>
-  <lastmod>2023-01-29T09:41:08+00:00</lastmod>
+  <lastmod>2024-03-12T04:28:54+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/Work_with_multiple_sheets.html</loc>
-  <lastmod>2023-01-29T09:41:08+00:00</lastmod>
+  <lastmod>2024-03-12T04:28:35+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/Work_with_multiple_books.html</loc>
+  <lastmod>2024-03-12T04:28:09+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/gantchart.html</loc>
-  <lastmod>2023-01-29T09:41:08+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/vba_password_unlocked.html</loc>
-  <lastmod>2023-01-29T09:41:08+00:00</lastmod>
+  <lastmod>2024-07-30T09:40:43+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/send_email.html</loc>
-  <lastmod>2023-02-12T08:54:20+00:00</lastmod>
+  <lastmod>2024-03-12T04:28:27+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Excel/Interval_event.html</loc>
+  <lastmod>2024-03-12T04:29:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Microsoft/PowerShell/Windows%20app%20auto-test.html</loc>
-  <lastmod>2022-11-30T06:53:14+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:12+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Git/git.html</loc>
+  <lastmod>2024-03-18T07:02:01+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Git/submodule.html</loc>
+  <lastmod>2024-01-30T00:02:30+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Azure_DevOps/How%20to%20use%20SSH%20key.html</loc>
+  <lastmod>2024-01-31T03:05:40+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Azure_DevOps/Pipelines_cs_netframework.html</loc>
+  <lastmod>2024-03-13T09:38:27+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Bitbucket/How%20to%20use%20SSH%20key.html</loc>
-  <lastmod>2022-11-07T06:38:15+00:00</lastmod>
+  <lastmod>2024-02-29T04:14:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Bitbucket/Pipelines_c++.html</loc>
-  <lastmod>2022-07-14T13:21:34+00:00</lastmod>
+  <lastmod>2024-03-02T04:34:06+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Github/How%20to%20use%20SSH%20key.html</loc>
-  <lastmod>2023-02-08T05:11:33+00:00</lastmod>
+  <lastmod>2024-03-11T06:47:31+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Github/Actions_cs_netframework.html</loc>
+  <lastmod>2024-03-11T06:47:31+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Algorithm/levenshtein.html</loc>
-  <lastmod>2022-11-29T06:10:21+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:02+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Doxygen/doxygen_windows.html</loc>
-  <lastmod>2022-08-28T10:35:52+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:27+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/TestMethod/SourceCodeCoverage/AxoCover.html</loc>
+  <lastmod>2024-01-31T02:55:13+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/coverage/gcov_lcov.html</loc>
-  <lastmod>2023-02-07T03:32:01+00:00</lastmod>
+  <lastmod>2024-03-06T09:15:13+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Metaverse/Meta_Quest.html</loc>
-  <lastmod>2022-11-15T22:36:15+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:01+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Metaverse/try_handtracking_passthrough.html</loc>
-  <lastmod>2022-11-15T22:34:32+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:01+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Metaverse/create_vrchat_world.html</loc>
-  <lastmod>2022-11-15T22:37:31+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:01+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/FixPerformMon.html</loc>
-  <lastmod>2022-05-22T07:17:45+00:00</lastmod>
+  <lastmod>2023-11-24T08:48:23+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Etc/Bash/send_message_to_teams_with_webhook.html</loc>
+  <lastmod>2024-09-30T06:19:05+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/etc/cppcheck.html</loc>
+  <lastmod>2024-08-25T03:40:31+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/etc/valgrind.html</loc>
-  <lastmod>2022-08-15T04:51:35+00:00</lastmod>
+  <lastmod>2024-07-24T05:07:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/language/types/constexpr.html</loc>
-  <lastmod>2022-11-18T06:42:44+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:13+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/map.html</loc>
-  <lastmod>2022-09-12T01:39:19+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:05+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/set.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/queue.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/stack.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/forward_list.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:05+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/Delegate%20and%20Event/lambda.html</loc>
-  <lastmod>2022-08-16T08:22:11+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:27+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/async_await/async_await.html</loc>
-  <lastmod>2022-05-03T00:14:45+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/TestMethod/SourceCodeCoverage/AxoCover.html</loc>
-  <lastmod>2022-07-19T07:13:16+00:00</lastmod>
+  <lastmod>2023-11-04T23:49:00+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/Etc/HowToUseJoystick.html</loc>
-  <lastmod>2022-07-14T02:27:28+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:27+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/Etc/HowToUseSettings.html</loc>
+  <lastmod>2023-08-30T21:57:27+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/DataBinding/DataBinding_01.html</loc>
+  <lastmod>2023-08-30T22:33:26+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/DataBinding/DataBinding_Format%20and%20Parse.html</loc>
+  <lastmod>2023-08-30T22:33:33+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/DataBinding/Counter.html</loc>
-  <lastmod>2022-04-30T04:00:02+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:24+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/Globalize/HowToGlobalizeForm.html</loc>
-  <lastmod>2022-04-02T01:48:53+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:32+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/System.Windows.Media.Animation/Animation%20method%20for%20Grid_ColumnDefinition.html</loc>
-  <lastmod>2022-12-09T23:49:15+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:15+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/System.Windows.Media.Animation/Animation%20of%20the%20rectangle.html</loc>
-  <lastmod>2022-11-17T08:22:50+00:00</lastmod>
+  <lastmod>2024-01-25T23:11:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/DataBinding/Counter.html</loc>
-  <lastmod>2022-08-10T10:40:55+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:55+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/DataBinding/MeterYardConverter.html</loc>
-  <lastmod>2022-04-30T04:00:10+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:56+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/3D%20Graphics/Model/Pyramid.html</loc>
-  <lastmod>2021-04-11T03:26:22+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:43+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/3D%20Graphics/Model/cube.html</loc>
-  <lastmod>2023-02-16T00:44:26+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:43+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/3D%20Graphics/Texture/PasteImage.html</loc>
-  <lastmod>2023-02-16T00:56:59+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:44+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/3D%20Graphics/Texture/PasteMovie.html</loc>
-  <lastmod>2022-12-19T13:33:48+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:44+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/3D%20Graphics/Etc/SnowFall.html</loc>
-  <lastmod>2022-11-21T04:28:48+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:41+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/MahApps.Metro/abstract.html</loc>
-  <lastmod>2022-07-14T03:34:29+00:00</lastmod>
+  <lastmod>2023-11-04T04:23:17+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/MahApps.Metro/CreateWindow.html</loc>
-  <lastmod>2022-10-01T11:35:35+00:00</lastmod>
+  <lastmod>2024-02-14T08:41:21+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/MahApps.Metro.IconPacks/abstract.html</loc>
-  <lastmod>2022-08-16T08:35:17+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/Material%20Design%20In%20XAML%20Toolkit/abstract.html</loc>
-  <lastmod>2022-07-18T01:32:39+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:07+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/Material%20Design%20In%20XAML%20Toolkit/StartPrograming.html</loc>
-  <lastmod>2022-07-18T22:55:21+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:07+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/MahApps%20and%20Material-Design/abstract.html</loc>
-  <lastmod>2022-07-14T06:32:15+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:02+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Design/Dragablz/abstract.html</loc>
-  <lastmod>2022-10-10T09:19:48+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:01+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Blend/Behavior/MouseDragElementBehavior.html</loc>
-  <lastmod>2022-07-25T22:02:01+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:49+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/SaveWpfAttribute.html</loc>
-  <lastmod>2022-04-30T04:00:07+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:41+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/SplashScreen.html</loc>
-  <lastmod>2022-04-30T04:00:07+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:41+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/ImageViewer.html</loc>
-  <lastmod>2022-04-30T04:00:07+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:41+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/CS/WPF/Etc/GetScreenCapture.html</loc>
-  <lastmod>2022-04-30T04:00:13+00:00</lastmod>
+  <lastmod>2023-08-30T21:58:10+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/language/functions/lambda.html</loc>
-  <lastmod>2022-05-22T07:00:55+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:12+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/language/class/static_member.html</loc>
-  <lastmod>2022-11-21T03:42:06+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:11+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/string/split.html</loc>
-  <lastmod>2022-11-18T05:13:24+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/array.html</loc>
-  <lastmod>2022-08-28T02:36:28+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:05+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/vector.html</loc>
-  <lastmod>2022-10-10T09:08:41+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/deque.html</loc>
-  <lastmod>2022-08-29T22:55:26+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:05+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/list.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:05+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Container/priority_queue.html</loc>
-  <lastmod>2022-05-16T21:15:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/smart_pointer/unique_ptr.html</loc>
-  <lastmod>2022-10-10T08:51:13+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:16+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/smart_pointer/shared_ptr.html</loc>
-  <lastmod>2022-10-13T09:32:47+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:16+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/smart_pointer/weak_ptr.html</loc>
-  <lastmod>2022-07-18T01:45:10+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:16+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/thread.html</loc>
-  <lastmod>2022-09-13T14:21:50+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:19+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/sleep_for.html</loc>
-  <lastmod>2022-09-13T14:21:51+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:19+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/sleep_until.html</loc>
-  <lastmod>2022-09-13T14:21:50+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:19+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/mutex.html</loc>
-  <lastmod>2022-09-13T14:21:51+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:19+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/lock_guard.html</loc>
-  <lastmod>2022-09-13T14:21:51+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:19+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/thread/async.html</loc>
-  <lastmod>2022-11-18T05:03:48+00:00</lastmod>
+  <lastmod>2024-01-25T02:16:21+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/atomic/atomic.html</loc>
-  <lastmod>2022-12-14T02:52:18+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:08+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/Numeric%20library/mt19937.html</loc>
-  <lastmod>2022-12-14T02:34:40+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:06+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/network/curl.html</loc>
-  <lastmod>2023-03-02T03:03:57+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:15+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/C++/etc/Properties.html</loc>
-  <lastmod>2022-05-16T21:42:22+00:00</lastmod>
+  <lastmod>2023-08-30T21:57:09+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/System/HowToGetWindowsVersion.html</loc>
-  <lastmod>2022-11-21T06:49:41+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:47+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/WindowControl/WindowPositionAndSize.html</loc>
-  <lastmod>2022-11-21T23:24:03+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:49+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/CryptAPI/CryptEnumProviders.html</loc>
-  <lastmod>2022-04-30T04:00:23+00:00</lastmod>
+  <lastmod>2023-11-03T02:39:46+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/CryptAPI/CryptEnumProviderTypes.html</loc>
-  <lastmod>2022-04-30T04:00:23+00:00</lastmod>
+  <lastmod>2023-11-03T02:39:40+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/CryptAPI/AES_by_CryptAPI.html</loc>
-  <lastmod>2022-04-30T04:00:23+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:35+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/Multimedia/Joystick/joyGetPos.html</loc>
-  <lastmod>2022-12-09T12:09:18+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:44+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/Multimedia/Joystick/joyGetPosEx.html</loc>
-  <lastmod>2022-12-09T12:09:25+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:44+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/PowerControl/SetThreadExecutionState.html</loc>
+  <lastmod>2023-08-30T21:59:46+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/SIMD/ExtInstCheck.html</loc>
+  <lastmod>2023-08-30T21:59:46+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/SIMD/Intrinsic.html</loc>
+  <lastmod>2023-08-30T21:59:46+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/Etc/Counter.html</loc>
+  <lastmod>2023-08-30T21:59:37+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/Etc/LARGE_ADDRESS_WARE.html</loc>
+  <lastmod>2023-08-30T21:59:37+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>http://hidetoshi.la.coocan.jp/Programing%20Items/Win32/Etc/Globalization.html</loc>
-  <lastmod>2023-03-07T00:02:56+00:00</lastmod>
+  <lastmod>2023-08-30T21:59:37+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 
