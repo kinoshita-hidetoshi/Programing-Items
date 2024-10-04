@@ -35,6 +35,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #505000;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -48,7 +54,7 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p>1. ***</p>
+    	<p><a href="#1._マンデルブロ集合の計算を高速化してみる">1. マンデルブロ集合の計算を高速化してみる</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -59,8 +65,9 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 1. ***</h2>
+  	<h2> <a name="1._マンデルブロ集合の計算を高速化してみる">1. マンデルブロ集合の計算を高速化してみる</a></h2>
   	<h4>[概要]</h4>
+    <p>有名なマンデルブロ集合の計算を JIT(numba) を使って高速化してみます。</p>
   	<p> &nbsp;</p>
   	
   	<h4>[環境]</h4>
@@ -71,9 +78,19 @@
   	  </tr>
   		
   	  <tr>
-  	    <td>コンパイラ :</td>
-  	      <td>Visual Studio 2022 pro.,</td>
-  	      <td>Version 17.9.5 </td>
+  	    <td>言語 :</td>
+  	      <td>Python,</td>
+  	      <td>3.10.7 </td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>ライブラリ：</td>
+  	      <td>numba,</td>
+  	      <td>0.60.0</td>
   	  </tr>
   		
   	  <tr>
@@ -93,10 +110,255 @@
   	</table>
   	
   	<p> &nbsp;</p>
+    <h4> [手順]</h4>
+    <p> 高速化する元の Python ソースコードに下記２つを追加します。</p>
+    <p> (1) <span class="cpp-source">from numba import jit</span> を追加します</p>
+    <p> (2) 高速化したい関数の前に <span class="cpp-source">@jit(nopython=True)</span> 
+    を追加します。</p>
+    <p> &nbsp;</p>
+    <h4> [結果]</h4>
+    <p> 私のパソコンで動作させた場合の実行時間比較を下記表に記載します。</p>
+    <p> 単純比較で 約30倍 高速になりました。</p>
+    <p> &nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="300">
+      <caption>表．実行時間比較</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>条件</th>
+          <th>実行時間 [秒]</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>高速化前</td>
+          <td>27.2</td>
+        </tr>
+        <tr>
+          <td>JIT 適用後</td>
+          <td>1.2</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> 図. マンデルブロ集合 演算結果</p>
+    <p> 
+    <img alt="マンデルブロ集合 演算結果" src="jit_numba/imgE.jpg" width="800"></p>
+    <p> &nbsp;</p>
+    <p> [JIT(numba) による高速化後のソースコード]</p>
+    <pre class="prettyprint linenums lang-py" style="width: 1000px">'''
+マンデルブロ集合の画像を作成する
+
+参考： 日経ソフトウェア 2021年7月号「特集１ Pythonプログラムを高速化！」
+
+libraries:
+- matplotlib : pip install numpy matplotlib numba
+
+'''
+
+<span class="auto-style1">from numba import jit</span>    # (1)
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.colors import Normalize
+import time
+
+STEP_COUNT = 100
+MESH = 1000
+
+REAL_MIN = -2
+REAL_MAX = 0.5
+IMAG_MIN = -1.2
+#IMAG_MIN = -0.8
+IMAG_MAX = 1.2
+
+
+<span class="auto-style1">@jit(nopython=True)</span>      # (2)
+def check_mandelbrot(c):
+    z = complex(0, 0)
+    n = 0
+    while np.abs(z) &lt;= 2 and n &lt; STEP_COUNT:
+        z = z ** 2 + c
+        n += 1
+    return n
+
+
+'''
+概要： マンデルブロー集合を計算する
+'''
+def create_mandelbrot_data():
+    real, imag = np.meshgrid(
+        np.linspace(REAL_MIN, REAL_MAX, MESH),
+        np.linspace(IMAG_MIN, IMAG_MAX, MESH))
+    length = len(real.ravel())
+    mandelbrot_data = np.zeros(length)
+
+    for i in range(length):
+        c = complex(real.ravel()[i], imag.ravel()[i])
+        n = check_mandelbrot(c)
+        if n &lt; STEP_COUNT:
+            mandelbrot_data[i] = n
+
+    mandelbrot_data = np.reshape(mandelbrot_data, real.shape)
+    return mandelbrot_data
+
+
+'''
+概要： マンデルブロー画像を表示、JPEG画像として保存、をする
+'''
+def create_jpg(mandelbrot_data):
+    # imshow で画像が上限反転するので、先にデータを反転させる
+    mandelbrot_data = mandelbrot_data[::-1]
+
+    # 左右反転させる場合はこんな感じで書く
+    #for i in range(len(mandelbrot_data)):
+    #    mandelbrot_data[i] = mandelbrot_data[i][::-1]
+
+    fig = plt.figure()
+
+    # サブプロット領域を作成。"111" = "1,1,1"。あまり気にしなくてよい。
+    # (FYI) https://qiita.com/kenichiro_nishioka/items/8e307e164a4e0a279734
+    ax = fig.add_subplot(111)
+
+    # 軸ラベルを追加
+    ax.set_title('mandelbrot')
+    ax.set_xlabel('real')
+    ax.set_ylabel('imag')
+
+    # 画像作成
+    ax.imshow(mandelbrot_data, cmap='jet', norm=Normalize(vmin=0, vmax=STEP_COUNT), extent=[REAL_MIN, REAL_MAX, IMAG_MIN, IMAG_MAX])
+
+    # JPEG画像保存
+    plt.savefig("mandelbrot.jpg")
+
+    # 画像を表示
+    plt.show()
+
+    # tight_layout() メソッドはサブプロット間の正しい間隔を自動的に維持します。
+    # (ここでは１つのグラフのみを表示するので意味はないかもしれません...。参照元の記載がこうなっていたので記載しています。)
+    plt.tight_layout()
+
+    plt.close()
+
+
+def main():
+    start = time.perf_counter()     # 計測開始
+    mandelbrot_data = create_mandelbrot_data()
+    end = time.perf_counter()       # 計測終了
+    print('{:.1f} sec'.format(end-start))
+    create_jpg(mandelbrot_data)
+
+
+if __name__ == "__main__":
+    main()</pre>
+    <p> &nbsp;</p>
+    <p> [高速化前のソースコード]</p>
+    <pre class="prettyprint linenums lang-py" style="width: 1000px">'''
+マンデルブロ集合の画像を作成する
+
+参考： 日経ソフトウェア 2021年7月号「特集１ Pythonプログラムを高速化！」
+
+libraries:
+- matplotlib : pip install numpy matplotlib
+
+'''
+
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.colors import Normalize
+import time
+
+STEP_COUNT = 100
+MESH = 1000
+
+REAL_MIN = -2
+REAL_MAX = 0.5
+IMAG_MIN = -1.2
+#IMAG_MIN = -0.8
+IMAG_MAX = 1.2
+
+
+def check_mandelbrot(c):
+    z = complex(0, 0)
+    n = 0
+    while np.abs(z) &lt;= 2 and n &lt; STEP_COUNT:
+        z = z ** 2 + c
+        n += 1
+    return n
+
+
+'''
+概要： マンデルブロー集合を計算する
+'''
+def create_mandelbrot_data():
+    real, imag = np.meshgrid(
+        np.linspace(REAL_MIN, REAL_MAX, MESH),
+        np.linspace(IMAG_MIN, IMAG_MAX, MESH))
+    length = len(real.ravel())
+    mandelbrot_data = np.zeros(length)
+
+    for i in range(length):
+        c = complex(real.ravel()[i], imag.ravel()[i])
+        n = check_mandelbrot(c)
+        if n &lt; STEP_COUNT:
+            mandelbrot_data[i] = n
+
+    mandelbrot_data = np.reshape(mandelbrot_data, real.shape)
+    return mandelbrot_data
+
+
+'''
+概要： マンデルブロー画像を表示、JPEG画像として保存、をする
+'''
+def create_jpg(mandelbrot_data):
+    # imshow で画像が上限反転するので、先にデータを反転させる
+    mandelbrot_data = mandelbrot_data[::-1]
+
+    # 左右反転させる場合はこんな感じで書く
+    #for i in range(len(mandelbrot_data)):
+    #    mandelbrot_data[i] = mandelbrot_data[i][::-1]
+
+    fig = plt.figure()
+
+    # サブプロット領域を作成。"111" = "1,1,1"。あまり気にしなくてよい。
+    # (FYI) https://qiita.com/kenichiro_nishioka/items/8e307e164a4e0a279734
+    ax = fig.add_subplot(111)
+
+    # 軸ラベルを追加
+    ax.set_title('mandelbrot')
+    ax.set_xlabel('real')
+    ax.set_ylabel('imag')
+
+    # 画像作成
+    ax.imshow(mandelbrot_data, cmap='jet', norm=Normalize(vmin=0, vmax=STEP_COUNT), extent=[REAL_MIN, REAL_MAX, IMAG_MIN, IMAG_MAX])
+
+    # JPEG画像保存
+    plt.savefig("mandelbrot.jpg")
+
+    # 画像を表示
+    plt.show()
+
+    # tight_layout() メソッドはサブプロット間の正しい間隔を自動的に維持します。
+    # (ここでは１つのグラフのみを表示するので意味はないかもしれません...。参照元の記載がこうなっていたので記載しています。)
+    plt.tight_layout()
+
+    plt.close()
+
+
+def main():
+    start = time.perf_counter()     # 計測開始
+    mandelbrot_data = create_mandelbrot_data()
+    end = time.perf_counter()       # 計測終了
+    print('{:.1f} sec'.format(end-start))
+    create_jpg(mandelbrot_data)
+
+
+if __name__ == "__main__":
+    main()</pre>
+    <p> &nbsp;</p>
 	
   </section>
   
-  <p> &nbsp;</p>
   <p> &nbsp;</p>
 
   <section>
@@ -157,7 +419,7 @@
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
   	  <tr>
-  	    <td class="td_history_date">2024-08-11</td>
+  	    <td class="td_history_date">2024-10-04</td>
   	    <td class="td_history_separator">-</td>
   	    <td class="td_history">新規作成 </td>
   	  </tr>
