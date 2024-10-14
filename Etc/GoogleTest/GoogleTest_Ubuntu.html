@@ -48,10 +48,10 @@
 
 <body onload="prettyPrint();">
 	
-<h1>Google Test の使い方 (Ubuntu)</h1>
+<h1>GoogleTest の使い方 (Ubuntu)</h1>
 
 <p> &nbsp;</p>
-<p> Google Test の使い方についてメモしていきます。</p>
+<p> GoogleTest の使い方についてメモしていきます。</p>
 
 <p>&nbsp;</p>
 <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
@@ -59,8 +59,11 @@
     <td>
       <nav>
         <h2>目次</h2>
-        <p><a href="#1._Google_Test_をインストール">1. Google Test をインストール</a></p>
-        <p><a href="#2._Google_Test_の使い方">2. Google Test の使い方</a></p>
+        <p><a href="#1._GoogleTest_をインストール">1. GoogleTest をインストール</a></p>
+        <p><a href="#2._GoogleTest_の使い方">2. GoogleTest の使い方</a></p>
+        <p><a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
+        <p><a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
+        <p><a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
         <p>&nbsp;</p>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -72,7 +75,7 @@
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="1._Google_Test_をインストール">1. Google Test をインストール</a></h2>
+	<h2> <a name="1._GoogleTest_をインストール">1. GoogleTest をインストール</a></h2>
 	<h4>[概要]</h4>
     <p>Github から一式を取得後、cmake、make、make install します。</p>
 	<p> &nbsp;</p>
@@ -88,6 +91,16 @@
 	    <td>OS :</td>
 	    <td>Ubunsu,</td>
 	    <td>20.04 (WSL) </td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_separate" colspan="3"></td>
+	  </tr>
+		
+	  <tr>
+	    <td>Tool:</td>
+	    <td>googletest,</td>
+	    <td>1.15.2</td>
 	  </tr>
 	  
 	  <tr>
@@ -110,14 +123,14 @@
     <p> &nbsp;</p>
     <p> &nbsp;</p>
     <p> 1-2. Google Test をビルド</p>
-    <p> 普通に CMake でビルドします。</p>
+    <p> 普通に cmake でビルドします。</p>
     <p> &nbsp;</p>
 	<pre class="prettyprint linenums">
 $ mkdir temp
 $ cd temp 
-$ wget https://github.com/google/googletest/archive/release-1.12.0.tar.gz
-$ tar zxvf release-1.12.0.tar.gz 
-$ cd /usr/local/src/googletest-release-1.12.0 
+$ wget https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
+$ tar zxvf googletest-1.15.2.tar.gz
+$ cd googletest-1.15.2
 $ mkdir build 
 $ cd build 
 $ cmake .. 
@@ -142,48 +155,137 @@ $ sudo make install</pre>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="2._Google_Test_の使い方">2. Google Test の使い方</a></h2>
-    <p> &nbsp;</p>
-    <h3> 2-1. 簡単に Google Test する</h3>
+	<h2> <a name="2._GoogleTest_の使い方">2. GoogleTest の使い方</a></h2>
+  <p> &nbsp;</p>
+
+  <section>
+    <h3> <a name="2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></h3>
     <p> まずは簡単にちゃんと Google Test をインストールできたかを確認したいと思います。</p>
     <p> 今回試すコードは以下のような感じです。</p>
     <p> &nbsp;</p>
     <p> ["test_gtest.cpp"]</p>
-    <pre class="prettyprint linenums">
+    <pre class="prettyprint linenums" style="width: 800px">
 #include &lt;gtest/gtest.h&gt;
 TEST(TestCaseName, TestName){
      EXPECT_EQ(1, 1); 
 }</pre>
     <p> &nbsp;</p>
     <p> 下記コマンドを入力してビルドします。</p>
-    <pre>$ g++ test_gtest.cpp -o test_gtest -lgtest_main -lgtest -pthread</pre>
+    <pre style="width: 800px">$ g++ test_gtest.cpp -o test_gtest -lgtest_main -lgtest</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドを入力してテストを実行します</p>
+    <pre style="width: 800px"> ./test_gtest</pre>
     <p> &nbsp;</p>
     <p> 実行結果を下図に示します。</p>
     <p> <a href="GoogleTest_Ubuntu/img6.jpg" target="_blank">
     <img alt="Google Test 実行例" class="auto-style2" src="GoogleTest_Ubuntu/img6.jpg" width="800"></a></p>
     <p> &nbsp;</p>
+  </section>
+
+  <p> &nbsp;</p>
+  
+  <section>
+    <h3> <a name="2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></h3>
+    <p> <a href="#2-1._簡単に_Google_Test_する">2-1._簡単に_Google_Test_する</a> の内容を 
+    cmake を使ってビルドしてみます。cmakeを使ったビルドの設定は CMakeLists.txt 
+    というテキストファイルに記述します。ディレクトリの中身は次のようになります。 </p>
     <p> &nbsp;</p>
-    <p> まず CMakeLists.txt を作成します。こんな感じ。これをベースに必要な修正を行っていきます。</p>
+    <pre style="width: 800px">./
+ ├ CMakeLists.txt
+ └ test_gtest.cpp </pre>
+    <p> &nbsp;</p>
+    <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
     <p> ["CMakeLists.txt"]</p>
-	<pre class="prettyprint linenums">
-# 基本的な設定
+    <pre class="prettyprint linenums" style="width: 800px">
+# CMake のバージョンを設定
 cmake_minimum_required(VERSION 3.13)
 
-project(test_project)
+# プロジェクト名と使用する言語を設定
+project(test_gtest CXX)
 
-# Google Test ライブラリを探す
-find_package(GTest)
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD 14)
 
-# 今回作成する実行ファイル test_project, ソースファイルは main.cpp のみ
-add_executabule(test_project main.cpp)
+# test_gtest という実行ファイルを test_gtest.cpp から作成
+add_executable(test_gtest test_gtest.cpp)
 
-# gtest, pthread をリンクします
-target_link_library(test_project ${GTEST_BOTH_LIBRARY} pthread)
-target_include_directories(test_project PUBLIC ${GTEST_INCLUDE_DIRS})</pre>
+# gtest_main, gtest をリンクします
+target_link_libraries(
+    test_gtest
+    gtest_main
+    gtest
+)
+</pre>
     <p> &nbsp;</p>
-    <p> GTEST_BOTH_LIBRARY については下記資料を参照。</p>
-    <p> <a href="https://cmake.org/cmake/help/v3.18/module/FindGTest.html" target="_blank">https://cmake.org/cmake/help/v3.18/module/FindGTest.html</a></p>
+    <p> この状態で以下のようにコマンドを入力します。</p>
+    <pre style="width: 800px">
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./test_gtest</pre>
     <p> &nbsp;</p>
+    <p> 実行結果の画面です。</p>
+    <p> <img alt="実行結果" src="GoogleTest_Ubuntu/img11.jpg"></p>
+    <p> &nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h3> <a name="2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></h3>
+    <p> 記事 
+    <a href="https://qiita.com/yohm/items/db6597ffb87fa5480cea" target="_blank">
+    cmakeプロジェクトにGoogleTestを最小限の手間で導入する #C++ - Qiita</a> による手順に従うと、GoogleTest 
+    を事前にインストールしておかなくても cmake できるらしい。試してみます。</p>
+    <p> &nbsp;</p>
+    <p> 構成は図の通りで前節と同じです。 </p>
+    <pre style="width: 800px">./
+ ├ CMakeLists.txt
+ └ test_gtest.cpp </pre>
+    <p> &nbsp;</p>
+    <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
+    <p> ["CMakeLists.txt"]</p>
+    <pre class="prettyprint linenums" style="width: 800px">
+# CMake のバージョンを設定
+cmake_minimum_required(VERSION 3.13)
+
+# プロジェクト名と使用する言語を設定
+project(test_gtest CXX)
+
+# GoogleTest requires at least C++14
+set(CMAKE_CXX_STANDARD 14)
+
+<span class="auto-style1">include(FetchContent)</span>
+<span class="auto-style1">FetchContent_Declare(</span>
+<span class="auto-style1">  googletest</span>
+<span class="auto-style1">  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip</span>
+)
+<span class="auto-style1"># For Windows: Prevent overriding the parent project's compiler/linker settings</span>
+<span class="auto-style1">set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)</span>
+<span class="auto-style1">FetchContent_MakeAvailable(googletest)</span>
+
+# test_gtest という実行ファイルを test_gtest.cpp から作成
+add_executable(test_gtest test_gtest.cpp)
+
+# gtest_main をリンクします
+target_link_libraries(
+    test_gtest
+    GTest::gtest_main
+)
+</pre>
+    <p> &nbsp;</p>
+    <p> この状態で以下のようにコマンドを入力します。</p>
+    <pre style="width: 800px">
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./test_gtest</pre>
+    <p>&nbsp;</p>
+    <p>実行結果の画面です。今回は処理末尾だけ表示します。様子が若干違うけれどもちゃんと期待の動作をしました。</p>
+    <p><img alt="実行結果" src="GoogleTest_Ubuntu/img16.jpg"></p>
+  </section>
 </section>
 
 <p> &nbsp;</p>
@@ -265,6 +367,17 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2024-10-14</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"google test" を "1.15.2" へ更新</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history"><a href="#2-2._cmake_を使ってみる">2-2._cmake_を使ってみる</a>,
+        <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a> を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-06-30</td>
 	    <td class="td_history_separator">-</td>
