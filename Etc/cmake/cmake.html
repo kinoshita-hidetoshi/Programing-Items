@@ -3,212 +3,546 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>cmake の使い方</title>
+  <!-- タイトル -->
+  <title>cmake の使い方 | Programming Items</title>
 	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../design.css" type="text/css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
   
-  <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
+  <style type="text/css">
+    .auto-style1 {
+      color: #FF0000;
+    }
+    .auto-style2 {
+      color: #87CEEB;
+    }
+  </style>
+
+</head>
 
 <body onload="prettyPrint();">
-	
-<h1>cmake の使い方</h1>
 
-<p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
-<p> ［概要を記載します］</p>
-<p> &nbsp;</p>
+  <h1>cmake の使い方</h1>
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-        1. ***<br>
-        2. ***<br>
-        3. ***<br><a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <p> cmake の使い方について記載してみたいと思います。</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._ステップ１:_実行ファイルを作成">1. ステップ１： 実行ファイルを作成</a></p>
+    	<p><a href="#2._ステップ２:_静的・動的ライブラリを作成">2. ステップ２： 静的・動的ライブラリを作成</a></p>
+    	<p><a href="#3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３： サブディレクトリにソースが分散している場合</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<section>
-	<h2> 1. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2019 pro.,</td>
-	      <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p> &nbsp;</p>
-	
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <section>
+  	<h2> <a name="1._ステップ１:_実行ファイルを作成">1. ステップ１: 実行ファイルを作成</a></h2>
+  	<h4>[概要]</h4>
+    <p>"Hello!" をコンソールへ出力するだけの簡単な実行ファイルを作成する手順を題材に説明します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.2.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>1-1. コマンドラインでビルド</h3>
+    <p>まず g++ コンパイラを使ったビルドの基本を確認します。</p>
+    <p>下記のようなソースコードを準備します。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ main.cpp
+ ├ hello.h
+ └ hello.cpp</pre>
+    <p>&nbsp;</p>
+    <p>[main.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include "hello.h"
 
-<section>
-	<h2> 2. ***</h2>
-	<h4>[概要]</h4>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	    <td>Visual Studio 2019 pro.,</td>
-	    <td>Version 16.6.0 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows10 home,</td>
-	    <td>Version 1909 </td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p>&nbsp;</p>
-	<p>[作成結果] 作成したプログラムの様子を動画で以下に示します。</p>
-	<table style="clip: rect(auto, auto, auto, auto);" class="auto-style8">
-	  <tr>
-	    <td>
-	      <video controls autoplay="y" loop="y" src="../../MouseDragElementBehavior/SampleMovie01.mp4">
-	        <p>動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。</p>
-	      </video>
-	    </td>
-	  </tr>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>[プログラムソース &quot;***.cpp&quot;]</p>
-	<pre class="prettyprint linenums">
-	</pre>
-</section>
-	
-<br>
-<br>
+int main() {
+    hello();
+}</pre>
+    <p>&nbsp;</p>
+    <p>[hello.h]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#ifndef HELLO_H
+#define HELLO_H
 
-<section>
-	<h2>サンプルプログラム</h2>
-	<p>サンプルプログラム ダウンロード</p>
-</section>
+void hello();
 
-<br>
-<br>
+#endif</pre>
+    <p>&nbsp;</p>
+    <p>[hello.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include &lt;iostream&gt;
+#include "hello.h"
 
-<section>
-  <h2><a name="参考">参考</a></h2>
-  <ul>
-    <li><a href="https://qiita.com/shohirose/items/45fb49c6b429e8b204ac" target="_blank">
-    CMakeの使い方（その１） - Qiita</a></li>
-    <li><a href="https://qiita.com/shohirose/items/637f4b712893764a7ec1" target="_blank">
-    CMakeの使い方（その２） - Qiita</a></li>
-    <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial1" target="_blank">
-    勝手に作るCMake入門 その1 基本的な使い方 - かみのメモ (hatenablog.com)</a></li>
-    <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial2" target="_blank">
-    勝手に作るCMake入門 その2 プロジェクトの階層化 - かみのメモ (hatenablog.com)</a></li>
-    <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial3" target="_blank">
-    勝手に作るCMake入門 その3 プロジェクトの設定 - かみのメモ (hatenablog.com)</a></li>
-    <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial4" target="_blank">
-    勝手に作るCMake入門 その4 外部ライブラリを利用する - かみのメモ (hatenablog.com)</a></li>
-    <li><a href="http://zonomasa.hatenablog.com/entry/try_cmake" target="_blank">
-    CMAKE によるビルド自動化とテスト実行 - zonomasaの日記 (hatenablog.com)</a></li>
-    <li><a href="https://mickey-happygolucky.hatenablog.com/entry/2020/11/19/203903" target="_blank">
-    CMakeLists 覚書 (2020年版) - みつきんのメモ (hatenablog.com)</a></li>
-    <li>
-    <a href="https://qiita.com/ktrmnm/items/667a7b7c93cd3fb78419" target="_blank">
-    Google Test勉強録 (1) CMakeでのビルド - Qiita</a></li>
-    <li>
-    <a href="https://code.visualstudio.com/docs/cpp/cmake-linux" target="_blank">
-    Get started with CMake Tools on Linux (visualstudio.com)</a></li>
-    <li>
-    <a href="https://qiita.com/janus_wel/items/a673793d448c72cbc95e" target="_blank">
-    CMake 簡易まとめ - Qiita</a></li>
-    <li>
-    <a href="https://qiita.com/yumetodo/items/bd8f556ab56298f19ba8" target="_blank">
-    ありきたりなCMakeのプロジェクト作成 for C++ - Qiita</a></li>
-	<li>
-    <a href="https://blog.neno.dev/entry/2018/06/12/so-using-cmake/" target="_blank">
-	CMakeで外部ライブラリとリンクさせたりするのどうすんのという話。 - ねののお庭。 (neno.dev)</a></li>
-	<li>
-    <a href="https://mijinc0.github.io/blog/post/20190530_cpp_library/" target="_blank">
-	C++の共有ライブラリの作成と利用 · ByzantinePosts (mijinc0.github.io)</a></li>
-	</ul>
-</section>
+void hello() {
+    std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
+}</pre>
+    <p>&nbsp;</p>
+    <p>上記ソースコード３つを準備できたら、下記コマンドを入力してビルドします。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ g++ -c main.cpp hello.cpp
+$ g++ -o start_cmake.out main.o hello.o</pre>
+    <p>&nbsp;</p>
+    <p>この <span class="cpp-source">start_cmake.out</span> を実行すれば 
+    <span class="cpp-source">Hello!</span> を出力します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+Hello!</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>1-2. cmake でビルド</h3>
+    <p>"1-1. コマンドラインでビルド" の内容を cmake を使ってビルドするようにしてみます。</p>
+    <p>&nbsp;</p>
+    <p>CMakeLists.txt を以下のように作成します。</p>
+    <p>[CMakeLists.txt]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px"># CMake のバージョンを設定
+cmake_minimum_required(VERSION 3.13)
+# プロジェクト名と使用する言語を設定
+project(start_cmake CXX)
+# start_cmake.out という実行ファイルを main.cpp と hello.cpp から作成
+add_executable(start_cmake.out main.cpp hello.cpp)</pre>
+    <p>&nbsp;</p>
+    <p>CMakeLists.txt ファイルを追加後のディレクトリの中身は以下のようになります。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ <strong>CMakeLists.txt</strong>
+ ├ main.cpp
+ ├ hello.h
+ └ hello.cpp</pre>
+    <p>&nbsp;</p>
+    <p>cmake を使ってビルドするときは、次のようにソースディレクトリとは別にビルド専用のディレクトリを作成し、その中でビルドします。慣習的に 
+    build というフォルダを作成する場合が多いように思います。</p>
+    <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ mkdir <strong>build</strong>
+$ cd <strong>build</strong>
+$ cmake ..
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/hoge/build
+$ make
+[ 33%] Building CXX object CMakeFiles/start_cmake.out.dir/main.cpp.o
+[ 66%] Building CXX object CMakeFiles/start_cmake.out.dir/hello.cpp.o
+[100%] Linking CXX executable start_cmake.out
+[100%] Built target start_cmake.out
+$ ./start_cmake.out
+Hello!</pre>
+    <p>&nbsp;</p>
+    <p>cmake を使った場合、ビルド結果は全て build ディレクトリ内に保存されているため、build 
+    ディレクトリを削除するだけで容易に元の状態に戻すことができます。これは out-of-source ビルドと呼ばれています。また git 
+    を使って開発している場合、<span class="cpp-source">.gitignore</span> に  
+    <span class="cpp-source">build/</span> 
+    を登録しておくだけでビルド生成物および中間ファイルなどを全て git の管理対象外とすることができます。</p>
+    <p>&nbsp;</p>
+       
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._ステップ２:_静的・動的ライブラリを作成">2. ステップ２: 静的・動的ライブラリを作成</a></h2>
+  	<h4>[概要]</h4>
+    <p>ライブラリを作る場合、静的・動的ライブラリ（*.a, *.so）を作成することになります。そして実行ファイルにリンクして使用します。</p>
+    <p>本章では、静的・動的ライブラリを cmake を使って作成などする手順について記載します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.2.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>2-1. コマンドラインでビルド</h3>
+    <p>下記のようなソースコードを準備します。</p>
+    <p>前章に <span class="cpp-source">good_morning.h</span>,
+    <span class="cpp-source">good_morning.cpp</span> ２つのファイルを追加した感じです。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ main.cpp
+ ├ hello.h
+ ├ hello.cpp
+ ├ <strong>good_morning.h</strong>
+ └ <strong>good_morning.cpp</strong></pre>
+    <p>&nbsp;</p>
+    <p>[good_morning.h]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#ifndef GOOD_MORNING_H
+#define GOOD_MORNING_H
+
+void good_morning();
+
+#endif</pre>
+    <p>&nbsp;</p>
+    <p>[hello.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
+#include "good_morning.h"
+
+void good_morning() {
+    std::cout &lt;&lt; "Good morning!" &lt;&lt; std::endl;
+}</pre>
+    <p>&nbsp;</p>
+    <p><span class="cpp-source">main.cpp</span> を次のように変更します。</p>
+    <p>[main.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include "hello.h"
+#include "good_morning.h"
+
+int main() {
+    hello();
+    good_morning();
+}</pre>
+    <p>&nbsp;</p>
+    <h4>2-1-1. 静的ライブラリの作成</h4>
+    <p>静的ライブラリを作成後、main.cpp をコンパイルして静的ライブラリとリンクします。</p>
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ g++ -c hello.cpp good_morning.cpp                                            # hello.o, good_morning.o を作成
+$ ar <span class="auto-style1"><strong>rvs</strong></span> <span class="auto-style2"><strong>libgreetings.a</strong></span> hello.o good_morning.o                                 # 静的ライブラリ(libgreetings.a)を作成
+$ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L.</strong></span>                              # main.cpp をコンパイルして libgreetings.a とリンク
+</pre>
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+Hello!
+Good morning!</pre>
+    <p>&nbsp;</p>
+    <h4>2-1-2. 動的ライブラリの作成</h4>
+    <p>動的ライブラリを作成後、main.cpp をコンパイルして動的ライブラリとリンクします。</p>
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ g++ <span class="auto-style1"><strong>-fPIC -c</strong></span> hello.cpp good_morning.cpp                                      # hello.o, good_morning.o を作成
+$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, &quot;Hiragino Kaku Gothic ProN&quot;, &quot;Hiragino Sans&quot;, Meiryo, monospace; font-size: 13.94px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: pre; background-color: rgb(29, 32, 32); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" class="auto-style2"><strong>libgreetings.so</strong></span>                       # 静的ライブラリ(libgreetings.so)を作成
+$ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L. -Xlinker -rpath -Xlinker .</strong></span>   # mmain.cpp をコンパイルして libgreetings.so とリンク
+</pre>
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+Hello!
+Good morning!</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>2-2. cmake でビルド</h3>
+    <p>"2-1. コマンドラインでビルド" の内容を cmake を使ってビルドするようにしてみます。</p>
+    <p>前章と同様にファイル構成に CMakeLists.txt を追加します。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ <strong>CMakeLists.txt</strong>
+ ├ main.cpp
+ ├ hello.h
+ ├ hello.cpp
+ ├ good_morning.h
+ └ good_morning.cpp</pre>
+    <p>&nbsp;</p>
+    <h4>2-2-1. 静的ライブラリの作成</h4>
+    <p>CMakeLists.txt を以下のように作成します。</p>
+    <p>[CMakeLists.txt]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">cmake_minimum_required(VERSION 3.13)
+project(start_cmake CXX)
+# 静的ライブラリlibgreetings.aを作成
+add_library(greetings <strong>STATIC</strong> hello.cpp good_morning.cpp)
+# start_cmake.outという実行ファイルをmain.cppから作成
+add_executable(start_cmake.out main.cpp)
+# start_cmake.outを作成する際にlibgreetings.aをリンク
+target_link_libraries(start_cmake.out greetings)</pre>
+    <p>&nbsp;</p>
+    <p>CMakeを使ってビルドする場合、静的・共有ライブラリを作成するときの<strong>違いはたったの一語（STATIC/SHARED）</strong>です。 </p>
+    <pre class="prettyprint" style="width: 600px">add_library(greetings [<strong>SHARED</strong>|<strong>STATIC</strong>] hello.cpp good_morning.cpp)</pre>
+    <p>&nbsp;</p>
+    <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ mkdir build
+$ cd build/
+$ cmake ..
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/hoge/build
+$ make
+[ 20%] Building CXX object CMakeFiles/greetings.dir/hello.cpp.o
+[ 40%] Building CXX object CMakeFiles/greetings.dir/good_morning.cpp.o
+[ 60%] Linking CXX static library libgreetings.a
+[ 60%] Built target greetings
+[ 80%] Building CXX object CMakeFiles/start_cmake.out.dir/main.cpp.o
+[100%] Linking CXX executable start_cmake.out
+[100%] Built target start_cmake.out
+$ ./start_cmake.out 
+Hello!
+Good morning!</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>2-2-2. 動的ライブラリの作成</h4>
+    <p>CMakeLists.txt を以下のように作成します。</p>
+    <p>[CMakeLists.txt]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">cmake_minimum_required(VERSION 3.13)
+project(start_cmake CXX)
+# 動的ライブラリlibgreetings.soを作成
+add_library(greetings <strong>SHARED</strong> hello.cpp good_morning.cpp)
+# start_cmake.outという実行ファイルをmain.cppから作成
+add_executable(start_cmake.out main.cpp)
+# start_cmake.outを作成する際にlibgreetings.soをリンク
+target_link_libraries(start_cmake.out greetings)</pre>
+    <p>&nbsp;</p>
+    <p>CMakeを使ってビルドする場合、静的・共有ライブラリを作成するときの<strong>違いはたったの一語（STATIC/SHARED）</strong>です。 </p>
+    <pre class="prettyprint" style="width: 600px">add_library(greetings [<strong>SHARED</strong>|<strong>STATIC</strong>] hello.cpp good_morning.cpp)</pre>
+    <p>&nbsp;</p>
+    <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ mkdir build
+$ cd build/
+$ cmake ..
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/hoge/build
+$ make
+[ 20%] Building CXX object CMakeFiles/greetings.dir/hello.cpp.o
+[ 40%] Building CXX object CMakeFiles/greetings.dir/good_morning.cpp.o
+[ 60%] Linking CXX shared library libgreetings.so
+[ 60%] Built target greetings
+[ 80%] Building CXX object CMakeFiles/start_cmake.out.dir/main.cpp.o
+[100%] Linking CXX executable start_cmake.out
+[100%] Built target start_cmake.out
+$ ./start_cmake.out 
+Hello!
+Good morning!</pre>
+    <p>&nbsp;</p>
+       
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３: サブディレクトリにソースが分散している場合</a></h2>
+  	<h4>[概要]</h4>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.2.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>3-1. コマンドラインでビルド</h3>
+    <p>下記のようなソースコードを準備します。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ main.cpp
+ ├ hello.h
+ └ hello.cpp</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>3-2. cmake でビルド</h3>
+    <p>"3-1. コマンドラインでビルド" の内容を cmake を使ってビルドするようにしてみます。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>	
+       
+  </section>
+  	
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2024 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <br>&nbsp;<br>
+
+  <section>
+    <h2><a name="参考">参考</a></h2>
+    <ul>
+      <li><a href="https://qiita.com/shohirose/items/45fb49c6b429e8b204ac" target="_blank">
+      CMakeの使い方（その１） - Qiita</a></li>
+      <li><a href="https://qiita.com/shohirose/items/637f4b712893764a7ec1" target="_blank">
+      CMakeの使い方（その２） - Qiita</a></li>
+      <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial1" target="_blank">
+      勝手に作るCMake入門 その1 基本的な使い方 - かみのメモ (hatenablog.com)</a></li>
+      <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial2" target="_blank">
+      勝手に作るCMake入門 その2 プロジェクトの階層化 - かみのメモ (hatenablog.com)</a></li>
+      <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial3" target="_blank">
+      勝手に作るCMake入門 その3 プロジェクトの設定 - かみのメモ (hatenablog.com)</a></li>
+      <li><a href="https://kamino.hatenablog.com/entry/cmake_tutorial4" target="_blank">
+      勝手に作るCMake入門 その4 外部ライブラリを利用する - かみのメモ (hatenablog.com)</a></li>
+      <li><a href="http://zonomasa.hatenablog.com/entry/try_cmake" target="_blank">
+      CMAKE によるビルド自動化とテスト実行 - zonomasaの日記 (hatenablog.com)</a></li>
+      <li><a href="https://mickey-happygolucky.hatenablog.com/entry/2020/11/19/203903" target="_blank">
+      CMakeLists 覚書 (2020年版) - みつきんのメモ (hatenablog.com)</a></li>
+      <li>
+      <a href="https://qiita.com/ktrmnm/items/667a7b7c93cd3fb78419" target="_blank">
+      Google Test勉強録 (1) CMakeでのビルド - Qiita</a></li>
+      <li>
+      <a href="https://code.visualstudio.com/docs/cpp/cmake-linux" target="_blank">
+      Get started with CMake Tools on Linux (visualstudio.com)</a></li>
+      <li>
+      <a href="https://qiita.com/janus_wel/items/a673793d448c72cbc95e" target="_blank">
+      CMake 簡易まとめ - Qiita</a></li>
+      <li>
+      <a href="https://qiita.com/yumetodo/items/bd8f556ab56298f19ba8" target="_blank">
+      ありきたりなCMakeのプロジェクト作成 for C++ - Qiita</a></li>
+  	<li>
+      <a href="https://blog.neno.dev/entry/2018/06/12/so-using-cmake/" target="_blank">
+  	CMakeで外部ライブラリとリンクさせたりするのどうすんのという話。 - ねののお庭。 (neno.dev)</a></li>
+  	<li>
+      <a href="https://mijinc0.github.io/blog/post/20190530_cpp_library/" target="_blank">
+  	C++の共有ライブラリの作成と利用 · ByzantinePosts (mijinc0.github.io)</a></li>
+      <li>
+      <a href="https://qiita.com/naoyoshinori/items/5c0b96ae2ae17cb4bf4f">Linux 
+      動的ライブラリ/静的ライブラリ/共有ライブラリ 備忘録 #GCC - Qiita</a></li>
+  	</ul>
+  </section>
 
 <p>&nbsp;</p>
 
@@ -220,17 +554,7 @@
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
 	  <tr>
-	    <td class="td_history_date">2021-08-12</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">なんか変えた。<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date"></td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">こんなことも変えた。</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2021-01-02</td>
+	    <td class="td_history_date">2024-10-29</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">新規作成 </td>
 	  </tr>
@@ -240,7 +564,7 @@
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>&copy; copyright 2021 木下英俊</small></p>
+	<p><small>&copy; copyright 2024 木下英俊</small></p>
 </footer>
 
 </body>
