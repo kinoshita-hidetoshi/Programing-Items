@@ -302,7 +302,7 @@ Good morning!</pre>
     <p>動的ライブラリを作成後、main.cpp をコンパイルして動的ライブラリとリンクします。</p>
     <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
 $ g++ <span class="auto-style1"><strong>-fPIC -c</strong></span> hello.cpp good_morning.cpp                                      # hello.o, good_morning.o を作成
-$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span style="font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, &quot;Hiragino Kaku Gothic ProN&quot;, &quot;Hiragino Sans&quot;, Meiryo, monospace; font-size: 13.94px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: pre; background-color: rgb(29, 32, 32); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" class="auto-style2"><strong>libgreetings.so</strong></span>                       # 静的ライブラリ(libgreetings.so)を作成
+$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span class="auto-style2"><strong>libgreetings.so</strong></span>                       # 静的ライブラリ(libgreetings.so)を作成
 $ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L. -Xlinker -rpath -Xlinker .</strong></span>   # mmain.cpp をコンパイルして libgreetings.so とリンク
 </pre>
     <p>&nbsp;</p>
