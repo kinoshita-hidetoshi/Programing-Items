@@ -267,7 +267,7 @@ void good_morning();
 
 #endif</pre>
     <p>&nbsp;</p>
-    <p>[hello.cpp]</p>
+    <p>[good_morning.cpp]</p>
     <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
 #include "good_morning.h"
 
@@ -302,7 +302,7 @@ Good morning!</pre>
     <p>動的ライブラリを作成後、main.cpp をコンパイルして動的ライブラリとリンクします。</p>
     <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
 $ g++ <span class="auto-style1"><strong>-fPIC -c</strong></span> hello.cpp good_morning.cpp                                      # hello.o, good_morning.o を作成
-$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span class="auto-style2"><strong>libgreetings.so</strong></span>                       # 静的ライブラリ(libgreetings.so)を作成
+$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span class="auto-style2"><strong>libgreetings.so</strong></span>                        # 静的ライブラリ(libgreetings.so)を作成
 $ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L. -Xlinker -rpath -Xlinker .</strong></span>   # mmain.cpp をコンパイルして libgreetings.so とリンク
 </pre>
     <p>&nbsp;</p>
@@ -417,6 +417,7 @@ Good morning!</pre>
   <section>
   	<h2> <a name="3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３: サブディレクトリにソースが分散している場合</a></h2>
   	<h4>[概要]</h4>
+    <p>ソフトウェアが大規模になってくると役割毎に保存するフォルダを分けたりします。そういった場合を例に説明します。</p>
   	<p> &nbsp;</p>
   	
   	<h4>[環境]</h4>
@@ -449,21 +450,186 @@ Good morning!</pre>
   	</table>
   	
   	<p> &nbsp;</p>
-    <p> &nbsp;</p>
-  	
-  	<h3>3-1. コマンドラインでビルド</h3>
-    <p>下記のようなソースコードを準備します。</p>
+    <p>下記のようなフォルダおよびファイル構成を例に説明します。ファイル内容は前章と同じです。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
     <pre style="width: 600px">./
- ├ main.cpp
- ├ hello.h
- └ hello.cpp</pre>
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ hello.cpp
+ │└ good_morning.cpp
+ └ main/
+ 　└ main.cpp</pre>
+    <p>&nbsp;</p>
+    <p>[main.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include "hello.h"
+#include "good_morning.h"
+
+int main() {
+    hello();
+    good_morning();
+}</pre>
+    <p>&nbsp;</p>
+    <p>[hello.h]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#ifndef HELLO_H
+#define HELLO_H
+
+void hello();
+
+#endif</pre>
+    <p>&nbsp;</p>
+    <p>[hello.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include &lt;iostream&gt;
+#include "hello.h"
+
+void hello() {
+    std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
+}</pre>
+    <p>&nbsp;</p>
+    <p>[good_morning.h]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#ifndef GOOD_MORNING_H
+#define GOOD_MORNING_H
+
+void good_morning();
+
+#endif</pre>
+    <p>&nbsp;</p>
+    <p>[good_morning.cpp]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
+#include "good_morning.h"
+
+void good_morning() {
+    std::cout &lt;&lt; "Good morning!" &lt;&lt; std::endl;
+}</pre>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>3-1. コマンドラインでビルド</h3>
+    <p>
+    さて、これをコマンドラインからビルドしてみます。ルートディレクトリ直下にいるものとし、共有ライブラリを作成して実行ファイルにリンクするやり方で行います。</p>
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ cd source/
+$ g++ -fPIC -c hello.cpp good_morning.cpp -I../include
+$ g++ -shared *.o -o libgreetings.so
+$ cd ../main/
+$ g++ main.cpp -o main.out -I../include -L../source -lgreetings -Xlinker -rpath -Xlinker ../source</pre>
+    <p>&nbsp;</p>
+    <p>今回は <span class="cpp-source">-L</span> オプションに加えて <span class="cpp-source">
+    -I</span> オプションでインクルードファイルを探すディレクトリを指定する必要があります。前章で<span class="cpp-source"> 
+    -I </span>オプションが必要なかったのは、カレントディレクトリはデフォルトでインクルードファイルを探す場所として認識されるからです。</p>
+    <p>上記コマンドを実行後のフォルダ構成は下図のようになります。</p>
+    <pre style="width: 600px">./
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ hello.cpp
+ │├ <strong>hello.o</strong>
+ │├ good_morning.cpp
+ │├ <strong>good_morning.o</strong>
+ │└ <strong>libgreetings.so</strong>
+ └ main/
+ 　├ main.cpp
+ 　└ <strong>main.out</strong></pre>
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">main.out</span> を実行すれば下記のように出力します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./main.out
+Hello!
+Good morning!</pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+  	
     <h3>3-2. cmake でビルド</h3>
-    <p>"3-1. コマンドラインでビルド" の内容を cmake を使ってビルドするようにしてみます。</p>
+    <p>"3-1. コマンドラインでビルド" の内容を cmake を使ってビルドできるようにします。</p>
+    <p>ファイル構成を下図のようにします。CMakeLists.txt をルートおよび source/、main/ の３か所に追加します。</p>
     <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ <strong>CMakeLists.txt</strong>
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ <strong>CMakeLists.txt</strong>
+ │├ hello.cpp
+ │└ good_morning.cpp
+ └ main/
+ 　├ <strong>CMakeLists.txt</strong>
+ 　└ main.cpp</pre>
+    <p>&nbsp;</p>
+    <p>ルートディレクトリにある <span class="cpp-source">CMakeLists.txt</span> 
+    ではサブディレクトリの登録をします。</p>
+    <p>[./CMakeLists.txt]</p>
+<pre class="prettyprint linenums lang-cpp" style="width: 600px">
+cmake_minimum_required(VERSION 3.13)
+project(greetings CXX)
+
+# サブディレクトリを登録 
+add_subdirectory(source) 
+add_subdirectory(main)
+</pre>
+    <p>&nbsp;</p>
+    <p><span class="cpp-source">/source/CMakeLists.txt</span> および 
+    <span class="cpp-source">/main/CMakeLists.txt</span> 
+    ではそれぞれのディレクトリにあるファイルのコンパイル方法を指定します。</p>
+    <p>[./source/CMakeLists.txt]</p>
+<pre class="prettyprint linenums lang-cpp" style="width: 600px">
+add_library(
+    greetings
+    SHARED
+        hello.cpp
+        good_morning.cpp
+)
+
+# greetingライブラリのインクルードディレクトリを教えてあげる
+# PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
+target_include_directories(
+    greetings
+    PUBLIC ${PROJECT_SOURCE_DIR}/include
+)
+</pre>
+    <p>&nbsp;</p>
+    <p>[./main/CMakeLists.txt]</p>
+<pre class="prettyprint linenums lang-cpp" style="width: 600px">
+add_executable(main.out main.cpp)
+
+# main.outをコンパイルする際にgreetingsをリンクする
+target_link_libraries(main.out greetings)
+</pre>
+    <p>&nbsp;</p>
+    <p>以上で準備を完了しました。</p>
+    <p>cmake を使った場合のいつもの手順でビルドします。下記ではビルド結果 main.out の実行まで一連の操作とコンソール出力の例を例示します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ mkdir build
+$ cd build
+$ cmake ..
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/foo//step_03/build
+$ make
+[ 20%] Building CXX object source/CMakeFiles/greetings.dir/hello.cpp.o
+[ 40%] Building CXX object source/CMakeFiles/greetings.dir/good_morning.cpp.o
+[ 60%] Linking CXX shared library libgreetings.so
+[ 60%] Built target greetings
+[ 80%] Building CXX object main/CMakeFiles/main.out.dir/main.cpp.o
+[100%] Linking CXX executable main.out
+[100%] Built target main.out
+$ ./main/main.out
+Hello!
+Good morning!
+</pre>
+    <p>&nbsp;</p>
+    <p>以上で完了です。</p>
     <p>&nbsp;</p>	
        
   </section>
@@ -553,6 +719,12 @@ Good morning!</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2024-12-15</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#3._ステップ３:_サブディレクトリにソースが分散している場合">3._ステップ３:_サブディレクトリにソースが分散している場合</a>」を追記 </td>
+	  </tr>
+	  
 	  <tr>
 	    <td class="td_history_date">2024-10-29</td>
 	    <td class="td_history_separator">-</td>
