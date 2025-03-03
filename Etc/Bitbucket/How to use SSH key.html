@@ -290,13 +290,13 @@ Host bitbucket.org
     <p>&nbsp;</p>
     <p><img alt="" src="How%20to%20use%20SSH%20key/imgF.jpg" width="800px"></p>
     <p>&nbsp;</p>
-    <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
+    <p>以下のコマンドで公開鍵を表示し、「ssh-ed25519 ～ 自分のメールアドレス」をコピーします。</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 $ cat ~/.ssh/bitbucket/id_ed25519.pub
-ed25519
+ssh-ed25519 **********
 **************************************************************************
 **************************************************************************
-mail@mail</pre>
+********** hoge@foo.com</pre>
 
     <p>&nbsp;</p>
     <p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
@@ -539,16 +539,14 @@ Host bitbucket.org
     <p>&nbsp;</p>
     <p><img alt="" src="How%20to%20use%20SSH%20key/imgF.jpg" width="800px"></p>
     <p>&nbsp;</p>
-    <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
+    <p>以下のコマンドで公開鍵を表示し、「ssh-ed25519 ～ 自分のメールアドレス」をコピーします。</p>
 
 	  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 &gt; type %homedrive%%homepath%\.ssh\bitbucket\id_ed25519.pub
-ssh-ed25519 AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
-1o8a5iQ8blw3fd43c2qZYjVTIIh7N+lcUWuVXnXyWQNeVNT/IPEoaZaaur9SDAojhcA1kUMODK
-0KuKDlbddxijWqJzzmEqcrZGNFEKUTVfB/ctQFZIgb0ScyGWiJWjIOVUloLqcdy6CEbHSjiLV7
-rxFqPhFU/RO0QbqS58zjxWLVYP7jgJXudJ+QJcwmUlLoH1k22AEH154Q28hRNriupma8D/VyJ5
-2VWWHwtgF+F6jp8G72uhn46aYmQXK3brUIv7vu/k/8lAUUNI32UrPNoxWII6rbs/lU+0vs5peh
-QqVlPcjJd3 hoge@foo.com</pre>
+ssh-ed25519 **********
+**************************************************************************
+**************************************************************************
+********** hoge@foo.com</pre>
 
     <p>&nbsp;</p>
     <p>&quot;Key&quot; の欄にコピーした公開鍵を張り付けます。</p>
