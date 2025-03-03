@@ -69,8 +69,47 @@
   
   <section>
     <h2> <a name="1._概要">1. 概要</a></h2>
+    <p> code-prettifyは、HTML内のソースコードスニペットを見やすくする埋め込みスクリプトです。</p>
+    <p> 
+    <a href="https://github.com/googlearchive/code-prettify" target="_blank">
+    GitHub - googlearchive/code-prettify: An embeddable script that makes 
+    source-code snippets in HTML prettier.</a> で公開されている OSS です。</p>
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
+    <p> 以下はその機能の概要です。</p>
+    <ul>
+      <li>様々なプログラミング言語のシンタックスハイライト</li>
+      <li>軽量で、ページの読み込みをブロックしません</li>
+      <li>CSSによるスタイルのカスタマイズが可</li>
+      <li>複数の言語に対応（C、Java、Python、Bash、SQL、HTML、XML、CSS、JavaScriptなど）</li>
+      <li>クロスブラウザ対応で、幅広いブラウザで動作します</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>code-prettifyを使用するには、HTMLドキュメントに以下のスクリプトタグを追加します。</p>
+    <pre  class="prettyprint lang-html">
+&lt;script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"&gt;&lt;/script&gt;
+    </pre>
+    <p>または HTML ドキュメントと一緒に css, js ファイルを保存したうえで HTML ドキュメントに以下のようにスクリプトタグを追加します。</p>
+    <pre  class="prettyprint lang-html">
+&lt;script src="prettify/prettify.js" type="text/javascript"&gt;&lt;/script&gt;
+    </pre>
+    <p>私は後者の方を好んで使用しています。</p>
+    <p>&nbsp;</p>
+    <p>
+    簡単にスタイルを適用するには、テーマ（skin）を読み込みます。数は多くありませんが、Default、Desert、Sunburst、Sons-Of-Obsidian、Doxy 
+    からテーマを利用することができます。テーマを読み込まない場合は Default のスタイルが適用されます。</p>
+    <p>下記は Deseert のテーマを設定した例です。 </p>
+    <pre  class="prettyprint lang-html">
+&lt;link href="prettify/styles/desert.css" rel="stylesheet" type="text/css"&gt;
+&lt;script src="prettify/prettify.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+    <p>&nbsp;</p>
+    <p>コードの言語を指定するには、lang-クラスを使用します。</p>
+    <pre class="prettyprint lang-html">
+ &lt;pre  class="prettyprint lang-cpp"&gt;
+  &lt;!-- c++ コード --&gt;
+&lt;/pre&gt;</pre>
+    <p>&nbsp;</p>
+    <p>上記設定を行った例を以下に示します。</p>
+    <p>&nbsp;</p>
   
     <p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
     <pre class="prettyprint linenums lang-cpp">
@@ -105,10 +144,10 @@ struct Data {
 int main()
 {
     {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
+        vector&lt;shared_ptr&lt;Data&gt;&gt; v1;
 
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(1, "foo")));
-        v1.push_back(<span class="auto-style1">shared_ptr</span>&lt;Data&gt;(new Data(2, "var")));
+        v1.push_back(shared_ptr&lt;Data&gt;(new Data(1, "foo")));
+        v1.push_back(shared_ptr&lt;Data&gt;(new Data(2, "var")));
 
         for (auto data : v1) {
             cout &lt;&lt; data-&gt;id &lt;&lt; ", " &lt;&lt; data-&gt;name &lt;&lt; endl;
@@ -116,7 +155,7 @@ int main()
     }
 
     {
-        vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v2;
+        vector&lt;shared_ptr&lt;Data&gt;&gt; v2;
 
         v2.emplace_back(new Data(3, "foo"));
         v2.emplace_back(new Data(4, "bar"));
@@ -129,6 +168,8 @@ int main()
     return EXIT_SUCCESS;</pre>
   </section>
 	
+  <p>&nbsp;</p>
+  <p>良い感じに表示してくれました。</p>
   <p>&nbsp;</p>
   <hr>
   <p>&nbsp;</p>
@@ -226,11 +267,15 @@ lang-yaml.js</pre>
   <section>
     <h2><a name="3._行番号を表示">3. 行番号を表示</a></h2>
     <p>クラスに "linenums" を追加すると行番号を表示することができます。</p>
-    <p style="padding: 10px; background-color: #000000; color: #D0D0D0; width: 400px; font-family: monospace;">
-    &lt;pre 
-    class="prettyprint <strong>linenums</strong>"&gt;<br>console.log('Hello World')<br>
-    console.log('Hello World')<br>console.log('Hello World')<br>
-    console.log('Hello World')<br>console.log('Hello World')<br>&lt;/pre&gt;</p>
+    <pre class="prettyprint lang-html" style="width: 400px">
+&lt;pre class="prettyprint linenums"&gt;
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+&lt;/pre&gt;</pre>
+    <p>&nbsp;</p>
     <p>こんな感じで表示してくれます。</p>
     <pre class="prettyprint linenums" style="width: 400px">
 console.log('Hello World')
@@ -240,11 +285,15 @@ console.log('Hello World')
 console.log('Hello World')</pre>
     <p>&nbsp;</p>
     <p>行番号の開始値を指定する場合は linenums の後にコロンを挟んで数値で指定します。15 から始めたい場合は次のように "linenums:15" と指定します。</p>
-    <p style="padding: 10px; background-color: #000000; color: #D0D0D0; width: 400px; font-family: monospace;">
-    &lt;pre 
-    class="prettyprint <strong>linenums:15</strong>"&gt;<br>console.log('Hello World')<br>
-    console.log('Hello World')<br>console.log('Hello World')<br>
-    console.log('Hello World')<br>console.log('Hello World')<br>&lt;/pre&gt;</p>
+    <pre class="prettyprint lang-html" style="width: 400px">
+&lt;pre class="prettyprint linenums:15"&gt;
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+  console.log('Hello World')
+&lt;/pre&gt;</pre>
+    <p>&nbsp;</p>
     <p>こんな感じで表示してくれます。</p>
     <pre class="prettyprint linenums:15" style="width: 400px">
 console.log('Hello World')
@@ -268,7 +317,7 @@ console.log('Hello World')</pre>
         <td>
     The MIT License (MIT)<br><br>
     
-    Copyright © 2020-2022 Kinoshita Hidetoshi<br><br>
+        Copyright © 2020 Kinoshita Hidetoshi<br><br>
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -331,6 +380,11 @@ console.log('Hello World')</pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-03-03</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">全般へ説明追記</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2024-02-28</td>
   	    <td class="td_history_separator">-</td>
