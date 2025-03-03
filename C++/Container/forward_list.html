@@ -3,22 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
-  <title>std::forward_list</title>
+  <!-- タイトル -->
+  <title>std::forward_list | Programming Items</title>
+  
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="favicon.ico">
   
   <!-- CSS -->
   <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../design.css" type="text/css">
   
   <!-- Start for 'google-code-prettify' -->
-  <link href="../../prettify.css" rel="stylesheet" type="text/css">
-  <script src="../../prettify.js" type="text/javascript"></script>
-  <!-- End for 'google-code-prettify' -->
+  <link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+  <script src="../../prettify/prettify.js" type="text/javascript"></script>
+  <!-- End for 'google-code-prettify' -->	
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
@@ -32,9 +36,6 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
   
   <style type="text/css">
-  .auto-style1 {
-    background-color: #FFFF00;
-  }
   .auto-style2 {
     font-size: large;
   }
@@ -44,141 +45,136 @@
 
 <body onload="prettyPrint();">
 	
-<h1>std::forward_list (c++11)</h1>
+  <h1>std::forward_list (c++11)</h1>
 
-<p>std::forward_list を試してみます。</p>
-<p> &nbsp;</p>
-
-<table style="border: 1px solid #808080; width: 100%; max-width:800px; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2> 目次</h2>
-        <p>
-      		<a href="#1._始めに_－_Constructor">1. 始めに - Constructor</a><br>
-      		<a href="#2._挿入">2. 挿入</a><br>
-      		<a href="#参考">参考</a>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<div>
-	<h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
-	std::<span class="auto-style2">forward_list</span></h5>
-	<table>
-	<tbody>
-		<tr>
-			<td class="td_separate" colspan="2"></td>
-		</tr>
-		
-		<tr>
-			<td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
-			&lt;forward_list&gt; で定義</td>
-		</tr>
-		
-		<tr>
-			<td class="td_separate" colspan="2"></td>
-		</tr>
-		
-		<tr>
-			<td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
-			class T,<br>&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;T&gt;<br>
-            &gt; class <strong>forward_list</strong>;</td>
-			<td><span class="comment">(1)(c++11以上)</span></td>
-		</tr>
-		
-		<tr>
-			<td class="td_separate" colspan="2"></td>
-		</tr>
-		
-		<tr>
-			<td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
-			template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using <strong>forward_list</strong> = std::forward_list&lt;T, 
-			std::pmr::polymorphic_allocator&lt;T&gt;&gt;;<br>}</td>
-			<td><span class="comment">(2)(c++17以上)</span></td>
-		</tr>
-		
-		<tr>
-			<td class="td_separate" colspan="2"></td>
-		</tr>
-	</tbody>
-	</table>
-	
-	<h5 style="margin-bottom:0px">テンプレート引数</h5>
-	<table>
-		<tr>
-			<td style="vertical-align:top">T</td>
-			<td style="vertical-align:top">-</td>
-			<td>要素の型</td>
-		</tr>
-		<tr>
-			<td style="vertical-align:top; white-space: nowrap;">Allocator</td>
-			<td style="vertical-align:top">-</td>
-			<td>メモリを確保/解放したり、そのメモリに要素を構築/破棄したりするために使用されるアロケータ。 この型は Allocator 
-				の要件を満たさなければなりません。 Allocator::value_type と T が同じでない場合、動作は未定義です。</td>
-		</tr>
-	</table>
-	<p>&nbsp;</p>
-	<p>std::forward_list 
-    はコンテナ内のあらゆる位置への高速な挿入と削除をサポートするコンテナです。高速なランダムアクセスはサポートされません。このコンテナは片方向連結リストとして実装され、本質的に 
-    C 
-    で実装された場合と比較していかなるオーバーヘッドもありません。std::listと比較すると、このコンテナは双方向のイテレーションが必要ないため、より空間効率の良い記憶領域を提供します。</p>
-    <p>
-    リスト内の要素を追加、削除、移動、またはいくつかのリストを横断するそれらの操作は、リスト中の他の要素を現在参照しているイテレータを無効化しません。しかし、（erase_afterを用いて）リストから要素が削除される場合、対応する要素を参照するイテレータや参照は無効化されます。</p>
-    <p>
-    std::forward_list は（size メンバ関数と operator== の計算量が常に線形時間であることを除いて） Container, 
-    AllocatorAwareContainer, SequenceContainer の要件を満たします。</p>
-</div>
-<p>
-		<br>
-		</p>
-
-<p> &nbsp;</p>
-
-<section>
-  <h2> <a name="1._始めに_－_Constructor">1. 始めに － Constructor</a></h2>
-  <h4>[概要]</h4>
-<p>forward_list の各種コンストラクタの例を示します。</p>
-  <p> &nbsp;</p>
+  <p>std::forward_list を試してみます。</p>
+  <p>&nbsp;</p>
   
-  <h4>[環境]</h4>
-  <table>
-  <tbody>
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>コンパイラ :</td>
-  		<td>g++,</td>
-  		<td>9.3.0 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>OS :</td>
-  		<td>Ubuntu (WSL2),</td>
-  		<td>20.04 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  </tbody>
-  </table>
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._始めに_－_Constructor">1. 始めに － Constructor</a></p>
+    	<p><a href="#2._挿入">2. 挿入</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
   
-  <p> &nbsp;</p>
-  
-  <p>[プログラムソース &quot;forword_list_01.cpp&quot;]</p>
-  
-  <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <div>
+    <h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
+    std::<span class="auto-style2">forward_list</span></h5>
+    <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="2"></td>
+      </tr>
+      
+      <tr>
+        <td colspan="2" style="padding-top: 0px; padding-bottom: 0px">ヘッダ 
+        &lt;forward_list&gt; で定義</td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="2"></td>
+      </tr>
+      
+      <tr>
+        <td style="padding-top:0px;padding-bottom:0px">template&lt;<br>&nbsp;&nbsp;&nbsp; 
+        class T,<br>&nbsp;&nbsp;&nbsp; class Allocator = std::allocator&lt;T&gt;<br>
+              &gt; class <strong>forward_list</strong>;</td>
+        <td><span class="comment">(1)(c++11以上)</span></td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="2"></td>
+      </tr>
+      
+      <tr>
+        <td style="padding-top:0px;padding-bottom:0px">namespace pmr {<br>&nbsp;&nbsp;&nbsp; 
+        template &lt;class T&gt;<br>&nbsp;&nbsp;&nbsp; using <strong>forward_list</strong> = std::forward_list&lt;T, 
+        std::pmr::polymorphic_allocator&lt;T&gt;&gt;;<br>}</td>
+        <td><span class="comment">(2)(c++17以上)</span></td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="2"></td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <h5 style="margin-bottom:0px">テンプレート引数</h5>
+    <table>
+      <tr>
+        <td style="vertical-align:top">T</td>
+        <td style="vertical-align:top">-</td>
+        <td>要素の型</td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top; white-space: nowrap;">Allocator</td>
+        <td style="vertical-align:top">-</td>
+        <td>メモリを確保/解放したり、そのメモリに要素を構築/破棄したりするために使用されるアロケータ。 この型は Allocator 
+          の要件を満たさなければなりません。 Allocator::value_type と T が同じでない場合、動作は未定義です。</td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>std::forward_list 
+      はコンテナ内のあらゆる位置への高速な挿入と削除をサポートするコンテナです。高速なランダムアクセスはサポートされません。このコンテナは片方向連結リストとして実装され、本質的に 
+      C 
+      で実装された場合と比較していかなるオーバーヘッドもありません。std::listと比較すると、このコンテナは双方向のイテレーションが必要ないため、より空間効率の良い記憶領域を提供します。</p>
+      <p>
+      リスト内の要素を追加、削除、移動、またはいくつかのリストを横断するそれらの操作は、リスト中の他の要素を現在参照しているイテレータを無効化しません。しかし、（erase_afterを用いて）リストから要素が削除される場合、対応する要素を参照するイテレータや参照は無効化されます。</p>
+      <p>
+      std::forward_list は（size メンバ関数と operator== の計算量が常に線形時間であることを除いて） Container, 
+      AllocatorAwareContainer, SequenceContainer の要件を満たします。</p>
+  </div>
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2> <a name="1._始めに_－_Constructor">1. 始めに － Constructor</a></h2>
+    <h4>[概要]</h4>
+    <p>forward_list の各種コンストラクタの例を示します。</p>
+    <p> &nbsp;</p>
+    
+    <h4>[環境]</h4>
+    <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>コンパイラ :</td>
+        <td>g++,</td>
+        <td>9.3.0 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>OS :</td>
+        <td>Ubuntu (WSL2),</td>
+        <td>20.04 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p>[プログラムソース &quot;forword_list_01.cpp&quot;]</p>
+    
+    <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
 #include &lt;string&gt;   // string
 #include &lt;iostream&gt; // ostream
 
@@ -197,74 +193,75 @@ std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const std::forward_list
 int main()
 {
     // c++11 の初期化リストの構文
-    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words1 {&quot;the&quot;, &quot;frogurt&quot;, &quot;is&quot;, &quot;also&quot;, &quot;cursed.&quot;};
+    std::forward_list&lt;std::string&gt; words1 {&quot;the&quot;, &quot;frogurt&quot;, &quot;is&quot;, &quot;also&quot;, &quot;cursed.&quot;};
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // word2 = word1
-    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words2(words1.begin(), words1.end());
+    std::forward_list&lt;std::string&gt; words2(words1.begin(), words1.end());
     std::cout &lt;&lt; &quot;words2: &quot; &lt;&lt; words2 &lt;&lt; std::endl;
 
     // words3 = words1
-    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words3(words1);
+    std::forward_list&lt;std::string&gt; words3(words1);
     std::cout &lt;&lt; &quot;words3: &quot; &lt;&lt; words3 &lt;&lt; std::endl;
 
     // words4 is {&quot;Mo&quot;,&quot;Mo&quot;, &quot;Mo&quot;, &quot;Mo&quot;, &quot;Mo&quot;}
-    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words4(5, &quot;Mo&quot;);
+    std::forward_list&lt;std::string&gt; words4(5, &quot;Mo&quot;);
     std::cout &lt;&lt; &quot;words4: &quot; &lt;&lt; words4 &lt;&lt; std::endl;
 
     return EXIT_SUCCESS;
 }</pre>
   
-</section>
-	
-<p>&nbsp;</p>
-<p>[出力]</p>
-<pre>words1: [the, frogurt, is, also, cursed.]
+  <p>&nbsp;</p>
+  
+  <p>[出力]</p>
+  <pre>words1: [the, frogurt, is, also, cursed.]
 words2: [the, frogurt, is, also, cursed.]
 words3: [the, frogurt, is, also, cursed.]
 words4: [Mo, Mo, Mo, Mo, Mo]</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-  <h2><a name="2._挿入">2. 挿入</a></h2>
-  <h4>[概要]</h4>
-<p>挿入系のメソッドをいろいろと試してみます。</p>
-  <p> &nbsp;</p>
-  
-  <h4>[環境]</h4>
-  <table>
-  <tbody>
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>コンパイラ :</td>
-  		<td>g++,</td>
-  		<td>9.3.0 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  	
-  	<tr>
-  		<td>OS :</td>
-  		<td>Ubuntu (WSL2),</td>
-  		<td>20.04 </td>
-  	</tr>
-  	
-  	<tr>
-  		<td class="td_separate" colspan="3"></td>
-  	</tr>
-  </tbody>
-  </table>
+  </section>
   
   <p>&nbsp;</p>
-  <p>[プログラムソース &quot;forward_list_02.cpp&quot;]</p>
-  	
-  <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="2._挿入">2. 挿入</a></h2>
+    <h4>[概要]</h4>
+    <p>挿入系のメソッドをいろいろと試してみます。</p>
+    <p>&nbsp;</p>
+    
+    <h4>[環境]</h4>
+    <table>
+    <tbody>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>コンパイラ :</td>
+        <td>g++,</td>
+        <td>9.3.0 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      
+      <tr>
+        <td>OS :</td>
+        <td>Ubuntu (WSL2),</td>
+        <td>20.04 </td>
+      </tr>
+      
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>[プログラムソース &quot;forward_list_02.cpp&quot;]</p>
+      
+    <pre class="prettyprint linenums">#include &lt;forward_list&gt; // forward_list
 #include &lt;string&gt;   // string
 #include &lt;iostream&gt; // ostream
 
@@ -282,28 +279,28 @@ std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const std::forward_list
 
 int main(){
     // c++11 の初期化リストの構文
-    std::<span class="auto-style1">forward_list</span>&lt;std::string&gt; words1 {&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;};
+    std::forward_list&lt;std::string&gt; words1 {&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;};
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // emplace_front
-    words1.<span class="auto-style1">emplace_front</span>(&quot;emplace_front&quot;);
+    words1.emplace_front(&quot;emplace_front&quot;);
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // push_front
-    words1.<span class="auto-style1">push_front</span>(std::string(&quot;push_front&quot;));
+    words1.push_front(std::string(&quot;push_front&quot;));
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // emplace_after
-    words1.<span class="auto-style1">emplace_after</span>(words1.begin(), &quot;emplace_after&quot;);
+    words1.emplace_after(words1.begin(), &quot;emplace_after&quot;);
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // insert_after
-    words1.<span class="auto-style1">insert_after</span>(words1.begin(), std::string(&quot;insert_after&quot;));
+    words1.insert_after(words1.begin(), std::string(&quot;insert_after&quot;));
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // insert_afert &amp; next
     std::forward_list&lt;std::string&gt; li {&quot;test1&quot;, &quot;test2&quot;, &quot;test3&quot;};
-    words1.<span class="auto-style1">insert_after</span>(std::next(words1.begin(), 3), li.begin(), li.end());
+    words1.insert_after(std::next(words1.begin(), 3), li.begin(), li.end());
     std::cout &lt;&lt; &quot;words1: &quot; &lt;&lt; words1 &lt;&lt; std::endl;
 
     // insert_after &amp; prev
@@ -315,61 +312,93 @@ int main(){
 #endif
 
     return EXIT_SUCCESS;
-}
-</pre>
+}</pre>
   	
-  <br>[出力]<br>
-<pre>words1: [1, 2, 3, 4, 5]
+    <br>[出力]<br>
+    <pre>words1: [1, 2, 3, 4, 5]
 words1: [emplace_front, 1, 2, 3, 4, 5]
 words1: [push_front, emplace_front, 1, 2, 3, 4, 5]
 words1: [push_front, emplace_after, emplace_front, 1, 2, 3, 4, 5]
 words1: [push_front, insert_after, emplace_after, emplace_front, 1, 2, 3, 4, 5]
 words1: [push_front, insert_after, emplace_after, emplace_front, test1, test2, test3, 1, 2, 3, 4, 5]</pre>
   	
-  <br>
-  	
-  <br>
-  	
-  <br>
-  <h2>
-  サンプルプログラム</h2>
-  <p>
-  サンプルプログラム ダウンロード</p>
-</section>
+  </section>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p> &nbsp;</p>
 
-<section>
-  <h2><a name="参考">参考</a></h2>
-  <ul>
-  	<li>cppreference.com - std::forward_list<br>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2021 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>cppreference.com - std::forward_list<br>
   	<a href="https://ja.cppreference.com/w/cpp/container/forward_list" target="_blank">
       https://ja.cppreference.com/w/cpp/container/forward_list</a></li>
-  </ul>
+  	</ul>
+  </section>
+  
   <p>&nbsp;</p>
-</section>
-
-<hr>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-  <h2 style="margin-bottom:5px">記載</h2>
-  <table>
-  	<tr>
-  		<td class="td_history">2021-01-03</td>
-  		<td class="td_history" style="padding-left:10px !important; padding-right:10px !important;text-align:center">-</td>
-  		<td class="td_history">新規作成 </td>
-  	</tr>
-  </table>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-<p><small>&copy; copyright 2021 木下英俊</small></p>
-</footer>
-
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-03-03</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">ページデザイン更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2021-01-03</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2021 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
 </body>
 </html>
