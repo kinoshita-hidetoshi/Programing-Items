@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
@@ -41,6 +41,9 @@
   }
   .auto-style2 {
     border-width: 0px;
+  }
+  .auto-style3 {
+    text-decoration: underline;
   }
   </style>
 
@@ -259,8 +262,9 @@ set(CMAKE_CXX_STANDARD 14)
 <span class="auto-style1">include(FetchContent)</span>
 <span class="auto-style1">FetchContent_Declare(</span>
 <span class="auto-style1">  googletest</span>
+<span class="auto-style1">  DOWNLOAD_EXTRACT_TIMESTAMP ON   # 追加</span>
 <span class="auto-style1">  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip</span>
-)
+<span class="auto-style1">)</span>
 <span class="auto-style1"># For Windows: Prevent overriding the parent project's compiler/linker settings</span>
 <span class="auto-style1">set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)</span>
 <span class="auto-style1">FetchContent_MakeAvailable(googletest)</span>
@@ -274,6 +278,20 @@ target_link_libraries(
     GTest::gtest_main
 )
 </pre>
+    <p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>CMake3.24以降では、上記「<strong>DOWNLOAD_EXTRACT_TIMESTAMP ON</strong>」を記載することが推奨になったようです。これを行わないと 
+        "<span class="auto-style3">The DOWNLOAD_EXTRACT_TIMESTAMP option was not 
+        given and policy CMP0135 is not set.</span>" という警告を出力します。</p>
+        <p>他の対応方法として CMakeLists.txt に "cmake_policy(SET CMP0135 NEW)" 
+        を追加するという方法もあるそうです。</p>
+      </div>
+    </div>
+
     <p> &nbsp;</p>
     <p> この状態で以下のようにコマンドを入力します。</p>
     <pre style="width: 800px">
@@ -355,6 +373,10 @@ SOFTWARE.
     <li>
       <a href="https://waldeinsamkeit.hatenablog.jp/entry/2020/07/25/212255">
       Google Testのインストールと使い方 - ネコと和解せよ (hatenablog.jp)</a></li>
+        <li>
+        <a href="https://qiita.com/kai-tokei/items/ecab1a2c78f8bb3cfe1f" target="_blank">
+        Cmakeにて"The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy 
+        CMP0135 is not set."という警告が表示されたことについて #C++ - Qiita</a></li>
 	</ul>
 </section>
 
@@ -369,6 +391,12 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-03-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a>」へ「DOWNLOAD_EXTRACT_TIMESTAMP 
+        ON」に関する情報を追記 </td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2024-10-14</td>
 	    <td class="td_history_separator">-</td>
