@@ -410,9 +410,9 @@ set_tests_properties(hoge_test PROPERTIES LABELS hoge)</pre>
   	<p>&nbsp;</p>
     <p>&nbsp;</p>
     <p><span class="cpp-source">CMakeLists.txt</span> ファイルの記載例です。</p>
-    <p>簡単に説明すると、<strong><em>include(GoogleTest)</em></strong>、<strong><em>enable_testin()</em></strong> 
-    した後に <strong><em> add_test</em></strong>() の代わりに <strong><em>
-    gtest_add_tests</em></strong>() でテストを追加する、という感じです。これら機能は cmake 3.1 で導入され、3.9 
+    <p>簡単に説明すると、<strong><em>include(GoogleTest)</em></strong>、<strong><em>enable_testing()</em></strong> 
+    した後に (<strong><em>add_test</em></strong>() ではなく) <strong><em>
+    gtest_add_tests</em></strong>() でテストを追加する、という感じです。<br>これら機能は cmake 3.1 で導入され、3.9 
     以降ぐらいで現在の仕様になったらしいです。</p>
     <pre class="prettyprint linenums lang-sh" style="width: 800px">
 # CMake のバージョンを設定
