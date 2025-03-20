@@ -165,10 +165,11 @@
       <p>-S を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
       </li>
       <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ） </li>
-      <li>コミットが署名されたことを確認します。<br>
+      <li>コミットが署名されたことを確認します。<br>"-1" は最新コミットから1つを表示することを意味します。"-3" 
+      とすれば最新コミットから3つを表示します。<br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">git log --show-signature -1</pre>
-      <br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
+      表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
       <strong><br>NOTE： </strong>ディレクトリにファイルをセットアップする必要があります。詳細については、 
       <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile">
       Git ドキュメント</a>を参照してください。bitbucket@example.com の部分は Bitbucket 
@@ -189,7 +190,7 @@ eval $(ssh-agent)</pre>
 kinoshita@PC-DE2208N0022R:~$ cat .gitconfig
 [user]
         name = kinoshita hidetoshi
-        email = hidetoshi.kinoshita@i-pro.com
+        email = ********@********.com
         signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub
 [gpg "ssh"]
         allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
@@ -211,12 +212,12 @@ kinoshita@PC-DE2208N0022R:~$ cat .gitconfig
     <p>もしくは全てを対象に有効化する場合は ‘--global’ を付けて下記コマンドを実行します。 </p>
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global commit.gpgsign true</pre>
     <p>&nbsp;</p>
-    <p>後者のコマンドを実行後の私の .gitconfig ファイル例です。 </p>
+    <p>後者のコマンドを実行後の私の .gitconfig ファイル例です。（メールアドレスは **** で変更表記しています）</p>
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 kinoshita@PC-DE2208N0022R:~$ cat .gitconfig
 [user]
         name = kinoshita hidetoshi
-        email = hidetoshi.kinoshita@i-pro.com
+        email = ********@********.com
         signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub
 [gpg "ssh"]
         allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
