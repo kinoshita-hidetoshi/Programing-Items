@@ -107,7 +107,15 @@
       <li>以下のコマンドを実行することで diskpart を起動します
         <pre style="width: 400px">diskpart</pre></li>
       <li>diskpart のコマンドプロンプトで以下のコマンドを実行します
-        <pre style="width: 400px">select vdisk file="C:\&lt;path&gt;\your.vhdx
+        <pre style="width: 400px">
+select vdisk file="C:\&lt;path&gt;\your.vhdx"
+attach vdisk readonly
+compact vdisk
+deatch vdisk
+exit</pre>
+        前章で紹介の例と同じ内容だと下記のように入力します
+        <pre>
+select vdisk file="C:\Users\kinos\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState\ext4.vhdx"
 attach vdisk readonly
 compact vdisk
 deatch vdisk
