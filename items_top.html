@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="木下英俊">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
   <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
@@ -12,12 +12,15 @@
   <!-- タイトル -->
   <title>Top メニュー | Programming Items</title>
 
-  <base target="contents">
-	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="favicon.ico">
+  
   <!-- CSS -->
 	<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
   <link href="design_items_v3.css" rel="stylesheet">
 
+  <base target="contents">
+	
   <script type="text/javascript">
     function checkedOff(){
       window.parent.checkedOff();
@@ -204,6 +207,11 @@
       
       <li><a href="Etc/PowerAutomateDesktop.html" onclick="checkedOff();">Power Automate Desktop</a></li>
       <li><a href="Etc/Windows%20SDK.html" onclick="checkedOff();">Windows SDK</a></li>
+      
+      <li>WSL</li>
+      <ul>
+        <li><a href="Microsoft/WSL/wsl2_optimize_diskspace.html" onclick="checkedOff();">WSL2 のディスクサイズを削減する</a></li>
+      </ul>
         
     </ul>
     
