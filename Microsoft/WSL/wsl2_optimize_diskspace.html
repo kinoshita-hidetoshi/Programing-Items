@@ -40,6 +40,7 @@
 <body onload="prettyPrint();">
 	
   <h1>WSL2 のディスクサイズを削減する</h1>
+  <p>&nbsp;</p>
   
   <div class="status_information">
     <div></div>
@@ -70,6 +71,19 @@
   
   <section>
   	<h2> <a name="1._Optimize-VHD_コマンドによる方法">1. Optimize-VHD コマンドによる方法</a></h2>
+    <p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>Optimize-VHD を使う方法がよく紹介されていますが、Optimize-VHD は Hyper-V に含まれる機能です。Hyper-V は 
+        "Windows11 Pro" では使用できますが、"Windows11 Home" では残念ながら使用できません。</p>
+        <p>"Windows11 Home" をお使いの方は後述の記事［<a href="#2._diskpart_コマンドによる方法">2. diskpart コマンドによる方法</a>」を参照ください。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
     <p> "*Ubuntu*"&nbsp;でフィルタして Get-AppxPackage することで自分の Ubuntu (WSL2) 
     一覧を見つけることができます。<br>下図例では Ubunt24.04LTS と Ubuntu22.04LTS の２つがあることを示しています。</p>
     <p> ここで注意したいことは、PackageFullName：<span class="cpp-source">CanonicalGroupLimited.Ubuntu24.04LTS_2404.1.26.0_x64__79rhkp1fndgsc</span> 
@@ -186,8 +200,8 @@ exit</pre>
   <p>&nbsp;</p>
   
   <section>
-  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
   </section>
   
   <p>&nbsp;</p>
