@@ -73,6 +73,7 @@
   <p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
+  <p>以下の環境で確認しています</p>
 	<table>
 	<tbody>
 	  <tr>
@@ -82,7 +83,7 @@
 	  <tr>
 	    <td>OS:</td>
 	    <td>(1) WSL/Ubuntu,</td>
-	    <td>20.04</td>
+	    <td>24.04, 22.04, 20.04</td>
 	  </tr>
 	  <tr>
 	    <td>&nbsp;</td>
@@ -95,7 +96,13 @@
 	  </tr>
 		
 	  <tr>
-	    <td>ベースOS :</td>
+	    <td>OS :</td>
+	    <td>Windows11 home,</td>
+	    <td>24H2</td>
+	  </tr>
+	  
+	  <tr>
+	    <td>&nbsp;</td>
 	    <td>Windows10 home,</td>
 	    <td>Version 2003 </td>
 	  </tr>
@@ -106,7 +113,7 @@
 	</tbody>
 	</table>
 	
-	<p> &nbsp;</p>
+  <p> &nbsp;</p>
 	<p> &nbsp;</p>
 	
 	<h3>1-1. GitHub にアカウントを作成</h3>
@@ -131,41 +138,97 @@
   <p>下記手順でSSH認証鍵をホーム配下の .ssh/github フォルダ内に生成します。</p>
 	<p>&nbsp;</p>
 	
-	<pre style="color: #C0C0C0; background-color: #000000"><code>$ mkdir ~/.ssh
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+$ mkdir ~/.ssh
 $ cd ~/.ssh
 $ mkdir github
 $ cd github
-$ ssh-keygen -t rsa -C hoge@foo.com              <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
+$ ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
 Generating public/private rsa key pair.
-Enter file in which to save the key (/home/hidetoshi/.ssh/id_rsa):/home/hidetoshi/.ssh/github/id_rsa
+Enter file in which to save the key (/home/hidetoshi/.ssh/id_rsa):/home/hidetoshi/.ssh/github/id_ed25519                                                 <span class="auto-style1">&lt;----- &quot;github&quot;フォルダへ修正してEnter</span>
                                                  <span class="auto-style1">&lt;----- &quot;github&quot;フォルダへ修正してEnter</span>
 Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
 Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
-Your identification has been saved in /home/hidetoshi/.ssh/github/id_rsa.
-Your public key has been saved in /home/hidetoshi/.ssh/github/id_rsa.pub.
+Your identification has been saved in /home/hidetoshi/.ssh/github/id_ed25519.
+Your public key has been saved in /home/hidetoshi/.ssh/github/id_ed25519.pub.
 The key fingerprint is:
-0f:19:40:a4:36:b4:89:42:b0:e2:f4:b2:5b:ce:85:39 mail@mail
+SHA256:Z5I/tXZlSEIvrQgZ2jFq8vUa6FHkmxbW+jps24D9WqU hoge@foo.com
 The key&#39;s randomart image is:
-+--[ RSA 2048]----+
-| o  .   .  o  +  |
-|.  .  o  +   .   |
-|+..   *    .     |
-|   + . .. .   o  |
-|       o  .   S  |
-| o  o        o   |
-|    .    E   . . |
-|         =     o |
-| . o             |
-+-----------------+
-$</code></pre>
++--[ED25519 256]--+
+|        =   .    |
+|       * * . o   |
+|    . + X . o +  |
+|     + = O . = . |
+|      + S = + . o|
+|     . = O + . o |
+|      o.+ E o .  |
+|        +* o .   |
+|       .++o      |
++----[SHA256]-----+
+$</pre>
 
 	<p>&nbsp;</p>
   <p>これで公開鍵と秘密鍵が作成できました。</p>
-  <ul>
-    <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
-    <li>id_rsa.pub: 公開鍵</li>
-  </ul>
+    <ul>
+      <li>id_ed25519:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+      <li>id_ed25519.pub: 公開鍵</li>
+    </ul>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>説明を <span class="cpp-source">ssh-keygen -t ed25519</span> 
+        へ変更しました。動作確認済みです。</p>
+        <ul>
+          <li>Ed25519 は「エドワーズ曲線デジタル署名」と呼ばれる RSA より強力なアルゴリズムです。 </li>
+          <li>Github はクライアント キー用に、Ed25519、ECDSA、RSA 
+          の3つの暗号化アルゴリズムをサポートしています。</li>
+          <li>DSAキー（ssh-dss）や、古い暗号アルゴリズムは2022年3月以降サポート外となっています</li>
+        </ul>
+      </div>
+    </div>
+
   <p>&nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="800">
+      <caption></caption>
+      <thead class="standard_table">
+        <tr>
+          <th style="white-space: nowrap">キーのタイプ</th>
+          <th>最小キーサイズ (bit)</th>
+          <th>例</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ed25519</td>
+          <td>256</td>
+          <td style="white-space: nowrap">ssh-keygen -t ed25519 -b 256</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>ECDSA</td>
+          <td>256</td>
+          <td>ssh-keygen -t ecdsa -b 256</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>RSA</td>
+          <td>2048</td>
+          <td>ssh-keygen -t rsa -b 2048</td>
+          <td>2048ビット以上の鍵サイズが推奨されます。</td>
+        </tr>
+        <tr>
+          <td>DSA / DSS</td>
+          <td>1024</td>
+          <td>ssh-keygen -t dsa -b 1024</td>
+          <td>DSAキー（ssh-dss）や、古い暗号アルゴリズムは2022年3月以降サポート外となっています </td>
+        </tr>
+      </tbody>
+    </table>
+    
   <p>&nbsp;</p>
 
   <h3>1-4. ~/.ssh/config にSSH鍵を設定</h3>
@@ -176,46 +239,48 @@ $</code></pre>
   <p>config ファイルに以下の情報を書き込みます。</p>
 
   <p><strong>["config"]</strong></p>
-
-  <pre style="width: 800px">Host github.com
+    
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+Host github.com
   HostName github.com
-  IdentityFile ~/.ssh/github/id_rsa
+  IdentityFile ~/.ssh/github/id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes</pre>
   
   <p>&nbsp;</p>
-	<p><strong>["config" (port 443 環境)]</strong></p>
-	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
-	<pre style="width: 800px">Host github.com
+  <p><strong>["config" (port 443 環境)]</strong></p>
+  <p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">Host github.com
   HostName <span class="auto-style1"><strong>ssh.</strong></span>github.com 
-  IdentityFile ~/.ssh/github/id_rsa
+  IdentityFile ~/.ssh/github/id_ed25519
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
   IdentitiesOnly yes</pre>
-	<p>&nbsp;</p>
-	
-	<p><strong>["config" プロキシ環境下]</strong></p>
-	<p>proxy 環境下ではこちらのサンプルを参照ください。"ProxyCommand" の行を追加しています。</p>
-	
-  <pre style="width: 800px">Host github.com
+  <p>&nbsp;</p>
+  
+  <p><strong>["config" プロキシ環境下]</strong></p>
+  <p>proxy 環境下ではこちらのサンプルを参照ください。"ProxyCommand" の行を追加しています。</p>
+  
+  <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+Host github.com
   HostName github.com
-  IdentityFile ~/.ssh/github/id_rsa
+  IdentityFile ~/.ssh/github/id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes
   <span class="auto-style1"><strong>ProxyCommand /usr/bin/corkscrew proxy.hoge.co.jp 8080 %h %p</strong></span></pre>
 	
-	<p>&nbsp;</p>
-	<ul>
-	  <li>プロキシコマンドとして corkscrew を使用しています。</li>
-	  <li>"proxy.hoge.co.jp" はプロキシアドレスの例です。ネットワーク管理者の指示に従って設定してください。</li>
-	  <li>"8080" はプロキシポート番号の例です。ネットワーク管理者の指示に従って設定してください。</li>
-	</ul>
-	<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <ul>
+    <li>プロキシコマンドとして corkscrew を使用しています。</li>
+    <li>"proxy.hoge.co.jp" はプロキシアドレスの例です。ネットワーク管理者の指示に従って設定してください。</li>
+    <li>"8080" はプロキシポート番号の例です。ネットワーク管理者の指示に従って設定してください。</li>
+  </ul>
+  <p>&nbsp;</p>
   
   <div class="status_information">
     <div></div>
@@ -248,14 +313,15 @@ $</code></pre>
 	<img alt="&quot;SSH keys / add new&quot; 画面" class="border_with_drop-shadow" src="How%20to%20use%20SSH%20key/img18.jpg" width="800"></p>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
-  <p>続いて、以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
+  <p>続いて、以下のコマンドで公開鍵を表示し、「ssh-ed25519 ～ 自分のメールアドレス」をコピーします。</p>
 	<p>&nbsp;</p>
 	
-  <pre style="width: 800px; color: #C0C0C0; background-color: #000000;"><code>$ cat ~/.ssh/github/id_rsa.pub
-ssh-rsa
+  <pre style="width: 800px; color: #C0C0C0; background-color: #000000;">
+$ cat ~/.ssh/github/id_ed25519.pub
+ssh-ed25519 **********
 **************************************************************************
 **************************************************************************
-mail@mail</code></pre>
+********** hoge@foo.com</pre>
 
   <p>&nbsp;</p>
 	<p>&nbsp;</p>
@@ -348,46 +414,100 @@ $</code></pre>
   <h3>2-3. SSH認証鍵 － 公開鍵と秘密鍵を作成</h3>
   <p>複数のSSH認証鍵を登録することを想定して、GitHub専用フォルダに鍵を登録する手順として記載します。</p>
   <p>下記手順でSSH認証鍵をホーム配下の .ssh/github フォルダ内に生成します。</p>
-	<p>&nbsp;</p>
-	
-  <pre style="color: #C0C0C0; background-color: #000000">&gt; %homedrive%
+  <p>&nbsp;</p>
+  <pre style="color: #FFFFFF; background-color: #000000; width: 900px;">&gt; %homedrive%
 &gt; cd %homepath%
 &gt; mkdir .ssh
 &gt; cd .ssh
 &gt; mkdir github
 &gt; cd github
-&gt; ssh-keygen -t rsa -C hoge@foo.com               <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
-Generating public/private rsa key pair.
-Enter file in which to save the key (C:\Users\ユーザ名/.ssh/id_rsa): c:\users\ユーザ名/.ssh/github/id_rsa
-                                                  <span class="auto-style1">&lt;----- &quot;github&quot;フォルダへ修正してEnter</span>
-Enter passphrase (empty for no passphrase):       <span class="auto-style1">&lt;-----Enterを押す</span>
-Enter same passphrase again:                      <span class="auto-style1">&lt;-----Enterを押す</span>
-Your identification has been saved in c:\Users\ユーザ名/.ssh/github/id_rsa.
-Your public key has been saved in c:\Users\ユーザ名/.ssh/github/id_rsa.pub.
+&gt; ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;--- "hoge@foo.com" は自分のメールアドレス</span>
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (C:\Users\[ユーザ名]/.ssh/id_ed25519): c:\users\[ユーザ名]/.ssh/github/id_ed25519
+                                                 <span class="auto-style1">&lt;----- "github" フォルダへ修正してEnter</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Your identification has been saved in c:\Users\[ユーザ名]/.ssh/github/id_ed25519.
+Your public key has been saved in c:\Users\[ユーザ名]/.ssh/github/id_ed25519.pub.
 The key fingerprint is:
-SHA256:sxNXQxxEEMuuB+zYuX95RVRKkpe4zn3zRbDe/88z+nQ hoge@foo.com
-The key&#39;s randomart image is:
-+---[RSA 2048]----+
-| o**+..o|
-| . o+o+..|
-| o oo.+ |
-| . . .... o|
-| S oo o + |
-| + O o o.=|
-| . B . . +E|
-| + o o++|
-| .... oo.O|
+SHA256:Z5I/tXZlSEIvrQgZ2jFq8vUa6FHkmxbW+jps24D9WqU hoge@foo.com
+The key's randomart image is:
++--[ED25519 256]--+
+|        =   .    |
+|       * * . o   |
+|    . + X . o +  |
+|     + = O . = . |
+|      + S = + . o|
+|     . = O + . o |
+|      o.+ E o .  |
+|        +* o .   |
+|       .++o      |
 +----[SHA256]-----+
 
-C:\Users\ユーザ名\.ssh\github&gt;</pre>
+C:\Users\[ユーザ名]\.ssh\github&gt;</pre>
 
-	<p>&nbsp;</p>
+  <p>&nbsp;</p>
   <p>これで公開鍵と秘密鍵が作成できました。</p>
   
   <ul>
-    <li>id_rsa:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
-    <li>id_rsa.pub: 公開鍵</li>
+    <li>id_ed25519:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
+    <li>id_ed25519.pub: 公開鍵</li>
   </ul>
+
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>説明を <span class="cpp-source">ssh-keygen -t ed25519</span> 
+      へ変更しました。動作確認済みです。</p>
+      <ul>
+        <li>Ed25519 は「エドワーズ曲線デジタル署名」と呼ばれる RSA より強力なアルゴリズムです。 </li>
+        <li>Github はクライアント キー用に、Ed25519、ECDSA、RSA 
+        の3つの暗号化アルゴリズムをサポートしています。</li>
+        <li>DSAキー（ssh-dss）や、古い暗号アルゴリズムは2022年3月以降サポート外となっています</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
+        
+  <table class="border-collapse" border="1" width="800">
+    <caption></caption>
+    <thead class="standard_table">
+      <tr>
+        <th style="white-space: nowrap">キーのタイプ</th>
+        <th>最小キーサイズ (bit)</th>
+        <th>例</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ed25519</td>
+        <td>256</td>
+        <td style="white-space: nowrap">ssh-keygen -t ed25519 -b 256</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ECDSA</td>
+        <td>256</td>
+        <td>ssh-keygen -t ecdsa -b 256</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>RSA</td>
+        <td>2048</td>
+        <td>ssh-keygen -t rsa -b 2048</td>
+        <td>2048ビット以上の鍵サイズが推奨されます。</td>
+      </tr>
+      <tr>
+        <td>DSA / DSS</td>
+        <td>1024</td>
+        <td>ssh-keygen -t dsa -b 1024</td>
+        <td>DSAキー（ssh-dss）や、古い暗号アルゴリズムは2022年3月以降サポート外となっています </td>
+      </tr>
+    </tbody>
+  </table>
   
   <p>&nbsp;</p>
   <p>&nbsp;</p>
@@ -404,9 +524,10 @@ C:\Users\ユーザ名\.ssh\github&gt;</pre>
 
   <p><strong>["config"]</strong></p>
   
-  <pre style="width: 800px">Host github.com
+  <pre style="color: #C0C0C0; background-color: #000000; width: 800px">
+Host github.com
   HostName github.com
-  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -415,9 +536,10 @@ C:\Users\ユーザ名\.ssh\github&gt;</pre>
   <p>&nbsp;</p>
 	<p><strong>["config" (port 443 環境)]</strong></p>
 	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
-	<pre style="width: 800px">Host github.com
+	<pre style="color: #C0C0C0; background-color: #000000; width: 800px">
+Host github.com
   HostName <span class="auto-style1"><strong>ssh.</strong></span>github.com 
-  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_ed25519
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
@@ -427,9 +549,10 @@ C:\Users\ユーザ名\.ssh\github&gt;</pre>
   <p>proxy 環境下ではこちらのサンプルを参照ください。</p>
   <p>”ProxyCommand” の行を追加しています。</p>
 
-  <pre>Host github.com
+  <pre style="color: #C0C0C0; background-color: #000000; width: 800px">
+Host github.com
   HostName github.com
-  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_rsa
+  IdentityFile C:\Users\[ユーザ名]\.ssh\github\id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
@@ -467,7 +590,8 @@ C:\Users\ユーザ名\.ssh\github&gt;</pre>
 	<p>&nbsp;</p>
   <p>以下のコマンドで公開鍵を表示し、「ssh-rsa ～ 自分のメールアドレス」をコピーします。</p>
   <p>&nbsp;</p>
-  <pre style="width: 800px">&gt; type %homedrive%%homepath%\.ssh\github\id.rsa.pub
+  <pre style="width: 800px">
+&gt; type %homedrive%%homepath%\.ssh\github\id_ed25519.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1r2MfRiv4TGt+jTD96PLTRkYb1nn4mul2Rr
 1o8a5iQ8blw3fd43c2qZYjVTIIh7N+****uVXnXyWQNeVNT/IPEoaZaaur9SDAojhcA1kUMODK
 0KuKDlbddxijWqJzzmEqcrZGNFEKUTVfB/********0ScyGWiJWjIOVUloLqcdy6CEbHSjiLV7
@@ -493,9 +617,10 @@ QqVlPcjJd3 hoge@foo.com</pre>
   <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
 	<p>&nbsp;</p>
 	
-  <pre style="color: #C0C0C0; background-color: #000000; width: 800px"><code>$ ssh -T git@github.com
+  <pre style="color: #C0C0C0; background-color: #000000; width: 800px">
+$ ssh -T git@github.com
 Hi hidetoshi-kinoshita! You've successfully authenticated, but GitHub does not provide shell access. 
-$</code></pre>
+$</pre>
 
   <p>&nbsp;</p>
 	<p>&nbsp;</p>
@@ -569,6 +694,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-04-05</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">SSH鍵アルゴリズムを RSA から Ed25519 へ記載変更、他</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-11-07</td>
 	    <td class="td_history_separator">-</td>
