@@ -63,10 +63,12 @@
       <nav>
         <h2>目次</h2>
         <p><a href="#1._GoogleTest_をインストール">1. GoogleTest をインストール</a></p>
+        <p>&nbsp;&nbsp; <a href="#1-1._ソースコードをビルドしてインストールする">1-1. ソースコードをビルドしてインストールする</a></p>
+        <p>&nbsp;&nbsp; <a href="#1-2._パッケージマネージャーでインストールする">1-2. パッケージマネージャーでインストールする</a></p>
         <p><a href="#2._GoogleTest_の使い方">2. GoogleTest の使い方</a></p>
-        <p><a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
-        <p><a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
-        <p><a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
         <p>&nbsp;</p>
         <p><a href="#ライセンス">ライセンス</a></p>
         <p><a href="#参考">参考</a></p>
@@ -79,8 +81,9 @@
 
 <section>
 	<h2> <a name="1._GoogleTest_をインストール">1. GoogleTest をインストール</a></h2>
+    <h3> <a name="1-1._ソースコードをビルドしてインストールする">1-1. ソースコードをビルドしてインストールする</a></h3>
 	<h4>[概要]</h4>
-    <p>Github から一式を取得後、cmake、make、make install します。</p>
+    <p>Github からソースコード一式を取得後、cmake、make、make install します。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -115,8 +118,8 @@
 	<p> &nbsp;</p>
 	
 	<p>&nbsp;</p>
-	<p> 1-1. ソースをダウンロード</p>
-    <p> Google Test のリポジトリはこちらです。</p>
+	<p> <strong>Step1</strong>. </p>
+    <p> ソースをダウンロードします。Google Test のリポジトリはこちらです。</p>
     <p> <a href="https://github.com/google/googletest">google/googletest: 
     GoogleTest - Google Testing and Mocking Framework (github.com)</a></p>
     <p> &nbsp;</p>
@@ -124,11 +127,35 @@
     <p> <a href="https://github.com/google/googletest/releases">Releases · 
     google/googletest (github.com)</a></p>
     <p> &nbsp;</p>
+    <p> <strong>Step2</strong>. </p>
+    <p> 事前に必要なパッケージをインストールします。</p>
+        
+    <table class="border-collapse" border="1" width="500">
+      <caption>[table.] simple table のサンプル１</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>パッケージ名</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>build-essential</td>
+          <td>c/c++ ビルド環境</td>
+        </tr>
+        <tr>
+          <td>cmake</td>
+          <td>プロジェクトのビルドに使用</td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p> &nbsp;</p>
-    <p> 1-2. Google Test をビルド</p>
+    <pre class="prettyprint" style="width: 800px">sudo apt install build-essential cmake lcov</pre>
+    <p> &nbsp;</p>
+    <p> <strong>Step3</strong>. Google Test をビルド</p>
     <p> 普通に cmake でビルドします。</p>
-    <p> &nbsp;</p>
-	<pre class="prettyprint linenums">
+	<pre class="prettyprint" style="width: 800px">
 $ mkdir temp
 $ cd temp 
 $ wget https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
@@ -145,7 +172,7 @@ $ sudo make install </pre>
 <p>以上でインストール完了です。</p>
 <p>&nbsp;</p>
 <p>インストール先を変更したい場合は、cmake するときに&nbsp; CMAKE_INSTALL_PREFIX を設定します。</p>
-	<pre class="prettyprint linenums">
+	<pre class="prettyprint" style="width: 800px">
 ･･･
 $ mkdir build
 $ cd build
@@ -153,13 +180,31 @@ $ cmake <span class="auto-style1">-DCMAKE_INSTALL_PREFIX=path/to/install/dir</sp
 $ make
 $ sudo make install</pre>
 <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="1-2._パッケージマネージャーでインストールする">1-2. パッケージマネージャーでインストールする</a></h3>
+    <p>Ubuntuでは以下のコマンドでインストールできます。使用するディストリビューションによって適宜コマンドは変更してください。</p>
+    <pre class="prettyprint" style="width: 800px">sudo apt-get install <strong>libgtest-dev</strong></pre>
+    
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>GoogleTest 用のパッケージ libgtest-dev は古いバージョンだと "google mock" 
+        が同梱されていません。その場合は最新のソースコードをレポジトリから取得し、それをビルドして使用します。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    
 </section>
 	
 <p>&nbsp;</p>
 
 <section>
 	<h2> <a name="2._GoogleTest_の使い方">2. GoogleTest の使い方</a></h2>
-  <p> &nbsp;</p>
 
   <section>
     <h3> <a name="2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></h3>
@@ -351,7 +396,10 @@ SOFTWARE.
 	<h2><a name="参考">参考</a></h2>
 	<ul>
 		<li>
-      <a href="http://opencv.jp/googletestdocs/index.html" target="_blank">
+        <a href="https://github.com/google/googletest" target="_blank">
+        google/googletest: GoogleTest - Google Testing and Mocking Framework</a></li>
+        <li>
+        <a href="http://opencv.jp/googletestdocs/index.html" target="_blank">
       Google Test — Google Test ドキュメント日本語訳 (opencv.jp)</a></li>
     <li>
       <a href="https://qiita.com/shohirose/items/30e39949d8bf990b0462" target="_blank">
