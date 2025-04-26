@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
-  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです。">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
   <meta name="keywords" content="">
   <!-- キャッシュ無効化 -->
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>［タイトルを記載します］ | Programming Items</title>
+  <title>make の使い方 | Programming Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -35,11 +35,20 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+    .auto-style1 {
+      color: #FF0000;
+    }
+    .auto-style2 {
+      color: #87CEEB;
+    }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
 	
-  <h1>make</h1>
+  <h1>make の使い方</h1>
   
   <p>make に関する情報を記載します</p>
   
@@ -48,9 +57,9 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p>1. ***</p>
-    	<p>2. ***</p>
-    	<p>3. ***</p>
+    	<p><a href="#1._ステップ１:_実行ファイルを作成">1. ステップ１： 実行ファイルを作成</a></p>
+    	<p><a href="#2._ステップ２:_静的・動的ライブラリを作成">2. ステップ２： 静的・動的ライブラリを作成</a></p>
+    	<p><a href="#3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３： サブディレクトリにソースが分散している場合</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -61,41 +70,869 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 1. ***</h2>
+  	<h2> <a name="1._ステップ１:_実行ファイルを作成">1. ステップ１: 実行ファイルを作成</a></h2>
   	<h4>[概要]</h4>
+    <p>"Hello!" をコンソールへ出力するだけの簡単な実行ファイルを作成する手順を題材に説明します。</p>
   	<p> &nbsp;</p>
   	
   	<h4>[環境]</h4>
   	<table>
-    	<tbody>
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td>コンパイラ :</td>
-    	      <td>Visual Studio 2022 pro.,</td>
-    	      <td>Version 17.9.5 </td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td>OS :</td>
-    	    <td>Windows11 home,</td>
-    	    <td>23H2 </td>
-    	  </tr>
-    	  
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    	</tbody>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.3.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
   	</table>
   	
+  	<p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>1-1. コマンドラインでビルド</h3>
+    <p>まず g++ コンパイラを使ったビルドの基本を確認します。</p>
+    <p>下記のようなソースコードを準備します。</p>
     <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    <pre style="width: 600px">./
+ ├ main.cpp
+ ├ hello.h
+ └ hello.cpp</pre>
+    <p>&nbsp;</p>
+    <p>[main.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include "hello.h"
+
+int main() {
+    hello();
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>[hello.h]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#ifndef HELLO_H
+#define HELLO_H
+
+void hello();
+
+#endif</pre>
+
+    <p>&nbsp;</p>
+    <p>[hello.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include &lt;iostream&gt;
+#include "hello.h"
+
+void hello() {
+    std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>上記ソースコード３つを準備できたら、下記コマンドを入力してビルドします。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ g++ -Wall -g -c main.cpp hello.cpp
+$ g++ -o start_cmake.out main.o hello.o</pre>
+
+    <p>&nbsp;</p>
+    <p>bash スクリプトの例です。<br>スクリプト作成後に <span class="cpp-source">chmod +x build.sh</span> 
+    を忘れずに。</p>
+    <p>[ビルドスクリプト例： "build.sh"]</p>
+    
+    <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+rm -f *.o start_cmake.out
+
+g++ -Wall -g -c main.cpp hello.cpp
+g++ -o start_cmake.out main.o hello.o</pre>
+
+    <p>&nbsp;</p>
+    <p>ビルドされた <span class="cpp-source">start_make.out</span> を実行すれば 
+    <span class="cpp-source">Hello!</span> を出力します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+Hello!</pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3>1-2. make でビルド</h3>
+    <p>"1-1. コマンドラインでビルド" の内容を make を使ってビルドするようにしてみます。</p>
+    <p>&nbsp;</p>
+    <p>makefile を以下のように作成します。</p>
+    
+    <p>["makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# コンパイラとターゲット
+CC = g++
+TARGET = start_make.out
+
+# ディレクトリとファイル
+SRCS = main.cpp hello.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# コンパイルフラグ
+CFLAGS = -Wall -g
+
+# ターゲットのビルドルール
+$(TARGET): $(OBJS)
+    $(CC) -o $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TARGET)
+    @echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(OBJS) $(TARGET)
+    @echo "Clean up all targets."    </pre>
+
+    <p>&nbsp;</p>
+    <p>makefile ファイルを追加後のディレクトリの中身は以下のようになります。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    
+    <pre style="width: 600px">./
+ ├ <strong>makefile</strong>
+ ├ main.cpp
+ ├ hello.h
+ └ hello.cpp</pre>
+ 
+    <p>&nbsp;</p>
+    <p>makefile を使ってビルドする操作を以下に示します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make
+g++ -Wall -g -c main.cpp -o main.o
+g++ -Wall -g -c hello.cpp -o hello.o
+g++ -o start_make.out main.o hello.o
+$ ./start_make.out
+Hello!
+$</pre>
+
+    <p>&nbsp;</p>
+    <p>続けて make を実行すると、既にビルド済みということで「make: 'start_make.out' is up to date.」を出力してビルド実行しません。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make
+g++ -Wall -g -c main.cpp -o main.o
+g++ -Wall -g -c hello.cpp -o hello.o
+g++ -o start_make.out main.o hello.o
+$ ./start_make.out
+Hello!
+$ <strong>make
+make: 'start_make.out' is up to date.</strong>
+$</pre>
+
+    <p>&nbsp;</p>
+    <p>続けてソースコードを修正して make を実行すると、修正した部分のみをビルドします。</p>
+    <p>main.cpp を変更後 make した例を以下に示します。</p>
+    <p>main.cpp のみビルドされて start_make.out を再構築されたことを確認できます。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make
+g++ -Wall -g -c main.cpp -o main.o
+g++ -Wall -g -c hello.cpp -o hello.o
+g++ -o start_make.out main.o hello.o
+$ ./start_make.out
+Hello!
+$ make
+make: 'start_make.out' is up to date.
+<span class="auto-style1"><strong>*** ここで main.cpp を修正 ***</strong></span>
+$ <strong>make
+g++ -Wall -g -c main.cpp -o main.o
+g++ -o start_make.out main.o hello.o</strong>
+$</pre>
+
+    <p>&nbsp;</p>
+    <p>make clean と入力すると、ビルド結果をすべて削除します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make clean
+rm -f main.o hello.o start_make.out
+Clean up all targets.
+$</pre>
+
+    <p>&nbsp;</p>
+    <p>make all と入力すると、ビルド結果をすべて削除後に全ビルドを実施します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make all
+rm -f main.o hello.o start_make.out
+Clean up all targets.
+g++ -Wall -g -c main.cpp -o main.o
+g++ -Wall -g -c hello.cpp -o hello.o
+g++ -o start_make.out main.o hello.o
+Build all targets.
+$</pre>
+       
+  </section>
+  	
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._ステップ２:_静的・動的ライブラリを作成">2. ステップ２: 静的・動的ライブラリを作成</a></h2>
+  	<h4>[概要]</h4>
+    <p>ライブラリを作る場合、静的・動的ライブラリ（*.a, *.so）を作成することになります。そして実行ファイルにリンクして使用します。</p>
+    <p>本章では、静的・動的ライブラリを cmake を使って作成などする手順について記載します。</p>
+  	<p>&nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.2.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>2-1. コマンドラインでビルド</h3>
+    <p>下記のようなソースコードを準備します。</p>
+    <p>前章に <span class="cpp-source">good_morning.h</span>,
+    <span class="cpp-source">good_morning.cpp</span> ２つのファイルを追加した感じです。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    
+    <pre style="width: 600px">./
+ ├ main.cpp
+ ├ hello.h
+ ├ hello.cpp
+ ├ <strong>good_morning.h</strong>
+ └ <strong>good_morning.cpp</strong></pre>
+ 
+    <p>&nbsp;</p>
+    <p>[good_morning.h]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#ifndef GOOD_MORNING_H
+#define GOOD_MORNING_H
+
+void good_morning();
+
+#endif</pre>
+    <p>&nbsp;</p>
+    <p>[good_morning.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
+#include "good_morning.h"
+
+void good_morning() {
+    std::cout &lt;&lt; "Good morning!" &lt;&lt; std::endl;
+}</pre>
+
+    <p>&nbsp;</p>
+    <p><span class="cpp-source">main.cpp</span> を次のように変更します。</p>
+    <p>[main.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include "hello.h"
+#include "good_morning.h"
+
+int main() {
+    hello();
+    good_morning();
+}</pre>
+
+    <p>&nbsp;</p>
+    <h4>2-1-1. 静的ライブラリの作成</h4>
+    <p>静的ライブラリを作成後、main.cpp をコンパイルして静的ライブラリとリンクします。</p>
+    
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ g++ -Wall -g -c hello.cpp good_morning.cpp                       # hello.o, good_morning.o を作成
+$ ar <span class="auto-style1"><strong>rvs</strong></span> <span class="auto-style2"><strong>libgreetings.a</strong></span> hello.o good_morning.o                     # 静的ライブラリ(libgreetings.a)を作成
+$ g++ -o start_make.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L.</strong></span>                   # main.cpp をコンパイルして libgreetings.a とリンク
+</pre>
+
+    <p>&nbsp;</p>
+    <p>bash スクリプトの例です。<br>スクリプト作成後に <span class="cpp-source">chmod +x build.sh</span> 
+    を忘れずに。</p>
+    <p>[ビルドスクリプト例： "build.sh"]</p>
+    <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+rm -f *.o *.a start_make.out
+
+g++ -Wall -g -c hello.cpp good_morning.cpp
+ar rvs libgreetings.a hello.o good_morning.o
+g++ -o start_make.out main.cpp -lgreetings -L.</pre>
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_make.out
+Hello!
+Good morning!</pre>
+    <p>&nbsp;</p>
+    <h4>2-1-2. 動的ライブラリの作成</h4>
+    <p>動的ライブラリを作成後、main.cpp をコンパイルして動的ライブラリとリンクします。</p>
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ g++ <span class="auto-style1"><strong>-fPIC -c</strong></span> hello.cpp good_morning.cpp                                      # hello.o, good_morning.o を作成
+$ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span class="auto-style2"><strong>libgreetings.so</strong></span>                        # 静的ライブラリ(libgreetings.so)を作成
+$ g++ -o start_make.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L. -Xlinker -rpath -Xlinker .</strong></span>    # mmain.cpp をコンパイルして libgreetings.so とリンク
+</pre>
+    <p>&nbsp;</p>
+    <p>bash スクリプトの例です。<br>スクリプト作成後に <span class="cpp-source">chmod +x build.sh</span> 
+    を忘れずに。</p>
+    <p>[ビルドスクリプト例： "build.sh"]</p>
+    
+    <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+rm -f *.o *.so start_make.out
+
+g++ -fPIC -Wall -g -c hello.cpp good_morning.cpp
+g++ -shared hello.o good_morning.o -o libgreetings.so
+g++ -o start_make.out main.cpp -lgreetings -L. -Xlinker -rpath -Xlinker .</pre>
+
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_make.out
+Hello!
+Good morning!</pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3>2-2. make でビルド</h3>
+    <p>"2-1. コマンドラインでビルド" の内容を make を使ってビルドするようにしてみます。</p>
+    <p>前章と同様にファイル構成に makefile を追加します。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    
+    <pre style="width: 600px">./
+ ├ <strong>makefile</strong>
+ ├ main.cpp
+ ├ hello.h
+ ├ hello.cpp
+ ├ good_morning.h
+ └ good_morning.cpp</pre>
+ 
+    <p>&nbsp;</p>
+    
+    <h4>2-2-1. 静的ライブラリの作成</h4>
+    <p>makefile を以下のように作成します。</p>
+    
+    <p>["makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# コンパイラとアーカイバ
+CC = g++
+AR = ar
+
+# ターゲット
+TARGET = start_make.out
+LIBRARY = libgreetings.a
+
+# ソースファイルとオブジェクトファイル
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
+LIB_SRCS = hello.cpp good_morning.cpp
+LIB_OBJS = $(LIB_SRCS:.cpp=.o)
+
+# コンパイルフラグ
+CFLAGS  = -Wall -g
+ARFLAGS = rvs
+
+# 実行ファイルのビルドルール
+$(TARGET): $(OBJS) $(LIBRARY)
+    $(CC) -o $@ $(OBJS) -L. -lgreetings
+
+# ライブラリのビルドルール
+$(LIBRARY): $(LIB_OBJS)
+    $(AR) $(ARFLAGS) $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TARGET)
+    @echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(TARGET) $(OBJS) $(LIB_OBJS) $(LIBRARY)
+    @echo "Clean up all targets."</pre>
+    <p>&nbsp;</p>
+    <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make
+g++ -Wall -g -c main.cpp -o main.o
+g++ -Wall -g -c hello.cpp -o hello.o
+g++ -Wall -g -c good_morning.cpp -o good_morning.o
+ar rvs libgreetings.a hello.o good_morning.o
+ar: creating libgreetings.a
+a - hello.o
+a - good_morning.o
+g++ -o start_make.out main.o -L. -lgreetings
+$ ./start_make.out
+Hello!
+Good morning!
+$</pre>
+
+    <p>&nbsp;</p>
+    
+    <h4>2-2-2. 動的ライブラリの作成</h4>
+    <p>makefile を以下のように作成します。</p>
+    
+    <p>["makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# コンパイラ
+CC = g++
+
+# ターゲット
+TARGET = start_make.out
+LIBRARY = libgreetings.so
+
+# ソースファイルとオブジェクトファイル
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
+LIB_SRCS = hello.cpp good_morning.cpp
+LIB_OBJS = $(LIB_SRCS:.cpp=.o)
+
+# コンパイルフラグ
+CFLAGS = -Wall -g -fPIC
+LDFLAGS = -shared
+RPATH_FLAGS = -Xlinker -rpath -Xlinker .
+
+# 実行ファイルのビルドルール
+$(TARGET): $(SRCS) $(LIBRARY)
+	$(CC) -o $@ $(SRCS) -L. -lgreetings $(RPATH_FLAGS)
+
+# 共有ライブラリのビルドルール
+$(LIBRARY): $(LIB_OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TARGET)
+	@echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+	rm -f $(TARGET) $(OBJS) $(LIB_OBJS) $(LIBRARY)
+	@echo "Clean up all targets."</pre>
 	
+    <p>&nbsp;</p>
+    <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+$ make
+g++ -Wall -g -fPIC -c hello.cpp -o hello.o
+g++ -Wall -g -fPIC -c good_morning.cpp -o good_morning.o
+g++ -shared -o libgreetings.so hello.o good_morning.o
+g++ -o start_make.out main.cpp -L. -lgreetings -Xlinker -rpath -Xlinker .
+$ ./start_make.out
+Hello!
+Good morning!
+$</pre>
+
+    <p>&nbsp;</p>
+       
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３: サブディレクトリにソースが分散している場合</a></h2>
+  	<h4>[概要]</h4>
+    <p>ソフトウェアが大規模になってくると役割毎に保存するフォルダを分けたりします。そういった場合を例に説明します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>g++,</td>
+  	      <td>13.2.0</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubuntu,</td>
+  	    <td>24.04</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p>下記のようなフォルダおよびファイル構成を例に説明します。ファイル内容は前章と同じです。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    
+    <pre style="width: 600px">./
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ hello.cpp
+ │└ good_morning.cpp
+ └ main/
+ 　└ main.cpp</pre>
+ 
+    <p>&nbsp;</p>
+    <p>[main.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include "hello.h"
+#include "good_morning.h"
+
+int main() {
+    hello();
+    good_morning();
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>[hello.h]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#ifndef HELLO_H
+#define HELLO_H
+
+void hello();
+
+#endif</pre>
+
+    <p>&nbsp;</p>
+    <p>[hello.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+#include &lt;iostream&gt;
+#include "hello.h"
+
+void hello() {
+    std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>[good_morning.h]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#ifndef GOOD_MORNING_H
+#define GOOD_MORNING_H
+
+void good_morning();
+
+#endif</pre>
+
+    <p>&nbsp;</p>
+    <p>[good_morning.cpp]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
+#include "good_morning.h"
+
+void good_morning() {
+    std::cout &lt;&lt; "Good morning!" &lt;&lt; std::endl;
+}</pre>
+
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+  	
+  	<h3>3-1. コマンドラインでビルド</h3>
+    <p>さて、これをコマンドラインからビルドしてみます。ルートディレクトリ直下にいるものとし、共有ライブラリを作成して実行ファイルにリンクするやり方で行います。</p>
+    <p>今回は <span class="cpp-source">-L</span> オプションに加えて <span class="cpp-source">
+    -I</span> オプションでインクルードファイルを探すディレクトリを指定する必要があります。前章で<span class="cpp-source"> 
+    -I </span>オプションが必要なかったのは、カレントディレクトリはデフォルトでインクルードファイルを探す場所として認識されるからです。</p>
+    
+    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+$ cd source/
+$ g++ -fPIC -c hello.cpp good_morning.cpp -I../include
+$ g++ -shared *.o -o libgreetings.so
+$ cd ../main/
+$ g++ main.cpp -o main.out -I../include -L../source -lgreetings -Xlinker -rpath -Xlinker ../source</pre>
+
+    <p>&nbsp;</p>
+    <p>bash スクリプトの例です。<br>スクリプト作成後に <span class="cpp-source">chmod +x build.sh</span> 
+    を忘れずに。</p>
+    <p>[ビルドスクリプト例： "build.sh"]</p>
+    
+    <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+rm -f source/*.o source/*.so main/start_make.out
+
+cd source/
+g++ -fPIC -Wall -g -c hello.cpp good_morning.cpp -I../include
+g++ -shared *.o -o libgreetings.so
+cd ../main/
+g++ main.cpp -o main.out -I../include -L../source -lgreetings -Xlinker -rpath -Xlinker ../source</pre>
+
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>上記説明では -Xlinker の引数として相対パス（"../source"）を使用していますが、ライブラリ所在を絶対パスで指定することも可能です。</p>
+        <p><span class="cpp-source">LD_LIBRARY_PATH</span>&nbsp;環境変数を使用して共有ライブラリのパスを指定する、という方法もあります。<br>
+        <span class="cpp-source">export LD_LIBRARY_PATH=../source:$LD_LIBRARY_PATH</span></p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>上記コマンドを実行後のフォルダ構成は下図のようになります。</p>
+    
+    <pre style="width: 600px">./
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ hello.cpp
+ │├ <strong>hello.o</strong>
+ │├ good_morning.cpp
+ │├ <strong>good_morning.o</strong>
+ │└ <strong>libgreetings.so</strong>
+ └ main/
+ 　├ main.cpp
+ 　└ <strong>main.out</strong></pre>
+ 
+    <p>&nbsp;</p>
+    <p>生成したファイル <span class="cpp-source">main.out</span> を実行すると下記のように出力します。</p>
+    
+    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./main.out
+Hello!
+Good morning!</pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  	
+    <h3>3-2. make でビルド</h3>
+    <p>"3-1. コマンドラインでビルド" の内容を make を使ってビルドできるようにします。</p>
+    <p>ファイル構成を下図のようにします。makefile をルートおよび source/、main/ の３か所に追加します。</p>
+    <p>&nbsp;</p>
+    <p>ファイル構成</p>
+    
+    <pre style="width: 600px">./
+ ├ <strong>makefile</strong>
+ ├ include/
+ │├ hello.h
+ │└ good_morning.h
+ ├ source/
+ │├ <strong>makefile</strong>
+ │├ hello.cpp
+ │└ good_morning.cpp
+ └ main/
+ 　├ <strong>makefile</strong>
+ 　└ main.cpp</pre>
+ 
+    <p>&nbsp;</p>
+    <p>ルートディレクトリにある <span class="cpp-source">makefile</span> 
+    ではサブディレクトリの登録をします。</p>
+    <p>["./makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# デフォルトターゲット
+.PHONY: all
+all: source_build main_build
+    @echo "Build complete."
+
+# source ディレクトリのビルド
+.PHONY: source_build
+source_build:
+    @echo "Building source directory..."
+    $(MAKE) -C source
+
+# main ディレクトリのビルド
+.PHONY: main_build
+main_build:
+    @echo "Building main directory..."
+    $(MAKE) -C main
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    @echo "Cleaning source directory..."
+    $(MAKE) -C source clean
+    @echo "Cleaning main directory..."
+    $(MAKE) -C main clean
+    @echo "Clean up all targets."</pre>
+    
+    <p>&nbsp;</p>
+    <p><span class="cpp-source">/source/makefile</span> および 
+    <span class="cpp-source">/main/makefile</span> 
+    ではそれぞれのディレクトリにあるファイルのコンパイル方法を指定します。</p>
+    <p>["./source/makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# コンパイラ
+CC = g++
+
+# ターゲット
+LIBRARY = libgreetings.so
+
+# ソースファイルとオブジェクトファイル
+SRCS = hello.cpp good_morning.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# コンパイルフラグ
+CFLAGS = -Wall -g -fPIC -I../include
+LDFLAGS = -shared
+
+# 共有ライブラリのビルドルール
+$(LIBRARY): $(OBJS)
+    $(CC) $(LDFLAGS) -o $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(LIBRARY)
+    @echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(OBJS) $(LIBRARY)
+    @echo "Clean up all targets."</pre>
+    
+    <p>&nbsp;</p>
+    <p>["./main/makefile"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">
+# コンパイラ
+CC = g++
+
+# ターゲット
+TARGET = main.out
+
+# ソースファイル
+SRCS = main.cpp
+
+# コンパイルフラグ
+CFLAGS = -Wall -g -I../include
+LDFLAGS = -L../source -lgreetings -Xlinker -rpath -Xlinker ../source
+
+# デフォルトターゲット
+.PHONY: all
+all: $(TARGET)
+
+# 実行ファイルのビルドルール
+$(TARGET): $(SRCS)
+    $(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(TARGET)
+    @echo "Clean up all targets."</pre>
+    
+    <p>&nbsp;</p>
+    <p>以上で準備を完了しました。</p>
+    <p>make を使った場合のいつもの手順でビルドします。下記ではビルド結果 main.out の実行まで一連の操作とコンソール出力の例を例示します。</p>
+    
+    <pre style="width: 800px; background-color: #000000; color: #FFFFFF;">
+$ make
+Building source directory...
+make -C source
+make[1]: Entering directory 'source'
+g++ -Wall -g -fPIC -I../include -c hello.cpp -o hello.o
+g++ -Wall -g -fPIC -I../include -c good_morning.cpp -o good_morning.o
+g++ -shared -o libgreetings.so hello.o good_morning.o
+make[1]: Leaving directory 'source'
+Building main directory...
+make -C main
+make[1]: Entering directory 'main'
+g++ -Wall -g -I../include main.cpp -o main.out -L../source -lgreetings -Xlinker -rpath -Xlinker ../source
+make[1]: Leaving directory 'main'
+Build complete.
+$ cd main
+$ ./main.out
+Hello!
+Good morning!
+$</pre>
+
+    <p>&nbsp;</p>
+    <p>以上で完了です。</p>
+       
   </section>
   	
   <p>&nbsp;</p>
@@ -167,7 +1004,7 @@
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
   	  <tr>
-  	    <td class="td_history_date">2025-04-12</td>
+  	    <td class="td_history_date">2025-04-26</td>
   	    <td class="td_history_separator">-</td>
   	    <td class="td_history">新規作成 </td>
   	  </tr>
