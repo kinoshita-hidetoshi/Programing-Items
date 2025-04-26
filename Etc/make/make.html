@@ -810,8 +810,8 @@ Good morning!</pre>
     
     <pre class="prettyprint linenums lang-cpp" style="width: 600px">
 # デフォルトターゲット
-.PHONY: all
-all: source_build main_build
+.PHONY: target
+target: source_build main_build
     @echo "Build complete."
 
 # source ディレクトリのビルド
@@ -826,6 +826,15 @@ main_build:
     @echo "Building main directory..."
     $(MAKE) -C main
 
+# 全ビルド
+.PHONY: all
+all:
+    @echo "Make source directory..."
+    $(MAKE) -C source all
+    @echo "Make main directory..."
+    $(MAKE) -C main all
+    @echo "Make all targets."
+
 # クリーンアップ
 .PHONY: clean
 clean:
@@ -834,7 +843,7 @@ clean:
     @echo "Cleaning main directory..."
     $(MAKE) -C main clean
     @echo "Clean up all targets."</pre>
-    
+
     <p>&nbsp;</p>
     <p><span class="cpp-source">/source/makefile</span> および 
     <span class="cpp-source">/main/makefile</span> 
@@ -892,13 +901,14 @@ SRCS = main.cpp
 CFLAGS = -Wall -g -I../include
 LDFLAGS = -L../source -lgreetings -Xlinker -rpath -Xlinker ../source
 
-# デフォルトターゲット
-.PHONY: all
-all: $(TARGET)
-
 # 実行ファイルのビルドルール
 $(TARGET): $(SRCS)
     $(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+# 全ビルド
+.PHONY: all
+all: clean $(LIBRARY)
+    @echo "Build all targets."
 
 # クリーンアップ
 .PHONY: clean
