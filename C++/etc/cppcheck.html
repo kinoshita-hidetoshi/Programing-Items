@@ -261,7 +261,7 @@ int main()
     <p>&nbsp;</p>
         
     <table class="border-collapse" border="1">
-      <caption>[Table.] その他 よく使用するオプション</caption>
+      <caption>[Table.] よく使用するオプション</caption>
       <thead class="standard_table">
         <tr>
           <th>オプション</th>
@@ -269,6 +269,22 @@ int main()
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>--<strong>enable</strong></td>
+          <td>
+            <p>検査カテゴリーを指定します</p>
+            <ul>
+              <li>all</li>
+              <li>warning</li>
+              <li>style</li>
+              <li>performance</li>
+              <li>portability</li>
+              <li>information</li>
+              <li>unusedFunction</li>
+              <li>missingInclude</li>            
+            </ul>
+          </td>
+        </tr>
         <tr>
           <td><strong>-h, --help</strong></td>
           <td>ヘルプ表示</td>
@@ -358,7 +374,18 @@ int main()
               <li><strong>C++ Builder 6</strong><br>Cppcheck は、C++ Builder 6 プロジェクトに対して解析を実行できます。<br>
               (例) <span class="cpp-source">cppcheck --project=foobar.bpr</span><br><br>プロジェクト内の特定のフォルダを無視するには、-i 
               オプションを使用します。下記例では "foo" フォルダ内のソースファイルの分析がスキップされます。 <br>
-              (例) <span class="cpp-source">cppcheck --project=foobar.bpr -ifoo</span><br>&nbsp;</li>
+              (例) <span class="cpp-source">cppcheck --project=foobar.bpr -ifoo</span></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>--suppress</strong></td>
+          <td>
+            <p>警告出力を抑制します</p>
+            <ul>
+              <li><span class="cpp-source">cppcheck --suppress=missingIncludeSystem src/</span> </li>
+              <li>ファイル指定<br><span class="cpp-source">cppcheck --suppress=memleak:src/file1.cpp src/</span> </li>
+              <li>複数指定 <br><span class="cpp-source">cppcheck --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction calcurator.cpp</span> </li>
             </ul>
           </td>
         </tr>
@@ -367,6 +394,7 @@ int main()
     
     <p> &nbsp;</p>
     <p> &nbsp;</p>
+    
     <h4> 解析してみる</h4>
     <p> GUI と同じ下記テストコードを解析してみます。</p>
     <p> &nbsp;</p>
