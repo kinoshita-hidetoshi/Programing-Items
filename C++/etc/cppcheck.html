@@ -389,6 +389,38 @@ int main()
             </ul>
           </td>
         </tr>
+        <tr>
+          <td><strong>--inline-suppr</strong></td>
+          <td>
+            ソースコード内へ直接記載する インライン抑制 です。<br>cppcheck のコマンドライン引数に "--inline-suppr" 
+            を追加したうえで、ソースコード内に抑制内容を記載します。<br>ソースコード内への記載例を以下に記載します。<br>
+            <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+// 特定の警告を抑制する例 
+void legacyFunction() {
+    <strong>// cppcheck-suppress uninitvar</strong> 
+    int x; int y = x + 1; 
+}
+
+// 複数の警告を抑制 
+void testFunction() {
+    <strong>// cppcheck-suppress [uninitvar,nullPointer]</strong>
+    char* ptr = nullptr;
+    *ptr = 'a'; 
+}
+
+// 複数行のコードを対象に警告を抑制 - Suppressing warnings aaaa on a block of code:
+<strong>// cppcheck-suppress-begin uninitvar</strong>
+...
+<strong>// cppcheck-suppress-end uninitvar</strong>
+
+// 複数行のコードを対象に複数の警告を抑制 - Suppressing multiple ids on a block of code:
+<strong>// cppcheck-suppress-begin [uninitvar,nullPointer]</strong>
+...
+<strong>// cppcheck-suppress-end [uninitvar,nullPointer]</strong>
+
+</pre>
+          </td>
+        </tr>
       </tbody>
     </table>
     
@@ -530,6 +562,11 @@ C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-05-06</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">"--inline-suppr"オプションに関する記載を追記</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2024-08-25</td>
 	    <td class="td_history_separator">-</td>
