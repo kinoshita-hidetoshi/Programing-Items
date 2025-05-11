@@ -1122,13 +1122,41 @@ End Sub</pre>
   <p>以上の内容を全て（＋アルファ？）した <strong>Excelガントチャート</strong> を以下からダウンロードできます。<br>
   私自身が業務で使用することを目的にこれをブラッシュアップしているので、ここのが一番完成度が高いです。</p>
   <p>&nbsp;</p>
-  <p><a href="gantchart/Excel_gantchart_v1_05.xlsm">Excelガントチャート ダウンロード</a></p>
   
+  <p><a href="gantchart/Excel_gantchart_v1_05.xlsm">Excelガントチャート ダウンロード (6か月版)</a></p>
+  <p><a href="gantchart/Excel_gantchart_v1_05_12month.xlsm">Excelガントチャート ダウンロード (12か月版)</a></p>
+  
+  <p>&nbsp;</p>
+  
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>複数名からリクエスト頂いたので "12か月版" を追加しました。下記手順で修正しています。もしさらに他の表示期間を必要とする方は参考にしてください。</p>
+      <ol>
+        <li>12か月シートを作成</li>
+        <li>表示範囲を拡張した位置に “END” を移動</li>
+        <li>Y2 を「=Y1+183」から「=Y1+365」へ変更</li>
+        <li>条件付き書式の適用先を修正</li>
+        <li>印刷範囲修正（改ページプレビュー）</li>
+        <li>VBA <span class="cpp-source">GANTCHART_SHEET_NAME</span> を修正<br>
+        <span class="cpp-source">GANTCHART_SHEET_NAME = "ガントチャート（12か月）"</span></li>
+      </ol>
+      <p>なお、印刷を考慮すると従来 "6か月版" の使用を推奨。画面上部の "開始日" 
+      を変更すればデータをそのままに表示範囲を変更できますので、多くの場合にこれで十分なはずです。ご活用ください。</p>
+    </div>
+  </div>
+
   <p>&nbsp;</p>  
   <p>&nbsp;</p>
 
   <h4>変更履歴</h4>
   <table>
+    <tr>
+      <td class="td_history_date">2025-05-11</td>
+      <td class="td_history_separator">-</td>
+      <td class="td_history">"12か月版" を追加</td>
+    </tr>
     <tr>
       <td class="td_history_date">2023-10-01</td>
       <td class="td_history_separator">-</td>
@@ -1276,6 +1304,12 @@ End Sub</pre>
   <h2 style="margin-bottom:5px">変更履歴</h2>
 
   <table>
+  
+    <tr>
+      <td class="td_history_date">2025-05-11</td>
+      <td class="td_history_separator">-</td>
+      <td class="td_history">「<a href="#ダウンロード">ダウンロード</a>」に "12か月版" を追加</td>
+    </tr>
   
     <tr>
       <td class="td_history_date">2024-07-25</td>
