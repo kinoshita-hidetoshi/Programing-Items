@@ -58,17 +58,18 @@
 
 <div class="mokuji">
   <nav>
-	<h2>目次</h2>
-	<p><a href="#1._gcov_を使ってみる">1. gcov を使ってみる</a></p>
-	<p>&nbsp;&nbsp; <a href="#1-1.オプション一覧">1-1. オプション一覧</a></p>
-	<p>&nbsp;&nbsp; <a href="#1-2._gcov_を試してみる">1-2. gcov を試してみる</a></p>
-	<p><a href="#2._lcov_を使ってみる">2. lcov を使ってみる</a></p>
-	<p>&nbsp;&nbsp; <a href="#2-1._オプション一覧">2-1. オプション一覧</a></p>
-	<p>&nbsp;&nbsp; <a href="#2-2._lcov_を試してみる">2-2. lcov を試してみる</a></p>
-	<p>&nbsp;&nbsp; <a href="#2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) を追加する</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
+  	<h2>目次</h2>
+  	<p><a href="#1._gcov_を使ってみる">1. gcov を使ってみる</a></p>
+  	<p>&nbsp;&nbsp; <a href="#1-1.オプション一覧">1-1. オプション一覧</a></p>
+  	<p>&nbsp;&nbsp; <a href="#1-2._gcov_を試してみる">1-2. gcov を試してみる</a></p>
+  	<p><a href="#2._lcov_を使ってみる">2. lcov を使ってみる</a></p>
+  	<p>&nbsp;&nbsp; <a href="#2-1._オプション一覧">2-1. オプション一覧</a></p>
+  	<p>&nbsp;&nbsp; <a href="#2-2._lcov_を試してみる">2-2. lcov を試してみる</a></p>
+  	<p>&nbsp;&nbsp; <a href="#2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) を追加する</a></p>
+    <p>&nbsp;&nbsp; <a href="#2-4._不要なカバレッジ情報を削除する">2-4. 不要なカバレッジ情報を削除する</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
   </nav>
 </div>
 <p>&nbsp;</p>
@@ -543,11 +544,10 @@ Overall coverage rate:
 </section>
 	
 <section>
-	<h3><a name="2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) 
-    を追加する</a></h3>
+	<h3><a name="2-3._lcov_の表示に_Branches(c1)_を追加する">2-3. lcov の表示に Branches(c1) を追加する</a></h3>
 	<h4>[概要]</h4>
-<p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>とても便利なツールですが、デフォルトでは 
-C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
+  <p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>とても便利なツールですが、デフォルトでは 
+  C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
 	<p> &nbsp;</p>
 	
 	<h4>[環境]</h4>
@@ -602,9 +602,10 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 	
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
-<p>C1(分岐網羅)のカバレッジを表示するには ~/.lcovrc を以下のように設定して C1 を有効化する必要があります。</p>
+  <p>C1(分岐網羅)のカバレッジを表示するには ~/.lcovrc を以下のように設定して C1 を有効化する必要があります。</p>
 	<p>&nbsp;</p>
 	<p>[~/.lcovrc]</p>
+
 	<pre class="prettyprint linenums" style="width: 800px">
 # Include branch coverage data display (can be disabled by the
 # --no-branch-coverage option of genhtml)
@@ -612,10 +613,15 @@ C0(命令網羅) のカバレッジデータしか表示してくれません。
 
 # Specify if branch coverage data should be collected and processed.
 <span class="auto-style1">lcov_branch_coverage = 1</span></pre>
-<br>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。<br><br>lcov<br>
-<pre style="width: 800px">--rc lcov_branch_coverage=1</pre>
-genhtml<br>
-<pre style="width: 800px">--branch-coverage</pre>
+
+  <br>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。<br><br>lcov<br>
+
+  <pre style="width: 800px">--rc lcov_branch_coverage=1</pre>
+
+  genhtml<br>
+
+  <pre style="width: 800px">--branch-coverage</pre>
+
 	<p>&nbsp;</p>
 	<p>後者の例を実際に実行してみます。</p>
 	<p>&nbsp;</p>
@@ -643,28 +649,32 @@ int main() {
 	<p> 実行ファイル "coverage_test" と共に "coverage_test.gcno" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
   
-    <div class="status_information">
-      <div></div>
-      <div>
-        <p><strong>NOTE</strong></p>
-        <p>コンパイルオプションとして「-coverage」ではなく「"-fprofile-arcs" フラグと "-ftest-coverage" 
-		フラグを付けてコードをコンパイルします。」と説明されている記事も多数見かけます。<br>"-coverage" オプションは 
-		"-fprofile-arcs -ftest-coverage -lgcov" と同義（シノムニ）とのことです。詳しくは下記 ULR 中の 
-		"--coverage" 説明を参照。<br>
-		<a href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options" target="_blank">
-		Instrumentation Options (Using the GNU Compiler Collection (GCC))</a></p>
-      </div>
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>コンパイルオプションとして「-coverage」ではなく「"-fprofile-arcs" フラグと "-ftest-coverage" 
+      フラグを付けてコードをコンパイルします。」と説明されている記事も多数見かけます。<br>"-coverage" オプションは 
+      "-fprofile-arcs -ftest-coverage -lgcov" と同義（シノムニ）とのことです。詳しくは下記 ULR 中の 
+      "--coverage" 説明を参照。<br>
+      <a href="https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#Instrumentation-Options" target="_blank">
+      Instrumentation Options (Using the GNU Compiler Collection (GCC))</a></p>
     </div>
+  </div>
 
-    <p> &nbsp;</p>
+  <p> &nbsp;</p>
 	<p> (3) プログラムを実行します。</p>
-	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">hidetoshi@Laptop4:~$ ./coverage_test 
+
+	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">
+hidetoshi@Laptop4:~$ ./coverage_test 
 1 is odd.</pre>
+
 	<p> "coverage_test.gcda" というファイルが出力されます。</p>
 	<p> &nbsp;</p>
 	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
 	<p> オプションとして "<span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span>" 
 	を付けて実行します。</p>
+
 	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ lcov -d . -c <span class="auto-style2"><strong>--rc lcov_branch_coverage=1</strong></span> -o coverage_test.info
 Capturing coverage data from .
 Subroutine read_intermediate_text redefined at /usr/bin/geninfo line 2623.
@@ -680,10 +690,12 @@ Scanning . for .gcda files ...
 Found 1 data files in .
 Processing coverage_test.gcda
 Finished .info-file creation</pre>
+
 	<p> &nbsp;</p>
 	<p> (6) genhtml を実行します。</p>
 	<p> オプションとして "<span class="auto-style2"><strong>--branch-coverage</strong></span>" 
 	を付けて実行します。</p>
+
 	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ genhtml coverage_test.info <span class="auto-style2"><strong>--branch-coverage</strong></span> -o ./info
 Reading data file coverage_test.info
 Found 1 entries.
@@ -696,14 +708,55 @@ Overall coverage rate:
   lines......: 83.3% (5 of 6 lines)
   functions..: 100.0% (1 of 1 function)
   branches...: 50.0% (1 of 2 branches)</pre>
+
 	<p> &nbsp;</p>
 	<p> (7) ./info ディレクトリ中の index.html をブラウザで開きます。</p>
 	<p>
     <img alt="lcov 表示結果 － branches 付き" class="border_with_drop-shadow" src="gcov_lcov/img45.jpg" width="800"></p>
 	<p>&nbsp;</p>
 	<p>以上の手順で lcov の表示に Branches(c1) を追加できることを確認できました。</p>
-	<p><br>
-	</p>
+	<p><br></p>
+</section>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<section>
+  <h3><a name="2-4._不要なカバレッジ情報を削除する">2-4. 不要なカバレッジ情報を削除する</a></h3>
+  <h4>[概要]</h4>
+  <p>lcovを使っていると、不要なカバレッジ情報も集計して表示してくれる場合があります。例えば #include 
+  したファイルのカバレッジまで測定してくれたりしますが、開発環境に含まれているヘッダファイルのカバレッジを測定したいということは通常ありません。こういった不要なカバレッジ情報を削除する手順について記載します。</p>
+  <p>&nbsp;</p>
+  <h4>[手順]</h4>
+  <p>(1) カバレッジを表示したら、下図のように不要な "/usr/include/*" の結果まで表示したとします。これを削除する手順を記載します。</p>
+  <p>
+  <img alt="カバレッジ結果（不要な情報あり）" class="border" src="gcov_lcov/img6.jpg" width="1000"></p>
+  <p>&nbsp;</p>
+  <p>このときのシェルスクリプトを以下の通りとします。</p>
+
+  <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+# カバレッジレポートを生成 (lcov) 
+lcov -d . -c -o counter.info
+genhtml counter.info -o ./info</pre>
+
+  <p>&nbsp;</p>
+  <p>(2) 削除したい情報を <span class="cpp-source">lcov --remove</span> 
+  で指定して削除します。下記例では修正前のファイル（counter.info）から修正後のファイル（filtered_coverage.info）を出力しています。</p>
+  <p>そして修正後のファイル（filtered_coverage.info）に対して genhtml を実行します。</p>
+
+  <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+# カバレッジレポートを生成 (lcov) 
+lcov -d . -c -o counter.info
+<strong>lcov --remove counter.info '/usr/include/*' --output-file filtered_coverage.info </strong>
+genhtml <strong>filtered_coverage.info</strong> -o ./info </pre>
+
+  <p>複数の条件を削除したい場合は、上記例で <span class="cpp-source">'usr/include/*'</span> 
+  という箇所と同様に同じ場所へ複数記載すれば良いようです。</p>
+  <p>&nbsp;</p>
+  <p>(3) 修正後のカバレッジ結果です。不要な "/usr/include/*" カバレッジ結果を削除できました。</p>
+  <p>
+  <img alt="フィルター後のカバレッジ結果" class="border" src="gcov_lcov/imgA.jpg" width="1000"></p>
+  
 </section>
 
 <p>&nbsp;</p>
@@ -711,38 +764,35 @@ Overall coverage rate:
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<div class="license">
-The MIT License (MIT)<br><br>
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
+  The MIT License (MIT)<br><br>
 
-  Copyright © 2021 Kinoshita Hidetoshi<br><br>
+    Copyright © 2021 Kinoshita Hidetoshi<br><br>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:<br><br>
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.<br><br>
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</div>
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+  </div>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
 </section>
 
-<p>
-<br>
-
-</p>
+<p><br></p>
 
 <section>
 	<h2><a name="参考">参考</a></h2>
@@ -757,7 +807,7 @@ SOFTWARE.
         <a href="https://orumin.blogspot.com/2020/11/blog-post.html" target="_blank">
         コードカヴァレッジ計測 (orumin.blogspot.com)</a></li>
 	</ul>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
@@ -769,6 +819,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-05-17</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#2-4._不要なカバレッジ情報を削除する">2-4._不要なカバレッジ情報を削除する</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-08-15</td>
 	    <td class="td_history_separator">-</td>
