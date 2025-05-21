@@ -39,6 +39,9 @@
   .auto-style1 {
     text-decoration: underline;
   }
+  .auto-style2 {
+    color: #FF0000;
+  }
   </style>
   
 </head>
@@ -61,6 +64,9 @@ Daniel Marjamäki です。 Cppcheckは、GNU General Public License に基づ�
     <p>&nbsp;&nbsp; <a href="#2-1._GUI_(Windows)">2-1. GUI (Windows)</a></p>
     <p>&nbsp;&nbsp; <a href="#2-2._CUI">2-2. CUI</a></p>
 	<p><a href="#3._解析結果の例">3. 解析結果の例</a></p>
+    <p>&nbsp;&nbsp; <a href="#3-1._メモリリーク">3-1. メモリリーク</a></p>
+    <p>&nbsp;&nbsp; <a href="#3-2._初期化されていない変数">3-2. 初期化されていない変数</a></p>
+    <p>&nbsp;&nbsp; <a href="#3-3._条件文の論理的誤り">3-3. 条件文の論理的誤り</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -431,7 +437,7 @@ void testFunction() {
     <p> GUI と同じ下記テストコードを解析してみます。</p>
     <p> &nbsp;</p>
     <p> [test.cpp]</p>
-    <pre class="prettyprint linenums lang-cpp" style="width: 400px">#include &lt;iostream&gt;
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">#include &lt;iostream&gt;
 
 void foo(int x)
 {
@@ -482,16 +488,101 @@ C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
 
 <section>
 	<h2> <a name="3._解析結果の例">3. 解析結果の例</a></h2>
-  <p> &nbsp;</p>
   <section>
-    <h3> 3-1. 例1</h3>
+    <h3> <a name="3-1._メモリリーク">3-1. メモリリーク</a></h3>
+    <p> メモリリーク、の例として下記ソースコードを cppcheck で解析してみます。</p>
+    <p> ["sample_01.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+
+void memoryLeakExample() {
+    int* ptr = new int(10); // メモリの確保
+    ptr[0] = 20;    // メモリにアクセス
+    // delete ptr; // 解放を忘れている
+}
+
+int main(){
+    memoryLeakExample(); // メモリリークが発生する
+    // delete ptr; // ここで解放しても意味がない
+    return 0;
+}</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドで解析します。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_01.cpp</pre>
+    <p> &nbsp;</p>
+    <p> 実行結果は以下の通りです。</p>
+    <p> "sample_01.cpp" の7行目で ptr がメモリリークしていることを検出しています。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">
+$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_01.cpp
+Checking sample_01.cpp ...
+sample_01.cpp:7:1: <span class="auto-style2">error</span>: Memory leak: ptr [memleak]
+}
+^</pre>
     <p> &nbsp;</p>
   </section>
   
-  <p> &nbsp;</p>
-    
   <section>
-    <h3> 3-2. 例2</h3>
+    <h3> <a name="3-2._初期化されていない変数">3-2. 初期化されていない変数</a></h3>
+    <p> 初期化されていない変数、の例として下記ソースコードを cppcheck で解析してみます。</p>
+    <p> ["sample_02.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+
+void uninitializedVariableExample() {
+    int x; // 初期化されていない
+    int y = x + 10; // 未初期化変数を使用
+}
+
+int main() {
+    uninitializedVariableExample(); // 未初期化変数の使用
+    return 0;
+}</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドで解析します。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_02.cpp</pre>
+    <p> &nbsp;</p>
+    <p> 実行結果は以下の通りです。</p>
+    <p> 変数 x を未初期化であることを検出しています。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">
+$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_02.cpp
+Checking sample_02.cpp ...
+sample_02.cpp:5:13: <span class="auto-style2">error:</span> Uninitialized variable: x [uninitvar]
+    int y = x + 10; // 未初期化変数を使用
+            ^
+sample_02.cpp:5:11: <span class="auto-style2">style:</span> Variable 'y' is assigned a value that is never used. [unreadVariable]
+    int y = x + 10; // 未初期化変数を使用</pre>
+    <p> &nbsp;</p>
+  </section>
+
+  <section>
+    <h3> <a name="3-3._条件文の論理的誤り">3-3. 条件文の論理的誤り</a></h3>
+    <p> 条件文の論理的誤り、の例として下記ソースコードを cppcheck で解析してみます。</p>
+    <p> ["sample_03.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+
+void logicalErrorExample() {
+    int a = 5;
+    if (a == a) { // この条件は常に真
+        std::cout &lt;&lt; "This will always be true" &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    logicalErrorExample(); // 論理エラーの例
+    return 0;
+}</pre>
+    <p> &nbsp;</p>
+    <p> 下記コマンドで解析します。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_03.cpp</pre>
+    <p> &nbsp;</p>
+    <p> 実行結果は以下の通りです。</p>
+    <p> 条件文の論理的誤り を検出しています。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">
+$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_03.cpp 
+Checking sample_03.cpp ...
+sample_03.cpp:5:11: <span class="auto-style2">style</span>: Same expression on both sides of '=='. [duplicateExpression]
+    if (a == a) { // この条件は常に真</pre>
     <p> &nbsp;</p>
   </section>
 </section>
@@ -562,6 +653,11 @@ C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-05-21</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#3._解析結果の例">3._解析結果の例</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2025-05-06</td>
 	    <td class="td_history_separator">-</td>
