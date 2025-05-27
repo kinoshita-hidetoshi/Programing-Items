@@ -129,7 +129,7 @@
   
   <section>
   	<h2> <a name="3._新しいSSHキーを生成して追加する">3. 新しい SSH キーを生成して追加する</a></h2>
-    <p>既にある SSH キーを使用してコミットに署名する場合、次章へ進んでください。</p>
+    <p>既に登録済みの SSH キーを使用してコミットに署名する場合、次章へ進んでください。</p>
     <p>コミットに署名するための新しい SSH キーを生成して追加するには、使用するオペレーティング システムに応じた手順に従います。</p>
     <ul>
       <li>Windows:
@@ -144,12 +144,27 @@
     </ul>
   </section>
 	
+  <p> または私が作成した記事（<a href="How%20to%20use%20SSH%20key.html">How to use SSH 
+  key.html</a>）を参照して SSH キーを作成および登録を行います。</p>
+  
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>Bitbucket は認証キー(Authentication key)と署名キー(Signing key)の違いありません。</p>
+      <p>Github はホームページ上で登録時に 'Key type' として選択します。初期状態は認証キー(Authentication 
+      key)になっているので、署名キーを登録する場合は変更する必要があります。</p>
+    </div>
+  </div>
+
   <p> &nbsp;</p>
   <p> &nbsp;</p>
   
   <section>
   	<h2> <a name="4._SSH_キーでコミットに署名する">4. SSH キーでコミットに署名する</a></h2>
     <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順に従います。</p>
+    <p> 下記では "--global" を付与して全ての git を対象とする設定を例に記載しています。リポジトリ毎に設定する場合は 
+    "--global" を削除して実施します。</p>
     <ol>
       <li>キーの形式についてGitに伝えます。<br>
         <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global gpg.format ssh</pre>
@@ -185,7 +200,7 @@ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
 ssh-add ~/.ssh/id_rsa.pub
 eval $(ssh-agent)</pre>
       </li>
-      <li>以上を設定後の私の .gitconfig ファイルを紹介します。<br>
+      <li>以上を設定後の私の .gitconfig ファイルを紹介します。<br>[".gitconfig"]<br>
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 kinoshita@PC-FooBoo:~$ cat .gitconfig
 [user]
@@ -196,6 +211,21 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
         allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
 [gpg]
         format = ssh</pre>
+        "--global" を付けずに各リポジトリで設定した場合はリポジトリ内の ".git/config" 
+      ファイルに同様の情報が記載されます。<br>[".git/config"]<br>
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+[core]
+        省略
+[remote "origin"]
+        省略
+[branch "main"]
+        省略
+[commit]
+        gpgsign = true
+[gpg]
+        format = ssh
+[user]
+        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub</pre>
       </li>
     </ol>
   </section>
