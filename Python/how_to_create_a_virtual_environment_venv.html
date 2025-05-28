@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>仮想環境の作り方 (venv) | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>仮想環境の作り方 (venv)</h1>
+  
+  <p> ［注意］ファイルを適切な場所に保存後、最初にCSSへのパスが適正であるかを確認すること。</p>
+  <p> ［概要を記載します］</p>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._仮想環境の作成">1. 仮想環境の作成</a></p>
+    	<p><a href="#2._仮想環境の有効化">2. 仮想環境の有効化</a></p>
+    	<p><a href="#3._パッケージのインストール">3. パッケージのインストール</a></p>
+      <p><a href="#4._仮想環境の無効化">4. 仮想環境の無効化</a></p>
+      <p><a href="#追加のヒント">追加のヒント</a></p>
+      <p>&nbsp;&nbsp; <a href="#パッケージの一覧を保存">パッケージ一覧を保存</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._仮想環境の作成">1. 仮想環境の作成</a></h2>
+    <p>プロジェクトディレクトリに移動し、以下のコマンドを実行します。</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">python -m venv venv</pre>
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p><strong>venv</strong> 使用時の書式は <span class="cpp-source">python -m venv <あなたが作成する仮想環境名></span> ですが、慣習として仮想環境名を venv として作成する場合が多いようです。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>	
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._仮想環境の有効化">2. 仮想環境の有効化</a></h2>
+    <p>仮想環境を有効化するには、以下のコマンドを使用します。</p>
+    <ul>
+      <li>Windows： <span class="cpp-source">.\venv\Scripts\activate</span></li>
+      <li>Linux / macOS： <span class="cpp-source">source venv/bin/activate</span></li>
+    </ul>
+  
+    <p>&nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>venv 以外の仮想環境名を付与した場合、上記コマンドをその名称へ読み替えてください。 </p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>	
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="3._パッケージのインストール">3. パッケージのインストール</a></h2>
+    <p>仮想環境が有効化された状態で、必要なパッケージをインストールします。</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">pip install パッケージ名</pre>
+    <p>&nbsp;</p>
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="4._仮想環境の無効化">4. 仮想環境の無効化</a></h2>
+    <p>仮想環境の使用を終了するには、以下のコマンドを実行します。 </p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">deactivate</pre>
+    <p>&nbsp;</p>
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a name="追加のヒント">追加のヒント</a></h2>
+    <h3><a name="パッケージの一覧を保存">パッケージの一覧を保存</a></h3>
+    <p>現在の仮想環境にインストールされているパッケージをファイルに保存するには、以下のコマンドを使用します。 </p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">pip freeze &gt; requirements.txt</pre>
+    <p>保存したファイルからパッケージを一括インストールするには、以下のコマンドを使用します。</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">ppip install -r requirements.txt</pre>
+    <p>&nbsp;</p>
+  </section>
+  	
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2025 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://qiita.com/shun_sakamoto/items/7944d0ac4d30edf91fde" target="_blank">
+        venvで手軽にPythonの仮想環境を構築しよう #VSCode - Qiita</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-05-28</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2025 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
