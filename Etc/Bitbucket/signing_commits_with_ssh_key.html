@@ -169,9 +169,7 @@
       <li>キーの形式についてGitに伝えます。<br>
         <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global gpg.format ssh</pre>
       </li>
-      <li>コミットの署名に使用するキーを Git に指示します。<br>これを行うには、以下の例の "~/.ssh/id_rsa.pub" 
-      をあなたの公開鍵に置き換えます。<br>
-        <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global user.signingkey ~/.ssh/id_rsa.pub</pre>
+      <li>コミットの署名に使用するキーを Git に指示します。<br>
       <p>私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。<br></p>
         <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</pre>
       </li>
@@ -180,8 +178,9 @@
       <p>-S を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
       </li>
       <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ） </li>
-      <li>コミットが署名されたことを確認します。<br>"-1" は最新コミットから1つを表示することを意味します。"-3" 
-      とすれば最新コミットから3つを表示します。<br>
+      <li>コミットが署名されたことを確認します。（必要に応じて）<br>
+        "-1" は最新コミットから1つを表示することを意味します。
+        "-3" は最新コミットから3つを表示します。<br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">git log --show-signature -1</pre>
       表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
@@ -191,13 +190,13 @@
       アカウントに関連付けられているあなたのメール アドレスへ置き換えて使用してください。以下の例を参照してください。 <br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-echo "bitbucket@example.com $(cat ~/.ssh/id_rsa.pub)" &gt; ~/.ssh/allowed_signers
+echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
 git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
 
       </li>
       <li>必要に応じて、ssh-agent を再実行することを検討してください。<br>
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-ssh-add ~/.ssh/id_rsa.pub
+ssh-add ~/.ssh/id_ed25519.pub
 eval $(ssh-agent)</pre>
       </li>
       <li>以上を設定後の私の .gitconfig ファイルを紹介します。<br>[".gitconfig"]<br>
