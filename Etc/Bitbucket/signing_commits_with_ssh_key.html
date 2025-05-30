@@ -65,6 +65,7 @@
       <p><a href="#4._SSH_キーでコミットに署名する">4. SSH キーでコミットに署名する</a></p>
       <p><a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a></p>
       <p><a href="#6._署名検証のステータス">6. 署名検証のステータス</a></p>
+      <p><a href="#7._つまり、設定手順を簡単に説明すると...">7. つまり、設定手順を簡単に説明すると...</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -321,7 +322,48 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
 	
   <p> &nbsp;</p>
   <p> &nbsp;</p>
+  
+  <section>
+    <h2><a name="7._つまり、設定手順を簡単に説明すると...">7. つまり、設定手順を簡単に説明すると...</a></h2>
+    <p>いろいろ記載しましたが、Bitbucket でコミット署名の設定手順を要約すると以下のような感じになります。</p>
+    <p>個別の内容は適宜変更してください。</p>
+    <ol>
+      <li>SSH 認証鍵を作成</li>
+      <li>SSH 認証鍵を Bitbucket へ登録</li>
+      <li>キーの形式を指定<br><span class="cpp-source">$ git config gpg.format ssh</span></li>
+      <li>コミット署名に使用する SSH 認証鍵を指定（以下は例です）<br><span class="cpp-source">$ git config 
+      user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</span></li>
+      <li>git commit で常に署名するように設定<br><span class="cpp-source">$ git config 
+      commit.gpgsign true</span> </li>
+    </ol>
+    <p>1-2 は、既に作成および登録済みの認証鍵を使用する場合は実施不要。</p>
+    <p>3-5 は、設定を行うリポジトリ内で行います。リポジトリ毎に異なる設定を行えますので、例えば Bitbucket と GitHub 
+    両方を使用している、という人でも安心です。</p>
+    <p>全部共通で良い、という場合は 3-5 のコマンド実行時に <span class="cpp-source">--global</span> 
+    オプションを追加します。</p>
+    <p>逆に <span class="cpp-source">--global</span> 
+    オプションで設定を行ったうえで、動作条件が異なるリポジトリのみ個別変更という方法もできそうです。</p>
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>下記２つのメールアドレスが一致している必要があります。</p>
+        <ul>
+          <li>リポジトリで設定のメールアドレス<span class="cpp-source"><br>git config 
+          --global/--local user.name "foo boo"</span></li>
+          <li>SSH 認証鍵に記載のメールアドレス</li>
+        </ul>
+      </div>
+    </div>
 
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
     <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
@@ -388,6 +430,11 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-05-30</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#7._つまり、設定手順を簡単に説明すると...">7._つまり、設定手順を簡単に説明すると...</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-03-19</td>
   	    <td class="td_history_separator">-</td>
