@@ -187,8 +187,9 @@
       表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
       <strong><br>NOTE： </strong>ディレクトリにファイルをセットアップする必要があります。詳細については、 
       <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile">
-      Git ドキュメント</a>を参照してください。bitbucket@example.com の部分は Bitbucket 
-      アカウントに関連付けられているあなたのメール アドレスへ置き換えて使用してください。以下の例を参照してください。 <br>
+      Git ドキュメント</a>を参照してください。<br>
+      <span class="cpp-source">bitbucket@example.com</span> の部分は Bitbucket アカウントに関連付けられているあなたのメール アドレスへ置き換えて使用してください。<br>
+      (私はこれの必要性をまだ理解できていません。この手続きなしでコミット署名できているように見えます。) <br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
@@ -404,13 +405,17 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
       <li>
         <a href="https://support.atlassian.com/bitbucket-cloud/docs/use-ssh-keys-to-sign-commits/" target="_blank">
         Use SSH keys to sign commits | Bitbucket Cloud | Atlassian Support</a></li>
+      <li>
+        <a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/use-ssh-keys-to-sign-commits/" target="_blank">
+        SSH キーを使ってコミットに署名する | Bitbucket Cloud | アトラシアン サポート</a></li>
       <li><a href="https://zenn.dev/beingish/articles/5beb088b807399" target="_blank">
         特定のリポジトリーで Git commit 時に署名するための設定</a></li>
       <li><a href="https://qiita.com/haw_ohnuma/items/51fa84449bc4a1393846" target="_blank">
         gitのcommitを署名付きにして偽装対策！ #Git - Qiita</a></li>
       <li><a href="https://qiita.com/tonnsama/items/c938b220b57e828cd288" target="_blank">
         GitのコミットにSSH鍵で署名してGitHub上でVerifiedマークをつけよう！ #Git - Qiita</a></li>
-      <li>Visual Studio Code<ul>
+      <li>Visual Studio Code
+      <ul>
         <li><a href="https://qiita.com/yumetodo/items/7c25c1d6de92921faa3e" target="_blank">
           WindowsにてVisual Studio Codeからcommitするときにgpg署名する #Git - Qiita</a></li>
         <li><a href="https://qiita.com/ItSANgo/items/37431ba32fbda43bdcc9" target="_blank">
