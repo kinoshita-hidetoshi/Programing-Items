@@ -202,7 +202,7 @@ bool Initialize( CONTRIBUTOR&amp; contributor, unsigned long dwResult )
 
 <section>
 <h2> <a name="2._インストール">2. インストール</a></h2>
-<p> ここでは Windows10 64bit 環境へインストールを粉う手順を記載します。<br>Doxygen、Graphviz、HTML Help 
+<p> ここでは Windows10 64bit 環境へインストールする手順を記載します。<br>Doxygen、Graphviz、HTML Help 
 Workshop の順に入手とインストールを行います。</p>
 <p> &nbsp;</p>
 <h3> <a name="2-1._Doxygen">2-1. Doxygen</a></h3>
@@ -554,7 +554,7 @@ HTML(.chm)&quot; へ変更します。</p>
 <h2><a name="6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a></h2>
 <p>サンプルプログラムには、STATE という状態を意味する enum が定義されています。<br>この状態遷移図を追加する、という作業を例にやってみます。</p>
 
-<pre class="prettyprint linenums"><code>//! プログラム状態
+<pre class="prettyprint linenums" style="width: 600px"><code>//! プログラム状態
 enum STATE {
     beforeStart,                  //!&lt; 時間計測前
     underMeasurement,             //!&lt; 時間計測中
@@ -577,7 +577,7 @@ enum STATE {
 <p>&quot;@image html state_graph.png&quot; の部分が画像埋め込みをしている部分です。<br>
 このコマンドではどうやら画像の幅や高さ、位置、などを指定できないようです。</p>
 
-<pre class="prettyprint linenums"><code>/*=========================================================*/
+<pre class="prettyprint linenums" style="width:600px"><code>/*=========================================================*/
 /*!
     プログラム状態
 
@@ -604,7 +604,7 @@ enum STATE {
 <p>&nbsp;</p>
 <p>次に、&quot;HTML commands&quot; から &lt;img&gt; を使ってみます。</p>
 <p>&lt;img&gt; では width や height を使って大きさを指定することができます。HTMLに限定されますが、こちらの方が使い勝手がよさそうです。</p>
-<pre class="prettyprint linenums"><code>/*=========================================================*/
+<pre class="prettyprint linenums" style="width:600px"><code>/*=========================================================*/
 /*!
     プログラム状態
     
@@ -641,7 +641,7 @@ enum STATE {
 <p></p>
 <p>追加した &quot;mainpage.txt&quot; の中身を見てみましょう。</p>
 <p>@mainpage, @section, @subsection を使って記載していることがわかります。他に @subsubsection というコマンドもまだあります。</p>
-<pre class="prettyprint linenums"><code>/*=========================================================*/
+<pre class="prettyprint linenums" style="width:1000px"><code>/*=========================================================*/
 /*! @file
     @brief	Doxygen のためのプログラム説明用メインページファイル
     
