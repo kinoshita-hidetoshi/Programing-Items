@@ -60,9 +60,10 @@
 	<p>&nbsp;&nbsp; <a href="#2-1._ビルド＆インストール">2-1. ビルド＆インストール</a></p>
 	<p>&nbsp;&nbsp; <a href="#2-2._バイナリインストール">2-2. バイナリインストール</a></p>
 	<p><a href="#3._オプション一覧">3. オプション一覧</a></p>
-	<p><a href="#4._メモリリークを検出する方法">4. メモリリークを検出する方法</a></p>
-	<p><a href="#5._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">5. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></p>
-	<p><a href="#6._メモリ領域外への不正アクセスの検出方法">6. メモリ領域外への不正アクセスの検出方法</a></p>
+  <p><a href="#4._解析結果の例">4. 解析結果の例</a></p>
+	<p>&nbsp;&nbsp; <a href="#4-1._メモリリークを検出する方法">4-1. メモリリークを検出する方法</a></p>
+	<p>&nbsp;&nbsp; <a href="#4-2._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">4-2. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></p>
+	<p>&nbsp;&nbsp; <a href="#4-3._メモリ領域外への不正アクセスの検出方法">4-3. メモリ領域外への不正アクセスの検出方法</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
 	<p><a href="#参考">参考</a></p>
@@ -381,11 +382,12 @@ usage: valgrind [options] prog-and-args
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="4._メモリリークを検出する方法">4. メモリリークを検出する方法</a></h2>
+	<h2> <a name="4._解析結果の例">4. 解析結果の例</a></h2>
+  <h3><a name="4-1._メモリリークを検出する方法">4-1. メモリリークを検出する方法</a></h3>
 	<h4>[概要]</h4>
 	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind で「メモリリークを検出する方法」を示します。</p>
 	<p> &nbsp;</p>
-	
+
 	<h4>[環境]</h4>
 	<table>
 	<tbody>
@@ -424,11 +426,13 @@ usage: valgrind [options] prog-and-args
 	  </tr>
 	</tbody>
 	</table>
+
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+	<p>[プログラムソース &quot;memory_leak.cpp&quot;]</p>
 	
-	  <p> &nbsp;</p>
-    <p> &nbsp;</p>
-  	<p>[プログラムソース &quot;memory_leak.cpp&quot;]</p>
-	<pre class="prettyprint linenums lang-cpp" style="width: 800px">#include &lt;iostream&gt;
+	<pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
 
 int main()
 {
@@ -440,19 +444,25 @@ int main()
 
     return EXIT_SUCCESS;
 }</pre>
+
 	<p><span class="cpp-source">delete[] p</span> の処理が無いので、 
 	<span class="cpp-source">p = new char[10]</span> で確保した動的メモリが未開放でリークとなります。</p>
 	<p>&nbsp;</p>
 	<p>テストプログラム（memory_leak.cpp）をコンパイルします。</p>
-	<pre style="width: 800px; background-color: #000000; color: #FFFFFF;">hidetoshi@Laptop4:~$ g++ -Wall -g memory_leak.cpp -o memory_leak
+    	
+  <pre style="width: 800px; background-color: #000000; color: #FFFFFF;">
+hidetoshi@Laptop4:~$ g++ -Wall -g memory_leak.cpp -o memory_leak
 memory_leak.cpp: In function ‘int main()’:
 memory_leak.cpp:5:11: warning: variable ‘p’ set but not used [-Wunused-but-set-variable]
     5 |     char *p;</pre>
+    
 	<p>コンパイルすると警告が出力されますが、宣言した変数 p を使用していないだけなので無視してください。 </p>
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	<p>valgrind を使ってテストプログラム（memory_leak）を実行します。</p>
-	<pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">hidetoshi@Laptop4:~$ <strong>valgrind</strong> --leak-check=full --leak-resolution=high --show-reachable=yes ./<strong>memory_leak</strong> 
+
+  <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+hidetoshi@Laptop4:~$ <strong>valgrind</strong> --leak-check=full --leak-resolution=high --show-reachable=yes ./<strong>memory_leak</strong> 
 ==1420== Memcheck, a memory error detector
 ==1420== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
 ==1420== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
@@ -477,6 +487,7 @@ memory_leak.cpp:5:11: warning: variable ‘p’ set but not used [-Wunused-but-s
 ==1420== For lists of detected and suppressed errors, rerun with: -s
 ==1420== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 hidetoshi@Laptop4:~$ </pre>
+
 	<p>&nbsp;</p>
 	<p>100 bytes のメモリリークを検出できました。（definitely lost: 100 bytes in 10 blocks）</p>
 	<p>リークしているメモリを確保した場所は memory_leak.cpp:8 であることを教えてくれます。この情報を得るにはコンパイル時に -g 
@@ -488,7 +499,7 @@ hidetoshi@Laptop4:~$ </pre>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="5._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">5. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></h2>
+	<h3><a name="4-2._解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法">4-2. 解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法</a></h3>
 	<h4>[概要]</h4>
 	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind 
 	で「解放済みメモリー領域へのポインタを誤って使ってしまう問題の検出方法」を示します。</p>
@@ -600,7 +611,7 @@ hidetoshi@Laptop4:~$ </pre>
 <p>&nbsp;</p>
 
 <section>
-	<h2> <a name="6._メモリ領域外への不正アクセスの検出方法">6. メモリ領域外への不正アクセスの検出方法</a></h2>
+	<h3><a name="4-3._メモリ領域外への不正アクセスの検出方法">4-3. メモリ領域外への不正アクセスの検出方法</a></h3>
 	<h4>[概要]</h4>
 	<p> gcc/g++ でビルドした c++ プログラムをサンプルに valgrind 
 	で「メモリ領域外への不正アクセスの検出方法」を示します。</p>
