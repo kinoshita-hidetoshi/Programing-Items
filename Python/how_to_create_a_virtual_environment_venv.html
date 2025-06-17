@@ -67,7 +67,7 @@
   <section>
   	<h2> <a name="1._仮想環境の作成">1. 仮想環境の作成</a></h2>
     <p>プロジェクトディレクトリに移動し、以下のコマンドを実行します。</p>
-    <pre class="prettyprint linenums lang-cpp" style="width: 600px">python -m venv venv</pre>
+    <pre class="prettyprint linenums lang-cpp" style="width: 600px">python -m venv .venv</pre>
     <p>&nbsp;</p>
   
     <div class="status_information">
@@ -76,6 +76,8 @@
         <p><strong>NOTE</strong></p>
         <p><strong>venv</strong> 使用時の書式は <span class="cpp-source">python -m venv <あなたが作成する仮想環境名></span> ですが、慣習として仮想環境名を  
         <span class="cpp-source">.venv</span> として作成する場合が多いようです。</p>
+        <p>これとともに git 使用時は <span class="cpp-source">.gitignore</span> ファイルに 
+        <span class="cpp-source">.venv</span> を登録しましょう。</p>
       </div>
     </div>
 
