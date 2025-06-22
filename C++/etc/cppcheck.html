@@ -241,7 +241,7 @@ int main()
           <td>unusedFunction のチェックを有効にします。</td>
         </tr>
         <tr>
-          <td><strong>missingInclude</strong></td>
+          <td><strong style="white-space: nowrap">missingInclude</strong></td>
           <td>missingInclude のチェックを有効にします。</td>
         </tr>
       </tbody>
@@ -266,7 +266,7 @@ int main()
     <p>&nbsp;</p>
     <p>&nbsp;</p>
         
-    <table class="border-collapse" border="1">
+    <table class="border-collapse" border="1" width="1000">
       <caption>[Table.] よく使用するオプション</caption>
       <thead class="standard_table">
         <tr>
@@ -316,7 +316,7 @@ int main()
           <td>解析結果の出力を xml 形式にする</td>
         </tr>
         <tr>
-          <td><strong>--platform</strong></td>
+          <td><strong style="white-space: nowrap">--platform</strong></td>
           <td>適用する c/c++ 標準を指定する
             <ul>
               <li>unix32: 32 bit unix variant</li>
@@ -396,7 +396,7 @@ int main()
           </td>
         </tr>
         <tr>
-          <td><strong>--inline-suppr</strong></td>
+          <td><strong style="white-space: nowrap">--inline-suppr</strong></td>
           <td>
             ソースコード内へ直接記載する インライン抑制 です。<br>cppcheck のコマンドライン引数に "--inline-suppr" 
             を追加したうえで、ソースコード内に抑制内容を記載します。<br>ソースコード内への記載例を以下に記載します。<br>
@@ -423,8 +423,16 @@ void testFunction() {
 <strong>// cppcheck-suppress-begin [uninitvar,nullPointer]</strong>
 ...
 <strong>// cppcheck-suppress-end [uninitvar,nullPointer]</strong>
-
 </pre>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>--error-exitcode</strong></td>
+          <td>
+            エラーを「必須の修正」として扱いたい場合や、特定のエラー種類だけを検出したい場合には、Cppcheckのオプション（例:
+            <span class="cpp-source">--error-exitcode</span>）を使うこともできます<br>
+            <pre class="prettyprint" style="width: 400px">cppcheck --error-exitcode=1 your_code.cpp</pre>
+            これでエラーが検出された場合、Cppcheckが指定したエラーコード（この場合は1）を返します。
           </td>
         </tr>
       </tbody>
