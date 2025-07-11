@@ -35,6 +35,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    text-decoration: underline;
+  }
+  </style>
+
   </head>
 
 <body onload="prettyPrint();">
@@ -185,7 +191,15 @@
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">git log --show-signature -1</pre>
       表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
-      <strong><br>NOTE： </strong>ディレクトリにファイルをセットアップする必要があります。詳細については、 
+
+      </li>
+      <li>ディレクトリにファイル <span class="cpp-source">allowedSignersFile</span> 
+      をセットアップします。<br><span class="cpp-source">allowedSignersFile</span> は、Git で 
+      SSH 署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>
+      登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> の部分を 
+      <span class="auto-style1"><strong>Bitbucket アカウントに関連付けられているユーザーのメールアドレス 
+      </strong></span>へ置き換えて使用してください。 
+      <br><br>NOTE： ディレクトリにファイルをセットアップする必要があります。詳細については、 
       <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile">
       Git ドキュメント</a>を参照してください。<br>
       <span class="cpp-source">bitbucket@example.com</span> の部分は Bitbucket アカウントに関連付けられているあなたのメール アドレスへ置き換えて使用してください。<br>
@@ -194,6 +208,15 @@
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
 git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
+      つまり、<span class="cpp-source">~/.ssh/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br>
+      <pre style="width:800px">「ユーザーのメールアドレス SSH公開鍵」</pre>
+      <span style="color: rgb(41, 42, 46); font-family: &quot;Atlassian Sans&quot;, ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Ubuntu, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: pre-wrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+      例えばこんな感じのファイルです。<br>
+      <pre style="width:800px">example@domain.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAxxxxxx...</pre>
+      そして <span class="cpp-source">.gitconfig</span> には <span class="cpp-source">
+      allowedSignersFile</span> のパスが記載されます。
+      </span><br>
+      <br>
 
       </li>
       <li>必要に応じて、ssh-agent を再実行することを検討してください。<br>
@@ -334,6 +357,13 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
       <li>キーの形式を指定<br><span class="cpp-source">$ git config gpg.format ssh</span></li>
       <li>コミット署名に使用する SSH 認証鍵を指定（以下は例です）<br><span class="cpp-source">$ git config 
       user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</span></li>
+      <li>ファイル <span class="cpp-source">allowedSignersFile</span> 
+      をセットアップ<br>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+$ echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
+$ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
+      </li>
       <li>git commit で常に署名するように設定<br><span class="cpp-source">$ git config 
       commit.gpgsign true</span> </li>
     </ol>
