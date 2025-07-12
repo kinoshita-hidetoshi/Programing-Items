@@ -35,12 +35,6 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  <style type="text/css">
-  .auto-style1 {
-    text-decoration: underline;
-  }
-  </style>
-
   </head>
 
 <body onload="prettyPrint();">
@@ -184,35 +178,36 @@
         <pre class="prettyprint linenums lang-cpp" style="width: 800px">git commit -S -m "your commit message"</pre>
       <p>-S を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
       </li>
-      <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ） </li>
+      <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ）<br> </li>
       <li>コミットが署名されたことを確認します。（必要に応じて）<br>
         "-1" は最新コミットから1つを表示することを意味します。
         "-3" は最新コミットから3つを表示します。<br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">git log --show-signature -1</pre>
-      表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
+      表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br><br>
 
       </li>
-      <li>ディレクトリにファイル <span class="cpp-source">allowedSignersFile</span> 
-      をセットアップします。<br><span class="cpp-source">allowedSignersFile</span> は、Git で 
-      SSH 署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>
-      登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> の部分を 
-      <span class="auto-style1"><strong>Bitbucket アカウントに関連付けられているユーザーのメールアドレス 
-      </strong></span>へ置き換えて使用してください。 
-      <br><br>NOTE： ディレクトリにファイルをセットアップする必要があります。詳細については、 
-      <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-gpgsshallowedSignersFile">
-      Git ドキュメント</a>を参照してください。<br>
-      <span class="cpp-source">bitbucket@example.com</span> の部分は Bitbucket アカウントに関連付けられているあなたのメール アドレスへ置き換えて使用してください。<br>
-      (私はこれの必要性をまだ理解できていません。この手続きなしでコミット署名できているように見えます。) <br>
+      <li>
+      <p data-pm-slice="1 1 [&quot;orderedList&quot;,{&quot;order&quot;:1},&quot;listItem&quot;,null]" data-prosemirror-content-type="node" data-prosemirror-node-block="true" data-prosemirror-node-name="paragraph">
+      [任意] ディレクトリにファイル 
+      <span class="cpp-source" data-prosemirror-content-type="mark" data-prosemirror-mark-name="code" spellcheck="false">
+      allowedSignersFile</span> をセットアップ<br>
+      本設定は、署名されたコミットを検証するために使用します。対象リポジトリへコミットするユーザーの (1)メールアドレス、(2)公開鍵、を 
+      <span class="cpp-source">allowedSignersFile</span> へ登録します。<br>
+      <span class="cpp-source">allowedSignersFile</span> は、Git で SSH 
+      署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> 
+      および <span class="cpp-source">id_ed25519.pub</span> 
+      を登録するユーザーのメールアドレス・公開鍵、へ置き換えて登録します。</p>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
+echo "bitbucket@example.com $(cat id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
 git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
       つまり、<span class="cpp-source">~/.ssh/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br>
       <pre style="width:800px">「ユーザーのメールアドレス SSH公開鍵」</pre>
       <span style="color: rgb(41, 42, 46); font-family: &quot;Atlassian Sans&quot;, ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Ubuntu, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: pre-wrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
       例えばこんな感じのファイルです。<br>
-      <pre style="width:800px">example@domain.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAxxxxxx...</pre>
+      <pre style="width:800px">example@domain.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAxxxxxx...
+foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
       そして <span class="cpp-source">.gitconfig</span> には <span class="cpp-source">
       allowedSignersFile</span> のパスが記載されます。
       </span><br>
