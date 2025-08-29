@@ -92,6 +92,19 @@
     <p> 
     <img alt="テスト" src="wsl2_optimize_diskspace/imgF.jpg" width="1000"></p>
     <p> &nbsp;</p>
+  
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>発生条件不明ですが、"ext4.vhdx" の所在が上記ではなく下記パスとなる場合があることを確認しました。この場合 
+        "Get-AppxPackage" コマンドで検出できませんでした。</p>
+        <p>"c:\Users\&lt;ユーザー名&gt;\AppData\Local\wsl\{********-****-****-************}\ext4.vhdx"</p>
+        <p>ご注意ください</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
   	<p>以下の手順で Optimize-VHD コマンドによる VHD ファイルを最適化を行います。</p>
     <ol>
       <li>PowerShell で WSL を停止します
@@ -136,6 +149,20 @@ detach vdisk
 exit</pre>
       </li>
     </ol>
+  
+    <p> &nbsp;</p>
+    
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>発生条件不明ですが、"ext4.vhdx" の所在が上記ではなく下記パスとなる場合があることを確認しました。この場合 
+        "Get-AppxPackage" コマンドで検出できませんでした。</p>
+        <p>"c:\Users\&lt;ユーザー名&gt;\AppData\Local\wsl\{********-****-****-************}\ext4.vhdx"</p>
+        <p>ご注意ください</p>
+      </div>
+    </div>
+
     <p> &nbsp;</p>
     
   </section>
@@ -189,6 +216,11 @@ exit</pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-08-29</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">"ext4.vhdx" の所在について NOTE を追記</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-05-07</td>
   	    <td class="td_history_separator">-</td>
