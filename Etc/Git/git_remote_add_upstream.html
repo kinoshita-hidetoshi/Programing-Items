@@ -64,43 +64,27 @@
     <p>Git で fork 元のリポジトリの変更を cherry-pick して fork 先に反映するには、以下の手順で実施できます。</p>
   	<p> &nbsp;</p>
   	
-  	<h4><a name="[手順概要]">[手順概要]</a></h4>
+  	<h4><a name="[手順概要]">[手順]</a></h4>
+    <p>Git で別リポジトリのコミットを cherry-pick するには、以下の手順で行います。</p>
+    <p>&nbsp;</p>
     <ol>
-      <li>fork 元のリポジトリを remote に追加</li>
-      <li>対象のコミットを確認</li>
-      <li>cherry-pick でコミットを適用</li>
-      <li>push して反映</li>
+      <li><strong>cherry-pick したいコミットのSHAを確認</strong><br>cherry-pick 元のリポジトリで 
+      <span class="cpp-source">git log</span> などを使い、対象コミットID（ハッシュ値）を調べます。 </li>
+      <li><strong>cherry-pick 先のリポジトリにリモートを追加（または一時的に fetch）</strong> <br>例:
+      <span class="cpp-source">git remote add upstream &lt;URL&gt;</span> <URL>
+      <br>または、fetch だけする場合: <span class="cpp-source">git fetch &lt;URL&gt; &lt;branch&gt;</span><br>後者の場合、次項目 
+      3 を行わない</li>
+      <li><strong>コミットを fetch する</strong><br>例: <span class="cpp-source">git fetch 
+      upstream</span></li>
+      <li><strong>cherry-pick を実行したいブランチをチェックアウト</strong><br>例:
+      <span class="cpp-source">git checkout your-branch</span> </li>
+      <li><strong>cherry-pick コマンドを実行</strong><br>例: <span class="cpp-source">
+      git cherry-pick &lt;コミットID&gt;</span></li>
+      <li><strong>git リモートサーバーへ push</strong><br>例: <span class="cpp-source">git 
+      push origin &lt;自分の作業ブランチ&gt;</span></li>
+      <li><strong>不要になったリモートを削除（必要に応じて）</strong><br>例: <span class="cpp-source">git remote remove 
+      upstream</span></li>
     </ol>
-    <p>&nbsp;</p>
-  	
-  	<h4><a name="[詳細手順]">[詳細手順]</a></h4>
-    <p>下記説明例では bitbucket での使用を例に記載します。URL 記載などをあなたの git 環境へ読み替えてください。</p>
-    <p>&nbsp;</p>
-    <p>1. fork 元のリポジトリを remote に追加</p>
-    <pre class="prettyprint linenums lang-sh" style="width: 800px">
-git remote add upstream https://bitbucket.org/"fork元ユーザー名"/"fork元リポジトリ名".git
-git fetch upstream
-</pre>
-
-    <p>&nbsp;</p>
-    <p>2. cherry-pick したいコミットを確認</p>
-    <pre class="prettyprint linenums lang-sh" style="width: 800px">
-git log upstream/"fork元ブランチ名"</pre>
-
-    <p>※ "fork元ブランチ名" は、main, develop, など具体的なブランチ名を記載</p>
-    <p>&nbsp;</p>
-    <p>3. cherry-pick を実行</p>
-    <pre class="prettyprint linenums lang-sh" style="width: 800px">
-git checkout "自分の作業ブランチ"
-git cherry-pick &lt;コミットID&gt;</pre>
-
-    <p>※ 複数のコミットを cherry-pick したい場合は、コミットIDを順に指定するか、範囲しても可能</p>
-    <p>&nbsp;</p>
-    <p>4. git リモートサーバーへ push</p>
-    <pre class="prettyprint linenums lang-sh" style="width: 800px">
-git push origin "自分の作業ブランチ"</pre>
-
-    <p>&nbsp;</p>
     <p>&nbsp;</p>
   
     <div class="status_information">
