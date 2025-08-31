@@ -86,6 +86,31 @@
       upstream</span></li>
     </ol>
     <p>&nbsp;</p>
+    <p>具体例：</p>
+    <pre class="prettyprint linenums lang-cpp">
+# 1. cherry-pick 元のリポジトリでコミットSHAを確認 
+$ git log
+
+# 2. cherry-pick 先のリポジトリでリモート追加 
+$ git remote add temp-origin https://github.com/example/other-repo.git 
+
+# 3. fetchする 
+$ git fetch temp-origin main 
+
+# 4. cherry-pick したいブランチに移動 
+$ git checkout your-branch 
+
+# 5. cherry-pick 実行 
+$ git cherry-pick &lt;コミットSHA&gt;
+
+# 6. git リモートサーバーへ push
+$ git push origin &lt;自分の作業ブランチ&gt;
+
+# 7. リモート削除（任意） 
+$ git remote remove temp-origin</pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
   
     <div class="status_information">
       <div></div>
