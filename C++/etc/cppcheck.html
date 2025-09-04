@@ -558,6 +558,7 @@ Options:
 
 <section>
 	<h2> <a name="3._解析結果の例">3. 解析結果の例</a></h2>
+    <p> &nbsp;</p>
   <section>
     <h3> <a name="3-1._メモリリーク">3-1. メモリリーク</a></h3>
     <p> メモリリーク、の例として下記ソースコードを cppcheck で解析してみます。</p>
@@ -577,7 +578,11 @@ int main(){
     return 0;
 }</pre>
     <p> &nbsp;</p>
-    <p> 下記コマンドで解析します。</p>
+    <p> GUI (Windows) 表示例です。</p>
+    <p> CUI で xml 出力して GUI で xml ファイルを読み込みする、でもOKです。</p>
+    <p> <img alt="GUI 表示例" src="cppcheck/img3.jpg" width="1000"></p>
+    <p> &nbsp;</p>
+    <p> CUI 解析は、下記コマンドで解析しました。</p>
     <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_01.cpp</pre>
     <p> &nbsp;</p>
     <p> 実行結果は以下の通りです。</p>
@@ -588,6 +593,7 @@ Checking sample_01.cpp ...
 sample_01.cpp:7:1: <span class="auto-style2">error</span>: Memory leak: ptr [memleak]
 }
 ^</pre>
+    <p> &nbsp;</p>
     <p> &nbsp;</p>
   </section>
   
@@ -608,7 +614,11 @@ int main() {
     return 0;
 }</pre>
     <p> &nbsp;</p>
-    <p> 下記コマンドで解析します。</p>
+    <p> GUI (Windows) 表示例です。</p>
+    <p> CUI で xml 出力して GUI で xml ファイルを読み込みする、でもOKです。</p>
+    <p> <img alt="GUI 表示例" src="cppcheck/img4.jpg" width="1000"></p>
+    <p> &nbsp;</p>
+    <p> CUI 解析は、下記コマンドで解析しました。</p>
     <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_02.cpp</pre>
     <p> &nbsp;</p>
     <p> 実行結果は以下の通りです。</p>
@@ -621,6 +631,7 @@ sample_02.cpp:5:13: <span class="auto-style2">error:</span> Uninitialized variab
             ^
 sample_02.cpp:5:11: <span class="auto-style2">style:</span> Variable 'y' is assigned a value that is never used. [unreadVariable]
     int y = x + 10; // 未初期化変数を使用</pre>
+    <p> &nbsp;</p>
     <p> &nbsp;</p>
   </section>
 
@@ -643,7 +654,11 @@ int main() {
     return 0;
 }</pre>
     <p> &nbsp;</p>
-    <p> 下記コマンドで解析します。</p>
+    <p> GUI (Windows) 表示例です。</p>
+    <p> CUI で xml 出力して GUI で xml ファイルを読み込みする、でもOKです。</p>
+    <p> <img alt="GUI 表示例" src="cppcheck/img5.jpg" width="1000"></p>
+    <p> &nbsp;</p>
+    <p> CUI 解析は、下記コマンドで解析しました。</p>
     <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_03.cpp</pre>
     <p> &nbsp;</p>
     <p> 実行結果は以下の通りです。</p>
@@ -727,6 +742,11 @@ sample_03.cpp:5:11: <span class="auto-style2">style</span>: Same expression on b
 	    <td class="td_history_date">2025-09-04</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">「<a href="#解析結果を_HTML_で出力する">解析結果を_HTML_で出力する</a>」を追加</td>
+	  </tr>
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">&nbsp;</td>
+	    <td class="td_history">「<a href="#3._解析結果の例">3._解析結果の例</a>」に GUI表示例を追加</td>
 	  </tr>
 	  <tr>
 	    <td class="td_history_date">2025-05-21</td>
