@@ -42,6 +42,9 @@
   .auto-style2 {
     color: #FF0000;
   }
+  .auto-style3 {
+    background-color: #505000;
+  }
   </style>
   
 </head>
@@ -63,6 +66,9 @@ Daniel Marjamäki です。 Cppcheckは、GNU General Public License に基づ�
 	<p><a href="#2._使用方法">2. 使用方法</a></p>
     <p>&nbsp;&nbsp; <a href="#2-1._GUI_(Windows)">2-1. GUI (Windows)</a></p>
     <p>&nbsp;&nbsp; <a href="#2-2._CUI">2-2. CUI</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#概要">概要</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#解析してみる">解析してみる</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#解析結果を_HTML_で出力する">解析結果を HTML で出力する</a></p>
 	<p><a href="#3._解析結果の例">3. 解析結果の例</a></p>
     <p>&nbsp;&nbsp; <a href="#3-1._メモリリーク">3-1. メモリリーク</a></p>
     <p>&nbsp;&nbsp; <a href="#3-2._初期化されていない変数">3-2. 初期化されていない変数</a></p>
@@ -192,7 +198,7 @@ int main()
     <p> CUI 版の使用方法について記載します。</p>
     <p> Jenkins や Pipelines などの各種 CI/CD ツールと連携させたい場合などでは CUI(コマンドライン) を使って解析します。</p>
     <p> &nbsp;</p>
-    <h4> 概要</h4>
+    <h4> <a name="概要">概要</a></h4>
     <p> CUI は次の形式で実行します。 </p>
     <blockquote>$ cppcheck --enable=all ソース [...]</blockquote>
     <p>引数としてチェック対象のソースファイルやファイルのあるフォルダーを指定します。フォルダーの場合は再帰的にチェックします。</p>
@@ -441,7 +447,7 @@ void testFunction() {
     <p> &nbsp;</p>
     <p> &nbsp;</p>
     
-    <h4> 解析してみる</h4>
+    <h4> <a name="解析してみる">解析してみる</a></h4>
     <p> GUI と同じ下記テストコードを解析してみます。</p>
     <p> &nbsp;</p>
     <p> [test.cpp]</p>
@@ -487,10 +493,66 @@ Active checkers: 163/565
 C:\Users\foo\Documents\cpp\cppcheck_test&gt;</pre>
     <p> &nbsp;</p>
     <p> GUI 版と同じ解析結果を出力できていることを確認できました。</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h4> <a name="解析結果を_HTML_で出力する">解析結果を HTML で出力する</a></h4>
+    <p> cppcheck の解析結果を HTML で出力する方法について記載します。</p>
+    <p> &nbsp;</p>
+    <p> 1.</p>
+    <p> HTML レポートは、cppcheck の結果 xml から変換するので、まずは cppcheck をかけて xml を出力します。</p>
+    <p> 前例の出力を xml で出力します。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 1000px;">$ cppcheck --enable=all --suppress=missingIncludeSystem --platform=win64 --std=c++20 <strong><span class="auto-style3">--xml</span></strong> test.cpp <strong><span class="auto-style3">2&gt; result.xml</span></strong></pre>
+    <p> &nbsp;</p>
+    <p> 2.</p>
+    <p> xml ができたら html を作成します。</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 1000px;">$ cppcheck-htmlreport --file=result.xml --title=test.cpp --report-dir=./html&nbsp;</pre>
+    <ul>
+      <li>"--file" で cppcheck で出力した xml ファイルを指定します。<br>複数指定可能です。(例) "--file 
+      file1.xml --file file2.xml ...</li>
+    </ul>
+    <p>cppcheck-htmlreport のその他オプションは下記を参照</p>
+    <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">
+Usage: cppcheck-htmlreport [options]
+
+Options:
+  -h, --help            show this help message and exit
+  --title=TITLE         The title of the project.
+  --file=FILE           The cppcheck xml output file to read defects from. You
+                        can combine results from several xml reports i.e. "--
+                        file file1.xml --file file2.xml ..". Default is
+                        reading from stdin.
+  --report-dir=REPORT_DIR
+                        The directory where the HTML report content is
+                        written.
+  --source-dir=SOURCE_DIR
+                        Base directory where source code files can be found.
+  --add-author-information=ADD_AUTHOR_INFORMATION
+                        Blame information to include. Adds specified author
+                        information. Specify as comma-separated list of either
+                        "name", "email", "date" or "n","e","d". Default:
+                        "n,e,d"
+  --source-encoding=SOURCE_ENCODING
+                        Encoding of source code.
+  --blame-options=BLAME_OPTIONS
+                        [-w, -M] blame options which you can use to get author
+                        and author mail  -w --&gt; not including white spaces and
+                        returns original author of the line  -M --&gt; not
+                        including moving of lines and returns original author
+                        of the line</pre>
+    <p>&nbsp;</p>
+    <p>3.</p>
+    <p>出力された index.html を表示します。下図が表示例です。</p>
+    <p>結構使えそう、と私は思いましたがいかがでしょうか。</p>
+    <p>
+    <img alt="解析結果 － トップ" src="cppcheck/img9.jpg" width="1000" class="border"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    <img alt="解析結果 － ソースコード" class="border" src="cppcheck/imgB.jpg" width="1000"></p>
+    <p>&nbsp;</p>
   </section>
 </section>
 	
-<p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
 
@@ -661,6 +723,11 @@ sample_03.cpp:5:11: <span class="auto-style2">style</span>: Same expression on b
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-09-04</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#解析結果を_HTML_で出力する">解析結果を_HTML_で出力する</a>」を追加</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2025-05-21</td>
 	    <td class="td_history_separator">-</td>
