@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>スコープ付き列挙型 (c++11) | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>スコープ付き列挙型 (c++11)</h1>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._説明">1. 説明</a></p>
+      <p><a href="#2._using_宣言によるスコープ付き列挙型の省略_(c++20)">2._using_宣言によるスコープ付き列挙型の省略_(c++20)</a></p>
+      <p><a href="#3._列挙型の基礎となる型の指定_(c++11)">3._列挙型の基礎となる型の指定_(c++11)</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+   	<h2> <a name="1._説明">1. 説明</a></h2>
+    <p> 従来の<a href="enumerations.html">列挙型</a>は、列挙型の中で定義されている列挙子が他の名前と衝突してしまう、という問題があります。</p>
+    <p> 例えば、以下のプログラムは名前の衝突が発生してコンパイルエラーになります。</p>
+    <p> ["enumerator_name_collision.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 900px">
+#include &lt;iostream&gt;
+
+int main() {
+    int Blue = 1;
+    enum TrafficLight { Blue, Yellow, Red };       // エラー: 'Blue' はすでに定義されています
+    TrafficLight light = Blue;
+
+    std::cout &lt;&lt; "TrafficLight: " &lt;&lt; static_cast&lt;int&gt;(light) &lt;&lt; std::endl;
+
+    return 0;
+}</pre>
+
+    <p> 以下はビルド時の出力です。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width: 900px">
+$ g++ -Wall enumerator_name_collision.cpp -o enumerator_name_collision.out
+enumerator_name_collision.cpp: In function ‘int main()’:
+enumerator_name_collision.cpp:5:25: error: ‘Blue’ redeclared as different kind of entity
+    5 |     enum TrafficLight { Blue, Yellow, Red }; // エラー: 'BLUE' はすでに定義されています
+      |                         ^~~~
+enumerator_name_collision.cpp:4:9: note: previous declaration ‘int Blue’
+    4 |     int Blue = 1;
+      |         ^~~~
+enumerator_name_collision.cpp:6:26: error: invalid conversion from ‘int’ to ‘main()::TrafficLight’ [-fpermissive]
+    6 |     TrafficLight light = Blue;
+      |                          ^~~~
+      |                          |
+      |                          int</pre>
+
+    <p> &nbsp;</p>
+    <p> 上記問題を解決するために、スコープ付き列挙型を使用します。スコープ付き列挙型は、enum に続けて struct または class 
+    を記述して宣言します。</p>
+    <p> struct と class に違いはありません。</p>
+    <p> スコープ付き列挙型は、必ず「型名::値」というように必ず型名による修飾が必要です。ただし後述の using 
+    宣言を利用すると、型名の修飾を省略することが可能です。</p>
+    <p> ["scoped_enumerator.cpp"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width: 900px">
+#include &lt;iostream&gt;
+
+int main() {
+    int Blue = 1;
+    enum struct TrafficLight { Blue, Yellow, Red };
+    TrafficLight light = TrafficLight::Blue;
+
+    std::cout &lt;&lt; "TrafficLight: " &lt;&lt; static_cast&lt;int&gt;(light) &lt;&lt; std::endl;
+
+    return 0;
+}</pre>
+
+    <p>以下は、ビルドおよび実行時の出力結果です。</p>
+    <p>正常にビルドすることができ、期待する実行結果を得ることができました。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width: 900px">
+$ g++ -Wall scoped_enumerator.cpp -o scoped_enumerator.out
+scoped_enumerator.cpp: In function ‘int main()’:
+scoped_enumerator.cpp:4:9: warning: unused variable ‘Blue’ [-Wunused-variable]
+    4 |     int Blue = 1;
+      |         ^~~~
+$ ./scoped_enumerator.out 
+TrafficLight: 0</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+  	
+  <p> &nbsp;</p>
+  
+  <section>
+   	<h2><a name="2._using_宣言によるスコープ付き列挙型の省略_(c++20)">2. using 宣言によるスコープ付き列挙型の省略 (c++20)</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p> &nbsp;</p>
+  
+  <section>
+   	<h2><a name="3._列挙型の基礎となる型の指定_(c++11)">3. 列挙型の基礎となる型の指定 (c++11)</a></h2>
+    <p>&nbsp;</p>
+  </section>
+
+  <p> &nbsp;</p>
+  
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2025 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://ja.cppreference.com/w/cpp/language/enum.html" target="_blank">
+        Enumeration declaration - cppreference.com</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-09-26</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2025 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
