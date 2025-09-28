@@ -46,7 +46,7 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p><a href="#1._説明">1. 説明</a></p>
+    	<p><a href="#1._基本説明">1. 基本説明</a></p>
       <p><a href="#2._列挙型の基礎となる型の指定_(c++11)">2._列挙型の基礎となる型の指定_(c++11)</a></p>
       <p><a href="#3._using_宣言によるスコープ付き列挙型の省略_(c++20)">3._using_宣言によるスコープ付き列挙型の省略_(c++20)</a></p>
     	<p>&nbsp;</p>
@@ -58,7 +58,39 @@
   <p>&nbsp;</p>
   
   <section>
-   	<h2> <a name="1._説明">1. 説明</a></h2>
+   	<h2> <a name="1._基本説明">1. 基本説明</a></h2>
+    <p> &nbsp;</p>
+  	
+  	[環境]
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    	      <td>13.3.0 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu 24.04,</td>
+    	    <td>WSL</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+    <p> &nbsp;</p>
     <p> 従来の<a href="enumerations.html">列挙型</a>は、列挙型の中で定義されている列挙子が他の名前と衝突してしまう、という問題があります。</p>
     <p> 例えば、以下のプログラムは名前の衝突が発生してコンパイルエラーになります。</p>
     <p> ["enumerator_name_collision.cpp"]</p>
@@ -76,6 +108,8 @@ int main() {
 }</pre>
 
     <p> 以下はビルド時の出力です。</p>
+    <p> "<span class="cpp-source">error: ‘Blue’ redeclared as different kind of entity</span>"</p>
+    <p> というエラー出力を確認することができます。</p>
     
     <pre class="prettyprint lang-cpp" style="width: 900px">
 $ g++ -Wall enumerator_name_collision.cpp -o enumerator_name_collision.out
