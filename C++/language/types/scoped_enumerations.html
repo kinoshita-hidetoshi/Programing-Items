@@ -35,6 +35,15 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    text-decoration: underline;
+  }
+  .auto-style2 {
+    background-color: #505000;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -47,8 +56,8 @@
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1._基本説明">1. 基本説明</a></p>
-      <p><a href="#2._列挙型の基礎となる型の指定_(c++11)">2._列挙型の基礎となる型の指定_(c++11)</a></p>
-      <p><a href="#3._using_宣言によるスコープ付き列挙型の省略_(c++20)">3._using_宣言によるスコープ付き列挙型の省略_(c++20)</a></p>
+      <p><a href="#2._列挙型の基礎となる型の指定_(c++11)">2. 列挙型の基礎となる型の指定_(c++11)</a></p>
+      <p><a href="#3._using_宣言によるスコープ付き列挙型の省略_(c++20)">3. using_宣言によるスコープ付き列挙型の省略_(c++20)</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -61,7 +70,7 @@
    	<h2> <a name="1._基本説明">1. 基本説明</a></h2>
     <p> &nbsp;</p>
   	
-  	[環境]
+  	<h4>[環境]</h4>
   	<table>
     	<tbody>
     	  <tr>
@@ -90,10 +99,11 @@
     	</tbody>
   	</table>
   	
-    <p> &nbsp;</p>
+  	<p>&nbsp;</p>
     <p> 従来の<a href="enumerations.html">列挙型</a>は、列挙型の中で定義されている列挙子が他の名前と衝突してしまう、という問題があります。</p>
-    <p> 例えば、以下のプログラムは名前の衝突が発生してコンパイルエラーになります。</p>
-    <p> ["enumerator_name_collision.cpp"]</p>
+    <p> 例えば、以下のプログラムは名前の衝突が発生して<span class="auto-style1">ビルドエラーになります</span>。</p>
+    <p> &nbsp;</p>
+    <p> [コード例（エラー）： "enumerator_name_collision.cpp"]</p>
     <pre class="prettyprint linenums lang-cpp" style="width: 900px">
 #include &lt;iostream&gt;
 
@@ -107,11 +117,12 @@ int main() {
     return 0;
 }</pre>
 
+    <p> &nbsp;</p>
     <p> 以下はビルド時の出力です。</p>
     <p> "<span class="cpp-source">error: ‘Blue’ redeclared as different kind of entity</span>"</p>
     <p> というエラー出力を確認することができます。</p>
     
-    <pre class="prettyprint lang-cpp" style="width: 900px">
+    <pre class="prettyprint lang-sh" style="width: 900px">
 $ g++ -Wall enumerator_name_collision.cpp -o enumerator_name_collision.out
 enumerator_name_collision.cpp: In function ‘int main()’:
 enumerator_name_collision.cpp:5:25: error: ‘Blue’ redeclared as different kind of entity
@@ -127,19 +138,21 @@ enumerator_name_collision.cpp:6:26: error: invalid conversion from ‘int’ to 
       |                          int</pre>
 
     <p> &nbsp;</p>
-    <p> 上記問題を解決するために、スコープ付き列挙型を使用します。スコープ付き列挙型は、enum に続けて struct または class 
-    を記述して宣言します。</p>
+    <p> 上記問題を解決するために、スコープ付き列挙型を使用します。スコープ付き列挙型は、"<strong><em>enum 
+    struct</em></strong>" または "<strong><em>enum class</em></strong>" 
+    を宣言します。</p>
     <p> struct と class に違いはありません。</p>
     <p> スコープ付き列挙型は、必ず「型名::値」というように必ず型名による修飾が必要です。ただし後述の using 
     宣言を利用すると、型名の修飾を省略することが可能です。</p>
-    <p> ["scoped_enumerator.cpp"]</p>
+    <p> &nbsp;</p>
+    <p> [コード例（正常）： "scoped_enumerator.cpp"]</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width: 900px">
 #include &lt;iostream&gt;
 
 int main() {
     int Blue = 1;
-    enum struct TrafficLight { Blue, Yellow, Red };
+    <strong><span class="auto-style2"><em>enum struct</em></span></strong>  TrafficLight { Blue, Yellow, Red };
     TrafficLight light = TrafficLight::Blue;
 
     std::cout &lt;&lt; "TrafficLight: " &lt;&lt; static_cast&lt;int&gt;(light) &lt;&lt; std::endl;
@@ -147,6 +160,7 @@ int main() {
     return 0;
 }</pre>
 
+    <p>&nbsp;</p>
     <p>以下は、ビルドおよび実行時の出力結果です。</p>
     <p>正常にビルドすることができ、期待する実行結果を得ることができました。</p>
     <p>※ 警告 (warning) が１つ残ってますが、説明の都合上許容させてください。</p>
@@ -158,7 +172,8 @@ scoped_enumerator.cpp:4:9: warning: unused variable ‘Blue’ [-Wunused-variabl
     4 |     int Blue = 1;
       |         ^~~~
 $ ./scoped_enumerator.out 
-TrafficLight: 0</pre>
+TrafficLight: 0
+$</pre>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>

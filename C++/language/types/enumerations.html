@@ -52,7 +52,7 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p><a href="#1._説明">1. 説明</a></p>
+    	<p><a href="#1._基本説明">1. 基本説明</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -63,18 +63,73 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> <a name="1._説明">1. 説明</a></h2>
+  	<h2> <a name="1._基本説明">1. 基本説明</a></h2>
+    <p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    	      <td>13.3.0 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu 24.04,</td>
+    	    <td>WSL</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
     <p> 列挙型は、名前付きの定数として扱える列挙子の集合を表現する型です。「種別」や「状態」といった有限を定義したい場合に使用することで可読性が向上します。</p>
     <p> また、列挙型は代入する値を定義した範囲に制限できるため、定数や #define 定義を使用した場合と比べて安全に扱うことができます。</p>
     <p> &nbsp;</p>
-    <p> 例えば、交通信号機の色と状態を表す列挙型は、以下のように定義することができます。</p>
+    <p> コード例： "enumeration_01.cpp"</p>
+    <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+
+int main() {
+    enum TrafficLight { Blue, Yellow, Red };
+    TrafficLight light = Blue;
+
+    std::cout &lt;&lt; "TrafficLight: " &lt;&lt; static_cast&lt;int&gt;(light) &lt;&lt; std::endl;
+
+    return 0;
+}</pre>
+
+    <p> &nbsp;</p>
+    <p> ビルド・実行例：</p>
+    <pre class="prettyprint lang-sh" style="width: 800px">
+$ g++ -Wall enumerator_01.cpp -o enumerator_01.out
+$ ./enumerator_01.out 
+TrafficLight: 0
+$</pre>
+
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 上記例では、交通信号機の色と状態を表す列挙型として以下のように定義しています。</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 enum TrafficLight { Blue, Yellow, Red };
 TrafficLight light = Blue;</pre>
 
     <p> &nbsp;</p>
-    <p> 列挙型の各列挙子は、0から順に1ずつ増加した値となります。</p>
+    <p> 列挙型の各列挙子は、無指定だと 0から順に1ずつ増加した値となります。</p>
     <p> 列挙型の各列挙子を任意の値にするためには、= で列挙子の値を定義します。以下は、= を使って列挙型の各列挙子を任意の値に設定する例です。</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
