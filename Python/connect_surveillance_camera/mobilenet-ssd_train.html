@@ -299,6 +299,41 @@
   <pre style="background-color: #000000; color: #CCCCCC; overflow-x: auto;">$ python open_images_downloader.py --root <strong>./data/open_images</strong> --class_names "Handgun,Shotgun" --num_workers 20</pre>
 	
   <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>open_images_downloader.py 実行時に下記エラーを出力する場合があります。Pandas バージョン違いにより 
+        iteritems() が無くなったことが原因です。 </p>
+      </div>
+    </div>
+
+      <p>エラー出力内容：</p>
+      
+      <pre class="prettyprint lang-cpp" style="width: 800px">
+Traceback (most recent call last):
+File "/home/kinoshita/github/pytorch-ssd/open_images_downloader.py", line 171, in &lt;module&gt;
+log_counts(annotations.drop_duplicates(["ImageID", "ClassName"])["ClassName"])
+File "/home/kinoshita/github/pytorch-ssd/open_images_downloader.py", line 63, in log_counts
+for k, count in values.value_counts().iteritems():</pre>
+      <p>上記エラーを出力した場合、下記の通り修正してください。</p>
+      <p class="auto-style2">修正後：</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+def log_counts(values):
+    for k, count in values.value_counts().<span class="auto-style2"><strong>items</strong></span>():
+        logging.warning(f"{k}: {count}/{len(values)} = {count/len(values):.2f}.")</pre>
+        
+      <p class="auto-style2">修正前：</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+def log_counts(values):
+    for k, count in values.value_counts().<span class="auto-style2"><strong>iteritems</strong></span>():
+        logging.warning(f"{k}: {count}/{len(values)} = {count/len(values):.2f}.")</pre>
+        
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
 
   <p>6. 確認</p>
   <p>ダウンロード完了後の様子を下図に示します。</p>
