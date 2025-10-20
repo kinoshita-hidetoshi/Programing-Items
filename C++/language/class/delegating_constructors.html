@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>委譲コンストラクタ (delegating constructors) | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>委譲コンストラクタ (delegating constructors)</h1>
+  <p>&nbsp;</p>
+  <p>「委譲コンストラクタ (delegating 
+  constructors)」は、コンストラクタから同じクラスの他のコンストラクタを実行（処理を委譲）する機能です。</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._例１">1. 例１</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._例１">1. 例１</a></h2>
+  	<h4>[概要]</h4>
+    <p>委譲コンストラクタ (delegating constructors) の例を以下に記載します。</p>
+    <p>
+    (2)のコンストラクタでの <span class="cpp-source">X(42)</span> 
+    の部分が委譲コンストラクタです。(2)のコンストラクタから(1)のコンストラクタを呼び出し、初期化処理を(1)のコンストラクタに集約しています。<br>
+    (1)のコンストラクタから返ったのちに、(2)のコンストラクタの本体（下図例では空ですが {} 
+    の部分）が実行されます。この機能を使用することにより、複数のコンストラクタを作成・メンテナンスするコストが減り、コードの肥大化を抑えることができます。 
+    </p>
+    <p>&nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++,</td>
+    	      <td>13.3.0 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu,</td>
+    	    <td>24.04 </td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+  	
+  	<p>["delegeting_constructors_01.cpp"]</p>	
+  	<pre class="prettyprint linenums lang-cpp" style="width: 800px">
+// このコードは C++11 の機能である「コンストラクタの委譲」を使用しています。
+// (2)のデフォルトコンストラクタは、(1)のコンストラクタに初期値42を渡して初期化処理を委譲しています。
+// これにより、コードの重複を避け、保守性が向上します。
+
+#include &lt;iostream&gt;
+
+class X {
+    int i_;
+public:
+    X(int i) : i_(i) {} // (1) : int型のパラメータを受け取るコンストラクタ
+
+    X() : X(42) {}      // (2) : デフォルトコンストラクタ。
+                        //       (1)のコンストラクタに初期値を渡して初期化処理を委譲する
+    const int&amp; getValue() const {
+        return i_;
+    }
+};
+
+int main() {
+    X x1;      // デフォルトコンストラクタ(2) が呼ばれる
+    X x2(10);  // int型のパラメータを受け取るコンストラクタ(1) が呼ばれる
+
+    std::cout &lt;&lt; "x1 value: " &lt;&lt; x1.getValue() &lt;&lt; std::endl; // 出力: x1 value: 42
+    std::cout &lt;&lt; "x2 value: " &lt;&lt; x2.getValue() &lt;&lt; std::endl; // 出力: x2 value: 10
+
+    return 0;
+}</pre>
+
+  	<p> &nbsp;</p>
+  	
+    <p> ビルド、実行</p>
+    <pre class="prettyprint lang-cpp" style="width: 800px">
+$ g++ -Wall deletegating_constructors_01.cpp -o deletegating_constructors_01.out
+$ ./deletegating_constructors_01.out 
+x1 value: 42
+x2 value: 10
+$ </pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2025 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://cpprefjp.github.io/lang/cpp11/delegating_constructors.html" target="_blank">
+        委譲コンストラクタ [N1986] - cpprefjp C++日本語リファレンス</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-10-20</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2025 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
