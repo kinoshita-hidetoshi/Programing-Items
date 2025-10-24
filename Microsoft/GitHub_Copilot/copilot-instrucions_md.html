@@ -85,6 +85,7 @@
     <p>
     <a href="https://docs.github.com/ja/copilot/how-tos/configure-custom-instructions/add-repository-instructions?tool=vscode">
     GitHub Copilot のリポジトリ カスタム命令を追加する - GitHub Docs</a></p>
+    <p>&nbsp;</p>
 	
   </section>
   	
@@ -106,127 +107,69 @@
   
   <section>
   	<h2> 3. copilot-instructions.md を作成する</h2>
-    <p> 難しく考えずに、c++ 用の "copilot-instructions.md" を AI に作成してもらいました。</p>
-    <p> これを使用してみるあたりから始めてみたいと思います。</p>
-    <p> AI が作成したオリジナルは "英語版" の方です。日本語版の方は私が翻訳したものです。</p>
-  	
-  	<p>&nbsp;</p>
+    <p> 難しく考えずに、c++ 用の "copilot-instructions.md" を Google AI (Jemini?) に 
+    「<span class="cpp-source">c++ 用の copilot-instructions.md を作成して</span>」 
+    とお願いして作成してもらいました。<br>
+    これを元にアレンジして使用してみるあたりから始めてみたいと思います。</p>
+    <p>&nbsp;</p>
     <p>"copilot-instructions.md" サンプル</p>
-    <p>"日本語版"</p>
-  	
-    <pre class="prettyprint linenums lang-md">
-# C++ リポジトリにおける手順
-
-## Overview
-このリポジトリには、最新の C++ ガイドラインに準拠した C++ アプリケーションが含まれています。
-コードはクリーンで効率的で、十分に文書化されている必要があります。 
-
-## コーディングスタイル
-- **命名規則:**
-  - Classe と struct は `PascalCase` を使用する.
-  - 関数と変数は `snake_case` を使用する.
-  - グローバル定数は 'SCREAMING_SNAKE_CASE' を使用する.
-- **インデント:** インデントにスペース4文字を使用する. tab を使用してはいけない.
-- **括弧:** "Allman style" の括弧を使用 (各括弧は新しい行に記載).
-- **空白:**
-  - バイナリ操作 (`+`, `-`, `*`, `/`, `=`) の後にスペースを加える.
-  - `if`, `for`, `while` などのキーワード後にスペースを加えること.
-- **ヘッダ:**
-  - 必ずインクルードガードを使用すること.
-  - include ディレクティブをアルファベット順でソートする.
-
-## 言語と機能
-- **Modern C++:** Prefer modern C++17/20 features (e.g., `std::optional`, `std::string_view`, structured bindings).
-- **Resource Management:** Use RAII (Resource Acquisition Is Initialization) and smart pointers (`std::unique_ptr`, `std::shared_ptr`) to manage resources.
-- **Const Correctness:** Use `const` where appropriate for variables, function parameters, and member functions to improve code safety.
-- **Error Handling:** Use exceptions for exceptional errors. For expected errors, prefer return values (e.g., `std::optional`, `std::error_code`).
-- **Standard Library:** Prefer the standard library over third-party libraries unless explicitly specified.
-
-## 文書化とコメント
-- **Doxygen:** Doxygen-style のコメントを全ての public classes, functions, そして複雑なロジックへ適用する.
-- **関数ヘッダ:** 全ての public 関数は、その関数の概要 (brief description) およびパラメータ、戻り値について記載する.
-- **Inline Comments:** Use inline comments sparingly to explain non-obvious code.
-
-## 例
-
-### Class Example
-```cpp
-class MyClass {
-public:
-    /**
-     * @brief MyClass オブジェクトのコンストラクタ
-     * @param name オブジェクトの名前
-     */
-    MyClass(std::string_view name);
-    
-    /**
-     * @brief オブジェクトの名前を取得
-     * @return オブジェクトの名前を string 形式で
-     */
-    [[nodiscard]] std::string_view get_name() const;
-
-private:
-    std::string name_;
-};</pre>
-
-    <p>&nbsp;</p>
-    <p>"英語版"</p>
     
     <pre class="prettyprint linenums lang-md">
-# Instructions for C++ Repository
+markdown
+# Instructions for GitHub Copilot for this C++ project
 
-## Overview
-This repository contains a C++ application that follows modern C++ guidelines. The code should be clean, efficient, and well-documented.
+## 全般的なガイドライン
 
-## Coding Style
-- **Naming Conventions:**
-  - Classes and structs should use `PascalCase`.
-  - Functions and variables should use `snake_case`.
-  - Global constants should use `SCREAMING_SNAKE_CASE`.
-- **Indentation:** Use 4 spaces for indentation. Do not use tabs.
-- **Braces:** Use Allman style braces (each brace on a new line).
-- **Whitespace:**
-  - Add a space before and after binary operators (`+`, `-`, `*`, `/`, `=`).
-  - Add a space after keywords like `if`, `for`, `while`.
-- **Headers:**
-  - Always use include guards.
-  - Sort include directives alphabetically.
+*   **言語バージョン:** すべてのコードは C++17 標準に準拠してください。
+*   **命名規則:**
+    *   関数、変数、メンバー変数は `snake_case` を使用してください。
+    *   クラス、構造体、列挙型は `PascalCase` を使用してください。
+    *   定数は `UPPER_SNAKE_CASE` を使用してください。
+*   **コードの書式設定:**
+    *   インデントはスペース4つを使用してください。
+    *   `if`, `for`, `while` などの制御文では、必ず波括弧 `{}` を使用してください。
+*   **コメント:**
+    *   すべての公開API（クラス、関数）には、その目的、引数、戻り値を説明するDoxygen形式のコメントを記述してください。
+    *   複雑なロジックや意図が不明瞭な箇所には、行コメントを適宜追加してください。
+*   **エラー処理:**
+    *   関数が失敗する可能性がある場合は、例外をスローするか、エラーコードを返すことを明確にしてください。
+    *   リソースを解放する必要がある場合は、RAII (Resource Acquisition Is Initialization) パターンを使用してください。
 
-## Language and Features
-- **Modern C++:** Prefer modern C++17/20 features (e.g., `std::optional`, `std::string_view`, structured bindings).
-- **Resource Management:** Use RAII (Resource Acquisition Is Initialization) and smart pointers (`std::unique_ptr`, `std::shared_ptr`) to manage resources.
-- **Const Correctness:** Use `const` where appropriate for variables, function parameters, and member functions to improve code safety.
-- **Error Handling:** Use exceptions for exceptional errors. For expected errors, prefer return values (e.g., `std::optional`, `std::error_code`).
-- **Standard Library:** Prefer the standard library over third-party libraries unless explicitly specified.
+## C++固有の指示
 
-## Documentation and Comments
-- **Doxygen:** Use Doxygen-style comments for all public classes, functions, and complex logic.
-- **Function Headers:** Every public function should have a brief description of what it does, its parameters, and its return value.
-- **Inline Comments:** Use inline comments sparingly to explain non-obvious code.
+### メモリ管理
+*   生のポインタではなく、`std::unique_ptr` や `std::shared_ptr` を優先的に使用してください。
+*   配列の場合は `std::vector` を、固定長の場合は `std::array` を使用してください。
 
-## Examples
+### コンテナ
+*   コンテナを使用する場合、可能な限り `const`参照を渡すようにしてください。
+*   パフォーマンスが重視される場面を除き、イテレータの無効化に注意してください。
 
-### Class Example
-```cpp
-class MyClass {
-public:
-    /**
-     * @brief Constructs a new MyClass object.
-     * @param name The name of the object.
-     */
-    MyClass(std::string_view name);
-    
-    /**
-     * @brief Gets the name of the object.
-     * @return The name as a string view.
-     */
-    [[nodiscard]] std::string_view get_name() const;
+### デザインパターン
+*   このプロジェクトでは、以下のデザインパターンを積極的に活用してください。
+    *   シングルトン
+    *   ファクトリーパターン
+    *   オブザーバーパターン
 
-private:
-    std::string name_;
-};</pre>
+### ヘッダーファイル
+*   ヘッダーファイルにはインクルードガード (`#pragma once` または `#ifndef/#define/#endif`) を追加してください。
+*   可能な限り、ヘッダーファイルでの依存関係を最小限に抑えるようにしてください。
+
+## 具体的なタスクの指示
+
+### ユニットテスト
+*   新しい機能を追加する際には、`test/` ディレクトリにユニットテストを記述してください。
+*   テストフレームワークとして Google Test を使用してください。
+
+### ドキュメンテーション
+*   公開されたAPIにはDoxygen形式のドキュメントを生成してください。
+*   Copilotは、新しいコードのドキュメントを生成する際に、上記のルールに従ってください。
+
+### リファクタリング
+*   既存のコードをリファクタリングする際には、Copilotはパフォーマンスの向上、コードの簡素化、および可読性の向上を優先してください。
+
+<br /></pre>
     <p>&nbsp;</p>
-   	<p>&nbsp;</p>	
 	
   </section>
   	
@@ -273,25 +216,69 @@ private:
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 5. サンプル</h2>
+  	<h2> 5. copilot-instructions.md サンプル</h2>
   	
     <section>
-      <h3>5-1. React で Webアプリ</h3>
+      <h3>5-1. c++</h3>
+    
+    <pre class="prettyprint linenums lang-md">
+markdown
+# Instructions for GitHub Copilot for this C++ project
+
+## 全般的なガイドライン
+
+*   **言語バージョン:** すべてのコードは C++17 標準に準拠してください。
+*   **命名規則:**
+    *   関数、変数、メンバー変数は `snake_case` を使用してください。
+    *   クラス、構造体、列挙型は `PascalCase` を使用してください。
+    *   定数は `UPPER_SNAKE_CASE` を使用してください。
+*   **コードの書式設定:**
+    *   インデントはスペース4つを使用してください。
+    *   `if`, `for`, `while` などの制御文では、必ず波括弧 `{}` を使用してください。
+*   **コメント:**
+    *   すべての公開API（クラス、関数）には、その目的、引数、戻り値を説明するDoxygen形式のコメントを記述してください。
+    *   複雑なロジックや意図が不明瞭な箇所には、行コメントを適宜追加してください。
+*   **エラー処理:**
+    *   関数が失敗する可能性がある場合は、例外をスローするか、エラーコードを返すことを明確にしてください。
+    *   リソースを解放する必要がある場合は、RAII (Resource Acquisition Is Initialization) パターンを使用してください。
+
+## C++固有の指示
+
+### メモリ管理
+*   生のポインタではなく、`std::unique_ptr` や `std::shared_ptr` を優先的に使用してください。
+*   配列の場合は `std::vector` を、固定長の場合は `std::array` を使用してください。
+
+### コンテナ
+*   コンテナを使用する場合、可能な限り `const`参照を渡すようにしてください。
+*   パフォーマンスが重視される場面を除き、イテレータの無効化に注意してください。
+
+### デザインパターン
+*   このプロジェクトでは、以下のデザインパターンを積極的に活用してください。
+    *   シングルトン
+    *   ファクトリーパターン
+    *   オブザーバーパターン
+
+### ヘッダーファイル
+*   ヘッダーファイルにはインクルードガード (`#pragma once` または `#ifndef/#define/#endif`) を追加してください。
+*   可能な限り、ヘッダーファイルでの依存関係を最小限に抑えるようにしてください。
+
+## 具体的なタスクの指示
+
+### ユニットテスト
+*   新しい機能を追加する際には、`test/` ディレクトリにユニットテストを記述してください。
+*   テストフレームワークとして Google Test を使用してください。
+
+### ドキュメンテーション
+*   公開されたAPIにはDoxygen形式のドキュメントを生成してください。
+*   Copilotは、新しいコードのドキュメントを生成する際に、上記のルールに従ってください。
+
+### リファクタリング
+*   既存のコードをリファクタリングする際には、Copilotはパフォーマンスの向上、コードの簡素化、および可読性の向上を優先してください。
+
+<br /></pre>
+      <p>&nbsp;</p>
     </section>
     
-    <section>
-      <h3>5-2. Kotlin で Androidアプリ</h3>
-    </section>
-    
-    <section>
-      <h3>5-3. c++ でコンソールアプリ</h3>
-    </section>
-    
-    <section>
-      <h3>&nbsp;</h3>
-    </section>
-    
-  	<p>&nbsp;</p>
    	<p>&nbsp;</p>	
 	
   </section>
