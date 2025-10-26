@@ -137,7 +137,7 @@ rect.bottom - rect.top</p>
 シンプルに Win32 のプロジェクトとして作成してみます。</p>
 <p>[環境]</p>
 <ul>
-	<li>Visual Studio 2015 pro., C#, .NET Framework 4.5</li>
+	<li>Visual Studio 2015 pro., c/c++ Windows デスクトップアプリケーション</li>
 	<li>OS: Windows10 home</li>
 </ul>
 <p>
@@ -149,7 +149,9 @@ rect.bottom - rect.top</p>
 7画素、の差異を確認することができます。</p>
 
 <p>&nbsp;</p>
-<p><img alt="実行結果" src="WindowPositionAndSize/img1D.gif" class="border_with_drop-shadow"></p>
+
+<p>図： ディスプレイ "100%" 表示時の例</p>
+<p><img alt="実行結果" src="WindowPositionAndSize/img1D.gif" class="border_with_drop-shadow" width="500"></p>
 <p>&nbsp;</p>
 <p>[プログラムソース]<br>プロシージャコールを抜粋で記載します。<br>全体については、サンプルダウンロードから取得して確認してください。</p>
 
@@ -232,7 +234,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       <div></div>
       <div>
         <p><strong>NOTE</strong></p>
-        <p>GetWindowRect と DwmGetWindowAttribute は下記違いもありそうです。どう活用したらよいか、難しい・・・。</p>
+        <p>GetWindowRect と DwmGetWindowAttribute は下記違いもありそうです。</p>
+        <p>DwmGetWindowsAttribute で得られる値は、ディスプレイの物理的な値と一致、<br>GetWindowRect 
+        で得られる値は、表示倍率に影響を受けない仮想的な表示情報、<br>と使い分けもできそうです。</p>
         <ul>
           <li>表示倍率の設定による影響<br>
             例えば 150% 表示にすると、DwmGetWindowAttribute の値の方が約150%大きくなります。</li>
@@ -241,21 +245,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     </div>
 
     <p>&nbsp;</p>
-	
-<p>&nbsp;</p>
-<h2>サンプルプログラム</h2>
+    
+<p>図： ディスプレイ "150%" 表示時の例</p>
 <p>
-サンプルプログラム <a href="WindowPositionAndSize/WindowControlSample.zip">ダウンロード</a></p>
+<img alt="150% 表示時の例" height="367" src="WindowPositionAndSize/img8.jpg" width="500" class="border_with_drop-shadow"></p>
 <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+<section>
+  <h2>サンプルプログラム</h2>
+  <p>サンプルプログラム <a href="WindowPositionAndSize/WindowControlSample.zip">ダウンロード</a></p>
+  <p>&nbsp;</p>
+</section>
+
 <p>&nbsp;</p>
 
 <section>
   <h2><a id="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<div class="license">
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <div class="license">
 The MIT License (MIT)<br><br>
 
-Copyright © 2015-2022 Kinoshita Hidetoshi<br><br>
+Copyright © 2015 Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -300,6 +311,11 @@ SOFTWARE.
 	<h2 style="margin-bottom:5px">変更履歴</h2>
 	<table>
 	  <tr>
+	    <td class="td_history_date">2025-10-26</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「図： ディスプレイ "150%" 表示時の例」を追加</td>
+	  </tr>
+	  <tr>
 	    <td class="td_history_date">2022-10-13</td>
 	    <td class="td_history_separator">-</td>
 	    <td class="td_history">ページデザイン更新</td>
@@ -327,7 +343,7 @@ SOFTWARE.
 <p>&nbsp;</p>
 
 <footer>
-	<p><small>Copyright © 2015-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+	<p><small>© 2015 Kinoshita Hidetoshi (木下英俊)</small></p>
 </footer>
 
 </body>
