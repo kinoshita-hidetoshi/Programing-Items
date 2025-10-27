@@ -86,8 +86,10 @@ https://ja.cppreference.com/w/cpp/container/vector</a></p>
 <p> &nbsp;</p>
 
 <div>
+
 <h5 style="border-bottom: 1px solid rgb(170,170,170); border-bottom-color: rgb(170, 170, 170);margin-bottom:6px;">
 std::vector&lt;T,Allocator&gt;::<span class="auto-style2">push_back</span></h5>
+
 <table>
 <tbody>
 	<tr>
@@ -122,7 +124,10 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">push_back</span></h5>
 	が新しい要素にムーブされます。</p>
 	<p style="margin-bottom:0px">新しい size() が capacity() 
 より大きい場合は、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
-<h5 style="margin-bottom:0px">引数</h5>
+  <p>&nbsp;</p>
+
+<h5 style="margin-bottom:0px">引数:</h5>
+
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">value</td>
@@ -130,7 +135,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">push_back</span></h5>
 		<td style="padding-top:0px;padding-bottom:0px">追加する要素の値</td>
 	</tr>
 </table>
-<h5 style="margin-bottom:0px">戻り値</h5>
+
+<h5 style="margin-bottom:0px">戻り値:</h5>
+
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">(なし)</td>
@@ -174,7 +181,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">push_back</span></h5>
 <p> &nbsp;</p>
 
 <h4>[プログラムソース]</h4>
-<pre class="prettyprint linenums">#include &lt;iostream&gt;
+
+<pre class="prettyprint linenums" style="width: 800px">
+#include &lt;iostream&gt;
 #include &lt;vector&gt;
  
 int main()
@@ -316,7 +325,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">insert</span></h5>
 	の前に初期化子リスト ilist から要素を挿入します。</p>
 	<p style="margin-bottom:0px">新しい size() が capacity() 
 より大きい場合は再確保が発生し、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
-<h5 style="margin-bottom:0px">引数</h5>
+  <p>&nbsp;</p>
+
+<h5 style="margin-bottom:0px">引数:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">pos</td>
@@ -341,7 +352,7 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">insert</span></h5>
 		<td style="padding-top:0px;padding-bottom:0px">挿入する値の初期化子リスト</td>
 	</tr>
 </table>
-<h5 style="margin-bottom:0px">戻り値</h5>
+<h5 style="margin-bottom:0px">戻り値:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">挿入された value を指すイテレータ。</td>
@@ -401,7 +412,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">insert</span></h5>
 <p> &nbsp;</p>
 
 <h4>[プログラムソース]</h4>
-<pre class="prettyprint linenums">#include &lt;iostream&gt;
+
+<pre class="prettyprint linenums" style="width: 800px">
+#include &lt;iostream&gt;
 #include &lt;vector&gt;
 
 void print_vec(const std::vector&lt;int&gt;&amp; vec)
@@ -436,7 +449,9 @@ int main()
     print_vec(vec);
 }</pre>
 &nbsp;<h4>[出力]</h4>
-<pre>100 100 100
+
+<pre style="width: 800px">
+100 100 100
 200 100 100 100
 300 300 200 100 100 100
 300 300 400 400 200 100 100 100
@@ -450,8 +465,8 @@ int main()
 <h2> <a name="3._emplace_back (c++11)">3. emplace_back (c++11)</a></h2>
 <h4>[概要]</h4>
 <p> emplace_back を使った要素を挿入する例を示します。</p>
-<p> emplace_back, emplace_front は c++11 以降で使用可能です。<br>push_back 
-を使用したときに必要なコピーやムーブを回避するために、どのように emplace_back を使用すれば良いかを示します。</p>
+<p> emplace_back, emplace_front は c++11 以降で使用可能です。<br>
+push_back を使用したときに必要なコピーやムーブを回避するために、どのように emplace_back を使用すれば良いかを示します。</p>
 <p> &nbsp;</p>
 
 <div>
@@ -489,7 +504,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 
 <p style="margin-bottom:0px">コンテナの終端に新しい要素を追加します。<br>新しい size() が capacity() 
 より大きい場合は再確保が発生し、すべてのイテレータおよび参照（終端イテレータを含む）が無効化されます。そうでなければ、終端イテレータのみが無効化されます。</p>
-<h5 style="margin-bottom:0px">引数</h5>
+  <p>&nbsp;</p>
+
+<h5 style="margin-bottom:0px">引数:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">args</td>
@@ -497,7 +514,8 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 		<td style="padding-top:0px;padding-bottom:0px">要素のコンストラクタに転送される引数</td>
 	</tr>
 </table>
-<h5 style="margin-bottom:0px">戻り値</h5>
+
+<h5 style="margin-bottom:0px">戻り値:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">(なし)</td>
@@ -545,7 +563,8 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace_back</span></h
 <p>&nbsp;</p>
 
 <h4>[プログラムソース]</h4>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+<pre class="prettyprint linenums" style="width: 800px"><code>
+#include &lt;iostream&gt;
 #include &lt;vector&gt;
 #include &lt;string&gt;
 
@@ -611,10 +630,15 @@ int main()
     }
 }</code></pre>
 	
-<h4>&nbsp;</h4>
-  <h4>[出力]<br>
-</h4>
-<pre><code>emplace_back:
+  <p>&nbsp;</p>
+  
+  <h4>[出力]</h4>
+  <p>emplace_back と push_back の動作違いを以下で確認できます。</p>
+  <p>push_back では "I am being moved." がありますが、emplace_back にはありません。emplace_back 
+  を使用すると中間オブジェクトの生成が無くなって move や copy が無くなって処理が効率化されていることを確認できます。</p>
+
+  <pre style="width: 800px"><code>
+emplace_back:
 I am being constructed.
 
 push_back:
@@ -632,11 +656,7 @@ Nelson Mandela was elected president of South Africa in 1994.
 Franklin Delano Roosevelt was re-elected president of the USA in 1936.</code></pre>
 	
   <p>&nbsp;</p>
-  <p>
-	
-<br>
-	
-  </p>
+  <p>&nbsp;</p>
 	
 </section>
 
@@ -668,7 +688,9 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace</span></h5>
 </table>
 
 <p style="margin-bottom:0px">新しい要素を pos の前に直接挿入します。<br>c++11 以降で使用可能です。</p>
-<h5 style="margin-bottom:0px">引数</h5>
+<p>&nbsp;</p>
+
+<h5 style="margin-bottom:0px">引数:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">pos</td>
@@ -681,7 +703,8 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace</span></h5>
 		<td style="padding-top:0px;padding-bottom:0px">要素のコンストラクタに転送される引数</td>
 	</tr>
 </table>
-<h5 style="margin-bottom:0px">戻り値</h5>
+
+<h5 style="margin-bottom:0px">戻り値:</h5>
 <table>
 	<tr>
 		<td style="padding-top:0px;padding-bottom:0px">挿入された要素を指すイテレータ。</td>
@@ -723,7 +746,8 @@ std::vector&lt;T,Allocator&gt;::<span class="auto-style2">emplace</span></h5>
 <p>&nbsp;</p>
 
 <h4>[プログラムソース]</h4>
-<pre class="prettyprint linenums">#include &lt;iostream&gt;
+<pre class="prettyprint linenums" style="width: 800px">
+#include &lt;iostream&gt;
 #include &lt;vector&gt;
 #include &lt;string&gt;
 
@@ -775,9 +799,13 @@ int main()
         std::cout &lt;&lt; president &lt;&lt; std::endl;
     }
 }</pre>
-<h4>&nbsp;[出力]<br>
-</h4>
-<pre>emplace_back:
+
+<p>&nbsp;</p>
+
+<h4>[出力]</h4>
+  
+<pre style="width: 800px">
+emplace_back:
 I am being constructed.
 I am being constructed.
 I am being moved.
