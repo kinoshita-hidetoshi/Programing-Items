@@ -167,7 +167,75 @@ markdown
 
 ### リファクタリング
 *   既存のコードをリファクタリングする際には、Copilotはパフォーマンスの向上、コードの簡素化、および可読性の向上を優先してください。
-    </pre>
+    
+## 禁止事項
+*   `#define`マクロは、インクルードガードを除いて使用しないでください。
+*   `constexpr`や`enum class`を優先してください。
+*   グローバル変数の使用は避けてください。
+*   生のCスタイル配列や`void*`は使用しないでください。
+
+## 例 
+
+### 良い例
+```cpp
+// good_example.h
+#pragma once 
+#include &lt;iostream&gt;
+
+<iostream>/**
+ * @brief 挨拶を管理するクラス
+ */
+class Greeter {
+public:
+    Greeter(const std::string&amp; name); 
+
+    /**
+     * @brief 挨拶を出力する
+     */
+    void say_hello() const;
+
+private: 
+    std::string m_name; 
+}; 
+
+// good_example.cpp 
+#include "good_example.h"
+
+Greeter::Greeter(const std::string&amp; name)
+    : m_name(name) {}
+
+void Greeter::say_hello() const {
+    std::cout &lt;&lt; "Hello, " &lt;&lt; m_name &lt;&lt; "!" &lt;&lt; std::endl; 
+}
+
+
+### 悪い例
+```cpp
+// bad_example.h
+#ifndef BAD_EXAMPLE_H
+#define BAD_EXAMPLE_H
+
+// マクロは使用しない 
+#define GREETING "Hello" 
+
+class BadGreeter { 
+public: 
+    void say_hello(char* name);   // Cスタイル配列と生ポインタ 
+
+private: 
+    // メンバー変数にプレフィックスがない 
+    std::string name; 
+}; 
+#endif // BAD_EXAMPLE_H 
+
+
+// bad_example.cpp 
+#include "bad_example.h" 
+
+void BadGreeter::say_hello(char* name) { 
+    // グローバル変数を避ける 
+    std::cout &lt;&lt; GREETING &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!" &lt;&lt; std::endl; 
+} </pre>
 
     <p>&nbsp;</p>
     <p style="font-size: medium;"><strong>このファイルの使い方</strong></p>
