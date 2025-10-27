@@ -50,18 +50,19 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p>1. はじめに</p>
-      <p>2. copilot-instructions.md の紹介</p>
-      <p>3. copilot-instructions.md を作成する</p>
-        <p>4. どんなことを書く？</p>
-        <p>&nbsp;&nbsp; 4-1. 前提条件</p>
+    	<p><a href="#1._はじめに">1. はじめに</a></p>
+      <p><a href="#2._copilot-instructions.md_の紹介">2. copilot-instructions.md の紹介</a></p>
+      <p><a href="#3._copilot-instructions.md_を作成する">3. copilot-instructions.md を作成する</a></p>
+        <p><a href="#4._どんなことを書く？">4. どんなことを書く？</a></p>
+        <p>&nbsp;&nbsp; 4-1. 全般的なガイドライン、前提条件</p>
         <p>&nbsp;&nbsp; 4-2. アプリ概要</p>
-        <p>&nbsp;&nbsp; 4-3. 技術スタック</p>
-        <p>&nbsp;&nbsp; 4-4. ディレクトリ構成</p>
-        <p>&nbsp;&nbsp; 4-5. アーキテクチャ・設計指針</p>
-        <p>&nbsp;&nbsp; 4-6. テスト方針</p>
-        <p>&nbsp;&nbsp; 4-7. アンチパターン</p>
-        <p>5. サンプル</p>
+        <p>&nbsp;&nbsp; 4-3. ディレクトリ構成</p>
+        <p>&nbsp;&nbsp; 4-4. 使用している言語 固有の指示</p>
+        <p>&nbsp;&nbsp; 4-5. フレームワーク、主要なライブラリ </p>
+        <p>&nbsp;&nbsp; 4-6. アーキテクチャ・設計指針</p>
+        <p>&nbsp;&nbsp; 4-7. テスト方針</p>
+        <p>&nbsp;&nbsp; 4-8. アンチパターン</p>
+        <p><a href="#5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></p>
         <p>&nbsp;&nbsp; 5-1. React で Webアプリ </p>
         <p>&nbsp;&nbsp; 5-2. Kotlin で Androidアプリ</p>
         <p>&nbsp;&nbsp; 5-3. c++ でコンソールアプリ</p>
@@ -75,7 +76,7 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 1. はじめに</h2>
+  	<h2> <a name="1._はじめに">1. はじめに</a></h2>
   	
   	<p>GitHub Copilot を使用している皆さんは <span class="cpp-source">
     .github/copilot-instructions.md</span> というファイルをご存じでしょうか。</p>
@@ -91,7 +92,7 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 2. copilot-instructions.md の紹介</h2>
+  	<h2> <a name="2._copilot-instructions.md_の紹介">2. copilot-instructions.md の紹介</a></h2>
     <p> "copilot-instructions.md" は、対象リポジトリにおける GitHub Copilot 
     への指示書です。このファイルは、GitHub Copilot 
     がユーザーの指示を処理する前に真っ先に読み込む指示書として機能します。特別な設定は不要で、プロジェクトの .github フォルダに 
@@ -105,7 +106,7 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 3. copilot-instructions.md を作成する</h2>
+  	<h2> <a name="3._copilot-instructions.md_を作成する">3. copilot-instructions.md を作成する</a></h2>
     <p> 難しく考えずに、c++ 用の "copilot-instructions.md" を Google AI (Jemini?) に 
     「<span class="cpp-source">c++ 用の copilot-instructions.md を作成して</span>」 
     とお願いして作成してもらいました。<br>
@@ -171,7 +172,8 @@ markdown
     <p>&nbsp;</p>
     <p style="font-size: medium;"><strong>このファイルの使い方</strong></p>
     <ol>
-      <li>上記の内容をコピーし、プロジェクトのルートディレクトリに&nbsp;<span class="cpp-source">.github/copilot-instructions.md</span>&nbsp;という名前で保存します。</li>
+      <li>上記の内容をコピーし、プロジェクトのルートディレクトリに&nbsp;<span class="cpp-source">.github/copilot-instructions.md</span>&nbsp;という名前で保存します。<br>
+      フォルダ <span class="cpp-source">.github</span> 中に保存すること、ご注意ください。</li>
       <li>プロジェクトのコーディングスタイルや要件に合わせて、このファイルを編集します。</li>
       <li>このファイルをリポジトリにコミットし、他の開発者と共有します。 </li>
     </ol>
@@ -182,39 +184,64 @@ markdown
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 4. どんなことを書く？</h2>
+  	<h2> <a name="4._どんなことを書く？">4. どんなことを書く？</a></h2>
 
     <section>
-      <h3>4-1. 前提条件</h3>
+      <h3>4-1. 全般的なガイドライン、前提条件</h3>
+      <p>「回答は必ず日本語で」や「100行以上の大規模な変更を行う場合は、先に変更計画を提案してください」というような全般的なルールを記載します。</p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
       <h3>4-2. アプリ概要</h3>
+      <p>このプロジェクトが作成するアプリケーションの目的、主要な機能、を簡潔に記載します。</p>
+      <p>AI がプロジェクト全体像を理解することで、無駄なファイル探索を減らしてより的確な回答を行えるようにします。</p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
-      <h3>4-3. 技術スタック</h3>
+      <h3>4-3. 使用している言語 固有の指示</h3>
+      <p>「C++ を使用します」や［言語バージョン: すべてのコードは C++17 標準に準拠してください」などです。</p>
+      <p>上記のAIが作成した例に記載の内容は、多くが本項目に該当しますね。</p>
+      <p>&nbsp;</p>
+      <h3>4-4. フレームワーク、主要なライブラリ</h3>
+      <p>
+      フレームワーク、主要なライブラリとそれらのバージョンを明記します。これにより、Copilotがプロジェクトで使われていないライブラリを勝手にimportしたり、古い構文を提案したりするのを防げます。 
+      </p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
-      <h3>4-4. ディレクトリ構成</h3>
+      <h3>4-5. ディレクトリ構成</h3>
+      <p>主要なディレクトリと、それぞれの役割を説明します。</p>
+      <p>
+      「src/features には機能ごと、src/share dには共通コンポーネント」などと記述することで、Copilot 
+      が新しいファイルを適切な場所に作成・提案するようになります。 </p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
-      <h3>4-5. アーキテクチャ・設計指針</h3>
+      <h3>4-6. アーキテクチャ・設計指針</h3>
+      <p>プロジェクトで採用している設計指針（例:&nbsp;MVVM、Atomic Design、Clean Architectureなど）を記載します。</p>
+      <p>これを定義しないと、AIが既存の設計と一貫性のないコードを生成してしまう可能性があります。チーム開発では特に重要です。 </p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
-      <h3>4-6. テスト方針</h3>
+      <h3>4-7. テスト方針</h3>
+      <p>使用しているテストフレームワーク（Google Test, Vitest, Jest, RSpec など）、テストの記述方針（「テストコードは 
+      __tests_ _配下に置く」「カバレッジは80%を目指す」など）を記載します。</p>
+      <p>&nbsp;</p>
     </section>
     
     <section>
-      <h3>4-7. アンチパターン</h3>
+      <h3>4-8. アンチパターン</h3>
     </section>
 
 
   	
-  	<p>&nbsp;</p>
+  	<p>「こう書かないでほしい」というルールを記載することも有効です。</p>
+    <p>例えば、「default export は禁止」「any 型は原則使用禁止」などプロジェクト固有の禁止事項を明記しましょう。 </p>
    	<p>&nbsp;</p>	
 	
   </section>
@@ -222,7 +249,7 @@ markdown
   <p>&nbsp;</p>
   
   <section>
-  	<h2> 5. copilot-instructions.md サンプル</h2>
+  	<h2> <a name="5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></h2>
   	
     <section>
       <h3>5-1. c++</h3>
