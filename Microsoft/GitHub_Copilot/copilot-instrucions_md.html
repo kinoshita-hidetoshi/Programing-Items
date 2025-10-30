@@ -117,14 +117,16 @@
     <p>"copilot-instructions.md" サンプル</p>
     
     <pre class="prettyprint linenums lang-md">
-markdown
 # Instructions for GitHub Copilot for this C++ project
 
 ## 全般的なガイドライン
 
-*   **言語バージョン:** すべてのコードは C++17 標準に準拠してください。
+*   **言語バージョン:** すべてのコードは C++23 標準に準拠してください。
 *   **命名規則:**
-    *   関数、変数、メンバー変数は `snake_case` を使用してください。
+    *   関数、メソッド名 は `camelCase` を使用してください
+    *   関数、メソッド名 は動詞で始めてください（例: `calculateSum`、`getData`）
+    *   変数、メンバー変数は `snake_case` を使用してください。
+    *   private メンバー変数には `_` サフィックスを付けてください。
     *   クラス、構造体、列挙型は `PascalCase` を使用してください。
     *   定数は `UPPER_SNAKE_CASE` を使用してください。
 *   **コードの書式設定:**
@@ -154,7 +156,7 @@ markdown
     *   オブザーバーパターン
 
 ### ヘッダーファイル
-*   ヘッダーファイルにはインクルードガード (`#pragma once` または `#ifndef/#define/#endif`) を追加してください。
+*   ヘッダーファイルにはインクルードガード ( `#pragma once` または `#ifndef/#define/#endif` ) を追加してください。
 *   可能な限り、ヘッダーファイルでの依存関係を最小限に抑えるようにしてください。
 
 ## 具体的なタスクの指示
@@ -171,10 +173,10 @@ markdown
 *   既存のコードをリファクタリングする際には、Copilotはパフォーマンスの向上、コードの簡素化、および可読性の向上を優先してください。
     
 ## 禁止事項
-*   `#define`マクロは、インクルードガードを除いて使用しないでください。
-*   `constexpr`や`enum class`を優先してください。
+*   `#define` マクロは、インクルードガードを除いて使用しないでください。
+*   `constexpr` や `enum class` を優先してください。
 *   グローバル変数の使用は避けてください。
-*   生のCスタイル配列や`void*`は使用しないでください。
+*   生のCスタイル配列や `void*` は使用しないでください。
 
 ## 例 
 
@@ -184,7 +186,7 @@ markdown
 #pragma once 
 #include &lt;iostream&gt;
 
-<iostream>/**
+/**
  * @brief 挨拶を管理するクラス
  */
 class Greeter {
@@ -233,13 +235,14 @@ private:
 
 // bad_example.cpp 
 #include "bad_example.h" 
-
 void BadGreeter::say_hello(char* name) { 
     // グローバル変数を避ける 
     std::cout &lt;&lt; GREETING &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!" &lt;&lt; std::endl; 
 } </pre>
 
     <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
     <p style="font-size: medium;"><strong>このファイルの使い方</strong></p>
     <ol>
       <li>上記の内容をコピーし、プロジェクトのルートディレクトリに&nbsp;<span class="cpp-source">.github/copilot-instructions.md</span>&nbsp;という名前で保存します。<br>
@@ -325,14 +328,16 @@ void BadGreeter::say_hello(char* name) {
       <h3>5-1. c++</h3>
     
     <pre class="prettyprint linenums lang-md">
-markdown
 # Instructions for GitHub Copilot for this C++ project
 
 ## 全般的なガイドライン
 
-*   **言語バージョン:** すべてのコードは C++17 標準に準拠してください。
+*   **言語バージョン:** すべてのコードは C++23 標準に準拠してください。
 *   **命名規則:**
-    *   関数、変数、メンバー変数は `snake_case` を使用してください。
+    *   関数、メソッド名 は `camelCase` を使用してください
+    *   関数、メソッド名 は動詞で始めてください（例: `calculateSum`、`getData`）
+    *   変数、メンバー変数は `snake_case` を使用してください。
+    *   private メンバー変数には `_` サフィックスを付けてください。
     *   クラス、構造体、列挙型は `PascalCase` を使用してください。
     *   定数は `UPPER_SNAKE_CASE` を使用してください。
 *   **コードの書式設定:**
@@ -362,7 +367,7 @@ markdown
     *   オブザーバーパターン
 
 ### ヘッダーファイル
-*   ヘッダーファイルにはインクルードガード (`#pragma once` または `#ifndef/#define/#endif`) を追加してください。
+*   ヘッダーファイルにはインクルードガード ( `#pragma once` または `#ifndef/#define/#endif` ) を追加してください。
 *   可能な限り、ヘッダーファイルでの依存関係を最小限に抑えるようにしてください。
 
 ## 具体的なタスクの指示
@@ -377,8 +382,75 @@ markdown
 
 ### リファクタリング
 *   既存のコードをリファクタリングする際には、Copilotはパフォーマンスの向上、コードの簡素化、および可読性の向上を優先してください。
+    
+## 禁止事項
+*   `#define` マクロは、インクルードガードを除いて使用しないでください。
+*   `constexpr` や `enum class` を優先してください。
+*   グローバル変数の使用は避けてください。
+*   生のCスタイル配列や `void*` は使用しないでください。
 
-<br /></pre>
+## 例 
+
+### 良い例
+```cpp
+// good_example.h
+#pragma once 
+#include &lt;iostream&gt;
+
+/**
+ * @brief 挨拶を管理するクラス
+ */
+class Greeter {
+public:
+    Greeter(const std::string&amp; name); 
+
+    /**
+     * @brief 挨拶を出力する
+     */
+    void say_hello() const;
+
+private: 
+    std::string m_name; 
+}; 
+
+// good_example.cpp 
+#include "good_example.h"
+
+Greeter::Greeter(const std::string&amp; name)
+    : m_name(name) {}
+
+void Greeter::say_hello() const {
+    std::cout &lt;&lt; "Hello, " &lt;&lt; m_name &lt;&lt; "!" &lt;&lt; std::endl; 
+}
+
+
+### 悪い例
+```cpp
+// bad_example.h
+#ifndef BAD_EXAMPLE_H
+#define BAD_EXAMPLE_H
+
+// マクロは使用しない 
+#define GREETING "Hello" 
+
+class BadGreeter { 
+public: 
+    void say_hello(char* name);   // Cスタイル配列と生ポインタ 
+
+private: 
+    // メンバー変数にプレフィックスがない 
+    std::string name; 
+}; 
+#endif // BAD_EXAMPLE_H 
+
+
+// bad_example.cpp 
+#include "bad_example.h" 
+void BadGreeter::say_hello(char* name) { 
+    // グローバル変数を避ける 
+    std::cout &lt;&lt; GREETING &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!" &lt;&lt; std::endl; 
+} </pre>
+
       <p>&nbsp;</p>
     </section>
     
