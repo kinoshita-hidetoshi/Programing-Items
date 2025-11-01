@@ -351,7 +351,7 @@ $ </pre>
         <p><strong>NOTE</strong></p>
         <ul>
           <li>明示的に new で生成</li>
-          <li>&nbsp;スレッドセーフではないので、ロックが必要</li>
+          <li>スレッドセーフではないので、ロックが必要</li>
           <li>破棄タイミングの制御が難しい</li>
         </ul>
       </div>
@@ -397,8 +397,15 @@ $ </pre>
 class Singleton {
 private:
     static Singleton* instance;
-    Singleton() {}
+    Singleton() = default;
+    Singleton() = default;
 public:
+    // コピー/ムーブを削除してシングルトンを保証
+    Singleton(const Logger&amp;) = delete;
+    Singleton&amp; operator=(const Singleton&amp;) = delete;
+    Singleton(Singleton&amp;&amp;) = delete;
+    Singleton&amp; operator=(Singleton&amp;&amp;) = delete;
+
     static Singleton* getInstance() {
         if (!instance) {
             instance = new Singleton();
@@ -406,6 +413,7 @@ public:
         return instance;
     }
 };
+
 Singleton* Singleton::instance = nullptr;</pre>
 
     <p>&nbsp;</p>
@@ -469,18 +477,31 @@ Singleton* Singleton::instance = nullptr;</pre>
     
   	<p>[プログラムソース &quot;***.cpp&quot;]</p>
     <pre class="prettyprint linenums lang-cpp" style="width:1000px">
-std::mutex mtx;
-Singleton* Singleton::instance = nullptr;
+class Singleton {
+private:
+    static Singleton* instance;
+    Singleton() = default;
+    Singleton() = default;
+public:
+    // コピー/ムーブを削除してシングルトンを保証
+    Singleton(const Logger&amp;) = delete;
+    Singleton&amp; operator=(const Singleton&amp;) = delete;
+    Singleton(Singleton&amp;&amp;) = delete;
+    Singleton&amp; operator=(Singleton&amp;&amp;) = delete;
 
-Singleton* Singleton::getInstance() {
-    if (!instance) {
-        std::lock_guard&lt;std::mutex&gt; lock(mtx);
+    static Singleton* getInstance() {
         if (!instance) {
-            instance = new Singleton();
+            std::lock_guard&lt;std::mutex&gt; lock(mtx);
+            if (!instance) {
+                instance = new Singleton();
+            }
         }
+        return instance;
     }
-    return instance;
-}</pre>
+};
+
+Singleton* Singleton::instance = nullptr;
+std::mutex mtx;</pre>
 
     <p>&nbsp;</p>
   </section>
