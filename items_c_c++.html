@@ -509,23 +509,6 @@
   			<li>noexcept演算子 (c++11)</li>
       </ul>
 
-      <li class="accordion-toggle">
-        <a class="menu-link">Network</a>
-      </li>
-      <ul>
-  			<li>asio</li>
-  			<li><a href="C++/network/cpprestsdk.html" onclick="checkedOff()">cpprestsdk</a></li>
-  			<li><a href="C++/network/curl.html" onclick="checkedOff()">libcurl</a></li>
-      </ul>
-
-      <li class="accordion-toggle">
-        <a class="menu-link">他</a>
-      </li>
-      <ul>
-  			<li><a href="C++/etc/Properties.html" onclick="checkedOff()">Properties</a></li>
-            <li><a href="C++/etc/modern_cpp_introduction.html">Modern C++ 入門</a></li>
-      </ul>
-
     </ul>
   </ul>
 </div>
@@ -678,23 +661,117 @@
   <ul class="menu-list">
     
     <li class="accordion-toggle" style="list-style-type:none;">
+      <a class="menu-link" name="design-pattern_menu_top">デザインパターン</a>
+    </li>
+    <ul>
+      <li class="accordion-toggle"><a class="menu-link">生成</a></li>
+      <ul>
+        <!-- 
+        <li><a href="C++/design_pattern/abstract_factory.html">Abstract Factory</a></li>
+        <li><a href="C++/design_pattern/builder.html">Builder</a></li>
+        <li><a href="C++/design_pattern/factory_method.html">Factory Method</a></li>
+        <li><a href="C++/design_pattern/prototype.html">Prototype</a></li>
+        -->
+        <li>Abstract Factory</li>
+        <li>Builder</li>
+        <li>Factory Method</li>
+        <li>Prototype</li>
+        <li><a href="C++/design_pattern/singleton.html" onclick="checkedOff()">Singleton</a></li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">構造</a></li>
+      <ul>
+        <li>Adapter</li>
+        <li>Bridge</li>
+        <li>Composite</li>
+        <li>Decorator</li>
+        <li>Facade</li>
+        <li>Flyweight</li>
+        <li>Proxy</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">振る舞い</a></li>
+      <ul>
+        <li>Chain of Responsibility</li>
+        <li>Command</li>
+        <li>Interpreter</li>
+        <li>Iterator</li>
+        <li>Mediator</li>
+        <li>Memento</li>
+        <li>Observer</li>
+        <li>State</li>
+        <li>Strategy</li>
+        <li>Template Method</li>
+        <li>Visitor</li>
+      </ul>
+      
+      <li class="accordion-toggle"><a class="menu-link">マルチスレッド</a></li>
+      <ul>
+        <li>Active object</li>
+        <li>Balking</li>
+        <li>Double-checked locking</li>
+        <li>Future</li>
+        <li>Guarded suspension</li>
+        <li>Lock</li>
+        <li>Monitor</li>
+        <li>Producer-consumer</li>
+        <li>Reactor</li>
+        <li>Readers-writer lock</li>
+        <li>Scheduler</li>
+        <li>Thread pool</li>
+        <li>Thread-specific storage</li>
+        <li>Two-phase termination</li>
+      </ul>
+    </ul>
+  </ul>
+</div>
+
+<hr>
+
+<!-- etc -->
+<a href="items_top.html" target="_self">
+  <li class="return">
+    <img class="return" alt="戻る アイコン" src="Images/to_upper_folder.png">
+    <label class="return">戻る</label>
+  </li>
+</a>
+
+<div class="menu-container">
+  <ul class="menu-list">
+    
+    <li class="accordion-toggle" style="list-style-type:none;">
       <a class="menu-link" name="etc_menu_top">etc</a>
     </li>
     <ul>
-      <li>cmake</li>
+      <li class="accordion-toggle"><a class="menu-link">make</a></li>
       <ul>
+        <li><a href="Etc/make/make.html" onclick="checkedOff();">make</a></li>
         <li><a href="Etc/cmake/cmake.html" onclick="checkedOff();">cmake</a></li>
         <li><a href="Etc/cmake/cmake_ctest.html" onclick="checkedOff();">ctest</a></li>
       </ul>
-      <li>make</li>
+      
+      <li class="accordion-toggle">
+        <a class="menu-link">Network</a>
+      </li>
       <ul>
-        <li><a href="Etc/make/make.html" onclick="checkedOff();">make</a></li>
-      </ul>    
-      <li><a href="C++/etc/cppcheck.html" onclick="checkedOff()">cppcheck</a></li>
-      <li><a href="C++/etc/valgrind.html" onclick="checkedOff()">valgrind</a></li>
-      <li><a href="Etc/coverage/gcov_lcov.html" onclick="checkedOff()">gcov/lcov</a></li>
-      <li><a href="C++/etc/OpenCppCoverage.html" onclick="checkedOff()">OpenCppCoverage</a></li>
+  			<li>asio</li>
+  			<li><a href="C++/network/cpprestsdk.html" onclick="checkedOff()">cpprestsdk</a></li>
+  			<li><a href="C++/network/curl.html" onclick="checkedOff()">libcurl</a></li>
+      </ul>
+      
+      <li class="accordion-toggle">
+        <a class="menu-link">Tools</a>
+      </li>
+      <ul>
+        <li><a href="C++/etc/cppcheck.html" onclick="checkedOff()">cppcheck</a></li>
+        <li><a href="C++/etc/valgrind.html" onclick="checkedOff()">valgrind</a></li>
+        <li><a href="Etc/coverage/gcov_lcov.html" onclick="checkedOff()">gcov/lcov</a></li>
+        <li><a href="C++/etc/OpenCppCoverage.html" onclick="checkedOff()">OpenCppCoverage</a></li>
+      </ul>
+      
       <li><a href="C++/etc/online_programing_environment.html" onclick="checkedOff()">オンラインプログラミング環境</a></li>
+  		<li><a href="C++/etc/Properties.html" onclick="checkedOff()">Properties</a></li>
+      <li><a href="C++/etc/modern_cpp_introduction.html">Modern C++ 入門 | CodeZine</a></li>
     </ul>
   </ul>
 </div>
