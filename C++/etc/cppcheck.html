@@ -319,7 +319,29 @@ int main()
         </tr>
         <tr>
           <td><strong>--xml</strong></td>
-          <td>解析結果の出力を xml 形式にする</td>
+          <td>解析結果の出力を xml 形式にする<br><br>ポイントは 
+          <span class="cpp-source">--xml</span> オプションを使い、標準エラー出力 (stderr) 
+          をファイルへリダイレクトすること。Cppcheck の XML 出力は標準出力ではなく標準エラーに出力される。このため 
+          <span class="cpp-source">2&gt;</span> を使って <span class="cpp-source">
+          result.xml</span> に保存する必要がある。<br><br>
+          
+          例： <span class="cpp-source">cppcheck --xml path/to/source/code <strong>2&gt;</strong> result.xml<br></span><br>
+          
+          出力されるXMLイメージ：<br>
+          
+          <pre class="prettyprint lang-xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;results version="2"&gt;
+  &lt;cppcheck version="1.86"/&gt;
+  &lt;errors&gt;
+    &lt;error id="bufferAccessOutOfBounds" severity="error" msg="Buffer is accessed out of bounds: tmp"&gt;
+      &lt;location file="src/main.cpp" line="42"/&gt;
+      &lt;symbol&gt;tmp&lt;/symbol&gt;
+    &lt;/error&gt;
+  &lt;/errors&gt;
+&lt;/results&gt;</pre>
+
+          </td>
         </tr>
         <tr>
           <td><strong style="white-space: nowrap">--platform</strong></td>
@@ -404,7 +426,7 @@ int main()
         <tr>
           <td><strong style="white-space: nowrap">--inline-suppr</strong></td>
           <td>
-            ソースコード内へ直接記載する インライン抑制 です。<br>cppcheck のコマンドライン引数に "--inline-suppr" 
+            ソースコード内へ直接記載する インライン抑制 です。<br>cppcheck のコマンドライン引数に "<span class="cpp-source">--inline-suppr</span>" 
             を追加したうえで、ソースコード内に抑制内容を記載します。<br>ソースコード内への記載例を以下に記載します。<br>
             <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 // 特定の警告を抑制する例 
@@ -623,6 +645,7 @@ int main() {
     <p> &nbsp;</p>
     <p> 実行結果は以下の通りです。</p>
     <p> 変数 x を未初期化であることを検出しています。</p>
+    
     <pre style="background-color: #000000; color: #FFFFFF; width: 800px;">
 $ cppcheck --enable=all --suppress=missingIncludeSystem --platform=unix64 --std=c++20 sample_02.cpp
 Checking sample_02.cpp ...
