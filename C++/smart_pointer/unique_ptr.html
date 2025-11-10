@@ -58,14 +58,14 @@
 	<li><span class="t-mark">template&lt;class T, class Deleter = 
 	std::default_delete&lt;T&gt;&gt; class unique_ptr;</span></li>
 	<li><span class="t-mark">template &lt;class T, class Deleter&gt; class 
-	unique_ptr&lt;T[], Deleter&gt;;<br>-&gt; 配列T[]をサポートします。</span></li>
+	unique_ptr&lt;T[], Deleter&gt;;<br>⇨ 配列 T[] をサポートします。</span></li>
 </ol>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <div class="mokuji">
   <nav>
   <h2>目次</h2>
-  <p><a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a></p>
+  <p><a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a></p>
   <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
   <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
   <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
@@ -78,97 +78,197 @@
 </div>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2>評価環境：</h2>
-<ul>
-	<li>コンパイラ： Visual Studio 2013</li>
-	<li>ＯＳ： Windows8.1 Proffesional 64bit 日本語版</li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a></h2>
-<p>まずは <strong><em>unique_ptr</em></strong> を使ってみます。<strong><em>shared_ptr</em></strong> 
-とほとんど同じ感じで使用できますが、コピーはできません。moveを使って管理者の譲渡と明示的に行う必要があります。</p>
 
-<pre class="prettyprint linenums">
-<code>#include &lt;iostream&gt;         // cout, endl
-#include &lt;string&gt;           // string
-#include &lt;memory&gt;           // unique_ptr
+  <section>
+    <h2><a name="1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a></h2>
+    <p>まずは <strong><em>unique_ptr</em></strong> を使ってみます。<strong><em>shared_ptr</em></strong> 
+    とほとんど同じ感じで使用できますが、コピーはできません。moveを使って管理者の譲渡と明示的に行う必要があります。</p>
+    <p>&nbsp;</p>
 
-using namespace std;
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04), </td>
+    	      <td>13.3.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu 24.04 (WSL)</td>
+    	    <td>&nbsp;</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
 
-// class Person
-class Person{
+    <p>&nbsp;</p>
+    <p>[ソースコード： "unique_ptr.cpp"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;string&gt;       // string
+#include &lt;memory&gt;       // unique_ptr
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
+
+class Person {
 private:
-    string  name_;
-    string  phone_;
+    std::string name_;
+    std::string phone_;
 
 public:
-    // コンストラクタ
+    /**
+     * @brief デフォルトコンストラクタ
+     *        空の名前と電話番号で委譲コンストラクタを呼ぶ
+     */
     Person()
-        : Person("", "")           // 委譲コンストラクタ。VS2013以降で使用可能
-//      : name_(""), phone_("")    // VS2013以前はこちらで
+        : Person("", "")                // 委譲コンストラクタ
     {
     }
-    // コピーコンストラクタ
+
+    /**
+     * @brief コピーコンストラクタ
+     * @param rhs コピー元
+     */
     Person(const Person&amp; rhs)
-        : Person(rhs.name_, rhs.phone_)         // 委譲コンストラクタ。VS2013以降で使用可能
-//      : name_(rhs.name_), phone_(rhs.phone_)  // VS2013以前はこちらで
+        : Person(rhs.name_, rhs.phone_)
     {
-    }
-    Person(string name, string phone)
-        : name_(name), phone_(phone)
-    {
-        cout &lt;&lt; <span class="string">"Person::Person()"</span> &lt;&lt; endl;
     }
 
-<span class="comment">    // デストラクタ
-</span>    virtual ~Person()
+    /**
+     * @brief 値を指定するコンストラクタ
+     * @param name 氏名
+     * @param phone 電話番号
+     */
+    Person(std::string name, std::string phone)
+        : name_(std::move(name)), phone_(std::move(phone))
     {
-        cout &lt;&lt; <span class="string">"Person::~Person()"</span> &lt;&lt; endl;
+        std::cout &lt;&lt; "Person::Person()" &lt;&lt; std::endl;
     }
 
-<span class="comment">    // アクセッサ
-</span>    const std::string getName() const
+    /**
+     * @brief デストラクタ
+     */
+    virtual ~Person()
+    {
+        std::cout &lt;&lt; "Person::~Person()" &lt;&lt; std::endl;
+    }
+
+    /**
+     * @brief 名前を取得する
+     * @return 名前への参照
+     */
+    const std::string&amp; getName() const
     {
         return name_;
     }
-    const std::string getPhone() const
+
+    /**
+     * @brief 電話番号を取得する
+     * @return 電話番号への参照
+     */
+    const std::string&amp; getPhone() const
     {
         return phone_;
     }
 };
 
 
-<span class="comment">// グローバルな演算子オーバーロード */</span>
-std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const <span class="auto-style1">unique_ptr</span>&lt;Person&gt; &amp;rhs)
+// Person を出力する演算子オーバーロード
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Person&amp; p)
 {
-    return (os &lt;&lt; <span class="string">'('</span> &lt;&lt; rhs-&gt;getName() &lt;&lt; <span class="string">','</span> &lt;&lt; rhs-&gt;getPhone() &lt;&lt; <span class="string">')'</span>);
+    return (os &lt;&lt; '(' &lt;&lt; p.getName() &lt;&lt; ',' &lt;&lt; p.getPhone() &lt;&lt; ')');
 }
 
-<span class="comment">// Person をコンソール出力</span>
-void PrintPerson(<span class="auto-style1">unique_ptr</span>&lt;Person&gt;&amp; person)
+/**
+ * @brief Person をコンソール出力する（null 安全）
+ * @param person 出力対象の unique_ptr
+ */
+void coutPerson(const std::unique_ptr&lt;Person&gt;&amp; person)
 {
-    cout &lt;&lt; person &lt;&lt; endl;
+    if (person) {
+        std::cout &lt;&lt; *person &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "(null)" &lt;&lt; std::endl;
+    }
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+/**
+ * @brief unique_ptr が指す Person を差し替える（所有権は引数で渡された参照側に残る）
+ * @param person 差し替え対象の unique_ptr への参照
+ */
+void replacePerson(std::unique_ptr&lt;Person&gt;&amp; person)
 {
-<span class="comment">    /*========*/
-    /* 前処理 */
-    /*========*/
-</span>    <span class="auto-style1">unique_ptr</span>&lt;Person&gt; foo(new Person(<span class="string">"foo"</span>, <span class="string">"090-****-0123"</span>));
-    <span class="auto-style1">unique_ptr</span>&lt;Person&gt; bar(new Person(<span class="string">"bar"</span>, <span class="string">"090-****-5555"</span>));
+    person = std::make_unique&lt;Person&gt;("bar_2", "090-****-????");
+}
 
-<span class="comment">    /*========*/
-    /* 処理部 */
-    /*========*/
-</span>    PrintPerson(foo);
-    PrintPerson(bar);
+int main()
+{
+    // unique_ptr 生成
+    std::unique_ptr&lt;Person&gt; foo = std::make_unique&lt;Person&gt;("foo", "090-****-0123");
+    std::unique_ptr&lt;Person&gt; bar = std::make_unique&lt;Person&gt;("bar", "090-****-5555");
+    std::unique_ptr&lt;Person&gt; hoge;
 
-<span class="comment">    /*========*/
-    /* 後処理 */
-    /*========*/
-</span>    return EXIT_SUCCESS;
-}</code></pre>
+    // コンソール出力
+    coutPerson(foo);        // (foo,090-****-0123)
+    coutPerson(bar);        // (bar,090-****-5555)
+    coutPerson(hoge);       // (null)
+
+    // Person 差し替え
+    replacePerson(bar);
+    coutPerson(bar);        // (bar_2,090-****-????)
+
+    // 所有権の移動
+    hoge = std::move(foo);
+    // hoge = foo;          // これはコンパイルエラーになる
+    coutPerson(foo);        // (null)
+    coutPerson(hoge);       // (foo,090-****-0123)
+
+    return EXIT_SUCCESS;
+}</pre>
+    <p>&nbsp;</p>
+    
+    <p>ビルド(例)：</p>
+    <pre class="prettyprint" style="width:800px">
+$ g++ -Wall -g make_unique.cpp -o make_unique.out</pre>
+
+    <p>&nbsp;</p>
+    
+    <p>実行結果：</p>
+    <pre class="prettyprint" style="width:800px">
+$ ./make_unique.out 
+Person::Person()
+Person::Person()
+(foo,090-****-0123)
+(bar,090-****-5555)
+(null)
+Person::Person()
+Person::~Person()
+(bar_2,090-****-????)
+(null)
+(foo,090-****-0123)
+Person::~Person()
+Person::~Person()
+$ </pre>
+    <p>&nbsp;</p>
+    <p>3箇所でクラス Person のデストラクタが実行されている（"Person::~Person()" 
+    の部分）ことから、unique_ptr が期待通りに解放処理を行っていることがわかります。</p>
+    <p>&nbsp;</p>
+
+</section>
+
 
 <p>&nbsp;</p>
 <h2><a name="2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></h2>
@@ -176,7 +276,7 @@ int _tmain(int argc, _TCHAR* argv[])
 ただし範囲外アクセスに対するチェック機構はありません。配列を使用したい場合、まずはコンテナの使用を検討するべきです。時々実行速度を問題にコンテナの使用を止めている場合がありますが、C++11で採用された 
 std::array を使用すれば処理速度の問題もありません。</p>
 
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-cpp" style="width:800px">
 <code>#include &lt;iostream&gt;         // cout, endl, EXIT_SUCCESS
 #include &lt;string&gt;           // string
 #include &lt;memory&gt;           // unique_ptr
@@ -204,15 +304,14 @@ int main(int argc, char* argv[])
 }</code></pre>
 
 <p>&nbsp;</p>
-<h2><a name="3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr 
-に置き換える</a></h2>
-<p>
+<p>&nbsp;</p>
+<h2><a name="3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></h2>
 
-c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
+<p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
 free を使用します。デアロケータを指定することで unique_ptr のメモリ解放を free で行えるようにします。</p>
 
-<pre class="prettyprint linenums">
-<code>#include &lt;iostream&gt;     // cout, EXIT_SUCCESS
+<pre class="prettyprint linenums lang-cpp">
+#include &lt;iostream&gt;     // cout, EXIT_SUCCESS
 #include &lt;memory&gt;       // shared_ptr, unique_ptr
 #include &lt;cstdlib&gt;      // malloc, free
 
@@ -240,7 +339,7 @@ int main()
     }
 
     return EXIT_SUCCESS;
-}</code></pre>
+}</pre>
 
 <p>&nbsp;</p>
 <h2><a name="4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr 
@@ -249,8 +348,8 @@ int main()
 <h3>4-1. シンプルな実装例</h3>
 <p>シンプルにやるとこんな感じでしょうか。</p>
 
-<pre class="prettyprint linenums">
-<code>#include &lt;stdio.h&gt;  <span class="comment">// fopen, fclose</span>
+<pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;stdio.h&gt;  <span class="comment">// fopen, fclose</span>
 #include &lt;stdlib.h&gt;
 #include &lt;memory&gt;   <span class="comment">// unique_ptr</span>
 
@@ -275,14 +374,14 @@ int main(int argc, char* argv[])
     return EXIT_SUCCESS;
     // ここで custom_fclose が自動実行されます
 }
-</code></pre>
+</pre>
 
 <h3>&nbsp;</h3>
 <h3>4-2. Lambda式 による実装例</h3>
 <p>Lambda式 で記載するとこんな感じでしょうか。</p>
 
-<pre class="prettyprint linenums">
-<code>#include &lt;stdio.h&gt;          // FILE, fopen, fclose
+<pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;stdio.h&gt;          // FILE, fopen, fclose
 #include &lt;stdlib.h&gt;
 #include &lt;memory&gt;           // unique_ptr
 
@@ -304,7 +403,7 @@ int main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
     // ここで custom_fclose が自動実行されます
-}</code></pre>
+}</pre>
 
 <h3>&nbsp;</h3>
 <h3>4-3. ファクトリーパターン による実装例</h3>
@@ -340,142 +439,225 @@ int main()
 
 <p>私的には Lambda式 を使った2番目のやつが一番シンプルで好きかな。</p>
 <p>&nbsp;</p>
-<h2><a name="5._make_unique">5. make_unique</a></h2>
-<p>c++14 で <strong>make_unique</strong> が追加されました。Visual Studio は 2013 から対応しているようです。<br>unique_ptr 
-を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
-<p>では早速「<a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a>」で記載したコードを  
-<strong>make_unique</strong> を使って書き換えてみます。</p>
-<p>ついでに、実行途中で unique_ptr 変数を途中で差し替える SwapTest() という関数を追加してみます。<br>関数 SwapTest() 
-を終了するところで古いインスタンスが解放されてデストラクタが実行されます。</p>
 <p>&nbsp;</p>
-<p>■評価環境</p>
-<ul>
-	<li>コンパイラ： Visual Studio 2019,&nbsp; Ver. 16.3.6</li>
-	<li>OS： Windows10,&nbsp; Ver. 1903</li>
-</ul>
-<p>■参考URL</p>
-<ul>
-	<li>
-	<a href="https://cpprefjp.github.io/reference/memory/make_unique.html" target="_blank">
-	https://cpprefjp.github.io/reference/memory/make_unique.html</a></li>
-</ul>
-<p>&nbsp;</p>
-<pre class="prettyprint linenums">
-<code>#include &lt;tchar.h&gt;      // _TCHAR, _tmain
+
+
+  <section>
+    <h2><a name="5._make_unique">5. make_unique</a></h2>
+    
+    <p>c++14 で <strong>make_unique</strong> が追加されました。Visual Studio は 2013 から対応しているようです。<br>unique_ptr 
+    を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
+    <p>&nbsp;</p>
+
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04), </td>
+    	      <td>13.3.0</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu 24.04 (WSL)</td>
+    	    <td>&nbsp;</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+
+    <p>&nbsp;</p>
+    
+    <p>[ソースコード： "unique_ptr.cpp"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // cout, endl
 #include &lt;string&gt;       // string
 #include &lt;memory&gt;       // unique_ptr
-
-using namespace std;
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
 
 class Person {
 private:
-    string  name_;
-    string  phone_;
+    std::string name_;
+    std::string phone_;
 
 public:
+    /**
+     * @brief デフォルトコンストラクタ
+     *        空の名前と電話番号で委譲コンストラクタを呼ぶ
+     */
     Person()
-        : Person(&quot;&quot;, &quot;&quot;)                // 委譲コンストラクタ、VS2013 OK、VS2012 NG
-//      : name_(&quot;&quot;), phone_(&quot;&quot;)
+        : Person("", "")                // 委譲コンストラクタ
     {
-    }
-    Person(const Person&amp; rhs)                 // コピーコンストラクタ
-        : Person(rhs.name_, rhs.phone_) // 委譲コンストラクタ、VS2013 OK、VS2012 NG
-//      : name_(rhs.name_), phone_(rhs.phone_)
-    {
-    }
-    Person(string name, string phone)
-        : name_(name), phone_(phone)
-    {
-        cout &lt;&lt; &quot;Person::Person()&quot; &lt;&lt; endl;
     }
 
+    /**
+     * @brief コピーコンストラクタ
+     * @param rhs コピー元
+     */
+    Person(const Person&amp; rhs)
+        : Person(rhs.name_, rhs.phone_)
+    {
+    }
+
+    /**
+     * @brief 値を指定するコンストラクタ
+     * @param name 氏名
+     * @param phone 電話番号
+     */
+    Person(std::string name, std::string phone)
+        : name_(std::move(name)), phone_(std::move(phone))
+    {
+        std::cout &lt;&lt; "Person::Person()" &lt;&lt; std::endl;
+    }
+
+    /**
+     * @brief デストラクタ
+     */
     virtual ~Person()
     {
-        cout &lt;&lt; &quot;Person::~Person()&quot; &lt;&lt; endl;
+        std::cout &lt;&lt; "Person::~Person()" &lt;&lt; std::endl;
     }
 
-    const std::string getName() const
+    /**
+     * @brief 名前を取得する
+     * @return 名前への参照
+     */
+    const std::string&amp; getName() const
     {
         return name_;
     }
-    const std::string getPhone() const
+
+    /**
+     * @brief 電話番号を取得する
+     * @return 電話番号への参照
+     */
+    const std::string&amp; getPhone() const
     {
         return phone_;
     }
 };
 
 
-// グローバルな演算子オーバーロード */
-std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const unique_ptr&lt;Person&gt;&amp; rhs)
+// Person を出力する演算子オーバーロード
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Person&amp; p)
 {
-    return (os &lt;&lt; &#39;(&#39; &lt;&lt; rhs-&gt;getName() &lt;&lt; &#39;,&#39; &lt;&lt; rhs-&gt;getPhone() &lt;&lt; &#39;)&#39;);
+    return (os &lt;&lt; '(' &lt;&lt; p.getName() &lt;&lt; ',' &lt;&lt; p.getPhone() &lt;&lt; ')');
 }
 
-// Person をコンソール出力
-void PrintPerson(unique_ptr&lt;Person&gt;&amp; person)
+/**
+ * @brief Person をコンソール出力する（null 安全）
+ * @param person 出力対象の unique_ptr
+ */
+void coutPerson(const std::unique_ptr&lt;Person&gt;&amp; person)
 {
-    cout &lt;&lt; person &lt;&lt; endl;
+    if (person) {
+        std::cout &lt;&lt; *person &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; "(null)" &lt;&lt; std::endl;
+    }
 }
 
-void SwapTest(unique_ptr&lt;Person&gt;&amp; person)
+/**
+ * @brief unique_ptr が指す Person を差し替える（所有権は引数で渡された参照側に残る）
+ * @param person 差し替え対象の unique_ptr への参照
+ */
+void replacePerson(std::unique_ptr&lt;Person&gt;&amp; person)
 {
-    person = <span class="auto-style1">make_unique</span>&lt;Person&gt;(&quot;bar_2&quot;, &quot;090-****-????&quot;);
+    person = std::make_unique&lt;Person&gt;("bar_2", "090-****-????");
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
-    /*========*/
-    /* 前処理 */
-    /*========*/
-    unique_ptr&lt;Person&gt; foo = <span class="auto-style1">make_unique</span>&lt;Person&gt;(&quot;foo&quot;, &quot;090-****-0123&quot;);
-    unique_ptr&lt;Person&gt; bar = <span class="auto-style1">make_unique</span>&lt;Person&gt;(&quot;bar&quot;, &quot;090-****-5555&quot;);
+    // unique_ptr 生成
+    std::unique_ptr&lt;Person&gt; foo = std::make_unique&lt;Person&gt;("foo", "090-****-0123");
+    std::unique_ptr&lt;Person&gt; bar = std::make_unique&lt;Person&gt;("bar", "090-****-5555");
+    std::unique_ptr&lt;Person&gt; hoge;
 
-    /*========*/
-    /* 処理部 */
-    /*========*/
-    PrintPerson(foo);
-    PrintPerson(bar);
+    // コンソール出力
+    coutPerson(foo);        // (foo,090-****-0123)
+    coutPerson(bar);        // (bar,090-****-5555)
+    coutPerson(hoge);       // (null)
 
-    SwapTest(bar);
+    // Person 差し替え
+    replacePerson(bar);
+    coutPerson(bar);        // (bar_2,090-****-????)
 
-    PrintPerson(bar);
+    // 所有権の移動
+    hoge = std::move(foo);
+    // hoge = foo;          // これはコンパイルエラーになる
+    coutPerson(foo);        // (null)
+    coutPerson(hoge);       // (foo,090-****-0123)
 
-    /*========*/
-    /* 後処理 */
-    /*========*/
     return EXIT_SUCCESS;
-}</code>
-</pre>
+}</pre>
 
-<p>&nbsp;</p>
-<p>[実行結果]</p>
-<p><img alt="" src="unique_ptr/imgB.gif"></p>
+    <p>&nbsp;</p>
+    
+    <p>ビルド(例)：</p>
+    <pre class="prettyprint" style="width:800px">
+$ g++ -Wall -g make_unique.cpp -o make_unique.out</pre>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <p>実行結果：</p>
+    <pre class="prettyprint" style="width:800px">
+$ ./make_unique.out 
+Person::Person()
+Person::Person()
+(foo,090-****-0123)
+(bar,090-****-5555)
+(null)
+Person::Person()
+Person::~Person()
+(bar_2,090-****-????)
+(null)
+(foo,090-****-0123)
+Person::~Person()
+Person::~Person()
+$ </pre>
 
-<section>
-<h2><a name="6._make_unique_配列版">6. make_unique 配列版</a></h2>
-<p>c++14 で追加された <strong>make_unique</strong> は 配列型T に対応しています。Visual Studio は 2013 から対応しているようです。<br>
-make_share は本文記載時点では 配列型T に未対応です。 c++20 で対応予定、VS2019 ver.16.3.6 でも未対応です。</font><br>&nbsp;unique_ptr 
-を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
-<p>では同様に「<a href="#1._まずは_unique_ptr_を使ってみる">1. まずは unique_ptr を使ってみる</a>」で記載したコードを  
-<strong>make_unique</strong> を使って書き換えてみます。</p>
-<p>■評価環境</p>
-<ul>
-	<li>コンパイラ： Visual Studio 2019,&nbsp; Ver. 16.3.6</li>
-	<li>OS： Windows10,&nbsp; Ver. 1903</li>
-</ul>
-<p>■参考URL</p>
-<ul>
-	<li>
-	<a href="https://cpprefjp.github.io/reference/memory/make_unique.html" target="_blank">
-	https://cpprefjp.github.io/reference/memory/make_unique.html</a></li>
-</ul>
-<p>&nbsp;</p>
-<pre class="prettyprint linenums">
-<code>#include &lt;tchar.h&gt;      // _TCHAR, _tmain
+    <p>&nbsp;</p>
+    
+  </section>
+    
+  <p>&nbsp;</p>
+
+  <section>
+  
+    <h2><a name="6._make_unique_配列版">6. make_unique 配列版</a></h2>
+    <p>c++14 で追加された <strong>make_unique</strong> は 配列型T に対応しています。Visual Studio は 2013 から対応しているようです。<br>
+    make_share は本文記載時点では 配列型T に未対応です。 c++20 で対応予定、VS2019 ver.16.3.6 でも未対応です。<br>&nbsp;unique_ptr 
+    を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
+    <p>では同様に「<a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a>」で記載したコードを  
+    <strong>make_unique</strong> を使って書き換えてみます。</p>
+    <p>■評価環境</p>
+    <ul>
+      <li>コンパイラ： Visual Studio 2019,&nbsp; Ver. 16.3.6</li>
+      <li>OS： Windows10,&nbsp; Ver. 1903</li>
+    </ul>
+    <p>■参考URL</p>
+    <ul>
+      <li>
+      <a href="https://cpprefjp.github.io/reference/memory/make_unique.html" target="_blank">
+      https://cpprefjp.github.io/reference/memory/make_unique.html</a></li>
+    </ul>
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;tchar.h&gt;      // _TCHAR, _tmain
 #include &lt;iostream&gt;     // cout, endl
 #include &lt;string&gt;       // string
 #include &lt;memory&gt;       // unique_ptr
@@ -556,25 +738,28 @@ int _tmain(int argc, _TCHAR* argv[])
     }
 
     return EXIT_SUCCESS;
-}</code></pre>
-<p></p>
-<p>[実行結果]</p>
-<p><img alt="" src="unique_ptr/imgD.jpg"></p>
-<p>無駄なコンストラクタ、デストラクタ、の発生が気になりますが、この動作で正しいです。</p>
-<p>&nbsp;</p>
-</section>
+}</pre>
 
-<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
-<section>
-  <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
+    <p>[実行結果]</p>
+    <p><img alt="" src="unique_ptr/imgD.jpg"></p>
+    <p>無駄なコンストラクタ、デストラクタ、の発生が気になりますが、この動作で正しいです。</p>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+      <tr>
+        <td>
 The MIT License (MIT)<br><br>
 
-Copyright © 2014-2022 Kinoshita Hidetoshi<br><br>
+Copyright © 2014 Kinoshita Hidetoshi<br><br>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -593,72 +778,72 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-    </td>
-  </tr>
-</table>
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+  </section>
+
   <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="参考">参考</a></h2>
+    <ul>
+      <li> <a href="http://ja.cppreference.com/w/cpp/memory/unique_ptr" target="_blank">
+        http://ja.cppreference.com/w/cpp/memory/unique_ptr</a></li>
+    </ul>
+  </section>
+
   <p>&nbsp;</p>
-</section>
 
-<br>
+  <hr>
 
-<section>
-	<h2><a name="参考">参考</a></h2>
-	<ul>
-		<li> 
- 
- 
- 
-<a href="http://ja.cppreference.com/w/cpp/memory/unique_ptr" target="_blank">
-http://ja.cppreference.com/w/cpp/memory/unique_ptr</a></li>
-	</ul>
-</section>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <section>
+    <h2 style="margin-bottom:5px">変更履歴</h2>
+    <table>
+      <tr>
+        <td class="td_history_date">2025-11-10</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">"<a href="#1._unique_ptr_を使ってみる">1._unique_ptr_を使ってみる</a>", "<a href="#5._make_unique">5._make_unique</a>" を更新</td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2022-07-13</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">ページデザイン更新</td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2019-11-02</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">「6. make_unique 配列版」を追加<br></td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2019-10-26</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">「5. make_unique」を追加</td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2014-03-09</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">新規作成 </td>
+      </tr>
+    </table>
+  </section>
 
-<hr>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
 
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2022-07-13</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2019-11-02</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「6. make_unique 配列版」を追加<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2019-10-26</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「5. make_unique」を追加</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2014-03-09</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <footer>
+    <p><small>Copyright © 2014-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
-<section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2014-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
-
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
 </body>
 </html>
