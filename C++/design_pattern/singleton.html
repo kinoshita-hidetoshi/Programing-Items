@@ -35,6 +35,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #505000;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -48,8 +54,8 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p><a href="#1._静的ローカル変数方式_（Meyers_シングルトン）">1. 静的ローカル変数方式 （Meyers シングルトン）</a></a></p>
-      <p>2. 静的メンバ変数方式 </p>
+    	<p><a href="#1._静的ローカル変数方式_（Meyers_シングルトン）">1. 静的ローカル変数方式 （Meyers シングルトン）</a> </p>
+      <p><a href="#2._静的メンバ変数方式">2. 静的メンバ変数方式 </a> </p>
       <p>3. ダブルチェックロッキング方式 </p>
       <p>4. テンプレートベースの汎用シングルトン </p>
     	<p>&nbsp;</p>
@@ -65,8 +71,9 @@
   	<h2><a name="1._静的ローカル変数方式_（Meyers_シングルトン）">1. 静的ローカル変数方式 （Meyers シングルトン）</a></a></h2>
   	<h4>[概要]</h4>
   	<p> Singleton パターン、の最初のサンプルプログラムを作成してみます。</p>
-    <p> このサンプルは、シンプルなシングルトン型の <span class="cpp-source">Logger</span> 
-    を提供します。主な特徴は以下の通りです。</p>
+    <p> 「Meyers シングルトン」と呼ばれるシンプルなシングルトン型の <span class="cpp-source">Logger</span> 
+    を紹介します。</p>
+    <p> 主な特徴は以下の通りです。</p>
     <ul>
       <li>Meyers シングルトン:<br><span class="cpp-source">Logger::getInstance()</span> 
       は関数内静的変数を用いた遅延初期化を行い、C++11 以降の言語仕様でスレッドセーフに初期化されます<br>⇨ 唯一のインスタンスを  
@@ -341,8 +348,32 @@ $ </pre>
   <p> &nbsp;</p>
     
   <section>
-    <h2> 2. 静的メンバ変数方式</h2>
+    <h2> <a name="2._静的メンバ変数方式">2. 静的メンバ変数方式</a></h2>
   	<h4>[概要]</h4>
+    <p> 「静的メンバ変数方式」と呼ばれるシングルトン型の <span class="cpp-source">Logger</span> 
+    を紹介します。</p>
+    <p> 主な特徴は以下の通りです。</p>
+    <ul>
+      <li>静的メンバ変数方式:<br><span class="cpp-source">Logger::getInstance()</span> 
+      は、唯一のインスタンスである <span class="cpp-source">Logger::instance_ptr_</span> 
+      を一度のみ初期化を行っています。<br>この初期化処理の部分がポイントです。</li>
+      <li>&nbsp;スレッドセーフ: <br>内部で <span class="cpp-source">std::mutex</span> 
+      を使って標準出力へのアクセスを直列化します</li>
+      <li>破棄タイミング：<br>プログラムから明示的に <span class="cpp-source">
+      Logger::destroyInstance();</span> を呼ぶ必要があります。</li>
+      <li>基本 API: &nbsp;
+      <ul>
+        <li><span class="cpp-source">static Logger&amp;  getInstance()</span> : 
+        シングルトンインスタンスを取得します</li>
+        <li><span class="cpp-source">static void destroyInstance()</span> : 
+        シングルトンインスタンスを破棄します</li>
+        <li><span class="cpp-source">void log(const std::string&amp; message)</span> 
+        : スレッドセーフにメッセージを標準出力へ出力し、内部カウンタを増加します</li>
+        <li><span class="cpp-source">std::size_t getCount() const</span> : 
+        これまでに出力したメッセージ数を返します</li>
+      </ul>
+      </li>
+    </ul>
     <p>&nbsp;</p>
   
     <div class="status_information">
@@ -392,29 +423,249 @@ $ </pre>
 	  <p> &nbsp;</p>
     <p> &nbsp;</p>
     <h4> [コード]</h4>
-  	<p>[プログラムソース &quot;***.cpp&quot;]</p>
+  	<p>[プログラムソース &quot;logger.h&quot;]</p>
     <pre class="prettyprint linenums lang-cpp" style="width:1000px">
-class Singleton {
+// logger.h
+// Logger クラスの宣言（ヘッダ）
+
+#pragma once
+
+#include &lt;atomic&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;string&gt;
+
+/**
+ * @brief 明示的に破棄できるシングルトン Logger の宣言。
+ *
+ * 実装は logger.cpp にあり、スレッド安全な初期化と明示破棄をサポートします。
+ */
+class Logger {
 private:
-    static Singleton* instance;
-    Singleton() = default;
-    Singleton() = default;
+    // メンバー変数（先に記載）
+<span class="auto-style1">    static std::unique_ptr&lt;Logger&gt; instance_ptr_;</span>
+<span class="auto-style1">    static std::once_flag init_flag_;</span>
+
+    mutable std::mutex mutex_;
+    std::atomic&lt;std::size_t&gt; counter_{0};
+
+<span class="auto-style1">    // unique_ptr のデフォルトデリータが private デストラクタを呼べるようにする</span>
+<span class="auto-style1">    friend struct std::default_delete&lt;Logger&gt;;</span>
+
+    // 特殊メンバはメソッド群の先頭に定義するが実装は cpp に置く
+    Logger() = default;
+    ~Logger() = default;
+
 public:
-    // コピー/ムーブを削除してシングルトンを保証
-    Singleton(const Logger&amp;) = delete;
-    Singleton&amp; operator=(const Singleton&amp;) = delete;
-    Singleton(Singleton&amp;&amp;) = delete;
-    Singleton&amp; operator=(Singleton&amp;&amp;) = delete;
+    // コピー/ムーブを禁止
+    Logger(const Logger&amp;) = delete;
+    Logger&amp; operator=(const Logger&amp;) = delete;
+    Logger(Logger&amp;&amp;) = delete;
+    Logger&amp; operator=(Logger&amp;&amp;) = delete;
 
-    static Singleton* getInstance() {
-        if (!instance) {
-            instance = new Singleton();
-        }
-        return instance;
+    /**
+     * @brief シングルトンインスタンスを取得する。
+     *
+     * 初回呼び出し時にインスタンスを生成します（スレッド安全）。
+     */
+    static Logger&amp; getInstance();
+
+<span class="auto-style1">    /**</span>
+<span class="auto-style1">     * @brief シングルトンを明示的に破棄する。</span>
+<span class="auto-style1">     *</span>
+<span class="auto-style1">     * 注意: 破棄後に他スレッドが Logger を使用していると危険です。</span>
+<span class="auto-style1">     */</span>
+<span class="auto-style1">    static void destroyInstance();</span>
+
+    /**
+     * @brief メッセージをログ出力する（スレッドセーフ）。
+     */
+    void log(const std::string&amp; msg);
+
+    /**
+     * @brief これまでに出力したメッセージ数を返す。
+     */
+    std::size_t getCount() const;
+};</pre>
+    <p>&nbsp;</p>
+    <p>[プログラムソース &quot;logger.cpp&quot;]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width:1000px">
+// logger.cpp
+#include "logger.h"
+
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;utility&gt;
+
+// 静的メンバーの定義
+<span class="auto-style1">std::unique_ptr&lt;Logger&gt; Logger::instance_ptr_;</span>
+<span class="auto-style1">std::once_flag Logger::init_flag_;</span>
+
+Logger&amp; Logger::getInstance()
+{
+<span class="auto-style1">    std::call_once(init_flag_, []() { instance_ptr_.reset(new Logger()); });</span>
+<span class="auto-style1">    return *instance_ptr_;</span>
+}
+
+void Logger::destroyInstance()
+{
+<span class="auto-style1">    instance_ptr_.reset();</span>
+}
+
+void Logger::log(const std::string&amp; msg)
+{
+    std::lock_guard&lt;std::mutex&gt; lock(mutex_);
+    ++counter_;
+    std::cout &lt;&lt; "[" &lt;&lt; counter_ &lt;&lt; "] " &lt;&lt; msg &lt;&lt; std::endl;
+}
+
+std::size_t Logger::getCount() const
+{
+    return counter_.load();
+}</pre>
+    <p>&nbsp;</p>
+    <p>[プログラムソース &quot;singleton_pattern_02.cpp&quot;]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width:1000px">
+// singleton_pattern_02.cpp
+// 明示的に破棄できるシングルトン（std::unique_ptr + std::call_once）
+// サンプル実装：スレッド安全にログ出力し、必要なら明示破棄が可能
+
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;mutex&gt;
+#include &lt;string&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+#include &lt;utility&gt;
+
+#include "logger.h"
+
+
+int main()
+{
+    const int num_threads = 6;
+    const int msgs_per_thread = 5;
+
+    std::vector&lt;std::thread&gt; threads;
+    threads.reserve(num_threads);
+
+    for (int t = 0; t &lt; num_threads; ++t) {
+        threads.emplace_back([t, msgs_per_thread]() {
+            for (int i = 0; i &lt; msgs_per_thread; ++i) {
+                Logger::getInstance().log("thread " + std::to_string(t) + " message " + std::to_string(i));
+                std::this_thread::yield();
+            }
+        });
     }
-};
 
-Singleton* Singleton::instance = nullptr;</pre>
+    for (auto&amp; th : threads) {
+        th.join();
+    }
+
+    std::cout &lt;&lt; "Total messages: " &lt;&lt; Logger::getInstance().getCount() &lt;&lt; std::endl;
+
+    // 明示的に破棄する例（このプログラムでは不要だが動作する）
+    <span class="auto-style1">Logger::destroyInstance();</span>
+
+    return 0;
+}</pre>
+
+    <p>&nbsp;</p>
+    
+    <p>[プログラムソース &quot;Makefile&quot;]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width:1000px">
+# Makefile for singleton_pattern_02 sample
+#
+# Targets:
+#   all / build - build the executable
+#   run         - run the built executable
+#   clean       - remove built artifacts
+#   help        - show this help
+
+CXX := g++
+CXXFLAGS := -std=c++23 -O2 -Wall -Wextra -pthread
+LDFLAGS :=
+
+SRC_DIR := .
+SRCS := $(SRC_DIR)/logger.cpp $(SRC_DIR)/singleton_pattern_02.cpp
+OBJS := $(SRCS:.cpp=.o)
+TARGET := $(SRC_DIR)/singleton_pattern_02.out
+
+.PHONY: all build run clean help
+
+all: build
+
+build: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CXX) $(CXXFLAGS) -o $@ $(SRCS) $(LDFLAGS)
+
+run: $(TARGET)
+	@echo "Running $(TARGET)"
+	$(TARGET)
+
+clean:
+	@echo "Cleaning..."
+	-@rm -f $(TARGET) $(OBJS)
+
+help:
+	@echo "Makefile for singleton_pattern_02 sample"
+	@echo "Available targets:"
+	@echo "  make        (or make all)  - build the executable"
+	@echo "  make run                   - run the executable (builds first if needed)"
+	@echo "  make clean                 - remove build artifacts"
+	@echo "  make help                  - show this message"</pre>
+    <p>&nbsp;</p>
+    
+    <p>ビルド方法：</p>
+    <p>make コマンドを実行するだけです</p>
+    <pre class="prettyprint" style="width:800px">
+$ make
+g++ -std=c++23 -O2 -Wall -Wextra -pthread -o singleton_pattern_02.out ./logger.cpp ./singleton_pattern_02.cpp 
+$</pre>
+    <p>&nbsp;</p>
+    
+    <p>実行結果：</p>
+    <pre class="prettyprint" style="width:800px">
+$ ./singleton_pattern_02.out 
+[1] thread 0 message 0
+[2] thread 0 message 1
+[3] thread 0 message 2
+[4] thread 0 message 3
+[5] thread 0 message 4
+[6] thread 1 message 0
+[7] thread 1 message 1
+[8] thread 1 message 2
+[9] thread 1 message 3
+[10] thread 1 message 4
+[11] thread 2 message 0
+[12] thread 2 message 1
+[13] thread 2 message 2
+[14] thread 2 message 3
+[15] thread 2 message 4
+[16] thread 3 message 0
+[17] thread 3 message 1
+[18] thread 3 message 2
+[19] thread 3 message 3
+[20] thread 5 message 0
+[21] thread 5 message 1
+[22] thread 5 message 2
+[23] thread 4 message 0
+[24] thread 4 message 1
+[25] thread 4 message 2
+[26] thread 4 message 3
+[27] thread 4 message 4
+[28] thread 5 message 3
+[29] thread 5 message 4
+[30] thread 3 message 4
+Total messages: 30
+$ </pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 
     <p>&nbsp;</p>
     <p>&nbsp;</p>
