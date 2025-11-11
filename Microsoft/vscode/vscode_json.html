@@ -10,7 +10,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
 	
   <!-- タイトル -->
-  <title>[vscode] launch.json, settings.json, tasks.json | Programming Items</title>
+  <title>[vscode] c/c++ デバッグ方法 (launch.json, settings.json, tasks.json) | Programming Items</title>
 	
   <!-- ファビコン -->
   <link rel="shortcut icon" href="../../favicon.ico">
@@ -45,8 +45,9 @@
 
 <body onload="prettyPrint();">
 	
-  <h1>[vscode] launch.json, settings.json, tasks.json</h1>
+  <h1>[vscode] c/c++ デバッグ方法 (launch.json, settings.json, tasks.json)</h1>
   
+  <p> &nbsp;</p>
   <p> "<strong>Visual Studio Code</strong>" の <span class="cpp-source">
   launch.json</span>, <span class="cpp-source">settings.json</span>,
   <span class="cpp-source">tasks.json</span> などについて調べた内容をこちらに記載します。</p>
@@ -57,8 +58,13 @@
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1._概要">1. 概要</a></p>
-    	<p><a href="#2._[Ctrl]_+_[Shift]_+_[B]でビルド、[F5]でデバッグ開始">2. "[Ctrl] + [Shift] + [B]" でビルド、"[F5]" でデバッグ開始</a></p>
-    	<p>&nbsp;</p>
+      <p><a href="#2._拡張機能_C/C++_Extension_Pack_インストール">2. 拡張機能_C/C++_Extension_Pack_インストール</a></p>
+    	<p><a href="#3._launch.json_の作成手順">3._launch.json の作成手順</a></p>
+        <p><a href="#4._デバッグ実行">4._デバッグ実行</a></p>
+        <p><a href="#5._引数付きでデバッグ実行_(launch.json)">5._引数付きでデバッグ実行_(launch.json)</a></p>
+        <p><a href="#6._選択中のソースコードを_[Ctrl]_+_[Shift]_+_[B]でビルド、[F5]でデバッグ">
+        6._選択中のソースコードを_[Ctrl]_+_[Shift]_+_[B]でビルド、[F5]でデバッグ</a></p>
+        <p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
     </nav>
@@ -69,12 +75,77 @@
   
   <section>
   	<h2> <a name="1._概要">1. 概要</a></h2>
-    <p> Visual Studio Code でのファイル launch.json, settings.json, tasks.json 
-    は、それぞれ異なる目的の設定ファイルです。</p>
+    <p> Visual Studio Code で C/C++ 言語をデバッグする際に使用できる機能を紹介します。</p>
     <p> &nbsp;</p>
         
     <table class="border-collapse" border="1" width="800">
-      <caption>launch.json, settings.json, tasks.json 概要</caption>
+      <caption>機能概要</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>機能</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap">ブレークポイント</td>
+          <td>
+          <ul>
+            <li>ソースコードエディタの行番号の左側をクリックすると、赤い丸が設定されます。この赤丸がブレークポイントです。<br>
+            <span class="cpp-source">[F9]</span> でもカーソル位置にブレークポイントを設定できます。</li>
+            <li>ブレークポイントを設定すると、その行でプログラムが一時停止します。</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">変数ウィンド</td>
+          <td>
+          <ul>
+            <li>画面左側には、変数ウィンドウを表示します。</li>
+            <li>変数ウィンドウでは、実行中の変数の値を確認できます。</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">ステップオーバー</td>
+          <td>
+          <p>プログラムをステップ実行するための機能です</p>
+          <ul>
+            <li>同一関数内で１行分進めます</li>
+            <li><span class="cpp-source">[F10]</span></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">ステップイン</td>
+          <td>
+          <p>プログラムをステップ実行するための機能です</p>
+          <ul>
+            <li>別の関数をコールする行の場合、その関数内に入ります</li>
+            <li><span class="cpp-source">[F11]</span></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">ステップアウト</td>
+          <td>
+          <p>プログラムをステップ実行するための機能です</p>
+          <ul>
+            <li>現在の関数の終わりまで実行し、関数をコールした側の行へ戻ります</li>
+            <li><span class="cpp-source">[Shift] + [F11]</span></li>
+          </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> 上記機能について、詳細設定を下記３つのファイルで行います。</p>
+    <p> これら３つのファイルを <span class="cpp-source">./.vscode/</span> フォルダに保存します。</p>
+    <p> &nbsp;</p>
+        
+    <table class="border-collapse" border="1" width="800">
+      <caption>launch.json, settings.json, tasks.json 説明</caption>
       <thead class="standard_table">
         <tr>
           <th>ファイル</th>
@@ -101,9 +172,215 @@
   	
   <p>&nbsp;</p>
   <p>&nbsp;</p>
-    
+  
   <section>
-  	<h2> <a name="2._[Ctrl]_+_[Shift]_+_[B]でビルド、[F5]でデバッグ開始">2. <span class="cpp-source">"[Ctrl] + [Shift] + [B]"</span>でビルド、<span class="cpp-source">"[F5]"</span>でデバッグ開始</a></h2>
+    <h2><a name="2._拡張機能_C/C++_Extension_Pack_インストール">2. 拡張機能 C/C++ Extension Pack インストール</a></h2>
+    <p>Visual Studio Code で C/C++ を扱うために、拡張機能を使用します。</p>
+    <p>拡張機能メニュー（ <span class="cpp-source">Ctrl + Shift + X</span> ）から 「C/C++ 
+    Extension Pack」 
+    を検索し、インストールしてください。</p>
+    <p>&nbsp;</p>
+    <p><img alt="C/C++ Extension Pack" src="vscode_json/img1C.jpg" width="800"></p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._launch.json_の作成手順">3. launch.json の作成手順</a></h2>
+    <p><span class="cpp-source">launch.json</span> を作成する手順について記載します。</p>
+    <p>&nbsp;</p>
+    <p>1. </p>
+    <p>[実行] &gt; [構成の追加] をクリックします</p>
+    <p><img alt="[実行] &gt; [構成の追加]" src="vscode_json/img22.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>2. </p>
+    <p><span class="cpp-source">launch.json</span> ファイルを生成します。続いて［構成の追加...］ボタンををクリックします</p>
+    <p><img alt="launch.json" src="vscode_json/img27.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>3. "<span class="cpp-source">{} C/C++: (gdb) 起動</span>" をクリックします</p>
+    <p>
+    <img alt="{} C/C++: (gdb) 起動" src="vscode_json/img2A.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>こんな感じの <span class="cpp-source">launch.json</span> を生成してくれます</p>
+    <p><img alt="launch.json" src="vscode_json/img2F.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p><span class="cpp-source">launch.json</span> 全文をこちらで紹介します</p>
+    
+    <pre class="prettyprint linenums lang-json" style="width:800px">{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) 起動",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "プログラム名を入力してください (例: ${workspaceFolder}/a.out)",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "gdb の再フォーマットを有効にする",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "逆アセンブリ フレーバーを Intel に設定",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}</pre>
+    <p>&nbsp;</p>
+    <p>4. </p>
+    <p><span class="cpp-source">"program": "プログラム名を入力してください (例: ${workspaceFolder}/a.out)"</span> 
+    の部分を、実際に起動するプログラム内容へ変更します。</p>
+    <p>ここでは私のテストプログラム内容（<span class="cpp-source">"program": 
+    "${workspaceFolder}/sample_01/out/bin/test.out"</span>）へ変更しました。変更後の 
+    <span class="cpp-source">launch.json</span> を以下に記載します。</p>
+    
+    <pre class="prettyprint linenums lang-json" style="width:800px">{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) 起動",
+            "type": "cppdbg",
+            "request": "launch",
+            <span class="auto-style1">"program": "${workspaceFolder}/sample_01/out/bin/test.out"</span>,
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "gdb の再フォーマットを有効にする",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "逆アセンブリ フレーバーを Intel に設定",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}</pre>
+    <p>&nbsp;</p>
+    <p>以上で launch.json の事前設定を完了です。</p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="4._デバッグ実行">4. デバッグ実行</a></h2>
+    <p>1.</p>
+    <p>さて本番。ブレークポイント、を設定します。</p>
+    <p>&nbsp;行番号の左側あたりをマウスクリックすることで、ブレークポイントを On/Off することができます。</p>
+    <p>赤丸 が付いている状態はブレークポイント On の状態です。</p>
+    <p>下図では <span class="cpp-source">return a + b;</span> の部分に設定しています。</p>
+    <p><img alt="ブレークポイント、を設定" src="vscode_json/img39.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>2.</p>
+    <p>&nbsp;<span class="cpp-source">［F5］</span>キーを押してデバッグ実行を開始します。</p>
+    <p>
+    これまでの設定を無事に行えていれば、下図のようにブレークポイントを設定した箇所でプログラム実行を一時停止し、変数領域（画面左側ウィンドウ）に各変数の状態を表示してくれます。</p>
+    <p><img alt="debug 実行" src="vscode_json/img3D.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>3.</p>
+    <p>続けて以下の操作が可能です。</p>
+    <ul>
+      <li>続行 (F5)</li>
+      <li>&nbsp;ステップオーバー (F10)</li>
+      <li>ステップイン (F11)</li>
+      <li>ステップアウト (Shift+F11)</li>
+      <li>再起動 (Ctrl+Shift+F5)</li>
+      <li>停止 (Shift+F5)</li>
+    </ul>
+    <p>下図アイコンから同じ操作を可能です</p>
+    <p><img alt="デバッグ操作ボタン" src="vscode_json/img49.jpg"></p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="5._引数付きでデバッグ実行_(launch.json)">5. 引数付きでデバッグ実行 (launch.json)</a></h2>
+    <p>引数を付けてプログラムをデバッグ実行することも可能です。 </p>
+    <p>引数を指定するには、<span class="cpp-source">launch.json</span>&nbsp;の&nbsp;"args"キーに指定します。複数個の引数を渡す場合はカンマ区切りで指定します。以下がサンプルファイルです。</p>
+    <pre class="prettyprint linenums lang-json" style="width:800px">
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "launch_cpp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/debug/main.out",
+            <span class="auto-style1">"args": ["0", "100", "200"]</span>,
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "gdb の再フォーマットを有効にする",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}</pre>
+    <p>&nbsp;</p>
+    <p>上記の launch.jsonファイル を実行し、引数を表示するプログラム例を以下に記載します。</p>
+    
+    <p>["testcode.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+int main(int argc, char *argv[])
+{
+    int i = 0;
+    printf("argc = %d\n", argc );
+    for( i = 0; i &lt; argc; i++ ){
+        printf("argv[%d] = %s\n", i, argv[i] );
+    }
+    return 0;
+}</pre>
+    <p>&nbsp;</p>
+    <p>実行結果は以下の通りです。引数が意図通りに渡されていることを確認できました。</p>
+    <pre class="prettyprint" style="width:800px">
+argc = 4
+argv[0] = [workspaceFolder]/debug/main.out
+argv[1] = 0
+argv[2] = 100
+argv[3] = 200</pre>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a name="6._選択中のソースコードを_[Ctrl]_+_[Shift]_+_[B]でビルド、[F5]でデバッグ">6. 選択中のソースコードを <span class="cpp-source">"[Ctrl] + [Shift] + [B]"</span>でビルド、<span class="cpp-source">"[F5]"</span>でデバッグ</a></h2>
+    <p> 簡単なプログラム評価など行う場合は、ソースコードファイルが１つしかない場合も多かったりします。</p>
+    <p> そういった環境だと、上記のような launch.json を都度準備するのは面倒ですね。共通の launch.json 
+    でいつでも簡単にビルド＆デバッグできるとうれし買ったりします。そういった環境構築の例を紹介します。</p>
+    <p> &nbsp;</p>
+    <p> 以下の記事は、選択中の１つのソースファイルのみを対象に実行するものです。</p>
     
     <p> <span class="cpp-source">[Ctrl + Shift + B]</span>でビルド、<span class="cpp-source">[F5]</span>でデバッグ開始、をそれぞれできるようにします。</p>
     <p> vscode 上でブレークポイントを設定し、変数やレジスタの内容を vscode 画面上で確認することができます。</p>
@@ -307,12 +584,18 @@
   	<h2><a id="参考">参考</a></h2>
   	<ul>
   		<li>
+        <a href="https://inno-tech-life.com/dev/cpp/cpp_debug_vscode/" target="_blank">
+        【初心者向けに解説】Visual Studio CodeでC言語/C++のデバッグ方法 | Inno-Tech-Life</a></li>
+        <li>
         <a href="https://qiita.com/k_zoo/items/cc98640f15529bcc39fc" target="_blank">
         VSCodeの設定ファイル(launch.json, settings.json, tasks.json等)の中身を全部羅列してみた 
         #VSCode - Qiita</a></li>
         <li>
         <a href="https://zenn.dev/kail/articles/fe7cdd321db9ba" target="_blank">
         【Linux】Visual Studio CodeでMakefileを使ったビルドとGDB</a></li>
+        <li>
+        <a href="https://code.visualstudio.com/docs/cpp/launch-json-reference" target="_blank">
+        Configure C/C++ debugging</a></li>
   	</ul>
   </section>
   
