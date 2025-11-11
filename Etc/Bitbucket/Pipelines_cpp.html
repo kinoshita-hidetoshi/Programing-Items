@@ -110,13 +110,13 @@
     
     <h3><a name="1-2._リポジトリをクローン">1-2. リポジトリをクローン</a></h3>
     <p>リポジトリをローカルＰＣへクローンします。</p>
-    <p><img alt="git clone" src="Pipelines_c++/img2E.jpg" width="1000"></p>
+    <p><img alt="git clone" src="Pipelines_cpp/img2E.jpg" width="1000"></p>
     <p>&nbsp;</p>
     
     <h3><a name="1-3._サンプルソース（c++）を作成">1-3. サンプルソース（c++）を作成</a></h3>
     <p>ソースコードを作成します。下記は例です。</p>
     <p>
-    <img alt="sample source" src="Pipelines_c++/img30.jpg" width="1000"></p>
+    <img alt="sample source" src="Pipelines_cpp/img30.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>プログラム例（”hello.cpp”） </p>
     <pre class="prettyprint linenums lang-cpp" style="width: 600px">
@@ -131,13 +131,13 @@ int main()
     
     <h3><a name="1-4._コミット＆プッシュ">1-4. コミット＆プッシュ</a></h3>
     <p>作成したソースコードをコミット＆プッシュします。 </p>
-    <p><img alt="コミット＆プッシュ" src="Pipelines_c++/img3C.jpg" width="1000"></p>
+    <p><img alt="コミット＆プッシュ" src="Pipelines_cpp/img3C.jpg" width="1000"></p>
     <p>&nbsp;</p>
-    <p><img alt="コミット＆プッシュ" src="Pipelines_c++/img3D.jpg" width="1000"></p>
+    <p><img alt="コミット＆プッシュ" src="Pipelines_cpp/img3D.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>クラウド側に登録を完了 </p>
     <p>
-    <img alt="コミット＆プッシュ" class="border" src="Pipelines_c++/img3E.jpg" width="1000"></p>
+    <img alt="コミット＆プッシュ" class="border" src="Pipelines_cpp/img3E.jpg" width="1000"></p>
     <p>&nbsp;</p>
     
     <h3><a name="1-5._Pipelines_を有効化">1-5. Pipelines を有効化</a></h3>
@@ -154,31 +154,31 @@ int main()
     <p>&nbsp;</p>
     <p>(1) ”Repository settings” をクリックします。 </p>
     <p>
-    <img alt="Repository settings" class="border" src="Pipelines_c++/img51.jpg" width="1000"></p>
+    <img alt="Repository settings" class="border" src="Pipelines_cpp/img51.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(2) “PIPELINES“ の中の "Settings“ をクリックします。</p>
     <p>
-    <img alt="Settings" class="border" src="Pipelines_c++/img53.jpg" width="1000"></p>
+    <img alt="Settings" class="border" src="Pipelines_cpp/img53.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) “Enable Pipelines“ をチェック状態にします。 </p>
     <p>
-    <img alt="Enable Pipelines" class="border" src="Pipelines_c++/img54.jpg" width="1000"></p>
+    <img alt="Enable Pipelines" class="border" src="Pipelines_cpp/img54.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>これで Pipelines が有効になりました。 </p>
     <p>&nbsp;</p>
     <p>(4) ”bitbucket-pipelines.yml” の雛形を準備します。ここでは下記手順で雛形を準備してみました。 </p>
     <p>「パイプライン」⇨「Build C++ Application」 </p>
     <p>
-    <img alt="Build C++ Application" class="border" src="Pipelines_c++/img56.jpg" width="1000"></p>
+    <img alt="Build C++ Application" class="border" src="Pipelines_cpp/img56.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>内容を確認後［Commit file］ボタンをクリックします。 </p>
     <p>
-    <img alt="Commit file" class="border" src="Pipelines_c++/img58.jpg" width="1000"></p>
+    <img alt="Commit file" class="border" src="Pipelines_cpp/img58.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>すると・・・初めての Pipelines が実行されました。 </p>
     <p>&nbsp;</p>
     <p>
-    <img alt="Start Pipelines" class="border" src="Pipelines_c++/img5B.jpg" width="1000"></p>
+    <img alt="Start Pipelines" class="border" src="Pipelines_cpp/img5B.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>当然ながら <span class="auto-style1"><strong>Failed</strong></span> となりました。 
     </p>
@@ -186,21 +186,21 @@ int main()
     <p>こんなメールが私へ届きました。これは良いですね。</p>
     <p>複数メンバーがいるときなど、このメールは誰に対して送信されるのかが気になりましたが、ここでは一旦忘れて進めます。 </p>
     <p>
-    <img alt="mail 受信" class="border_with_drop-shadow" src="Pipelines_c++/img5E.jpg" width="600"></p>
+    <img alt="mail 受信" class="border_with_drop-shadow" src="Pipelines_cpp/img5E.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>”パイプライン” メニューをクリックすると Status が ”<span class="auto-style1"><strong>Failed</strong></span>” 
     のものがあります。 </p>
     <p>
-    <img alt="Failed on pipeline menu" class="border" src="Pipelines_c++/img5F.jpg" width="1000"></p>
+    <img alt="Failed on pipeline menu" class="border" src="Pipelines_cpp/img5F.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>クリックして内容を確認してみると・・・ make に check の記載がされていない ・・・ということらしいです。そもそも makefile 
     を準備していないので、エラーになって当然の状況です。</p>
     <p>
-    <img alt="Cause of error" class="border" src="Pipelines_c++/img62.jpg" width="1000"></p>
+    <img alt="Cause of error" class="border" src="Pipelines_cpp/img62.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>「ソース」を確認すると、とりあえず ”bitbucket-pipelines.yml” ファイルが追加されています。 </p>
     <p>
-    <img alt="bitbucket-pipelines.yml" class="border" src="Pipelines_c++/img64.jpg" width="1000"></p>
+    <img alt="bitbucket-pipelines.yml" class="border" src="Pipelines_cpp/img64.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>現時点の yml ファイル内容を以下に記載します。今後このファイルを編集していくことで Pipelines を実際に動くようにしていきます。</p>
     
@@ -293,12 +293,12 @@ pipelines:
     <p>上記修正で Pipelines 実行を正常に完了できるようになりました。OS も “Ubuntu 18.04.6 LTS“ 
     を意図通りにロードできていることを確認できました。</p>
     <p>
-    <img alt="Pipelines 実行 Success" src="Pipelines_c++/img86.jpg" class="border" width="1000"></p>
+    <img alt="Pipelines 実行 Success" src="Pipelines_cpp/img86.jpg" class="border" width="1000"></p>
     <p>&nbsp;</p>
     <p>本書記載時点、正常終了した Pipelines に対するメールは届きませんでした。</p>
     <p>&nbsp;機能拡張「Jira and Bitbucket (Atlassian Labs)」をインストールした “VS code” 
     から正常終了した Pipelines を下図のように確認することができました。</p>
-    <p><img alt="VS code の様子" src="Pipelines_c++/img88.jpg" width="1000"></p>
+    <p><img alt="VS code の様子" src="Pipelines_cpp/img88.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>以上で正常動作する “bitbucket-pipelines.yml” を構築できました。</p>
     <p>&nbsp;この後は少しずつ機能を加えていく感じで修正を行っていきたいと思います。 </p>
@@ -365,7 +365,7 @@ pipelines:
     <p>&nbsp;</p>
     <p>パイプラインを実行後の画面です。”Artifacs” の画面から “hello“ をダウンロードすることができます。</p>
     <p>
-    <img alt="Artifact" class="border" src="Pipelines_c++/img91.jpg" width="800"></p>
+    <img alt="Artifact" class="border" src="Pipelines_cpp/img91.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p><strong>参考：</strong></p>
     <ul>
@@ -392,11 +392,11 @@ pipelines:
     <p>&nbsp;</p>
     <p>(1) Bitbucket にログイン後、①設定アイコン 、②［<strong>Personal Bitbucket settings</strong>］を順にクリックします。</p>
     <p>
-    <img alt="Personal Bitbucket settings" class="border" src="Pipelines_c++/img5.jpg" width="1000"></p>
+    <img alt="Personal Bitbucket settings" class="border" src="Pipelines_cpp/img5.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(2) メニューから [<strong>アクセス管理</strong>] のグループ中にある［<strong>アプリパスワード</strong>］を選択します。</p>
     <p>
-    <img alt="アプリパスワード" class="border" src="Pipelines_c++/img6.jpg" width="1000"></p>
+    <img alt="アプリパスワード" class="border" src="Pipelines_cpp/img6.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) [<strong>アプリパスワードの作成</strong>] ボタンをクリックします。</p>
     <p>&nbsp;</p>
@@ -404,10 +404,10 @@ pipelines:
     <p>①の Label はユーザーの識別用に使用されるため「Pipelines」などの任意の名前を設定できます。</p>
     <p>ここでは評価に使用しているリポジトリ名をそのまま使用します。 </p>
     <p>
-    <img alt="アプリパスワード" class="border" src="Pipelines_c++/img7.jpg" width="1000"></p>
+    <img alt="アプリパスワード" class="border" src="Pipelines_cpp/img7.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(5) 「新しいアプリ パスワード」を表示するので記録します。</p>
-    <p><img alt="新しいアプリパスワード" src="Pipelines_c++/img8.jpg"></p>
+    <p><img alt="新しいアプリパスワード" src="Pipelines_cpp/img8.jpg"></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     
@@ -440,7 +440,7 @@ pipelines:
     <p>&nbsp;［<strong>Repository settings</strong>］ &gt; “PIPELINES“ の［<strong>Repository 
     variables</strong>］ をクリックします。</p>
     <p>
-    <img alt="Repository variables" class="border" src="Pipelines_c++/img14.jpg" width="1000"></p>
+    <img alt="Repository variables" class="border" src="Pipelines_cpp/img14.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(2) 下記内容を "Repository variables" へ登録します。</p>
         
@@ -477,11 +477,11 @@ pipelines:
 
     <p>&nbsp;</p>
     <p>
-    <img alt="BITBUCKET_USERNAME" class="border" src="Pipelines_c++/img17.jpg" width="1000"></p>
+    <img alt="BITBUCKET_USERNAME" class="border" src="Pipelines_cpp/img17.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>設定後の様子(例)です。</p>
     <p>
-    <img alt="Repository variables" class="border" src="Pipelines_c++/img18.jpg" width="1000"></p>
+    <img alt="Repository variables" class="border" src="Pipelines_cpp/img18.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     
@@ -554,14 +554,14 @@ pipelines:
     <p>&nbsp;</p>
     <p>この “bitbucket-pipelines.yml“ によりパイプラインを実行した結果を以下に記載します。</p>
     <p>こちらは パイプライン実行を成功 (Successful) した例です。</p>
-    <p><img alt="パイプライン実行を成功 (Successful) した例" src="Pipelines_c++/wp28jh6u.jpg" class="border" width="1000">&nbsp;</p>
+    <p><img alt="パイプライン実行を成功 (Successful) した例" src="Pipelines_cpp/wp28jh6u.jpg" class="border" width="1000">&nbsp;</p>
     <p>&nbsp;</p>
     <p>
-    <img alt="pipelines" class="border" src="Pipelines_c++/img22.jpg" width="1000"></p>
+    <img alt="pipelines" class="border" src="Pipelines_cpp/img22.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>［ダウンロード］をクリックすると、”hello” をダウンロードできるようになっていることを確認できます。</p>
     <p>
-    <img alt="ダウンロード" class="border" src="Pipelines_c++/img24.jpg" width="1000"></p>
+    <img alt="ダウンロード" class="border" src="Pipelines_cpp/img24.jpg" width="1000"></p>
     <p>&nbsp;</p>
   
     <div class="status_information">
@@ -710,7 +710,7 @@ pipelines:
     <p>Pipelines のビルド構成は bitbucket-pipelines.yml ファイルで定義できます。Pipelines 
     を初めて利用される場合は、<a href="https://support.atlassian.com/ja/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/" target="_blank">Bitbucket 
     Pipelines を使い始める</a> のドキュメントをご確認ください。 </p>
-    <p><img alt="パイプライントリガー" src="Pipelines_c++/img45.jpg"></p>
+    <p><img alt="パイプライントリガー" src="Pipelines_cpp/img45.jpg"></p>
     <p>&nbsp;</p>
     
     <h3><a name="5-1._手動でパイプラインを実行する">5-1. 手動でパイプラインを実行する</a></h3>
@@ -795,10 +795,10 @@ pipelines:
     <p>(1) ［パイプライン］メニューを選択します。 </p>
     <p>(2) ［Run pipeline］ をクリックします。 </p>
     <p>
-    <img alt="custom-build" class="border" src="Pipelines_c++/img4E.jpg" width="1000"></p>
+    <img alt="custom-build" class="border" src="Pipelines_cpp/img4E.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) ”Branch” と ”Pipeline” を選択後、［Run］ボタンをクリックします。</p>
-    <p><img alt="custom-build" src="Pipelines_c++/img4F.jpg" width="600"></p>
+    <p><img alt="custom-build" src="Pipelines_cpp/img4F.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>以上の操作により、選択したブランチのコミット HEAD に対してパイプラインを実行します。 </p>
     <p>&nbsp;</p>
@@ -808,10 +808,10 @@ pipelines:
     <p>(1) ［ブランチ］メニューを選択します。</p>
     <p>&nbsp;(2) パイプランを実行するブランチの ［･･･］ &gt; ［Run pipelines for a branch］ をクリックします。</p>
     <p>
-    <img alt="custom-build" class="border" src="Pipelines_c++/img50.jpg" width="1000"></p>
+    <img alt="custom-build" class="border" src="Pipelines_cpp/img50.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) ”Pipeline” を選択後、［Run］ボタンをクリックします。</p>
-    <p><img alt="custom-build" src="Pipelines_c++/img52.jpg" width="600"></p>
+    <p><img alt="custom-build" src="Pipelines_cpp/img52.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>以上の操作により、選択したブランチのコミット HEAD に対してパイプラインを実行します。 </p>
     <p>&nbsp;</p>
@@ -822,14 +822,14 @@ pipelines:
     <p>(1) ［コミット］メニューを選択します。 </p>
     <p>(2) パイプラインを実行するコミットを選択します。 </p>
     <p>
-    <img alt="custom-build" class="border" src="Pipelines_c++/img55.jpg" width="1000"></p>
+    <img alt="custom-build" class="border" src="Pipelines_cpp/img55.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) 「Run pipeline」をクリックします。</p>
     <p>
-    <img alt="custom-build" class="border" src="Pipelines_c++/img57.jpg" width="1000"></p>
+    <img alt="custom-build" class="border" src="Pipelines_cpp/img57.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(4) "Pipeline" を選択後、［Run］ボタンをクリックします。</p>
-    <p><img alt="custom-build" src="Pipelines_c++/img59.jpg" width="600"></p>
+    <p><img alt="custom-build" src="Pipelines_cpp/img59.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>以上の操作により、コミットに対してパイプラインを実行します。</p>
     <p>&nbsp;</p>
@@ -981,11 +981,11 @@ pipelines:
     <p>(2) [<strong>パイプライン</strong>] &gt; [<strong>Schedules</strong>] (右上) 
     をクリックします。</p>
     <p>
-    <img alt="pipelines - schedules" class="border" src="Pipelines_c++/img76.jpg" width="1000"></p>
+    <img alt="pipelines - schedules" class="border" src="Pipelines_cpp/img76.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(3) [New schedule] をクリックします。</p>
     <p>
-    <img alt="pipelines - schedules" class="border" src="Pipelines_c++/img77.jpg" width="1000"></p>
+    <img alt="pipelines - schedules" class="border" src="Pipelines_cpp/img77.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>(4) スケジュールを登録したいブランチとパイプラインを選択します。 </p>
     <ul>
@@ -993,7 +993,7 @@ pipelines:
       <li>選択したブランチの bitbucket-pipelines.yml でパイプラインが定義されている必要があります。</li>
     </ul>
     <p>
-    <img alt="pipelines - schedules" src="Pipelines_c++/img79.jpg" width="600"></p>
+    <img alt="pipelines - schedules" src="Pipelines_cpp/img79.jpg" width="600"></p>
     <p>
     &nbsp;</p>
     <p>
@@ -1006,10 +1006,10 @@ pipelines:
       </li>
     </ul>
     <p>
-    <img alt="pipelines - schedules" src="Pipelines_c++/img7F.jpg" width="600"></p>
+    <img alt="pipelines - schedules" src="Pipelines_cpp/img7F.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>
-    <img alt="pipelines - schedules" src="Pipelines_c++/img80.jpg" width="600"></p>
+    <img alt="pipelines - schedules" src="Pipelines_cpp/img80.jpg" width="600"></p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     
@@ -1067,7 +1067,7 @@ pipelines:
     <p>説明をかなり割愛しますが、public リポジトリはこんな感じで簡単に git clone できます。</p>
     <p>下図の通り、このパイプラインを全て正常に実行することができました。</p>
     <p>
-    <img alt="Pipelines 中で git clone" class="border" src="Pipelines_c++/img9.jpg" width="800"></p>
+    <img alt="Pipelines 中で git clone" class="border" src="Pipelines_cpp/img9.jpg" width="800"></p>
     <p>&nbsp;</p>
     
     <div class="status_warning">
@@ -1110,9 +1110,9 @@ pipelines:
     <p>&nbsp;</p>
     <p>まずはこのままパイプラインを実行して結果を確認してみます。 </p>
     <p>&nbsp;</p>
-    <p><img alt="実行結果" class="border" src="Pipelines_c++/img13.jpg" width="800"></p>
+    <p><img alt="実行結果" class="border" src="Pipelines_cpp/img13.jpg" width="800"></p>
     <p>&nbsp;</p>
-    <p><img alt="実行結果" class="border" src="Pipelines_c++/img14.gif" width="800"></p>
+    <p><img alt="実行結果" class="border" src="Pipelines_cpp/img14.gif" width="800"></p>
     <p>&nbsp;</p>
     <p>予想通りですが、「Permission denied (publickey) .」となって "git clone" 
     を失敗しました。パイプラインに対して SSH 鍵を登録してリポジトリへアクセスできるようにする必要がある、ということです。</p>
@@ -1123,56 +1123,56 @@ pipelines:
     <p>(2) [Generate keys] または [Use my own keys] ボタンをクリックします。</p>
     <p>ここでは [Generate keys] ボタンをクリックして進みます。</p>
     <p>
-    <img alt="Generate keys" class="border" src="Pipelines_c++/img19.jpg" width="800"></p>
+    <img alt="Generate keys" class="border" src="Pipelines_cpp/img19.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>(3) "Private key" と "Public key" を生成して下図のような画面へ表示します。</p>
     <p>
-    <img alt="SSH keys" src="Pipelines_c++/img1A.jpg" class="border" width="800"></p>
+    <img alt="SSH keys" src="Pipelines_cpp/img1A.jpg" class="border" width="800"></p>
     <p>&nbsp;</p>
     <p>(4) [<strong>Copy public key</strong>] ボタンをクリックして ”public key” をコピーします。</p>
     <p>
-    <img alt="SSH keys" class="border" src="Pipelines_c++/img1E.jpg" width="800"></p>
+    <img alt="SSH keys" class="border" src="Pipelines_cpp/img1E.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>(5) ターゲットリポジトリへ “public key“ 
     を登録します。リポジトリ("pipelines_test1")へ移動して、[Repository settings] &gt; [一般] &gt; [アクセスキー] 
     をクリックします。 </p>
     <p>
-    <img alt="SSH keys" class="border" src="Pipelines_c++/img20.jpg" width="800"></p>
+    <img alt="SSH keys" class="border" src="Pipelines_cpp/img20.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>(6) [Add key] ボタンをクリックします。</p>
     <p>
-    <img alt="SSH keys" class="border" src="Pipelines_c++/img23.jpg" width="800"></p>
+    <img alt="SSH keys" class="border" src="Pipelines_cpp/img23.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>(7) 下図のような画面を表示するので、必要事項を記入後に [Add SSH key] ボタンをクリックします。 </p>
     <ul>
       <li>Label : 後で何の鍵かを特定できる名前を付けましょう </li>
       <li>Key : (4) でコピーした公開鍵をここに貼ります</li>
     </ul>
-    <p><img alt="SSH keys" src="Pipelines_c++/img26.jpg" width="800"></p>
+    <p><img alt="SSH keys" src="Pipelines_cpp/img26.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>ここでは下図のように入力してみました。[Add SSH key] ボタンをクリックします。</p>
-    <p><img alt="SSH keys" src="Pipelines_c++/img27.jpg" width="800"></p>
+    <p><img alt="SSH keys" src="Pipelines_cpp/img27.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>するとこんな感じの画面表示となりました。</p>
     <p>
-    <img alt="SSH keys" class="border" src="Pipelines_c++/img2A.jpg" width="800"></p>
+    <img alt="SSH keys" class="border" src="Pipelines_cpp/img2A.jpg" width="800"></p>
     <p>&nbsp;</p>
     <p>以上で SSH 鍵の設定を完了です。</p>
     <p>&nbsp;</p>
     <p>(8) 先程失敗（Failed）となったパイプラインを再度実行してみます。</p>
     <p>[Run pipelines] ボタンをクリックします。</p>
     <p>
-    <img alt="Run pipeline" src="Pipelines_c++/img2D.jpg" class="border" width="800"></p>
+    <img alt="Run pipeline" src="Pipelines_cpp/img2D.jpg" class="border" width="800"></p>
     <p>
     &nbsp;</p>
     <p>
     下図画面を表示するので［Run］ボタンをクリックします。</p>
     <p>
-    <img alt="Run pipeline" src="Pipelines_c++/img32.jpg" width="800"></p>
+    <img alt="Run pipeline" src="Pipelines_cpp/img32.jpg" width="800"></p>
     <p>
     &nbsp;</p>
     <p>
-    <img alt="Run pipeline" class="border" src="Pipelines_c++/img33.jpg" width="800"></p>
+    <img alt="Run pipeline" class="border" src="Pipelines_cpp/img33.jpg" width="800"></p>
     <p>
     &nbsp;</p>
     <p>
@@ -1220,7 +1220,7 @@ pipelines:
     <p>これを実行することで <strong>hello_6</strong> というファイルを出力することができました。<strong>6</strong> 
     という値はビルド番号 <strong>#6</strong> からくるものです。</p>
     <p>
-    <img alt="BITBUCKET_BUILD_NUMBER 使用方法" class="border" src="Pipelines_c++/img36.jpg" width="800"></p>
+    <img alt="BITBUCKET_BUILD_NUMBER 使用方法" class="border" src="Pipelines_cpp/img36.jpg" width="800"></p>
     <p>&nbsp;</p>
   
     <div class="status_information">
@@ -1590,10 +1590,10 @@ pipelines:
     <p>&nbsp;</p>
     <p>以上の処理により下図のような結果を取得することができます。</p>
     <p>
-    <img alt="カバレッジ結果" class="border" src="Pipelines_c++/img73.jpg" width="1000"></p>
+    <img alt="カバレッジ結果" class="border" src="Pipelines_cpp/img73.jpg" width="1000"></p>
     <p>&nbsp;</p>
     <p>
-    <img alt="カバレッジ結果" class="border" src="Pipelines_c++/img78.jpg" width="1000"></p>
+    <img alt="カバレッジ結果" class="border" src="Pipelines_cpp/img78.jpg" width="1000"></p>
     <p>&nbsp;</p>
   </section>
 
