@@ -69,6 +69,10 @@
           <p>&nbsp;&nbsp; <a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
           <p>&nbsp;&nbsp; <a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
           <p>&nbsp;&nbsp; <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
+          <p><a href="#3._libcalcurator.so_をテストする">3. libcalcurator.so をテストする</a></p>
+          <p>&nbsp;&nbsp; <a href="#3-1._build.sh_でビルド">3-1._build.sh_でビルド</a></p>
+          <p>&nbsp;&nbsp; <a href="#3-2._make_でビルド">3-2._make_でビルド</a></p>
+          <p>&nbsp;&nbsp; <a href="#3-3._cmake_でビルド">3-3._cmake_でビルド</a></p>
           <p>&nbsp;</p>
           <p><a href="#ライセンス">ライセンス</a></p>
           <p><a href="#参考">参考</a></p>
@@ -382,7 +386,512 @@ $ ./test_gtest</pre>
 
   <p> &nbsp;</p>
   <p> &nbsp;</p>
+  
+  <section>
+    <h2><a name="3._libcalcurator.so_をテストする">3. libcalcurator.so をテストする</a></h2>
+    <p>もう少しプログラムらしい内容で紹介したいと覆います。</p>
+    <p>本章では、四則演算（足し算、引き算、掛け算、割り算）を行う関数ライブラリ libcalcurator.so を作成して、これを Google Test 
+    を使って単体テストしてみます。</p>
+    <p>&nbsp;</p>
+    
+    <section>
+      <h3><a name="3-1._build.sh_でビルド">3-1. build.sh でビルド</a></h3>
+ 
+      <p>&nbsp;</p>
+      <h4>ファイル構成</h4>
+      
+      <pre class="prettyprint" style="width: 800px">
+./
+ ├ calcurator.h
+ ├ calcurator.cpp
+ ├ build.sh
+ └ test
+     ├ test_add.cpp
+     ├ test_sub.cpp
+     ├ test_mul.cpp
+     └ test_div.cpp</pre>
+      <p>&nbsp;</p>
+      
+      <h4>ソースコード</h4>
+      
+      <p>"calcurator.h"</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+namespace ipro {
+    int add(int a, int b);
+    int sub(int a, int b);
+    int mul(int a, int b);
+    int div(int a, int b);
+}</pre>
+      <p>&nbsp;</p>
+      
+      <p>"calcurator.cpp"</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+#include "calcurator.h"
 
+namespace ipro {
+    int add(int a, int b){
+        return a + b;
+    }
+    int sub(int a, int b){
+        return a - b;
+    }
+    int mul(int a, int b){
+        return a * b;
+    }
+    int div(int a, int b){
+        if (b == 0) {
+            throw std::runtime_error("Division by zero.");
+        }
+        return a / b;
+    }
+}</pre>
+      <p>&nbsp;</p>
+      
+      <h4>テストコード</h4>
+      <p>"test_add.cpp"</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+#include &lt;gtest/gtest.h&gt;
+#include "calcurator.h"
+
+class calcurator_add_test : public ::testing::Test {
+    protected:
+        virtual void SetUp() {
+        }
+        virtual void TearDown() {
+        }
+};
+
+TEST_F(calcurator_add_test, add_1) {
+    EXPECT_EQ(ipro::add(1, 2), 3);
+
+}
+
+TEST_F(calcurator_add_test, add_2) {
+    EXPECT_EQ(ipro::add(-1, -2), -3);
+}
+
+TEST_F(calcurator_add_test, add_3) {
+    EXPECT_EQ(ipro::add(0, 0), 0);
+}
+
+TEST_F(calcurator_add_test, add_4) {
+    EXPECT_EQ(ipro::add(1000000, 2000000), 3000000);
+}</pre>
+
+      <p>&nbsp;</p>
+      
+      <p>"test_sub.cpp"</p>
+    
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+#include &lt;gtest/gtest.h&gt;
+#include "calcurator.h"
+
+class calcurator_sub_test : public ::testing::Test {
+    protected:
+        virtual void SetUp() {
+        }
+        virtual void TearDown() {
+        }
+};
+
+TEST_F(calcurator_sub_test, sub) {
+    EXPECT_EQ(ipro::sub(1, 2), -1);
+    EXPECT_EQ(ipro::sub(-1, -2), 1);
+    EXPECT_EQ(ipro::sub(0, 0), 0);
+    EXPECT_EQ(ipro::sub(1000000, 2000000), -1000000);
+}</pre>
+      <p>&nbsp;</p>
+      
+      <p>"test_mul.cpp"</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+#include &lt;gtest/gtest.h&gt;
+#include "calcurator.h"
+
+class calcurator_mul_test : public ::testing::Test {
+    protected:
+        virtual void SetUp() {
+        }
+        virtual void TearDown() {
+        }
+};
+
+TEST_F(calcurator_mul_test, mul) {
+    EXPECT_EQ(ipro::mul(1, 2), 2);
+    EXPECT_EQ(ipro::mul(-1, -2), 2);
+    EXPECT_EQ(ipro::mul(0, 0), 0);
+    EXPECT_EQ(ipro::mul(10000, 20000), 200000000);
+}</pre>
+
+      <p>&nbsp;</p>
+      <p>"test_div.cpp"</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
+#include &lt;iostream&gt;
+#include &lt;gtest/gtest.h&gt;
+#include "calcurator.h"
+
+class calcurator_div_test : public ::testing::Test {
+    protected:
+        virtual void SetUp() {
+        }
+        virtual void TearDown() {
+        }
+};
+
+TEST_F(calcurator_div_test, div) {
+    EXPECT_EQ(ipro::div(1, 2), 0);
+    EXPECT_EQ(ipro::div(-1, -2), 0);
+    EXPECT_EQ(ipro::div(0, 1), 0);
+    EXPECT_EQ(ipro::div(1000000, 2000000), 0);
+    EXPECT_THROW(ipro::div(1, 0), std::invalid_argument);
+}</pre>
+
+      <p>&nbsp;</p>
+      
+      <h4>ビルドスクリプト</h4>
+      
+      <p>"build.sh"</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 1000px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+# 削除
+rm -f *.o *.so *.out ./test/*.o ./*.so test/*.out
+
+# libcalcurator.so をビルド
+g++ -fPIC -Wall -g -c calcurator.cpp
+g++ -shared calcurator.o -o libcalcurator.so
+
+# テストプログラム(unit_test.out) をビルド
+cd test
+g++ -Wall -g -c test_add.cpp test_sub.cpp test_mul.cpp test_div.cpp -I../
+g++ -o unit_test.out test_add.o test_sub.o test_mul.o test_div.o -lcalcurator -lgtest_main -lgtest -L../ -Xlinker -rpath -Xlinker ..
+
+# 実行
+./unit_test.out</pre>
+
+      <p>&nbsp;</p>
+      <p>./build.sh 実行結果</p>
+      <p><img alt="実行の様子" src="GoogleTest_Ubuntu/img3A.jpg"></p>
+      <p>&nbsp;</p>
+      
+    </section>
+    
+    <p>&nbsp;</p>
+    
+    <section>
+      <h3><a name="3-2._make_でビルド">3-2. make でビルド</a></h3>
+      <p>make によるビルド実現方法について記載しておきます。</p>
+      <p>&nbsp;</p>
+
+      <h4>(例1) １つの makefile によるビルド</h4>
+      <p>ファイル構成</p>
+      
+      <pre class="prettyprint" style="width: 800px">
+./
+ ├ calcurator.h
+ ├ calcurator.cpp
+ ├ makefile
+ └ test
+     ├ test_add.cpp
+     ├ test_sub.cpp
+     ├ test_mul.cpp
+     └ test_div.cpp</pre>
+      <p>&nbsp;</p>
+      
+      <p>makefile</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+# コンパイラ
+CC = g++
+
+# ソースファイルとオブジェクトファイル (ライブラリ)
+TARGET = libcalcurator.so
+SRCS = calcurator.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# ソースファイルとオブジェクトファイル (テスト用)
+TEST_TARGET = unit_test.out
+TEST_SRCS = $(addprefix test/, test_add.cpp test_sub.cpp test_mul.cpp test_div.cpp)
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+
+# コンパイルフラグ
+CFLAGS = -Wall -g -fPIC
+LDFLAGS = -shared
+
+# テスト用コンパイルフラグ
+TEST_CFLAGS = -Wall -g -I./
+TEST_LDFLAGS = -lgtest_main -lgtest -lcalcurator -L. -Xlinker -rpath -Xlinker .
+
+# テスト実行ファイルのビルドルール
+test/$(TEST_TARGET): $(TEST_OBJS) $(TARGET)
+    $(CC) $(TEST_CFLAGS) -o $@ $(TEST_OBJS) $(TEST_LDFLAGS)
+
+# 共有ライブラリのビルドルール
+$(TARGET): $(OBJS)
+    $(CC) $(LDFLAGS) -o $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+	
+# テスト用オブジェクトファイルのビルドルール
+test/%.o: test/%.cpp
+    $(CC) $(TEST_CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TARGET) test/$(TEST_TARGET)
+    @echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(OBJS) $(TARGET) $(TEST_OBJS) test/$(TEST_TARGET)
+    @echo "Clean up all targets."</pre>
+      <p>&nbsp;</p>
+      <p>build.sh</p>
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+# 削除
+make clean
+
+# ビルド
+make
+
+# 実行
+./test/unit_test.out</pre>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h4>(例2) ２つの makefile によるビルド</h4>
+      <p>makefile を libcalcurator.so 用とテストプログラムを分離する例です。</p>
+      <p>makefile(1) から makefile(2) を呼んでいます。</p>
+      <p>&nbsp;</p>
+      
+      <p>ファイル構成</p>
+      
+      <pre class="prettyprint" style="width: 800px">
+./
+ ├ calcurator.h
+ ├ calcurator.cpp
+ ├ makefile (1)
+ └ test
+     ├ test_add.cpp
+     ├ test_sub.cpp
+     ├ test_mul.cpp
+     ├ test_div.cpp
+     └ makefile (2)</pre>
+      <p>&nbsp;</p>
+      
+      <p>makefile (1)</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+# コンパイラ
+CC = g++
+
+# ソースファイルとオブジェクトファイル (ライブラリ)
+TARGET = libcalcurator.so
+SRCS = calcurator.cpp
+OBJS = $(SRCS:.cpp=.o)
+
+# ターゲット
+.PHONY: target
+target: $(TARGET) test_build
+
+# テスト用のビルド
+test_build:
+    $(MAKE) -C test
+
+# コンパイルフラグ
+CFLAGS = -Wall -g -fPIC
+LDFLAGS = -shared
+
+# 共有ライブラリのビルドルール
+$(TARGET): $(OBJS)
+    $(CC) $(LDFLAGS) -o $@ $^
+
+# オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TARGET)
+    @echo "Build all targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(OBJS) $(TARGET)
+    $(MAKE) -C test clean
+    @echo "Clean up all targets."</pre>
+      <p>&nbsp;</p>
+      
+      <p>makefile (2)</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 900px">
+# コンパイラ
+CC = g++
+
+# テスト用ターゲット
+TEST_TARGET = unit_test.out
+TEST_SRCS = $(wildcard *.cpp)
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+LIBCALCURATOR = ../libcalcurator.so
+
+# テスト用コンパイルフラグ
+TEST_CFLAGS = -Wall -g -I../
+TEST_LDFLAGS = -lgtest_main -lgtest -lcalcurator -L.. -Xlinker -rpath -Xlinker .. -Xlinker -rpath -Xlinker .
+
+# テスト実行ファイルのビルドルール
+$(TEST_TARGET): $(TEST_OBJS)
+    $(CC) $(TEST_CFLAGS) -o $@ $(TEST_OBJS) $(TEST_LDFLAGS)
+
+# テスト用オブジェクトファイルのビルドルール
+%.o: %.cpp
+    $(CC) $(TEST_CFLAGS) -c $&lt; -o $@
+
+# 全ビルド
+.PHONY: all
+all: clean $(TEST_TARGET)
+    @echo "Build all test targets."
+
+# クリーンアップ
+.PHONY: clean
+clean:
+    rm -f $(TEST_OBJS) $(TEST_TARGET)
+    @echo "Clean up all test targets."</pre>
+      <p>&nbsp;</p>
+      
+      <p>build.sh</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+# 削除
+make clean
+
+# ビルド
+make
+
+# 実行
+./test/unit_test.out</pre>
+      <p>&nbsp;</p>
+      <p>./build.sh 実行結果</p>
+      <p>
+      <img alt="実行結果" src="GoogleTest_Ubuntu/img50.jpg"></p>
+    </section>
+    
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <section>
+      <h3><a name="3-3._cmake_でビルド">3-3. cmake でビルド</a></h3>
+      <p>cmake によるビルド実現方法について記載しておきます。</p>
+      <p>&nbsp;</p>
+      
+      <p>ファイル構成</p>
+      
+      <pre class="prettyprint" style="width: 800px">
+./
+ ├ calcurator.h
+ ├ calcurator.cpp
+ ├ CMakeLists.txt  (1)
+ └ test
+     ├ test_add.cpp
+     ├ test_sub.cpp
+     ├ test_mul.cpp
+     ├ test_div.cpp
+     └ CMakeLists.txt  (2)</pre>
+      <p>&nbsp;</p>
+      
+      <p>CMakeLists.txt (1)</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+cmake_minimum_required(VERSION 3.13)
+project(calcurator CXX)
+
+# ライブラリ作成
+add_library(calcurator SHARED calcurator.cpp)
+
+# ヘッダーファイルのインクルードディレクトリ
+target_include_directories(calcurator PUBLIC ${PROJECT_SOURCE_DIR})
+
+# 最適化・警告等のオプション
+target_compile_options(calcurator PUBLIC -Wall -g -fPIC)
+
+# testサブディレクトリも追加
+add_subdirectory(test)</pre>
+      <p>&nbsp;</p>
+      
+      <p>CMakeLists.txt (2)</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+# テスト用ソースを自動取得
+file(GLOB TEST_SRCS "test_*.cpp")
+
+# テストプログラム作成
+add_executable(unit_test.out ${TEST_SRCS})
+
+# ライブラリのリンク
+target_link_libraries(unit_test.out PRIVATE calcurator gtest_main gtest)
+
+# インクルードパス
+include_directories("${CMAKE_SOURCE_DIR}/..")
+
+# 最適化・警告等のオプション
+target_compile_options(unit_test.out PRIVATE -Wall -g)</pre>
+      <p>&nbsp;</p>
+      
+      <p>build.sh</p>
+      
+      <pre class="prettyprint linenums lang-bsh" style="width: 800px">
+#!/bin/bash
+
+# スクリプトの冒頭に set -e を追加すると、エラーが発生した時点でスクリプトの実行を停止します
+# スクリプトの冒頭に set -x を追加すると、実行するコマンドを自動的に出力します
+set -ex
+
+# 削除
+rm -rf build
+
+# ビルド
+mkdir build
+cd build
+cmake ..
+make
+
+# 実行
+./test/unit_test.out</pre>
+
+      <p>&nbsp;</p>
+    </section>
+    
+  </section>
+
+  <p> &nbsp;</p>
+  
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
     <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
@@ -459,6 +968,11 @@ $ ./test_gtest</pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-11-15</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#3._libcalcurator.so_をテストする">3. libcalcurator.so をテストする</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-03-04</td>
   	    <td class="td_history_separator">-</td>
