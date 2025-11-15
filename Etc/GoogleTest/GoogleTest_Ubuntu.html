@@ -51,74 +51,93 @@
 
 <body onload="prettyPrint();">
 	
-<h1>GoogleTest の使い方 (Ubuntu)</h1>
+  <h1>GoogleTest の使い方 (Ubuntu)</h1>
+  
+  <p> &nbsp;</p>
+  <p> GoogleTest の使い方についてメモしていきます。</p>
+  
+  <p>&nbsp;</p>
+  <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
+    <tr>
+      <td>
+        <nav>
+          <h2>目次</h2>
+          <p><a href="#1._GoogleTest_をインストール">1. GoogleTest をインストール</a></p>
+          <p>&nbsp;&nbsp; <a href="#1-1._パッケージマネージャーでインストールする">1-1. パッケージマネージャーでインストールする</a></p>
+          <p>&nbsp;&nbsp; <a href="#1-2._ソースコードをビルドしてインストールする">1-2. ソースコードをビルドしてインストールする</a></p>
+          <p><a href="#2._GoogleTest_の使い方">2. GoogleTest の使い方</a></p>
+          <p>&nbsp;&nbsp; <a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
+          <p>&nbsp;&nbsp; <a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
+          <p>&nbsp;&nbsp; <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
+          <p>&nbsp;</p>
+          <p><a href="#ライセンス">ライセンス</a></p>
+          <p><a href="#参考">参考</a></p>
+        </nav>
+      </td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._GoogleTest_をインストール">1. GoogleTest をインストール</a></h2>
+  	
+    <h3><a name="1-1._パッケージマネージャーでインストールする">1-1. パッケージマネージャーでインストールする</a></h3>
+    <p>Ubuntuでは以下のコマンドでインストールできます。使用するディストリビューションによって適宜コマンドは変更してください。</p>
+    <pre class="prettyprint" style="width: 800px">sudo apt-get install <strong>libgtest-dev</strong></pre>
+    
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>GoogleTest 用のパッケージ libgtest-dev は古いバージョンだと "google mock" 
+        が同梱されていません。その場合は最新のソースコードをレポジトリから取得し、それをビルドして使用します。 </p>
+      </div>
+    </div>
 
-<p> &nbsp;</p>
-<p> GoogleTest の使い方についてメモしていきます。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  	
+    <h3> <a name="1-2._ソースコードをビルドしてインストールする">1-2. ソースコードをビルドしてインストールする</a></h3>
+  	<h4>[概要]</h4>
+      <p>Github からソースコード一式を取得後、cmake、make、make install します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Ubunsu,</td>
+  	    <td>20.04 (WSL) </td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>Tool:</td>
+  	    <td>googletest,</td>
+  	    <td>1.15.2</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+	
+	  <p> &nbsp;</p>
+		<p>&nbsp;</p>
 
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._GoogleTest_をインストール">1. GoogleTest をインストール</a></p>
-        <p>&nbsp;&nbsp; <a href="#1-1._ソースコードをビルドしてインストールする">1-1. ソースコードをビルドしてインストールする</a></p>
-        <p>&nbsp;&nbsp; <a href="#1-2._パッケージマネージャーでインストールする">1-2. パッケージマネージャーでインストールする</a></p>
-        <p><a href="#2._GoogleTest_の使い方">2. GoogleTest の使い方</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></p>
-        <p>&nbsp;&nbsp; <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></p>
-        <p>&nbsp;</p>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-	<h2> <a name="1._GoogleTest_をインストール">1. GoogleTest をインストール</a></h2>
-    <h3> <a name="1-1._ソースコードをビルドしてインストールする">1-1. ソースコードをビルドしてインストールする</a></h3>
-	<h4>[概要]</h4>
-    <p>Github からソースコード一式を取得後、cmake、make、make install します。</p>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Ubunsu,</td>
-	    <td>20.04 (WSL) </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>Tool:</td>
-	    <td>googletest,</td>
-	    <td>1.15.2</td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	
-	<p>&nbsp;</p>
-	<p> <strong>Step1</strong>. </p>
+	  <p> <strong>Step1</strong>. </p>
     <p> ソースをダウンロードします。Google Test のリポジトリはこちらです。</p>
     <p> <a href="https://github.com/google/googletest">google/googletest: 
     GoogleTest - Google Testing and Mocking Framework (github.com)</a></p>
@@ -155,7 +174,8 @@
     <p> &nbsp;</p>
     <p> <strong>Step3</strong>. Google Test をビルド</p>
     <p> 普通に cmake でビルドします。</p>
-	<pre class="prettyprint" style="width: 800px">
+    
+	  <pre class="prettyprint" style="width: 800px">
 $ mkdir temp
 $ cd temp 
 $ wget https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
@@ -167,84 +187,85 @@ $ cmake ..
 $ make 
 $ sudo make install </pre>
 
-
     <p> &nbsp;</p>
-<p>以上でインストール完了です。</p>
-<p>&nbsp;</p>
-<p>インストール先を変更したい場合は、cmake するときに&nbsp; CMAKE_INSTALL_PREFIX を設定します。</p>
-	<pre class="prettyprint" style="width: 800px">
+    <p>以上でインストール完了です。</p>
+    <p>&nbsp;</p>
+    <p>インストール先を変更したい場合は、cmake するときに&nbsp; CMAKE_INSTALL_PREFIX を設定します。</p>
+
+	  <pre class="prettyprint" style="width: 800px">
 ･･･
 $ mkdir build
 $ cd build
 $ cmake <span class="auto-style1">-DCMAKE_INSTALL_PREFIX=path/to/install/dir</span> ../
 $ make
 $ sudo make install</pre>
-<p>&nbsp;</p>
-    <p>&nbsp;</p>
-    
-    <h3><a name="1-2._パッケージマネージャーでインストールする">1-2. パッケージマネージャーでインストールする</a></h3>
-    <p>Ubuntuでは以下のコマンドでインストールできます。使用するディストリビューションによって適宜コマンドは変更してください。</p>
-    <pre class="prettyprint" style="width: 800px">sudo apt-get install <strong>libgtest-dev</strong></pre>
-    
-    <p>&nbsp;</p>
-    
-    <div class="status_warning">
-      <div></div>
-      <div>
-        <p><strong>注意</strong></p>
-        <p>GoogleTest 用のパッケージ libgtest-dev は古いバージョンだと "google mock" 
-        が同梱されていません。その場合は最新のソースコードをレポジトリから取得し、それをビルドして使用します。 </p>
-      </div>
-    </div>
 
     <p>&nbsp;</p>
     
-</section>
+  </section>
 	
-<p>&nbsp;</p>
-
-<section>
-	<h2> <a name="2._GoogleTest_の使い方">2. GoogleTest の使い方</a></h2>
+  <p>&nbsp;</p>
 
   <section>
-    <h3> <a name="2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></h3>
-    <p> まずは簡単にちゃんと Google Test をインストールできたかを確認したいと思います。</p>
-    <p> 今回試すコードは以下のような感じです。</p>
-    <p> &nbsp;</p>
-    <p> ["test_gtest.cpp"]</p>
-    <pre class="prettyprint linenums" style="width: 800px">
+  	<h2> <a name="2._GoogleTest_の使い方">2. GoogleTest の使い方</a></h2>
+  
+    <section>
+      <h3> <a name="2-1._簡単に_GoogleTest_する">2-1. 簡単に GoogleTest する</a></h3>
+      <p> まずは簡単にちゃんと Google Test をインストールできたかを確認したいと思います。</p>
+      <p> &nbsp;</p>
+      <p> 1. 今回試すコードは以下のような感じです。これを入力します。</p>
+      <p> &nbsp;</p>
+      <p> ["test_gtest.cpp"]</p>
+      
+      <pre class="prettyprint linenums" style="width: 800px">
 #include &lt;gtest/gtest.h&gt;
 TEST(TestCaseName, TestName){
      EXPECT_EQ(1, 1); 
 }</pre>
-    <p> &nbsp;</p>
-    <p> 下記コマンドを入力してビルドします。</p>
-    <pre style="width: 800px">$ g++ test_gtest.cpp -o test_gtest -lgtest_main -lgtest</pre>
-    <p> &nbsp;</p>
-    <p> 下記コマンドを入力してテストを実行します</p>
-    <pre style="width: 800px"> ./test_gtest</pre>
-    <p> &nbsp;</p>
-    <p> 実行結果を下図に示します。</p>
-    <p> <a href="GoogleTest_Ubuntu/img6.jpg" target="_blank">
-    <img alt="Google Test 実行例" class="auto-style2" src="GoogleTest_Ubuntu/img6.jpg" width="800"></a></p>
-    <p> &nbsp;</p>
-  </section>
 
-  <p> &nbsp;</p>
-  
-  <section>
-    <h3> <a name="2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></h3>
-    <p> <a href="#2-1._簡単に_Google_Test_する">2-1._簡単に_Google_Test_する</a> の内容を 
-    cmake を使ってビルドしてみます。cmakeを使ったビルドの設定は CMakeLists.txt 
-    というテキストファイルに記述します。ディレクトリの中身は次のようになります。 </p>
+      <p> &nbsp;</p>
+      <p> 2. 下記コマンドを入力してビルドします。</p>
+      <pre style="width: 800px">$ g++ test_gtest.cpp -o test_gtest -lgtest_main -lgtest</pre>
+      
+      <div class="status_information">
+        <div></div>
+        <div>
+          <p><strong>NOTE</strong></p>
+          <p>インストールした Google Test から <span class="cpp-source">gtest_main</span>, <span class="cpp-source">gtest</span> をリンクします</p>
+        </div>
+      </div>
+
+      <p> &nbsp;</p>
+      <p> 3. 下記コマンドを入力してテストを実行します</p>
+      <pre style="width: 800px"> ./test_gtest</pre>
+      <p> &nbsp;</p>
+      <p> 実行結果を下図に示します。</p>
+      <p> <a href="GoogleTest_Ubuntu/img6.jpg" target="_blank">
+      <img alt="Google Test 実行例" class="auto-style2" src="GoogleTest_Ubuntu/img6.jpg" width="800"></a></p>
+      <p> &nbsp;</p>
+      <p> 以上、基本の Google Test 使用方法でした。</p>
+      <p> &nbsp;</p>
+    </section>
+
     <p> &nbsp;</p>
-    <pre style="width: 800px">./
+  
+    <section>
+      <h3> <a name="2-2._cmake_を使ってみる">2-2. cmake を使ってみる</a></h3>
+      <p> <a href="#2-1._簡単に_Google_Test_する">2-1._簡単に_Google_Test_する</a> の内容を 
+      cmake を使ってビルドしてみます。cmakeを使ったビルドの設定は CMakeLists.txt 
+      というテキストファイルに記述します。ディレクトリの中身は次のようになります。 </p>
+      <p> &nbsp;</p>
+      
+      <pre style="width: 800px">
+./
  ├ CMakeLists.txt
  └ test_gtest.cpp </pre>
-    <p> &nbsp;</p>
-    <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
-    <p> ["CMakeLists.txt"]</p>
-    <pre class="prettyprint linenums" style="width: 800px">
+ 
+      <p> &nbsp;</p>
+      <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
+      <p> ["CMakeLists.txt"]</p>
+      
+      <pre class="prettyprint linenums" style="width: 800px">
 # CMake のバージョンを設定
 cmake_minimum_required(VERSION 3.13)
 
@@ -262,39 +283,45 @@ target_link_libraries(
     test_gtest
     gtest_main
     gtest
-)
-</pre>
-    <p> &nbsp;</p>
-    <p> この状態で以下のようにコマンドを入力します。</p>
-    <pre style="width: 800px">
+)</pre>
+
+      <p> &nbsp;</p>
+      <p> この状態で以下のようにコマンドを入力します。</p>
+  
+      <pre style="width: 800px">
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
 $ ./test_gtest</pre>
-    <p> &nbsp;</p>
-    <p> 実行結果の画面です。</p>
-    <p> <img alt="実行結果" src="GoogleTest_Ubuntu/img11.jpg"></p>
-    <p> &nbsp;</p>
-  </section>
 
-  <p>&nbsp;</p>
+      <p> &nbsp;</p>
+      <p> 実行結果の画面です。</p>
+      <p> <img alt="実行結果" src="GoogleTest_Ubuntu/img11.jpg"></p>
+      <p> &nbsp;</p>
+    </section>
 
-  <section>
-    <h3> <a name="2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></h3>
-    <p> 記事 
-    <a href="https://qiita.com/yohm/items/db6597ffb87fa5480cea" target="_blank">
-    cmakeプロジェクトにGoogleTestを最小限の手間で導入する #C++ - Qiita</a> による手順に従うと、GoogleTest 
-    を事前にインストールしておかなくても cmake できるらしい。試してみます。</p>
-    <p> &nbsp;</p>
-    <p> 構成は図の通りで前節と同じです。 </p>
-    <pre style="width: 800px">./
+    <p>&nbsp;</p>
+
+    <section>
+      <h3> <a name="2-3._GoogleTest_を最小限の手間で導入">2-3. GoogleTest を最小限の手間で導入</a></h3>
+      <p> 記事 
+      <a href="https://qiita.com/yohm/items/db6597ffb87fa5480cea" target="_blank">
+      cmakeプロジェクトにGoogleTestを最小限の手間で導入する #C++ - Qiita</a> による手順に従うと、GoogleTest 
+      を事前にインストールしておかなくても cmake できるらしい。試してみます。</p>
+      <p> &nbsp;</p>
+      <p> 構成は図の通りで前節と同じです。 </p>
+      
+      <pre style="width: 800px">
+./
  ├ CMakeLists.txt
  └ test_gtest.cpp </pre>
-    <p> &nbsp;</p>
-    <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
-    <p> ["CMakeLists.txt"]</p>
-    <pre class="prettyprint linenums" style="width: 800px">
+ 
+      <p> &nbsp;</p>
+      <p> <span class="cpp-source">CMakeLists.txt</span> の内容は次のようになります。</p>
+      <p> ["CMakeLists.txt"]</p>
+      
+      <pre class="prettyprint linenums" style="width: 800px">
 # CMake のバージョンを設定
 cmake_minimum_required(VERSION 3.13)
 
@@ -321,8 +348,8 @@ add_executable(test_gtest test_gtest.cpp)
 target_link_libraries(
     test_gtest
     GTest::gtest_main
-)
-</pre>
+)</pre>
+
     <p> &nbsp;</p>
   
     <div class="status_information">
@@ -339,138 +366,129 @@ target_link_libraries(
 
     <p> &nbsp;</p>
     <p> この状態で以下のようにコマンドを入力します。</p>
+    
     <pre style="width: 800px">
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
 $ ./test_gtest</pre>
-    <p>&nbsp;</p>
-    <p>実行結果の画面です。今回は処理末尾だけ表示します。様子が若干違うけれどもちゃんと期待の動作をしました。</p>
-    <p><img alt="実行結果" src="GoogleTest_Ubuntu/img16.jpg"></p>
+
+      <p>&nbsp;</p>
+      <p>実行結果の画面です。今回は処理末尾だけ表示します。様子が若干違うけれどもちゃんと期待の動作をしました。</p>
+      <p><img alt="実行結果" src="GoogleTest_Ubuntu/img16.jpg"></p>
+    </section>
   </section>
-</section>
 
-<p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
 
-<section>
-  <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-The MIT License (MIT)<br><br>
-
-Copyright © 2022 Kinoshita Hidetoshi<br><br>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2025 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
   <p>&nbsp;</p>
+
+  <section>
+  	<h2><a name="参考">参考</a></h2>
+  	<ul>
+  		<li>
+          <a href="https://github.com/google/googletest" target="_blank">
+          google/googletest: GoogleTest - Google Testing and Mocking Framework</a></li>
+          <li>
+          <a href="http://opencv.jp/googletestdocs/index.html" target="_blank">
+        Google Test — Google Test ドキュメント日本語訳 (opencv.jp)</a></li>
+      <li>
+        <a href="https://qiita.com/shohirose/items/30e39949d8bf990b0462" target="_blank">
+        Google Testの使い方 - Qiita</a></li>
+      <li>
+        <a href="https://qiita.com/budougumi0617/items/45532aea8e3f9fe8b8b6" target="_blank">
+        GoogleTest を使って単体テストを行う準備をする。 - Qiita</a></li>
+      <li>
+        <a href="https://qiita.com/imasaaki/items/0021d1ef14660184f396" target="_blank">
+        GoogleTest + CMake でC++の実践的なユニットテスト環境を構築する：その２（カバレッジ表示） - Qiita</a></li>
+      <li>
+        <a href="https://docs.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2019" target="_blank">C++ 用の Google Test を使用する方法 - Visual Studio | Microsoft Docs</a></li>
+      <li>
+        <a href="https://qiita.com/ktrmnm/items/667a7b7c93cd3fb78419" target="_blank">
+        Google Test勉強録 (1) CMakeでのビルド - Qiita</a></li>
+      <li>
+        <a href="https://qiita.com/y-vectorfield/items/f69464ee5d8cd80153bd" target="_blank">
+        (続) Google Testを導入してみた - Qiita</a></li>
+      <li>
+        <a href="https://waldeinsamkeit.hatenablog.jp/entry/2020/07/25/212255">
+        Google Testのインストールと使い方 - ネコと和解せよ (hatenablog.jp)</a></li>
+          <li>
+          <a href="https://qiita.com/kai-tokei/items/ecab1a2c78f8bb3cfe1f" target="_blank">
+          Cmakeにて"The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy 
+          CMP0135 is not set."という警告が表示されたことについて #C++ - Qiita</a></li>
+  	</ul>
+  </section>
+  
   <p>&nbsp;</p>
-</section>
-
-<p>
-<br>
-
-</p>
-
-<section>
-	<h2><a name="参考">参考</a></h2>
-	<ul>
-		<li>
-        <a href="https://github.com/google/googletest" target="_blank">
-        google/googletest: GoogleTest - Google Testing and Mocking Framework</a></li>
-        <li>
-        <a href="http://opencv.jp/googletestdocs/index.html" target="_blank">
-      Google Test — Google Test ドキュメント日本語訳 (opencv.jp)</a></li>
-    <li>
-      <a href="https://qiita.com/shohirose/items/30e39949d8bf990b0462" target="_blank">
-      Google Testの使い方 - Qiita</a></li>
-    <li>
-      <a href="https://qiita.com/budougumi0617/items/45532aea8e3f9fe8b8b6" target="_blank">
-      GoogleTest を使って単体テストを行う準備をする。 - Qiita</a></li>
-    <li>
-      <a href="https://qiita.com/imasaaki/items/0021d1ef14660184f396" target="_blank">
-      GoogleTest + CMake でC++の実践的なユニットテスト環境を構築する：その２（カバレッジ表示） - Qiita</a></li>
-    <li>
-      <a href="https://docs.microsoft.com/ja-jp/visualstudio/test/how-to-use-google-test-for-cpp?view=vs-2019" target="_blank">C++ 用の Google Test を使用する方法 - Visual Studio | Microsoft Docs</a></li>
-    <li>
-      <a href="https://qiita.com/ktrmnm/items/667a7b7c93cd3fb78419" target="_blank">
-      Google Test勉強録 (1) CMakeでのビルド - Qiita</a></li>
-    <li>
-      <a href="https://qiita.com/y-vectorfield/items/f69464ee5d8cd80153bd" target="_blank">
-      (続) Google Testを導入してみた - Qiita</a></li>
-    <li>
-      <a href="https://waldeinsamkeit.hatenablog.jp/entry/2020/07/25/212255">
-      Google Testのインストールと使い方 - ネコと和解せよ (hatenablog.jp)</a></li>
-        <li>
-        <a href="https://qiita.com/kai-tokei/items/ecab1a2c78f8bb3cfe1f" target="_blank">
-        Cmakeにて"The DOWNLOAD_EXTRACT_TIMESTAMP option was not given and policy 
-        CMP0135 is not set."という警告が表示されたことについて #C++ - Qiita</a></li>
-	</ul>
-</section>
-
-<p>&nbsp;</p>
-
-<hr>
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2025-03-04</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「<a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a>」へ「DOWNLOAD_EXTRACT_TIMESTAMP 
-        ON」に関する情報を追記 </td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2024-10-14</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">"google test" を "1.15.2" へ更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">&nbsp;</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history"><a href="#2-2._cmake_を使ってみる">2-2._cmake_を使ってみる</a>,
-        <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a> を追加</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2022-06-30</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>&copy; copyright 2022 木下英俊</small></p>
-</footer>
+  
+  <hr>
+  
+  <p style="margin-bottom:5px">&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-03-04</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a>」へ「DOWNLOAD_EXTRACT_TIMESTAMP 
+          ON」に関する情報を追記 </td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2024-10-14</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">"google test" を "1.15.2" へ更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">&nbsp;</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history"><a href="#2-2._cmake_を使ってみる">2-2._cmake_を使ってみる</a>,
+          <a href="#2-3._GoogleTest_を最小限の手間で導入">2-3._GoogleTest_を最小限の手間で導入</a> を追加</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2022-06-30</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; copyright 2022 木下英俊</small></p>
+  </footer>
 
 </body>
 </html>
