@@ -111,7 +111,8 @@
     <p>下記のようなソースコードを準備します。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ main.cpp
  ├ hello.h
  └ hello.cpp</pre>
@@ -134,6 +135,7 @@ void hello();
 #endif</pre>
     <p>&nbsp;</p>
     <p>[hello.cpp]</p>
+    
     <pre class="prettyprint linenums lang-cpp" style="width: 600px">
 #include &lt;iostream&gt;
 #include "hello.h"
@@ -141,15 +143,22 @@ void hello();
 void hello() {
     std::cout &lt;&lt; "Hello!" &lt;&lt; std::endl;
 }</pre>
+
     <p>&nbsp;</p>
     <p>上記ソースコード３つを準備できたら、下記コマンドを入力してビルドします。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ g++ -c main.cpp hello.cpp
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ g++ -c main.cpp hello.cpp
 $ g++ -o start_cmake.out main.o hello.o</pre>
+
     <p>&nbsp;</p>
     <p>この <span class="cpp-source">start_cmake.out</span> を実行すれば 
     <span class="cpp-source">Hello!</span> を出力します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ ./start_cmake.out
 Hello!</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3>1-2. cmake でビルド</h3>
@@ -167,7 +176,8 @@ add_executable(start_cmake.out main.cpp hello.cpp)</pre>
     <p>CMakeLists.txt ファイルを追加後のディレクトリの中身は以下のようになります。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ <strong>CMakeLists.txt</strong>
  ├ main.cpp
  ├ hello.h
@@ -176,7 +186,9 @@ add_executable(start_cmake.out main.cpp hello.cpp)</pre>
     <p>cmake を使ってビルドするときは、次のようにソースディレクトリとは別にビルド専用のディレクトリを作成し、その中でビルドします。慣習的に 
     build というフォルダを作成する場合が多いように思います。</p>
     <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ mkdir <strong>build</strong>
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ mkdir <strong>build</strong>
 $ cd <strong>build</strong>
 $ cmake ..
 -- The CXX compiler identification is GNU 13.2.0
@@ -252,7 +264,8 @@ Hello!</pre>
     <span class="cpp-source">good_morning.cpp</span> ２つのファイルを追加した感じです。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ main.cpp
  ├ hello.h
  ├ hello.cpp
@@ -287,29 +300,39 @@ int main() {
     <p>&nbsp;</p>
     <h4>2-1-1. 静的ライブラリの作成</h4>
     <p>静的ライブラリを作成後、main.cpp をコンパイルして静的ライブラリとリンクします。</p>
-    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 1000px">
 $ g++ -c hello.cpp good_morning.cpp                                            # hello.o, good_morning.o を作成
 $ ar <span class="auto-style1"><strong>rvs</strong></span> <span class="auto-style2"><strong>libgreetings.a</strong></span> hello.o good_morning.o                                 # 静的ライブラリ(libgreetings.a)を作成
 $ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L.</strong></span>                              # main.cpp をコンパイルして libgreetings.a とリンク
 </pre>
+
     <p>&nbsp;</p>
     <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ ./start_cmake.out
 Hello!
 Good morning!</pre>
+
     <p>&nbsp;</p>
     <h4>2-1-2. 動的ライブラリの作成</h4>
     <p>動的ライブラリを作成後、main.cpp をコンパイルして動的ライブラリとリンクします。</p>
-    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 1000px">
 $ g++ <span class="auto-style1"><strong>-fPIC -c</strong></span> hello.cpp good_morning.cpp                                      # hello.o, good_morning.o を作成
 $ g++ <span class="auto-style1"><strong>-shared</strong></span> hello.o good_morning.o -o <span class="auto-style2"><strong>libgreetings.so</strong></span>                        # 静的ライブラリ(libgreetings.so)を作成
 $ g++ -o start_cmake.out main.cpp -l<span class="auto-style2"><strong>greetings</strong></span> <span class="auto-style1"><strong>-L. -Xlinker -rpath -Xlinker .</strong></span>   # mmain.cpp をコンパイルして libgreetings.so とリンク
 </pre>
+
     <p>&nbsp;</p>
     <p>生成したファイル <span class="cpp-source">start_cmake.out</span> を実行すれば下記のように出力します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./start_cmake.out
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ ./start_cmake.out
 Hello!
 Good morning!</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h3>2-2. cmake でビルド</h3>
@@ -317,7 +340,8 @@ Good morning!</pre>
     <p>前章と同様にファイル構成に CMakeLists.txt を追加します。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ <strong>CMakeLists.txt</strong>
  ├ main.cpp
  ├ hello.h
@@ -341,7 +365,8 @@ target_link_libraries(start_cmake.out greetings)</pre>
     <pre class="prettyprint" style="width: 600px">add_library(greetings [<strong>SHARED</strong>|<strong>STATIC</strong>] hello.cpp good_morning.cpp)</pre>
     <p>&nbsp;</p>
     <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
 $ mkdir build
 $ cd build/
 $ cmake ..
@@ -365,6 +390,7 @@ $ make
 $ ./start_cmake.out 
 Hello!
 Good morning!</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -384,7 +410,8 @@ target_link_libraries(start_cmake.out greetings)</pre>
     <pre class="prettyprint" style="width: 600px">add_library(greetings [<strong>SHARED</strong>|<strong>STATIC</strong>] hello.cpp good_morning.cpp)</pre>
     <p>&nbsp;</p>
     <p>ビルドおよびビルド生成物を実行するまで一連の操作を以下に示します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
 $ mkdir build
 $ cd build/
 $ cmake ..
@@ -408,6 +435,7 @@ $ make
 $ ./start_cmake.out 
 Hello!
 Good morning!</pre>
+
     <p>&nbsp;</p>
        
   </section>
@@ -453,7 +481,8 @@ Good morning!</pre>
     <p>下記のようなフォルダおよびファイル構成を例に説明します。ファイル内容は前章と同じです。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ include/
  │├ hello.h
  │└ good_morning.h
@@ -511,18 +540,21 @@ void good_morning() {
   	<h3>3-1. コマンドラインでビルド</h3>
     <p>
     さて、これをコマンドラインからビルドしてみます。ルートディレクトリ直下にいるものとし、共有ライブラリを作成して実行ファイルにリンクするやり方で行います。</p>
-    <pre style="width: 1000px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 1000px">
 $ cd source/
 $ g++ -fPIC -c hello.cpp good_morning.cpp -I../include
 $ g++ -shared *.o -o libgreetings.so
 $ cd ../main/
 $ g++ main.cpp -o main.out -I../include -L../source -lgreetings -Xlinker -rpath -Xlinker ../source</pre>
+
     <p>&nbsp;</p>
     <p>今回は <span class="cpp-source">-L</span> オプションに加えて <span class="cpp-source">
     -I</span> オプションでインクルードファイルを探すディレクトリを指定する必要があります。前章で<span class="cpp-source"> 
     -I </span>オプションが必要なかったのは、カレントディレクトリはデフォルトでインクルードファイルを探す場所として認識されるからです。</p>
     <p>上記コマンドを実行後のフォルダ構成は下図のようになります。</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ include/
  │├ hello.h
  │└ good_morning.h
@@ -537,9 +569,12 @@ $ g++ main.cpp -o main.out -I../include -L../source -lgreetings -Xlinker -rpath 
  　└ <strong>main.out</strong></pre>
     <p>&nbsp;</p>
     <p>生成したファイル <span class="cpp-source">main.out</span> を実行すれば下記のように出力します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">$ ./main.out
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ ./main.out
 Hello!
 Good morning!</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   	
@@ -548,7 +583,8 @@ Good morning!</pre>
     <p>ファイル構成を下図のようにします。CMakeLists.txt をルートおよび source/、main/ の３か所に追加します。</p>
     <p>&nbsp;</p>
     <p>ファイル構成</p>
-    <pre style="width: 600px">./
+    <pre class="prettyprint lang-cpp" style="width: 600px">
+./
  ├ <strong>CMakeLists.txt</strong>
  ├ include/
  │├ hello.h
@@ -589,7 +625,7 @@ add_library(
 # PROJECT_SOURCE_DIRはこのプロジェクトのルートディレクトリの絶対パス
 target_include_directories(
     greetings
-    PUBLIC ${PROJECT_SOURCE_DIR}/include
+    <strong>PUBLIC</strong> ${PROJECT_SOURCE_DIR}/include
 )
 </pre>
     <p>&nbsp;</p>
@@ -601,9 +637,23 @@ add_executable(main.out main.cpp)
 target_link_libraries(main.out greetings)
 </pre>
     <p>&nbsp;</p>
+    <p><span class="cpp-source">target_include_directories</span> の第2引数（上記例では 
+    <span class="cpp-source">PUBLIC</span>）について補足です。第2引数には、<span class="cpp-source">PUBLIC</span>,
+    <span class="cpp-source">PRIVATE</span>, <span class="cpp-source">INTERFACE</span> 
+    のいずれかを設定します。</p>
+    <ul>
+      <li><span class="cpp-source">PUBLIC</span>： 
+      ターゲット（greeints）および依存ターゲット（main.out）両方に必要な場合</li>
+      <li><span class="cpp-source">PRIVATE</span>： ターゲット（greeings）のみに必要な場合</li>
+      <li><span class="cpp-source">INTERFACE</span>: 依存ターゲット（main.out）のみに必要な場合</li>
+    </ul>
+    <p>上記例では、greetings と main.out の両方で必要なので <span class="cpp-source">PUBLIC</span> 
+    を宣言しています。</p>
+    <p>&nbsp;</p>
     <p>以上で準備を完了しました。</p>
     <p>cmake を使った場合のいつもの手順でビルドします。下記ではビルド結果 main.out の実行まで一連の操作とコンソール出力の例を例示します。</p>
-    <pre style="width: 600px; background-color: #000000; color: #FFFFFF;">
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
 $ mkdir build
 $ cd build
 $ cmake ..
@@ -626,8 +676,8 @@ $ make
 [100%] Built target main.out
 $ ./main/main.out
 Hello!
-Good morning!
-</pre>
+Good morning!</pre>
+
     <p>&nbsp;</p>
     <p>以上で完了です。</p>
     <p>&nbsp;</p>	
