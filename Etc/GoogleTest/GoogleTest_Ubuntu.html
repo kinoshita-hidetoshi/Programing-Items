@@ -468,7 +468,6 @@ class calcurator_add_test : public ::testing::Test {
 
 TEST_F(calcurator_add_test, add_1) {
     EXPECT_EQ(ipro::add(1, 2), 3);
-
 }
 
 TEST_F(calcurator_add_test, add_2) {
@@ -551,7 +550,7 @@ TEST_F(calcurator_div_test, div) {
     EXPECT_EQ(ipro::div(-1, -2), 0);
     EXPECT_EQ(ipro::div(0, 1), 0);
     EXPECT_EQ(ipro::div(1000000, 2000000), 0);
-    EXPECT_THROW(ipro::div(1, 0), std::invalid_argument);
+    EXPECT_THROW(ipro::div(1, 0), std::runtime_error);
 }</pre>
 
       <p>&nbsp;</p>
