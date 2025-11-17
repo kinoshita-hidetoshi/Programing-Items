@@ -45,18 +45,28 @@
   
   <p> <strong>GitHub Copilot</strong> を使って、簡単な <strong>Excel</strong> マクロアプリを作成してみました。こちらで紹介します。</p>
   
-  <p>全作業を５分ぐらいで完了しました。</p>
+  <p>全作業を10分ぐらいで完了しました。</p>
   <p>&nbsp;</p>
   
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1.作成した_Excel_マクロアプリ_">1.作成した_Excel_マクロアプリ_</a></p>
-        <p><a href="#2._GitHub_Copilot_へのお願い方法_">2._GitHub_Copilot_へのお願い方法</a></p>
-        <p><a href="#3._GitHub_Copilot_の出力内容">3._GitHub_Copilot_の出力内容</a></p>
-        <p>&nbsp;&nbsp; <a href="#3-1._TimeDisplayMacro.bas">
-        3-1._TimeDisplayMacro.bas</a></p>
-        <p>&nbsp;&nbsp; <a href="#3-2._README.md">3-2._README.md</a></p>
+        <p><a href="#2._デジタル時計を作る">2._デジタル時計を作る</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-1._GitHub_Copilot_へのお願い方法_">
+        2-1._GitHub_Copilot_へのお願い方法_</a></p>
+        <p>&nbsp;&nbsp; <a href="#2-2._GitHub_Copilot_の出力内容">
+        2-2._GitHub_Copilot_の出力内容</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#2-2-1._TimeDisplayMacro.bas">
+        2-2-1._TimeDisplayMacro.bas</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#2-2-2._README.md">2-2-2._README.md</a></p>
+        <p><a href="#3._アナログ時計を作る">3._アナログ時計を作る</a></p>
+        <p>&nbsp;&nbsp; <a href="#3-1._GitHub_Copilot_へのお願い方法">
+        3-1._GitHub_Copilot_へのお願い方法</a></p>
+        <p>&nbsp;&nbsp; <a href="#3-2._GitHub_Copilot_の出力内容">
+        3-2._GitHub_Copilot_の出力内容</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#3-2-1._TimeDisplayMacro.bas">
+        3-2-1._TimeDisplayMacro.bas</a></p>
         <p><a href="#4._後書き">4._後書き</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
@@ -71,33 +81,18 @@
   	<h2> <a name="1.作成した_Excel_マクロアプリ_">1.作成した Excel マクロアプリ </a> </h2>
   	<p>1秒周期で現在時刻を表示する、という簡単な内容です。</p>
     <p>&nbsp;</p>
-    <p><strong>作成した Excel マクロアプリ</strong>： こちらに添付します </p>
+    <p><strong>作成した Excel マクロアプリ</strong>： こちらに添付します&nbsp;</p>
     <a href="create_excel_macro_app/TimeDisplayApp.xlsm">TimeDisplayApp.xlsm</a><p>
     &nbsp;</p>
     
-  	<p>こちら、実際に動作させてみた動画です。 </p>
+  	<p>こちら、実際に動作させてみた様子です。</p>
+    <p>&nbsp;</p>
+    <p>動画： "Excelマクロ_現在時刻を1秒更新.mp4"</p>
     <video controls muted autoplay="y" loop="y" width="800">
       <source src="create_excel_macro_app/Show_and_update_date_and_time.mp4" type="video/mp4">
       動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
     </video>
     
-    <p>[動画] "Excelマクロ_現在時刻を1秒更新.mp4"</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-	
-  </section>
-  	
-  <section>
-  	<h2> <a name="2._GitHub_Copilot_へのお願い方法_">2. GitHub Copilot へのお願い方法 </a> </h2>
-  	<p>下記のように依頼してみました。</p>
-    
-    <blockquote style="width:800px">
-      excel マクロアプリを作成したい。1秒ごとに現在時刻を更新して表示して。
-    </blockquote>
-    
-    <p>&nbsp;</p>
-    <p><img alt="vscode 画面" src="create_excel_macro_app/img13.jpg" width="1000px"></p>
-    <p>図： 実際の画面（vscode にて）</p>
     <p>&nbsp;</p>
 	
   </section>
@@ -105,10 +100,37 @@
   <p>&nbsp;</p>
     
   <section>
-  	<h2> <a name="3._GitHub_Copilot_の出力内容">3. GitHub Copilot の出力内容</a></h2>
-    <p> GitHub Copilot から実際に出力された例を以下に紹介します。 </p>
-  	<h4>&nbsp;</h4>
-    <h3><a name="3-1._TimeDisplayMacro.bas">3-1. TimeDisplayMacro.bas</a></h3>
+    <h2><a name="2._デジタル時計を作る">2. デジタル時計を作る</a></h2>
+  	<h3> <a name="2-1._GitHub_Copilot_へのお願い方法_">2-1. GitHub Copilot へのお願い方法 </a> </h3>
+  	<p>下記のように依頼してみました。</p>
+    
+    <blockquote style="width:800px">
+      excel マクロアプリを作成したい。1秒ごとに現在時刻を更新して表示して。
+    </blockquote>
+    
+    <p>図： 実際の画面（vscode にて）</p>
+    <p><img alt="vscode 画面" src="create_excel_macro_app/img13.jpg" width="1000px"></p>
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p>&nbsp;</p>
+    
+  <section>
+  	<h3> <a name="2-2._GitHub_Copilot_の出力内容">2-2. GitHub Copilot の出力内容</a></h3>
+    <p> <strong>GitHub Copilot</strong> から実際に出力された例を以下に紹介します。 </p>
+    <p> 全部 GitHub Copilot による生成です。私は1ステップもコーディングしていません。</p>
+    <p>&nbsp;</p>
+    
+    <p>動画： "Excelマクロ_現在時刻を1秒更新.mp4"</p>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="create_excel_macro_app/Show_and_update_date_and_time_digital.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    
+    <p> &nbsp;</p>
+    
+    <h4><a name="2-2-1._TimeDisplayMacro.bas">2-2-1. TimeDisplayMacro.bas</a></h4>
     
     <pre class="prettyprint linenums lang-vb" style="width:800px">
 Option Explicit
@@ -175,9 +197,11 @@ Sub StopTimeDisplay()
     
     MsgBox "時刻表示を停止しました。", vbInformation
 End Sub</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <h3><a name="3-2._README.md">3-2. README.md</a></h3>
+    
+    <h4><a name="2-2-2._README.md">2-2-2. README.md</a></h4>
     
     <pre class="prettyprint linenums lang-yaml" style="width:800px">
 # Excel 時刻表示マクロアプリ
@@ -247,11 +271,368 @@ End Sub</pre>
 - 一度 `StopTimeDisplay` を実行してから、再度 `StartTimeDisplay` を実行してください</pre>
 
     <p>&nbsp;</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>
+        期待通りに動作するのですが、時計の動作を開始してしばらくすると画面更新が5秒周期ぐらいになってしまいます。マウスを動かす、などすると元の1秒周期に戻ります。</p>
+        <p>同じ問題と思われる内容が下記記事で紹介されていました。<br>
+        <a href="https://qiita.com/ktetsuo/items/8428ea4563f3f9d24be8" target="_blank">
+        VBAのApplication.OnTimeが遅延する問題とその対策 #Excel - Qiita</a></p>
+        <p>修正方法はいくつかありそうです。</p>
+        <p>（案1）擬似的なマウス移動でExcelに「操作あり」と認識させる（上記記事参照）</p>
+        <p>（案2）Application.OnTime をやめて SetIimer api で実現する（次章参照）</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
 	
   </section>
   	
   <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._アナログ時計を作る">3. アナログ時計を作る</a></h2>
+  	<h3><a name="3-1._GitHub_Copilot_へのお願い方法">3-1. GitHub Copilot へのお願い方法</a> </h3>
+  	<p>前章の内容に続けて、下記のように依頼してみました。</p>
     
+    <blockquote style="width:800px">
+      アナログ時計を追加して
+    </blockquote>
+    
+    <p>一度ソースコードを生成後に上記問題（しばらくすると画面更新が5秒周期ぐらいになってしまう）を確認したので、下記のような感じの追加相談を何度か反復しました。</p>
+    
+    <blockquote style="width:800px">
+      プログラムを実行してしばらくすると画面更新が５秒ぐらいの頻度になってしまう。１秒周期の画面更新を維持するように修正して。</blockquote>
+    
+    <p>GitHub Copilot が生成したコードを以下に記載します。</p>
+    <p>結果として、上記（案2）により問題を解決したと私は理解します。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+  	<h3><a name="3-2._GitHub_Copilot_の出力内容">3-2. GitHub Copilot の出力内容</a></h3>
+    <p> <strong>GitHub Copilot</strong> から実際に出力された例を以下に紹介します。</p>
+    <p> 全部 GitHub Copilot による生成です。私は1ステップもコーディングしていません。</p>
+    <p>&nbsp;</p>
+    
+    <p>動画： "Excelマクロ_現在時刻を1秒更新.mp4"</p>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="create_excel_macro_app/Show_and_update_date_and_time.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4><a name="3-2-1._TimeDisplayMacro.bas">3-2-1. TimeDisplayMacro.bas</a></h4>
+    <p>VBA コードの出力結果です。</p>
+    
+    <pre class="prettyprint linenums lang-vb">
+Option Explicit
+
+' 次回実行時刻を保存する変数
+Dim NextRunTime As Date
+Dim IsRunning As Boolean
+
+' 時計の針のオブジェクト
+Dim HourHand As Shape
+Dim MinuteHand As Shape
+Dim SecondHand As Shape
+Dim ClockFace As Shape
+
+' Windows APIタイマー関数
+#If VBA7 Then
+    Private Declare PtrSafe Function SetTimer Lib "user32" (ByVal hWnd As LongPtr, ByVal nIDEvent As LongPtr, ByVal uElapse As Long, ByVal lpTimerFunc As LongPtr) As LongPtr
+    Private Declare PtrSafe Function KillTimer Lib "user32" (ByVal hWnd As LongPtr, ByVal nIDEvent As LongPtr) As Long
+    Private TimerID As LongPtr
+#Else
+    Private Declare Function SetTimer Lib "user32" (ByVal hWnd As Long, ByVal nIDEvent As Long, ByVal uElapse As Long, ByVal lpTimerFunc As Long) As Long
+    Private Declare Function KillTimer Lib "user32" (ByVal hWnd As Long, ByVal nIDEvent As Long) As Long
+    Private TimerID As Long
+#End If
+
+' タイマーコールバック関数
+#If VBA7 Then
+    Private Sub TimerProc(ByVal hWnd As LongPtr, ByVal uMsg As Long, ByVal idEvent As LongPtr, ByVal dwTime As Long)
+        UpdateTime
+    End Sub
+#Else
+    Private Sub TimerProc(ByVal hWnd As Long, ByVal uMsg As Long, ByVal idEvent As Long, ByVal dwTime As Long)
+        UpdateTime
+    End Sub
+#End If
+
+' 1秒ごとに現在時刻を更新
+Sub StartTimeDisplay()
+    ' すでにタイマーが動いている場合は停止
+    If IsRunning Then
+        StopTimeDisplay
+    End If
+    
+    ' セルA1に時刻を表示
+    Range("A1").Value = "現在時刻:"
+    Range("A1").Font.Bold = True
+    Range("A1").Font.Size = 14
+    
+    Range("B1").Font.Size = 14
+    Range("B1").NumberFormat = "yyyy/mm/dd hh:mm:ss"
+    
+    ' 列幅を自動調整
+    Columns("A:B").AutoFit
+    
+    ' アナログ時計を初期化
+    InitializeAnalogClock
+    
+    ' 実行フラグを立てる
+    IsRunning = True
+    
+    ' 初回の時刻表示
+    UpdateTime
+    
+    ' Windows APIタイマーを開始(1000ミリ秒=1秒)
+    TimerID = SetTimer(0, 0, 1000, AddressOf TimerProc)
+    
+    MsgBox "時刻表示を開始しました。停止するには StopTimeDisplay を実行してください。", vbInformation
+End Sub
+
+' 時刻を更新する処理
+Sub UpdateTime()
+    On Error Resume Next
+    
+    ' 実行中でなければ終了
+    If Not IsRunning Then Exit Sub
+    
+    ' セルB1に現在時刻を表示
+    ThisWorkbook.Sheets(1).Range("B1").Value = Now
+    
+    ' アナログ時計を更新
+    UpdateAnalogClock
+End Sub
+
+' 時刻表示を停止
+Sub StopTimeDisplay()
+    On Error Resume Next
+    
+    ' 実行フラグを下げる
+    IsRunning = False
+    
+    ' Windows APIタイマーを停止
+    If TimerID &lt;&gt; 0 Then
+        KillTimer 0, TimerID
+        TimerID = 0
+    End If
+    
+    ' アナログ時計を削除
+    DeleteAnalogClock
+    
+    MsgBox "時刻表示を停止しました。", vbInformation
+End Sub
+
+' アナログ時計を初期化
+Sub InitializeAnalogClock()
+    Dim ws As Worksheet
+    Dim centerX As Double, centerY As Double
+    Dim radius As Double
+    Dim i As Integer
+    Dim angle As Double
+    Dim x1 As Double, y1 As Double, x2 As Double, y2 As Double
+    
+    Set ws = ThisWorkbook.Sheets(1)
+    
+    ' 既存の時計を削除
+    DeleteAnalogClock
+    
+    ' 時計の中心位置(セルD5の位置)
+    centerX = ws.Range("D5").Left + 100
+    centerY = ws.Range("D5").Top + 100
+    radius = 80
+    
+    ' 時計の文字盤(円)を作成
+    Set ClockFace = ws.Shapes.AddShape(msoShapeOval, _
+                                        centerX - radius, centerY - radius, _
+                                        radius * 2, radius * 2)
+    With ClockFace
+        .Fill.ForeColor.RGB = RGB(255, 255, 255)
+        .Line.Weight = 2
+        .Line.ForeColor.RGB = RGB(0, 0, 0)
+        .Name = "ClockFace"
+    End With
+    
+    ' 12時間の目盛りを描画
+    For i = 0 To 11
+        angle = i * 30 * WorksheetFunction.Pi / 180 - WorksheetFunction.Pi / 2
+        x1 = centerX + (radius - 10) * Cos(angle)
+        y1 = centerY + (radius - 10) * Sin(angle)
+        x2 = centerX + (radius - 5) * Cos(angle)
+        y2 = centerY + (radius - 5) * Sin(angle)
+        
+        Dim mark As Shape
+        Set mark = ws.Shapes.AddLine(x1, y1, x2, y2)
+        mark.Line.Weight = 2
+        mark.Line.ForeColor.RGB = RGB(0, 0, 0)
+        mark.Name = "ClockMark" &amp; i
+    Next i
+    
+    ' 中心点を描画
+    Dim centerDot As Shape
+    Set centerDot = ws.Shapes.AddShape(msoShapeOval, _
+                                        centerX - 3, centerY - 3, 6, 6)
+    With centerDot
+        .Fill.ForeColor.RGB = RGB(0, 0, 0)
+        .Line.Visible = msoFalse
+        .Name = "ClockCenter"
+    End With
+    
+    ' 時針を作成(短く太い)
+    Set HourHand = ws.Shapes.AddLine(centerX, centerY, centerX, centerY - radius * 0.5)
+    With HourHand
+        .Line.Weight = 4
+        .Line.ForeColor.RGB = RGB(0, 0, 0)
+        .Name = "HourHand"
+    End With
+    
+    ' 分針を作成(長く中太)
+    Set MinuteHand = ws.Shapes.AddLine(centerX, centerY, centerX, centerY - radius * 0.7)
+    With MinuteHand
+        .Line.Weight = 2.5
+        .Line.ForeColor.RGB = RGB(0, 0, 0)
+        .Name = "MinuteHand"
+    End With
+    
+    ' 秒針を作成(長く細い、赤色)
+    Set SecondHand = ws.Shapes.AddLine(centerX, centerY, centerX, centerY - radius * 0.8)
+    With SecondHand
+        .Line.Weight = 1
+        .Line.ForeColor.RGB = RGB(255, 0, 0)
+        .Name = "SecondHand"
+    End With
+End Sub
+
+' アナログ時計を更新
+Sub UpdateAnalogClock()
+    Dim ws As Worksheet
+    Dim centerX As Double, centerY As Double
+    Dim radius As Double
+    Dim currentTime As Date
+    Dim hours As Integer, minutes As Integer, seconds As Integer
+    Dim hourAngle As Double, minuteAngle As Double, secondAngle As Double
+    
+    Set ws = ThisWorkbook.Sheets(1)
+    
+    ' 時計の針が存在しない場合は終了
+    On Error Resume Next
+    If HourHand Is Nothing Or MinuteHand Is Nothing Or SecondHand Is Nothing Then
+        Exit Sub
+    End If
+    On Error GoTo 0
+    
+    ' 時計の中心位置
+    centerX = ws.Range("D5").Left + 100
+    centerY = ws.Range("D5").Top + 100
+    radius = 80
+    
+    ' 現在時刻を取得
+    currentTime = Now
+    hours = Hour(currentTime)
+    minutes = Minute(currentTime)
+    seconds = Second(currentTime)
+    
+    ' 12時間表示に変換
+    If hours &gt;= 12 Then hours = hours - 12
+    
+    ' 角度を計算(12時を0度として時計回りに回転)
+    ' 注: Excelの角度は右向きが0度なので、-90度(-Pi/2)オフセット
+    hourAngle = ((hours + minutes / 60) * 30 - 90) * WorksheetFunction.Pi / 180
+    minuteAngle = (minutes * 6 - 90) * WorksheetFunction.Pi / 180
+    secondAngle = (seconds * 6 - 90) * WorksheetFunction.Pi / 180
+    
+    ' 時針を削除して再作成
+    On Error Resume Next
+    HourHand.Delete
+    On Error GoTo 0
+    
+    Dim hourLength As Double
+    hourLength = radius * 0.5
+    Dim hourEndX As Double, hourEndY As Double
+    hourEndX = centerX + hourLength * Cos(hourAngle)
+    hourEndY = centerY + hourLength * Sin(hourAngle)
+    
+    Set HourHand = ws.Shapes.AddLine(centerX, centerY, hourEndX, hourEndY)
+    With HourHand
+        .Line.Weight = 4
+        .Line.ForeColor.RGB = RGB(0, 0, 0)
+        .Name = "HourHand"
+    End With
+    
+    ' 分針を削除して再作成
+    On Error Resume Next
+    MinuteHand.Delete
+    On Error GoTo 0
+    
+    Dim minuteLength As Double
+    minuteLength = radius * 0.7
+    Dim minuteEndX As Double, minuteEndY As Double
+    minuteEndX = centerX + minuteLength * Cos(minuteAngle)
+    minuteEndY = centerY + minuteLength * Sin(minuteAngle)
+    
+    Set MinuteHand = ws.Shapes.AddLine(centerX, centerY, minuteEndX, minuteEndY)
+    With MinuteHand
+        .Line.Weight = 2.5
+        .Line.ForeColor.RGB = RGB(0, 0, 0)
+        .Name = "MinuteHand"
+    End With
+    
+    ' 秒針を削除して再作成
+    On Error Resume Next
+    SecondHand.Delete
+    On Error GoTo 0
+    
+    Dim secondLength As Double
+    secondLength = radius * 0.8
+    Dim secondEndX As Double, secondEndY As Double
+    secondEndX = centerX + secondLength * Cos(secondAngle)
+    secondEndY = centerY + secondLength * Sin(secondAngle)
+    
+    Set SecondHand = ws.Shapes.AddLine(centerX, centerY, secondEndX, secondEndY)
+    With SecondHand
+        .Line.Weight = 1
+        .Line.ForeColor.RGB = RGB(255, 0, 0)
+        .Name = "SecondHand"
+    End With
+    
+    ' 画面描画を強制的に更新
+    ws.Calculate
+End Sub
+
+' アナログ時計を削除
+Sub DeleteAnalogClock()
+    Dim ws As Worksheet
+    Dim shp As Shape
+    
+    Set ws = ThisWorkbook.Sheets(1)
+    
+    On Error Resume Next
+    ' 全ての時計関連の図形を削除
+    For Each shp In ws.Shapes
+        If shp.Name Like "Clock*" Or shp.Name Like "*Hand" Then
+            shp.Delete
+        End If
+    Next shp
+    
+    ' オブジェクト変数をクリア
+    Set HourHand = Nothing
+    Set MinuteHand = Nothing
+    Set SecondHand = Nothing
+    Set CckFace = Nothing
+    On Error GoTo 0
+End Sub</pre>
+
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+  
   <section>
   	<h2> <a name="4._後書き">4. 後書き</a> </h2>
   	<p><strong>GitHub Copilot</strong> を使って <strong>Excel</strong> マクロアプリを作成する、ということを試してみました。</p>
@@ -299,7 +680,12 @@ End Sub</pre>
   <section>
   	<h2><a id="参考">参考</a></h2>
   	<ul>
-  		<li></li>
+  		<li>
+        <a href="https://github.com/features/copilot?locale=ja" target="_blank">
+        GitHub Copilot · あなたの AI ペア プログラマー</a></li>
+        <li>
+        <a href="https://qiita.com/ktetsuo/items/8428ea4563f3f9d24be8" target="_blank">
+        VBAのApplication.OnTimeが遅延する問題とその対策 #Excel - Qiita</a></li>
   	</ul>
   </section>
   
