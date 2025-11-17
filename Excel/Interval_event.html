@@ -40,67 +40,67 @@
 
 <body onload="prettyPrint();">
 	
-<h1>[VBA] タイマー起動 と アナログ時計作成</h1>
+  <h1>[VBA] タイマー起動 と アナログ時計作成</h1>
+  
+  <p> Excel と VBA による周期イベントタイマーの使い方を記載してみます。</p>
+  <p> この手法を使って、デジタル時計とアナログ時計を作成してみます。</p>
+  
+  <p>&nbsp;</p>
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></p>
+  	<p><a href="#2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></p>
+  	<p><a href="#3._アナログ時計を作成する">3. アナログ時計を作成する</a></p>
+    <p><a href="#ダウンロード">ダウンロード</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>こんな感じのものを作成します。</p>
+  <p>
+    <video controls muted autoplay="y" loop="y" width="500">
+      <source src="Interval_event/analog_clock.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+  </p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<p> Excel と VBA による周期イベントタイマーの使い方を記載してみます。</p>
-<p> この手法を使って、デジタル時計とアナログ時計を作成してみます。</p>
-
-<p>&nbsp;</p>
-<div class="mokuji">
-  <nav>
-	<h2>目次</h2>
-	<p><a href="#1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></p>
-	<p><a href="#2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></p>
-	<p><a href="#3._アナログ時計を作成する">3. アナログ時計を作成する</a></p>
-  <p><a href="#ダウンロード">ダウンロード</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>こんな感じのものを作成します。</p>
-<p>
-  <video controls muted autoplay="y" loop="y" width="500">
-    <source src="Interval_event/analog_clock.mp4" type="video/mp4">
-    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
-  </video>
-</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-	<h2> <a name="1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></h2>
-	<h4>[概要]</h4>
-    <p>まず最初に、もっとも標準的な Application.OnTime を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
-    <p>ここでは１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
-	<p> &nbsp;</p>
+  <section>
+  	<h2> <a name="1._OnTime_によるタイマー起動">1. OnTime によるタイマー起動</a></h2>
+  	<h4>[概要]</h4>
+      <p>まず最初に、もっとも標準的な Application.OnTime を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
+      <p>ここでは１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>Microsoft Excel</td>
+          <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+          <td>64 ビット</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
 	
-	<h4>[環境]</h4>
-	<table>
-  	<tbody>
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td>Microsoft Excel</td>
-        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
-        <td>64 ビット</td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	<p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet1" に作成しています。</p>
-	
-  <pre class="prettyprint linenums lang-vb">'
+  	<p> &nbsp;</p>
+  	<p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet1" に作成しています。</p>
+  	
+    <pre class="prettyprint linenums lang-vb">'
 ' Application.OnTime を使った周期動作により、デジタル時計 を作成してみます
 '
 
@@ -147,53 +147,71 @@ End Sub</pre>
     <p>&nbsp;</p>
     <p>Sheet1 上にボタンを作成して、スタート／ストップをそれぞれ Sheet1.OnTimeStart／Sheet1.OnTimeStop 
     を実行するようにすると、下記動画のように動作します。</p>
-<p>
-  <video controls muted autoplay="y" loop="y" width="500">
-    <source src="Interval_event/digital_clock_by_OnTime.mp4" type="video/mp4">
-    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
-  </video>
-</p>
+    
+    <p>
+      <video controls muted autoplay="y" loop="y" width="500">
+        <source src="Interval_event/digital_clock_by_OnTime.mp4" type="video/mp4">
+        動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+      </video>
+    </p>
+    
     <p>&nbsp;</p>
     <p>１秒周期で画面更新することができました。これを応用することで簡単な動画やゲームなどを実現することもできそうです。</p>
-    <p>ところでマウスカーソルが時々 Wait 表示になるところが若干気になります。次章で紹介する SetTimer (Windows API) 
-    を使うとこの問題を解決できます。</p>	
-	<p> &nbsp;</p>
-	
-</section>
-	
-<p>&nbsp;</p>
+    <p>&nbsp;</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>
+        期待通りに動作するのですが、時計の動作を開始してしばらくすると画面更新が5秒周期ぐらいになってしまいます。マウスを動かす、などすると元の1秒周期に戻ります。</p>
+        <p>同じ問題と思われる内容が下記記事で紹介されていました。<br>
+        <a href="https://qiita.com/ktetsuo/items/8428ea4563f3f9d24be8" target="_blank">
+        VBAのApplication.OnTimeが遅延する問題とその対策 #Excel - Qiita</a></p>
+        <p>修正方法はいくつかありそうです。</p>
+        <p>（案1）擬似的なマウス移動でExcelに「操作あり」と認識させる（上記記事参照）</p>
+        <p>（案2）Application.OnTime をやめて SetIimer api で実現する（次章参照）</p>
+      </div>
+    </div>
 
-<section>
-	<h2> <a name="2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></h2>
-	<h4>[概要]</h4>
-    <p>SetTimer, KillTimer API (Windows API) を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
-    <p>前章同様に１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
-	<p> &nbsp;</p>
+    <p>&nbsp;</p>
+	  <p> &nbsp;</p>
 	
-	<h4>[環境]</h4>
-	<table>
-  	<tbody>
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td>Microsoft Excel</td>
-        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
-        <td>64 ビット</td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  	</tbody>
-	</table>
-	
-  <p> &nbsp;</p>
-  <p> &nbsp;</p>
-	<p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet2" に作成しています。</p>
-	
-  <pre class="prettyprint linenums lang-vb">'
+  </section>
+  	
+  <p>&nbsp;</p>
+
+  <section>
+    <h2> <a name="2._SetTimer_によるタイマー起動">2. SetTimer によるタイマー起動</a></h2>
+    <h4>[概要]</h4>
+      <p>SetTimer, KillTimer API (Windows API) を使って１秒周期で関数を起動する VBA プログラムを作成してみます。</p>
+      <p>前章同様に１秒周期で "A1" セルに現在の日時情報を表示してみます。</p>
+    <p> &nbsp;</p>
+    
+    <h4>[環境]</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="td_separate" colspan="3"></td>
+        </tr>
+        
+        <tr>
+          <td>Microsoft Excel</td>
+          <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+          <td>64 ビット</td>
+        </tr>
+        
+        <tr>
+          <td class="td_separate" colspan="3"></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p>VBAコードを以下に示します。下記例では "Microsoft ExcelObjects" &gt; "Sheet2" に作成しています。</p>
+    
+    <pre class="prettyprint linenums lang-vb">'
 ' Win32 API の SetTimer, KillTimer を使った周期動作により、デジタル時計、アナログ時計を作成してみます。
 '
 
@@ -230,12 +248,13 @@ Sub TimerStop()
 
     Call StopTimer
     
-End Sub
-</pre>
-  <p> &nbsp;</p>
+End Sub</pre>
+
+    <p> &nbsp;</p>
     <p> 下記コードを "標準モジュール" &gt; "Module1" に記載します。</p>
   
-  <pre class="prettyprint linenums lang-vb">'
+    <pre class="prettyprint linenums lang-vb">
+'
 ' Win32 API の SetTimer, KillTimer を使って周期動作を実現してみます。
 ' 下記内容は Sheet2 のためのVBAプログラムです。
 ' Sheet2 内で全てを実現したかったのですが、標準モジュール（Module1）内で記載しないと意図通りに動作してくれませんでした。残念。
@@ -279,17 +298,17 @@ Public Sub StopTimer()
     mTimerID = 0
     
 End Sub</pre>
+
     <p> &nbsp;</p>
     <p>Sheet2 上にボタンを作成して、スタート／ストップをそれぞれ Sheet2.TimerStart／Sheet2.TimerStop 
     を実行するようにすると、下記動画のように動作します。</p>
-<p>
-  <video controls muted autoplay="y" loop="y" width="500">
-    <source src="Interval_event/digital_clock_by_SetTimer.mp4" type="video/mp4">
-    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
-  </video>
-</p>
     <p>
-    &nbsp;</p>
+      <video controls muted autoplay="y" loop="y" width="500">
+        <source src="Interval_event/digital_clock_by_SetTimer.mp4" type="video/mp4">
+        動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+      </video>
+    </p>
+    <p>&nbsp;</p>
     <p>OnTime による実現と異なってマウスカーソルが Wait 状態に頻繁になることが無くなりました。良い感じです。</p>
     <p>一方、<em>SetTimer</em>, <em>KillTimer</em> を標準モジュール内で使用する必要がありました。Sheet2 
     内で使用したかったのですが私はうまく実現することができませんでした。</p>
@@ -307,41 +326,42 @@ End Sub</pre>
     </div>
 
     <p>&nbsp;</p>
-</section>
-	
-<p> &nbsp;</p>
-
-<section>
-	<h2> <a name="3._アナログ時計を作成する">3. アナログ時計を作成する</a></h2>
-	<h4>[概要]</h4>
-    <p>上記タイマーイベントを使用してアナログ時計を作成します。完成イメージは下図動画の通りです。</p>
-    <p>
-  <video controls muted autoplay="y" loop="y" width="500">
-    <source src="Interval_event/analog_clock.mp4" type="video/mp4">
-    動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
-  </video></p>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-  	<tbody>
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td>Microsoft Excel</td>
-        <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
-        <td>64 ビット</td>
-  	  </tr>
-  		
-  	  <tr>
-  	    <td class="td_separate" colspan="3"></td>
-  	  </tr>
-  	</tbody>
-	</table>
+  </section>
 	
   <p> &nbsp;</p>
+
+  <section>
+    <h2> <a name="3._アナログ時計を作成する">3. アナログ時計を作成する</a></h2>
+    <h4>[概要]</h4>
+    <p>上記タイマーイベントを使用してアナログ時計を作成します。完成イメージは下図動画の通りです。</p>
+    <p>
+      <video controls muted autoplay="y" loop="y" width="500">
+        <source src="Interval_event/analog_clock.mp4" type="video/mp4">
+        動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+      </video>
+    </p>
+	  <p> &nbsp;</p>
+	
+    <h4>[環境]</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="td_separate" colspan="3"></td>
+        </tr>
+        
+        <tr>
+          <td>Microsoft Excel</td>
+          <td>2021 MSO (バージョン 2307 ビルド 16.0.16626.20170)</td>
+          <td>64 ビット</td>
+        </tr>
+        
+        <tr>
+          <td class="td_separate" colspan="3"></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
     <p> &nbsp;</p>
     <p> 3-1. アナログ時計を描く</p>
     <p> 最初にアナログ時計の絵を描きます。</p>
@@ -455,16 +475,16 @@ Sub test_AnalogTimer()
 
     UpdateSecond (10)
 
-End Sub
-</pre>
+End Sub</pre>
 
-  <p> &nbsp;</p>
+    <p> &nbsp;</p>
     <p> 上記 "test_AnalogTimer()" を実行した結果は下図の通りです。値を適当に変更しつつ、テスト＆デバッグを行います。</p>
     <p> 
     <img alt="test_AnalogTimer() の実行結果" class="border_with_drop-shadow" src="Interval_event/img5E.jpg"></p>
-  <p> &nbsp;</p>
-  <p> &nbsp;</p>
-  <p> 3-4. 分針（長針）を動かす</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+
+    <p> 3-4. 分針（長針）を動かす</p>
     <p> 指定した分数に従って分針を動かす関数を作成します。</p>
     <p> 秒針とほぼ同じ処理なので、詳細説明を割愛します。</p>
     <p> &nbsp;</p>
@@ -490,9 +510,10 @@ Private Sub UpdateMinute(minite As Double)
     Call ScaleHeight_Update(shp, rate)
     
 End Sub</pre>
+
     <p> &nbsp;</p>
-  <p> &nbsp;</p>
-  <p> 3-5. 時針（短針）を動かす</p>
+    <p> &nbsp;</p>
+    <p> 3-5. 時針（短針）を動かす</p>
     <p> 指定した時数に従って時針を動かす関数を作成します。</p>
     <p> 秒針とほぼ同じ処理なので、詳細説明を割愛します。</p>
     <p> &nbsp;</p>
@@ -518,12 +539,12 @@ Private Sub UpdateHour(hour As Double)
     Call ScaleHeight_Update(shp, rate)
 
 End Sub</pre>
-  <p> &nbsp;</p>
-  <p> &nbsp;</p>
-  <p> 3-6. 現在時刻に従ってアナログ時計を更新する</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 3-6. 現在時刻に従ってアナログ時計を更新する</p>
     <p> 現在時刻に従ってアナログ時計を更新する関数を作成します。</p>
-  <p> &nbsp;</p>
-  <pre class="prettyprint linenums lang-vb">
+    <p> &nbsp;</p>
+    <pre class="prettyprint linenums lang-vb">
 '
 ' アナログ時計を現在時間に従って表示する
 '
@@ -544,11 +565,12 @@ Private Sub AnalogTimerProc()
     UpdateSecond (s)
 
 End Sub</pre>
+
     <p> &nbsp;</p>
     <p> &nbsp;</p>
-  <p> 3-7. １秒周期で現在時刻を更新する</p>
+    <p> 3-7. １秒周期で現在時刻を更新する</p>
     <p> 最後に１秒周期で現在時刻を更新するようにします。</p>
-  <p> １章、２章、で作成した周期イベントの中から上記関数 AnalogTimerProc() をコールするだけです。</p>
+    <p> １章、２章、で作成した周期イベントの中から上記関数 AnalogTimerProc() をコールするだけです。</p>
     <p> &nbsp;</p>
     <p> １章の内容（Sheet1）にアナログ時計表示を加えた全ソースコードを以下に記載します。</p>
     <p> &nbsp;</p>
@@ -720,96 +742,104 @@ Sub test_AnalogTimer()
     UpdateSecond (30)
 
 End Sub</pre>
+
     <p> &nbsp;</p>
+    
+  </section>
+
   <p> &nbsp;</p>
-  
-</section>
 
-<p> &nbsp;</p>
-<p> &nbsp;</p>
-
-<section>
-	<h2> <a name="ダウンロード">ダウンロード</a></h2>
+  <section>
+  	<h2> <a name="ダウンロード">ダウンロード</a></h2>
     <p> 上記で作成した Excel ファイルを <a href="Interval_event/Excel%20時計_v1.0.xlsm">こちら</a> 
     からダウンロードできます。</p>
+
+    <p> &nbsp;</p>  
+    
+  </section>
+
   <p> &nbsp;</p>
-  
-</section>
 
-<p> &nbsp;</p>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2023 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
 
-<section>
-  <h2><a id="ライセンス">ライセンス</a></h2>
-  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-  <div class="license">
-    The MIT License (MIT)<br><br>
-    
-    &nbsp; Copyright 2023 Kinoshita Hidetoshi<br><br>
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:<br><br>
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.<br><br>
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-  </div>
+  <br>
+
+  <section>
+    <h2><a id="参考">参考</a></h2>
+    <ul>
+      <li>VBAでのタイマー処理（SetTimer,OnTime）｜VBA技術解説 (excel-ubara.com)<br>
+          <a href="https://excel-ubara.com/excelvba4/EXCEL299.html" target="_blank">
+          https://excel-ubara.com/excelvba4/EXCEL299.html</a></li>
+          <li>(487) ExcelVBA【実践】アナログ時計を開発・解説【初級/基礎/入門】 - YouTube<br>
+          <a href="https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s" target="_blank">
+          https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s</a></li>
+          <li>
+          <a href="https://qiita.com/ktetsuo/items/8428ea4563f3f9d24be8" target="_blank">
+          VBAのApplication.OnTimeが遅延する問題とその対策 #Excel - Qiita</a></li>
+    </ul>
+  </section>
+
   <p>&nbsp;</p>
-</section>
 
-<br>
+  <hr>
 
-<section>
-	<h2><a id="参考">参考</a></h2>
-	<ul>
-		<li>VBAでのタイマー処理（SetTimer,OnTime）｜VBA技術解説 (excel-ubara.com)<br>
-        <a href="https://excel-ubara.com/excelvba4/EXCEL299.html" target="_blank">
-        https://excel-ubara.com/excelvba4/EXCEL299.html</a></li>
-        <li>(487) ExcelVBA【実践】アナログ時計を開発・解説【初級/基礎/入門】 - YouTube<br>
-        <a href="https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s" target="_blank">
-        https://www.youtube.com/watch?v=NaPXMiaRvXk&amp;t=4s</a></li>
-	</ul>
-</section>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <section>
+    <h2 style="margin-bottom:5px">変更履歴</h2>
+    <table>
+      <tr>
+        <td class="td_history_date">2025-11-17</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">説明および参考記事を追記</td>
+      </tr>
+      <tr>
+        <td class="td_history_date">2023-08-19</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">新規作成 </td>
+      </tr>
+    </table>
+  </section>
 
-<hr>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <section>
+    <p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
 
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2023-08-19</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
-
-<section>
-<p><a href="../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  <footer>
+    <p><small>&copy; 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
