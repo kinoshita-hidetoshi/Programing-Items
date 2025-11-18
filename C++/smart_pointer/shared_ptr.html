@@ -42,10 +42,6 @@
     .auto-style2 {
       text-decoration: underline;
     }
-    .auto-style4 {
-      color: #990000;
-      background-color: #FFFF00;
-    }
     .auto-style5 {
       text-decoration: line-through;
     }
@@ -54,43 +50,45 @@
 
 <body onload="prettyPrint();">
 
-<h1>std::shared_ptr (c++11)</h1>
-<p>std::shared_ptr です。<span class="t-lines"><span><span class="t-mark">auto_ptr 
-が deprecated（廃止予定）になりましたので、今後はこの shared_ptr, unique_ptr 
-がスマートポインタの主流になっていくことでしょう。</span></span></span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p><a href="#1._まずは_shared_ptr_を使ってみる">1. まずは shared_ptr を使ってみる</a></p>
-        <p><a href="#2._make_shared">2. make_shared</a></p>
-        <p><a href="#3._関数の引数に使う">3. 関数の引数に使う</a></p>
-        <p><a href="#4._関数の引数に使う（その２）">4. 関数の引数に使う（その２）</a></p>
-        <p><a href="#5._shared_ptr_で動的配列を使う">5. shared_ptr で動的配列を使う</a></p>
-        <p>&nbsp;&nbsp; <a href="#5-1._c++17_以前の環境の場合">5-1. c++17 以前の環境の場合</a></p>
-        <p>&nbsp;&nbsp; <a href="#5-2._c++17_以降の環境の場合">5-2. c++17 以降の環境の場合</a></p>
-        <p><a href="#6._malloc,_free_を_shared_ptr_に置き換える">6. malloc, free を shared_ptr に置き換える</a></p>
-        <p>&nbsp;&nbsp; <a href="#6-1._c++17_以前の環境の場合">6-1. c++17 以前の環境の場合</a></p>
-        <p>&nbsp;&nbsp; <a href="#6-2._c++17_以降の環境の場合">6-2. c++17 以降の環境の場合</a></p>
-        <p><a href="#7._fopen,_fclose_を_shared_ptr_に置き換える_">7. fopen, fclose を shared_ptr に置き換える</a></p>
-		    <p><br></p>
-        <p><a href="#ライセンス">ライセンス</a></p>
-        <p><a href="#参考">参考</a></p>
-      </nav>
-    </td>
-  </tr>
-</table>
-<p>&nbsp;</p>
+  <h1>std::shared_ptr (c++11)</h1>
+  <p>std::shared_ptr です。<span class="t-lines"><span><span class="t-mark">auto_ptr 
+  が deprecated（廃止予定）になりましたので、今後はこの shared_ptr, unique_ptr 
+  がスマートポインタの主流になっていくことでしょう。</span></span></span></p>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+      <p><a href="#1._まずは_shared_ptr_を使ってみる">1. まずは shared_ptr を使ってみる</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-1._その１">1-1. その１</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-2._その２">1-2. その２</a></p>
+      <p><a href="#2._関数の引数に使う（その１）">2._関数の引数に使う（その１）</a></p>
+      <p><a href="#3._関数の引数に使う（その２）">3._関数の引数に使う（その２）</a></p>
+      <p><a href="#4._shared_ptr_で動的配列を使う">4._shared_ptr_で動的配列を使う</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-1._c++17_以前の環境の場合">4-1._c++17_以前の環境の場合</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-2._c++17_以降の環境の場合">4-2._c++17_以降の環境の場合</a></p>
+      <p><a href="#5._malloc,_free_を_shared_ptr_に置き換える">5._malloc,_free_を_shared_ptr_に置き換える</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-1._c++17_以前の環境の場合">5-1._c++17_以前の環境の場合</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-2._c++17_以降の環境の場合">5-2._c++17_以降の環境の場合</a></p>
+      <p><a href="#6._fopen,_fclose_を_shared_ptr_に置き換える">6._fopen,_fclose_を_shared_ptr_に置き換える</a></p>
+      <p><a href="#7._make_shared">7._make_shared</a></p>
+      <p><br></p>
+      <p><a href="#ライセンス">ライセンス</a></p>
+      <p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
-<h2><a name="1._まずは_shared_ptr_を使ってみる">1. まずは shared_ptr を使ってみる</a></h2>
-<h3>1-1. その１</h3>
-<p>shared_ptr は自動的にメモリ解放まで行ってくれることが魅力です。<br>この辺りを確認しやすいサンプルを以下に提示します。</p>
-
-<pre class="prettyprint linenums lang-cpp">
+  <section>
+    <h2><a name="1._まずは_shared_ptr_を使ってみる">1. まずは shared_ptr を使ってみる</a></h2>
+    <h3><a name="1-1._その１">1-1. その１</a></h3>
+    <p>shared_ptr は自動的にメモリ解放まで行ってくれることが魅力です。<br>この辺りを確認しやすいサンプルを以下に提示します。</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include "stdafx.h"
 
 #include &lt;iostream&gt;
@@ -118,7 +116,6 @@ struct Data {
     }
 };
 
-
 int main()
 {
     {
@@ -145,158 +142,94 @@ int main()
 
     return EXIT_SUCCESS;
 }</pre>
-<p>実行結果<br><img alt="" src="shared_ptr/img26.gif"></p>
-<p>デストラクタが自動的に実行されてメモリ解放が行われていることがわかります。</p>
-<p>&nbsp;</p>
 
+    <p>&nbsp;</p>
+    <p>実行結果<br><img alt="" src="shared_ptr/img26.gif"></p>
+    <p>デストラクタが自動的に実行されてメモリ解放が行われていることがわかります。</p>
+    <p>&nbsp;</p>
 
-<font face="Meiryo UI">
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
-	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
-</ul>
-</font>
+    <h4>評価環境：</h4>
+    <ul>
+    	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
+    	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+  </section>
 
-<p>&nbsp;</p>
-<h3>1-2. その２</h3>
+  <p>&nbsp;</p>
+  
+  <section>
+<h3><a name="1-2._その２">1-2. その２</a></h3>
 <p>Let's boost のホームページからサンプルプログラムを引用、少し修正して以下に掲載します。</p>
 
 
 
-<code>
-<pre class="prettyprint linenums">
-#include &lt;iostream&gt;&nbsp;  // cout, EXIT_SUCCESS
-#include &lt;string&gt;&nbsp;&nbsp;&nbsp;  // string
-#include &lt;memory&gt;&nbsp;&nbsp;&nbsp;  // shared_ptr
-#include &lt;vector&gt;&nbsp;&nbsp;&nbsp;  // vector
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;   // cout, EXIT_SUCCESS
+#include &lt;string&gt;     // string
+#include &lt;memory&gt;     // shared_ptr
+#include &lt;vector&gt;     // vector
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-&nbsp;&nbsp;&nbsp; typedef <span class="auto-style1">shared_ptr</span>&lt;string&gt; strPtr;
+    typedef <span class="auto-style1">shared_ptr</span>&lt;string&gt; strPtr;
 
-&nbsp;&nbsp;&nbsp; auto s = strPtr(new string("pen."));
-&nbsp;&nbsp;&nbsp; vector&lt; strPtr &gt; v;
+    auto s = strPtr(new string("pen."));
+    vector&lt; strPtr &gt; v;
 
     // vectorに入れたり。
     v.push_back( strPtr(new string("this")) );
-&nbsp;&nbsp;&nbsp; v.push_back( strPtr(new string("is")) );
-&nbsp;&nbsp;&nbsp; v.push_back( strPtr(new string("a")) );
-&nbsp;&nbsp;&nbsp; v.push_back(s);
+    v.push_back( strPtr(new string("is")) );
+    v.push_back( strPtr(new string("a")) );
+    v.push_back(s);
 
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; *s &lt;&lt; endl;
-&nbsp;&nbsp;&nbsp;
+    cout &lt;&lt; *s &lt;&lt; endl;
+    
     // sをpush_backで他にコピーしたからと言って使えなくなったりしない。
-&nbsp;&nbsp;&nbsp; // auto_ptr, unique_ptr だと使えなくなる。&nbsp;&nbsp;&nbsp;
+    // auto_ptr, unique_ptr だと使えなくなる。
 
     // vector に保存した文字列を出力
-    for ( strPtr pStr : v)&nbsp;&nbsp;&nbsp;    // ranged-for で表記
+    for ( strPtr pStr : v)       // ranged-for で表記
     {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; *pStr &lt;&lt; " ";
-&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; endl;
-
-
-&nbsp;&nbsp;&nbsp; return EXIT_SUCCESS;
-}
-// ここで全て delete される。
-</pre>
-</code>
-
-
-<font face="Meiryo UI">
-<h4>出力結果：<br><img alt="" src="shared_ptr/img1B.gif"></h4>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： Visual Studio 2013</li>
-	<li>ＯＳ： Windows8.1 64bit 日本語版</li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="2._make_shared">2. make_shared</a></h2>
-<p>c++11 から make_shared が加わりました。shared_ptr を使う場合は極力これを使うのも良いでしょう。<br>
-ただし、shard_ptr が c++17 で 配列T に対応したことに伴って make_shared も c++20 で仕様拡張を予定しています。<br>逆に言えば、 
-c++20 までは 配列T に未対応ですので注意が必要です。 </p>
-
-<h4>参考URL：</h4>
-<ul>
-	<li>
-	<a href="http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared" target="_blank">std::make_shared</a><br>
-	<a href="http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared" target="_blank">http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared</a></li>
-</ul>
-<p>&nbsp;</p>
-
-<pre class="prettyprint linenums">
-#include "stdafx.h"
-
-#include &lt;iostream&gt;     // cout, endl
-#include &lt;string&gt;       // string
-#include &lt;memory&gt;       // shared_ptr, make_shared
-#include &lt;vector&gt;       // vector
-
-using namespace std;
-
-class Data {
-private:
-    int id_;
-    std::string name_;
-
-public:
-    Data()
-        : Data(0, "") {}
-    Data(int id, const std::string&amp; name)
-        : id_(id), name_(name)
-    {
-        std::cout &lt;&lt; "ctor" &lt;&lt; std::endl;
+        cout &lt;&lt; *pStr &lt;&lt; " ";
     }
-
-    ~Data()
-    {
-        std::cout &lt;&lt; "dtor" &lt;&lt; std::endl;
-    }
-
-    int GetId()
-    {
-        return id_;
-    }
-
-    std::string GetName()
-    {
-        return name_;
-    }
-};
-
-
-int main()
-{
-    vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
-
-    v1.push_back(<span class="auto-style1">make_shared</span>&lt;Data&gt;(1, "foo"));
-    v1.push_back(<span class="auto-style1">make_shared</span>&lt;Data&gt;(2, "bar"));
-
-    for (auto data : v1) {
-        cout &lt;&lt; data-&gt;GetId() &lt;&lt; ", " &lt;&lt; data-&gt;GetName() &lt;&lt; endl;
-    }
+    cout &lt;&lt; endl;
 
     return EXIT_SUCCESS;
-}</pre>
-<p>実行結果<br><img alt="" src="shared_ptr/img2D.gif"></p>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
-	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="3._関数の引数に使う">3. 関数の引数に使う</a></h2>
-<p>関数の引数に shared_ptr を渡してみます。<br>関数に shared_ptr を渡したり、関数の中で shared_ptr 
-の値を変更したり、といったことができます。</p>
+}
+// ここで全て delete される
+</pre>
+
+    <p>&nbsp;</p>
+    <h4>出力結果：<br><img alt="" src="shared_ptr/img1B.gif"></h4>
+    <p>&nbsp;</p>
+    <h4>評価環境：</h4>
+    <ul>
+    	<li>コンパイラ： Visual Studio 2013</li>
+    	<li>ＯＳ： Windows8.1 64bit 日本語版</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="2._関数の引数に使う（その１）">2. 関数の引数に使う（その１）</a></h2>
+    
+    <p>関数の引数に shared_ptr を渡してみます。<br>関数に shared_ptr を渡したり、関数の中で shared_ptr 
+    の値を変更したり、といったことができます。</p>
+    <p>&nbsp;</p>
 <!--
 <table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
   <tr>
     <td style="width: 800px">
 -->
-<pre class="prettyprint linenums">
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
 #include &lt;string&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// string</span>
 #include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// memory</span>
@@ -363,19 +296,27 @@ int main(int argc, char* argv[])
 
 &nbsp;&nbsp;&nbsp; return EXIT_SUCCESS;
 }
-<span class="comment">// ここで全て delete される。</span>
-</pre>
-<!--
-</td></tr></table>
--->
+<span class="comment">// ここで全て delete される。</span></pre>
 
-<p><img alt="" src="shared_ptr/img28.gif"></p>
-<p>&nbsp;</p>
-<h2><a name="4._関数の引数に使う（その２）">4. 関数の引数に使う（その２）</a></h2>
-<p>もう少し複雑な適用例を示します。<br>クラスと関数オーバーロードへの適用を例に示します。<br>smart_ptr 
-が最後にちゃんと解放されていることがわかります。<br>smart_ptr 
-と合わせて生のポインタとオート変数への適用も併記するので、使い方などを比較してみてください。</p>
-<pre class="prettyprint linenums">
+    <!--
+    </td></tr></table>
+    -->
+    
+    <p><img alt="" src="shared_ptr/img28.gif"></p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._関数の引数に使う（その２）">3. 関数の引数に使う（その２）</a></h2>
+    
+    <p>もう少し複雑な適用例を示します。<br>クラスと関数オーバーロードへの適用を例に示します。<br>smart_ptr 
+    が最後にちゃんと解放されていることがわかります。<br>smart_ptr 
+    と合わせて生のポインタとオート変数への適用も併記するので、使い方などを比較してみてください。</p>
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include "targetver.h"
 
 #include &lt;stdio.h&gt;
@@ -495,39 +436,49 @@ int _tmain(int argc, _TCHAR* argv[])
     return EXIT_SUCCESS;
 }</pre>
 
-<p>&nbsp;</p>
-<p>実行結果<br><img alt="" src="shared_ptr/img16.gif"></p>
-<p>foo, bar の２つの smart_ptr がちゃんと解放されていることがわかります。</p>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
-	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="5._shared_ptr_で動的配列を使う">5. shared_ptr で動的配列を使う</a></h2>
-<h3><a name="5-1._c++17_以前の環境の場合">5-1. c++17 以前の環境の場合</a></h3>
-<p>shared_ptr はポインタが無効になった時 delete を使用します。つまり 
-delete[]を必要とする動的配列を使用する場合は上記のような方法そのままでは使用できません。 boost::shared_array みたいなものは 
-標準c++ にはありません。<br>ただ、std::default_delete は配列に対する特殊化が提供されています。これ(std::default_delete)を使って shared_ptr 
-で動的配列を使用する例を以下で紹介します。</p>
-<p>&nbsp;</p>
-<p>■参考URL</p>
-<ul>
-	<li><a href="http://d.hatena.ne.jp/faith_and_brave/20110920/1316507398">http://d.hatena.ne.jp/faith_and_brave/20110920/1316507398</a></li>
-</ul>
-<p>&nbsp;</p>
-<p>スマートポインタの本家 boost はバージョン 1.53 以降で boost::shared_ptr 
-が配列(T[])に対応しました。標準にもいずれフィードバックされることでしょう。(c++17 で採用されました。)<br>また標準ではC++11で採用された std::unique_ptr 
-は delete, 
-delete[] を自動判断する機構が入っています。std::unique_ptr を使用することも検討しましょう。<br>
-<span class="auto-style5">なお、 
-shared_ptr の T[] 対応は C++14 にも入りませんでした。C++17をスコープにしたTSに入ったようです。あと３年の我慢です。</span></p>
-<!--
-<table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
-  <tr>
-    <td style="width: 800px">
--->
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
+    <p>&nbsp;</p>
+    <p>実行結果<br><img alt="" src="shared_ptr/img16.gif"></p>
+    <p>foo, bar の２つの smart_ptr がちゃんと解放されていることがわかります。</p>
+    <p>&nbsp;</p>
+    <h4>評価環境：</h4>
+    <ul>
+    	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
+    	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
+    </ul>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="4._shared_ptr_で動的配列を使う">4. shared_ptr で動的配列を使う</a></h2>
+    <h3><a name="4-1._c++17_以前の環境の場合">4-1. c++17 以前の環境の場合</a></h3>
+    <p>shared_ptr はポインタが無効になった時 delete を使用します。つまり 
+    delete[]を必要とする動的配列を使用する場合は上記のような方法そのままでは使用できません。 boost::shared_array みたいなものは 
+    標準c++ にはありません。<br>ただ、std::default_delete は配列に対する特殊化が提供されています。これ(std::default_delete)を使って shared_ptr 
+    で動的配列を使用する例を以下で紹介します。</p>
+    <p>&nbsp;</p>
+    <p>■参考URL</p>
+    <ul>
+    	<li><a href="http://d.hatena.ne.jp/faith_and_brave/20110920/1316507398">http://d.hatena.ne.jp/faith_and_brave/20110920/1316507398</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>スマートポインタの本家 boost はバージョン 1.53 以降で boost::shared_ptr 
+    が配列(T[])に対応しました。標準にもいずれフィードバックされることでしょう。(c++17 で採用されました。)<br>また標準ではC++11で採用された std::unique_ptr 
+    は delete, 
+    delete[] を自動判断する機構が入っています。std::unique_ptr を使用することも検討しましょう。<br>
+    <span class="auto-style5">なお、 
+    shared_ptr の T[] 対応は C++14 にも入りませんでした。C++17をスコープにしたTSに入ったようです。あと３年の我慢です。</span></p>
+    <p>&nbsp;</p>
+    
+    <!--
+    <table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width: 800px">
+    -->
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
 #include &lt;string&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// string</span>
 #include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// shared_ptr, default_delete</span>
 #include &lt;vector&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// vector</span>
@@ -573,27 +524,32 @@ int main()
 
 &nbsp;&nbsp;&nbsp; std::cout &lt;&lt; <span class="string">"end main"</span> &lt;&lt; std::endl;
 }
-</code>
+
 </pre>
-<!--
-	  </td></tr></table>
--->
-<p><img alt="" src="shared_ptr/img2F.gif"></p>
-<p>
-確かに配列をスマートポインタで扱えるようになりましたが、get()で生のポインタを取り出ししたのちに[]により指定する必要がある、など少々不便な感じがします。つまり 
-shared_ptr は[]のオペレータが無いのです。boost::shared_array の方が使い勝手が良かったように感じます。c++14 で 
-shared_array が追加されるか、shared_ptr に []のオペレータが追加されるか、などを期待します。（後日追記： c++17 
-で採用されました。）<br>
-配列を使う場合はコンテナ(std::vector, std::array, std::list)を使いなさい、ってのが背景にあるのかもしれません。</p>
-<p>&nbsp;</p>
-<h3><a name="5-2._c++17_以降の環境の場合">5-2. c++17 以降の環境の場合</a></h3>
-<p>c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr と同じように簡単に配列を実装できます。</p>
-<ul>
-	<li>Microsoft VC++： VS 2017 V15.5 で対応しました。</li>
-	<li>gcc： 対応時期 および 有効化方法は調査中。対応済みバージョンの gcc を使用するだけじゃなく、コンパイル時にオプションが必要そう。</li>
-</ul>
-<p>&nbsp;</p>
-<pre class="prettyprint linenums"><code>#include "stdafx.h"
+
+    <!--
+    	  </td></tr></table>
+    -->
+    <p><img alt="" src="shared_ptr/img2F.gif"></p>
+    <p>
+    確かに配列をスマートポインタで扱えるようになりましたが、get()で生のポインタを取り出ししたのちに[]により指定する必要がある、など少々不便な感じがします。つまり 
+    shared_ptr は[]のオペレータが無いのです。boost::shared_array の方が使い勝手が良かったように感じます。c++14 で 
+    shared_array が追加されるか、shared_ptr に []のオペレータが追加されるか、などを期待します。（後日追記： c++17 
+    で採用されました。）<br>
+    配列を使う場合はコンテナ(std::vector, std::array, std::list)を使いなさい、ってのが背景にあるのかもしれません。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  
+    <h3><a name="4-2._c++17_以降の環境の場合">4-2. c++17 以降の環境の場合</a></h3>
+    <p>c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr と同じように簡単に配列を実装できます。</p>
+    <ul>
+    	<li>Microsoft VC++： VS 2017 V15.5 で対応しました。</li>
+    	<li>gcc： 対応時期 および 有効化方法は調査中。対応済みバージョンの gcc を使用するだけじゃなく、コンパイル時にオプションが必要そう。</li>
+    </ul>
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include "stdafx.h"
 
 #include &lt;iostream&gt;
 #include &lt;memory&gt;
@@ -618,21 +574,28 @@ int main()
     cout &lt;&lt; endl;
 
     return EXIT_SUCCESS;
-}</code></pre>
-<h4>&nbsp;</h4>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
-	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="6._malloc,_free_を_shared_ptr_に置き換える">6. malloc, free を shared_ptr 
-に置き換える</a></h2>
-<h3><a name="6-1._c++17_以前の環境の場合">6-1. c++17 以前の環境の場合</a></h3>
-<p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
-free を使用します。デアロケータを指定することで shared_ptr のメモリ解放を free で行えるようにします。</p>
+}</pre>
 
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
+    <p>&nbsp;</p>
+    <h4>評価環境：</h4>
+    <ul>
+    	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
+    	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
+    </ul>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  <h2><a name="5._malloc,_free_を_shared_ptr_に置き換える">5. malloc, free を shared_ptr に置き換える</a></h2>
+  
+  <section>
+    <h3><a name="5-1._c++17_以前の環境の場合">5-1. c++17 以前の環境の場合</a></h3>
+    <p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
+    free を使用します。デアロケータを指定することで shared_ptr のメモリ解放を free で行えるようにします。</p>
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
 #include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// shared_ptr</span>
 #include &lt;cstdlib&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// malloc, free</span>
 
@@ -656,20 +619,28 @@ int main()
     }
 
 &nbsp;&nbsp;&nbsp; return EXIT_SUCCESS;
-<font face="Meiryo UI"><code>    // ここで free が実装されて memory を開放
-</code></font>}</code></pre>
+    // ここで free が実装されて memory を開放
+}</pre>
 
-<p>&nbsp;</p>
-<h3><a name="6-2._c++17_以降の環境の場合">6-2. c++17 以降の環境の場合</a></h3>
-<p>前述の例だと &quot;memory.get()[i]&quot; というに配列へアクセスするのが気持ち悪い。やっぱり &quot;memory[i]&quot; って使いたいです。<br>
-c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr 
-と同じように簡単に配列を実装できる、と思われます。</p>
-<ul>
-	<li>Microsoft VC++： VS 2017 V15.5 で対応しました。</li>
-	<li>gcc： 対応時期 および 有効化方法は調査中。対応済みバージョンの gcc を使用するだけじゃなく、コンパイル時にオプションが必要そう。</li>
-</ul>
-<p>VS2019でテストした感じだと意図通りに &quot;memory[i]&quot; で使えて、ちゃんと free もやってくれてそうに見えます。<br>unique_ptr と使い方が違うことが不安材料です。</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;     // cout, EXIT_SUCCESS
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+  
+    <h3><a name="5-2._c++17_以降の環境の場合">5-2. c++17 以降の環境の場合</a></h3>
+    <p>前述の例だと &quot;memory.get()[i]&quot; というに配列へアクセスするのが気持ち悪い。やっぱり &quot;memory[i]&quot; って使いたいです。<br>
+    c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr 
+    と同じように簡単に配列を実装できる、と思われます。</p>
+    <ul>
+    	<li>Microsoft VC++： VS 2017 V15.5 で対応しました。</li>
+    	<li>gcc： 対応時期 および 有効化方法は調査中。対応済みバージョンの gcc を使用するだけじゃなく、コンパイル時にオプションが必要そう。</li>
+    </ul>
+    <p>VS2019でテストした感じだと意図通りに &quot;memory[i]&quot; で使えて、ちゃんと free もやってくれてそうに見えます。<br>unique_ptr と使い方が違うことが不安材料です。</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, EXIT_SUCCESS
 #include &lt;memory&gt;       // shared_ptr, unique_ptr
 #include &lt;cstdlib&gt;      // malloc, free
 
@@ -696,15 +667,22 @@ int main()
 
     return EXIT_SUCCESS;
     // ここで free が実装されて memory を開放
-}</code></pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2><a name="7._fopen,_fclose_を_shared_ptr_に置き換える_">7. fopen, fclose を shared_ptr 
-に置き換える</a></h2>
-<p>これは実装例をいくつか書いてみます。しっくりくるやつを使ってみてください。</p>
-<p>シンプルにやるとこんな感じでしょうか。</p>
+}</pre>
 
-<pre class="prettyprint linenums"><code>#include &lt;stdio.h&gt;  <span class="comment">// fopen, fclose</span>
+    <p>&nbsp;</p>
+    
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="6._fopen,_fclose_を_shared_ptr_に置き換える">6. fopen, fclose を shared_ptr 
+    に置き換える</a></h2>
+    <p>これは実装例をいくつか書いてみます。しっくりくるやつを使ってみてください。</p>
+    <p>シンプルにやるとこんな感じでしょうか。</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;stdio.h&gt;  <span class="comment">// fopen, fclose</span>
 #include &lt;stdlib.h&gt;
 #include &lt;memory&gt;   <span class="comment">// shared_ptr</span>
 
@@ -727,15 +705,19 @@ int main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
     <span class="comment">// ここで custom_fclose が自動実行されます</span>
-}</code></pre>
+}</pre>
 
-<p>これを Lambda式 で記載するとこんな感じでしょうか。</p>
-<!--
-<table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
-  <tr>
-    <td style="width: 800px">
--->
-<pre class="prettyprint linenums"><code>#include &lt;stdio.h&gt;          <span class="comment">// FILE, fopen, fclose</span>
+    <p>&nbsp;</p>
+    <p>これを Lambda式 で記載するとこんな感じでしょうか。</p>
+      
+    <!--
+    <table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width: 800px">
+    -->
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;stdio.h&gt;          <span class="comment">// FILE, fopen, fclose</span>
 #include &lt;stdlib.h&gt;
 #include &lt;memory&gt;           <span class="comment">// shared_ptr</span>
 
@@ -757,15 +739,17 @@ int main(int argc, char* argv[])
 
     return EXIT_SUCCESS;
 <span class="comment">    // ここで custom_fclose が自動実行されます
-</span>}</code></pre>
+</span>}</pre>
 
-<!--
-	  </td></tr></table>
--->
+    <!--
+    	  </td></tr></table>
+    -->
+    
+    <p>&nbsp;</p>
+    <p>ファクトリーパターン的に shared_ptr を返す関数を作成するならばこんな感じでしょうか。</p>
 
-<p>ファクトリーパターン的に shared_ptr を返す関数を作成するならばこんな感じでしょうか。</p>
-
-<pre class="prettyprint linenums"><code>#include &lt;cstdio&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// fopen, fclose</span>
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;cstdio&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// fopen, fclose</span>
 #include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
 #include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// shared_ptr</span>
 
@@ -790,146 +774,206 @@ int main()
 </span>&nbsp;&nbsp;&nbsp; if (fp.get()){
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fprintf(fp.get(), "Hello world.");
 &nbsp;&nbsp;&nbsp; }
-}</code></pre>
+}</pre>
 
-<!--
-	  </td></tr></table>
--->
-<p>私的には Lambda式 を使った2番目のやつが一番シンプルで好きかな。</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2><a name="参考URL">■参考URL</a></h2>
-<ul>
-	<li><font face="Meiryo UI"> 
- 
- 
- 
-<a href="http://ja.cppreference.com/w/cpp/memory/shared_ptr" target="_blank">http://ja.cppreference.com/w/cpp/memory/shared_ptr</a></font></li>
-	<li>
-	<a href="https://cpprefjp.github.io/implementation-status.html" target="_blank">
-	コンパイラの実装状況</a><br>
-	<a href="https://cpprefjp.github.io/implementation-status.html" target="_blank">
-	https://cpprefjp.github.io/implementation-status.html</a></li>
-</ul>
-<p>&nbsp;</p>
-<hr>
-<p>記載： 2013年12月1日 木下英俊<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-2014年3月9日 追記/修正<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-2014年9月6日 ソースコードを表記を「google-code-prettify」によるものへ変更<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-2018年5月4日 いろいろアップデート。c++17 に関わる make_shared, 配列対応版の shared_ptr, などのネタを追加。<br></p>
-</font>
-
-<!--
-<script type="text/javascript">prettyPrint();</script>
--->
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-  <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-The MIT License (MIT)<br><br>
-
-Copyright © 2013-2022 Kinoshita Hidetoshi<br><br>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
+    <!--
+    	  </td></tr></table>
+    -->
+    <p>私的には Lambda式 を使った2番目のやつが一番シンプルで好きかな。</p>
+    <p>&nbsp;</p>
+    
+    <!--
+    <script type="text/javascript">prettyPrint();</script>
+    -->
+  </section>
+  
   <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="7._make_shared">7. make_shared</a></h2>
+    <p>c++11 から make_shared が加わりました。shared_ptr を使う場合は極力これを使うのも良いでしょう。<br>
+    ただし、shard_ptr が c++17 で 配列T に対応したことに伴って make_shared も c++20 で仕様拡張を予定しています。<br>逆に言えば、 
+    c++20 までは 配列T に未対応ですので注意が必要です。</p>
+    <p>&nbsp;</p>
+    
+    <h4>参考URL：</h4>
+    <ul>
+    	<li>
+    	<a href="http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared" target="_blank">std::make_shared</a><br>
+    	<a href="http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared" target="_blank">http://ja.cppreference.com/w/cpp/memory/shared_ptr/make_shared</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include "stdafx.h"
+
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;string&gt;       // string
+#include &lt;memory&gt;       // shared_ptr, make_shared
+#include &lt;vector&gt;       // vector
+
+using namespace std;
+
+class Data {
+private:
+    int id_;
+    std::string name_;
+
+public:
+    Data()
+        : Data(0, "") {}
+    Data(int id, const std::string&amp; name)
+        : id_(id), name_(name)
+    {
+        std::cout &lt;&lt; "ctor" &lt;&lt; std::endl;
+    }
+
+    ~Data()
+    {
+        std::cout &lt;&lt; "dtor" &lt;&lt; std::endl;
+    }
+
+    int GetId()
+    {
+        return id_;
+    }
+
+    std::string GetName()
+    {
+        return name_;
+    }
+};
+
+
+int main()
+{
+    vector&lt;<span class="auto-style1">shared_ptr</span>&lt;Data&gt;&gt; v1;
+
+    v1.push_back(<span class="auto-style1">make_shared</span>&lt;Data&gt;(1, "foo"));
+    v1.push_back(<span class="auto-style1">make_shared</span>&lt;Data&gt;(2, "bar"));
+
+    for (auto data : v1) {
+        cout &lt;&lt; data-&gt;GetId() &lt;&lt; ", " &lt;&lt; data-&gt;GetName() &lt;&lt; endl;
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>実行結果<br><img alt="" src="shared_ptr/img2D.gif"></p>
+    <p>&nbsp;</p>
+    <h4>評価環境：</h4>
+    <ul>
+    	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
+    	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+  </section>
+
   <p>&nbsp;</p>
-</section>
 
-<br>
+  <section>
+    <h2><a name="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+      <tr>
+        <td>
+    The MIT License (MIT)<br><br>
+    
+    Copyright © 2013 Kinoshita Hidetoshi<br><br>
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:<br><br>
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.<br><br>
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
 
-<section>
-	<h2><a name="参考">参考</a></h2>
-	<ul>
-		<li>
-  		std::shared_ptr - cppreference.com<br>
-		<a href="https://ja.cppreference.com/w/cpp/memory/shared_ptr" target="_blank">
-		https://ja.cppreference.com/w/cpp/memory/shared_ptr</a></li>
-	  <li>
-      コンパイラの実装状況<br>
-		  <a href="https://cpprefjp.github.io/implementation-status.html" target="_blank">
-      https://cpprefjp.github.io/implementation-status.html</a></li>
-</ul>
-</section>
+  <section>
+  	<h2><a name="参考">参考</a></h2>
+  	<ul>
+  		<li>
+    		std::shared_ptr - cppreference.com<br>
+  		  <a href="https://ja.cppreference.com/w/cpp/memory/shared_ptr" target="_blank">
+  		  https://ja.cppreference.com/w/cpp/memory/shared_ptr</a></li>
+  	  <li>
+        コンパイラの実装状況<br>
+  		  <a href="https://cpprefjp.github.io/implementation-status.html" target="_blank">
+        https://cpprefjp.github.io/implementation-status.html</a></li>
+    </ul>
+  </section>
 
-<p>&nbsp;</p>
-
-<hr>
-
-<p>&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2022-07-13</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">
-		ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2018-05-04</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">
-		いろいろアップデート。c++17 に関わる make_shared, 配列対応版の shared_ptr, などのネタを追加。 </td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2014-09-06</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">
-		ソースコードを表記を「google-code-prettify」によるものへ変更</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2014-03-09</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">追記/修正</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2013-12-01</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2013-2022 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  <p>&nbsp;</p>
+  
+  <hr>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2022-07-13</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">
+  		ページデザイン更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2018-05-04</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">
+  		いろいろアップデート。c++17 に関わる make_shared, 配列対応版の shared_ptr, などのネタを追加。 </td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2014-09-06</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">
+  		ソースコードを表記を「google-code-prettify」によるものへ変更</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2014-03-09</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">追記/修正</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2013-12-01</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>Copyright © 2013 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
