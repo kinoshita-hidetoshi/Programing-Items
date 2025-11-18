@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>動的な生成と破棄 | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>動的な生成と破棄</h1>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._オブジェクトの動的な生成と破棄_(new/delete)">1. オブジェクトの動的な生成と破棄 (new/delete)</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._オブジェクトの動的な生成と破棄_(new/delete)">1. オブジェクトの動的な生成と破棄 (new/delete)</a></h2>
+  	<h4>[概要]</h4>
+  	<p> オブジェクトを動的に生成するには、new 演算子を使用します。new 
+    演算子は、オブジェクトを格納するメモリを確保し、初期化を行った後にそのメモリのアドレスを返します。メモリ確保に失敗した時は、std::bad_alloc 
+    例外を送出します。</p>
+    <p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	      <td>g++ 13.3.0</td>
+    	      <td></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Ubuntu-24.04 （WSL)</td>
+    	    <td>&nbsp;</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+    <p> new 演算子は、以下のように使用します。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">int* p = new int;</pre>
+    
+    <p> &nbsp;</p>
+    <p> 値の初期化を一緒に行いたい場合、以下のように使用します。下記例は 10 で初期化しています。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">int* p = new int(10);</pre>
+
+    <p> &nbsp;</p>
+    <p> new 演算子で配列を確保する場合は、以下のように使用します。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">int* arr = new int[5];</pre>
+    
+    <p> &nbsp;</p>
+    <p> 配列の値を初期化と一緒に行いたい場合、以下のように使用します。下記例は {1,2,3,4,5} で初期化しています。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">int* arr = new int[5]{1,2,3,4,5};</pre>
+    
+    <p> &nbsp;</p>
+    <p> 配列のサイズに 0 未満、もしくは実装で確保できる上限のサイズを超える値を指定すると、 std::bad_array_new_length 
+    例外を送出します。</p>
+    <p> new 演算子でメモリを確保するとき std::nothrow を組み合わせると、メモリ確保に失敗した場合に例外を送出せず nullptr 
+    を返すようになります。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">int* p = new(nothrow) int;</pre>
+    
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> new 演算子で確保したメモリは、delete で開放する必要があります。</p>
+    <p> delete 演算子は、以下のように使用します。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">delete p;</pre>
+    
+    <p> &nbsp;</p>
+    <p> new[] 演算子で確保された配列を開放するには、delete[] 演算子を使用します。</p>
+    
+    <pre class="prettyprint lang-cpp" style="width:800px">delete[] p;</pre>
+    
+    <p> &nbsp;</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>new / delete とメモリリーク</strong></p>
+        <p>new 演算子で確保した領域は、delete による解放を忘れると メモリリーク 
+        という問題を発生します。この問題を防ぐ方法として、標準ライブラリが提供する unique_ptr や shared_ptr 
+        のようなスマートポインタ、vector などのコンテナ を積極的に使用することを強く推奨します。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 上記内容を含む c++ プログラムを以下で紹介します。</p>
+    <p> &nbsp;</p>
+    <p> ソースコード：</p>
+    <p> ["new_delete_01.cpp"]</p>
+  	
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // for std::cout
+#include &lt;new&gt;          // for std::nothrow, placement new
+#include &lt;memory&gt;       // for std::make_unique
+
+/**
+ * @brief new/delete のシンプルなサンプル（構造体/クラスを使用しない）
+ *
+ * - 組み込み型（int）を使って `new` / `delete` / `new[]` / `delete[]` を示す
+ * - `std::nothrow` と placement new の簡単な例を含む
+ */
+
+int main() {
+    std::cout &lt;&lt; "-- new/delete simple examples start --\n";
+
+    // 1) 単一 int の new/delete
+    {
+        int* p = new int(10);
+        std::cout &lt;&lt; "*p = " &lt;&lt; *p &lt;&lt; "\n";
+        delete p;
+    }
+
+    // 2) int 配列の new[] / delete[]
+    {
+        int* arr = new int[5]{1,2,3,4,5};
+        for (int i = 0; i &lt; 5; ++i) {
+            std::cout &lt;&lt; "arr[" &lt;&lt; i &lt;&lt; "] = " &lt;&lt; arr[i] &lt;&lt; "\n";
+        }
+        delete[] arr;
+    }
+
+    // 3) std::nothrow を使った例外を投げない new
+    {
+        int* p = new (std::nothrow) int(42);
+        if (p) {
+            std::cout &lt;&lt; "nothrow allocated value = " &lt;&lt; *p &lt;&lt; "\n";
+            delete p;
+        } 
+        else {
+            std::cout &lt;&lt; "nothrow allocation failed\n";
+        }
+    }
+
+    // 4) placement new の例（int をバッファ上に構築）
+    {
+        alignas(int) unsigned char buffer[sizeof(int)];
+        int* p = new (buffer) int(99); // placement new
+        std::cout &lt;&lt; "placement *p = " &lt;&lt; *p &lt;&lt; "\n";
+        // int の破棄は特別な処理不要（ここでは何もしない）
+    }
+
+    // 5) std::unique_ptr (std::make_unique) と組み合わせた安全な管理
+    {
+        auto up = std::make_unique&lt;int&gt;(77);
+        std::cout &lt;&lt; "unique_ptr owns = " &lt;&lt; *up &lt;&lt; "\n";
+    }
+
+    // 6) std::unique_ptr (std::make_unique) の配列版（C++14 以降）
+    {
+        auto arr_up = std::make_unique&lt;int[]&gt;(5); // 要素はデフォルト初期化（ゼロでない場合あり）
+        for (int i = 0; i &lt; 5; ++i) {
+            arr_up[i] = (i + 1) * 10;
+        }
+        std::cout &lt;&lt; "make_unique&lt;int[]&gt; contents:";
+        for (int i = 0; i &lt; 5; ++i) {
+            std::cout &lt;&lt; ' ' &lt;&lt; arr_up[i];
+        }
+        std::cout &lt;&lt; '\n';
+    }
+
+    std::cout &lt;&lt; "-- new/delete simple examples end --\n";
+    return 0;
+}</pre>
+
+    <p> &nbsp;</p>
+    <p> ビルドおよびプログラム実行例：</p>
+    
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++23 -Wall -Wextra -O2 new_delete_01.cpp -o new_delete_01.out &amp;&amp; ./new_delete_01.out
+-- new/delete simple examples start --
+*p = 10
+arr[0] = 1
+arr[1] = 2
+arr[2] = 3
+arr[3] = 4
+arr[4] = 5
+nothrow allocated value = 42
+placement *p = 99
+unique_ptr owns = 77
+make_unique&lt;int[]&gt; contents: 10 20 30 40 50
+-- new/delete simple examples end --
+$</pre>
+  	
+    <p>&nbsp;</p>
+	
+  </section>
+  	
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2025 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li><a href="../../smart_pointer/unique_ptr.html">
+        unique_ptr</a></li>
+      <li><a href="../../smart_pointer/shared_ptr.html">
+        shared_ptr</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-11-18</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成</td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2025 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
