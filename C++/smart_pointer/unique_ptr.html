@@ -639,10 +639,11 @@ $ </pre>
   
     <h2><a name="6._make_unique_配列版">6. make_unique 配列版</a></h2>
     <p>c++14 で追加された <strong>make_unique</strong> は 配列型T に対応しています。Visual Studio は 2013 から対応しているようです。<br>
-    make_share は本文記載時点では 配列型T に未対応です。 c++20 で対応予定、VS2019 ver.16.3.6 でも未対応です。<br>&nbsp;unique_ptr 
+    make_shared は本文記載時点では 配列型T に未対応です。 c++20 で対応予定、VS2019 ver.16.3.6 でも未対応です。<br>unique_ptr 
     を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
-    <p>では同様に「<a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a>」で記載したコードを  
+    <p>では「<a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a>」で記載したコードを  
     <strong>make_unique</strong> を使って書き換えてみます。</p>
+    <p>&nbsp;</p>
     <p>■評価環境</p>
     <ul>
       <li>コンパイラ： Visual Studio 2019,&nbsp; Ver. 16.3.6</li>
