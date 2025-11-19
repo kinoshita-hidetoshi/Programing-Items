@@ -84,7 +84,137 @@
     <p>まずは <strong><em>unique_ptr</em></strong> を使ってみます。<strong><em>shared_ptr</em></strong> 
     とほとんど同じ感じで使用できますが、コピーはできません。moveを使って管理者の譲渡と明示的に行う必要があります。</p>
     <p>&nbsp;</p>
+    
+    <section>
+      <h3>1-1. その1</h3>
+      <p>最初にシンプルな unique_ptr 使用例を紹介します。</p>
+      <p>&nbsp;</p>
+      <p><strong>unique_ptr</strong> を直接使用する例を記載します。</p>
+      <p>int 型の生成は、以下のように使用します。</p>
+      <pre class="prettyprint lang-cpp" style="width:800px">std::unique_ptr<int> up(new int);</pre>
+      <p>&nbsp;</p>
+      <p>値の初期化を一緒に行いたい場合、以下のように使用します。下記例は 10 で初期化しています。 </p>
+      <pre class="prettyprint lang-cpp" style="width:800px">std::unique_ptr<int> up(new int(10));</pre>
+      <p>&nbsp;</p>
+      <p>配列を確保する場合は、以下のように使用します。</p>
+      <pre class="prettyprint lang-cpp" style="width:800px">std::unique_ptr<int[]> arr_up(new int[5]);</pre>
+      <p>&nbsp;</p>
+      <p>配列の値を初期化と一緒に行いたい場合、以下のように使用します。下記例は {1,2,3,4,5} で初期化しています。 </p>
+      <pre class="prettyprint lang-cpp" style="width:800px">std::unique_ptr<int[]> arr_up(new int[5]{1,2,3,4,5});</pre>
+      <p>&nbsp;</p>
+      <p><strong>make_unique</strong> による例を記載します。</p>
+      
+      <p>int 型の生成は、以下のように使用します。</p>
+      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique<int>(77);</pre>
+      <p>&nbsp;</p>
+      
+      <p>値の初期化を一緒に行いたい場合、以下のように使用します。下記例は 10 で初期化しています。 </p>
+      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique<int>(77);</pre>
+      <p>&nbsp;</p>
+      
+      <p>配列を確保する場合、以下のように使用します。下記例では、配列数 5 です。<br>make_unique を使って初期化を一緒に行うことはできないようです。</p>
+      <pre class="prettyprint lang-cpp" style="width:800px">
+auto arr_up = std::make_unique<int[]>(5); // 要素はデフォルト初期化（ゼロでない場合あり）
+for (int i = 0; i &lt; 5; ++i) {
+    arr_up[i] = (i + 1) * 10;
+}</pre>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>上記内容を含む c++ プログラムを以下で紹介します。</p>
+      <p>&nbsp;</p>
+      <p>ソースコード：</p>
+      <p>["unique_ptr_01.cpp"]</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // for std::cout
+#include &lt;new&gt;          // for std::nothrow, placement new
+#include &lt;memory&gt;       // for std::make_unique
+ 
+/**
+ * @brief new/delete のシンプルなサンプル（構造体/クラスを使用しない）
+ *
+ * - 組み込み型（int）を使って `new` / `delete` / `new[]` / `delete[]` を示す
+ * - `std::nothrow` と placement new の簡単な例を含む
+ */
+ 
+int main() {
+    std::cout &lt;&lt; "-- uqique_ptr simple examples start --\n";
 
+    // 1) 単一 int の std::unique_ptr
+    {
+        std::unique_ptr&lt;int&gt; up(new int(10));
+        std::cout &lt;&lt; "*up = " &lt;&lt; *up &lt;&lt; "\n";
+        // delete は自動的に行われる
+    }
+
+    // 2) int 配列の std::unique_ptr
+    {
+        std::unique_ptr&lt;int[]&gt; arr_up(new int[5]{1,2,3,4,5});
+        for (int i = 0; i &lt; 5; ++i) {
+            std::cout &lt;&lt; "arr_up[" &lt;&lt; i &lt;&lt; "] = " &lt;&lt; arr_up[i] &lt;&lt; "\n";
+        }
+        // delete[] は自動的に行われる
+    }
+
+    // 3) 単一 int 生成、std::make_unique 版
+    {
+        auto up = std::make_unique&lt;int&gt;(77);
+        std::cout &lt;&lt; "unique_ptr owns = " &lt;&lt; *up &lt;&lt; "\n";
+        // delete は自動的に行われる
+    }
+
+    // 4) 配列 int 生成、std::make_unique 配列版（C++14 以降）
+    {
+        auto arr_up = std::make_unique&lt;int[]&gt;(5); // 要素はデフォルト初期化（ゼロでない場合あり）
+        for (int i = 0; i &lt; 5; ++i) {
+            arr_up[i] = (i + 1) * 10;
+        }
+        std::cout &lt;&lt; "make_unique&lt;int[]&gt; contents:";
+        for (int i = 0; i &lt; 5; ++i) {
+            std::cout &lt;&lt; ' ' &lt;&lt; arr_up[i];
+        }
+        std::cout &lt;&lt; '\n';
+        // delete[] は自動的に行われる
+    }
+
+    std::cout &lt;&lt; "-- uqique_ptr simple examples end --\n";
+    return 0;
+}</pre>
+
+      <p>&nbsp;</p>
+      
+      <p>ビルド方法：</p>
+      <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -O2 unique_ptr_01.cpp -o unique_ptr_01.out</pre>
+      
+      <p>&nbsp;</p>
+      <p>実行結果：</p>
+      
+      <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./unique_ptr_01.out 
+-- uqique_ptr simple examples start --
+*up = 10
+arr_up[0] = 1
+arr_up[1] = 2
+arr_up[2] = 3
+arr_up[3] = 4
+arr_up[4] = 5
+unique_ptr owns = 77
+make_unique&lt;int[]&gt; contents: 10 20 30 40 50
+-- uqique_ptr simple examples end --
+$ </pre>
+
+      <p>&nbsp;</p>
+    </section>
+    
+    <p>&nbsp;</p>
+    
+    <section>
+      <h3>1-2. その2</h3>
+      <p>前の節で unique_ptr の簡単な使用方法について記載しました。</p>
+      <p>でも「本当に解放処理を自動的にやってくれてるのか心配」ですよね。</p>
+      <p>本節では、unique_ptr で class インスタンスを生成して、delete 
+      無しで自動的にデストラクタが実行されることを確認してみます。</p>
+      <p>&nbsp;</p>
   	<h4>[環境]</h4>
   	<table>
     	<tbody>
@@ -265,6 +395,11 @@ $ </pre>
     <p>&nbsp;</p>
     <p>3箇所でクラス Person のデストラクタが実行されている（"Person::~Person()" 
     の部分）ことから、unique_ptr が期待通りに解放処理を行っていることがわかります。</p>
+    <p>&nbsp;</p>
+      
+      <p>&nbsp;</p>
+    </section>
+    
     <p>&nbsp;</p>
 
 </section>
