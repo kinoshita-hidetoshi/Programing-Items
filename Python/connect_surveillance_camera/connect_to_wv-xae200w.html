@@ -215,7 +215,7 @@
 <section>
   <h2><a name="2._JPEGヘッダーから認識結果を取り出す">2. JPEGヘッダーから認識結果を取り出す</a></h2>
   <h4>[概要]</h4>
-  <p>資料<span>[1][4][5] </span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
+  <p>資料<span>[1][4] </span>によると JPEG, RTSP ともにパケットに AI 認識結果が記録されているようです。</p>
   <p>私の技量では RTSP からこの情報を取り出すのは難があるので、JPEG から取り出しすることにチャレンジしてみます。<br>JPEG 
   ヘッダのコメント領域に記録されているということなので、ここから情報を取り出してみます。</p>
   <p>
@@ -259,7 +259,7 @@
   - 5.連番のJPEGファイルで保存する</a>」に記載の方法を使って、WV-XAE200W を動作している状態の JPEG ファイルをPCに保存します。</p>
   <p>&nbsp;</p>
   <p>(2)</p>
-  <p>資料<span>[1][4][5]</span>、JPEGファイル構造の資料<span>[3]</span>、 
+  <p>資料<span>[1][4]</span>、JPEGファイル構造の資料<span>[3]</span>、 
   (1)で保存したファイルをバイナリエディタで表示した結果を見比べて確認などしていきます。</p>
   <p>まずは仕様確認です。</p>
   <p>資料<span>[1]</span>の「i-proカメラ外部インタフェース仕様書ver1.59.pdf - 13.3.3. 
@@ -1259,6 +1259,7 @@ if __name__ == "__main__":
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>["show_live_camera.py"]</p>
+  
   <pre class="prettyprint linenums lang-py">'''
 [Abstract]
     This program connects to an i-PRO camera and draws the recognition result 
@@ -1415,6 +1416,7 @@ if __name__ == "__main__":
                 connection = False
 
     cv2.destroyAllWindows()</pre>
+    
   <p>&nbsp;</p>
   <h4><a name="プログラム動作例">プログラム動作例</a></h4>
   <p>上記プログラムを実際に動作させた例を以下に記載します。</p>
@@ -1446,8 +1448,8 @@ if __name__ == "__main__":
 
 <section>
   <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+  <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
   <tr>
     <td>
 MIT License<br><br>
@@ -1482,21 +1484,16 @@ SOFTWARE.
 <section>
   <h2><a name="参考">参考</a></h2>
   <ul>
-    <li>[1] ネットワークカメラCGIコマンドインターフェース仕様書　統合版<br>
-    <a href="https://connect.panasonic.com/jp-ja/products-services_security_support_specifications-manuals-firms-dvlp_2012100910461872" target="_blank">
-    https://connect.panasonic.com/jp-ja/products-services_security_support_specifications-manuals-firms-dvlp_2012100910461872</a></li>
-    <li>[2] AI動体検知アプリケーション、AIプライバシーガードアプリケーション、AIプロセッサー解除ライセンス WV-XAE200W / 
-    WV-XAE201W / WV-XLE001W - 映像管理ソフト 製品一覧 - 監視・防犯システム - Panasonic<br>
-    <a href="https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w" target="_blank">
-    https://connect.panasonic.com/jp-ja/products-services/security_software/lineup/wv-xae200w-xae201w-xle001w</a></li>
-      <li>[3] WV-XAE200WUX　カメラ用機能拡張ソフトウェア（AI動体検知アプリケーション） - ダウンロード - i-PRO 
-      サポートポータル<br>
-      <a href="https://japancs.i-pro.com/space/DLJP/788989682/WV-XAE200WUX　カメラ用機能拡張ソフトウェア（AI動体検知アプリケーション）" target="_blank">
-      https://japancs.i-pro.com/space/DLJP/788989682/WV-XAE200WUX　カメラ用機能拡張ソフトウェア（AI動体検知アプリケーション）</a></li>
-    <li>[4] AIネットワークカメラ機能拡張ソフトウェア（AI動体検知【WV-XAE200W】）外部インターフェイス仕様書 - v1.00<br>
-    <a href="https://connect.panasonic.com/jp-ja/products-services_security_support_specifications-manuals-firms-dvlp_2022060110360001" target="_blank">https://connect.panasonic.com/jp-ja/products-services_security_support_specifications-manuals-firms-dvlp_2022060110360001</a></li>
-    <li>[5] AIネットワークカメラ用機能拡張ソフトウェア（AI動体検知アプリケーション）外部インターフェイス仕様書 - v1.00<br>
-    <a href="https://japancs.i-pro.com/space/DEVJP/789059438" target="_blank">https://japancs.i-pro.com/space/DEVJP/789059438</a></li>
+    <li>[1]
+      <a href="https://i-pro.com/products_and_solutions/ja/surveillance/learning-and-support/device-integration/cgi-itg-camera" target="_blank">
+      ネットワークカメラCGIコマンドインターフェース仕様書 | i-PRO Products</a></li>
+    <li>[2]
+    <a href="https://i-pro.com/products_and_solutions/ja/surveillance/products-list?category=AI%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%AB%E3%83%A1%E3%83%A9%E7%94%A8%20%E6%A9%9F%E8%83%BD%E6%8B%A1%E5%BC%B5%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2&amp;manufacture=i-PRO" target="_blank">
+    商品 - AIネットワークカメラ用 機能拡張ソフトウェア</a></li>
+    <li>[3]
+      <a href="https://i-pro.com/products_and_solutions/ja/surveillance/products/wv-xae200wux" target="_blank">WV-XAE200WUX | i-PRO Products</a></li>
+    <li>[4]
+      <a href="https://i-pro.com/products_and_solutions/ja/surveillance/learning-and-support/device-integration/ai-motion-dtc-app" target="_blank">AIネットワークカメラ用機能拡張ソフトウェア（AI動体検知）外部インターフェース仕様書 | i-PRO Products</a></li>
   </ul>
 </section>
 
@@ -1509,6 +1506,11 @@ SOFTWARE.
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2025-11-21</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history"><a href="#参考">参考</a> を更新（リンク先を Panasonic から i-PRO へ変更）</td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2023-10-20</td>
 	    <td class="td_history_separator">-</td>
@@ -1550,7 +1552,7 @@ SOFTWARE.
 <p>&nbsp;</p>
 
 <section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+<p><a href="../../index.html" target="_parent">Programming Items トップページ/a></p>
 <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
 </section>
 
