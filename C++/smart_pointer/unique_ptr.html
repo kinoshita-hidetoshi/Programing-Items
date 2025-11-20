@@ -66,6 +66,8 @@
   <nav>
   <h2>目次</h2>
   <p><a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-1._その1">1-1._その1</a></p>
+    <p>&nbsp;&nbsp; <a href="#1-2._その2">1-2._その2</a></p>
   <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
   <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
   <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
@@ -86,7 +88,7 @@
     <p>&nbsp;</p>
     
     <section>
-      <h3>1-1. その1</h3>
+      <h3><a name="1-1._その1">1-1. その1</a></h3>
       <p>最初にシンプルな unique_ptr 使用例を紹介します。</p>
       <p>&nbsp;</p>
       <p><strong>unique_ptr</strong> を直接使用する例を記載します。</p>
@@ -105,16 +107,16 @@
       <p><strong>make_unique</strong> による例を記載します。</p>
       
       <p>int 型の生成は、以下のように使用します。</p>
-      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique<int>(77);</pre>
+      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique&lt;int&gt;();</pre>
       <p>&nbsp;</p>
       
-      <p>値の初期化を一緒に行いたい場合、以下のように使用します。下記例は 10 で初期化しています。 </p>
-      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique<int>(77);</pre>
+      <p>値の初期化を一緒に行いたい場合、以下のように使用します。下記例は 77 で初期化しています。 </p>
+      <pre class="prettyprint lang-cpp" style="width:800px">auto up = std::make_unique&lt;int&gt;(77);</pre>
       <p>&nbsp;</p>
       
       <p>配列を確保する場合、以下のように使用します。下記例では、配列数 5 です。<br>make_unique を使って初期化を一緒に行うことはできないようです。</p>
       <pre class="prettyprint lang-cpp" style="width:800px">
-auto arr_up = std::make_unique<int[]>(5); // 要素はデフォルト初期化（ゼロでない場合あり）
+auto arr_up = std::make_unique&lt;int[]&gt;(5); // 要素はデフォルト初期化（ゼロでない場合あり）
 for (int i = 0; i &lt; 5; ++i) {
     arr_up[i] = (i + 1) * 10;
 }</pre>
@@ -131,10 +133,7 @@ for (int i = 0; i &lt; 5; ++i) {
 #include &lt;memory&gt;       // for std::make_unique
  
 /**
- * @brief new/delete のシンプルなサンプル（構造体/クラスを使用しない）
- *
- * - 組み込み型（int）を使って `new` / `delete` / `new[]` / `delete[]` を示す
- * - `std::nothrow` と placement new の簡単な例を含む
+ * @brief std::unique_ptr, std::make_unique のシンプルなサンプル
  */
  
 int main() {
@@ -184,7 +183,7 @@ int main() {
       <p>&nbsp;</p>
       
       <p>ビルド方法：</p>
-      <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -O2 unique_ptr_01.cpp -o unique_ptr_01.out</pre>
+      <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -O2 unique_ptr_01.cpp -o unique_ptr_01.out</pre>
       
       <p>&nbsp;</p>
       <p>実行結果：</p>
@@ -209,7 +208,7 @@ $ </pre>
     <p>&nbsp;</p>
     
     <section>
-      <h3>1-2. その2</h3>
+      <h3><a name="1-2._その2">1-2. その2</a></h3>
       <p>前の節で unique_ptr の簡単な使用方法について記載しました。</p>
       <p>でも「本当に解放処理を自動的にやってくれてるのか心配」ですよね。</p>
       <p>本節では、unique_ptr で class インスタンスを生成して、delete 
