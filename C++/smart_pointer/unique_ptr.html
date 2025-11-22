@@ -579,8 +579,9 @@ int main()
   <section>
     <h2><a name="5._make_unique">5. make_unique</a></h2>
     
-    <p>c++14 で <strong>make_unique</strong> が追加されました。Visual Studio は 2013 から対応しているようです。<br>unique_ptr 
-    を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
+    <p>c++14 から <strong>make_unique</strong> が加わりました。<strong>unique_ptr</strong> 直接使用せず 
+     
+    <strong>make_unique</strong> によるコーディングが推奨されています。</p>
     <p>&nbsp;</p>
 
   	<h4>[環境]</h4>
@@ -614,7 +615,7 @@ int main()
 
     <p>&nbsp;</p>
     
-    <p>[ソースコード： "unique_ptr.cpp"]</p>
+    <p>[ソースコード： "make_unique_01.cpp"]</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // cout, endl
@@ -742,7 +743,7 @@ int main()
     
     <p>ビルド(例)：</p>
     <pre class="prettyprint" style="width:800px">
-$ g++ -Wall -g make_unique.cpp -o make_unique.out</pre>
+$ g++ -Wall -Wextra -Wpedantic -g make_unique_01.cpp -o make_unique_01.out</pre>
 
     <p>&nbsp;</p>
     
@@ -790,6 +791,7 @@ $ </pre>
       https://cpprefjp.github.io/reference/memory/make_unique.html</a></li>
     </ul>
     <p>&nbsp;</p>
+    <p>[ソースコード： "make_unique_03.cpp"]</p>
 
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;tchar.h&gt;      // _TCHAR, _tmain
@@ -876,8 +878,13 @@ int _tmain(int argc, _TCHAR* argv[])
 }</pre>
 
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    
+    <p>ビルド(例)：</p>
+    <pre class="prettyprint" style="width:800px">
+$ g++ -Wall -Wextra -Wpedantic -g make_unique_03.cpp -o make_unique_03.out</pre>
 
+    <p>&nbsp;</p>
+    
     <p>[実行結果]</p>
     <p><img alt="" src="unique_ptr/imgD.jpg"></p>
     <p>無駄なコンストラクタ、デストラクタ、の発生が気になりますが、この動作で正しいです。</p>
