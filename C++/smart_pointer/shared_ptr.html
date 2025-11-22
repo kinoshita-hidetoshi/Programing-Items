@@ -1039,6 +1039,7 @@ for (int i = 0; i &lt; 5; ++i) {
     <p>&nbsp;</p>
     <p>上記内容を含む c++ プログラムを以下で紹介します。</p>
     <p>&nbsp;</p>
+    
     <p>[ソースコード： "make_shared_03.cpp"]</p>
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // for std::cout
@@ -1051,15 +1052,17 @@ for (int i = 0; i &lt; 5; ++i) {
 
 int main() {
     std::cout &lt;&lt; "-- shared_ptr simple examples start --\n";
- 
+
     // 1) 配列 int 生成、std::make_shared 配列版（C++20 以降）
     {
-        auto arr_sp = std::make_shared&lt;int[]&gt;(5);   // 要素はデフォルト初期化（ゼロでない場合あり）
-        for (int i = 0; i &lt; 5; ++i) {
+        const size_t array_size = 5;
+        auto arr_sp = std::make_shared&lt;int[]&gt;(array_size);   // 要素はデフォルト初期化（ゼロでない場合あり）
+        for (size_t i = 0; i &lt; array_size; ++i) {
             arr_sp[i] = (i + 1) * 10;
         }
-        std::cout &lt;&lt; "make_shared&lt;int[]&gt; contents:";
-        for (int i = 0; i &lt; 5; ++i) {
+
+        std::cout &lt;&lt; "make_shared&lt;int[]&gt; contents: ";
+        for (size_t i = 0; i &lt; array_size; ++i) {
             std::cout &lt;&lt; ' ' &lt;&lt; arr_sp[i];
         }
         std::cout &lt;&lt; '\n';
@@ -1069,7 +1072,6 @@ int main() {
     std::cout &lt;&lt; "-- shared_ptr simple examples end --\n";
    return 0;
 }</pre>
-
     <p>&nbsp;</p>
     
     <p>ビルド方法：</p>
