@@ -1051,7 +1051,7 @@ for (int i = 0; i &lt; 5; ++i) {
  */
 
 int main() {
-    std::cout &lt;&lt; "-- shared_ptr simple examples start --\n";
+    std::cout &lt;&lt; "-- make_shared simple examples start --\n";
 
     // 1) 配列 int 生成、std::make_shared 配列版（C++20 以降）
     {
@@ -1069,7 +1069,7 @@ int main() {
         // delete[] は自動的に行われる
     }
 
-    std::cout &lt;&lt; "-- shared_ptr simple examples end --\n";
+    std::cout &lt;&lt; "-- make_shared simple examples end --\n";
    return 0;
 }</pre>
     <p>&nbsp;</p>
@@ -1081,9 +1081,9 @@ int main() {
     
     <pre class="prettyprint lang-bsh" style="width:800px">
 $ ./make_shared_03.out 
--- shared_ptr simple examples start --
+-- make_shared simple examples start --
 make_shared&lt;int[]&gt; contents: 10 20 30 40 50
--- shared_ptr simple examples end --
+-- make_shared simple examples end --
 $ </pre>
 
     <p>&nbsp;</p>
