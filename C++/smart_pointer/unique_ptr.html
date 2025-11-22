@@ -608,39 +608,55 @@ int main()
      
     <strong>make_unique</strong> によるコーディングが推奨されています。</p>
     <p>&nbsp;</p>
+    <p>[ソースコード： "make_shared_01.cpp"]</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // for std::cout
+#include &lt;new&gt;          // for std::nothrow, placement new
+#include &lt;memory&gt;       // for std::make_unique
 
-  	<h4>[環境]</h4>
-  	<table>
-    	<tbody>
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td>コンパイラ :</td>
-    	      <td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04), </td>
-    	      <td>13.3.0</td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    		
-    	  <tr>
-    	    <td>OS :</td>
-    	    <td>Ubuntu 24.04 (WSL)</td>
-    	    <td>&nbsp;</td>
-    	  </tr>
-    	  
-    	  <tr>
-    	    <td class="td_separate" colspan="3"></td>
-    	  </tr>
-    	</tbody>
-  	</table>
+/**
+ * @brief std::make_shared のシンプルなサンプル
+ */
 
+int main() {
+    std::cout &lt;&lt; "-- make_unique simple examples start --\n";
+
+    // 1) 単一 int 生成、std::make_unique 版
+    {
+        auto up = std::make_unique&lt;int&gt;();
+        std::cout &lt;&lt; "make_unique owns = " &lt;&lt; *up &lt;&lt; "\n";
+        // delete は自動的に行われる
+    }
+
+    // 2) 単一 int 生成、std::make_unique 版
+    {
+        auto up = std::make_unique&lt;int&gt;(77);
+        std::cout &lt;&lt; "make_unique owns = " &lt;&lt; *up &lt;&lt; "\n";
+        // delete は自動的に行われる
+    }
+
+    std::cout &lt;&lt; "-- make_unique simple examples end --\n";
+   return 0;
+}</pre>
+    <p>&nbsp;</p>
+    <p>ビルド方法：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++20 -g -Wall -Wextra -Wpedantic make_unique_01.cpp -o make_unique_01.out</pre>
+    <p>&nbsp;</p>
+    <p>実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./make_shared_01.out 
+-- shared_ptr simple examples start --
+shared_ptr owns = 0
+shared_ptr owns = 77
+-- shared_ptr simple examples end --
+$ </pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>class インスタンスの生成もやってみます。</p>
     <p>&nbsp;</p>
     
-    <p>[ソースコード： "make_unique_01.cpp"]</p>
+    <p>[ソースコード： "make_unique_02.cpp"]</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // cout, endl
@@ -768,13 +784,13 @@ int main()
     
     <p>ビルド(例)：</p>
     <pre class="prettyprint" style="width:800px">
-$ g++ -Wall -Wextra -Wpedantic -g make_unique_01.cpp -o make_unique_01.out</pre>
+$ g++ -Wall -Wextra -Wpedantic -g make_unique_02.cpp -o make_unique_02.out</pre>
 
     <p>&nbsp;</p>
     
     <p>実行結果：</p>
     <pre class="prettyprint" style="width:800px">
-$ ./make_unique.out 
+$ ./make_unique_02.out 
 Person::Person()
 Person::Person()
 (foo,090-****-0123)
@@ -808,7 +824,7 @@ $ </pre>
       <p>1次元配列を扱う例を記載します。</p>
       <p>&nbsp;</p>
 
-      <p>[ソースコード： "make_unique_02.cpp"]</p>
+      <p>[ソースコード： "make_unique_03.cpp"]</p>
 
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // for std::cout
@@ -846,12 +862,12 @@ int main() {
       
       <p>ビルド例：</p>
       <pre class="prettyprint" style="width:800px">
-$ g++ -Wall -Wextra -Wpedantic -g make_unique_02.cpp -o make_unique_02.out</pre>
+$ g++ -Wall -Wextra -Wpedantic -g make_unique_03.cpp -o make_unique_03.out</pre>
 
       <p>&nbsp;</p>
       <p>実行結果：</p>
       <pre class="prettyprint" style="width:800px">
-$ ./make_unique_02.out
+$ ./make_unique_03.out
 -- make_unique simple examples start --
 make_shared<int[]> contents:  10 20 30 40 50
 -- make_unique simple examples end --$ </pre>
@@ -861,7 +877,7 @@ make_shared<int[]> contents:  10 20 30 40 50
       <p>class インスタンスを make_unique で1次元配列にする例も作成してみましょう。</p>
       <p>&nbsp;</p>
 
-      <p>[ソースコード： "make_unique_03.cpp"]</p>
+      <p>[ソースコード： "make_unique_04.cpp"]</p>
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // for std::cout
 #include &lt;memory&gt;       // for std::make_unique
@@ -977,7 +993,7 @@ int main()
       
       <p>ビルド例：</p>
       <pre class="prettyprint" style="width:800px">
-$ g++ -Wall -Wextra -Wpedantic -g make_unique_03.cpp -o make_unique_03.out</pre>
+$ g++ -Wall -Wextra -Wpedantic -g make_unique_04.cpp -o make_unique_04.out</pre>
 
       <p>&nbsp;</p>
     
@@ -1021,7 +1037,7 @@ $</pre>
       <h3><a name="6-2._2次元配列">6-2. 2次元配列</a></h3>
       <p>2次元配列を扱う例を記載します。</p>
       <p>&nbsp;</p>
-      <p>[ソースコード： "make_unique_04.cpp"]</p>
+      <p>[ソースコード： "make_unique_05.cpp"]</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 /**
@@ -1058,12 +1074,12 @@ int main() {
 }</pre>
       <p>&nbsp;</p>
       <p>ビルド例：</p>
-      <pre class="prettyprint" style="width:800px">$ g++ -std=c++23 -O2 -Wall -Wextra -Wpedantic make_unique_04.cpp -o make_unique_04.out
+      <pre class="prettyprint" style="width:800px">$ g++ -std=c++23 -O2 -Wall -Wextra -Wpedantic make_unique_05.cpp -o make_unique_05.out
 $ </pre>
       <p>&nbsp;</p>
       <p>実行結果：</p>
       <pre class="prettyprint" style="width:800px">
-$ ./make_unique_04.out 
+$ ./make_unique_05.out 
 0 1 2 3 
 4 5 6 7 
 8 9 10 11 
@@ -1077,7 +1093,7 @@ $ </pre>
       <h3><a name="6-3._3次元配列">6-3. 3次元配列</a></h3>
       <p>3次元配列を扱う例を記載します。</p>
       
-      <p>[ソースコード： "make_unique_05.cpp"]</p>
+      <p>[ソースコード： "make_unique_06.cpp"]</p>
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
 /**
  * @brief std::unique_ptr と std::make_unique を使った3次元配列のサンプル
@@ -1120,13 +1136,13 @@ int main() {
 }</pre>
       <p>&nbsp;</p>
       <p>ビルド例：</p>
-      <pre class="prettyprint" style="width:800px">$ g++ -std=c++23 -O2 -Wall -Wextra -Wpedantic make_unique_05.cpp -o make_unique_05.out
+      <pre class="prettyprint" style="width:800px">$ g++ -std=c++23 -O2 -Wall -Wextra -Wpedantic make_unique_06.cpp -o make_unique_06.out
 $ </pre>
       <p>&nbsp;</p>
       
       <p>実行例：</p>
       <pre class="prettyprint" style="width:800px">
-$ ./make_unique_05.out 
+$ ./make_unique_06.out 
 0 1 2 3 
 10 11 12 13 
 20 21 22 23 

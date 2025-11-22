@@ -948,6 +948,19 @@ int main() {
    return 0;
 }</pre>
     <p>&nbsp;</p>
+    <p>ビルド方法：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++20 -g -Wall -Wextra -Wpedantic make_shared_01.cpp -o make_shared_01.out</pre>
+    <p>&nbsp;</p>
+    <p>実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./make_shared_01.out 
+-- shared_ptr simple examples start --
+shared_ptr owns = 0
+shared_ptr owns = 77
+-- shared_ptr simple examples end --
+$ </pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     <p>class インスタンスの生成もやってみます。</p>
     <p>&nbsp;</p>
