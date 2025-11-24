@@ -82,6 +82,12 @@
     	
     	<tr>
     		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04) </td>
+    		<td>13.3.0</td>
+    	</tr>
+    		
+    	<tr>
+    		<td>&nbsp;</td>
     		<td>Visual Studio 2022,</td>
     		<td>Version 17.2.4 </td>
     	</tr>
@@ -98,6 +104,12 @@
     	
     	<tr>
     		<td>OS: </td>
+    	    <td>Ubuntu,</td>
+    	    <td>24.04 (WSL)</td>
+    	  </tr>
+    	
+    	<tr>
+    		<td>&nbsp;</td>
     	    <td>Windows11 home,</td>
     	    <td>21H2 </td>
     	  </tr>
@@ -115,46 +127,65 @@
     </table>
     
     <p> &nbsp;</p>
-    <h4> [プログラムソース]</h4>
-    
+    <p> &nbsp;</p>
+    <p> プログラム例： "array_01.cpp"</p>
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
+/**
+ * プログラム概要:
+ * このプログラムは、C++標準ライブラリの std::array コンテナの基本的な使用方法をデモンストレーションします。
+ * 具体的には、配列の初期化（集成体初期化を含む）、コンテナ操作（ソート、リバースコピー）、
+ * および範囲forループを使用した要素の出力を行います。
+ * std::arrayは固定サイズの配列を提供し、標準コンテナのインターフェースをサポートします。
+ */
 
+#include &lt;iostream&gt;     // std::cout
+#include &lt;string&gt;       // std::string
+#include &lt;array&gt;        // std::array
+#include &lt;iterator&gt;     // std::ostream_iterator
+#include &lt;algorithm&gt;    // std::sort, std::reverse_copy
+ 
 int main()
 {
     // 構築は集成体初期化を使用します。
-    std::<span class="auto-style3">array</span>&lt;int, 3&gt; a1{ {3, 1, 2} }; // CWG 1270 の改訂前の C++11 では二重の波括弧が必要です
+    std::array&lt;int, 3&gt; a1{ {3, 1, 2} }; // CWG 1270 の改訂前の C++11 では二重の波括弧が必要です
                                         // (改定後の C++11 および C++14 以上では必要ありません)。
-    std::<span class="auto-style3">array</span>&lt;int, 3&gt; a2 = { 1, 2, 3 };  // = の後では必要ありません。
-    std::<span class="auto-style3">array</span>&lt;std::string, 2&gt; a3 = { std::string(&quot;a&quot;), &quot;b&quot; };
-
+    std::array&lt;int, 3&gt; a2 = { 1, 2, 3 };  // = の後では必要ありません。
+    std::array&lt;std::string, 2&gt; a3 = { std::string("a"), "b" };
+ 
     // コンテナ操作がサポートされています。
     // a1
     std::sort(a1.begin(), a1.end());
-    std::copy(a1.begin(), a1.end(), std::ostream_iterator&lt;int&gt;(std::cout, &quot; &quot;));
-    std::cout &lt;&lt; &#39;\n&#39;;
+    std::copy(a1.begin(), a1.end(), std::ostream_iterator&lt;int&gt;(std::cout, " "));
+    std::cout &lt;&lt; '\n';
     // a2
-    std::reverse_copy(a2.begin(), a2.end(), std::ostream_iterator&lt;int&gt;(std::cout, &quot; &quot;));
-    std::cout &lt;&lt; &#39;\n&#39;;
-
+    std::reverse_copy(a2.begin(), a2.end(), std::ostream_iterator&lt;int&gt;(std::cout, " "));
+    std::cout &lt;&lt; '\n';
+ 
     // 範囲 for ループがサポートされています。
     // a3
     for (const auto&amp; s : a3) {
-        std::cout &lt;&lt; s &lt;&lt; &#39; &#39;;
+        std::cout &lt;&lt; s &lt;&lt; ' ';
     }
+
+    std::cout &lt;&lt; '\n';
     
-    return EXIT_SUCCESS;
+    return 0;
 }</pre>
 
-    <h4>&nbsp;</h4>
-    <h4>[出力]</h4>
+    <p> &nbsp;</p>
+    
+    <p> ビルド方法例（g++）：</p>  
+    <pre class="prettyprint lang-bsh" style="width: 800px">$ g++ -std=c++23 -Wall -Wextra -Wpedantic array_01.cpp -o array_01.out</pre>
+    
+    <p> &nbsp;</p>
+    <p>実行結果：</p>
     <pre class="prettyprint lang-bsh" style="width: 800px">
+$ ./array_01.out
 1 2 3
 3 2 1
-a b</pre>
+a b
+$</pre>
+
     <p>&nbsp;</p>
 
   </section>
@@ -223,7 +254,7 @@ a b</pre>
     
     <p> &nbsp;</p>
     <p> &nbsp;</p>
-    <p> プログラム例： "array_01.cpp"</p>
+    <p> プログラム例： "array_02.cpp"</p>
 
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 /**
@@ -276,13 +307,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     <p> &nbsp;</p>
     
     <p> ビルド方法例（g++）：</p>  
-    <pre class="prettyprint lang-bsh" style="width: 800px">$ g++ -std=c++23 -Wall -Wextra -Wpedantic array_01.cpp -o array_01.out</pre>
+    <pre class="prettyprint lang-bsh" style="width: 800px">$ g++ -std=c++23 -Wall -Wextra -Wpedantic array_02.cpp -o array_02.out</pre>
     
     <p> &nbsp;</p>
     <p> 実行結果：</p>
     
     <pre class="prettyprint lang-bsh" style="width: 800px">
-$ ./array_01.out 
+$ ./array_02.out 
 0 1 2 3 4 
 1 2 3 4 5 
 2 3 4 5 6 
