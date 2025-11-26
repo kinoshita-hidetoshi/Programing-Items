@@ -58,20 +58,21 @@
     <nav>
     	<h2>目次</h2>
       <p><a href="#1._shared_ptr_を使ってみる">1. shared_ptr を使ってみる</a></p>
-      <p>&nbsp;&nbsp; <a href="#1-1._その1">1-1._その1</a></p>
-      <p>&nbsp;&nbsp; <a href="#1-2._その2">1-2._その2</a></p>
-      <p>&nbsp;&nbsp; <a href="#1-3._その3">1-3._その3</a></p>
-      <p><a href="#2._関数の引数に使う（その１）">2._関数の引数に使う（その１）</a></p>
-      <p><a href="#3._関数の引数に使う（その２）">3._関数の引数に使う（その２）</a></p>
-      <p><a href="#4._shared_ptr_で動的配列を使う">4._shared_ptr_で動的配列を使う</a></p>
-      <p>&nbsp;&nbsp; <a href="#4-1._c++17_以前の環境の場合">4-1._c++17_以前の環境の場合</a></p>
-      <p>&nbsp;&nbsp; <a href="#4-2._c++17_以降の環境の場合">4-2._c++17_以降の環境の場合</a></p>
-      <p><a href="#5._malloc,_free_を_shared_ptr_に置き換える">5._malloc,_free_を_shared_ptr_に置き換える</a></p>
-      <p>&nbsp;&nbsp; <a href="#5-1._c++17_以前の環境の場合">5-1._c++17_以前の環境の場合</a></p>
-      <p>&nbsp;&nbsp; <a href="#5-2._c++17_以降の環境の場合">5-2._c++17_以降の環境の場合</a></p>
-      <p><a href="#6._fopen,_fclose_を_shared_ptr_に置き換える">6._fopen,_fclose_を_shared_ptr_に置き換える</a></p>
-      <p><a href="#7._make_shared">7._make_shared</a></p>
-      <p><a href="#8._make_shared_配列版">8._make_shared_配列版</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-1._その1">1-1. その1</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-2._その2">1-2. その2</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-3._その3">1-3. その3</a></p>
+      <p><a href="#2._関数の引数に使う">2. 関数の引数に使う</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-1._その１">2-1. その１</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-2._その２">2-2. その２</a></p>
+      <p><a href="#3._shared_ptr_で動的配列を使う">3. shared_ptr_で動的配列を使う</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-1._c++17_以前の環境の場合">3-1. c++17 以前の環境の場合</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-2._c++17_以降の環境の場合">3-2. c++17 以降の環境の場合</a></p>
+      <p><a href="#4._malloc,_free_を_shared_ptr_に置き換える">4. malloc, free を shared_ptr_に置き換える</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-1._c++17_以前の環境の場合">4-1. c++17 以前の環境の場合</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-2._c++17_以降の環境の場合">4-2. c++17 以降の環境の場合</a></p>
+      <p><a href="#5._fopen,_fclose_を_shared_ptr_に置き換える">5. fopen, fclose を shared_ptr に置き換える</a></p>
+      <p><a href="#6._make_shared">6. make_shared</a></p>
+      <p><a href="#7._make_shared_配列版">7. make_shared 配列版</a></p>
       <p><br></p>
       <p><a href="#ライセンス">ライセンス</a></p>
       <p><a href="#参考">参考</a></p>
@@ -79,7 +80,6 @@
   </div>
   
   <p>&nbsp;</p>
-  
   <p>&nbsp;</p>
 
   <section>
@@ -116,17 +116,20 @@
       <p>&nbsp;</p>
       
       <p>配列を確保する場合、以下のように使用します。下記例では、配列数 5 です。<br>make_shared を使って初期化を一緒に行うことはできないようです。</p>
+      
       <pre class="prettyprint lang-cpp" style="width:800px">
 auto arr_up = std::make_shared&lt;int[]&gt;<int[]>(5); // 要素はデフォルト初期化（ゼロでない場合あり）
 for (int i = 0; i &lt; 5; ++i) {
     arr_up[i] = (i + 1) * 10;
 }</pre>
+
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <p>上記内容を含む c++ プログラムを以下で紹介します。</p>
       <p>&nbsp;</p>
       <p>ソースコード：</p>
       <p>["shared_ptr_01.cpp"]</p>
+      
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;     // for std::cout
 #include &lt;new&gt;          // for std::nothrow, placement new
@@ -179,12 +182,14 @@ int main() {
     std::cout &lt;&lt; "-- shared_ptr simple examples end --\n";
    return 0;
 }</pre>
+
       <p>&nbsp;</p>
       
       <p>ビルド方法：</p>
       <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++23 -g -Wall -Wextra -Wpedantic shared_ptr_01.cpp -o shared_ptr_01.out</pre>
       <p>&nbsp;</p>
       <p>実行結果：</p>
+      
       <pre class="prettyprint lang-bsh" style="width:800px">
 $ ./shared_ptr_01.out 
 -- shared_ptr simple examples start --
@@ -342,17 +347,18 @@ int main(int argc, char* argv[])
   <p>&nbsp;</p>
 
   <section>
-    <h2><a name="2._関数の引数に使う（その１）">2. 関数の引数に使う（その１）</a></h2>
-    
-    <p>関数の引数に shared_ptr を渡してみます。<br>関数に shared_ptr を渡したり、関数の中で shared_ptr 
-    の値を変更したり、といったことができます。</p>
+    <h2><a name="2._関数の引数に使う">2. 関数の引数に使う</a></h2>
+    <p><strong>std::shared_ptr</strong> を関数の引数に使用する例を紹介します。</p>
     <p>&nbsp;</p>
-<!--
-<table style="WIDTH: 800px; " border="1" cellspacing="0" cellpadding="0">
-  <tr>
-    <td style="width: 800px">
--->
-    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+    
+    <section>
+      <h3><a name="2-1._その１">2-1. その１</a></h3>
+      
+      <p>関数の引数に shared_ptr を渡してみます。<br>関数に shared_ptr を渡したり、関数の中で shared_ptr 
+      の値を変更したり、といったことができます。</p>
+      <p>&nbsp;</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
 #include &lt;string&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// string</span>
 #include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// memory</span>
@@ -396,50 +402,48 @@ int main(int argc, char* argv[])
 &nbsp;&nbsp;&nbsp; auto s = strPtr(new string("pen."));
 &nbsp;&nbsp;&nbsp; vector&lt; strPtr &gt; v;
 
-&nbsp;&nbsp;&nbsp; <span class="comment">// vectorに入れたり。</span>
-&nbsp;&nbsp;&nbsp; v.push_back(strPtr(new string("this")));
-&nbsp;&nbsp;&nbsp; v.push_back(strPtr(new string("is")));
-&nbsp;&nbsp;&nbsp; v.push_back(strPtr(new string("a")));
-&nbsp;&nbsp;&nbsp; v.push_back(s);
+    // vectorに入れたり。
+    v.push_back(strPtr(new string("this")));
+    v.push_back(strPtr(new string("is")));
+    v.push_back(strPtr(new string("a")));
+    v.push_back(s);
 
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; *s &lt;&lt; endl; // sをpush_backで他にコピーしたからと言って使えなくなったりしない
+    cout &lt;&lt; *s &lt;&lt; endl; // sをpush_backで他にコピーしたからと言って使えなくなったりしない
 
-&nbsp;&nbsp;&nbsp; <span class="comment">// vector に保存した文字列を出力</span>
-&nbsp;&nbsp;&nbsp; disp_vector(v);
+    // vector に保存した文字列を出力
+    disp_vector(v);
 
-&nbsp;&nbsp;&nbsp; <span class="comment">// 関数を実行してみましょう</span>
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; "[foo1]" &lt;&lt; endl;
-&nbsp;&nbsp;&nbsp; foo1(v);
+    // 関数を実行してみましょう
+    cout &lt;&lt; "[foo1]" &lt;&lt; endl;
+    foo1(v);
 &nbsp;&nbsp;&nbsp; cout &lt;&lt; "[foo2]" &lt;&lt; endl;
 &nbsp;&nbsp;&nbsp; foo2(v);
 
-&nbsp;&nbsp;&nbsp; <span class="comment">// vector に保存した文字列を出力</span>
+&nbsp;&nbsp;&nbsp; // vector に保存した文字列を出力
 &nbsp;&nbsp;&nbsp; cout &lt;&lt; "[after return from foo2]" &lt;&lt; endl;
 &nbsp;&nbsp;&nbsp; disp_vector(v);
 
 &nbsp;&nbsp;&nbsp; return EXIT_SUCCESS;
 }
-<span class="comment">// ここで全て delete される。</span></pre>
-
-    <!--
-    </td></tr></table>
-    -->
+// ここで全て delete される。</pre>
     
-    <p><img alt="" src="shared_ptr/img28.gif"></p>
-    <p>&nbsp;</p>
-  </section>
-  
-  <p>&nbsp;</p>
-  
-  <section>
-    <h2><a name="3._関数の引数に使う（その２）">3. 関数の引数に使う（その２）</a></h2>
+      <p>&nbsp;</p>
+      <p>実行結果：</p>
+      <p><img alt="" src="shared_ptr/img28.gif"></p>
+    </section>
     
-    <p>もう少し複雑な適用例を示します。<br>クラスと関数オーバーロードへの適用を例に示します。<br>smart_ptr 
-    が最後にちゃんと解放されていることがわかります。<br>smart_ptr 
-    と合わせて生のポインタとオート変数への適用も併記するので、使い方などを比較してみてください。</p>
     <p>&nbsp;</p>
-
-    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+    <p>&nbsp;</p>
+    
+    <section>
+      <h3><a name="2-2._その２">2-2. その２</a></h3>
+      
+      <p>もう少し複雑な適用例を示します。<br>クラスと関数オーバーロードへの適用を例に示します。<br>smart_ptr 
+      が最後にちゃんと解放されていることがわかります。<br>smart_ptr 
+      と合わせて生のポインタとオート変数への適用も併記するので、使い方などを比較してみてください。</p>
+      <p>&nbsp;</p>
+  
+      <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include "targetver.h"
 
 #include &lt;stdio.h&gt;
@@ -559,23 +563,19 @@ int _tmain(int argc, _TCHAR* argv[])
     return EXIT_SUCCESS;
 }</pre>
 
-    <p>&nbsp;</p>
-    <p>実行結果<br><img alt="" src="shared_ptr/img16.gif"></p>
-    <p>foo, bar の２つの smart_ptr がちゃんと解放されていることがわかります。</p>
-    <p>&nbsp;</p>
-    <h4>評価環境：</h4>
-    <ul>
-    	<li>コンパイラ： Visual Studio 2017 Version 15.6.7</li>
-    	<li>ＯＳ： Windows 10 home 64bit, version 1803, 日本語版</li>
-    </ul>
-    <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>実行結果<br><img alt="" src="shared_ptr/img16.gif"></p>
+      <p>foo, bar の２つの smart_ptr がちゃんと解放されていることがわかります。</p>
+      <p>&nbsp;</p>
+    </section>
+    
   </section>
   
   <p>&nbsp;</p>
-  
+    
   <section>
-    <h2><a name="4._shared_ptr_で動的配列を使う">4. shared_ptr で動的配列を使う</a></h2>
-    <h3><a name="4-1._c++17_以前の環境の場合">4-1. c++17 以前の環境の場合</a></h3>
+    <h2><a name="3._shared_ptr_で動的配列を使う">3. shared_ptr で動的配列を使う</a></h2>
+    <h3><a name="3-1._c++17_以前の環境の場合">3-1. c++17 以前の環境の場合</a></h3>
     <p>shared_ptr はポインタが無効になった時 delete を使用します。つまり 
     delete[]を必要とする動的配列を使用する場合は上記のような方法そのままでは使用できません。 boost::shared_array みたいなものは 
     標準c++ にはありません。<br>ただ、std::default_delete は配列に対する特殊化が提供されています。これ(std::default_delete)を使って shared_ptr 
@@ -661,7 +661,7 @@ int main()
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   
-    <h3><a name="4-2._c++17_以降の環境の場合">4-2. c++17 以降の環境の場合</a></h3>
+    <h3><a name="3-2._c++17_以降の環境の場合">3-2. c++17 以降の環境の場合</a></h3>
     <p>c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr と同じように簡単に配列を実装できます。</p>
     <ul>
     	<li>Microsoft VC++： VS 2017 V15.5 で対応しました。</li>
@@ -707,10 +707,10 @@ int main()
   </section>
   
   <p>&nbsp;</p>
-  <h2><a name="5._malloc,_free_を_shared_ptr_に置き換える">5. malloc, free を shared_ptr に置き換える</a></h2>
+  <h2><a name="4._malloc,_free_を_shared_ptr_に置き換える">4. malloc, free を shared_ptr に置き換える</a></h2>
   
   <section>
-    <h3><a name="5-1._c++17_以前の環境の場合">5-1. c++17 以前の環境の場合</a></h3>
+    <h3><a name="4-1._c++17_以前の環境の場合">4-1. c++17 以前の環境の場合</a></h3>
     <p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
     free を使用します。デアロケータを指定することで shared_ptr のメモリ解放を free で行えるようにします。</p>
     <p>&nbsp;</p>
@@ -750,7 +750,7 @@ int main()
   
   <section>
   
-    <h3><a name="5-2._c++17_以降の環境の場合">5-2. c++17 以降の環境の場合</a></h3>
+    <h3><a name="4-2._c++17_以降の環境の場合">4-2. c++17 以降の環境の場合</a></h3>
     <p>前述の例だと &quot;memory.get()[i]&quot; というに配列へアクセスするのが気持ち悪い。やっぱり &quot;memory[i]&quot; って使いたいです。<br>
     c++17 にて shared_ptr が T[] および T[N] に対応しました。これで unique_ptr 
     と同じように簡単に配列を実装できる、と思われます。</p>
@@ -797,8 +797,7 @@ int main()
   <p>&nbsp;</p>
 
   <section>
-    <h2><a name="6._fopen,_fclose_を_shared_ptr_に置き換える">6. fopen, fclose を shared_ptr 
-    に置き換える</a></h2>
+    <h2><a name="5._fopen,_fclose_を_shared_ptr_に置き換える">5. fopen, fclose を shared_ptr に置き換える</a></h2>
     <p>これは実装例をいくつか書いてみます。しっくりくるやつを使ってみてください。</p>
     <p>シンプルにやるとこんな感じでしょうか。</p>
 
@@ -911,7 +910,7 @@ int main()
   <p>&nbsp;</p>
 
   <section>
-    <h2><a name="7._make_shared">7. make_shared</a></h2>
+    <h2><a name="6._make_shared">6. make_shared</a></h2>
     <p>c++11 から <strong>make_shared</strong> が加わりました。<strong>shared_ptr</strong> 直接使用せず 
      
     <strong>make_shared</strong> によるコーディングが推奨されています。</p>
@@ -1036,7 +1035,7 @@ int main()
 
   <section>
   
-    <h2><a name="8._make_shared_配列版">8. make_shared 配列版</a></h2>
+    <h2><a name="7._make_shared_配列版">7. make_shared 配列版</a></h2>
     <p>c++17 にて <strong>shared_ptr</strong> が T[] および T[N] に対応しました。<strong>make_shared</strong> 
     も c++20 で T[] および T[N] に対応しました。</p>
     <p>使用例を紹介したいと思います。</p>
