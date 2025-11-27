@@ -53,22 +53,20 @@
     	<p><a href="#1._はじめに">1. はじめに</a></p>
       <p><a href="#2._copilot-instructions.md_の紹介">2. copilot-instructions.md の紹介</a></p>
       <p><a href="#3._copilot-instructions.md_を作成する">3. copilot-instructions.md を作成する</a></p>
-        <p><a href="#4._どんなことを書く？">4. どんなことを書く？</a></p>
-        <p>&nbsp;&nbsp; 4-1. 全般的なガイドライン、前提条件</p>
-        <p>&nbsp;&nbsp; 4-2. アプリ概要</p>
-        <p>&nbsp;&nbsp; 4-3. ディレクトリ構成</p>
-        <p>&nbsp;&nbsp; 4-4. 使用している言語 固有の指示</p>
-        <p>&nbsp;&nbsp; 4-5. フレームワーク、主要なライブラリ </p>
-        <p>&nbsp;&nbsp; 4-6. アーキテクチャ・設計指針</p>
-        <p>&nbsp;&nbsp; 4-7. テスト方針</p>
-        <p>&nbsp;&nbsp; 4-8. アンチパターン</p>
-        <p><a href="#5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></p>
-        <p>&nbsp;&nbsp; 5-1. React で Webアプリ </p>
-        <p>&nbsp;&nbsp; 5-2. Kotlin で Androidアプリ</p>
-        <p>&nbsp;&nbsp; 5-3. c++ でコンソールアプリ</p>
-        <p><a href="#6._環境ごとの設定">6. 環境ごとの設定</a></p>
-        <p>&nbsp;&nbsp; 6-1. vscode</p>
-    	<p>&nbsp;</p>
+      <p><a href="#4._どんなことを書く？">4. どんなことを書く？</a></p>
+      <p>&nbsp;&nbsp; 4-1. 全般的なガイドライン、前提条件</p>
+      <p>&nbsp;&nbsp; 4-2. アプリ概要</p>
+      <p>&nbsp;&nbsp; 4-3. ディレクトリ構成</p>
+      <p>&nbsp;&nbsp; 4-4. 使用している言語 固有の指示</p>
+      <p>&nbsp;&nbsp; 4-5. フレームワーク、主要なライブラリ </p>
+      <p>&nbsp;&nbsp; 4-6. アーキテクチャ・設計指針</p>
+      <p>&nbsp;&nbsp; 4-7. テスト方針</p>
+      <p>&nbsp;&nbsp; 4-8. アンチパターン</p>
+      <p><a href="#5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-1._c++">5-1._c++</a></p>
+      <p><a href="#6._環境ごとの設定">6. 環境ごとの設定</a></p>
+      <p>&nbsp;&nbsp; <a href="#6-1._vscode">6-1._vscode</a></p>
+      <p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
     </nav>
@@ -143,7 +141,7 @@
 
 ### メモリ管理
 *   生のポインタではなく、`std::unique_ptr` や `std::shared_ptr` を優先的に使用してください。
-*   配列の場合は `std::vector` を、固定長の場合は `std::array` を使用してください。
+*   可変長配列の場合は `std::vector` を、固定長配列の場合は `std::array` を使用してください。
 
 ### コンテナ
 *   コンテナを使用する場合、可能な限り `const`参照を渡すようにしてください。
@@ -211,7 +209,7 @@ Greeter::Greeter(const std::string&amp; name)
 void Greeter::say_hello() const {
     std::cout &lt;&lt; "Hello, " &lt;&lt; m_name &lt;&lt; "!" &lt;&lt; std::endl; 
 }
-
+```
 
 ### 悪い例
 ```cpp
@@ -238,7 +236,8 @@ private:
 void BadGreeter::say_hello(char* name) { 
     // グローバル変数を避ける 
     std::cout &lt;&lt; GREETING &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!" &lt;&lt; std::endl; 
-} </pre>
+}
+```</pre>
 
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -325,9 +324,9 @@ void BadGreeter::say_hello(char* name) {
   	<h2> <a name="5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></h2>
   	
     <section>
-      <h3>5-1. c++</h3>
+      <h3><a name="5-1._c++">5-1. c++</a></h3>
     
-    <pre class="prettyprint linenums lang-md">
+      <pre class="prettyprint linenums lang-md">
 # Instructions for GitHub Copilot for this C++ project
 
 ## 全般的なガイドライン
@@ -354,7 +353,7 @@ void BadGreeter::say_hello(char* name) {
 
 ### メモリ管理
 *   生のポインタではなく、`std::unique_ptr` や `std::shared_ptr` を優先的に使用してください。
-*   配列の場合は `std::vector` を、固定長の場合は `std::array` を使用してください。
+*   可変長配列の場合は `std::vector` を、固定長配列の場合は `std::array` を使用してください。
 
 ### コンテナ
 *   コンテナを使用する場合、可能な限り `const`参照を渡すようにしてください。
@@ -422,7 +421,7 @@ Greeter::Greeter(const std::string&amp; name)
 void Greeter::say_hello() const {
     std::cout &lt;&lt; "Hello, " &lt;&lt; m_name &lt;&lt; "!" &lt;&lt; std::endl; 
 }
-
+```
 
 ### 悪い例
 ```cpp
@@ -449,7 +448,8 @@ private:
 void BadGreeter::say_hello(char* name) { 
     // グローバル変数を避ける 
     std::cout &lt;&lt; GREETING &lt;&lt; ", " &lt;&lt; name &lt;&lt; "!" &lt;&lt; std::endl; 
-} </pre>
+}
+```</pre>
 
       <p>&nbsp;</p>
     </section>
