@@ -354,85 +354,140 @@ int main(int argc, char* argv[])
     <section>
       <h3><a name="2-1._その１">2-1. その１</a></h3>
       
-      <p>関数の引数に shared_ptr を渡してみます。<br>関数に shared_ptr を渡したり、関数の中で shared_ptr 
+      <p>関数の引数に <strong>shared_ptr</strong> を渡してみます。<br>関数に <strong>shared_ptr</strong> を渡したり、関数の中で  
+      <strong>shared_ptr</strong> 
       の値を変更したり、といったことができます。</p>
       <p>&nbsp;</p>
-      
+      <p>[ソースコード: "function_argument_sample.cpp"]</p>
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
-#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// cout, EXIT_SUCCESS</span>
-#include &lt;string&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// string</span>
-#include &lt;memory&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// memory</span>
-#include &lt;vector&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">// vector</span>
+/**
+ * @file function_argument_sample_01.cpp
+ * @brief shared_ptr を関数引数として渡す際の動作をデモンストレーションするサンプルプログラム
+ * 
+ * このプログラムは、std::shared_ptr を使用したオブジェクトの所有権と参照カウントの管理を、
+ * 関数引数として渡すさまざまな方法（const参照、参照渡し、値渡し）を通じて説明します。
+ * 具体的には、以下の機能をサンプルとして実装しています：
+ * - inspect 関数: shared_ptr を const 参照で受け取り、内容を表示（読み取り専用）。
+ * - resetByRef 関数: shared_ptr を参照で受け取り、オブジェクトを差し替える。
+ * - takeOwnership 関数: shared_ptr を値渡しで受け取り、参照カウントを増やして所有権を共有。
+ * - makePerson 関数: Person オブジェクトを生成して shared_ptr で返すファクトリ関数。
+ * 
+ * main 関数では、これらの関数を呼び出して shared_ptr の動作を確認します。
+ * プログラムの実行により、参照カウントの増減や所有権の移転を理解できます。
+ */
+#include &lt;iostream&gt; // for std::cout
+#include &lt;memory&gt;   // for std::shared_ptr
+#include &lt;string&gt;   // for std::string
 
+/**
+ * @brief 簡易的な Person クラス（サンプル用）
+ */
+class Person {
+private:
+    std::string name_;
+    std::string phone_;
 
-using namespace std;
+public:
+    Person(const std::string&amp; name, const std::string&amp; phone)
+        : name_(name), phone_(phone) {}
 
-typedef <span class="auto-style1">shared_ptr</span>&lt;string&gt; strPtr;
+    const std::string&amp; getName() const { return name_; }
+    const std::string&amp; getPhone() const { return phone_; }
+};
 
-
-void disp_vector(const vector&lt;strPtr&gt; v)
+/**
+ * @brief shared_ptr を読み取り専用で受け取り内容を表示する
+ * @param person コンテンツを参照する const 参照の shared_ptr
+ */
+void inspect(const std::shared_ptr&lt;Person&gt;&amp; person)
 {
-&nbsp;&nbsp;&nbsp; for (strPtr s : v)
-&nbsp;&nbsp;&nbsp; {
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; *s &lt;&lt; " ";
-&nbsp;&nbsp;&nbsp; }
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; endl;
+    if (person) {
+        std::cout &lt;&lt; "inspect: " &lt;&lt; person-&gt;getName() &lt;&lt; ", " &lt;&lt; person-&gt;getPhone() &lt;&lt; "\n";
+    } else {
+        std::cout &lt;&lt; "inspect: (null)\n";
+    }
 }
 
-
-<span class="comment">// read only</span>
-void foo1( const vector&lt;strPtr&gt; v )
+/**
+ * @brief shared_ptr の参照を受け取り差し替える
+ * @param person 差し替える対象の shared_ptr への参照
+ */
+void resetByRef(std::shared_ptr&lt;Person&gt;&amp; person)
 {
-&nbsp;&nbsp;&nbsp; disp_vector(v);
+    person = std::make_shared&lt;Person&gt;("replaced", "000-0000-0000");
 }
 
-<span class="comment">// change value</span>
-void foo2( vector&lt;strPtr&gt;&amp; v )
+/**
+ * @brief shared_ptr を値渡しで受け取り参照カウントを増やす
+ * @param person コピーを受け取る shared_ptr
+ */
+void takeOwnership(std::shared_ptr&lt;Person&gt; person)
 {
-&nbsp;&nbsp;&nbsp; disp_vector(v);
-
-&nbsp;&nbsp;&nbsp; *v[3] = "book.";
-&nbsp;&nbsp;&nbsp; v.push_back(strPtr(new string("(insert string.)")));
-
-&nbsp;&nbsp;&nbsp; disp_vector(v);
+    if (person) {
+        std::cout &lt;&lt; "takeOwnership: received " &lt;&lt; person-&gt;getName() &lt;&lt; "\n";
+    } else {
+        std::cout &lt;&lt; "takeOwnership: (null)\n";
+    }
+    // person はここでスコープを抜けると参照カウントが減る
 }
 
-int main(int argc, char* argv[])
+/**
+ * @brief Person を生成して所有権を返すファクトリ関数
+ * @param name 氏名
+ * @param phone 電話番号
+ * @return 所有権を持つ unique_ptr&lt;Person&gt;
+ */
+std::shared_ptr&lt;Person&gt; makePerson(const std::string&amp; name, const std::string&amp; phone)
 {
-&nbsp;&nbsp;&nbsp; auto s = strPtr(new string("pen."));
-&nbsp;&nbsp;&nbsp; vector&lt; strPtr &gt; v;
-
-    // vectorに入れたり。
-    v.push_back(strPtr(new string("this")));
-    v.push_back(strPtr(new string("is")));
-    v.push_back(strPtr(new string("a")));
-    v.push_back(s);
-
-    cout &lt;&lt; *s &lt;&lt; endl; // sをpush_backで他にコピーしたからと言って使えなくなったりしない
-
-    // vector に保存した文字列を出力
-    disp_vector(v);
-
-    // 関数を実行してみましょう
-    cout &lt;&lt; "[foo1]" &lt;&lt; endl;
-    foo1(v);
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; "[foo2]" &lt;&lt; endl;
-&nbsp;&nbsp;&nbsp; foo2(v);
-
-&nbsp;&nbsp;&nbsp; // vector に保存した文字列を出力
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; "[after return from foo2]" &lt;&lt; endl;
-&nbsp;&nbsp;&nbsp; disp_vector(v);
-
-&nbsp;&nbsp;&nbsp; return EXIT_SUCCESS;
+    return std::make_shared&lt;Person&gt;(name, phone);
 }
-// ここで全て delete される。</pre>
-    
+
+int main()
+{
+    std::cout &lt;&lt; "-- unique_ptr function argument sample start --\n";
+
+    // 1) makePerson で生成して戻り値で受け取る
+    auto p1 = makePerson("alice", "111-1111-1111");
+    inspect(p1);
+
+    // 2) resetByRef で参照を渡して差し替える
+    resetByRef(p1);
+    inspect(p1);
+
+    // 3) takeOwnership に値渡しで渡す（コピーにより参照カウントが増える）
+    auto p2 = makePerson("bob", "222-2222-2222");
+    takeOwnership(p2);
+    inspect(p2); // p2 はまだ有効（shared_ptr はコピーにより共有される）
+
+    // 4) inspect に null を渡す
+    std::shared_ptr&lt;Person&gt; empty;
+    inspect(empty);
+
+    std::cout &lt;&lt; "-- unique_ptr function argument sample end --\n";
+    return 0;
+}</pre>
       <p>&nbsp;</p>
+      
+      <p>ビルド方法 (g++)：</p>
+      <pre class="prettyprint lang-bsh" style="width:800px">$ g++ -std=c++23 -Wall -Wextra -Wpedantic function_argument_sample_01.cpp -o function_argument_sample.out
+$ </pre>
+      <p>&nbsp;</p>
+      
       <p>実行結果：</p>
-      <p><img alt="" src="shared_ptr/img28.gif"></p>
+      <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./function_argument_sample.out 
+-- unique_ptr function argument sample start --
+inspect: alice, 111-1111-1111
+inspect: replaced, 000-0000-0000
+takeOwnership: received bob
+inspect: bob, 222-2222-2222
+inspect: (null)
+-- unique_ptr function argument sample end --
+$</pre>
+
+      <p>&nbsp;</p>
     </section>
     
-    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <section>
@@ -1164,26 +1219,22 @@ $ </pre>
   	  <tr>
   	    <td class="td_history_date">2025-11-20</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">
-  		<a href="#1-1._その1">1-1._その1</a> を追加</td>
+  	    <td class="td_history"><a href="#1-1._その1">1-1._その1</a> を追加</td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2022-07-13</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">
-  		ページデザイン更新</td>
+  	    <td class="td_history">ページデザイン更新</td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2018-05-04</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">
-  		いろいろアップデート。c++17 に関わる make_shared, 配列対応版の shared_ptr, などのネタを追加。 </td>
+  	    <td class="td_history">いろいろアップデート。c++17 に関わる make_shared, 配列対応版の shared_ptr, などのネタを追加。 </td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2014-09-06</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">
-  		ソースコードを表記を「google-code-prettify」によるものへ変更</td>
+  	    <td class="td_history">ソースコードを表記を「google-code-prettify」によるものへ変更</td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2014-03-09</td>
