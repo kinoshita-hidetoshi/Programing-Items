@@ -64,21 +64,23 @@
 
   <div class="mokuji">
     <nav>
-    <h2>目次</h2>
-    <p><a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a></p>
-    <p>&nbsp;&nbsp; <a href="#1-1._その1">1-1._その1</a></p>
-    <p>&nbsp;&nbsp; <a href="#1-2._その2">1-2._その2</a></p>
-    <p><a href="#2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></p>
-    <p><a href="#3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></p>
-    <p><a href="#4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr に置き換える</a></p>
-    <p><a href="#5._make_unique">5. make_unique</a></p>
-    <p><a href="#6._make_unique_配列版">6. make_unique 配列版</a></p>
-    <p>&nbsp;&nbsp; <a href="#6-1._1次元配列">6-1._1次元配列</a></p>
-    <p>&nbsp;&nbsp; <a href="#6-2._2次元配列">6-2._2次元配列</a></p>
-    <p>&nbsp;&nbsp; <a href="#6-3._3次元配列">6-3._3次元配列</a></p>
-    <p>&nbsp;</p>
-    <p><a href="#ライセンス">ライセンス</a></p>
-    <p><a href="#参考">参考</a></p>
+      <h2>目次</h2>
+      <p><a href="#1._unique_ptr_を使ってみる">1. unique_ptr を使ってみる</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-1._その1">1-1._その1</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-2._その2">1-2._その2</a></p>
+      <p><a href="#2._関数の引数に使う">2._関数の引数に使う</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-1._その１">2-1._その１</a></p>
+      <p><a href="#3. unique_ptr で動的配列を使う">3. unique_ptr で動的配列を使う</a></p>
+      <p><a href="#4._malloc,_free_を_unique_ptr_に置き換える">4. malloc, free を unique_ptr に置き換える</a></p>
+      <p><a href="#5. fopen, fclose を unique_ptr に置き換える">5. fopen, fclose を unique_ptr に置き換える</a></p>
+      <p><a href="#6._make_unique">6. make_unique</a></p>
+      <p><a href="#7._make_unique_配列版">7. make_unique 配列版</a></p>
+      <p>&nbsp;&nbsp; <a href="#7-1._1次元配列">7-1._1次元配列</a></p>
+      <p>&nbsp;&nbsp; <a href="#7-2._2次元配列">7-2._2次元配列</a></p>
+      <p>&nbsp;&nbsp; <a href="#7-3._3次元配列">7-3._3次元配列</a></p>
+      <p>&nbsp;</p>
+      <p><a href="#ライセンス">ライセンス</a></p>
+      <p><a href="#参考">参考</a></p>
     </nav>
   </div>
 
@@ -401,21 +403,147 @@ $ </pre>
       の部分）ことから、unique_ptr が期待通りに解放処理を行っていることがわかります。</p>
       <p>&nbsp;</p>
       
-    </section>
-    
+    </section>    
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="2._関数の引数に使う">2. 関数の引数に使う</a></h2>
+    <p><strong>std::unique_ptr</strong> を関数の引数に使用する例を紹介します。</p>
     <p>&nbsp;</p>
+    
+    <section>
+      <h3><a name="2-1._その１">2-1. その１</a></h3>
+      <p>関数の引数に <strong>unique_ptr</strong> を渡してみます。</p>
+      <p>関数に <strong>unique_ptr</strong> を渡したり、関数の中で <strong>unique_ptr</strong> 
+      の値を変更したり、といったことができます。 </p>
+      <p>&nbsp;</p>
+      <p>［ソースコード： "function_argument_sample.cpp"]</p>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt; // for std::cout
+#include &lt;memory&gt;   // for std::unique_ptr
+#include &lt;string&gt;   // for std::string
 
-</section>
+/**
+ * @brief 簡易的な Person クラス（サンプル用）
+ */
+class Person {
+private:
+    std::string name_;
+    std::string phone_;
 
+public:
+    Person(const std::string&amp; name, const std::string&amp; phone)
+        : name_(name), phone_(phone) {}
 
-<p>&nbsp;</p>
-<h2><a name="2. unique_ptr で動的配列を使う">2. unique_ptr で動的配列を使う</a></h2>
-<p><strong><em>unique_ptr</em></strong> で動的配列を使用する例です。<br>T[]の特殊化が組み込まれており、[]演算子も実装されています。直観的で気持ちよく使えます。<br>
-ただし範囲外アクセスに対するチェック機構はありません。配列を使用したい場合、まずはコンテナの使用を検討するべきです。時々実行速度を問題にコンテナの使用を止めている場合がありますが、C++11で採用された 
-std::array を使用すれば処理速度の問題もありません。</p>
+    const std::string&amp; getName() const { return name_; }
+    const std::string&amp; getPhone() const { return phone_; }
+};
 
-<pre class="prettyprint linenums lang-cpp" style="width:800px">
-<code>#include &lt;iostream&gt;         // cout, endl, EXIT_SUCCESS
+/**
+ * @brief unique_ptr を読み取り専用で受け取り内容を表示する
+ * @param person コンテンツを参照する const 参照の unique_ptr
+ */
+void inspect(const std::unique_ptr&lt;Person&gt;&amp; person)
+{
+    if (person) {
+        std::cout &lt;&lt; "inspect: " &lt;&lt; person-&gt;getName() &lt;&lt; ", " &lt;&lt; person-&gt;getPhone() &lt;&lt; "\n";
+    } else {
+        std::cout &lt;&lt; "inspect: (null)\n";
+    }
+}
+
+/**
+ * @brief unique_ptr の参照を受け取り差し替える（所有権は呼び出し元に残る）
+ * @param person 差し替える対象の unique_ptr への参照
+ */
+void resetByRef(std::unique_ptr&lt;Person&gt;&amp; person)
+{
+    person = std::make_unique&lt;Person&gt;("replaced", "000-0000-0000");
+}
+
+/**
+ * @brief 値渡しで unique_ptr を受け取り所有権を取得する
+ * @param person 所有権を移動して受け取る unique_ptr
+ */
+void takeOwnership(std::unique_ptr&lt;Person&gt; person)
+{
+    if (person) {
+        std::cout &lt;&lt; "takeOwnership: received " &lt;&lt; person-&gt;getName() &lt;&lt; "\n";
+    } else {
+        std::cout &lt;&lt; "takeOwnership: (null)\n";
+    }
+    // person はここでスコープを抜けると破棄される
+}
+
+/**
+ * @brief Person を生成して所有権を返すファクトリ関数
+ * @param name 氏名
+ * @param phone 電話番号
+ * @return 所有権を持つ unique_ptr&lt;Person&gt;
+ */
+std::unique_ptr&lt;Person&gt; makePerson(const std::string&amp; name, const std::string&amp; phone)
+{
+    return std::make_unique&lt;Person&gt;(name, phone);
+}
+
+int main()
+{
+    std::cout &lt;&lt; "-- unique_ptr function argument sample start --\n";
+
+    // 1) makePerson で生成して戻り値で受け取る
+    auto p1 = makePerson("alice", "111-1111-1111");
+    inspect(p1);
+
+    // 2) resetByRef で参照を渡して差し替える
+    resetByRef(p1);
+    inspect(p1);
+
+    // 3) takeOwnership に値渡しで渡す（move を使う）
+    auto p2 = makePerson("bob", "222-2222-2222");
+    takeOwnership(std::move(p2));
+    inspect(p2); // p2 は null になっている
+
+    // 4) inspect に null を渡す
+    std::unique_ptr&lt;Person&gt; empty;
+    inspect(empty);
+
+    std::cout &lt;&lt; "-- unique_ptr function argument sample end --\n";
+    return 0;
+}</pre>
+      <p>&nbsp;</p>
+      
+      <p>ビルド方法（g++）：</p>
+      <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++23 -O2 -Wall -Wextra -Wpedantic function_argument_sample.cpp -o function_argument_sample.out</pre>
+      <p>&nbsp;</p>
+      
+      <p>実行結果：</p>
+      <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./function_argument_sample.out 
+-- unique_ptr function argument sample start --
+inspect: alice, 111-1111-1111
+inspect: replaced, 000-0000-0000
+takeOwnership: received bob
+inspect: (null)
+inspect: (null)
+-- unique_ptr function argument sample end --
+$ </pre>
+      <p>&nbsp;</p>
+    </section>
+  </section>
+
+  <p>&nbsp;</p>
+      
+  <section>
+    <h2><a name="3. unique_ptr で動的配列を使う">3. unique_ptr で動的配列を使う</a></h2>
+    <p><strong><em>unique_ptr</em></strong> で動的配列を使用する例です。<br>T[]の特殊化が組み込まれており、[]演算子も実装されています。直観的で気持ちよく使えます。<br>
+    ただし範囲外アクセスに対するチェック機構はありません。配列を使用したい場合、まずはコンテナの使用を検討するべきです。時々実行速度を問題にコンテナの使用を止めている場合がありますが、C++11で採用された 
+    std::array を使用すれば処理速度の問題もありません。</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;         // cout, endl, EXIT_SUCCESS
 #include &lt;string&gt;           // string
 #include &lt;memory&gt;           // unique_ptr
 
@@ -439,17 +567,20 @@ int main(int argc, char* argv[])
     cout &lt;&lt; endl;
 
     return EXIT_SUCCESS;
-}</code></pre>
+}</pre>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h2><a name="3._malloc,_free_を_unique_ptr_に置き換える">3. malloc, free を unique_ptr に置き換える</a></h2>
-
-<p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
-free を使用します。デアロケータを指定することで unique_ptr のメモリ解放を free で行えるようにします。</p>
-
-<pre class="prettyprint linenums lang-cpp">
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="4._malloc,_free_を_unique_ptr_に置き換える">4. malloc, free を unique_ptr に置き換える</a></h2>
+    
+    <p>c 言語で規定されている malloc, calloc でメモリを動的に取得した場合、解放に使用する関数は delete や delete[] ではなく 
+    free を使用します。デアロケータを指定することで unique_ptr のメモリ解放を free で行えるようにします。</p>
+    
+    <pre class="prettyprint linenums lang-cpp">
 #include &lt;iostream&gt;     // cout, EXIT_SUCCESS
 #include &lt;memory&gt;       // shared_ptr, unique_ptr
 #include &lt;cstdlib&gt;      // malloc, free
@@ -481,17 +612,18 @@ int main()
     return EXIT_SUCCESS;
 }</pre>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
 
+  <p>&nbsp;</p>
 
   <section>
-    <h2><a name="4. fopen, fclose を unique_ptr に置き換える">4. fopen, fclose を unique_ptr 
+    <h2><a name="5. fopen, fclose を unique_ptr に置き換える">5. fopen, fclose を unique_ptr 
     に置き換える</a></h2>
     <p>これは実装例をいくつか書いてみます。しっくりくるやつを使ってみてください。</p>
 
     <section>
-      <h3>4-1. シンプルな実装例</h3>
+      <h3>5-1. シンプルな実装例</h3>
       <p>シンプルにやるとこんな感じでしょうか。</p>
 
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
@@ -527,7 +659,7 @@ int main(int argc, char* argv[])
     <p>&nbsp;</p>
 
     <section>
-      <h3>4-2. Lambda式 による実装例</h3>
+      <h3>5-2. Lambda式 による実装例</h3>
       <p>Lambda式 で記載するとこんな感じでしょうか。</p>
 
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
@@ -562,7 +694,7 @@ int main(int argc, char* argv[])
     <p>&nbsp;</p>
 
     <section>      
-      <h3>4-3. ファクトリーパターン による実装例</h3>
+      <h3>5-3. ファクトリーパターン による実装例</h3>
       <p>ファクトリーパターン的に unique_ptr を返す関数を作成するならばこんな感じでしょうか。</p>
 
       <pre class="prettyprint linenums">
@@ -602,7 +734,7 @@ int main()
   <p>&nbsp;</p>
 
   <section>
-    <h2><a name="5._make_unique">5. make_unique</a></h2>
+    <h2><a name="6._make_unique">6. make_unique</a></h2>
     
     <p>c++14 から <strong>make_unique</strong> が加わりました。<strong>unique_ptr</strong> 直接使用せず 
      
@@ -813,14 +945,14 @@ $ </pre>
 
   <section>
   
-    <h2><a name="6._make_unique_配列版">6. make_unique 配列版</a></h2>
+    <h2><a name="7._make_unique_配列版">7. make_unique 配列版</a></h2>
     <p>c++14 で追加された <strong>make_unique</strong> は T[] および T[N] に対応しています。<br>unique_ptr 
     を使用する場合、いろいろな理由から <strong>make_unique</strong> を使用することが推奨みたいです。</p>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <section>
-      <h3><a name="6-1._1次元配列">6-1. 1次元配列</a></h3>
+      <h3><a name="7-1._1次元配列">7-1. 1次元配列</a></h3>
       <p>1次元配列を扱う例を記載します。</p>
       <p>&nbsp;</p>
 
@@ -1034,7 +1166,7 @@ $</pre>
     <p>&nbsp;</p>
 
     <section>
-      <h3><a name="6-2._2次元配列">6-2. 2次元配列</a></h3>
+      <h3><a name="7-2._2次元配列">7-2. 2次元配列</a></h3>
       <p>2次元配列を扱う例を記載します。</p>
       <p>&nbsp;</p>
       <p>[ソースコード： "make_unique_05.cpp"]</p>
@@ -1090,7 +1222,7 @@ $ </pre>
     <p>&nbsp;</p>
     
     <section>
-      <h3><a name="6-3._3次元配列">6-3. 3次元配列</a></h3>
+      <h3><a name="7-3._3次元配列">7-3. 3次元配列</a></h3>
       <p>3次元配列を扱う例を記載します。</p>
       
       <p>[ソースコード： "make_unique_06.cpp"]</p>
@@ -1213,15 +1345,20 @@ SOFTWARE.
     <h2 style="margin-bottom:5px">変更履歴</h2>
     <table>
       <tr>
+        <td class="td_history_date">2025-11-29</td>
+        <td class="td_history_separator">-</td>
+        <td class="td_history">"<a href="#2._関数の引数に使う">2._関数の引数に使う</a>" を追加</td>
+      </tr>
+      <tr>
         <td class="td_history_date">2025-11-22</td>
         <td class="td_history_separator">-</td>
-        <td class="td_history">"<a href="#6._make_unique_配列版">6._make_unique_配列版</a>" 
+        <td class="td_history">"<a href="#7._make_unique_配列版">7._make_unique_配列版</a>" 
         を追加</td>
       </tr>
       <tr>
         <td class="td_history_date">2025-11-10</td>
         <td class="td_history_separator">-</td>
-        <td class="td_history">"<a href="#1._unique_ptr_を使ってみる">1._unique_ptr_を使ってみる</a>", "<a href="#5._make_unique">5._make_unique</a>" を更新</td>
+        <td class="td_history">"<a href="#1._unique_ptr_を使ってみる">1._unique_ptr_を使ってみる</a>", "<a href="#6._make_unique">6._make_unique</a>" を更新</td>
       </tr>
       <tr>
         <td class="td_history_date">2022-07-13</td>
