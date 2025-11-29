@@ -358,6 +358,7 @@ int main(int argc, char* argv[])
       <strong>shared_ptr</strong> 
       の値を変更したり、といったことができます。</p>
       <p>&nbsp;</p>
+      
       <p>[ソースコード: "function_argument_sample.cpp"]</p>
       <pre class="prettyprint linenums lang-cpp" style="width:800px">
 /**
@@ -393,6 +394,8 @@ public:
 
     const std::string&amp; getName() const { return name_; }
     const std::string&amp; getPhone() const { return phone_; }
+    void setName(const std::string&amp; name) { name_ = name; }
+    void setPhone(const std::string&amp; phone) { phone_ = phone; }
 };
 
 /**
@@ -425,9 +428,14 @@ void takeOwnership(std::shared_ptr&lt;Person&gt; person)
 {
     if (person) {
         std::cout &lt;&lt; "takeOwnership: received " &lt;&lt; person-&gt;getName() &lt;&lt; "\n";
+
+        // 所有権を共有しているので内容を変更できる
+        person-&gt;setName("john");
+        person-&gt;setPhone("012-3456-7890");
     } else {
         std::cout &lt;&lt; "takeOwnership: (null)\n";
     }
+
     // person はここでスコープを抜けると参照カウントが減る
 }
 
@@ -457,7 +465,8 @@ int main()
     // 3) takeOwnership に値渡しで渡す（コピーにより参照カウントが増える）
     auto p2 = makePerson("bob", "222-2222-2222");
     takeOwnership(p2);
-    inspect(p2); // p2 はまだ有効（shared_ptr はコピーにより共有される）
+    inspect(p2);    // p2 はまだ有効（shared_ptr はコピーにより共有される）
+                    // 内容も変更できる
 
     // 4) inspect に null を渡す
     std::shared_ptr&lt;Person&gt; empty;
@@ -475,12 +484,12 @@ $ </pre>
       
       <p>実行結果：</p>
       <pre class="prettyprint lang-bsh" style="width:800px">
-$ ./function_argument_sample.out 
+$ ./function_argument_sample.out
 -- unique_ptr function argument sample start --
 inspect: alice, 111-1111-1111
 inspect: replaced, 000-0000-0000
 takeOwnership: received bob
-inspect: bob, 222-2222-2222
+inspect: john, 012-3456-7890
 inspect: (null)
 -- unique_ptr function argument sample end --
 $</pre>
@@ -1216,6 +1225,11 @@ $ </pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2025-11-30</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#2-1._その１">2-1._その１</a>」内容を差し替え</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-11-20</td>
   	    <td class="td_history_separator">-</td>
