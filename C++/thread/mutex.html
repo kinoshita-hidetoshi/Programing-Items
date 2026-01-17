@@ -71,7 +71,8 @@
     <nav>
     	<h2>目次</h2>
     	<p> <a href="#1._mutex_を使ってみる">1. mutex を使ってみる</a></p>
-      <p> <a href="#2._mutex.lock,_mutex.unlock">2._mutex.lock, mutex.unlock</a></p>
+      <p> <a href="#2._mutex.lock,_mutex.unlock">2. mutex.lock, mutex.unlock</a></p>
+      <p> <a href="#3._try_lock">3. try_lock</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -85,6 +86,7 @@
     <h2> <a name="1._mutex_を使ってみる">1. mutex を使ってみる</a></h2>
     <p>[概要]</p>
     <p> <strong>mutex</strong> と <strong>lock_guard</strong> を使って、シンプルな排他処理を行うプログラムを作成してみます。</p>
+    <p> 自動的に unlock してくれるので、多くの場合でこの方法が最適です。</p>
     <p> &nbsp;</p>
     
     <p>[環境]</p>
@@ -215,6 +217,8 @@ $</pre>
   <section>
     <h2> <a name="2._mutex.lock,_mutex.unlock">2. mutex.lock, mutex.unlock</a></h2>
     <p> std::mutex.lock, std::mutex.unlock を使って排他処理を実装する例を紹介します。</p>
+    <p> lock と unlock を明示的に実施する方法です。lock 後の分岐や例外発生を考慮して確実に漏れなく unlock 
+    しないと、デッドロックを発生しやすい方法です。特に理由なければ、基本的には前述の lock_guard による実装を強く推奨します。</p>
     <p> &nbsp;</p>
     
     <section>
@@ -342,6 +346,15 @@ http://bar =&gt; fake content
 http://foo =&gt; fake content
 $</pre>
     <p>&nbsp;</p>
+
+  </section>
+
+  <p>&nbsp;</p>
+    
+  <section>
+    <h2> <a name="3._try_lock">3. try_lock</a></h2>
+    <p> 今後記載予定</p>
+    <p> &nbsp;</p>
 
   </section>
 
