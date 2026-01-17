@@ -40,13 +40,6 @@
   	.auto-style1 {
   		background-color: #505000;
   	}
-    .auto-style2 {
-        border: 0px solid #000000;
-      }
-    .auto-style3 {
-        border-style: solid;
-        border-width: 1px;
-    }
 	</style>
 </head>
 
@@ -167,34 +160,45 @@ int main()
     <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_01.cpp -o mutex_sample_01.out</pre>
     <p>&nbsp;</p>
     
-    <table class="auto-style2" style="width: 800px" style="border-collapse: collapse">
-      <tr>
-        <td style="white-space: nowrap;" class="auto-style3"><strong>-std=c++17</strong></td>
-        <td class="auto-style3">C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3" style="height: 30px"><strong>-Wall&nbsp;</strong></td>
-        <td class="auto-style3" style="height: 30px">一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-Wextra</strong></td>
-        <td class="auto-style3"><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-Wpedantic</strong></td>
-        <td class="auto-style3">規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-pthread</strong></td>
-        <td class="auto-style3">POSIX threads 
-        のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-O2</strong></td>
-        <td class="auto-style3">最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、-O3 よりは穏やかで安定的な設定です。デバッグ時は -g -O0 
-        を推奨します。 </td>
-      </tr>
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++17</strong></td>
+          <td>C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
     </table>
+    
     <p>&nbsp;</p>
     
     <p>実行結果：</p>
@@ -268,7 +272,7 @@ void save_page(const std::string&amp; url)
     //std::lock_guard&lt;std::mutex&gt; guard(g_pages_mutex);
     <span class="auto-style1">g_pages_mutex.lock();</span>
     g_pages[url] = result;
-    g<span class="auto-style1">_pages_mutex.unlock();</span>
+    <span class="auto-style1">g_pages_mutex.unlock();</span>
 }
 
 // メイン関数
@@ -291,33 +295,43 @@ int main()
     <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_02.cpp -o mutex_sample_02.out</pre>
     <p>&nbsp;</p>
     
-    <table class="auto-style2" style="width: 800px" style="border-collapse: collapse">
-      <tr>
-        <td style="white-space: nowrap;" class="auto-style3"><strong>-std=c++17</strong></td>
-        <td class="auto-style3">C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3" style="height: 30px"><strong>-Wall&nbsp;</strong></td>
-        <td class="auto-style3" style="height: 30px">一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-Wextra</strong></td>
-        <td class="auto-style3"><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-Wpedantic</strong></td>
-        <td class="auto-style3">規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-pthread</strong></td>
-        <td class="auto-style3">POSIX threads 
-        のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
-      </tr>
-      <tr>
-        <td class="auto-style3"><strong>-O2</strong></td>
-        <td class="auto-style3">最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、-O3 よりは穏やかで安定的な設定です。デバッグ時は -g -O0 
-        を推奨します。 </td>
-      </tr>
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++17</strong></td>
+          <td>C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
     </table>
     
     <p>&nbsp;</p>
