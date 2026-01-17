@@ -37,84 +37,98 @@
 
 	<link rel="stylesheet" href="../../design.css" type="text/css">
 	<style type="text/css">
-	.auto-style1 {
-		background-color: #505000;
-	}
+  	.auto-style1 {
+  		background-color: #505000;
+  	}
+    .auto-style2 {
+        border: 0px solid #000000;
+      }
+    .auto-style3 {
+        border-style: solid;
+        border-width: 1px;
+    }
 	</style>
 </head>
 
 <body onload="prettyPrint();">
 	
-<h1>std::mutex (c++11)&nbsp;</h1>
+  <h1>std::mutex (c++11)&nbsp;</h1>
 
-<p> 
-スレッド間で共有されるリソースに対して複数のスレッドから同時に処理を行うと、プログラムの整合性が壊れてしまいます。これを防ぐために共有リソースに対する処理を適切に制御してプログラムの整合性を保つことを 
-&quot;排他制御&quot; といいます。<br>
-ミューテックスと呼ばれる種類のクラスによって共有リソースへアクセスできるスレッドを制限して、排他制御を実現できます。</p>
-<p> <strong><em>std::mutex</em></strong> クラスは、スレッド間で排他的なロックの仕組みを提供するミューテックスです。<br>
-<strong>lock()</strong> 
-メンバ関数を呼び出すと、そのオブジェクトに対してロックをかけられます。既にほかのスレッドがロックをかけている場合は、そのロックが解除されるまで、呼び出し元スレッドの実行はブロックされます。<br>
-<strong><em>try_lock()</em></strong> メンバ関数を呼び出すと、ロックを試行できます。ロックの状態によって、以下のようになります。</p>
-<ul>
-	<li>どのスレッドもオブジェクトに対してロックをかけていない場合<br>⇒ ロックをかけ、<span class="cpp-source">true</span>が返る</li>
-	<li>他のスレッドがすでにロックをかけている場合<br>⇒ ロックを失敗し、<span class="cpp-source">false</span>が返る</li>
-</ul>
-<p><em><strong>unlock()</strong></em> メンバ関数を呼び出すと、オブジェクトに対してかけたロックを解除できます。</p>
-<p><em><strong>std::mutex</strong></em> クラスは、再帰的にロックをかけられません。１つのスレッド内で同じオブジェクトに対して lock() 
-メンバ関数を二度呼び出すと、デッドロックが発生します。<br>もしこのとき、処理系がデッドロックを検知できるならば、エラーコードに 
-<em><strong>std::errc::resource_deadlock_would_occur</strong></em> を設定した、  
-<strong><em>std::system_error</em></strong> 
-例外が送出されるかもしれません。</p>
-<p> &nbsp;</p>
-<div class="mokuji">
-  <nav>
-	<h2>目次</h2>
-	<p> <a href="#1._mutex_を使ってみる">1. mutex を使ってみる</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-<p> &nbsp;</p>
-<p> &nbsp;</p>
-<h2> <a name="1._mutex_を使ってみる">1. mutex を使ってみる</a></h2>
-<p>[概要]</p>
-<p> mutex と lock_guard を使って、シンプルな排他処理を行うプログラムを作成してみます。</p>
-<p> &nbsp;</p>
-
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.2 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-
-<p> &nbsp;</p>
-
-<p>[プログラムソース]</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;     // cout
+  <p> 
+  スレッド間で共有されるリソースに対して複数のスレッドから同時に処理を行うと、プログラムの整合性が壊れてしまいます。これを防ぐために共有リソースに対する処理を適切に制御してプログラムの整合性を保つことを 
+  &quot;排他制御&quot; といいます。<br>
+  ミューテックスと呼ばれる種類のクラスによって共有リソースへアクセスできるスレッドを制限して、排他制御を実現できます。</p>
+  <p> <strong><em>std::mutex</em></strong> クラスは、スレッド間で排他的なロックの仕組みを提供するミューテックスです。<br>
+  <strong>lock()</strong> 
+  メンバ関数を呼び出すと、そのオブジェクトに対してロックをかけられます。既にほかのスレッドがロックをかけている場合は、そのロックが解除されるまで、呼び出し元スレッドの実行はブロックされます。<br>
+  <strong><em>try_lock()</em></strong> メンバ関数を呼び出すと、ロックを試行できます。ロックの状態によって、以下のようになります。</p>
+  <ul>
+  	<li>どのスレッドもオブジェクトに対してロックをかけていない場合<br>⇒ ロックをかけ、<span class="cpp-source">true</span>が返る</li>
+  	<li>他のスレッドがすでにロックをかけている場合<br>⇒ ロックを失敗し、<span class="cpp-source">false</span>が返る</li>
+  </ul>
+  <p><em><strong>unlock()</strong></em> メンバ関数を呼び出すと、オブジェクトに対してかけたロックを解除できます。</p>
+  <p><em><strong>std::mutex</strong></em> クラスは、再帰的にロックをかけられません。１つのスレッド内で同じオブジェクトに対して lock() 
+  メンバ関数を二度呼び出すと、デッドロックが発生します。<br>もしこのとき、処理系がデッドロックを検知できるならば、エラーコードに 
+  <em><strong>std::errc::resource_deadlock_would_occur</strong></em> を設定した、  
+  <strong><em>std::system_error</em></strong> 
+  例外が送出されるかもしれません。</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p> <a href="#1._mutex_を使ってみる">1. mutex を使ってみる</a></p>
+      <p> <a href="#2._mutex.lock,_mutex.unlock">2._mutex.lock, mutex.unlock</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  
+  <section>
+    <h2> <a name="1._mutex_を使ってみる">1. mutex を使ってみる</a></h2>
+    <p>[概要]</p>
+    <p> <strong>mutex</strong> と <strong>lock_guard</strong> を使って、シンプルな排他処理を行うプログラムを作成してみます。</p>
+    <p> &nbsp;</p>
+    
+    <p>[環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    		<td>13.3.0</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Ubuntu 24.04 (WSL),</td>
+    		<td></td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p>[プログラムソース] <span class="cpp-source">mutex_sample_01.cpp</span></p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout
 #include &lt;map&gt;          // map
 #include &lt;string&gt;       // string
 #include &lt;chrono&gt;       // chrono::seconds
@@ -146,100 +160,259 @@ int main()
     for (const auto&amp; pair : g_pages) {
         std::cout &lt;&lt; pair.first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; pair.second &lt;&lt; &#39;\n&#39;;
     }
-}</code></pre>
+}</pre>
 
-<p>&nbsp;</p>
-<p>[実行結果]</p>
-<p><img alt="" src="mutex/imgD.jpg"></p>
-<p>&nbsp;</p>
-<h3>
-参考</h3>
-<ul>
-	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
-	<li>cppreference.com&nbsp; -&nbsp; lock_guard<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
-</ul>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-  <h2><a name="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
-  <tr>
-    <td>
-MIT License<br><br>
-
-    Copyright (c) 2020-2022  Kinoshita Hidetoshi<br><br>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-    </td>
-  </tr>
-</table>
+    <p>&nbsp;</p>
+    <p>ビルド方法（g++）：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_01.cpp -o mutex_sample_01.out</pre>
+    <p>&nbsp;</p>
+    
+    <table class="auto-style2" style="width: 800px" style="border-collapse: collapse">
+      <tr>
+        <td style="white-space: nowrap;" class="auto-style3"><strong>-std=c++17</strong></td>
+        <td class="auto-style3">C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3" style="height: 30px"><strong>-Wall&nbsp;</strong></td>
+        <td class="auto-style3" style="height: 30px">一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-Wextra</strong></td>
+        <td class="auto-style3"><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-Wpedantic</strong></td>
+        <td class="auto-style3">規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-pthread</strong></td>
+        <td class="auto-style3">POSIX threads 
+        のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-O2</strong></td>
+        <td class="auto-style3">最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、-O3 よりは穏やかで安定的な設定です。デバッグ時は -g -O0 
+        を推奨します。 </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    
+    <p>実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./mutex_sample_01.out 
+http://bar =&gt; fake content
+http://foo =&gt; fake content
+$</pre>
+    <p>&nbsp;</p>
+  </section>
+  
   <p>&nbsp;</p>
+  
+  <section>
+    <h2> <a name="2._mutex.lock,_mutex.unlock">2. mutex.lock, mutex.unlock</a></h2>
+    <p> std::mutex.lock, std::mutex.unlock を使って排他処理を実装する例を紹介します。</p>
+    <p> &nbsp;</p>
+    
+    <section>
+      <p>[環境]</p>
+      <table>
+      <tbody>
+      	<tr>
+      		<td class="td_separate" colspan="3"></td>
+      	</tr>
+      	
+      	<tr>
+      		<td>コンパイラ :</td>
+      		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+      		<td>13.3.0</td>
+      	</tr>
+      	
+      	<tr>
+      		<td class="td_separate" colspan="3"></td>
+      	</tr>
+      	
+      	<tr>
+      		<td>OS: </td>
+      		<td>Ubuntu 24.04 (WSL),</td>
+      		<td></td>
+      	</tr>
+      	
+      	<tr>
+      		<td class="td_separate" colspan="3"></td>
+      	</tr>
+      </tbody>
+      </table>
+    </section>
+    
+    <p> &nbsp;</p>
+    <p> [プログラムソース] <span class="cpp-source">mutex_sample_02.cpp</span></p>
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout
+#include &lt;map&gt;          // map
+#include &lt;string&gt;       // string
+#include &lt;chrono&gt;       // chrono::seconds
+#include &lt;thread&gt;       // thread, join
+<span class="auto-style1">#include &lt;mutex&gt;        // mutex</span>
+
+std::map&lt;std::string, std::string&gt; g_pages;
+<span class="auto-style1">std::mutex g_pages_mutex;</span>
+
+// 指定された URL からページを保存する関数
+void save_page(const std::string&amp; url)
+{
+    // ページの読み込みに時間がかかるのをシミュレートしています。
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::string result = "fake content";
+
+    // ミューテックスをロックして g_pages にアクセスします。
+    //std::lock_guard&lt;std::mutex&gt; guard(g_pages_mutex);
+    <span class="auto-style1">g_pages_mutex.lock();</span>
+    g_pages[url] = result;
+    g<span class="auto-style1">_pages_mutex.unlock();</span>
+}
+
+// メイン関数
+int main()
+{
+    std::thread t1(save_page, "http://foo");
+    std::thread t2(save_page, "http://bar");
+    t1.join();
+    t2.join();
+
+    // スレッドが join 済みであるため、ロックなしで g_pages にアクセスしても安全です。
+    for (const auto&amp; pair : g_pages) {
+        std::cout &lt;&lt; pair.first &lt;&lt; " =&gt; " &lt;&lt; pair.second &lt;&lt; '\n';
+    }
+
+    return 0;
+}</pre>
+    <p> &nbsp;</p>
+    <p>ビルド方法（g++）：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_02.cpp -o mutex_sample_02.out</pre>
+    <p>&nbsp;</p>
+    
+    <table class="auto-style2" style="width: 800px" style="border-collapse: collapse">
+      <tr>
+        <td style="white-space: nowrap;" class="auto-style3"><strong>-std=c++17</strong></td>
+        <td class="auto-style3">C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3" style="height: 30px"><strong>-Wall&nbsp;</strong></td>
+        <td class="auto-style3" style="height: 30px">一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-Wextra</strong></td>
+        <td class="auto-style3"><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-Wpedantic</strong></td>
+        <td class="auto-style3">規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-pthread</strong></td>
+        <td class="auto-style3">POSIX threads 
+        のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+      </tr>
+      <tr>
+        <td class="auto-style3"><strong>-O2</strong></td>
+        <td class="auto-style3">最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、-O3 よりは穏やかで安定的な設定です。デバッグ時は -g -O0 
+        を推奨します。 </td>
+      </tr>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ ./mutex_sample_02.out 
+http://bar =&gt; fake content
+http://foo =&gt; fake content
+$</pre>
+    <p>&nbsp;</p>
+
+  </section>
+
   <p>&nbsp;</p>
-</section>
+  
+  <section>
+    <h2><a name="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <table class="border-collapse" style="width: 600px; background-color: #F0F0F0; word-break: break-word;">
+      <tr>
+        <td>MIT License<br><br>
+    
+        Copyright (c) 2020  Kinoshita Hidetoshi<br><br>
+    
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:<br><br>
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.<br><br>
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+  
+  <h2>参考</h2>
+  <ul>
+  	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
+    	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
+    	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
+    <li>cppreference.com&nbsp; -&nbsp; lock_guard<br>
+      <a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
+  </ul>
 
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>cppreference.com&nbsp; -&nbsp; mutex<br>
-	<a href="https://ja.cppreference.com/w/cpp/thread/mutex" target="_blank">
-	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
-</ul>
-<p>&nbsp;</p>
-<hr>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
 
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date" style="height: 16px">2022-09-13</td>
-	    <td class="td_history_separator" style="height: 16px">-</td>
-	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2020-06-13</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成</td>
-	  </tr>
-	</table>
-</section>
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2026-01-17</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">
+        "<a href="#2._mutex.lock,_mutex.unlock">2._mutex.lock, mutex.unlock</a>" を追加</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2022-09-13</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2020-06-13</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成</td>
+  	  </tr>
+  	</table>
+  </section>
 
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2020 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  <footer>
+  	<p><small>Copyright © 2020 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
