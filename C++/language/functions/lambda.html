@@ -47,146 +47,165 @@
   </style>
 </head>
 
-<!-- Start for 'google-code-prettify' -->
 <body onload="prettyPrint();">
-<!-- End for 'google-code-prettify' -->
 
-<h1>ラムダ式 (lambda expression) (c++11)</h1>
+  <h1>ラムダ式 (lambda expression) (c++11)</h1>
+  
+  <p>c++ のラムダ式について記載します。</p>
+  <p>&nbsp;</p>
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._ラムダ式の基本">1. ラムダ式の基本</a></p>
+    <p>&nbsp;&nbsp; <a href="#▷キャプチャー">キャプチャー</a></p>
+    <p>&nbsp;&nbsp; <a href="#▷仮引数リスト（省略可能）">仮引数リスト（省略可能）</a></p>
+    <p>&nbsp;&nbsp; <a href="#▷戻り値の型（省略可能）">戻り値の型（省略可能）</a></p>
+    <p>&nbsp;&nbsp; <a href="#▷複合文">複合文</a></p>
+  	<p><a href="#2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a></p>
+  	<p><a href="#3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a></p>
+    <p><a href="#4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a></p>
+    <p><a href="#5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使う</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<p>c++ のラムダ式について記載します。</p>
-<p>&nbsp;</p>
-<div class="mokuji">
-  <nav>
-	<h2>目次</h2>
-	<p><a href="#1._ラムダ式の基本">1. ラムダ式の基本</a></p>
-  <p>&nbsp;&nbsp;&nbsp; <a href="#▷キャプチャー">キャプチャー</a></p>
-  <p>&nbsp;&nbsp;&nbsp; <a href="#▷仮引数リスト（省略可能）">仮引数リスト（省略可能）</a></p>
-  <p>&nbsp;&nbsp; <a href="#▷戻り値の型（省略可能）">戻り値の型（省略可能）</a></p>
-  <p>&nbsp;&nbsp; <a href="#▷複合文">複合文</a></p>
-	<p><a href="#2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a></p>
-	<p><a href="#3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a></p>
-  <p><a href="#4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a></p>
-  <p><a href="#5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使う</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 
-
-<h2><a name="1._ラムダ式の基本">1. ラムダ式の基本</a></h2>
-<p>ラムダ式は、簡潔に関数オブジェクトを記述する機能です。<br>以下のように記述します。</p>
-<p class="auto-style1"><strong>[ キャプチャー ] ( 仮引数リスト ) -&gt; 戻り値の型 { 複合文 }</strong></p>
-<p>それぞれの役割と記述法は以下の通りです。</p>
-<h3>&nbsp;</h3>
-<h4><a name="▷キャプチャー">▷キャプチャー</a></h4>
-<p>
-キャプチャーには、ラムダ式から参照するオブジェクトを指定します。ラムダ式はキャプチャーで指定しない限り、ラムダ式が定義されたスコープで宣言されているオブジェクトを使用できません。</p>
-<p>キャプチャーには以下の２種類があり、オブジェクトごとに指定できます。</p>
-<p>●参照キャプチャー&nbsp;&nbsp;&nbsp; ⇒&nbsp; オブジェクトが参照で渡される<br>●コピーキャプチャー&nbsp;&nbsp; 
-⇒&nbsp; オブジェクトのコピーが渡される</p>
-<p>&nbsp;</p>
-
-<table border="1" class="border-collapse" style="border-color: #008080; width: 100%">
-<caption class="auto-style5">▽キャプチャの記述例</caption>
-  <thead class="standard_table">
-  	<tr>
-  		<th>記述</th>
-  		<th>結果</th>
-  	</tr>
-  </thead>
-	<tr>
-		<td>[=]</td>
-		<td>すべてのオブジェクトをコピーキャプチャ。メンバ関数内であれば、this もキャプチャされる。</td>
-	</tr>
-	<tr>
-		<td>[&amp;]</td>
-		<td>すべてのオブジェクトを参照キャプチャ。</td>
-	</tr>
-	<tr>
-		<td>[v]</td>
-		<td>オブジェクト v をコピーキャプチャ。</td>
-	</tr>
-	<tr>
-		<td>[&amp;v]</td>
-		<td>オブジェクト v を参照キャプチャ。</td>
-	</tr>
-	<tr>
-		<td>[=,&amp;v]</td>
-		<td>オブジェクト v を参照キャプチャ、それ以外をコピーキャプチャ。</td>
-	</tr>
-	<tr>
-		<td>[&amp;,v]</td>
-		<td>オブジェクト v をコピーキャプチャ、それ以外を参照キャプチャ。</td>
-	</tr>
-</table>
-
-<p>&nbsp;</p>
-<p>たとえば、オブジェクト a と b をコピーキャプチャ、 c と d を参照キャプチャする場合は、以下のように記述します。</p>
-<p class="auto-style1">[ a, b, &amp;c, &amp;d ]</p>
-<p>ラムダ式の関数呼び出し演算子は、仮引数リストの後ろに mutable を指定していない限り、 const 
-修飾されており、コピーキャプチャしたオブジェクトの書き換えをできません。</p>
-<p>ラムダ式の中でコピーキャプチャしたオブジェクトの書き換えを行いたい場合、仮引数リストに続いて、 mutable を指定する必要があります。</p>
-<p>&nbsp;</p>
-<pre class="prettyprint linenums">
+  <section>
+    <h2><a name="1._ラムダ式の基本">1. ラムダ式の基本</a></h2>
+    <p>ラムダ式は、簡潔に関数オブジェクトを記述する機能です。<br>以下のように記述します。</p>
+    
+    <p class="auto-style1" style="width: 500px"><strong>[ キャプチャー ] ( 仮引数リスト ) -&gt; 戻り値の型 { 複合文 }</strong></p>
+    
+    <p>それぞれの役割と記述法は以下の通りです。</p>
+    <h3>&nbsp;</h3>
+    <h4><a name="▷キャプチャー">▷キャプチャー</a></h4>
+    <p>
+    キャプチャーには、ラムダ式から参照するオブジェクトを指定します。ラムダ式はキャプチャーで指定しない限り、ラムダ式が定義されたスコープで宣言されているオブジェクトを使用できません。</p>
+    <p>キャプチャーには以下の２種類があり、オブジェクトごとに指定できます。</p>
+    <p>●参照キャプチャー&nbsp;&nbsp;&nbsp; ⇒&nbsp; オブジェクトが参照で渡される<br>●コピーキャプチャー&nbsp;&nbsp; 
+    ⇒&nbsp; オブジェクトのコピーが渡される</p>
+    <p>&nbsp;</p>
+    
+    <table border="1" class="border-collapse" style="border-color: #008080" width="800">
+    <caption class="auto-style5">▽キャプチャの記述例</caption>
+      <thead class="standard_table">
+      	<tr>
+      		<th>記述</th>
+      		<th>結果</th>
+      	</tr>
+      </thead>
+    	<tr>
+    		<td>[=]</td>
+    		<td>すべてのオブジェクトをコピーキャプチャ。メンバ関数内であれば、this もキャプチャされる。</td>
+    	</tr>
+    	<tr>
+    		<td>[&amp;]</td>
+    		<td>すべてのオブジェクトを参照キャプチャ。</td>
+    	</tr>
+    	<tr>
+    		<td>[v]</td>
+    		<td>オブジェクト v をコピーキャプチャ。</td>
+    	</tr>
+    	<tr>
+    		<td>[&amp;v]</td>
+    		<td>オブジェクト v を参照キャプチャ。</td>
+    	</tr>
+    	<tr>
+    		<td>[=,&amp;v]</td>
+    		<td>オブジェクト v を参照キャプチャ、それ以外をコピーキャプチャ。</td>
+    	</tr>
+    	<tr>
+    		<td>[&amp;,v]</td>
+    		<td>オブジェクト v をコピーキャプチャ、それ以外を参照キャプチャ。</td>
+    	</tr>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>たとえば、オブジェクト a と b をコピーキャプチャ、 c と d を参照キャプチャする場合は、以下のように記述します。</p>
+    
+    <p class="auto-style1" style="width: 500px">[ a, b, &amp;c, &amp;d ]</p>
+    
+    <p>ラムダ式の関数呼び出し演算子は、仮引数リストの後ろに mutable を指定していない限り、 const 
+    修飾されており、コピーキャプチャしたオブジェクトの書き換えをできません。</p>
+    <p>ラムダ式の中でコピーキャプチャしたオブジェクトの書き換えを行いたい場合、仮引数リストに続いて、 mutable を指定する必要があります。</p>
+    <p>&nbsp;</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
 int i;
 [i]()-&gt; void { i = 1; };             // エラー：ラムダ式の中で、コピーキャプチャオブジェクトを変更できない
 [i]() mutable -&gt; void { i = 1; };    // ＯＫ：mutable を指定しているので変更可能
 </pre>
-<p>&nbsp;</p>
-<p>参照キャプチャしたオブジェクトの cv属性 
-は引き継がれます。そのため、const宣言されたオブジェクトを参照キャプチャーした場合、ラムダ式の中でオブジェクトの値を変更することはできません。</p>
-<p>&nbsp;</p>
-<h4><a name="▷仮引数リスト（省略可能）">▷仮引数リスト（省略可能）</a></h4>
-<p>仮引数リストは、非メンバ関数宣言の仮引数リストと同じです。たとえば int型 の仮引数 i と float型 の仮引数 f 
-をとるラムダ式の場合、仮引数リストは以下のようになります。</p>
-<p class="auto-style1">( int i, float f)</p>
-<p>仮引数リストを省略した場合は、仮引数なし、つまり () と同じです。</p>
-<p>&nbsp;</p>
-<h4><a name="▷戻り値の型（省略可能）">▷戻り値の型（省略可能）</a></h4>
-<p>ラムダ式の戻り値の型を指定します。</p>
-<p>戻り値の型を省略した場合、複合文が単一の return 式のみで構成されていれば、その return 式から推測されます。それ以外の場合は void 
-と推論されます。</p>
-<p>&nbsp;</p>
-<h4><a name="▷複合文">▷複合文</a></h4>
-<p>ラムダ式で行う処理を記述します。</p>
-<p>たとえば、 int型 の仮引数を取り、キャプチャしたオブジェクト x との積を返すラムダ式は以下のとおりです。</p>
-<p>&nbsp;</p>
-<pre class="prettyprint linenums">
-[x](int v)-&gt;int { return v * x; };
-</pre>
-<p>&nbsp;</p>
-<p>上記のラムダ式をオブジェクトxが宣言されている関数 func で使用してみます。<br>ラムダ式は、オブジェクト lamda 
-に代入したところで呼び出しています。</p>
-<p>&nbsp;</p>
 
-<pre class="prettyprint linenums">
+    <p>&nbsp;</p>
+    <p>参照キャプチャしたオブジェクトの cv属性 
+    は引き継がれます。そのため、const宣言されたオブジェクトを参照キャプチャーした場合、ラムダ式の中でオブジェクトの値を変更することはできません。</p>
+    <p>&nbsp;</p>
+    <h4><a name="▷仮引数リスト（省略可能）">▷仮引数リスト（省略可能）</a></h4>
+    <p>仮引数リストは、非メンバ関数宣言の仮引数リストと同じです。たとえば int型 の仮引数 i と float型 の仮引数 f 
+    をとるラムダ式の場合、仮引数リストは以下のようになります。</p>
+    
+    <p class="auto-style1" style="width: 500px">( int i, float f)</p>
+    
+    <p>仮引数リストを省略した場合は、仮引数なし、つまり () と同じです。</p>
+    <p>&nbsp;</p>
+    <h4><a name="▷戻り値の型（省略可能）">▷戻り値の型（省略可能）</a></h4>
+    <p>ラムダ式の戻り値の型を指定します。</p>
+    <p>戻り値の型を省略した場合、複合文が単一の return 式のみで構成されていれば、その return 式から推測されます。それ以外の場合は void 
+    と推論されます。</p>
+    <p>&nbsp;</p>
+    <h4><a name="▷複合文">▷複合文</a></h4>
+    <p>ラムダ式で行う処理を記述します。</p>
+    <p>たとえば、 int型 の仮引数を取り、キャプチャしたオブジェクト x との積を返すラムダ式は以下のとおりです。</p>
+    <p>&nbsp;</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
+[x](int v)-&gt;int { return v * x; };</pre>
+
+    <p>&nbsp;</p>
+    <p>上記のラムダ式をオブジェクトxが宣言されている関数 func で使用してみます。<br>ラムダ式は、オブジェクト lamda 
+    に代入したところで呼び出しています。</p>
+    <p>&nbsp;</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
 int func( int data ){
     int x = 5 ;
     auto lambda = [x](int v)-&gt;int { return x*v; };  // ラムダ式の定義
     int result = lambda(data);  // ラムダ式の実行
 
     return result;
-}
-</pre>
+}</pre>
 
-<p>&nbsp;</p>
-<h2><a name="2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a></h2>
-<p>以下のように記述することで、宣言したラムダ式をその場で呼び出せます。</p>
+    <p>&nbsp;</p>
+  
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="2._ラムダ式をその場ですぐに実行する方法">2. ラムダ式をその場ですぐに実行する方法</a></h2>
+    <p>以下のように記述することで、宣言したラムダ式をその場で呼び出せます。</p>
 
-<pre class="prettyprint linenums">
+    <pre class="prettyprint linenums" style="width: 900px">
 // 例１
 []{ std::cout &lt;&lt; "This sample is lambda function" &lt;&lt; std::endl; }();
 
 // 例２
 int result = [](int l, int r)-&gt;int { return l * r; }(2,5);</pre>
-<p>&nbsp;</p>
-<h2><a name="3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a></h2>
-<p>ラムダ式は、以下のように関数オブジェクトとしてオブジェクトへ代入できます。</p>
 
-<pre class="prettyprint linenums">
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="3._ラムダ式をオブジェクトへ登録する">3. ラムダ式をオブジェクトへ登録する</a></h2>
+    <p>ラムダ式は、以下のように関数オブジェクトとしてオブジェクトへ代入できます。</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
 <span style="color: green;">// 引用元 https://msdn.microsoft.com/ja-jp/library/dd293599.aspx
 // declaring_lambda_expressions1.cpp</span>
 <span style="color: green;">// compile with: /EHsc /W4</span>
@@ -207,21 +226,29 @@ int result = [](int l, int r)-&gt;int { return l * r; }(2,5);</pre>
     function&lt;<span style="color: blue;">int</span>(<span style="color: blue;">int</span>, <span style="color: blue;">int</span>)&gt; f2 = <span class="auto-style6">[](</span><span style="color: blue;" class="auto-style6">int</span><span class="auto-style6"> x, </span><span style="color: blue;" class="auto-style6">int</span><span class="auto-style6"> y) { </span><span style="color: blue;" class="auto-style6">return</span><span class="auto-style6"> x + y; }</span>;
 
     cout &lt;&lt; f2(3, 4) &lt;&lt; endl;
-}
-</pre>
-<p>&nbsp;</p>
-<p>何もキャプチャーしないラムダ式は、関数ポインタへ代入することもできます。</p>
+}</pre>
 
-<pre class="prettyprint linenums">
+    <p>&nbsp;</p>
+    <p>何もキャプチャーしないラムダ式は、関数ポインタへ代入することもできます。</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
 int (*ptr_to_lambda)(int,int) = [](int l, int r)-&gt;int { return l * r; };
 int result = ptr_to_lambda(2,5);</pre>
-<p>&nbsp;</p>
-<h2><a name="4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a></h2>
-<p>アルゴリズムに分類される標準関数を使用する場合、引数としてコールバック関数を渡す必要がある場合があります。<br>
-ラムダ式を用いることで、このコールバック関数の宣言をローカル関数内で記述することができます。<br>
-反復利用しない関数を不要に増やすことなく実装が可能になりました。</p>
 
-<pre class="prettyprint linenums">
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="4._ラムダ式をコールバック関数として使用する">4. ラムダ式をコールバック関数として使用する</a></h2>
+    
+    <p>アルゴリズムに分類される標準関数を使用する場合、引数としてコールバック関数を渡す必要がある場合があります。<br>
+    ラムダ式を用いることで、このコールバック関数の宣言をローカル関数内で記述することができます。<br>
+    反復利用しない関数を不要に増やすことなく実装が可能になりました。</p>
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums" style="width: 900px">
 #include &lt;stdio.h&gt; 
 #include &lt;stdlib.h&gt; 
 #include &lt;tchar.h&gt;
@@ -234,73 +261,83 @@ using namespace std;
 /*==========================*/ 
 /* n で割り切れる要素を探す */ 
 /*==========================*/
-int _tmain(int argc, _TCHAR* argv[]) 
+int _tmain(int argc, _TCHAR* argv[])
 { 
-&nbsp;&nbsp;&nbsp; int ar[] = { 9, 7, 5, 3, 1, -2, -4, -6, -8, 0 }; 
-&nbsp;&nbsp;&nbsp; int n = 4;
+    int ar[] = { 9, 7, 5, 3, 1, -2, -4, -6, -8, 0 }; 
+    int n = 4;
 
-&nbsp;&nbsp; &nbsp;// この行の 黄色部分 がラムダ式 !!
-&nbsp;&nbsp;&nbsp; int* found = std::find_if(ar, ar+10,&nbsp; [n](int x) <span class="auto-style6">{ return x % n == 0;}</span> );
+    // この行の 黄色部分 がラムダ式 !!
+    int* found = std::find_if(ar, ar+10,&nbsp; [n](int x) <span class="auto-style6">{ return x % n == 0;}</span> );
 
-&nbsp;&nbsp;&nbsp; if ( found != ar+(sizeof(ar)/sizeof(ar[0])) ){ 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; n &lt;&lt; " で割り切れる数 " &lt;&lt; *found &lt;&lt; " が見つかりました。" &lt;&lt; std::endl; 
-&nbsp;&nbsp;&nbsp; }
+    if ( found != ar+(sizeof(ar)/sizeof(ar[0])) ){ 
+        std::cout &lt;&lt; n &lt;&lt; " で割り切れる数 " &lt;&lt; *found &lt;&lt; " が見つかりました。" &lt;&lt; std::endl; 
+    }
 
-&nbsp;&nbsp;&nbsp; cout &lt;&lt; "HIT [ENTER] KEY !! " ; 
-&nbsp;&nbsp;&nbsp; { 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string str;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; getline( cin, str ); 
-&nbsp;&nbsp;&nbsp; } 
-&nbsp;&nbsp;&nbsp; return EXIT_SUCCESS; 
+    cout &lt;&lt; "HIT [ENTER] KEY !! " ; 
+    { 
+        string str;
+        getline( cin, str ); 
+    } 
+    return EXIT_SUCCESS; 
 }</pre>
-<p>&nbsp;</p>
+    <p>&nbsp;</p>
 
-<p>参考：</p>
-<ul>
-	<li>
-	<a title="http://codezine.jp/article/detail/4035" href="http://codezine.jp/article/detail/4035" rel="noreferrer" target="_blank">http://codezine.jp/article/detail/4035</a></li>
-	<li>
-	<a href="http://msdn.microsoft.com/ja-jp/library/dd293603(v=vs.110).aspx" target="_blank">http://msdn.microsoft.com/ja-jp/library/dd293603(v=vs.110).aspx</a></li>
-	<li>
-	<a href="https://msdn.microsoft.com/ja-jp/library/dd293599.aspx">
-	https://msdn.microsoft.com/ja-jp/library/dd293599.aspx</a></li>
-</ul>
-<p>&nbsp;</p>
-<h2><a name="5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使用する</a></h2>
-<p>ラムダ式内でメンバー変数を使用するには、キャプチャー対象として メンバー変数ではなく this を表記する、または一旦ローカル変数でメンバー変数を受けてそのローカル変数をキャプチャーする、というような方法をとる必要があります。</p>
-<p>&nbsp;</p>
-<p>[評価環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.3.10 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<p>こちらは this をキャプチャーする例です。</p>
-<p>[プログラムソース： &quot;test_lambda_01.cpp&quot;]</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+    <p>参考：</p>
+    <ul>
+    	<li>
+    	<a title="http://codezine.jp/article/detail/4035" href="http://codezine.jp/article/detail/4035" rel="noreferrer" target="_blank">http://codezine.jp/article/detail/4035</a></li>
+    	<li>
+    	<a href="http://msdn.microsoft.com/ja-jp/library/dd293603(v=vs.110).aspx" target="_blank">http://msdn.microsoft.com/ja-jp/library/dd293603(v=vs.110).aspx</a></li>
+    	<li>
+    	<a href="https://msdn.microsoft.com/ja-jp/library/dd293599.aspx">
+    	https://msdn.microsoft.com/ja-jp/library/dd293599.aspx</a></li>
+    </ul>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="5._メンバー変数をラムダ式で使用する">5. メンバー変数をラムダ式で使用する</a></h2>
+    
+    <p>ラムダ式内でメンバー変数を使用するには、キャプチャー対象として メンバー変数ではなく this を表記する、または一旦ローカル変数でメンバー変数を受けてそのローカル変数をキャプチャーする、というような方法をとる必要があります。</p>
+    <p>&nbsp;</p>
+    
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>Visual Studio 2019 pro.,</td>
+    		<td>Version 16.3.10 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Windows10 home,</td>
+    		<td>Version 1909 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>こちらは this をキャプチャーする例です。</p>
+    <p>[プログラムソース： &quot;test_lambda_01.cpp&quot;]</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
+#include &lt;iostream&gt;
 
 class Foo
 {
@@ -319,7 +356,7 @@ public:
 
         [<span class="auto-style6">this</span>] {
             std::cout &lt;&lt; &quot;(2) &quot; &lt;&lt; _x &lt;&lt; std::endl;
-            _x++;                                                      // thisのコピーキャプチャーで _x を変更しても...
+            _x++;                                       // thisのコピーキャプチャーで _x を変更しても...
         }();
 
         std::cout &lt;&lt; &quot;(3) &quot; &lt;&lt; _x &lt;&lt; std::endl;         // this._x へちゃんと反映されています。
@@ -330,14 +367,15 @@ int main()
 {
     Foo foo(1);
     foo.print();
-}</code></pre>
-<p>&nbsp;</p>
-<p>こちら、同じ内容ですが、メンバー変数を一旦ローカル変数で受けてからローカル変数をキャプチャーする例です。</p>
-<p>
+}</pre>
 
-<font face="Meiryo UI">
-[プログラムソース： &quot;test_lambda_02.cpp&quot;]</font></p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+    <p>&nbsp;</p>
+    <p>こちら、同じ内容ですが、メンバー変数を一旦ローカル変数で受けてからローカル変数をキャプチャーする例です。</p>
+    
+    <p>[プログラムソース： &quot;test_lambda_02.cpp&quot;]</p>
+    
+    <pre class="prettyprint linenums" style="width: 900px">
+#include &lt;iostream&gt;
 
 class Foo
 {
@@ -353,9 +391,9 @@ public:
     {
         std::cout &lt;&lt; &quot;(1) &quot; &lt;&lt; _x &lt;&lt; std::endl;
 
-        <span class="auto-style6">auto &amp;x = _x;</span>                                // 一旦メンバー変数をローカル変数で受けて...
+        <span class="auto-style6">auto &amp;x = _x;</span>                                   // 一旦メンバー変数をローカル変数で受けて...
 
-        [<span class="auto-style6">&amp;x</span>] {                                           // この例では x を参照キャプチャーして使ってます。
+        [<span class="auto-style6">&amp;x</span>] {                                          // この例では x を参照キャプチャーして使ってます。
             std::cout &lt;&lt; &quot;(2) &quot; &lt;&lt; x &lt;&lt; std::endl;
             x++;                                        // thisのコピーキャプチャーで _x を変更しても...
         }();
@@ -368,97 +406,103 @@ int main()
 {
     Foo foo(1);
     foo.print();
-}</code></pre>
-<p>&nbsp;</p>
-<p>上記の２例について、いずれも同じ結果になります。</p>
-<p>[実行結果]</p>
-<p><img alt="実行結果" src="lambda/img19.gif"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+}</pre>
 
-<section>
-  <h2><a id="ライセンス">ライセンス</a></h2>
-  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-  <div class="license">
-    The MIT License (MIT)<br><br>
-    
-    &nbsp; Copyright 
-    2011-2019 Kinoshita Hidetoshi<br><br>
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:<br><br>
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.<br><br>
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-  </div>
+    <p>&nbsp;</p>
+    <p>上記の２例について、いずれも同じ結果になります。</p>
+    <p>[実行結果]</p>
+    <p><img alt="実行結果" src="lambda/img19.gif"></p>
+    <p>&nbsp;</p>
+  </section>
+  
   <p>&nbsp;</p>
-</section>
 
-<p>&nbsp;</p>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 
+      2011 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
 
-<section>
-	<h2><a id="参考">参考</a></h2>
-	<ul>
-		<li>
-        <a href="https://cpplover.blogspot.com/2010/06/lambda_15.html" target="_blank">https://cpplover.blogspot.com/2010/06/lambda_15.html</a></li>
-	</ul>
-</section>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
-<hr>
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+          <a href="https://cpplover.blogspot.com/2010/06/lambda_15.html" target="_blank">https://cpplover.blogspot.com/2010/06/lambda_15.html</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p style="margin-bottom:5px">&nbsp;</p>
 
-
-
-<p style="margin-bottom:5px">&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">記載</h2>
-	<table>
-	
-		  <tr>
-	    <td class="td_history_date">2019-12-01</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「5. メンバー変数をラムダ式で使用する」を追加</td>
-	  </tr>
-	
-		  <tr>
-	    <td class="td_history_date" style="height: 19px">2015-06-09</td>
-	    <td class="td_history_separator" style="height: 19px">-</td>
-	    <td class="td_history" style="height: 19px">全面更新 </td>
-	  </tr>
-	
-		  <tr>
-	    <td class="td_history_date">2013-01-06</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">説明更新 </td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_history_date">2011-08-09</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	  
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>&copy; copyright 2011-2019 木下英俊</small></p>
-</footer>
+  <section>
+  	<h2 style="margin-bottom:5px">記載</h2>
+  	<table>
+  	
+  		  <tr>
+  	    <td class="td_history_date">2026-01-18</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">一部表示および内部実装をリファクタ</td>
+  	  </tr>
+  	
+  		  <tr>
+  	    <td class="td_history_date">2019-12-01</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「5. メンバー変数をラムダ式で使用する」を追加</td>
+  	  </tr>
+  	
+  		  <tr>
+  	    <td class="td_history_date" style="height: 19px">2015-06-09</td>
+  	    <td class="td_history_separator" style="height: 19px">-</td>
+  	    <td class="td_history" style="height: 19px">全面更新 </td>
+  	  </tr>
+  	
+  		  <tr>
+  	    <td class="td_history_date">2013-01-06</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">説明更新 </td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_history_date">2011-08-09</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	  
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>© copyright 2011 木下英俊</small></p>
+  </footer>
 
 </body>
 </html>
