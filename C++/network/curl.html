@@ -35,56 +35,63 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+    .auto-style1 {
+      text-decoration: underline;
+    }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
 	
-<h1>libcurl</h1>
+  <h1>libcurl</h1>
+  
+  <p> libcurl の使い方などについてメモします。</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._libcurl_をインストールする">1. libcurl をインストールする</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></p>
+      <p>&nbsp;&nbsp; <a href="#1-2._Windows">1-2.&nbsp;Windows</a></p>
+      <p><a href="#2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<p> libcurl の使い方などについてメモします。</p>
-<p> &nbsp;</p>
-
-<div class="mokuji">
-  <nav>
-  	<h2>目次</h2>
-  	<p><a href="#1._libcurl_をインストールする">1. libcurl をインストールする</a></p>
-    <p>&nbsp; <a href="#1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></p>
-    <p>&nbsp; <a href="#1-2._Windows">1-2.&nbsp;Windows</a></p>
-    <p><a href="#2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></p>
-  	<p>&nbsp;</p>
-  	<p><a href="#ライセンス">ライセンス</a></p>
-  	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-	<h2><a name="1._libcurl_をインストールする">1. libcurl をインストールする</a></h2>
-  <h3><a name="1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></h3>
-	<h4>[概要]</h4>
+  <section>
+  	<h2><a name="1._libcurl_をインストールする">1. libcurl をインストールする</a></h2>
+    <h3><a name="1-1._Linux_(Ubuntu)">1-1. Linux (Ubuntu)</a></h3>
+  	<h4>[概要]</h4>
+  	
+    <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
+    というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
+    URL 転送ライブラリです。</p>
+  	<p> &nbsp;</p>
 	
-  <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
-  というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
-  URL 転送ライブラリです。</p>
-	<p> &nbsp;</p>
+  	<h4>[環境]</h4>
+  	<table>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>OS :</td>
+        <td>Ubuntu,</td>
+        <td>22.04</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </table>
 	
-	<h4>[環境]</h4>
-	<table>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>OS :</td>
-      <td>Ubuntu,</td>
-      <td>22.04</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </table>
-	
-	<p> &nbsp;</p>
+	  <p> &nbsp;</p>
     <p> ■ curl のインストール</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">sudo apt install curl</pre>
     <p> &nbsp;</p>
@@ -98,59 +105,62 @@
 	
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    
     <h3><a name="1-2._Windows">1-2. Windows</a></h3>
-	<h4>[概要]</h4>
-	
-  <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
-  というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
-  URL 転送ライブラリです。Microsoft Visual Studio からも利用可能です。</p>
-  <p>ここでは <strong>Microsoft</strong> が提供する <strong>vcpkg</strong> 
-  というクロスプラットフォームのパッケージマネージャーを使用して libcurl を導入する手順を紹介します。<strong>vcpkg</strong> 
-  を使用することで、c/c++ 
-  の外部ライブラリを利用したい場合に手動でソースコードからビルドすることなくインストールやリンクを簡単に行えるようになります。依存関係も <strong>
-  vcpkg</strong> が解決してインストールしてくれます。<strong>vcpkg</strong> は Windows、Linux および 
-  MacOS に対応しているようです。</p>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>コンパイラ :</td>
-      <td>Visual Studio 2022 pro.,</td>
-      <td>Version 17.5.1</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>ライブラリ ：</td>
-      <td>curl:x64-windows,</td>
-      <td>7.88.1</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>OS :</td>
-      <td>Windows11 home,</td>
-      <td>22H2</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </table>
-	
-	<p> &nbsp;</p>
-	
-  <p>(1) vcpkg をインストール</p>
-  <p>git の clone コマンドを使用し、GitHub から vcpkg リポジトリをクローンします。任意の場所で実施してください。私は 
-  Documents フォルダ内に Github フォルダを作成してここで作業しました。</p>
-  <pre style="color: #FFFFFF; background-color: #000000; width: 800px">git clone https://github.com/Microsoft/vcpkg.git</pre>
-  <p>[実行例]</p>
-  <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github&gt;git clone <strong>https://github.com/Microsoft/vcpkg.git</strong>
+  	<h4>[概要]</h4>
+  	
+    <p>標準 c++ 言語にはネットワーク関連処理を行うためのライブラリが脆弱ですので、本ページでは libcurl 
+    というオープンソースライブラリを紹介します。libcurlは複数のプラットフォームで同じようにビルド、稼動させることができるフリーで使いやすいクライアントサイド 
+    URL 転送ライブラリです。Microsoft Visual Studio からも利用可能です。</p>
+    <p>ここでは <strong>Microsoft</strong> が提供する <strong>vcpkg</strong> 
+    というクロスプラットフォームのパッケージマネージャーを使用して libcurl を導入する手順を紹介します。<strong>vcpkg</strong> 
+    を使用することで、c/c++ 
+    の外部ライブラリを利用したい場合に手動でソースコードからビルドすることなくインストールやリンクを簡単に行えるようになります。依存関係も <strong>
+    vcpkg</strong> が解決してインストールしてくれます。<strong>vcpkg</strong> は Windows、Linux および 
+    MacOS に対応しているようです。</p>
+  	<p> &nbsp;</p>
+  	
+  	<h4>[環境]</h4>
+  	<table>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>コンパイラ :</td>
+        <td>Visual Studio 2022 pro.,</td>
+        <td>Version 17.5.1</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>ライブラリ ：</td>
+        <td>curl:x64-windows,</td>
+        <td>7.88.1</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>OS :</td>
+        <td>Windows11 home,</td>
+        <td>22H2</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </table>
+  	
+  	<p> &nbsp;</p>
+  	
+    <p>(1) vcpkg をインストール</p>
+    <p>git の clone コマンドを使用し、GitHub から vcpkg リポジトリをクローンします。任意の場所で実施してください。私は 
+    Documents フォルダ内に Github フォルダを作成してここで作業しました。</p>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">git clone https://github.com/Microsoft/vcpkg.git</pre>
+    <p>[実行例]</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">
+C:\Users\foo\Documents\Github&gt;git clone <strong>https://github.com/Microsoft/vcpkg.git</strong>
 Cloning into 'vcpkg'...
 remote: Enumerating objects: 181622, done.
 remote: Total 181622 (delta 0), reused 0 (delta 0), pack-reused 181622
@@ -159,13 +169,18 @@ Resolving deltas: 100% (115829/115829), done.
 Updating files: 100% (9787/9787), done.
 
 C:\Users\foo\Documents\Github&gt;</pre>
+
     <p>&nbsp;</p>
     <p>(2) vcpkg 実行ファイルを生成</p>
     <p>クローンした中にある <strong>bootstrap-vcpkg.bat</strong> を実行して実行ファイルを生成します。</p>
+    
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">cd vcpkg
 bootstrap-vcpkg.bat</pre>
+
     <p>[実行例]</p>
-    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github&gt;<strong>cd vcpkg</strong>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">
+C:\Users\foo\Documents\Github&gt;<strong>cd vcpkg</strong>
 
 C:\Users\foo\Documents\Github\vcpkg&gt;<strong>bootstrap-vcpkg.bat</strong>
 Downloading https://github.com/microsoft/vcpkg-tool/releases/download/2023-02-16/vcpkg.exe -&gt; C:\Users\foo\Documents\Github\vcpkg\vcpkg.exe... done.
@@ -182,6 +197,7 @@ or by setting the VCPKG_DISABLE_METRICS environment variable.
 Read more about vcpkg telemetry at docs/about/privacy.md
 
 C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+
     <p>&nbsp;</p>
     <p>(3) vcpkg install コマンドで curl をインストール</p>
     <p><span class="cpp-source">vcpkg install</span> コマンドにより curl 
@@ -190,6 +206,7 @@ C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
     triplet</span> コマンドで確認できます。 </p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg install curl:x64-windows</pre>
     <p>[実行例]</p>
+    
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg install curl:x64-windows</strong>
 Computing installation plan...
 The following packages will be built and installed:
@@ -219,6 +236,7 @@ curl provides CMake targets:
 
 
 C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+
     <p>&nbsp;</p>
     <p>以上で libcurl のインストールを完了です。</p>
     <p>&nbsp;</p>
@@ -231,6 +249,7 @@ C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
     インクルードディレクトリやライブラリディレクトリ、およびライブラリの設定を行ってください。</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg integrate install</pre>
     <p>[実行例]</p>
+    
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg integrate install</strong>
 Applied user-wide integration for this vcpkg root.
 CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=C:/Users/foo/Documents/Github/vcpkg/scripts/buildsystems/vcpkg.cmake"
@@ -238,12 +257,14 @@ CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=C:/Users/foo/Documents/Github
 All MSBuild C++ projects can now #include any installed libraries. Linking will be handled automatically. Installing new libraries will make them instantly available.
 
 C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+
     <p>&nbsp;</p>
     <p>(5) インストールしたライブラリを確認</p>
     <p><span class="cpp-source">vcpkg list</span> 
     コマンドを実行することで、インストールしたライブラリ一覧を表示することができます。</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg list</pre>
     <p>[実行例]</p>
+    
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px">C:\Users\foo\Documents\Github\vcpkg&gt;<strong>vcpkg list</strong>
 curl:x64-windows                                  7.88.1              A library for transferring data with URLs
 curl[non-http]:x64-windows                                            Enables protocols beyond HTTP/HTTPS/HTTP2
@@ -256,66 +277,130 @@ zlib:x64-windows                                  1.2.13              A compress
 zlib:x86-windows                                  1.2.13              A compression library
 
 C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+
+    <p>&nbsp;</p>
+    <p>curl のインストールは以上で完了す。</p>
+    <p>&nbsp;</p>
+    <p>＊＊＊</p>
+    <p>&nbsp;</p>
+    <p>以下は参考情報です。以上でインストールした curl を後日 <span class="auto-style1">最新版へアップデート（アップグレード？）する手順 
+    </span>です。</p>
+    <p>&nbsp;</p>
+    <p>(1) vcpkg 自体を最新に更新 </p>
+    <p>まずは vcpkg 本体を最新にします。</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">
+cd /path/to/vcpkg
+git pull
+./bootstrap-vcpkg.sh  # Linux/macOS の場合
+.\bootstrap-vcpkg.bat # Windows の場合</pre>
+
+    <p>&nbsp;</p>
+    <p>(2) ライブラリのレジストリを更新</p>
+    <p>下記コマンドを実行して vcpkg のポート定義を最新にします。</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg update</pre>
+    
+    <p>これで、インストール済みのライブラリと最新バージョンの差分が表示されます。</p>
+    <p>&nbsp;</p>
+    <p>[実施例]</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">
+C:\Users\foo\Documents\Github\vcpkg&gt;vcpkg update
+Using local port versions. To update the local ports, use `git pull`.
+The following packages differ from their port versions:
+        curl:x64-windows                 7.88.1 -&gt; 8.18.0
+        vcpkg-cmake:x64-windows          2022-12-22 -&gt; 2024-04-23
+        vcpkg-cmake-config:x64-windows   2022-02-06#1 -&gt; 2024-05-23
+        zlib:x64-windows                 1.2.13 -&gt; 1.3.1
+        zlib:x86-windows                 1.2.13 -&gt; 1.3.1
+To update these packages and all dependencies, run
+.\vcpkg upgrade'
+To only remove outdated packages, run
+.\vcpkg remove --outdated
+
+C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
+    <p>&nbsp;</p>
+    <p>(3) ライブラリをアップグレード</p>
+    <p>下記コマンドですべてのライブラリを最新版に更新します。</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg upgrade</pre>
+    
+    <p>&nbsp;</p>
+    <p>確認メッセージが出るので、<code style="white-space: normal;">--no-dry-run</code> 
+    を付けて実行すると実際にアップグレードされます。</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg upgrade --no-dry-run</pre>
+    
+    <p>&nbsp;</p>
+    <p>（4) プロジェクトに反映</p>
+    <p>&nbsp;CMake などで vcpkg を使っている場合は、再ビルドすれば新しいバージョンが反映されます。</p>
+    <p>&nbsp;</p>
+    <p>ちなみに、特定のライブラリだけを更新したい場合は、その名前を指定して再インストールするのもアリです。</p>
+    
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px">vcpkg install ライブラリ名</pre>
+    
+    <p>vcpkg はインストール済みのバージョンと異なる場合、自動的にアップグレードしてくれます。</p>
     <p>&nbsp;</p>
 	
-</section>
-	
-<p>&nbsp;</p>
-
-<section>
-  <h2>2<a name="2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">. i-PRO カメラと JPEG 
-  接続して映像を表示してみる</a></h2>
-  <h4>[概要]</h4>
-  <p>&nbsp;c++(Visual Studio) と OpenCV, libcurl を使って、PC と i-PRO カメラを JPEG 
-  で接続して映像表示してみます。</p>
+  </section>
+  	
   <p>&nbsp;</p>
-  <h4>[評価環境]</h4>
-  <table>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>コンパイラ :</td>
-      <td>Visual Studio 2022 pro.,</td>
-      <td>Version 17.5.1</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>ライブラリ :</td>
-      <td>OpenCV,</td>
-      <td>4.6.0 </td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td>curl:x64-windows,</td>
-      <td>7.88.1</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    <tr>
-      <td>OS :</td>
-      <td>Windows11 home,</td>
-      <td>22H2</td>
-    </tr>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </table>
-  <p>&nbsp;</p>
-  <p>※ "Community edition" でも動作する内容です。</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <h4>[プログラム]</h4>
-  <p>サンプルプログラムのソースコードを以下に示します。</p>
-  <ul>
-    <li>プロジェクトを c++ の「コンソール アプリ」として作成します。</li>
-    <li>user_id, user_pw, host はあなたが使用するカメラの設定に従って変更してください。</li>
-    <li>プログラムを終了するときはキーボードから "q" キーを押す、またはコンソール上で [ctrl]+[c] してください。</li>
-  </ul>
-  <p>&nbsp;</p>
+  
+  <section>
+    <h2>2<a name="2._i-PRO_カメラと_JPEG_接続して映像を表示してみる">. i-PRO カメラと JPEG 
+    接続して映像を表示してみる</a></h2>
+    <h4>[概要]</h4>
+    <p>&nbsp;c++(Visual Studio) と OpenCV, libcurl を使って、PC と i-PRO カメラを JPEG 
+    で接続して映像表示してみます。</p>
+    <p>&nbsp;</p>
+    <h4>[評価環境]</h4>
+    <table>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>コンパイラ :</td>
+        <td>Visual Studio 2022 pro.,</td>
+        <td>Version 17.5.1</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>ライブラリ :</td>
+        <td>OpenCV,</td>
+        <td>4.6.0 </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>curl:x64-windows,</td>
+        <td>7.88.1</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+      <tr>
+        <td>OS :</td>
+        <td>Windows11 home,</td>
+        <td>22H2</td>
+      </tr>
+      <tr>
+        <td class="td_separate" colspan="3"></td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>※ "Community edition" でも動作する内容です。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>[プログラム]</h4>
+    <p>サンプルプログラムのソースコードを以下に示します。</p>
+    <ul>
+      <li>プロジェクトを c++ の「コンソール アプリ」として作成します。</li>
+      <li>user_id, user_pw, host はあなたが使用するカメラの設定に従って変更してください。</li>
+      <li>プログラムを終了するときはキーボードから "q" キーを押す、またはコンソール上で [ctrl]+[c] してください。</li>
+    </ul>
+    <p>&nbsp;</p>
     
     <div class="status_ok">
       <div></div>
@@ -327,8 +412,9 @@ C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
     </div>
 
     <p>&nbsp;</p>
-  <p>[プログラムソース "connect_with_jpeg_1.cpp"]</p>
-  <pre class="prettyprint linenums lang-cpp">/*
+    <p>[プログラムソース "connect_with_jpeg_1.cpp"]</p>
+    <pre class="prettyprint linenums lang-cpp">
+/*
 ======================================================================================
 [Abstract]
     Try connecting to an i-PRO camera with JPEG.
@@ -464,98 +550,105 @@ int main() {
 
     return EXIT_SUCCESS;
 }</pre>
+
+    <p>&nbsp;</p>
+    <p>上記プログラムを動かした様子を動画で示します。</p>
+    <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
+    <video autoplay="y" controls="" loop="y" muted="" width="800">
+      <source src="curl/connect_with_jpeg_sample.mp4" type="video/mp4">
+    </video>
+    <p>[動画] JPEG でカメラと接続して映像表示してみた様子</p>
+    <p>&nbsp;</p>
+  </section>
+
   <p>&nbsp;</p>
-  <p>上記プログラムを動かした様子を動画で示します。</p>
-  <p>こんなに簡単なプログラムでとても快適な映像表示を実現することができました。</p>
-  <video autoplay="y" controls="" loop="y" muted="" width="800">
-  <source src="curl/connect_with_jpeg_sample.mp4" type="video/mp4">
-  </video>
-  <p>[動画] JPEG でカメラと接続して映像表示してみた様子</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      Copyright © 2023 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <br>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>curl<br><a href="https://curl.se/" target="_blank">https://curl.se/</a></li>
+  		<li>curl/curl: A command line tool and library for transferring data 
+  		with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, 
+  		HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, 
+  		RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. 
+  		libcurl offers a myriad of powerful features (github.com)<br>
+        <a href="https://github.com/curl/curl" target="_blank">
+        https://github.com/curl/curl</a></li>
+  		<li>C++とcurlでHTTP通信処理作ってみた - Qiita<br>
+        <a href="https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f" target="_blank">
+        https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f</a></li>
+  		<li>【cURL】libcurlをVisual Studio 2019で使う方法 | ofiice cheigra (chiegra.com)<br>
+        <a href="https://chiegra.com/curl-vs2019/" target="_blank">
+        https://chiegra.com/curl-vs2019/</a></li>
+  	</ul>
+  </section>
+  
   <p>&nbsp;</p>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-  <h2><a id="ライセンス">ライセンス</a></h2>
-  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-  <div class="license">
-    The MIT License (MIT)<br><br>
-    
-    Copyright © 2023 Kinoshita Hidetoshi<br><br>
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:<br><br>
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.<br><br>
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-  </div>
+  
+  <hr>
+  
   <p>&nbsp;</p>
-</section>
-
-<br>
-
-<section>
-	<h2><a id="参考">参考</a></h2>
-	<ul>
-		<li>curl<br><a href="https://curl.se/" target="_blank">https://curl.se/</a></li>
-		<li>curl/curl: A command line tool and library for transferring data 
-		with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, 
-		HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, 
-		RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS. 
-		libcurl offers a myriad of powerful features (github.com)<br>
-      <a href="https://github.com/curl/curl" target="_blank">
-      https://github.com/curl/curl</a></li>
-		<li>C++とcurlでHTTP通信処理作ってみた - Qiita<br>
-      <a href="https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f" target="_blank">
-      https://qiita.com/mad_khaki/items/3712cd842910e3a97c3f</a></li>
-		<li>【cURL】libcurlをVisual Studio 2019で使う方法 | ofiice cheigra (chiegra.com)<br>
-      <a href="https://chiegra.com/curl-vs2019/" target="_blank">
-      https://chiegra.com/curl-vs2019/</a></li>
-	</ul>
-</section>
-
-<p>&nbsp;</p>
-
-<hr>
-
-<p>&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date">2023-03-01</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-01-18</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">"<a href="#1-2._Windows">1-2._Windows</a>" に 
+        vcpkg でインストールしたライブラリを最新版へ更新する手順 を追記</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2023-03-01</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>Copyright © 2023 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
