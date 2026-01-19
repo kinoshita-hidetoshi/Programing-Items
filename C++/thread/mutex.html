@@ -84,7 +84,6 @@
   
   <section>
     <h2> <a name="1._mutex_を使ってみる">1. mutex を使ってみる</a></h2>
-    <p>[概要]</p>
     <p> <strong>mutex</strong> と <strong>lock_guard</strong> を使って、シンプルな排他処理を行うプログラムを作成してみます。</p>
     <p> 自動的に unlock してくれるので、多くの場合でこの方法が最適です。</p>
     <p> &nbsp;</p>
@@ -119,47 +118,131 @@
     </table>
     
     <p> &nbsp;</p>
+    <p> 最初に、うまく動かない例を示します。</p>
+    <p> こちら "bad_sample.cpp" はうまく動かない例です。4つのスレッドがそれぞれ 25,000回 
+    のインクリメントをするので、最後に変数 count が 100,000 
+    になることを期待するプログラムです。しかし同期処理がないために期待する動作をしない、という例です。</p>
+    <p> &nbsp;</p>
     
-    <p>[プログラムソース] <span class="cpp-source">mutex_sample_01.cpp</span></p>
+    <p> [プログラムソース] <span class="cpp-source">bad_sample.cpp</span></p>
     
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
-#include &lt;iostream&gt;     // cout
-#include &lt;map&gt;          // map
-#include &lt;string&gt;       // string
-#include &lt;chrono&gt;       // chrono::seconds
-#include &lt;thread&gt;       // thread, join
-<span class="auto-style1">#include &lt;mutex&gt;        // mutex, lock_guard</span>
+#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;thread&gt;       // std::thread
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
 
-std::map&lt;std::string, std::string&gt; g_pages;
-<span class="auto-style1">std::mutex g_pages_mutex;</span>
+// グローバル変数
+volatile long           count = 0;
 
-void save_page(const std::string&amp; url)
+// カウントアップを行うスレッド関数
+void CountThread(const size_t iterations)
 {
-    // ページの読み込みに時間がかかるのをシミュレートしています。
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::string result = &quot;fake content&quot;;
-
-    // ミューテックスをロックして g_pages にアクセスします。
-    <span class="auto-style1">std::lock_guard&lt;std::mutex&gt; guard(g_pages_mutex);</span>
-    g_pages[url] = result;
+    int x;
+    for (size_t i = 0; i &lt; iterations; ++i){
+        x = count;
+        // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+        // std::this_thread::yield();      // スレッドの処理明け渡し。c++11。
+        x++;
+        count = x;
+    }
 }
 
+// メイン関数
 int main()
 {
-    std::thread t1(save_page, &quot;http://foo&quot;);
-    std::thread t2(save_page, &quot;http://bar&quot;);
-    t1.join();
-    t2.join();
+    const size_t    numThreads = 4;
+    std::thread     countThreads[numThreads];
 
-    // スレッドが join 済みであるため、ロックなしで g_pages にアクセスしても安全です。
-    for (const auto&amp; pair : g_pages) {
-        std::cout &lt;&lt; pair.first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; pair.second &lt;&lt; &#39;\n&#39;;
+    // スレッドを4つ作成
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i] = std::thread(CountThread, 25000);
     }
+
+    // 4つのスレッドが終わるのを待つ
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i].join();
+    }
+
+    // 4つのスレッドが終了したのちの count の値をチェック
+    std::cout &lt;&lt; "count = " &lt;&lt; count &lt;&lt; std::endl;
+    
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+    <p> ビルドおよび実行結果：</p>
+    
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 bad_sample.cpp -o bad_sample.out
+$ ./bad_sample.out 
+count = 72727
+$ </pre>
+
+    <p> この実行例では、期待する <strong>100,000</strong> に対して実際には <strong>72,727</strong> という値になりました。</p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> 次に、mutex による同期処理を追加した例を紹介します。</p>
+    <p> これにより、プログラム実行後の変数 count の値は期待する <strong>100,000</strong> となりました。</p>
+    <p> &nbsp;</p>
+    
+    <p> [プログラムソース] <span class="cpp-source">good_sample_01.cpp</span></p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;thread&gt;       // std::thread
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
+<span class="auto-style1">#include &lt;mutex&gt;        // mutex, lock_guard</span>
+
+// グローバル変数
+volatile long           count = 0;      // 共有変数
+<span class="auto-style1">std::mutex              count_mutex;     // ミューテックス</span>
+
+// カウントアップを行うスレッド関数
+void CountThread(const size_t iterations)
+{
+    int x;
+    for (size_t i = 0; i &lt; iterations; ++i){
+<span class="auto-style1">        // ミューテックスをロックして count にアクセスします。</span>
+<span class="auto-style1">        std::lock_guard&lt;std::mutex&gt; guard(count_mutex);</span>
+        
+        x = count;
+        // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+        // std::this_thread::yield();      // スレッドの処理明け渡し。c++11。
+        x++;
+        count = x;
+    }
+}
+
+// メイン関数
+int main()
+{
+    const size_t    numThreads = 4;
+    std::thread     countThreads[numThreads];
+
+    // スレッドを4つ作成
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i] = std::thread(CountThread, 25000);
+    }
+
+    // 4つのスレッドが終わるのを待つ
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i].join();
+    }
+
+    // 4つのスレッドが終了したのちの count の値をチェック
+    std::cout &lt;&lt; "count = " &lt;&lt; count &lt;&lt; std::endl;
+    
+    return EXIT_SUCCESS;
 }</pre>
 
-    <p>&nbsp;</p>
-    <p>ビルド方法（g++）：</p>
-    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_01.cpp -o mutex_sample_01.out</pre>
+    <p> &nbsp;</p>
+    
+    <p> ビルドおよび実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 good_sample_01.cpp -o good_sample_01.out
+$ ./good_sample_01.out 
+count = 100000
+$ </pre>
+
     <p>&nbsp;</p>
     
     <table class="border-collapse" border="1" style="width: 800px">
@@ -203,13 +286,6 @@ int main()
     
     <p>&nbsp;</p>
     
-    <p>実行結果：</p>
-    <pre class="prettyprint lang-bsh" style="width:800px">
-$ ./mutex_sample_01.out 
-http://bar =&gt; fake content
-http://foo =&gt; fake content
-$</pre>
-    <p>&nbsp;</p>
   </section>
   
   <p>&nbsp;</p>
@@ -217,8 +293,18 @@ $</pre>
   <section>
     <h2> <a name="2._mutex.lock,_mutex.unlock">2. mutex.lock, mutex.unlock</a></h2>
     <p> std::mutex.lock, std::mutex.unlock を使って排他処理を実装する例を紹介します。</p>
-    <p> lock と unlock を明示的に実施する方法です。lock 後の分岐や例外発生を考慮して確実に漏れなく unlock 
-    しないと、デッドロックを発生しやすい方法です。特に理由なければ、基本的には前述の lock_guard による実装を強く推奨します。</p>
+    <p> &nbsp;</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>lock 後の分岐や例外発生を漏れなく unlock しないとデッドロックを発生する方法です。特に理由なければ、基本的には前述の  
+        <strong>lock_guard</strong> による実装を推奨します。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
     <p> &nbsp;</p>
     
     <section>
@@ -253,50 +339,66 @@ $</pre>
     </section>
     
     <p> &nbsp;</p>
-    <p> [プログラムソース] <span class="cpp-source">mutex_sample_02.cpp</span></p>
+    
+    <p> [プログラムソース] <span class="cpp-source">good_sample_02.cpp</span></p>
+    
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
-#include &lt;iostream&gt;     // cout
-#include &lt;map&gt;          // map
-#include &lt;string&gt;       // string
-#include &lt;chrono&gt;       // chrono::seconds
-#include &lt;thread&gt;       // thread, join
-<span class="auto-style1">#include &lt;mutex&gt;        // mutex</span>
+#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;thread&gt;       // std::thread
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
+#include &lt;mutex&gt;        // mutex
 
-std::map&lt;std::string, std::string&gt; g_pages;
-<span class="auto-style1">std::mutex g_pages_mutex;</span>
+// グローバル変数
+volatile long           count = 0;      // 共有変数
+std::mutex              count_mutex;     // ミューテックス
 
-// 指定された URL からページを保存する関数
-void save_page(const std::string&amp; url)
+// カウントアップを行うスレッド関数
+void CountThread(const size_t iterations)
 {
-    // ページの読み込みに時間がかかるのをシミュレートしています。
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::string result = "fake content";
+    int x;
+    for (size_t i = 0; i &lt; iterations; ++i){
+        <span class="auto-style1">count_mutex.lock();  // ミューテックスをロックして count にアクセスします。</span>
 
-    // ミューテックスをロックして g_pages にアクセスします。
-    //std::lock_guard&lt;std::mutex&gt; guard(g_pages_mutex);
-    <span class="auto-style1">g_pages_mutex.lock();</span>
-    g_pages[url] = result;
-    <span class="auto-style1">g_pages_mutex.unlock();</span>
+        x = count;
+        // 問題を発生させにくい場合は次の行のコメントアウトを外してください。
+        // std::this_thread::yield();      // スレッドの処理明け渡し。c++11。
+        x++;
+        count = x;
+
+        <span class="auto-style1">count_mutex.unlock();  // ミューテックスのロックを解除します。</span>
+    }
 }
 
 // メイン関数
 int main()
 {
-    std::thread t1(save_page, "http://foo");
-    std::thread t2(save_page, "http://bar");
-    t1.join();
-    t2.join();
+    const size_t    numThreads = 4;
+    std::thread     countThreads[numThreads];
 
-    // スレッドが join 済みであるため、ロックなしで g_pages にアクセスしても安全です。
-    for (const auto&amp; pair : g_pages) {
-        std::cout &lt;&lt; pair.first &lt;&lt; " =&gt; " &lt;&lt; pair.second &lt;&lt; '\n';
+    // スレッドを4つ作成
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i] = std::thread(CountThread, 25000);
     }
 
-    return 0;
+    // 4つのスレッドが終わるのを待つ
+    for (size_t i = 0; i &lt; numThreads; ++i){
+        countThreads[i].join();
+    }
+
+    // 4つのスレッドが終了したのちの count の値をチェック
+    std::cout &lt;&lt; "count = " &lt;&lt; count &lt;&lt; std::endl;
+    
+    return EXIT_SUCCESS;
 }</pre>
     <p> &nbsp;</p>
-    <p>ビルド方法（g++）：</p>
-    <pre class="prettyprint lang-bsh" style="width:800px">g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 mutex_sample_02.cpp -o mutex_sample_02.out</pre>
+    
+    <p> ビルドおよび実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 good_sample_02.cpp -o good_sample_02.out
+$ ./good_sample_02.out 
+count = 100000
+$ </pre>
+
     <p>&nbsp;</p>
     
     <table class="border-collapse" border="1" style="width: 800px">
