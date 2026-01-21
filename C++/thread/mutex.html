@@ -72,8 +72,8 @@
     	<h2>目次</h2>
     	<p> <a href="#1._mutex_を使ってみる">1. mutex を使ってみる</a></p>
       <p> <a href="#2._mutex.lock,_mutex.unlock">2. mutex.lock, mutex.unlock</a></p>
-      <p> <a href="#3._try_lock">3. try_lock</a></p>
-    	<p>&nbsp;</p>
+      <p> <a href="#3._mutex::try_lock">3. mutex::try_lock</a></p>
+      <p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
     </nav>
@@ -443,21 +443,153 @@ $ </pre>
     </table>
     
     <p>&nbsp;</p>
-    <p>実行結果：</p>
-    <pre class="prettyprint lang-bsh" style="width:800px">
-$ ./mutex_sample_02.out 
-http://bar =&gt; fake content
-http://foo =&gt; fake content
-$</pre>
-    <p>&nbsp;</p>
 
   </section>
 
   <p>&nbsp;</p>
     
   <section>
-    <h2> <a name="3._try_lock">3. try_lock</a></h2>
-    <p> 今後記載予定</p>
+    <h2> <a name="3._mutex::try_lock">3. mutex::try_lock</a></h2>
+    <p> <span class="cpp-source">std::mutex::try_lock</span> は、C++ の 
+    <span class="cpp-source">std::mutex</span> 
+    クラスに属するメンバ関数で、ミューテックスをロックできるかどうかを試すための非ブロッキングな方法です。</p>
+    <p> &nbsp;</p>
+    <ul>
+      <li>成功時：ミューテックスのロックに成功すれば true を返す。 </li>
+      <li>失敗時：すでに他のスレッドがロックしている場合は false を返す。 </li>
+      <li>ブロックしない：lock() のようにロックが解放されるまで待たず、すぐに結果を返す。 </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>使いどころ：</p>
+    <ul>
+      <li>スレッドが他の作業を優先したいときに便利</li>
+      <li>例えば、リソースが使われていたら無理に待たずにスキップしたり、後回しにしたりできる</li>
+      <li>デッドロック回避のために、複数のミューテックスを順番に try_lock で試す戦略にも使える</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> 補足：</p>
+    <ul>
+      <li>似た機能に std::try_lock があります。std::mutex::try_lock と機能や戻り値が異なるので取り扱いに注意が必要です。</li>
+    </ul>
+    <p> &nbsp;</p>
+    <p> [プログラムソース] <span class="cpp-source">try-lock_01.cpp</span></p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;chrono&gt;
+#include &lt;iostream&gt; // std::cout
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+ 
+std::chrono::milliseconds interval(100);
+ 
+std::mutex mutex;
+int job_shared = 0;     // both threads can modify 'job_shared',
+                        // mutex will protect this variable
+ 
+int job_exclusive = 0;  // only one thread can modify 'job_exclusive'
+                        // no protection needed
+ 
+// this thread can modify both 'job_shared' and 'job_exclusive'
+void job_1() 
+{
+    bool bLoop = true;
+    std::this_thread::sleep_for(interval); // let 'job_2' take a lock
+ 
+    while (bLoop)
+    {
+        // try to lock mutex to modify 'job_shared'
+        if (mutex.try_lock())
+        {
+            std::cout &lt;&lt; "job shared (" &lt;&lt; job_shared &lt;&lt; ")\n";
+            mutex.unlock();
+            bLoop = false; // finish after one successful modification;
+        }
+        else
+        {
+            // can't get lock to modify 'job_shared'
+            // but there is some other work to do
+            ++job_exclusive;
+            std::cout &lt;&lt; "job exclusive (" &lt;&lt; job_exclusive &lt;&lt; ")\n";
+            std::this_thread::sleep_for(interval);
+        }
+    }
+
+    return;
+}
+ 
+// this thread can modify only 'job_shared'
+void job_2() 
+{
+    mutex.lock();
+    std::this_thread::sleep_for(5 * interval);
+    ++job_shared;
+    mutex.unlock();
+}
+ 
+int main() 
+{
+    std::thread thread_1(job_1);
+    std::thread thread_2(job_2);
+ 
+    thread_1.join();
+    thread_2.join();
+
+    return 0;
+}</pre>
+
+    <p> &nbsp;</p>
+    <p> ビルドおよび実行結果：</p>
+    
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++17 -Wall -Wextra -Wpedantic -pthread -O2 try-lock_01.cpp -o try-lock_01.out
+$ ./try-lock_01.out 
+job exclusive (1)
+job exclusive (2)
+job exclusive (3)
+job exclusive (4)
+job shared (1)
+$ </pre>
+    <p> &nbsp;</p>
+    
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++17</strong></td>
+          <td>C++17 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++17 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
+    </table>
+    
     <p> &nbsp;</p>
 
   </section>
@@ -504,6 +636,9 @@ $</pre>
     	https://ja.cppreference.com/w/cpp/thread/mutex</a></li>
     <li>cppreference.com&nbsp; -&nbsp; lock_guard<br>
       <a href="https://ja.cppreference.com/w/cpp/thread/lock_guard" target="_blank">https://ja.cppreference.com/w/cpp/thread/lock_guard</a></li>
+    <li>cppreference.com&nbsp; -&nbsp; mutex::try_lock<br>
+      <a href="https://en.cppreference.com/w/cpp/thread/mutex/try_lock.html" target="_blank">
+      std::mutex::try_lock - cppreference.com</a></li>
   </ul>
 
   <p>&nbsp;</p>
@@ -513,6 +648,12 @@ $</pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2026-01-21&nbsp;</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">
+        "<a href="#3._mutex::try_lock">3._mutex::try_lock</a>" を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date" style="height: 16px">2026-01-17</td>
   	    <td class="td_history_separator" style="height: 16px">-</td>
