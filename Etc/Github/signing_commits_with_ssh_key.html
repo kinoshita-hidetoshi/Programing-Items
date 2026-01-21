@@ -35,7 +35,13 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  </head>
+  <style type="text/css">
+    .auto-style1 {
+      background-color: #505000;
+    }
+  </style>
+
+</head>
 
 <body onload="prettyPrint();">
 	
@@ -278,6 +284,7 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
     
     <p>&nbsp;</p>
     <p>後者のコマンドを実行後の私の .gitconfig ファイル例です。（メールアドレスは **** で変更表記しています）</p>
+    <p><span class="cpp-source">gpfsign = true</span> の部分が追加されます。</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 kinoshita@PC-FooBoo:~$ cat .gitconfig
@@ -290,7 +297,7 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
 [gpg]
         format = ssh
 [commit]
-        gpgsign = true</pre>
+        g<span class="auto-style1">pgsign = true</span></pre>
         
     <p>&nbsp;</p>
     <p>以上の設定により git commit に “-S” を付けることなくコミットに対して常に署名するようになります。 </p>
@@ -318,27 +325,15 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
       <tbody>
         <tr>
           <td><strong>Verified</strong></td>
-          <td>
-          <p>GitHub が署名を検証でき、信頼できると判断された署名。GPG または SSH 署名が有効</p>
-          </td>
+          <td>コミットが署名され、署名が正常に検証されました</td>
         </tr>
         <tr>
-          <td style="white-space: nowrap"><strong>Partially verified</strong></td>
-          <td>
-          署名はあるが、GitHub が完全には検証できなかった<br>（例：公開鍵が GitHub に登録されていないなど）
-          </td>
+          <td style="white-space: nowrap"><strong>Unverified</strong></td>
+          <td>コミットは署名されていますが、署名を検証できませんでした</td>
         </tr>
         <tr>
-          <td style="white-space:nowrap"><strong>Unverified</strong></td>
-          <td>
-          <p>署名が無効、または改ざんされた可能性がある</p>
-          </td>
-        </tr>
-        <tr>
-          <td style="white-space:nowrap"><strong>No signature</strong></td>
-          <td>
-          署名が付いていない通常のコミット
-          </td>
+          <td style="white-space:nowrap"><strong>No verification status</strong></td>
+          <td>コミットが署名されていません</td>
         </tr>
       </tbody>
     </table>
@@ -383,8 +378,11 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
   <section>
   	<h2><a id="参考">参考</a></h2>
   	<ul>
-  		<li>
-        <a href="https://zenn.dev/beingish/articles/5beb088b807399" target="_blank">
+  		<li><a href="https://docs.github.com/ja/authentication/managing-commit-signature-verification/signing-commits" target="_blank">
+        コミットに署名する - GitHub ドキュメント</a></li>
+      <li><a href="https://docs.github.com/ja/authentication/managing-commit-signature-verification/about-commit-signature-verification" target="_blank">
+        コミット署名の検証について - GitHub ドキュメント</a></li>
+      <li><a href="https://zenn.dev/beingish/articles/5beb088b807399" target="_blank">
         特定のリポジトリーで Git commit 時に署名するための設定</a></li>
       <li><a href="https://qiita.com/haw_ohnuma/items/51fa84449bc4a1393846" target="_blank">
         gitのcommitを署名付きにして偽装対策！ #Git - Qiita</a></li>
