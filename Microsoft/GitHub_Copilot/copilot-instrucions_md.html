@@ -64,8 +64,11 @@
       <p>&nbsp;&nbsp; 4-8. アンチパターン</p>
       <p><a href="#5._copilot-instructions.md_サンプル">5. copilot-instructions.md サンプル</a></p>
       <p>&nbsp;&nbsp; <a href="#5-1._c++">5-1._c++</a></p>
+      <p>&nbsp;&nbsp; <a href="#5-2._Python">5-2. Python</a></p>
       <p><a href="#6._環境ごとの設定">6. 環境ごとの設定</a></p>
-      <p>&nbsp;&nbsp; <a href="#6-1._vscode">6-1._vscode</a></p>
+      <p>&nbsp;&nbsp; <a href="#6-1._vscode">6-1. vscode</a></p>
+      <p>&nbsp;&nbsp; <a href="#6-2._Visual_Studio_2022">6-2. Visual Studio 2022</a></p>
+      <p>&nbsp;&nbsp; <a href="#6-3._Visual_Studio_2026">6-3. Visual Studio 2026</a></p>
       <p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -325,6 +328,7 @@ void BadGreeter::say_hello(char* name) {
   	
     <section>
       <h3><a name="5-1._c++">5-1. c++</a></h3>
+      <p>"copilot-instructions.md" サンプル</p>
     
       <pre class="prettyprint linenums lang-md">
 # Instructions for GitHub Copilot for this C++ project
@@ -454,8 +458,53 @@ void BadGreeter::say_hello(char* name) {
       <p>&nbsp;</p>
     </section>
     
-   	<p>&nbsp;</p>	
-	
+    <p>&nbsp;</p>
+      
+    <section>
+      <h3><a name="5-2._Python">5-2. Python</a></h3>
+      
+      <p>"copilot-instructions.md" サンプル</p>
+      <pre class="prettyprint linenums lang-md">
+# Copilot Instructions for this Python project
+
+あなたは熟練した Python エンジニアとして、以下のガイドラインに従ってコードの生成、リファクタリング、および提案を行ってください。
+
+## 1. 基本原則
+- **Pythonic なコード**: [PEP 8](peps.python.org) に準拠し、読みやすく簡潔なコードを書くこと。
+- **型ヒント (Type Hints)**: すべての関数定義に型ヒントを付与し、[mypy](mypy-lang.org) 等での静的解析を容易にすること。
+- **モダンな機能**: Python 3.10+ の機能（`match-case` 文、`|` による型表記など）を積極的に活用すること。
+- **コメント**: コメント表記を日本語で行うこと。
+
+## 2. コーディングスタイル
+- **命名規則**: 
+  - 変数・関数名: `snake_case`
+  - クラス名: `PascalCase`
+  - 定数: `UPPER_SNAKE_CASE`
+- **docstring**: すべてのパブリックな関数・クラスに [Google Style Python Docstrings](google.github.io) 形式で記述すること。
+- **非同期処理**: I/O 待ちが発生する箇所では `asyncio` を優先的に使用すること。
+
+## 3. エラーハンドリングとログ
+- **例外処理**: 具体的でない `except Exception:` は避け、適切な例外クラスをキャッチすること。
+- **ロギング**: `print()` ではなく、標準の `logging` モジュール（またはプロジェクト指定のライブラリ）を使用すること。
+
+## 4. テスト
+- **pytest**: テストコードは [pytest](docs.pytest.org) 形式で記述すること。
+- **モック**: 外部 API や DB 接続には `unittest.mock` または `pytest-mock` を活用すること。
+
+## 5. ライブラリ利用の優先順位
+1. 標準ライブラリ
+2. [pydantic](docs.pydantic.dev) (データバリデーション)
+3. [httpx](www.python-httpx.org) (HTTP クライアント)
+4. [SQLAlchemy](www.sqlalchemy.org) / [SQLModel](sqlmodel.tiangolo.com) (ORM)
+
+## 6. 禁止事項
+- `import *` を使用しないこと。
+- 廃止されたライブラリ（例: `distutils`）を使用しないこと。
+- セキュリティリスクのある関数（例: `eval()`, `exec()`）を安易に使用しないこと。
+</pre>
+      <p>&nbsp;</p>
+    </section>
+    
   </section>
   	
   <p>&nbsp;</p>
@@ -470,6 +519,41 @@ void BadGreeter::say_hello(char* name) {
     <p>&nbsp;</p>
     <p>
     <img alt="vscode : github.copilot.chat.codeGeneration.useInstructionFiles 設定" src="copilot-instructions_md/img7.jpg" width="1200"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="6-2._Visual_Studio_2022">6-2. Visual Studio 2022</a></h3>
+    <p>設定で以下のオプションが有効になっていることを確認します。</p>
+    <p>これで、Copilot Chat やインライン補完時に <span class="cpp-source">
+    .github/copilot-instructions.md</span> の内容が自動的に反映されるようになります。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="Visual Studio 2022" src="copilot-instructions_md/img4.jpg" width="1000" class="border"></p>
+    <p>
+    &nbsp;</p>
+    <p>
+    下図を参考に「カスタム命令を <span class="cpp-source">.github/copilot-instructions.md</span> 
+    ファイルから読み込んで要求に追加できるようにします」を ☑ 状態にします。</p>
+    <p>
+    &nbsp;</p>
+    <p>
+    <img alt="Visual Studio 2022" class="border" src="copilot-instructions_md/img6.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3><a name="6-3._Visual_Studio_2026">6-3. Visual Studio 2026</a></h3>
+    <p>設定で以下のオプションが有効になっていることを確認します。</p>
+    <p>これで、Copilot Chat やインライン補完時に <span class="cpp-source">
+    .github/copilot-instructions.md</span> の内容が自動的に反映されるようになります。 </p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="Visual Studio 2026" class="border" src="copilot-instructions_md/img8.jpg" width="1000"></p>
+    <p>&nbsp;</p>
+    <p>
+    下図を参考に「カスタム命令を <span class="cpp-source">.github/copilot-instructions.md</span> 
+    ファイルから読み込んで要求に追加できるようにします」を ☑ 状態にします。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="Visual Studio 2026" class="border" src="copilot-instructions_md/img9.jpg" width="1000"></p>
     <p>&nbsp;</p>
     
   </section>
@@ -527,6 +611,11 @@ void BadGreeter::say_hello(char* name) {
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-01-23</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#5-2._Python">5-2._Python</a>」「<a href="#6-2._Visual_Studio_2022">6-2._Visual_Studio_2022</a>」「<a href="#6-3._Visual_Studio_2026">6-3._Visual_Studio_2026</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-10-30</td>
   	    <td class="td_history_separator">-</td>
