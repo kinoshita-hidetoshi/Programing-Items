@@ -58,11 +58,12 @@
 <!-- for 'google-code-prettify' -->
 
 <h1>std::thread (c++11)</h1>
-<p>std::thread 
+<p><strong>std::thread</strong> 
 は boost::thread から標準に採用されたライブラリです。C++03 
-ではスレッドライブラリがなかったのでWin32やpthreadを使うことになります。Win32の_beginthreadを使用した場合はクラスのメソッドを呼ぶ場合に static 
-なメソッドなどをいったん間にかませる必要があるのですが、std::threadはこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
-<p>類似の機能として std::async という機能があります。個人見解としては、std::thread を使わずに std::async 
+ではスレッドライブラリがなかったので Win32 や pthread を使うことになります。Win32 の _beginthread を使用した場合はクラスのメソッドを呼ぶ場合に static 
+なメソッドなどをいったん間にかませる必要があるのですが、この <strong>std::thread</strong> はこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
+<p>類似の機能として <strong>std::async</strong> という機能があります。個人見解としては、<strong>std::thread</strong> を使わずに  
+<strong>std::async</strong> 
 へすべて統一して使用するほうが良い、と考えます。詳細は <a href="async.html">std::async</a> を参照ください。</p>
 <p>&nbsp;</p>
 <div class="mokuji">

@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>std::jthread | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>std::jthread (c++20)</h1>
+  
+  <p> &nbsp;</p>
+  <p> <strong>std::jthread</strong> は、C++20 で導入された 「自動キャンセル機能付きの安全なスレッド」 です。従来の 
+  <strong>std::thread</strong> の欠点を補い、より扱いやすく、例外安全なスレッド管理を可能にします。 </p>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._std::jthread_の特徴">1. std::jthread の特徴</a></p>
+    	<p><a href="#2._std::jthread_を使ってみる">2. std::jthread を使ってみる</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="1._std::jthread_の特徴">1. std::jthread の特徴</a></h2>
+    <p> std::jthread は以下のような特徴があります。</p>
+    <p> &nbsp;</p>
+    <ol>
+      <li><strong>stop_token</strong> による協調的キャンセル<br><strong>std::jthread</strong> の最大の利点がこれです。 <br>
+      スレッド開始時に <strong>std::stop_token</strong> が渡され、外側から <strong>stop_request</strong> 
+      を送ることでスレッドに終了を依頼できます。 <br>強制終了ではなく「協調的キャンセル」なので安全です。<br><br>
+      <li>コンストラクタで <strong>stop_token</strong> を自動注入<br><strong>std::jthread</strong> 
+      のコンストラクタは、スレッド関数の第一引数が <strong>std::stop_token</strong> なら自動的に渡します。<br><br></li>
+      <li>スレッド終了時に自動 <strong>join</strong><br><strong>std::thread</strong> はデストラクタで  
+      <strong>join</strong> しないため、 <strong>join</strong> を忘れると 
+      <strong>std::terminate</strong> が発生する危険がありました。<br><strong>std::jthread</strong> は デストラクタで自動的に  
+      <strong>join</strong> します。<br>
+      <ul>
+        <li>join の書き忘れがない</li>
+        <li>例外が発生しても安全にスレッドが終了する </li>
+      </ul>
+      </li>
+      <li><strong>std::thread</strong> と同じように使える<br>基本的な <strong>API</strong>（<strong>joinable</strong>、<strong>get_id</strong> 
+      など）は std::<strong>thread</strong> と同じです。ただし <strong>detach</strong> 
+      はありません（自動 <strong>join</strong> 
+      が前提のため）。 </li>
+    </ol>
+    <p>&nbsp;</p>
+    <p>
+    
+    <table class="border-collapse" border="1" width="600">
+      <caption>🆚 std::thread との比較</caption>
+      <thead class="standard_table">
+        <tr style="white-space: normal;">
+          <th style="white-space: normal;"><span style="white-space: normal;">機能</span></th>
+          <th style="white-space: normal;"><span style="white-space: normal;">
+          std::thread</span></th>
+          <th style="white-space: normal;"><span style="white-space: normal;">
+          std::jthread</span></th>
+        </tr>
+      </thead>
+      <tbody style="white-space: normal;">
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          デストラクタで join</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">❌ 
+          しない</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">✅ 
+          自動で join</span></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          キャンセル機構</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">❌ 
+          なし</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">✅ 
+          stop_token で協調的キャンセル</span></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          detach</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">あり</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">なし</span></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          例外安全性</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">低い</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">高い</span></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          C++ バージョン</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          C++11〜</span></td>
+          <td style="white-space: normal;"><span style="white-space: normal;">
+          C++20〜</span></td>
+        </tr>
+    </table>
+    </p>
+	
+    <p>&nbsp;</p>
+  </section>
+  	
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="2._std::jthread_を使ってみる">2. std::jthread を使ってみる</a></h2>
+    <p>まずは「<strong>stop_token</strong> による協調的キャンセル」の機能を試してみます。</p>
+    <p>&nbsp;</p>
+    
+    <p>[環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    		<td>13.3.0</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Ubuntu 24.04 (WSL),</td>
+    		<td></td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p> [プログラムソース] <span class="cpp-source">jthread_01.cpp</span></p>
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
+#include &lt;string&gt;       // string
+#include &lt;chrono&gt;       // chrono
+#include &lt;thread&gt;       // jthread
+#include &lt;mutex&gt;        // mutex, lock_guard
+#include &lt;stop_token&gt;   // stop_token
+
+// グローバルなミューテックス
+std::mutex printMutex;
+
+// スレッドセーフなメッセージ出力関数
+void printMessage(const std::string&amp; message) {
+    std::lock_guard&lt;std::mutex&gt; lock(printMutex);
+    std::cout &lt;&lt; message &lt;&lt; std::endl;
+}
+
+// スレッド関数
+void threadFunction( std::stop_token s, const std::string&amp; title ) {
+    // 停止要求が来るまでループ
+    while (!s.stop_requested()) {
+        // 定期的にメッセージを出力
+        printMessage("Thread is running: " + title);
+        std::this_thread::sleep_for(std::chrono::seconds{1});
+    }
+    printMessage(title + " has received stop message.");
+    std::this_thread::sleep_for(std::chrono::seconds{3});
+    printMessage(title + " has been stopped.");
+}
+
+// メイン関数
+int main(){
+    // jthreadを使用して停止可能なスレッドを作成
+    std::jthread worker{threadFunction, "[Thread A]"};
+    // jthreadは自動的にスレッドをjoinするので、明示的なjoinは不要です。
+    
+    // メインスレッドも何か処理を行う
+    for (int i = 0; i &lt; 3; ++i) {
+        printMessage("Main thread is running: " + std::to_string(i));
+        std::this_thread::sleep_for(std::chrono::seconds{3});
+    }
+
+    // スレッドに対して停止要求を送る
+    worker.request_stop();
+    printMessage("Stop request sent to worker thread.");
+
+    // jthread はスコープを抜けると自動的に join されます
+    // ここで worker.join() を呼ぶこともできますが、jthread は自動的に join されるため、通常は不要です
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+    
+    <p> ビルドおよび実行結果：</p>
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++20 -Wall -Wextra -Wpedantic -pthread -O2 jthread_sample_01.cpp -o jthread_sample_01.out
+$ ./jthread_sample_01.out 
+Main thread is running: 0
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Main thread is running: 1
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Main thread is running: 2
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Stop request sent to worker thread.
+[Thread A] has received stop message.
+[Thread A] has been stopped.
+$ </pre>
+    <p> &nbsp;</p>
+    
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++20</strong></td>
+          <td>C++20 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++20 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>スレッドへの停止要求を送ることで、スレッドを停止できることを確認できました。</p>
+    
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2026 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>(例) http://www.****.com</li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-02-01</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2026 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
