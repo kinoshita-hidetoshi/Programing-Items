@@ -52,6 +52,7 @@
     	<h2>目次</h2>
     	<p><a href="#1._std::jthread_の特徴">1. std::jthread の特徴</a></p>
     	<p><a href="#2._std::jthread_を使ってみる">2. std::jthread を使ってみる</a></p>
+      <p><a href="#3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -73,11 +74,12 @@
       のコンストラクタは、スレッド関数の第一引数が <strong>std::stop_token</strong> なら自動的に渡します。<br><br></li>
       <li>スレッド終了時に自動 <strong>join</strong><br><strong>std::thread</strong> はデストラクタで  
       <strong>join</strong> しないため、 <strong>join</strong> を忘れると 
-      <strong>std::terminate</strong> が発生する危険がありました。<br><strong>std::jthread</strong> は デストラクタで自動的に  
-      <strong>join</strong> します。<br>
+      <strong>std::terminate</strong> が発生する危険がありました。<br><strong>std::jthread</strong> は、デストラクタで自動的に  
+      <strong>join</strong> します。<br><strong>std::jthread</strong> は、デストラクタで自動的に  
+      <strong>stop_request</strong> を送信します。<br>
       <ul>
         <li>join の書き忘れがない</li>
-        <li>例外が発生しても安全にスレッドが終了する </li>
+        <li>例外が発生しても安全にスレッドが終了する</li>
       </ul>
       </li>
       <li><strong>std::thread</strong> と同じように使える<br>基本的な <strong>API</strong>（<strong>joinable</strong>、<strong>get_id</strong> 
@@ -188,7 +190,6 @@
 #include &lt;chrono&gt;       // chrono
 #include &lt;thread&gt;       // jthread
 #include &lt;mutex&gt;        // mutex, lock_guard
-#include &lt;stop_token&gt;   // stop_token
 
 // グローバルなミューテックス
 std::mutex printMutex;
@@ -297,12 +298,185 @@ $ </pre>
     
     <p>&nbsp;</p>
     <p>スレッドへの停止要求を送ることで、スレッドを停止できることを確認できました。</p>
+    <p>&nbsp;</p>
     
   </section>
   
   <p>&nbsp;</p>
   
-  <p> &nbsp;</p>
+  <section>
+  	<h2> <a name="3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a></h2>
+  	<p> 起動中のスレッドに対して request_stop() しないでプログラムを終了した場合、どんな挙動になるのかを確認してみます。</p>
+    <p> 結論から記載すると、jthread インスタンス解放時に自動的に request_stop() を発行してくれるようです。最初に記載の 特徴３ 
+    になります。</p>
+    <p> &nbsp;</p>
+    <p> 前述の <span class="cpp-source">jthread_01.cpp</span> を元に作成するスレッドを３つに拡張したものを使用し、stop_request() 
+    をコメントアウトしたサンプルプログラムを使用します。</p>
+    <p> &nbsp;</p>
+    
+    <p>[環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    		<td>13.3.0</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Ubuntu 24.04 (WSL),</td>
+    		<td></td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p> [プログラムソース] <span class="cpp-source">jthread_02.cpp</span></p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;cstdlib&gt;      // EXIT_SUCCESS
+#include &lt;string&gt;       // string
+#include &lt;chrono&gt;       // chrono
+#include &lt;thread&gt;       // jthread
+#include &lt;mutex&gt;        // mutex, lock_guard
+
+// グローバルなミューテックス
+std::mutex printMutex;
+
+// スレッドセーフなメッセージ出力関数
+void printMessage(const std::string&amp; message) {
+    std::lock_guard&lt;std::mutex&gt; lock(printMutex);
+    std::cout &lt;&lt; message &lt;&lt; std::endl;
+}
+
+// スレッド関数
+void threadFunction( std::stop_token s, const std::string&amp; title ) {
+    // 停止要求が来るまでループ
+    while (!s.stop_requested()) {
+        // 定期的にメッセージを出力
+        printMessage("Thread is running: " + title);
+        std::this_thread::sleep_for(std::chrono::seconds{1});
+    }
+    printMessage(title + " has received stop message.");
+    std::this_thread::sleep_for(std::chrono::seconds{3});
+    printMessage(title + " has been stopped.");
+}
+
+// メイン関数
+int main(){
+    // jthreadを使用して停止可能なスレッドを作成
+    std::jthread worker1{threadFunction, "[Thread A]"};
+    std::jthread worker2{threadFunction, "[Thread B]"};
+    std::jthread worker3{threadFunction, "[Thread C]"};
+    // jthreadは自動的にスレッドをjoinするので、明示的なjoinは不要です。
+    
+    // メインスレッドも何か処理を行う
+    for (int i = 0; i &lt; 3; ++i) {
+        printMessage("Main thread is running: " + std::to_string(i));
+        std::this_thread::sleep_for(std::chrono::seconds{3});
+    }
+
+    // スレッドに対して停止要求を送る
+    //worker1.request_stop();
+    //worker2.request_stop();
+    //worker3.request_stop();
+    printMessage("Stop request sent to worker thread.");
+
+    // jthreadはスコープを抜けると自動的にjoinされます
+    // ここで worker.join() を呼ぶこともできますが、jthread は自動的に join されるため、通常は不要です
+    return EXIT_SUCCESS;
+}</pre>
+    <p> &nbsp;</p>
+    <p> ビルドおよび実行：</p>
+    
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++20 -Wall -Wextra -Wpedantic -pthread -O2 jthread_sample_02.cpp -o jthread_sample_02.out
+$ ./jthread_sample_02.out 
+Main thread is running: 0
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Main thread is running: 1
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Main thread is running: 2
+Thread is running: [Thread A]
+Thread is running: [Thread C]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread B]
+Thread is running: [Thread C]
+Thread is running: [Thread A]
+Thread is running: [Thread B]
+Thread is running: [Thread C]
+Stop request sent to worker thread.
+Thread is running: [Thread B]
+[Thread C] has received stop message.
+Thread is running: [Thread A]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+Thread is running: [Thread B]
+Thread is running: [Thread A]
+[Thread C] has been stopped.
+[Thread B] has received stop message.
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+Thread is running: [Thread A]
+[Thread B] has been stopped.
+[Thread A] has received stop message.
+[Thread A] has been stopped.
+$ </pre>
+    <p> &nbsp;</p>
+    <p> 全部のスレッドに対して自動的に request_stop() を発行してくれることを確認できました。</p>
+    <p> ただし、コンソール出力内容を確認すると、まとめて全部に request_stop() を送信してくれるわけではなさそうです。一つずつ 
+    request_stop() -&gt; join() しているようなので、プログラム終了後に恐らく以下と同等の処理をやってると思います。</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+    // スレッドに対して順番に停止要求を送り、その後 join() して終了を待つ
+    {
+        std::jthread* workers[] = { &amp;worker1, &amp;worker2, &amp;worker3 };
+        for (std::jthread* w : workers) {
+            printMessage("Sending stop request to a worker...");
+            w-&gt;request_stop();
+            // 停止処理が完了するのを待つ
+            if (w-&gt;joinable()) {
+                w-&gt;join();
+                printMessage("Worker has been joined.");
+            }
+        }
+    }</pre>
+    
+    <p> &nbsp;</p>
+  </section>
+	
   <p> &nbsp;</p>
 
   <section>
@@ -339,7 +513,12 @@ $ </pre>
   <section>
   	<h2><a id="参考">参考</a></h2>
   	<ul>
-  		<li>(例) http://www.****.com</li>
+  		<li>
+        <a href="https://en.cppreference.com/w/cpp/thread/jthread.html" target="_blank">
+        std::jthread - cppreference.com</a></li>
+      <li>
+        <a href="https://cpprefjp.github.io/reference/thread/jthread.html" target="_blank">
+        jthread - cpprefjp C++日本語リファレンス</a></li>
   	</ul>
   </section>
   
@@ -350,6 +529,11 @@ $ </pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-02-04&nbsp;</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-02-01</td>
   	    <td class="td_history_separator">-</td>
