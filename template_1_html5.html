@@ -103,7 +103,7 @@
   	<p> &nbsp;</p>
   	
     <p>[プログラムソース &quot;***.cpp&quot;] ★code-prettify サンプル</p>
-    <pre class="prettyprint linenums lang-cpp">
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
 #include "stdafx.h"
 
 #include &lt;iostream&gt;
@@ -219,12 +219,19 @@ int main()
     </table>
     
     <p>&nbsp;</p>
-    <p>
+    <p>&nbsp;</p>
+    <p>インラインでの引用にこちら "<strong>cpp-source</strong>" をスタイルとして指定する方法があります。以下のような感じで使います。</p>
+    <p>インラインでコード <span class="cpp-source">printMessage("Thread is running: ");</span> をこんな感じで記載できます</p>
     
-    &nbsp;</p>
-    <p>&lt;blockquote&gt; は<strong>外部からの文章や記述を引用する</strong>ときに使うHTML要素です</p>
+    <blockquote style="width: 1000px">
+      &lt;p&gt;インラインでコード &lt;span class="<strong>cpp-source</strong>"&gt;printMessage("Thread is running: 
+      ");&lt;/span&gt; をこんな感じで記載できます&lt;/p&gt;</blockquote>
     
-    <blockquote>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p><strong>&lt;blockquote&gt;</strong> は外部からの文章や記述を引用するときに使うHTML要素です</p>
+    
+    <blockquote style="width: 600px">
       &lt;blockquote&gt;&lt;/blockquote&gt; のサンプル
     </blockquote>
     

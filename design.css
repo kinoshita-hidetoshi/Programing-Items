@@ -269,7 +269,8 @@ blockquote{
 	padding: 0px 1px 0px 1px !important;
 	margin: 0px 1px 0px 1px !important;
 	line-height: 1.42857143;
-	color: #0000CC;
+	/*color: #0000CC;*/
+	color: #000000;
 	background-color: #f5f5f5;
 	border: 1px solid #ccc;
 	border-radius: 4px;
