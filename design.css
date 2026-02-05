@@ -137,6 +137,15 @@ img{
   height: auto;
 }
 
+figure {
+  display: inline-block;
+  margin: 0;
+}
+
+figure figcaption {
+  text-align: center;
+}
+
 /*
 ===
 img（図）の飾り
