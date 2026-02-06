@@ -343,16 +343,14 @@ public:
 int main(int argc, char* argv[])
 {
     <span class="comment">// メンバ関数をマルチスレッドで実行(クラス外部からの起動)</span>
-    {
-        PrintMessage hello(<span class="string">&quot;Hello &quot;</span>);
-        PrintMessage world(<span class="string">&quot;World! &quot;</span>);
+    PrintMessage hello(<span class="string">&quot;Hello &quot;</span>);
+    PrintMessage world(<span class="string">&quot;World! &quot;</span>);
 
-        <span class="auto-style5">thread</span>  thr_hello( &amp;PrintMessage::run, &amp;hello );
-        <span class="auto-style5">thread</span>  thr_world( &amp;PrintMessage::run, &amp;world );
+    <span class="auto-style5">thread</span>  thr_hello( &amp;PrintMessage::run, &amp;hello );
+    <span class="auto-style5">thread</span>  thr_world( &amp;PrintMessage::run, &amp;world );
 
-        thr_hello.join();
-        thr_world.join(); 
-    }
+    thr_hello.join();
+    thr_world.join(); 
 }</pre>
     
     <p>&nbsp;</p>
