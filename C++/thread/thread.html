@@ -43,13 +43,6 @@
     	color: #990000;
     	background-color: #505000;
     }
-    .auto-style7 {
-    	text-decoration: line-through;
-    }
-    .auto-style8 {
-    	background-color: #505000;
-    	text-decoration: line-through;
-    }
   </style>
 </head>
 
@@ -57,66 +50,72 @@
 <body onload="prettyPrint();">
 <!-- for 'google-code-prettify' -->
 
-<h1>std::thread (c++11)</h1>
-<p><strong>std::thread</strong> 
-は boost::thread から標準に採用されたライブラリです。C++03 
-ではスレッドライブラリがなかったので Win32 や pthread を使うことになります。Win32 の _beginthread を使用した場合はクラスのメソッドを呼ぶ場合に static 
-なメソッドなどをいったん間にかませる必要があるのですが、この <strong>std::thread</strong> はこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
-<p>類似の機能として <strong>std::async</strong> という機能があります。個人見解としては、<strong>std::thread</strong> を使わずに  
-<strong>std::async</strong> 
-へすべて統一して使用するほうが良い、と考えます。詳細は <a href="async.html">std::async</a> を参照ください。</p>
-<p>&nbsp;</p>
-<div class="mokuji">
-  <nav>
-	<h2>目次</h2>
-	<p><a href="#1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></p>
-	<p><a href="#2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></p>
-	<p><a href="#3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動)</a></p>
-	<p><a href="#4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></p>
-	<p><a href="#5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2><a name="1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></h2>
-<p>まずは一番シンプルな実装から試します。</p>
-<p>&nbsp;</p>
+  <h1>std::thread (c++11)</h1>
+  
+  <p><strong>std::thread</strong> 
+  は boost::thread から標準に採用されたライブラリです。C++03 
+  ではスレッドライブラリがなかったので Win32 や pthread を使う必要がありました。Win32 の _beginthread を使用した場合はクラスのメソッドを呼ぶ場合に static 
+  なメソッドなどをいったん間にかませる必要があるのですが、この <strong>std::thread</strong> はこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
+  <p>類似の機能として <strong>std::jthread</strong>,  <strong>std::async</strong> などがあります。</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></p>
+  	<p><a href="#2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></p>
+  	<p><a href="#3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動)</a></p>
+  	<p><a href="#4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></p>
+  	<p><a href="#5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
-<p>[環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ :</td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.6.0 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS: </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
+  <section>
+    <h2><a name="1._引数無し関数をマルチスレッドで実行">1. 引数無し関数をマルチスレッドで実行</a></h2>
+    <p>まずは一番シンプルな実装から試します。</p>
+    <p>&nbsp;</p>
 
-<p>&nbsp;</p>
-<p>[プログラムソース]</p>
-&nbsp;<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// cout, endl, EXIT_SUCCESS</span>
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>Visual Studio 2019 pro.,</td>
+    		<td>Version 16.6.0 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Windows10 home,</td>
+    		<td>Version 1909 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+    <p>[プログラムソース]</p>
+    &nbsp;
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// cout, endl, EXIT_SUCCESS</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::milliseconds</span>
 
@@ -151,22 +150,57 @@ int main(int argc, char* argv[])
     thr_world.join(); 
 
     return EXIT_SUCCESS;
-}</code></pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2>
-<a name="2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></h2>
-<p>
-引数付きの関数実行を同じく std::thread を使ったマルチスレッドで実行する方法を記載します。<br>thread 
-には関数ポインタを渡すのですが、オーバーロードした関数がある場合の記載方法が難しいので、これについても合わせて記載します。結論から言うとキャストで関数詳細情報を記載すればできるようです。<br>
-同様に、lambda式での起債も併記します。</p>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： VS2012 Update3</li>
-	<li>OS： Windows8 64bit</li>
-</ul>
-<p>[プログラムソース]</p>
-<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// EXIT_SUCCESS</span>
+}</pre>
+
+    <p>&nbsp;</p>
+        
+  </section>
+  <p>&nbsp;</p>
+  <section>
+  
+    <h2><a name="2._引数付き関数をマルチスレッドで実行">2. 引数付き関数をマルチスレッドで実行</a></h2>
+    <p>
+    引数付きの関数実行を同じく <strong>std::thread</strong> を使ったマルチスレッドで実行する方法を記載します。</p>
+    <p>
+    <strong>thread</strong> 
+    には関数ポインタを渡すのですが、オーバーロードした関数がある場合の記載方法が難しいのでこれについても記載します。結論から言うとキャストで関数詳細情報を記載すればできるようです。<br>
+    同様に、<strong>lambda</strong> 式 による実装も記載します。</p>
+    <p>&nbsp;</p>
+
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>Visual Studio 2012 Update3</td>
+    		<td>&nbsp;</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Windows8 64bit</td>
+    		<td>&nbsp;</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+    <p>[プログラムソース]</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// EXIT_SUCCESS</span>
 #include <span class="string">&lt;thread&gt;</span>       <span class="comment">// thread</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::milliseconds</span>
 #include <span class="string">&lt;string&gt;</span>
@@ -193,8 +227,7 @@ void PrintString( const char* str )
         this_thread::sleep_for( chrono::milliseconds(500) ); <span class="comment">// 500ms待機</span>
     }
 }
-<span class="command">#endif
-</span>
+<span class="command">#endif</span>
 int main(int argc, char* argv[])
 {
     <span class="comment">// 引数付き関数をマルチスレッドで実行</span>
@@ -231,24 +264,56 @@ int main(int argc, char* argv[])
     }
 
     return EXIT_SUCCESS;
-}</code></pre>
-<p>
-&nbsp;</p>
-<p>
-&nbsp;</p>
-<h2>
-<a name="3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動) 
-    </a></h2>
-<p>クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは &amp;hello, 
-&amp;world を引数で渡しています。</p>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： VS2012 Update3</li>
-	<li>OS： Windows8 64bit</li>
-</ul>
+}</pre>
 
-<p>[プログラムソース]</p>
-<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// std::cout, std::endl</span>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="3._メンバ関数をマルチスレッドで実行(クラス外部からの起動)_">3. メンバ関数をマルチスレッドで実行(クラス外部からの起動)</a></h2>
+    
+    <p>クラスメンバ関数をスレッド起動する方法です。</p>
+    <p>クラスメソッドは第一引数にインスタンス (this) が必要です。このため下記サンプルでは &amp;hello, 
+    &amp;world を引数で渡す必要があります。</p>
+    <p>&nbsp;</p>
+    
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>Visual Studio 2012 Update3</td>
+    		<td>&nbsp;</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Windows8 64bit</td>
+    		<td>&nbsp;</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+
+    <p>&nbsp;</p>
+    
+    <p>[プログラムソース]</p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// std::cout, std::endl</span>
 #include <span class="string">&lt;string&gt;</span>       <span class="comment">// string</span>
 #include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread, this_thread::sleep_for</span>
 #include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::millisecond</span>
@@ -288,108 +353,289 @@ int main(int argc, char* argv[])
         thr_hello.join();
         thr_world.join(); 
     }
-}</code>
-</pre>
+    </pre>
+    
+  <p>&nbsp;</p>
 
-<p>
-&nbsp;</p>
-<p>
-&nbsp;</p>
-<h2>
-<a name="4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></h2>
-<p>
-&nbsp;&nbsp; クラスメンバ関数をスレッド起動する方法です。クラスメソッドなので第一引数にインスタンス(this)が必要です。このため下記サンプルでは 
-this を引数で渡しています。<br></p>
-<h4>評価環境：</h4>
-<ul>
-	<li>コンパイラ： VS2012 Update3</li>
-	<li>OS： Windows8 64bit</li>
-</ul>
+  </section>
+  <p>&nbsp;</p>
+  <section>
 
-<p>[プログラムソース]</p>
-<pre class="prettyprint linenums"><code>#include <span class="string">&lt;iostream&gt;</span>     <span class="comment">// cout, endl</span>
-#include <span class="string">&lt;string&gt;</span>       <span class="comment">// string</span>
-#include <span class="auto-style6">&lt;thread&gt;</span>       <span class="comment">// thread, this_thread::sleep_for</span>
-#include <span class="string">&lt;chrono&gt;</span>       <span class="comment">// chrono::millisecond</span>
+    <h2><a name="4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4. メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a></h2>
+    <p>クラスメンバ関数をスレッド起動する方法です。</p>
+    <p>クラスメソッドなので第一引数にインスタンス(<strong>this</strong>)が必要です。このため下記サンプルでは 
+     
+    <strong>this</strong> を引数で渡しています。</p>
+    <p>&nbsp;</p>
+    
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    		<td>13.3.0</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Ubuntu 24.04 (WSL),</td>
+    		<td></td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    
+    <p>[プログラムソース] <span class="cpp-source">thread_01.cpp</span></p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;string&gt;       // string
+#include &lt;thread&gt;       // thread, this_thread::sleep_for
+#include &lt;chrono&gt;       // chrono::millisecond
 
-using namespace std;
-
+/// メッセージを出力するクラス
 class PrintMessage {
 private:
-    const string strMessage_ ;
-    <span class="auto-style5">thread</span>  thr_ ;
+    const std::string strMessage_ ;
+    std::thread  worker_ ;
 
 public:
-    PrintMessage( string strMessage ) : strMessage_(strMessage)
+    PrintMessage( std::string strMessage ) : strMessage_(strMessage)
     {
-<span class="auto-style7">        </span><span class="auto-style8">thread</span><span class="auto-style7">  thr( &amp;PrintMessage::run, this );</span>
-<span class="auto-style7">        thr_.swap( thr ) ;</span>
-        thr_ = <span class="auto-style5">thread</span>( &amp;PrintMessage::run, this);
+        worker_ = std::thread( &amp;PrintMessage::run, this);
     }
 
+    ~PrintMessage() {
+        if (worker_.joinable()) {
+            worker_.join();
+        }
+    }
+    
     void run()
     {
         const size_t RepeatCount = 5 ;
         for ( size_t i=0; i&lt;RepeatCount; ++i ){
-            cout &lt;&lt; strMessage_ &lt;&lt; endl;
-            this_thread::sleep_for( chrono::milliseconds(500) );
+            std::cout &lt;&lt; strMessage_ &lt;&lt; std::endl;
+            std::this_thread::sleep_for( std::chrono::milliseconds(500) );
         }
     } 
+    
     void join()
     {
-        thr_.join(); 
+        worker_.join(); 
     }
 };
 
-int main(int argc, char* argv[])
+/// メイン関数
+int main()
 {
-    <span class="comment">// メンバ関数をマルチスレッドで実行(クラス内部からの起動)</span>
+    // メンバ関数をマルチスレッドで実行(クラス内部からの起動)
     {
-        PrintMessage hello(&quot;Hello  &quot;);
-        PrintMessage world(&quot;World! &quot;); 
-
+        PrintMessage hello("Hello  ");
+        PrintMessage world("World! "); 
         hello.join();
         world.join(); 
     }
-}</code>
-</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2><a name="5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></h2>
-<p>一時停止状態のシステムスレッドを作成してみます。<br>
-すなわち、スレッドで何かを処理する時が来たらすぐに開始できるようにあらかじめスレッドを作成しておき、作成のスレッドのオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらのせえっていを行う必要があるため一時停止状態のスレッドを作成する場合もあるでしょう。<br>
-スレッドを一度だけ一時停止状態にしたい場合、void future を用いるのが妥当な選択です。この技法の要点を以下に示します。</p>
-<p>[評価環境]</p>
-<table>
-<tbody>
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>コンパイラ : </td>
-		<td>Visual Studio 2019 pro.,</td>
-		<td>Version 16.3.10 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-	
-	<tr>
-		<td>OS : </td>
-		<td>Windows10 home,</td>
-		<td>Version 1909 </td>
-	</tr>
-	
-	<tr>
-		<td class="td_separate" colspan="3"></td>
-	</tr>
-</tbody>
-</table>
-<p>&nbsp;</p>
-<p>[プログラムソース]</p>
-<pre class="prettyprint linenums"><code>#include &lt;iostream&gt;
+
+    return EXIT_SUCCESS;
+}</pre>
+    <p>&nbsp;</p>
+    <p>ビルドおよび実行結果：</p>
+
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++11 -Wall -Wextra -Wpedantic -pthread -O2 thread_01.cpp -o thread_01.out
+$ ./thread_01.out 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+$ </pre>
+
+    <p>&nbsp;</p>
+    
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++11</strong></td>
+          <td>C++11 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++11 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p> <span class="cpp-source">thread_01.cpp</span> を Lambda 式による実装へ変更した例を以下で紹介します。<br>
+    <strong>this</strong> をキャプチャーする、ことに気を付けるぐらいです。</p>
+    <p> <strong>this</strong> 無しでも thread 
+    作成はできますが、下記例ではスレッドからクラスメンバー（PrintMessage::strMessage_）をアクセスできずビルドエラーになります。クラスメンバーへのアクセス不要なら 
+    <strong>this</strong> のキャプチャーは不要です。</p>
+    <p>&nbsp;</p>
+    <p>[プログラムソース] <span class="cpp-source">thread_02.cpp</span></p>
+
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;     // cout, endl
+#include &lt;string&gt;       // string
+#include &lt;thread&gt;       // thread, this_thread::sleep_for
+#include &lt;chrono&gt;       // chrono::millisecond
+
+/// メッセージを出力するクラス
+class PrintMessage {
+private:
+    const std::string strMessage_ ;
+    std::thread  worker_ ;
+
+public:
+    PrintMessage( std::string strMessage ) : strMessage_(strMessage)
+    {
+        worker_ = std::thread( [this]() {
+            const size_t RepeatCount = 5 ;
+            for ( size_t i=0; i&lt;RepeatCount; ++i ){
+                std::cout &lt;&lt; strMessage_ &lt;&lt; std::endl;
+                std::this_thread::sleep_for( std::chrono::milliseconds(500) );
+            }
+        } );
+    }
+
+    ~PrintMessage() {
+        if (worker_.joinable()) {
+            worker_.join();
+        }
+    }
+    
+    void join()
+    {
+        worker_.join(); 
+    }
+};
+
+/// メイン関数
+int main()
+{
+    // メンバ関数をマルチスレッドで実行(クラス内部からの起動)
+    {
+        PrintMessage hello("Hello  ");
+        PrintMessage world("World! "); 
+        hello.join();
+        world.join(); 
+    }
+
+    return EXIT_SUCCESS;
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>ビルドおよび実行結果：</p>
+  
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ g++ -std=c++11 -Wall -Wextra -Wpedantic -pthread -O2 thread_02.cpp -o thread_02.out
+$ ./thread_02.out 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+Hello  
+World! 
+$ </pre>
+
+    <p>&nbsp;</p>
+
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="5._一時停止状態のスレッドを作る">5. 一時停止状態のスレッドを作る</a></h2>
+    <p>一時停止状態のシステムスレッドを作成してみます。<br>
+    すなわち、スレッドで何かを処理する時が来たらすぐに開始できるようにあらかじめスレッドを作成しておき、作成のスレッドのオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらのせえっていを行う必要があるため一時停止状態のスレッドを作成する場合もあるでしょう。<br>
+    スレッドを一度だけ一時停止状態にしたい場合、void future を用いるのが妥当な選択です。この技法の要点を以下に示します。</p>
+    <p>&nbsp;</p>
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ : </td>
+    		<td>Visual Studio 2019 pro.,</td>
+    		<td>Version 16.3.10 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS : </td>
+    		<td>Windows10 home,</td>
+    		<td>Version 1909 </td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    <p>&nbsp;</p>
+    
+    <p>[プログラムソース]</p>
+  
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+#include &lt;iostream&gt;
 #include &lt;thread&gt;       // std::thread
 #include &lt;future&gt;       // std::async
 
@@ -422,96 +668,103 @@ int main()
     cout &lt;&lt; &quot;Waiting...&quot; &lt;&lt; endl;
     t.join();
     cout &lt;&lt; &quot;Confirmed termination of react().&quot; &lt;&lt; endl;
-}</code></pre>
-<p>&nbsp;</p>
-<p>[実行結果]</p>
-<p><img alt="実行結果" src="thread/img6.gif"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+}</pre>
 
-<section>
-  <h2><a id="ライセンス">ライセンス</a></h2>
-<p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-<div class="license">
-The MIT License (MIT)<br><br>
-
-Copyright © 2013-2022 Kinoshita Hidetoshi<br><br>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:<br><br>
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.<br><br>
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</div>
+    <p>&nbsp;</p>
+    <p>[実行結果]</p>
+    <p><img alt="実行結果" src="thread/img6.gif"></p>
+    <p>&nbsp;</p>
+  
+  </section>
+  
   <p>&nbsp;</p>
+  
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      Copyright © 2013 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
   <p>&nbsp;</p>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-	<h2><a id="参考">参考</a></h2>
-	<ul>
-  	<li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
-  	<li><a href="https://ja.cppreference.com/w/cpp/thread/thread">https://ja.cppreference.com/w/cpp/thread/thread</a></li>
-	</ul>
-</section>
-
-<p>&nbsp;</p>
-<hr>
-
-<p>&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date" style="height: 16px">2022-08-28</td>
-	    <td class="td_history_separator" style="height: 16px">-</td>
-	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date" style="height: 16px">2020-06-01</td>
-	    <td class="td_history_separator" style="height: 16px">-</td>
-	    <td class="td_history" style="height: 16px">誤植修正<br></td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2019-11-20</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">「5. 一時停止状態のスレッドを作る」の章を追加</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2013-09-01</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成、（boost::thread の記述をベースに修正）</td>
-	  </tr>
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-<p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>Copyright © 2013 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+    	<li>「Effective Modern C++」 項目39：イベントが１度切ならば void な future を検討する</li>
+    	<li><a href="https://ja.cppreference.com/w/cpp/thread/thread">https://ja.cppreference.com/w/cpp/thread/thread</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2026-02-06</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">「<a href="#4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)">4._メンバ関数をマルチスレッドで起動(クラス内部からの起動)</a>」を更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2022-08-28</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2020-06-01</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">誤植修正<br></td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2019-11-20</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「5. 一時停止状態のスレッドを作る」の章を追加</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2013-09-01</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成、（boost::thread の記述をベースに修正）</td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>Copyright © 2013 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
