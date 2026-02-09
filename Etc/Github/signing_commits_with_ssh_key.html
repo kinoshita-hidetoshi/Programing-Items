@@ -74,8 +74,12 @@
   	<p>各人の SSH キーを使用してコミットに署名することができます。下図のように GitHub の Commits 
     画面で検証結果を確認することが可能です。</p>
     <p>&nbsp;</p>
-    <p>
-    <img alt="GitHub コミット署名" src="signing_commits_with_ssh_key/img4.jpg" width="1000" class="border"></p>
+    
+    <figure>
+      <img alt="GitHub コミット署名" src="signing_commits_with_ssh_key/img4.jpg" width="1000" class="border">
+      <figcaption>署名されたコミットの表示例<span class="comment">（Verified）</span></figcaption>
+    </figure>
+    
     <p>&nbsp;</p>
     <p>SSH キーを使用してコミットに署名する主な理由は、<strong>コードの信頼性とセキュリティを向上させるため</strong>です。この手法を利用することには、次のような利点があります。 
     </p>
@@ -177,21 +181,15 @@ Enter same passphrase again:</pre>
     "<span class="cpp-source">--global</span>" を削除して実施します。</p>
     <ol>
       <li>キーの形式についてGitに伝えます。<br>
-      
         <pre class="prettyprint lang-cpp" style="width: 800px">git config --global gpg.format ssh</pre>
-        
       </li>
       <li>コミットの署名に使用するキーを Git に指示します。<br>
-      <p>私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。<br></p>
-      
-        <pre class="prettyprint lang-cpp" style="width: 800px">git config --global user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</pre>
-        
+        <p>私の場合は <span class="cpp-source">~/.ssh/github/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。<br></p>
+        <pre class="prettyprint lang-cpp" style="width: 800px">git config --global user.signingkey ~/.ssh/github/id_ed25519.pub</pre>
       </li>
       <li>ローカルブランチに変更をコミットする場合は、コマンドのフラグ（-S）を使用します。<br>
-      
         <pre class="prettyprint lang-cpp" style="width: 800px">git commit -S -m "your commit message"</pre>
-        
-      <p>-S を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
+        <p>-S を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
       </li>
       <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ）<br> </li>
       <li>コミットが署名されたことを確認します。（必要に応じて）<br>
@@ -210,12 +208,12 @@ Enter same passphrase again:</pre>
       本設定は、署名されたコミットを検証するために使用します。対象リポジトリへコミットするユーザーの (1)メールアドレス、(2)公開鍵、を 
       <span class="cpp-source">allowedSignersFile</span> へ登録します。<br>
       <span class="cpp-source">allowedSignersFile</span> は、Git で SSH 
-      署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> 
+      署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>登録手順例を以下に記載します。<span class="cpp-source">your_name@example.com</span> 
       および <span class="cpp-source">id_ed25519.pub</span> 
       を登録するユーザーのメールアドレス・公開鍵、へ置き換えて登録します。</p>
       
       <pre class="prettyprint lang-cpp" style="width: 800px">
-echo "bitbucket@example.com $(cat id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
+echo "your_name@example.com $(cat id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
 git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
       <br>つまり、<span class="cpp-source">~/.ssh/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br>
       <pre style="width:800px">「ユーザーのメールアドレス SSH公開鍵」</pre>
@@ -236,11 +234,11 @@ eval $(ssh-agent)</pre>
       </li>
       <li>以上を設定後の私の .gitconfig ファイルを紹介します。<br>[".gitconfig"]<br>
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-kinoshita@PC-FooBoo:~$ cat .gitconfig
+$ cat .gitconfig
 [user]
         name = kinoshita hidetoshi
         email = ********@********.com
-        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub
+        signingkey = /home/kinoshita/.ssh/github/id_ed25519.pub
 [gpg "ssh"]
         allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
 [gpg]
@@ -261,7 +259,7 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
 [gpg]
         format = ssh
 [user]
-        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub</pre>
+        signingkey = /home/kinoshita/.ssh/github/id_ed25519.pub</pre>
         
       </li>
     </ol>
@@ -291,7 +289,7 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
 [user]
         name = kinoshita hidetoshi
         email = ********@********.com
-        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub
+        signingkey = /home/kinoshita/.ssh/github/id_ed25519.pub
 [gpg "ssh"]
         allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
 [gpg]
@@ -311,7 +309,11 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
     <p>以上の設定と署名付きコミットを行った後、GitHub へプッシュした Commits 画面を紹介します。</p>
     <p>下図の通り<span class="comment"><strong>［Verified］</strong></span>の表示が追加されました。</p>
     
-    <p><img alt="GitHub コミット署名" src="signing_commits_with_ssh_key/img4.jpg" width="1000" class="border"></p>
+    <figure>
+      <img alt="GitHub コミット署名" src="signing_commits_with_ssh_key/img4.jpg" width="1000" class="border">
+      <figcaption>署名されたコミットの表示例<span class="comment">（Verified）</span></figcaption>
+    </figure>
+    
     <p>&nbsp;</p>
         
     <table class="border-collapse" border="1" width="800">
