@@ -35,6 +35,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+    .auto-style1 {
+      background-color: #505000;
+    }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -157,7 +163,7 @@ int main()
     <pre class="prettyprint linenums:16 lang-cpp" style="width:800px">
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));</pre>
     <p> &nbsp;</p>
-    <p> ここでエラーになりました。vscode の画面では以下の通りです。</p>
+    <p> この Bさん の操作でエラーになりました。vscode の画面だと以下を表示しました。</p>
     
     <figure>
       <img alt="エラー画面 - vscode" src="how_to_resolve_conflicts_in_git/img16.jpg" width="1000">
@@ -168,7 +174,8 @@ int main()
     </p>
     <p> &nbsp;</p>
     <p> (4)「コマンド出力を表示する」をクリックすると、下記内容を表示しました。</p>
-    <pre class="prettyprint" style="width:800px">
+    
+    <pre style="width:800px; background-color: #000000; color: #FFFFFF;">
 &gt; git pull --tags origin main
 From github.com:kinoshita-hidetoshi/conflict_test
  * branch            main       -&gt; FETCH_HEAD
@@ -185,12 +192,35 @@ hint: preference for all repositories. You can also pass --rebase, --no-rebase,
 hint: or --ff-only on the command line to override the configured default per
 hint: invocation.
 fatal: Need to specify how to reconcile divergent branches.</pre>
+
     <p> &nbsp;</p>
-    <p> <strong>git pull</strong> が失敗している理由は 「ローカルとリモートの履歴が分岐していて、Git が “マージするのか 
-    / リベースするのか / fast‑forward のみ許可するのか” を判断できないため」ということらしいです。 Git 2.27 以降は、pull 
+    <p> 要約すると、<strong>git pull</strong> を失敗している理由は</p>
+    <p> 「ローカルとリモートの履歴が分岐していて、Git が “マージするのか 
+    / リベースするのか / fast‑forward のみ許可するのか” を判断できないため」</p>
+    <p> ということらしいです。</p>
+    <p> Git 2.27 以降は、pull 
     のデフォルト動作をユーザーが明示的に設定していない場合、このエラーを出して止まるようになっているそうです。</p>
     <p> &nbsp;</p>
-    <p> (5) ローカルとリモートが分岐しているので、どちらかを選ぶ必要があります</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong style="font-size: medium">参考</strong></p>
+        <p>Git に「どう統合するか」の方針を伝えてあげれば、次回からこの設定に従って自動的に処理されるようになります。コンソールから下記コマンドで設定できます。</p>
+        <ol>
+          <li>マージで統合したい場合（履歴をそのまま残す）<br><span class="cpp-source">git config 
+          pull.rebase false</span></li>
+          <li>リベースで統合したい場合（履歴を直線的にしたい）<br><span class="cpp-source">git config 
+          pull.rebase true</span></li>
+          <li>fast-forward のみ許可（履歴が完全に一致しているときだけ pull）<br>
+          <span class="cpp-source">git config pull.ff only</span> </li>
+        </ol>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <p> (5) ローカルとリモートが分岐しているので、どれを採用するか決める必要があります。</p>
     <p> よくある選択肢は下記３つです。</p>
     <ol>
       <li>merge</li>
@@ -198,9 +228,11 @@ fatal: Need to specify how to reconcile divergent branches.</pre>
       <li>fast-forward</li>
     </ol>
     <p>&nbsp;</p>
-    <p>ここでは、vscode の画面上から remote の HEAD を選択して merge (Merge into current 
-    branch...) してみます。</p>
-    <p> &nbsp;</p>
+    <p>参考に記載の <span class="cpp-source">git config pull.***</span> 
+    を設定せず、ここでは手動で解決します。</p>
+    <p>vscode の画面上から remote の HEAD を選択して Merge (<span class="cpp-source">Merge into current 
+    branch...</span>) します。</p>
+    <p> 下図では "Git Graph" というプラグインの画面で紹介していますが、他のツールを使用する場合も同様です。</p>
     
     <figure>
       <img alt="merge" src="how_to_resolve_conflicts_in_git/img21.jpg" width="1000">
@@ -239,11 +271,11 @@ int main()
         int i = 0;
         while (!st.stop_requested()) {
             std::cout &lt;&lt; "worker: tick " &lt;&lt; i++ &lt;&lt; "\n";
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-=======
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 826b8b9b697e1bef5c095d0c1f1cbf3ae187e3b7
+<span class="auto-style1">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+<span class="auto-style1">            std::this_thread::sleep_for(std::chrono::milliseconds(1000));</span>
+<span class="auto-style1">=======</span>
+<span class="auto-style1">            std::this_thread::sleep_for(std::chrono::milliseconds(500));</span>
+<span class="auto-style1">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 826b8b9b697e1bef5c095d0c1f1cbf3ae187e3b7</span>
         }
         std::cout &lt;&lt; "worker: stopping gracefully\n";
     });
@@ -261,8 +293,8 @@ int main()
     <p> &nbsp;</p>
     <p> (6) Conflict 部分を解決します。</p>
     <p> ここでは下記の通り <span class="cpp-source">std::this_thread::sleep_for(std::chrono::milliseconds(1000));</span> 
-    の方を採用します。</p>
-    <p> vscode 上では <span class="cpp-source">［現在の変更を取り込む］</span> をクリックでも良いです。</p>
+    の方を採用します。修正したら保存します。</p>
+    <p> vscode 画面上で <span class="cpp-source">［現在の変更を取り込む］</span> をクリックでも良いです。</p>
     
     <pre class="prettyprint linenums lang-cpp" style="width:800px">
 // std::jthread サンプル（C++20）
@@ -280,7 +312,7 @@ int main()
         int i = 0;
         while (!st.stop_requested()) {
             std::cout &lt;&lt; "worker: tick " &lt;&lt; i++ &lt;&lt; "\n";
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            <span class="auto-style1">std::this_thread::sleep_for(std::chrono::milliseconds(1000));</span>
         }
         std::cout &lt;&lt; "worker: stopping gracefully\n";
     });
