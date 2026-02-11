@@ -76,7 +76,8 @@
   <strong>std::async</strong> の3つがあります。</p>
   <p>最初にこの3つについて概要を記載します。</p>
   <p>&nbsp;</p>
-  <p style="white-space: normal;">🦊 <strong>参考（選び方の目安）</strong></p>
+  
+  <h3 style="white-space: normal;">🦊 <strong>参考（選び方の目安）</strong></h3>
   <div style="white-space: normal;">
     <table class="border-collapse" border="1" width="600">
       <thead class="standard_table">
@@ -108,7 +109,8 @@
   </div>
   
   <p>&nbsp;</p>
-  <h3>🧵 <code style="white-space: normal;">std::thread</code></h3>
+  
+  <h3>🧵 std::thread</h3>
     <table class="border-collapse" border="1" width="600">
       <tbody>
         <tr>
@@ -122,14 +124,14 @@
         <tr>
           <td><strong style="white-space: pre-wrap;">注意点</strong></td>
           <td>
-      <ul>
-        <li>
-          <p>
-          <code style="white-space: pre-wrap;" class="cpp-source">join()</code> や 
-          <code style="white-space: pre-wrap;" class="cpp-source">detach()</code> 
-          を忘れると未定義動作になる</p></li>
-        <li><p>スレッド終了の管理が手動で面倒。</p></li>
-      </ul>
+            <ul>
+              <li>
+                <p>
+                <code style="white-space: pre-wrap;" class="cpp-source">join()</code> や 
+                <code style="white-space: pre-wrap;" class="cpp-source">detach()</code> 
+                を忘れると未定義動作になる</p></li>
+              <li><p>スレッド終了の管理が手動で面倒。</p></li>
+            </ul>
           </td>
         </tr>
         <tr>
@@ -139,41 +141,37 @@
       </tbody>
     </table>
     
-  <p>&nbsp;</p>
-  
-  <h3 style="white-space: normal;">🌿 <code style="white-space: normal;">
-  std::jthread （C++20〜）</code></h3>
+    <p>&nbsp;</p>
+    
+    <h3>🌿 std::jthread （C++20〜）</h3>
     <table class="border-collapse" border="1" width="600">
       <tbody>
         <tr>
           <td><strong style="white-space: pre-wrap;">特徴</strong></td>
           <td><code style="white-space: pre-wrap;"><strong>std::thread</strong></code> 
-    の改良版。スレッド終了時に自動で <code style="white-space: pre-wrap;">join()</code> してくれる</td>
+            の改良版。スレッド終了時に自動で <code style="white-space: pre-wrap;">join()</code> してくれる</td>
         </tr>
         <tr>
           <td><strong style="white-space: pre-wrap;">利点</strong></td>
           <td>
-    <ul>
-      <li><p>リソースリークの心配が少ない（RAIIで自動管理）</p></li>
-      <li>
-      <p style="white-space: normal;">
-      <code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> 
-      によるキャンセル機構が組み込まれている</p>
-      </li>
-    </ul>
+            <ul>
+              <li><p>リソースリークの心配が少ない（RAIIで自動管理）</p></li>
+              <li><p><code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> によるキャンセル機構が組み込まれている</p>
+              </li>
+            </ul>
           </td>
         </tr>
         <tr>
           <td><strong style="white-space: pre-wrap;">注意点</strong></td>
           <td>
-    <ul style="white-space: normal;">
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">C++20以降が必要</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</p>
-      </li>
-    </ul>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">C++20以降が必要</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</p>
+              </li>
+            </ul>
           </td>
         </tr>
         <tr>
@@ -184,53 +182,53 @@
     </table>
     
     <p>&nbsp;</p>
-    <h3>⚡ <code>std::async</code></h3>
+    <h3>⚡ std::async</h3>
     <table class="border-collapse" border="1" width="600">
       <tbody>
         <tr>
           <td><strong style="white-space: pre-wrap;">特徴</strong></td>
           <td>関数を非同期に実行し、<code style="white-space: pre-wrap;" class="cpp-source">std::future</code> 
-    で結果を取得。</td>
+            で結果を取得。</td>
         </tr>
         <tr>
           <td><strong style="white-space: pre-wrap;">利点</strong></td>
           <td>
-    <ul style="white-space: normal;">
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">戻り値を簡単に取得できる</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">スレッド管理が不要</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</p>
-      </li>
-    </ul>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">戻り値を簡単に取得できる</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">スレッド管理が不要</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</p>
+              </li>
+            </ul>
           </td>
         </tr>
         <tr>
           <td><strong style="white-space: pre-wrap;">注意点</strong></td>
           <td>
-    <ul style="white-space: normal;">
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">実行ポリシー（<code style="white-space: pre-wrap;">std::launch::async</code> or
-      <code style="white-space: pre-wrap;">deferred</code>）に注意。</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;">実装依存でスレッドが作られないこともある。</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;"><span class="cpp-source">
-      std::launch::async</span> を使って新しいスレッドを起動した場合、<span class="cpp-source">future.get()</span> 
-      や <span class="cpp-source">wait()</span> を呼ばずに future 
-      を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</p>
-      </li>
-      <li style="white-space: normal;">
-      <p style="white-space: normal;"><span class="cpp-source">
-      std::launch::deferred</span> の場合、<span class="cpp-source">get()</span> 
-      を呼ばないと関数自体が実行されない。 </p>
-      </li>
-    </ul>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">実行ポリシー（<code style="white-space: pre-wrap;">std::launch::async</code> or
+              <code style="white-space: pre-wrap;">deferred</code>）に注意。</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">実装依存でスレッドが作られないこともある。</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;"><span class="cpp-source">
+              std::launch::async</span> を使って新しいスレッドを起動した場合、<span class="cpp-source">future.get()</span> 
+              や <span class="cpp-source">wait()</span> を呼ばずに future 
+              を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;"><span class="cpp-source">
+              std::launch::deferred</span> の場合、<span class="cpp-source">get()</span> 
+              を呼ばないと関数自体が実行されない。 </p>
+              </li>
+            </ul>
           </td>
         </tr>
         <tr>

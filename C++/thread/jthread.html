@@ -50,9 +50,10 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p><a href="#1._std::jthread_の特徴">1. std::jthread の特徴</a></p>
-    	<p><a href="#2._std::jthread_を使ってみる">2. std::jthread を使ってみる</a></p>
-      <p><a href="#3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a></p>
+      <p><a href="#1._C++標準の非同期処理_(std::thread,_std::jthread,_std::async)">1. C++標準の非同期処理 (std::thread, std::jthread, std::async)</a></p>
+    	<p><a href="#2._std::jthread_の特徴">2. std::jthread の特徴</a></p>
+    	<p><a href="#3._std::jthread_を使ってみる">3. std::jthread を使ってみる</a></p>
+      <p><a href="#4._request_stop()_しないとどうなる？">4. request_stop() しないとどうなる？</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -63,7 +64,183 @@
   <p>&nbsp;</p>
   
   <section>
-  	<h2> <a name="1._std::jthread_の特徴">1. std::jthread の特徴</a></h2>
+    <h2><a name="1._C++標準の非同期処理_(std::thread,_std::jthread,_std::async)">1. C++標準の非同期処理 (std::thread, std::jthread, std::async)</a> </h2>
+    <p>C++標準には、非同期処理を行う方法に <strong>std::thread</strong>, <strong>std::jthread</strong>, 
+    <strong>std::async</strong> の3つがあります。</p>
+    <p>最初にこの3つについて概要を記載します。</p>
+    <p>&nbsp;</p>
+    
+    <h3 style="white-space: normal;">🦊 <strong>参考（選び方の目安）</strong></h3>
+    <div style="white-space: normal;">
+      <table class="border-collapse" border="1" width="600">
+        <thead class="standard_table">
+          <tr style="white-space: normal;">
+            <th style="white-space: normal; height: 30px;">
+            <span style="white-space: normal;">目的</span></th>
+            <th style="white-space: normal; height: 30px;">
+            <span style="white-space: normal;">推奨される選択肢</span></th>
+          </tr>
+        </thead>
+        
+        <tbody style="white-space: normal;">
+          <tr style="white-space: normal;">
+            <td style="white-space: normal;"><span style="white-space: normal;">スレッドを完全に制御したい</span></td>
+            <td style="white-space: normal;"><code style="white-space: normal;">
+            <span style="white-space: normal;">std::thread</span></code></td>
+          </tr>
+          <tr style="white-space: normal;">
+            <td style="white-space: normal;"><span style="white-space: normal;">安全にスレッドを扱いたい（C++20 以降）</span></td>
+            <td style="white-space: normal;"><code style="white-space: normal;">
+            <span style="white-space: normal;">std::jthread</span></code></td>
+          </tr>
+          <tr style="white-space: normal;">
+            <td style="white-space: normal;"><span style="white-space: normal;">戻り値が必要な非同期処理を簡単に書きたい</span></td>
+            <td style="white-space: normal;"><code style="white-space: normal;">
+            <span style="white-space: normal;">std::async</span></code></td>
+          </tr>
+      </table>
+    </div>
+    
+    <p>&nbsp;</p>
+    
+    <h3>🧵 std::thread</h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td>最も基本的なスレッド。スレッドの生成と管理を自分で行う。</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>細かい制御が可能（スレッドのライフサイクル、優先度など）</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+            <ul>
+              <li>
+                <p>
+                <code style="white-space: pre-wrap;" class="cpp-source">join()</code> や 
+                <code style="white-space: pre-wrap;" class="cpp-source">detach()</code> 
+                を忘れると未定義動作になる</p></li>
+              <li><p>スレッド終了の管理が手動で面倒。</p></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>スレッドの寿命や動作を細かく制御したいとき</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    
+    <h3>🌿 std::jthread （C++20〜）</h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td><code style="white-space: pre-wrap;"><strong>std::thread</strong></code> 
+            の改良版。スレッド終了時に自動で <code style="white-space: pre-wrap;">join()</code> してくれる</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>
+            <ul>
+              <li><p>リソースリークの心配が少ない（RAIIで自動管理）</p></li>
+              <li><p><code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> によるキャンセル機構が組み込まれている</p>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">C++20以降が必要</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</p>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>スレッドのキャンセルや自動管理が欲しいとき。C++20が使えるならこちらが安全。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <h3>⚡ std::async</h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td>関数を非同期に実行し、<code style="white-space: pre-wrap;" class="cpp-source">std::future</code> 
+            で結果を取得。</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">戻り値を簡単に取得できる</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">スレッド管理が不要</p>
+              </li>
+              <li style="white-space: normal;">
+              <p style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</p>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+            <ul style="white-space: normal;">
+              <li style="white-space: normal;">
+                <p style="white-space: normal;">実行ポリシー（<code style="white-space: pre-wrap;">std::launch::async</code> or
+                <code style="white-space: pre-wrap;">deferred</code>）に注意。</p>
+              </li>
+              <li style="white-space: normal;">
+                <p style="white-space: normal;">実装依存でスレッドが作られないこともある。</p>
+              </li>
+              <li style="white-space: normal;">
+                <p style="white-space: normal;"><span class="cpp-source">
+                std::launch::async</span> を使って新しいスレッドを起動した場合、<span class="cpp-source">future.get()</span> 
+                や <span class="cpp-source">wait()</span> を呼ばずに future 
+                を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</p>
+              </li>
+              <li style="white-space: normal;">
+                <p style="white-space: normal;"><span class="cpp-source">
+                std::launch::deferred</span> の場合、<span class="cpp-source">get()</span> 
+                を呼ばないと関数自体が実行されない。 </p>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>「関数を非同期に呼び出して結果を待ちたい」ようなシンプルなケースに最適</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>以下、本ページでは <strong>std::jthread</strong> について記載します。</p>
+    <p>&nbsp;</p>
+
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="2._std::jthread_の特徴">2. std::jthread の特徴</a></h2>
     <p> std::jthread は以下のような特徴があります。</p>
     <p> &nbsp;</p>
     <ol>
@@ -147,7 +324,7 @@
   <p>&nbsp;</p>
   
   <section>
-    <h2><a name="2._std::jthread_を使ってみる">2. std::jthread を使ってみる</a></h2>
+    <h2><a name="3._std::jthread_を使ってみる">3. std::jthread を使ってみる</a></h2>
     <p>まずは「<strong>stop_token</strong> による協調的キャンセル」の機能を試してみます。</p>
     <p>&nbsp;</p>
     
@@ -305,7 +482,7 @@ $ </pre>
   <p>&nbsp;</p>
   
   <section>
-  	<h2> <a name="3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a></h2>
+  	<h2> <a name="4._request_stop()_しないとどうなる？">4. request_stop() しないとどうなる？</a></h2>
   	<p> 起動中のスレッドに対して request_stop() しないでプログラムを終了した場合、どんな挙動になるのかを確認してみます。</p>
     <p> 結論から記載すると、jthread インスタンス解放時に自動的に request_stop() を発行してくれるようです。最初に記載の 特徴３ 
     になります。</p>
@@ -532,7 +709,7 @@ $ </pre>
   	  <tr>
   	    <td class="td_history_date">2026-02-04&nbsp;</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">「<a href="#3._request_stop()_しないとどうなる？">3. request_stop() しないとどうなる？</a>」を追加</td>
+  	    <td class="td_history">「<a href="#4._request_stop()_しないとどうなる？">4. request_stop() しないとどうなる？</a>」を追加</td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-02-01</td>
