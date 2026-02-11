@@ -46,173 +46,460 @@
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">std::async (c++11)</h1>
-<p> c++11 でスレッド関連のライブラリが大幅に拡張されました。 <a href="thread.html">std::thread</a> と並んで代表的な std::async について記載します。<br>
-std::thread は promise, future 
-を併用しないとスレッドから呼び出し元へ値を戻すことができません。また例外が発生した場合を伝えることもできません。<br>std::async 
-は特に意識することなくスレッドの演算結果を呼び出し元へ戻す機能をサポートしており、例外発生時の実装も同様です。<br>個人的には std::thread 
-はもはや使用せずに std::async のみで良いのではと考えます。 </p>
-<p> &quot;Effective Modern C++&quot; の項目35 にも「スレッドベースよりもタスクベースプログラミングを優先する」って書いてありますしね。<br>
-これの意味は「std::thread よりも std::async を使いましょう」という内容です。</p>
-<p> &nbsp;</p>
-
-<div class="mokuji">
-  <nav>
-	<h2>目次</h2>
-	<p>
-        <a href="#1._シンプルな例">1. シンプルな例</a></p>
-	<p>
-        <a href="#2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a></p>
-	<p>
-        <a href="#3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></p>
-	<p>&nbsp;</p>
-	<p><a href="#ライセンス">ライセンス</a></p>
-	<p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<section>
-  <h2> <a name="1._シンプルな例">1. シンプルな例</a></h2>
-  <p> [概要]</p>
-  <p> まずはシンプルなサンプルを作ってみます。<br>少し処理の重たい関数 worker() を準備して、これを std::async で実行します。</p>
-  <p>[評価環境]</p>
-  <table>
-  <tbody>
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    
-    <tr>
-      <td>コンパイラ :</td>
-      <td>Visual Studio 2017 pro.,</td>
-      <td>Version 15.4.2 </td>
-    </tr>
-    
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-    
-    <tr>
-      <td>OS :</td>
-      <td>Windows10 home,</td>
-      <td>Version 1803 </td>
-    </tr>
-    
-    <tr>
-      <td class="td_separate" colspan="3"></td>
-    </tr>
-  </tbody>
-  </table>
+  <h1 class="auto-style7">std::async (c++11)</h1>
+  
+  <p> <strong>std::async</strong> は、C++11 
+  で導入された非同期処理のための関数テンプレートです。</p>
+  <p> バックグラウンドで関数を非同期に実行し、その結果を <strong>std::future</strong> 
+  経由で取得することができます。</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+  	<h2>目次</h2>
+  	<p><a href="#1._C++標準の非同期処理_(std::thread,_std::jthread,_std::async)">1. C++標準の非同期処理 (std::thread, std::jthread, std::async)</a></p>
+    <p><a href="#2._std::async_のシンプルな使用例">2. std::async のシンプルな使用例</a></p>
+  	<p><a href="#3._一時停止状態のスレッドを作る">3. 一時停止状態のスレッドを作る</a></p>
+  	<p><a href="#4._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">4. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></p>
+  	<p>&nbsp;</p>
+  	<p><a href="#ライセンス">ライセンス</a></p>
+  	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
   <p>&nbsp;</p>
-  [プログラムソース &quot;async.cpp&quot;]<br>
+  <p>&nbsp;</p>
+  
+  <section>
+  <h2><a name="1._C++標準の非同期処理_(std::thread,_std::jthread,_std::async)">1. C++標準の非同期処理 (std::thread, std::jthread, std::async)</a> </h2>
+  <p>C++標準には、非同期処理を行う方法に <strong>std::thread</strong>, <strong>std::jthread</strong>, 
+  <strong>std::async</strong> の3つがあります。</p>
+  <p>最初にこの3つについて概要を記載します。</p>
+  <p>&nbsp;</p>
+  <p style="white-space: normal;">🦊 <strong>参考（選び方の目安）</strong></p>
+  <div style="white-space: normal;">
+    <table class="border-collapse" border="1" width="600">
+      <thead class="standard_table">
+        <tr style="white-space: normal;">
+          <th style="white-space: normal; height: 30px;">
+          <span style="white-space: normal;">目的</span></th>
+          <th style="white-space: normal; height: 30px;">
+          <span style="white-space: normal;">推奨される選択肢</span></th>
+        </tr>
+      </thead>
+      
+      <tbody style="white-space: normal;">
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">スレッドを完全に制御したい</span></td>
+          <td style="white-space: normal;"><code style="white-space: normal;">
+          <span style="white-space: normal;">std::thread</span></code></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">安全にスレッドを扱いたい（C++20 以降）</span></td>
+          <td style="white-space: normal;"><code style="white-space: normal;">
+          <span style="white-space: normal;">std::jthread</span></code></td>
+        </tr>
+        <tr style="white-space: normal;">
+          <td style="white-space: normal;"><span style="white-space: normal;">戻り値が必要な非同期処理を簡単に書きたい</span></td>
+          <td style="white-space: normal;"><code style="white-space: normal;">
+          <span style="white-space: normal;">std::async</span></code></td>
+        </tr>
+    </table>
+  </div>
+  
+  <p>&nbsp;</p>
+  <h3>🧵 <code style="white-space: normal;">std::thread</code></h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td>最も基本的なスレッド。スレッドの生成と管理を自分で行う。</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>細かい制御が可能（スレッドのライフサイクル、優先度など）</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+      <ul>
+        <li>
+          <p>
+          <code style="white-space: pre-wrap;" class="cpp-source">join()</code> や 
+          <code style="white-space: pre-wrap;" class="cpp-source">detach()</code> 
+          を忘れると未定義動作になる</p></li>
+        <li><p>スレッド終了の管理が手動で面倒。</p></li>
+      </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>スレッドの寿命や動作を細かく制御したいとき</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  <p>&nbsp;</p>
+  
+  <h3 style="white-space: normal;">🌿 <code style="white-space: normal;">
+  std::jthread （C++20〜）</code></h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td><code style="white-space: pre-wrap;"><strong>std::thread</strong></code> 
+    の改良版。スレッド終了時に自動で <code style="white-space: pre-wrap;">join()</code> してくれる</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>
+    <ul>
+      <li><p>リソースリークの心配が少ない（RAIIで自動管理）</p></li>
+      <li>
+      <p style="white-space: normal;">
+      <code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> 
+      によるキャンセル機構が組み込まれている</p>
+      </li>
+    </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+    <ul style="white-space: normal;">
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">C++20以降が必要</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</p>
+      </li>
+    </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>スレッドのキャンセルや自動管理が欲しいとき。C++20が使えるならこちらが安全。</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <h3>⚡ <code>std::async</code></h3>
+    <table class="border-collapse" border="1" width="600">
+      <tbody>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">特徴</strong></td>
+          <td>関数を非同期に実行し、<code style="white-space: pre-wrap;" class="cpp-source">std::future</code> 
+    で結果を取得。</td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">利点</strong></td>
+          <td>
+    <ul style="white-space: normal;">
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">戻り値を簡単に取得できる</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">スレッド管理が不要</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</p>
+      </li>
+    </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong style="white-space: pre-wrap;">注意点</strong></td>
+          <td>
+    <ul style="white-space: normal;">
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">実行ポリシー（<code style="white-space: pre-wrap;">std::launch::async</code> or
+      <code style="white-space: pre-wrap;">deferred</code>）に注意。</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;">実装依存でスレッドが作られないこともある。</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;"><span class="cpp-source">
+      std::launch::async</span> を使って新しいスレッドを起動した場合、<span class="cpp-source">future.get()</span> 
+      や <span class="cpp-source">wait()</span> を呼ばずに future 
+      を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</p>
+      </li>
+      <li style="white-space: normal;">
+      <p style="white-space: normal;"><span class="cpp-source">
+      std::launch::deferred</span> の場合、<span class="cpp-source">get()</span> 
+      を呼ばないと関数自体が実行されない。 </p>
+      </li>
+    </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>使いどころ</strong></td>
+          <td>「関数を非同期に呼び出して結果を待ちたい」ようなシンプルなケースに最適</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>以下、本ページでは <strong>std::async</strong> について記載します。</p>
+    <p>&nbsp;</p>
 
-  <pre class="prettyprint linenums lang-cpp"><code>
-#include &lt;stdio.h&gt;
-#include &lt;tchar.h&gt;
-#include &lt;iostream&gt;
-#include &lt;vector&gt;    // std::vector
-#include &lt;future&gt;    // std::async, std::future
-#include &lt;windows.h&gt; // OutputDebugString
+  </section>
 
-using namespace std;
+  <p>&nbsp;</p>
 
-int worker(const vector&lt;int&gt;&amp; data)
+  <section>
+    <h2> <a name="2._std::async_のシンプルな使用例">2. std::async のシンプルな使用例</a></h2>
+    <p> [概要]</p>
+    <p> <strong>std::async</strong> を使って、まずはシンプルなサンプルを作ってみます。<br>少し処理の重たい関数 <span class="cpp-source">calcurateSum()</span> を準備して、これを  
+    <strong>std::async</strong> で実行します。</p>
+    <p> &nbsp;</p>
+    
+    <p>[評価環境]</p>
+    <table>
+    <tbody>
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>コンパイラ :</td>
+    		<td>g++ (Ubuntu 13.3.0-6ubuntu2~24.04),</td>
+    		<td>13.3.0</td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>OS: </td>
+    		<td>Ubuntu 24.04 (WSL),</td>
+    		<td></td>
+    	</tr>
+    	
+    	<tr>
+    		<td class="td_separate" colspan="3"></td>
+    	</tr>
+    </tbody>
+    </table>
+    
+    <p> &nbsp;</p>
+    <p>[プログラムソース] "<span class="cpp-source">async_01.cpp</span>"</p>
+  
+    <pre class="prettyprint linenums lang-cpp" style="width:1200px">
+#include &lt;iostream&gt;     // std::cout, std::endl
+#include &lt;vector&gt;       // std::vector
+#include &lt;future&gt;       // std::async, std::future
+#include &lt;chrono&gt;       // chrono::seconds, chrono::milliseconds, chrono::microseconds
+#include &lt;thread&gt;       // std::this_thread::sleep_for
+#include &lt;string&gt;       // std::string
+#include &lt;functional&gt;   // std::cref
+
+/// @brief data の合計値を計算する
+/// @param data : 合計値を計算するデータ
+/// @return data の合計値
+int calcurateSum(const std::vector&lt;int&gt;&amp; data)
 {
     int sum = 0;
-
-    for (int i : data) {
+    for (auto i : data) {
         // 重たい処理
-        this_thread::sleep_for(chrono::milliseconds(2000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         sum += i;
-        cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum &lt;&lt; endl;
+        std::cout &lt;&lt; "sum = " &lt;&lt; sum &lt;&lt; std::endl;
     }
 
-    //throw std::wstring(L&quot;test&quot;);
+    //throw std::runtime_error("test");
 
     return sum;
 }
 
-
+/// @brief std::async (非同期処理) のサンプルコード
+/// @return EXIT_SUCCESS
 int main()
 {
-    vector&lt;int&gt; data = { 1, 2, 3, 4, 5 };
+    std::vector&lt;int&gt; data = { 1, 2, 3, 4, 5 };
 
-    // worker() 関数を実行する
+    // calcurateSum() 関数を実行する
     // 引数が const なので cref() を使用。変更可能な場合は ref() で参照渡し。 
-//  future&lt;int&gt; f = std::async( launch::async, worker, cref(data) );                     // 非同期実行
-//  future&lt;int&gt; f = std::async( launch::deferred, worker, cref(data) );                  // 同期実行
-//  future&lt;int&gt; f = std::async( launch::async | launch::deferred, worker, cref(data) );  // 非同期/同期 どちらでもOK
-//  future&lt;int&gt; f = std::async( worker, cref(data));                                     // 非同期/同期 どちらでもOK
-    auto <span class="auto-style8">f</span> = std::<span class="auto-style8">async</span>( launch::async, worker, cref(data));                             // auto による推奨の使用方法。非同期実行。
-
+//  future&lt;int&gt; f = std::async( launch::async, calcurateSum, cref(data) );                     // 非同期実行
+//  future&lt;int&gt; f = std::async( launch::deferred, calcurateSum, cref(data) );                  // 同期実行
+//  future&lt;int&gt; f = std::async( launch::async | launch::deferred, calcurateSum, cref(data) );  // 非同期/同期 どちらでもOK
+//  future&lt;int&gt; f = std::async( calcurateSum, cref(data));                                     // 非同期/同期 どちらでもOK
+    auto f = std::async( std::launch::async, calcurateSum, cref(data));                        // auto による推奨の使用方法。非同期実行。
     try {
-        if (f.wait_for(chrono::seconds(0)) == future_status::deferred) {
+        if (f.wait_for(std::chrono::seconds(0)) == std::future_status::deferred) {
             // launch::deferred is selected.
-            cout &lt;&lt; <span class="auto-style8">f.get()</span> &lt;&lt; endl;
+            std::cout &lt;&lt; "data の合計値は " &lt;&lt; f.get() &lt;&lt; "です" &lt;&lt; std::endl;
         }
         else {
             // launch::async is selected.
-
             while (1) {
-                if (<span class="auto-style8">f.wait_for</span>(chrono::milliseconds(500)) == std::future_status::ready) {
-                    cout &lt;&lt; <span class="auto-style8">f.get() </span>&lt;&lt; endl;
+                if ( f.wait_for(std::chrono::milliseconds(500)) == std::future_status::ready ) {
+                    std::cout &lt;&lt; "data の合計値は " &lt;&lt; f.get() &lt;&lt; "です" &lt;&lt; std::endl;
                     break;
                 }
                 else {
-                    cout &lt;&lt; &quot;wait...&quot; &lt;&lt; endl;
+                    std::cout &lt;&lt; "wait..." &lt;&lt; std::endl;
                 }
             }
         }
     }
-    catch (std::wstring errorMessage) {
-        OutputDebugString(errorMessage.c_str());
+    catch (const std::exception&amp; ex) {
+        std::cout &lt;&lt; "exception catched: " &lt;&lt; ex.what() &lt;&lt; std::endl;
     }
     catch (...) {
-        // worker() 関数内で例外創出された場合の処理
-        OutputDebugString(_T(&quot;exception catched.&quot;));
+        std::cout &lt;&lt; "exception catched." &lt;&lt; std::endl;
     }
 
     return EXIT_SUCCESS;
-}</code>
-</pre>
-<p>［補足説明］</p>
-<ul>
-	<li>std::async の第一引数に launch::async を指定した場合、内部的にはスレッドを生成しての非同期の動作を行います。<br>
-	launch::deferred を指定した場合は同期実行します。通常の関数動作とお考え下さい。<br>無指定、または &quot;launch::async | 
-	launch::deferred&quot; を指定した場合、どちらで実行しても良い、という意図になります。<br>std::async 
-	を使用する時点で非同期実行を意図しているはずなので、通常は launch::async を明示的に指定した方が良いと考えます。</li>
-	<li>非同期実行の場合、対象のタスクが終了しているかを確認してから結果を取得します。<br>上記例では 上記例では 
-	「f.wait_for(chrono::milliseconds(500)) == std::future_status::ready」 
-	により最大500msの時間だけ処理完了を待ち、 f.get() を実行することで処理結果を取得します。</li>
-	<li>同期実行であることが明確な場合は、状態を確認する必要ありません。<br>f.get() を実行するまで処理自体が行われません。</li>
-	<li>どちらで実行しているかがわからない場合、両方を考慮した実装を行う必要があります。</li>
-</ul>
+}</pre>
 
-<br>
-<br>
+    <p>&nbsp;</p>
+    <p>ビルド方法：</p>
+    
+    <pre class="prettyprint" style="width:800px">$ g++ -std=c++20 -Wall -Wextra -Wpedantic -pthread -O2 async_01.cpp -o async_01.out</pre>
+    
+    <p>&nbsp;</p>
+    <p>Makefile 例：</p>
+    
+    <pre class="prettyprint linenums lang-cpp" style="width:800px">
+CXX := g++
+CXXFLAGS := -std=c++23 -O2 -Wall -Wextra -Wpedantic -pthread
 
-<h4>サンプルプログラム</h4>
-<p>サンプルプログラム ダウンロード</p>
-<p>&nbsp;</p>
-<h4>参考URL</h4>
-<ul>
-	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
-	http://ja.cppreference.com/w/cpp/thread/async</a></li>
-</ul>
+ifeq ($(DEBUG),1)
+    CXXFLAGS += -g
+endif
 
-<p>&nbsp;</p>
-</section>
+SRC := async_01.cpp
+OUT := $(SRC:.cpp=.out)
 
-<p>&nbsp;</p>
+.PHONY: all run clean help
+
+all: $(OUT)
+
+$(OUT): $(SRC)
+	@printf "Compiling %s -&gt; %s\n" "$&lt;" "$@"
+	$(CXX) $(CXXFLAGS) "$&lt;" -o "$@"
+
+run: $(OUT)
+	@./$(OUT)
+
+clean:
+	@rm -f $(OUT)
+
+help:
+	@printf "Usage:\n"
+	@printf "  make         Build async_01.cpp -&gt; async_01.out\n"
+	@printf "  make run     Build then run the binary\n"
+	@printf "  make clean   Remove generated binary\n"
+	@printf "  make help    Show this help message\n"</pre>
+    
+    <p>&nbsp;</p>
+    
+    <table class="border-collapse" border="1" style="width: 800px">
+      <caption>ビルドオプション説明：</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>オプション</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-std=c++23</strong></td>
+          <td>C++23 標準でコンパイルします。言語機能（構文・ライブラリ仕様）が C++23 準拠になります。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wall&nbsp;</strong></td>
+          <td>一般的な警告群を有効にします。コード品質の初期チェックに有用です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-Wextra</strong></td>
+          <td><strong>-Wall</strong>&nbsp;に含まれない追加の警告を有効にします。未使用パラメータなどを検出します。 </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap;"><strong>-Wpedantic</strong></td>
+          <td>規格に厳格に従っていない拡張や非標準的記法を警告します。移植性を高めたい場合に有効です。 </td>
+        </tr>
+        <tr>
+          <td><strong>-pthread</strong></td>
+          <td>POSIX threads 
+          のサポートを有効にし、スレッド関連のライブラリをリンクします。単に&nbsp;-lpthread&nbsp;をリンクするだけでなく、コンパイル時にスレッド対応（スレッドセーフな定義など）を有効にするフラグです。スレッド/ミューテックスなどを使うプログラムでは必須に近いオプションです（Linux）。 </td>
+        </tr>
+        <tr>
+          <td><strong>-O2</strong></td>
+          <td>最適化レベル 2 を指定します。実行速度向上のための最適化を行うが、"<strong>-O3</strong>" よりは穏やかで安定的な設定です。デバッグ時は 
+          "<strong>-g -O0</strong>" 
+          を推奨します。 </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>実行結果：</p>
+    <pre class="prettyprint" style="width:600px">
+$ ./async_01.out 
+wait...
+wait...
+wait...
+sum = 1
+wait...
+wait...
+wait...
+wait...
+sum = 3
+wait...
+wait...
+wait...
+wait...
+sum = 6
+wait...
+wait...
+wait...
+wait...
+sum = 10
+wait...
+wait...
+wait...
+wait...
+sum = 15
+data の合計値は 15です
+$ </pre>
+    <p>&nbsp;</p>
+
+    <p>補足説明：</p>
+    <ul>
+    	<li><strong>std::async</strong> の第一引数に <span class="cpp-source">launch::async</span> を指定した場合、内部的にスレッドを生成して非同期の動作を行います。<br>
+        <strong>std::async</strong> の第一引数に <span class="cpp-source">launch::deferred</span> を指定した場合は同期実行します。通常の関数動作とお考え下さい。<br>
+        <strong>std::async</strong> の第一引数を 無指定、または &quot;<span class="cpp-source">launch::async | 
+    	launch::deferred</span>&quot; を指定した場合、どちらで実行しても良い、という意図になります。<br>
+        <strong>std::async</strong> 
+    	を使用する時点で非同期実行を意図しているはずなので、通常は <span class="cpp-source">launch::async</span> を明示的に指定することになるはずです。<br></li>
+    	<li>非同期実行の場合、対象のタスクが終了しているかを確認してから結果を取得します。<br>上記例では "<span class="cpp-source">f.wait_for(chrono::milliseconds(500)) == std::future_status::ready</span>" 
+        の処理で最大 500ms の時間だけ処理完了を待ちます。その後 <span class="cpp-source">f.get()</span> を実行することで処理結果を取得します。</li>
+    	<li>同期実行であることが明確な場合は、状態を確認する必要ありません。同期実行の場合、<span class="cpp-source">f.get()</span> を実行するまで処理自体が行われません。</li>
+    	<li>非同期/同期 のどちらで実行しているかがわからない場合、両方を考慮したプログラム実装を行う必要があります。<br>プログラム品質を下げる原因となるので、特に理由なければ 同期/非同期 をちゃんと決めてプログラムの実装とテストを行う方が良いでしょう。</li>
+    </ul>
+
+    <p>&nbsp;</p>
+    <p>参考URL：</p>
+    <ul>
+    	<li><a href="http://ja.cppreference.com/w/cpp/thread/async" target="_blank">
+    	http://ja.cppreference.com/w/cpp/thread/async</a></li>
+    </ul>
+    
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
 
 <section>
-  <h2><a name="2._一時停止状態のスレッドを作る">2. 一時停止状態のスレッドを作る</a></h2>
+  <h2><a name="3._一時停止状態のスレッドを作る">3. 一時停止状態のスレッドを作る</a></h2>
   <p>一時停止状態のシステムスレッドを作成してみます。<br>
   すなわち、スレッドで何かを処理する時が来たらすぐに開始できるように、あらかじめスレッドを作成しておき、スレッドの作成によるオーバーヘッドによる遅延を回避する例です。または、実行開始前にスレッドに何かしらの設定を行う必要があるため、一時停止状態のスレッドを作成する場合もあるでしょう。<br>
   スレッドを一度だけ一時停止状態にしたい場合は、void な future を用いるのが妥当な選択です。この技法の要点を以下に示します。</p>
+  <p>&nbsp;</p>
   <p>[評価環境]</p>
   <table>
   <tbody>
@@ -244,7 +531,7 @@ int main()
 
   <p>&nbsp;</p>
 
-  <p>[プログラムソース： &quot;test_async_02.cpp&quot;]</p>
+  <p>[プログラムソース] "<span class="cpp-source">async_02.cpp</span>"</p>
   <pre class="prettyprint linenums lang-cpp">
 #include &lt;iostream&gt;
 #include &lt;future&gt;		// std::async
@@ -297,11 +584,10 @@ int main()
 <p>&nbsp;</p>
 
 <section>
-  <h2><a name="3._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">3. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
+  <h2><a name="4._async_で作成したスレッドの終了を待たずに_main_を終了したらどうなる？">4. async で作成したスレッドの終了を待たずに main を終了したらどうなる？</a></h2>
   <p>[概要]</p>
   <p> std::thread だと join または detatch が必須です。<br>std::async の場合は detatch 
   に相当する機能がないけれど、終了確認せずに worker スレッドを放置したらどうなるのでしょうか。<br>確認してみました。</p>
-  <p> どうやら特に考慮は不要のようです。<br>main タスクが終了しても async タスクの動作は継続しました。<br>逆に main タスクが終了したにもかかわらず async タスク側が残ってしまう場合もあるので、必要に応じて main タスク終了時に別スレッドを適切に終了するという処理が必要そうです。</p>
   <p> &nbsp;</p>
 
   <p>[環境]</p>
@@ -335,7 +621,7 @@ int main()
 
   <p> &nbsp;</p>
 
-  <p>&quot;test_async_03.cpp&quot;]</p>
+  <p>[プログラムソース] "<span class="cpp-source">async_03.cpp</span>"</p>
   <pre class="prettyprint linenums lang-cpp"><code>
 #include &lt;iostream&gt;
 #include &lt;vector&gt;   // vector
@@ -385,6 +671,9 @@ int main()
   <p>[実行結果]</p>
   <p><img alt="実行結果" src="async/imgA.jpg"></p>
   <p>&nbsp;</p>
+  <p><strong>結論：</strong></p>
+  <p> どうやら特に考慮は不要のようです。<br>main タスクが終了しても <strong>std::async</strong> タスクの動作は継続しました。<br>逆に  
+  <span class="cpp-source">main()</span> が終了したにもかかわらず async タスク側が残ってしまう場合もあるので、必要に応じて main タスク終了時に別スレッドを適切に終了するという処理が必要そうです。</p>
   <p>&nbsp;</p>
 </section>
 
@@ -398,7 +687,7 @@ int main()
       <td>
   MIT License<br><br>
 
-      Copyright (c) 2017-2022  Kinoshita Hidetoshi<br><br>
+      Copyright (c) 2017  Kinoshita Hidetoshi<br><br>
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -421,7 +710,6 @@ int main()
     </tr>
   </table>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
@@ -441,6 +729,14 @@ int main()
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2026-02-11</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">
+        「<a href="#1._C++標準の非同期処理_(std::thread,_std::jthread,_std::async)">1. C++標準の非同期処理 (std::thread, std::jthread, std::async)</a>」を追加<br>
+        「<a href="#2._std::async_のシンプルな使用例">2. std::async のシンプルな使用例</a>」を更新
+        </td>
+	  </tr>
 	  <tr>
 	    <td class="td_history_date">2022-06-10</td>
 	    <td class="td_history_separator">-</td>
@@ -474,7 +770,7 @@ int main()
 <p>&nbsp;</p>
 
 <footer>
-  <p><small>© copyright 2017-2022 木下英俊</small></p>
+  <p><small>© copyright 2017 木下英俊</small></p>
 </footer>
 
 </body>
