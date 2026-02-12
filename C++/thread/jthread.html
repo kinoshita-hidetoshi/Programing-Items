@@ -89,7 +89,7 @@
             <span style="white-space: normal;">std::thread</span></code></td>
           </tr>
           <tr style="white-space: normal;">
-            <td style="white-space: normal;"><span style="white-space: normal;">安全にスレッドを扱いたい（C++20 以降）</span></td>
+            <td style="white-space: normal;"><span style="white-space: normal;">安全にスレッドを扱いたい</span></td>
             <td style="white-space: normal;"><code style="white-space: normal;">
             <span style="white-space: normal;">std::jthread</span></code></td>
           </tr>
@@ -119,11 +119,10 @@
           <td>
             <ul>
               <li>
-                <p>
                 <code style="white-space: pre-wrap;" class="cpp-source">join()</code> や 
                 <code style="white-space: pre-wrap;" class="cpp-source">detach()</code> 
-                を忘れると未定義動作になる</p></li>
-              <li><p>スレッド終了の管理が手動で面倒。</p></li>
+                を忘れると未定義動作になる</li>
+              <li>スレッド終了の管理が手動で面倒</li>
             </ul>
           </td>
         </tr>
@@ -136,7 +135,7 @@
     
     <p>&nbsp;</p>
     
-    <h3>🌿 std::jthread （C++20〜）</h3>
+    <h3>🌿 std::jthread</h3>
     <table class="border-collapse" border="1" width="600">
       <tbody>
         <tr>
@@ -148,9 +147,8 @@
           <td><strong style="white-space: pre-wrap;">利点</strong></td>
           <td>
             <ul>
-              <li><p>リソースリークの心配が少ない（RAIIで自動管理）</p></li>
-              <li><p><code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> によるキャンセル機構が組み込まれている</p>
-              </li>
+              <li>リソースリークの心配が少ない（RAIIで自動管理）</li>
+              <li><code style="white-space: pre-wrap;" class="cpp-source">stop_token</code> によるキャンセル機構が組み込まれている</li>
             </ul>
           </td>
         </tr>
@@ -158,18 +156,15 @@
           <td><strong style="white-space: pre-wrap;">注意点</strong></td>
           <td>
             <ul style="white-space: normal;">
-              <li style="white-space: normal;">
-              <p style="white-space: normal;">C++20以降が必要</p>
-              </li>
-              <li style="white-space: normal;">
-              <p style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</p>
-              </li>
+              <li style="white-space: normal;">C++20以降が必要</li>
+              <li style="white-space: normal;">一部の環境ではまだ完全にサポートされていないかも</li>
             </ul>
           </td>
         </tr>
         <tr>
           <td style="white-space: nowrap"><strong>使いどころ</strong></td>
-          <td>スレッドのキャンセルや自動管理が欲しいとき。C++20が使えるならこちらが安全。</td>
+          <td>スレッドのキャンセルや自動管理が欲しいとき。<br>C++20 を使えるなら <strong>std::thread</strong> 
+          よりこちらの方が安全。</td>
         </tr>
       </tbody>
     </table>
@@ -187,15 +182,9 @@
           <td><strong style="white-space: pre-wrap;">利点</strong></td>
           <td>
             <ul style="white-space: normal;">
-              <li style="white-space: normal;">
-              <p style="white-space: normal;">戻り値を簡単に取得できる</p>
-              </li>
-              <li style="white-space: normal;">
-              <p style="white-space: normal;">スレッド管理が不要</p>
-              </li>
-              <li style="white-space: normal;">
-              <p style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</p>
-              </li>
+              <li style="white-space: normal;">戻り値を簡単に取得できる</li>
+              <li style="white-space: normal;">スレッド管理が不要</li>
+              <li style="white-space: normal;">リソースリークの心配が少ない（RAIIで自動管理）</li>
             </ul>
           </td>
         </tr>
@@ -204,23 +193,20 @@
           <td>
             <ul style="white-space: normal;">
               <li style="white-space: normal;">
-                <p style="white-space: normal;">実行ポリシー（<code style="white-space: pre-wrap;">std::launch::async</code> or
-                <code style="white-space: pre-wrap;">deferred</code>）に注意。</p>
-              </li>
+              実行ポリシー 
+              (<span class="cpp-source">std::launch::async</span> or
+              <span class="cpp-source">std::launch::deferred</span>) に注意。実装依存でスレッドが作られないこともある。</li>
               <li style="white-space: normal;">
-                <p style="white-space: normal;">実装依存でスレッドが作られないこともある。</p>
-              </li>
+              <span class="cpp-source">
+              std::launch::async</span> を使って新しいスレッドを起動した場合、future 
+              の <span class="cpp-source">get()</span> 
+              や <span class="cpp-source">wait()</span> を呼ばずに future 
+              を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</li>
               <li style="white-space: normal;">
-                <p style="white-space: normal;"><span class="cpp-source">
-                std::launch::async</span> を使って新しいスレッドを起動した場合、<span class="cpp-source">future.get()</span> 
-                や <span class="cpp-source">wait()</span> を呼ばずに future 
-                を破棄すると、スレッドがバックグラウンドで動いたままになる可能性がある。</p>
-              </li>
-              <li style="white-space: normal;">
-                <p style="white-space: normal;"><span class="cpp-source">
-                std::launch::deferred</span> の場合、<span class="cpp-source">get()</span> 
-                を呼ばないと関数自体が実行されない。 </p>
-              </li>
+              <span class="cpp-source">
+              std::launch::deferred</span> の場合、スレッドを作成しない。また、future 
+              の <span class="cpp-source">get()</span> 
+              を呼ばないと関数自体が実行されない。</li>
             </ul>
           </td>
         </tr>

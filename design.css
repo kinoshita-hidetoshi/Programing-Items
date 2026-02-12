@@ -65,7 +65,7 @@ ul {
 	font-family: sans-serif;
 	list-style-position: outside;
 	list-style-type: disc;
-	padding: 5px 0 5px 20px;
+	padding: 4px 0 4px 20px;
 }
 
 ol{
@@ -74,7 +74,7 @@ ol{
 }
 
 li{
-  padding: 0px 0 0px 0;
+  padding: 3px 0 3px 0;
 }
 
 pre{
