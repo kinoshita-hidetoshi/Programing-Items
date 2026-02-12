@@ -58,6 +58,7 @@ p{
 	color: #000000;
 	font-family: sans-serif;
 	margin: 6px 0px 6px 0px;
+	line-height: 1.6; /* 1.6倍の行間 */
 }
 
 ul {
@@ -74,7 +75,7 @@ ol{
 }
 
 li{
-  padding: 3px 0 3px 0;
+  padding: 4px 0 4px 0;
 }
 
 pre{
@@ -314,10 +315,18 @@ blockquote{
 
 
 /* Google Code Prettify */
-pre.prettyprint ol.linenums{
+pre.prettyprint {
+  line-height: 1.8; /* 行間を1.8倍に */ 
+}
+pre.prettyprint.linenums {
+  line-height: 1.4 !important; /* 行間を1.4倍に */ 
+}
+
+pre.prettyprint ol.linenums {
 	list-style-position: outside;
 	padding: 0 0 0 40px;
 }
+
 
 
 /*
