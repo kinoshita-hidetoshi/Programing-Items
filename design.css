@@ -56,14 +56,14 @@ h5 {
 p{
 	/*font-size: small;*/
 	color: #000000;
-	font-family: sans-serif;
-	margin: 6px 0px 6px 0px;
+	/*font-family: sans-serif;*/
+	margin: 3px 3px 3px 0px;
 	line-height: 1.6; /* 1.6倍の行間 */
 }
 
 ul {
 	/*font-size:small;*/
-	font-family: sans-serif;
+	/*font-family: sans-serif;*/
 	list-style-position: outside;
 	list-style-type: disc;
 	padding: 4px 0 4px 20px;
@@ -75,14 +75,16 @@ ol{
 }
 
 li{
-  padding: 4px 0 4px 0;
+  /*padding: 3px 0 3px 0;*/
+  margin: 3px 0 3px 0;
+	line-height: 1.6; /* 1.6倍の行間 */
 }
 
 pre{
   max-width: 100%;
-	display:block;
-	padding:4px;
-	margin:0 0 10px;
+	display: block;
+	padding: 4px 4px 4px 6px;
+	margin: 6px 0 6px 0;
 	
 	/* prettify.css 中の font-size とそろえる目的で、"font-size:14px" を指定 */
 	font-size:14px;
