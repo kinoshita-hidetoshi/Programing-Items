@@ -16,7 +16,8 @@
   <link rel="shortcut icon" href="../../favicon.ico">
   
   <!-- CSS -->
-  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <!--<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="../../ress.min.css">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
   
 	<!-- Start for 'google-code-prettify' -->
@@ -45,11 +46,11 @@
   <div class="status_information">
     <div></div>
     <div>
-      <p> Bitbucket Cloud で SSH キーを使用してコミットに署名できるようになりました。</p>
+      <p> <strong>Bitbucket</strong> で、SSH キーを使用してコミットに署名できるようになりました。</p>
       <p> 
       <a href="https://www.atlassian.com/blog/bitbucket/you-can-now-sign-commits-with-ssh-keys" target="_blank">SSH キーを使用してコミットに署名できるようになりました。- アトラシアンのワークライフ</a></p>
-      <p> 署名付きコミットは、開発者がSSH キーを使用してコントリビューションの信頼性を確認できるようにする、重要な保護レイヤーを提供します。</p>
-      <p> 本ページでは SSH キーを使用した署名付きコミットの設定手順、実際に使用してみた画面などを紹介します。 </p>
+      <p> 署名付きコミットは、開発者がSSH キーを使用してコントリビューションの信頼性を確認できるようにする重要な保護レイヤーを提供します。</p>
+      <p> 本ページでは、<strong>Bitbucket</strong> で SSH キーを使用した署名付きコミットの設定手順、実際に使用してみた画面などを紹介します。 </p>
     </div>
   </div>
 
@@ -77,23 +78,28 @@
   
   <section>
   	<h2> <a name="1._概要">1. 概要</a></h2>
-  	<p>各人の SSH キーを使用してコミットに署名することができます。下図のように Bitbucket Cloud の Commits 
-    画面で検証結果を確認することが可能です。</p>
+    <p> &nbsp;</p>
+    <h3>🔐 なぜ SSH 鍵で署名するの？</h3>
+    <ul>
+      <li><strong style="white-space: pre-wrap;">本人確認</strong>：誰がコミットしたかを明確にするため<br>
+      コミットに署名すると、誰がコミットしたのかを受信者が検証できるようになります。特に、チームでの開発やオープンソースプロジェクトでこのプロセスは重要です。</li>
+      <li><strong style="white-space: pre-wrap;">改ざん防止</strong>：コミットが第三者に改竄されていないことを保証<br>署名付きコミットを使用することで、コミットが正規の開発者によって作成されたことを証明できます。これにより、第三者がコードを不正に変更するリスクを軽減します。</li>
+      <li><strong style="white-space: pre-wrap;">GPG より簡単</strong>：SSH 
+      鍵はすでにリポジトリの認証に使っていることが多く、追加の設定が少ない</li>
+    </ul>
+    
+    <p> &nbsp;</p>
+    <p> 署名されたコミットは、下図のように <strong>Bitbucket</strong> の Commits 
+    画面で <strong>Verified</strong> という表示で確認できます。</p>
     <p>&nbsp;</p>
     <p>
     <img alt="画面例" class="border_with_drop-shadow" src="siging_commits_with_ssh_key/img13.jpg"></p>
     <p>&nbsp;</p>
-    <p>SSH キーを使用してコミットに署名する主な理由は、<strong>コードの信頼性とセキュリティを向上させるため</strong>です。この手法を利用することには、次のような利点があります。 
-    </p>
-    <ol>
-      <li><strong>改ざん防止：</strong> 
-      署名付きコミットを使用することで、コミットが正規の開発者によって作成されたことを証明できます。これにより、第三者がコードを不正に変更するリスクを軽減します。 
-      </li>
-      <li><strong>信頼性の向上：</strong> SSH 
-      キーを使ってコミットに署名すると、受信者がそのコミットの発信者を検証できるようになります。特に、チームでの開発やオープンソースプロジェクトでは、このプロセスは重要です。</li>
-      <li><strong>セキュリティの強化：</strong> SSH 
-      キーによる署名付きコミットは、パスワードやトークンよりも安全性が高く、特に機密性の高いプロジェクトに適しています。 </li>
-    </ol>
+    <p> またリポジトリ設定により、コミット署名を強制化することもできます。</p>
+    <p> これを有効化すると署名のないコミットを登録できなくなります。</p>
+    <p>
+    <img alt="Require all commits pushed via the CLI have a verified signature" class="border" src="siging_commits_with_ssh_key/img16.jpg" width="800"></p>
+    <p>&nbsp;</p>
     <p>&nbsp;</p>
     
     <div class="status_warning">
@@ -144,8 +150,9 @@
     </ul>
   </section>
 	
-  <p> または私が作成した記事（<a href="How%20to%20use%20SSH%20key.html">How to use SSH 
+  <p> または私の記事（<a href="How%20to%20use%20SSH%20key.html">How to use SSH 
   key.html</a>）を参照して SSH キーを作成および登録を行います。</p>
+  <p> &nbsp;</p>
   
   <div class="status_information">
     <div></div>
@@ -163,28 +170,29 @@
   <section>
   	<h2> <a name="4._SSH_キーでコミットに署名する">4. SSH キーでコミットに署名する</a></h2>
     <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順に従います。</p>
-    <p> 下記では "<span class="cpp-source">--global</span>" を付与して全ての git を対象とする設定を例に記載しています。リポジトリ毎に設定する場合は 
-    "<span class="cpp-source">--global</span>" を削除して実施します。</p>
+    <p> 下記説明は、リポジトリ毎に設定する例を説明します。全ての git リポジトリを対象に設定する場合は "<span class="cpp-source">--global</span>" を付与して実施します。</p>
     <p> &nbsp;</p>
     <ol>
+      <li>設定対象のフォルダ（git リポジトリ）へ移動します<br>
+        <pre class="prettyprint" style="width: 800px">cd ****</pre></li>
       <li>キーの形式についてGitに伝えます。<br>
-        <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global gpg.format ssh</pre>
-      </li>
-      <li>コミットの署名に使用するキーを Git に指示します。<br>
-      <p>私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。<br></p>
-        <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</pre>
-      </li>
-      <li>ローカルブランチに変更をコミットする場合は、コマンドのフラグ（-S）を使用します。<br>
-        <pre class="prettyprint linenums lang-cpp" style="width: 800px">git commit -S -m "your commit message"</pre>
-      <p><span class="cpp-source">-S</span> を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p>
-      </li>
-      <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ）<br> </li>
-      <li>コミットが署名されたことを確認します。（必要に応じて）<br>
-        "<span class="cpp-source">-1</span>" は最新コミットから1つを表示することを意味します。
-        "<span class="cpp-source">-3</span>" は最新コミットから3つを表示します。<br>
+        <pre class="prettyprint" style="width: 800px">git config gpg.format ssh</pre></li>
       
-      <pre class="prettyprint linenums lang-cpp" style="width: 800px">git log --show-signature -1</pre>
-      表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br><br>
+      <li>コミットの署名に使用するキーを Git に指示します。<br>
+        <p>私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。</p>
+        <pre class="prettyprint" style="width: 800px">git config user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</pre></li>
+      
+      <li>ローカルブランチに変更をコミットする場合は、コマンドのフラグ（-S）を使用します。<br>
+        <pre class="prettyprint" style="width: 800px">git commit -S -m "your commit message"</pre>
+        <p><span class="cpp-source">-S</span> を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p></li>
+      
+      <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ）<br> </li>
+      <li>[任意] 下記コマンドでコミットが署名されたことを確認します<br>
+        <p>"<span class="cpp-source">-1</span>" は最新コミットから1つを表示します。</p>
+        <p>"<span class="cpp-source">-3</span>" は最新コミットから3つを表示します。</p>
+      
+        <pre class="prettyprint" style="width: 800px">git log --show-signature -1</pre>
+        表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br><br>
 
       </li>
       <li>
@@ -192,18 +200,20 @@
       [任意] ディレクトリにファイル 
       <span class="cpp-source" data-prosemirror-content-type="mark" data-prosemirror-mark-name="code" spellcheck="false">
       allowedSignersFile</span> をセットアップ<br>
-      本設定は、署名されたコミットを検証するために使用します。対象リポジトリへコミットするユーザーの (1)メールアドレス、(2)公開鍵、を 
-      <span class="cpp-source">allowedSignersFile</span> へ登録します。<br>
       <span class="cpp-source">allowedSignersFile</span> は、Git で SSH 
-      署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> 
+      署名を使用したコミットやタグの検証を行う際に、信頼できる SSH 公開鍵をリストとして定義するファイルです。<br>
+      ファイル名、ファイル保存場所 はなんでも良いのですが、ここでは対象リポジトリに config というフォルダを作成して 
+      <span class="cpp-source">config/allowed_signers</span> 
+      というファイルで登録してみます。このファイルへ対象リポジトリへコミットするユーザーの (1)メールアドレス、(2)公開鍵、を 
+      <span class="cpp-source">allowedSignersFile</span> へ登録します。<br><br>登録手順例を以下に記載します。<span class="cpp-source">bitbucket@example.com</span> 
       および <span class="cpp-source">id_ed25519.pub</span> 
       を登録するユーザーのメールアドレス・公開鍵、へ置き換えて登録します。</p>
       
       <pre class="prettyprint" style="width: 800px">
-echo "bitbucket@example.com $(cat id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
-git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
+echo "bitbucket@example.com $(cat ~/.ssh/bitbucket/id_ed25519.pub)" &gt; config/allowed_signers
+git config gpg.ssh.allowedSignersFile config/allowed_signers</pre>
 
-      つまり、<span class="cpp-source">~/.ssh/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br><br>
+      つまり、<span class="cpp-source">config/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br><br>
       
       <pre style="width:800px">「ユーザーのメールアドレス SSH公開鍵」</pre>
       
@@ -214,31 +224,16 @@ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
 example@domain.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAxxxxxx...
 foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
 
-      そして <span class="cpp-source">.gitconfig</span> には <span class="cpp-source">allowedSignersFile</span> のパスが記載されます。
+      そして <span class="cpp-source">.git/config</span> には <span class="cpp-source">allowedSignersFile</span> のパスが記載されます。
       <br>
       <br>
 
       </li>
-      <li>必要に応じて、ssh-agent を再実行することを検討してください。<br>
+      <li>以上を設定後の私の <span class="cpp-source">.git/config</span> ファイルを紹介します。<br>
+      <p>項目の表示順序はいろいろなので気にしないでください。</p>
+      <br>
+      <p>["<span class="cpp-source">.git/config</span>"]</p>
       
-      <pre class="prettyprint" style="width: 800px">
-ssh-add ~/.ssh/id_ed25519.pub
-eval $(ssh-agent)</pre>
-
-      </li>
-      <li>以上を設定後の私の <span class="cpp-source">.gitconfig</span> ファイルを紹介します。<br><br>[".gitconfig"]<br>
-      
-      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-[user]
-        name = kinoshita hidetoshi
-        email = ********@********.com
-        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub
-[gpg "ssh"]
-        allowedSignersFile = /home/kinoshita/.ssh/allowed_signers
-[gpg]
-        format = ssh</pre>
-        <br>"<span class="cpp-source">--global</span>" を付けずに各リポジトリで設定した場合はリポジトリ内の "<span class="cpp-source">.git/config</span>" 
-      ファイルに同様の情報が記載されます。<br><br>[".git/config"]<br>
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 [core]
         省略
@@ -246,31 +241,47 @@ eval $(ssh-agent)</pre>
         省略
 [branch "main"]
         省略
-[commit]
-        gpgsign = true
+[user]
+        signingkey = /home/hidetoshi/.ssh/bitbucket/id_ed25519.pub
+[gpg "ssh"]
+        allowedSignersFile = config/allowed_signers
 [gpg]
         format = ssh
+[commit]
+        gpgsign = true</pre>
+      <br>"<span class="cpp-source">--global</span>" を付けて設定した場合は、"<span class="cpp-source">~/.gitconfig</span>" 
+      ファイルに同様の情報が記載されます。<br><br>["<span class="cpp-source">~/.gitconfig</span>"]<br>
+      
+      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 [user]
-        signingkey = /home/kinoshita/.ssh/bitbucket/id_ed25519.pub</pre>
+        name = kinoshita hidetoshi
+        email = ********@********.com
+        signingkey = /home/hidetoshi/.ssh/bitbucket/id_ed25519.pub
+[gpg "ssh"]
+        allowedSignersFile = /home/hidetoshi/.ssh/allowed_signers
+[gpg]
+        format = ssh
+[commit]
+        gpgsign = true</pre>
       </li>
     </ol>
+    
+    <p> &nbsp;</p>
   </section>
-	
-  <p> &nbsp;</p>
+  
   <p> &nbsp;</p>
   
   <section>
   	<h2> <a name="5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a></h2>
     <p>git commit 時に “-S“ を付けて実施することは面倒です。一部のツールではこれを補助する仕組みがある様子ですが、常に署名してくれる方が良い場合もありそうです。</p>
     <p>署名対象のディレクトリへ移動後、下記コマンドを実行します。</p>
-    <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config commit.gpgsign true</pre>
+    <pre class="prettyprint" style="width: 800px">git config commit.gpgsign true</pre>
     <p>&nbsp;</p>
     <p>もしくは全てを対象に有効化する場合は ‘--global’ を付けて下記コマンドを実行します。 </p>
-    <pre class="prettyprint linenums lang-cpp" style="width: 800px">git config --global commit.gpgsign true</pre>
+    <pre class="prettyprint" style="width: 800px">git config --global commit.gpgsign true</pre>
     <p>&nbsp;</p>
     <p>後者のコマンドを実行後の私の .gitconfig ファイル例です。（メールアドレスは **** で変更表記しています）</p>
     <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-kinoshita@PC-FooBoo:~$ cat .gitconfig
 [user]
         name = kinoshita hidetoshi
         email = ********@********.com
@@ -282,10 +293,11 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
 [commit]
         gpgsign = true</pre>
     <p>&nbsp;</p>
-    <p>以上の設定により git commit に “-S” を付けることなくコミットに対して常に署名するようになります。 </p>
+    <p>以上の設定により <span class="cpp-source">git commit</span> に <span class="cpp-source">-S</span> を付けることなくコミットに対して常に署名するようになります。 </p>
+    <p> &nbsp;</p>
+    
   </section>
 	
-  <p> &nbsp;</p>
   <p> &nbsp;</p>
   
   <section>
@@ -351,31 +363,35 @@ kinoshita@PC-FooBoo:~$ cat .gitconfig
   
   <section>
     <h2><a name="7._つまり、設定手順を簡単に説明すると...">7. つまり、設定手順を簡単に説明すると...</a></h2>
-    <p>いろいろ記載しましたが、Bitbucket でコミット署名の設定手順を要約すると以下のような感じになります。</p>
-    <p>個別の内容は適宜変更してください。</p>
+    <p>いろいろ記載しましたが、<strong>Bitbucket</strong> でコミット署名の設定手順を要約すると以下のような感じになります。</p>
+    <p>&nbsp;</p>
     <ol>
       <li>SSH 認証鍵を作成</li>
-      <li>SSH 認証鍵を Bitbucket へ登録</li>
-      <li>キーの形式を指定<br><span class="cpp-source">$ git config gpg.format ssh</span></li>
-      <li>コミット署名に使用する SSH 認証鍵を指定（以下は例です）<br><span class="cpp-source">$ git config 
-      user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</span></li>
-      <li>ファイル <span class="cpp-source">allowedSignersFile</span> 
-      をセットアップ<br>
+      <li>SSH 認証鍵を <strong>Bitbucket</strong> へ登録</li>
+      <li>キーの形式を指定<br>
+        <p><span class="cpp-source">$ git config gpg.format ssh</span></p></li>
+      <li>コミット署名に使用する SSH 認証鍵を指定（以下は例です）<br>
+        <p><span class="cpp-source">$ git config user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</span></p></li>
+      <li>ファイル <span class="cpp-source">allowedSignersFile</span> をセットアップ<br>
+      <p><span class="cpp-source">allowed_sighners</span> ファイルの所在およびファイル名は任意です。</p><br>
       
-      <pre class="prettyprint linenums lang-cpp" style="width: 800px">
-$ echo "bitbucket@example.com $(cat ~/.ssh/id_ed25519.pub)" &gt; ~/.ssh/allowed_signers
-$ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
+      <pre class="prettyprint" style="width: 800px">
+$ echo bitbucket@example.com $(cat ~/.ssh/bitbucket/id_ed25519.pub) &gt; config/allowed_signers
+$ git config gpg.ssh.allowedSignersFile config/allowed_signers</pre>
       </li>
-      <li>git commit で常に署名するように設定<br><span class="cpp-source">$ git config 
-      commit.gpgsign true</span> </li>
+      <li>git commit で常に署名するように設定<br>
+        <p><span class="cpp-source">$ git config commit.gpgsign true</span> </p>
+      </li>
     </ol>
+    <p>&nbsp;</p>
     <p>1-2 は、既に作成および登録済みの認証鍵を使用する場合は実施不要。</p>
-    <p>3-5 は、設定を行うリポジトリ内で行います。リポジトリ毎に異なる設定を行えますので、例えば Bitbucket と GitHub 
+    <p>3-5 は、設定を行うリポジトリ内で行います。リポジトリ毎に異なる設定を行えますので、例えば <strong>Bitbucket</strong> と  
+    <strong>GitHub</strong> 
     両方を使用している、という人でも安心です。</p>
     <p>全部共通で良い、という場合は 3-5 のコマンド実行時に <span class="cpp-source">--global</span> 
     オプションを追加します。</p>
     <p>逆に <span class="cpp-source">--global</span> 
-    オプションで設定を行ったうえで、動作条件が異なるリポジトリのみ個別変更という方法もできそうです。</p>
+    オプションで設定を行ったうえで動作条件が異なるリポジトリのみ個別変更、という方法もできそうです。</p>
     <p>&nbsp;</p>
     
     <div class="status_warning">
@@ -394,7 +410,6 @@ $ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
     <p>&nbsp;</p>
   </section>
   
-  <p> &nbsp;</p>
   <p> &nbsp;</p>
   
   <section>
@@ -467,6 +482,11 @@ $ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers</pre>
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-02-13</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">説明をリファクタ、ページデザイン調整、他</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2025-05-30</td>
   	    <td class="td_history_separator">-</td>
