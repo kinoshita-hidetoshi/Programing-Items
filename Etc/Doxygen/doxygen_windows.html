@@ -44,56 +44,42 @@
 
 <body onload="prettyPrint();">
 	
-<h1>Doxygen - Windows版</h1>
+  <h1>Doxygen - Windows版</h1>
 
-<p> Doxygen (Windows版) の使用方法などをざっくり記載してみます。</p>
-<nav>
+  <p> Doxygen (Windows版) の使用方法などをざっくり記載してみます。</p>
 	<p> &nbsp;</p>
-<table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
-  <tr>
-    <td>
-      <nav>
-        <h2>目次</h2>
-        <p>
-      	<a href="#1._Doxygen_とは">1. Doxygen とは</a><br>
-      	<a href="#2._インストール">2. インストール</a><br>&nbsp; <a href="#2-1._Doxygen">2-1. Doxygen</a><br>
-      	&nbsp;
-      	<a href="#2-2._Graphviz">2-2. Graphviz</a><br>
-      	&nbsp;
-      	<a href="#2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a><br>
-      	<a href="#3._Doxygenを使ってみる">3. Doxygenを使ってみる</a><br>
-      	&nbsp;
-      	<a href="#3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a><br>
-      	&nbsp;
-      	<a href="#3-2._Project_を設定する">3-2. Project を設定する</a><br>
-      	&nbsp;
-      	<a href="#3-3._Mode_を設定する">3-3. Mode を設定する</a><br>
-      	&nbsp;
-      	<a href="#3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a><br>
-      	&nbsp;
-      	<a href="#3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する</a><br>
-      	&nbsp;
-      	<a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a><br>
-      	&nbsp;
-      	<a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a><br>
-      	<a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a><br>&nbsp;
-      	<a href="#4-1._基本操作">4-1. 基本操作</a><br>&nbsp;
-      	<a href="#4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a><br>
-      	<a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a><br>
-      	<a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a><br>
-      	<a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
-      	<a href="#8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a><br><br>
-      	<a href="#ライセンス">ライセンス</a><br>
-        <a href="#参考">参考</a><br>
-        </p>
-      </nav>
-    </td>
-  </tr>
-</table>
-</nav>
-
-<p> &nbsp;</p>
-<p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+      <h2>目次</h2>
+      <p><a href="#1._Doxygen_とは">1. Doxygen とは</a></P>
+      <p><a href="#2._インストール">2. インストール</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-1._Doxygen">2-1. Doxygen</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-2._Graphviz">2-2. Graphviz</a></p>
+      <p>&nbsp;&nbsp; <a href="#2-3._HTML_Help_Workshop">2-3. HTML Help Workshop</a></P>
+      <p><a href="#3._Doxygenを使ってみる">3. Doxygenを使ってみる</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-1._作業フォルダを設定する">3-1. 作業フォルダを設定する</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-2._Project_を設定する">3-2. Project を設定する</a></P>
+      <p>&nbsp;&nbsp; <a href="#3-3._Mode_を設定する">3-3. Mode を設定する</a></P>
+      <p>&nbsp;&nbsp; <a href="#3-4._Diagrams_を設定する">3-4. Diagrams を設定する</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-5._OUTPUT_LANGUAGE_を設定する">3-5. OUTPUT_LANGUAGE を設定する</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-6._INPUT_ENCODING_を設定する">3-6. INPUT_ENCODING を設定する</a></p>
+      <p>&nbsp;&nbsp; <a href="#3-7._文書を生成する（Run）">3-7. 文書を生成する(Run)</a></p>
+      <p><a href="#4._DOT_(Graphviz)_を使ってみる">4. DOT (Graphviz) を使ってみる</a></P>
+      <p>&nbsp;&nbsp; <a href="#4-1._基本操作">4-1. 基本操作</a></p>
+      <p>&nbsp;&nbsp; <a href="#4-2._図中の関数名をクリックしてジャンプできるようにする">4-2. 図中の関数名をクリックしてジャンプできるようにする</a></p>
+      <p><a href="#5._HTML_Help_Workshop_を使って_chm_ファイルを生成してみる">5. HTML Help Workshop を使って chm ファイルを生成してみる</a></p>
+      <p><a href="#6._状態遷移図_を追加してみる">6. 状態遷移図 を追加してみる</a></p>
+      <p><a href="#7._mainpage_を追加する">7. mainpage を追加する</a><br>
+      <p><a href="#8._Dot_コマンドで図を描く">8. Dot コマンドで図を描く</a></p>
+      <br>
+      <p><a href="#ライセンス">ライセンス</a></p>
+      <p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
 
 <h2> <a name="1._Doxygen_とは">1. Doxygen とは</a></h2>
 <p> Doxygen (ドキシジェン) とは、C++、C言語、Java、Objective-C、Python、IDL 
