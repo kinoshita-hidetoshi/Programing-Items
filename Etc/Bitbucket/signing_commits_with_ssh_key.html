@@ -92,8 +92,12 @@
     <p> 署名されたコミットは、下図のように <strong>Bitbucket</strong> の Commits 
     画面で <strong>Verified</strong> という表示で確認できます。</p>
     <p>&nbsp;</p>
-    <p>
-    <img alt="画面例" class="border_with_drop-shadow" src="siging_commits_with_ssh_key/img13.jpg"></p>
+    
+    <figure>
+      <img alt="画面例" class="border_with_drop-shadow" src="siging_commits_with_ssh_key/img13.jpg">
+      <figcaption>署名されたコミットの表示例<span class="comment">（Verified）</span></figcaption>
+    </figure>
+    
     <p>&nbsp;</p>
     <p> またリポジトリ設定により、コミット署名を強制化することもできます。</p>
     <p> これを有効化すると署名のないコミットを登録できなくなります。</p>
@@ -210,7 +214,7 @@
       を登録するユーザーのメールアドレス・公開鍵、へ置き換えて登録します。</p>
       
       <pre class="prettyprint" style="width: 800px">
-echo "bitbucket@example.com $(cat ~/.ssh/bitbucket/id_ed25519.pub)" &gt; config/allowed_signers
+echo "example@domain.com $(cat ~/.ssh/bitbucket/id_ed25519.pub)" &gt; config/allowed_signers
 git config gpg.ssh.allowedSignersFile config/allowed_signers</pre>
 
       つまり、<span class="cpp-source">config/allowed_signers</span> に以下の形式で信頼する公開鍵を登録することを意味します。<br><br>
@@ -229,6 +233,7 @@ foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
       <br>
 
       </li>
+      
       <li>以上を設定後の私の <span class="cpp-source">.git/config</span> ファイルを紹介します。<br>
       <p>項目の表示順序はいろいろなので気にしないでください。</p>
       <br>
