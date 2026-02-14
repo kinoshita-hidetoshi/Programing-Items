@@ -49,7 +49,8 @@
 <body onload="prettyPrint();">
 <h1>[Dragablz] はじめに</h1>
 
-<p> 「Dragablz」 は、WPFアプリで使用できるドラッグ可能でタブを分離可能にするオープンソースライブラリです。Dragablzを使用することでとても簡単にドッキング可能なWindowsアプリケーションを作成可能です。使用ライセンスは当初「Ms-PL」でしたが、2016年に 
+<p> <strong>Dragablz</strong> は、WPFアプリで使用できるドラッグ可能でタブを分離可能にするオープンソースライブラリです。<strong>Dragablz
+</strong>を使用することでとても簡単にドッキング可能なWindowsアプリケーションを作成可能です。使用ライセンスは当初「Ms-PL」でしたが、2016年に 
 "MIT Licence" へ変更になったようです。</p>
 <p> &nbsp;</p>
 <div class="mokuji">
@@ -60,7 +61,7 @@
 	<p>&nbsp;&nbsp; <a href="#2-1._Dragablz_入手">2-1. Dragablz 入手</a></p>
 	<p>&nbsp;&nbsp; <a href="#2-2._タブをドラッグ移動可能にする">2-2. Tabをドラッグ移動可能にする</a></p>
 	<p>&nbsp;&nbsp; <a href="#2-3._タブを分離可能にする">2-3. Tabを分離可能にする</a></p>
-	<p>&nbsp;&nbsp;<a hre f="#2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更を可能にする</a></p>
+	<p>&nbsp;&nbsp;<a f="#2-4._ドラッグによるレイアウト変更_を可能にする" hre="" href="#2-4._ドラッグによるレイアウト変更_を可能にする">2-4. ドラッグによるレイアウト変更を可能にする</a></p>
 	<p><a href="#3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a></p>
 	<p>&nbsp;</p>
 	<p><a href="#ライセンス">ライセンス</a></p>
@@ -81,9 +82,44 @@
 <p> &nbsp;</p>
 <p> &nbsp;</p>
 <h2> <a name="2._まずはやってみよう">2. まずはやってみよう</a></h2>
-<p> まずはWPFで TabControl を使ったシンプルなプログラムを作ってみます。<br>これをリファレンスにして Dragablz 
+<p> まずは WPF で TabControl を使ったシンプルなプログラムを作ってみます。<br>これをリファレンスにして Dragablz 
 を使って少しずつ改造していきます。</p>
-<p> 画面です。</p>
+<p> &nbsp;</p>
+  	
+  	<p>[評価環境]</p>
+  	<table class="evaluation_environment">
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	    <td>Visual Studio 2015</td>
+    	    <td>&nbsp;</td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Windows10 home,</td>
+    	    <td>バージョン1511（November Update） </td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+<p> &nbsp;</p>
+    
+<p> ベースとなる WPF アプリの画面です。</p>
+<p> &nbsp;</p>
 <p><img alt="TabControl を使ったシンプル画面" src="abstract/imgB.jpg"></p>
 <p> &nbsp;</p>
 <p>このソースコード(xaml)です。</p>
@@ -120,20 +156,29 @@
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 	
-<p>ではこれを改造してきます。</p>
+<p>&nbsp;</p>
+<p>これを元に <strong>Dragablz</strong> を適用していきます。</p>
+<p>&nbsp;</p>
 <p>&nbsp;</p>
 <h3><a name="2-1._Dragablz_入手">2-1. Dragablz 入手</a></h3>
-<p>最初に NuGet で Dragablz を入手します。<br>この文章を書いているときのバージョンは v0.0.3.160 です。</p>
-<p> 
-<img alt="Dragablz を入手" src="abstract/imgA.jpg"></p>
+<p>最初に <strong>NuGet</strong> で <strong>Dragablz</strong> をインストールします。<br>この文章を書いているときのバージョンは v0.0.3.160 です。</p>
+<p>&nbsp;</p>
+
+    <figure>
+      <img alt="Dragablz を入手" src="abstract/imgA.jpg">
+      <figcaption>Nuget 画面 (Visual Studio 2015)</figcaption>
+    </figure>
+
+
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 <h3> <a name="2-2._タブをドラッグ移動可能にする">2-2. タブをドラッグ移動可能にする</a></h3>
+<p> ソースコードを以下のように修正します。色のついている３行（6, 11, 27 行目）を修正するだけです。</p>
 <p> &nbsp;</p>
 <p> ["MainWindow.xaml"]</p>
 
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-xml" >
 &lt;Window x:Class=&quot;simpleWindow.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
@@ -160,42 +205,51 @@
                     &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
                 &lt;/Grid&gt;
             &lt;/TabItem&gt;
-        &lt;/TabControl&gt;
+        &lt;/<span class="auto-style8">dragablz:TabablzControl</span>&gt;
 
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 	
 <p>
-これだけでタブをドラッグ移動可能になりました。</p>
-<p>
-<img alt="タブをドラッグ移動可能になった様子" src="abstract/img15.jpg"></p>
-<p>
 &nbsp;</p>
+<p>
+上記３行を修正するだけでタブをドラッグ移動可能になりました。</p>
+<p>
+下図のように、タブ部分をドラッグして移動できます。</p>
+<p><img alt="タブをドラッグ移動可能になった様子" src="abstract/img15.jpg"></p>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 <h3>
 <a name="2-3._タブを分離可能にする">2-3.
 タブを分離可能にする</a></h3>
 <p>
-もう少し改造してタブを分離可能にします。</p>
+今度はタブを掴んでドラッグすることで、ウィンドウを分離できるようにします。</p>
+<p>
+&nbsp;</p>
 <p>
 <img alt="タブを分離可能になった様子" src="abstract/img19.jpg"></p>
 <p>&nbsp;</p>
+<p>下記の３行（12-14行目）を追加するだけです。</p>
+<p>&nbsp;</p>
 
 [&quot;MainWindow.xaml&quot;]
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums lang-xml">
 &lt;Window x:Class=&quot;simpleWindow.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
         xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
-        <span class="auto-style9">xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;</span>
+        xmlns:dragablz=&quot;clr-namespace:Dragablz;assembly=Dragablz&quot;
         xmlns:local=&quot;clr-namespace:simpleWindow&quot;
         mc:Ignorable=&quot;d&quot;
         Title=&quot;MainWindow&quot; Height=&quot;350&quot; Width=&quot;525&quot; ResizeMode=&quot;CanResizeWithGrip&quot;&gt;
     &lt;Grid&gt;
-        &lt;<span class="auto-style9">dragablz:TabablzControl</span> Margin=&quot;10&quot;&gt;
-<span class="auto-style8">            &lt;dragablz:TabablzControl.InterTabController&gt;</span>
-<span class="auto-style8">                &lt;dragablz:InterTabController /&gt;</span>
-<span class="auto-style8">            &lt;/dragablz:TabablzControl.InterTabController&gt;</span>
+        &lt;dragablz:TabablzControl Margin=&quot;10&quot;&gt;
+            <span class="auto-style8">&lt;dragablz:TabablzControl.InterTabController&gt;</span>
+                <span class="auto-style8">&lt;dragablz:InterTabController /&gt;</span>
+            <span class="auto-style8">&lt;/dragablz:TabablzControl.InterTabController&gt;</span>
             &lt;TabItem Header=&quot;Tab No.1&quot; Margin=&quot;0&quot;&gt;
                 &lt;Grid Background=&quot;#FFE5E5E5&quot;&gt;
                     &lt;TextBlock x:Name=&quot;textBlock&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Hello world.&quot; VerticalAlignment=&quot;Top&quot;/&gt;
@@ -211,14 +265,16 @@
                     &lt;TextBlock x:Name=&quot;textBlock2&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; Text=&quot;Here we go !&quot; VerticalAlignment=&quot;Top&quot;/&gt;
                 &lt;/Grid&gt;
             &lt;/TabItem&gt;
-        &lt;/TabControl&gt;
+        &lt;/dragablz:TabablzControl&gt;
 
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 	
 <p>
-数行追加するだけで簡単に分離ウィンドウを作成できるようになりました。すばらしい。<br>欠点は上記の変更をするとタブ内の編集を Visual Studio 
-のGUI上で行えなくなることです。これについては少しずつ改善策を考えて行きましょう。</p>
+&nbsp;</p>
+<p>
+３行追加するだけで簡単に分離ウィンドウを作成できるようになりました。すばらしい。<br>欠点は、上記の変更をするとタブ内の編集を Visual Studio 
+の GUI 上で行えなくなることです。これについては少しずつ改善策を考えて行きましょう。</p>
 <p>
 &nbsp;</p>
 <p>
@@ -228,17 +284,25 @@
 <p>
 続いて、タブ部分をドラッグ操作することで下図のようなレイアウト変更を行えるようにします。</p>
 <p>
+&nbsp;</p>
+<p>
 <img alt="レイアウト変更の様子１" src="abstract/imgA1.jpg"></p>
 <p>
-<img alt="レイアウト変更の様子２" src="abstract/imgC.jpg"></p>
+&nbsp;</p>
 <p>
 <img alt="レイアウト変更の様子３" src="abstract/imgD.jpg"></p>
 <p>
+&nbsp;</p>
+<p>
 <img alt="レイアウト変更の様子４" src="abstract/imgE.jpg"></p>
+<p>
+&nbsp;</p>
 <p>
 ソースコードは以下の通りです。<br>黄色部分が追加したところです。水色部分はこれまでに既に追加した部分です。</p>
 
-<p>・&quot;Partition&quot; として指定しているキーワードは何でもよいようですが、これが一致しているタブのみをレイアウトとして取り込めるようです。</p>
+<p>&quot;<span class="cpp-source">Partition</span>&quot; として指定しているキーワード（下記例では "<span class="cpp-source">Beginning</span>"）は何でもよいようですが、これが一致しているタブのみをレイアウトとして取り込めるようです。</p>
+
+<p>&nbsp;</p>
 
 [&quot;MainWindow.xaml&quot;]
 <pre class="prettyprint linenums">
@@ -287,7 +351,9 @@
 </pre>
 	
 <p>
-こんなに簡単にできてしまいました。恐るべし、Dragablz !!</p>
+&nbsp;</p>
+<p>
+こんなに簡単にできてしまいました。恐るべし、<strong>Dragablz</strong> !!</p>
 <p>
 &nbsp;</p>
 <p>
@@ -295,8 +361,12 @@
 <h2>
 <a name="3._TablzControl_のプロパティ">3. TablzControl のプロパティ</a></h2>
 <h3>ConsolidateOrphanedItems</h3>
-<p>・”True” ： 分離したタブをCloseした場合、残ったウィンドウにこのタブが集約されるようになります。<br>・”False” ： 
-分離したタブをCloseした場合、そのタブは消えてしまいます。</p>
+<p>分離したタブを Close した時の挙動を設定するプロパティです。</p>
+<ul>
+  <li>”True” ： 分離したタブを Close したとき、そのタブは残ったウィンドウに集約されます</li>
+  <li>”False” ： 
+分離したタブをCloseしたとき、そのタブは消えます</li>
+</ul>
 <h3>&nbsp;</h3>
 <h3>ShowDefaultCloseButton</h3>
 
@@ -325,7 +395,8 @@ ItemContainerStyle</h3>
 <p>&nbsp;</p>
 
 [&quot;MainWindow.xaml&quot;]
-<pre class="prettyprint linenums">
+
+<pre class="prettyprint linenums lang-xml">
 &lt;Window x:Class=&quot;WpfApplication.MainWindow&quot;
         xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
