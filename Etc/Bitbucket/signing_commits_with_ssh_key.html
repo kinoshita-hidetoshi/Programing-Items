@@ -191,14 +191,6 @@
         <p><span class="cpp-source">-S</span> を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p></li>
       
       <li>SSH キーのパスフレーズを入力します。（パスフレーズを登録している場合のみ）<br> </li>
-      <li>[任意] 下記コマンドでコミットが署名されたことを確認します<br>
-        <p>"<span class="cpp-source">-1</span>" は最新コミットから1つを表示します。</p>
-        <p>"<span class="cpp-source">-3</span>" は最新コミットから3つを表示します。</p>
-      
-        <pre class="prettyprint" style="width: 800px">git log --show-signature -1</pre>
-        表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br><br>
-
-      </li>
       <li>
       <p data-pm-slice="1 1 [&quot;orderedList&quot;,{&quot;order&quot;:1},&quot;listItem&quot;,null]" data-prosemirror-content-type="node" data-prosemirror-node-block="true" data-prosemirror-node-name="paragraph">
       [任意] ディレクトリにファイル 
@@ -231,7 +223,7 @@ foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
       そして <span class="cpp-source">.git/config</span> には <span class="cpp-source">allowedSignersFile</span> のパスが記載されます。
        
       <br><br><strong>allowedSignersFile 登録しないとどうなる？</strong><br>ローカルでの署名検証に失敗します。署名付きのコミットを作成したり、Bitbucket 
-      へプッシュしたりすることは問題なく行えます。 <br>ローカル環境で&nbsp;<span class="cpp-source">git log 
+      へプッシュしたりすることは問題なく行えます。<br>ローカル環境で&nbsp;<span class="cpp-source">git log 
       --show-signature</span>&nbsp;などのコマンドを実行したときに署名が正しいかどうかを検証できず、エラーメッセージが表示されます。<br>
       <strong>エラー例</strong>:&nbsp;<span class="cpp-source">error: 
       gpg.ssh.allowedSignersFile needs to be configured and exist for ssh 
@@ -240,6 +232,14 @@ foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
 
       </li>
       
+      <li>[任意] 下記コマンドでコミットが署名されたことをローカルで確認します<br>
+        <p>"<span class="cpp-source">-1</span>" は最新コミットから1つを表示します。</p>
+        <p>"<span class="cpp-source">-3</span>" は最新コミットから3つを表示します。</p>
+      
+        <pre class="prettyprint" style="width: 800px">git log --show-signature -1</pre>
+        表示例です。<br><img alt="実行結果例" src="siging_commits_with_ssh_key/img34.jpg"><br>
+
+      </li>
       <li>以上を設定後の私の <span class="cpp-source">.git/config</span> ファイルを紹介します。<br>
       <p>項目の表示順序はいろいろなので気にしないでください。</p>
       <br>
