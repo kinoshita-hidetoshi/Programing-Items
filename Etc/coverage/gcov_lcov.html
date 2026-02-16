@@ -364,20 +364,20 @@ call    0 returned 1
 
 <section>
 	<h2> <a name="2._lcov_を使ってみる">2. lcov を使ってみる</a></h2>
-  <p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br></p>
+  <p><strong>lcov</strong> を使うと、カバレッジ計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br></p>
 	<p> &nbsp;</p>
 	
 	<section>
     <h3> <a name="2-1._lcov_概要">2-1. lcov 概要</a></h3>
-    <p> lcov は gcov の出力を収集・統合し、見やすい HTML カバレッジレポートを生成するためのツールセットです。</p>
-    <p> &nbsp;gcov が生のカバレッジ情報を行単位で出すのに対して、lcov 
-    はそれをプロジェクト全体で集約し、ブラウザで閲覧できる形に整える役割を担っています。genhtml というツールとともに使用します。</p>
+    <p> <strong>lcov</strong> は <strong>gcov</strong> の出力を収集・統合し、見やすい HTML カバレッジレポートを生成するためのツールセットです。</p>
+    <p> <strong>gcov</strong> が生のカバレッジ情報を行単位で出すのに対して、<strong>lcov</strong> 
+    はそれをプロジェクト全体で集約し、ブラウザで閲覧できる形に整える役割を担っています。<strong>genhtml</strong> というツールとともに使用します。</p>
     <p> &nbsp;</p>
     <p> <strong>何ができるのか</strong></p>
     <ul>
       <li><strong>カバレッジ情報の収集</strong><br>複数ファイル・複数テスト実行の .gcda / .gcno をまとめて解析し、 .info という 
       1 つのレポートファイルに統合する </li>
-      <li><strong>HTML レポート生成</strong><br>&nbsp;genhtml コマンドで、下記を色分けした見やすい HTML に変換できる。 <br>(1) 
+      <li><strong>HTML レポート生成</strong><br>&nbsp;<strong>genhtml</strong> コマンドで、下記を色分けした見やすい HTML に変換できる。 <br>(1) 
       行カバレッジ <br>(2) 関数カバレッジ <br>(3) 分岐カバレッジ</li>
       <li><strong>フィルタリング</strong><br>必要な部分だけに絞ったレポートを作れる。
        
@@ -458,11 +458,13 @@ For more information see: http://ltp.sourceforge.net/coverage/lcov.php</pre>
       <div></div>
       <div>
         <p><strong>重要</strong></p>
-        <p>lcov は内部で gcov を使用しているようです。そして gcc/g++ と gcov 
+        <p><strong>lcov</strong> は内部で <strong>gcov</strong> を使用しているようです。そして  
+        <strong>gcc/g++</strong> と <strong>gcov</strong> 
         のバージョンは完全一致している必要があります。不一致だとエラーになって解析できません。</p>
-        <p>lcov に対して使用する gcov を教えてあげるのが引数 "--gcov-tool" です。このオプションに続けて使用する gcov 
+        <p><strong>lcov</strong> に対して使用する <strong>gcov</strong> を教えてあげるのが引数 "<span class="cpp-source">--gcov-tool</span>" です。このオプションに続けて使用する  
+        <strong>gcov</strong> 
         をフルパスまたは相対パスで指定しします。</p>
-        <p>"--gcov-tool" 
+        <p>"<span class="cpp-source">--gcov-tool</span>" 
         は多くの場合に不要ですが、複数の開発環境をインストールしている場合、組み込みソフトウェア開発をしている場合、などにこれを使用する必要を生じる場合があります。ご注意ください。</p>
       </div>
     </div>
@@ -573,7 +575,7 @@ int main() {
 
   	<p> "coverage_test.gcda" というファイルが出力されます。カバレッジ測定データを保存したバイナリデータのようです。</p>
   	<p> &nbsp;</p>
-  	<p> (4) "coverage_test.gcda" と同じ場所で lcov を実行します。</p>
+  	<p> (4) "coverage_test.gcda" と同じ場所で <strong>lcov</strong> を実行します。</p>
   	
   	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ lcov -d . -c -o coverage_test.info
 Capturing coverage data from .
@@ -592,7 +594,7 @@ Processing coverage_test.gcda
 Finished .info-file creation</pre>
 
   	<p> &nbsp;</p>
-  	<p> (6) genhtml を実行します。</p>
+  	<p> (6) <strong>genhtml</strong> を実行します。</p>
   	
   	<pre style="width: 800px; color: #C0C0C0; background-color: #000000;">$ genhtml coverage_test.info -o ./info
 Reading data file coverage_test.info
@@ -625,7 +627,7 @@ Overall coverage rate:
       <img alt="lcov 表示結果（３）" src="gcov_lcov/img42.jpg" class="border_with_drop-shadow" width="800"></p>
   	<p> &nbsp;</p>
   	<p> &nbsp;</p>
-  	<p> とりあえず lcov を以上のような感じで使えそうです。</p>
+  	<p> とりあえず <strong>lcov</strong> を以上のような感じで使えそうです。</p>
   	<p> &nbsp;</p>
 	</section>
 
@@ -635,8 +637,8 @@ Overall coverage rate:
   	<h3><a name="2-4._lcov_の表示に_Branches(c1)_を追加する">2-4. lcov の表示に Branches(c1) を追加する</a></h3>
   	
   	<h4>[概要]</h4>
-    <p>lcovを使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>とても便利なツールですが、デフォルトでは 
-    C0(命令網羅) のカバレッジデータしか表示してくれません。<br>gcov はC0,C1両方のカバレッジデータを出力しています。</p>
+    <p><strong>lcov</strong> を使うと、カバレッジの計測結果を視覚的にわかりやすく表示（HTML形式）できます。<br>とても便利なツールですが、デフォルトでは 
+    C0(命令網羅) のカバレッジデータしか表示してくれません。<br><strong>gcov</strong> は C0, C1 両方のカバレッジデータを出力しています。</p>
   	<p> &nbsp;</p>
   	
   	<h4>[環境]</h4>
@@ -705,7 +707,7 @@ Overall coverage rate:
 
 
     <p>&nbsp;</p>
-    <p>または lcov, genhtml コマンドそれぞれの引数に下記を使用します。</p>
+    <p>または <strong>lcov</strong>, <strong>genhtml</strong> コマンドそれぞれの引数に下記を使用します。</p>
     <p>&nbsp;</p>
   
     <p><strong>lcov</strong></p>
@@ -786,7 +788,7 @@ Processing coverage_test.gcda
 Finished .info-file creation</pre>
 
   	<p> &nbsp;</p>
-  	<p> (6) genhtml を実行します。</p>
+  	<p> (6) <strong>genhtml</strong> を実行します。</p>
   	<p> オプションとして "<span class="auto-style2"><strong>--branch-coverage</strong></span>" 
   	を付けて実行します。</p>
 
@@ -808,7 +810,7 @@ Overall coverage rate:
   	<p>
       <img alt="lcov 表示結果 － branches 付き" class="border_with_drop-shadow" src="gcov_lcov/img45.jpg" width="800"></p>
   	<p>&nbsp;</p>
-  	<p>以上の手順で lcov の表示に Branches(c1) を追加できることを確認できました。</p>
+  	<p>以上の手順で <strong>lcov</strong> の表示に Branches(c1) を追加できることを確認できました。</p>
     <p>&nbsp;</p>
   </section>
 
