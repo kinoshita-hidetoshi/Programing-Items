@@ -223,14 +223,20 @@ git config gpg.ssh.allowedSignersFile config/allowed_signers</pre>
       <pre style="width:800px">「ユーザーのメールアドレス SSH公開鍵」</pre>
       
       <br>例えばこんな感じのファイルです。<br>
-      ["~/.ssh/allowed_signers"]<br>
+      ["config/allowed_signers"]<br>
       
       <pre class="prettyprint linenums lang-cpp" style="width: 800px">
 example@domain.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAxxxxxx...
 foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
 
       そして <span class="cpp-source">.git/config</span> には <span class="cpp-source">allowedSignersFile</span> のパスが記載されます。
-      <br>
+       
+      <br><br><strong>allowedSignersFile 登録しないとどうなる？</strong><br>ローカルでの署名検証に失敗します。署名付きのコミットを作成したり、GitHub 
+      へプッシュしたりすることは問題なく行えます。 <br>ローカル環境で&nbsp;<span class="cpp-source">git log 
+      --show-signature</span>&nbsp;などのコマンドを実行したときに署名が正しいかどうかを検証できず、エラーメッセージが表示されます。<br>
+      <strong>エラー例</strong>:&nbsp;<span class="cpp-source">error: 
+      gpg.ssh.allowedSignersFile needs to be configured and exist for ssh 
+      signature verification</span><br>
       <br>
 
       </li>
