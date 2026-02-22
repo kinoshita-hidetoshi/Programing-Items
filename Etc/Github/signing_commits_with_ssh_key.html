@@ -16,7 +16,8 @@
   <link rel="shortcut icon" href="../../favicon.ico">
   
   <!-- CSS -->
-  <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">
+  <!-- <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="../../ress.min.css">
 	<link rel="stylesheet" href="../../design.css" type="text/css">
   
 	<!-- Start for 'google-code-prettify' -->
@@ -127,20 +128,40 @@
   	<h2> <a name="3._新しいSSHキーを生成して追加する">3. 新しい SSH キーを生成して追加する</a></h2>
     <p> まずはSSHキーを作成します。</p>
     <p> すでにSSH認証を使用している場合はこの手順をスキップできます。</p>
-    
-    <pre class="prettyprint lang-bsh" style="width:800px">ssh-keygen -t ed25519 -C "your_email@example.com"</pre>
-    
-    <p> &nbsp;</p>
-    <p> 以下を表示したらそのまま Enter キーを押します。 </p>
-    
-    <pre class="prettyprint lang-bsh" style="width:800px">
-Generating public/private ed25519 key pair.
-Enter file in which to save the key (/root/.ssh/id_ed25519):</pre>
+	
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+$ mkdir ~/.ssh
+$ cd ~/.ssh
+$ mkdir github
+$ cd github
+$ ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;--- &quot;hoge@foo.com&quot; は自分のメールアドレス</span>
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/yourname/.ssh/id_rsa):/home/yourname/.ssh/github/id_ed25519
+                                                 <span class="auto-style1">&lt;----- &quot;github&quot;フォルダへ修正してEnter</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Your identification has been saved in /home/yourname/.ssh/github/id_ed25519.
+Your public key has been saved in /home/yourname/.ssh/github/id_ed25519.pub.
+The key fingerprint is:
+SHA256:Z5I/tXZlSEIvrQgZ2jFq8vUa6FHkmxbW+jps24D9WqU hoge@foo.com
+The key&#39;s randomart image is:
++--[ED25519 256]--+
+|        =   .    |
+|       * * . o   |
+|    . + X . o +  |
+|     + = O . = . |
+|      + S = + . o|
+|     . = O + . o |
+|      o.+ E o .  |
+|        +* o .   |
+|       .++o      |
++----[SHA256]-----+
+$</pre>
 
     <p> &nbsp;</p>
     <p> パスフレーズはここではなしで進めます。以下が出てきたらそのまま Enter キーを押します。 </p>
     
-    <pre class="prettyprint lang-bsh" style="width:800px">
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:</pre>
 
@@ -255,7 +276,7 @@ foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
 [branch "main"]
         省略
 [user]
-        signingkey = /home/hidetoshi/.ssh/github/id_ed25519.pub
+        signingkey = /home/yourname/.ssh/github/id_ed25519.pub
 [gpg "ssh"]
         allowedSignersFile = config/allowed_signers
 [gpg]
@@ -269,9 +290,9 @@ foo.boo@domain.com ssh-ed25519 ABCDE4NzaC1lZDI112345678xxxxxx...</pre>
 [user]
         name = kinoshita hidetoshi
         email = ********@********.com
-        signingkey = /home/hidetoshi/.ssh/github/id_ed25519.pub
+        signingkey = /home/yourname/.ssh/github/id_ed25519.pub
 [gpg "ssh"]
-        allowedSignersFile = /home/hidetoshi/.ssh/allowed_signers
+        allowedSignersFile = /home/yourname/.ssh/allowed_signers
 [gpg]
         format = ssh
 [commit]
