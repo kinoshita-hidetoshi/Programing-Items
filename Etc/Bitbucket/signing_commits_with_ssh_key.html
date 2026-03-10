@@ -36,6 +36,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    text-decoration: underline;
+  }
+  </style>
+
   </head>
 
 <body onload="prettyPrint();">
@@ -183,9 +189,13 @@
         <pre class="prettyprint" style="width: 800px">git config gpg.format ssh</pre></li>
       
       <li>コミットの署名に使用するキーを Git に指示します。<br>
-        <p>私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519.pub</span> を公開鍵として使用しているので下記コマンドを使用します。</p>
-        <pre class="prettyprint" style="width: 800px">git config user.signingkey ~/.ssh/bitbucket/id_ed25519.pub</pre></li>
-      
+        以下を参考に<span class="auto-style1">あなたの<strong>秘密鍵</strong>のパスとファイル名に置き換えてください</span>。<br>
+        私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519</span> を秘密鍵として使用しているので下記コマンドを使用します。<br><br>
+        Linux の場合：<pre class="prettyprint" style="width: 800px">git config user.signingkey ~/.ssh/bitbucket/id_ed25519</pre>
+        Windows の場合：<pre class="prettyprint" style="width: 800px">git config user.signingkey "c:\users\your_name\.ssh\bitbucket\id_ed25519"</pre>
+        <br><strong>補足：</strong><br>インターネット上の記事では、<strong>公開鍵</strong>を登録する、と記載しているものが多数あります。秘密鍵で署名して公開鍵で検証するので、ここで設定するのは秘密鍵で正しいです。ただし、公開鍵を指定した場合でも、git 
+        プログラムが自動的に処理しているのか、期待通りに動作してくれることを検証済みです。ご心配なく。結果として、登録するのは秘密鍵でも公開鍵でもOKです。私も両方で検証済みです。 
+        <br>
       <li>ローカルブランチに変更をコミットする場合は、コマンドのフラグ（-S）を使用します。<br>
         <pre class="prettyprint" style="width: 800px">git commit -S -m "your commit message"</pre>
         <p><span class="cpp-source">-S</span> を毎回つけるのが面倒な場合は、後述の "<a href="#5._git_commit_で常に署名するように設定する">5. git commit で常に署名するように設定する</a>" を確認してください。</p></li>
