@@ -54,7 +54,7 @@
   <h1>GoogleTest の使い方 (Ubuntu)</h1>
   
   <p> &nbsp;</p>
-  <p> GoogleTest の使い方についてメモしていきます。</p>
+  <p> <strong>GoogleTest</strong> の使い方についてメモしていきます。</p>
   
   <p>&nbsp;</p>
   <table style="border: 1px solid #808080; width: 800px; max-width: 100%; background-color: #F0F0F0;">
@@ -85,9 +85,11 @@
   
   <section>
   	<h2> <a name="1._GoogleTest_をインストール">1. GoogleTest をインストール</a></h2>
+    <p> 下記いずれかの方法で <strong>GoogleTest</strong> をあなたの環境へインストールします。</p>
+    <p> &nbsp;</p>
   	
     <h3><a name="1-1._パッケージマネージャーでインストールする">1-1. パッケージマネージャーでインストールする</a></h3>
-    <p>Ubuntuでは以下のコマンドでインストールできます。使用するディストリビューションによって適宜コマンドは変更してください。</p>
+    <p>Ubuntu では、以下のコマンドで <strong>GoogleTest</strong> をインストールできます。使用するディストリビューションによって適宜コマンドは変更してください。</p>
     <pre class="prettyprint" style="width: 800px">sudo apt-get install <strong>libgtest-dev</strong></pre>
     
     <p>&nbsp;</p>
@@ -96,7 +98,7 @@
       <div></div>
       <div>
         <p><strong>注意</strong></p>
-        <p>GoogleTest 用のパッケージ libgtest-dev は古いバージョンだと "google mock" 
+        <p><strong>GoogleTest</strong> 用のパッケージ libgtest-dev は、古いバージョンだと "google mock" 
         が同梱されていません。その場合は最新のソースコードをレポジトリから取得し、それをビルドして使用します。 </p>
       </div>
     </div>
@@ -142,12 +144,12 @@
 		<p>&nbsp;</p>
 
 	  <p> <strong>Step1</strong>. </p>
-    <p> ソースをダウンロードします。Google Test のリポジトリはこちらです。</p>
-    <p> <a href="https://github.com/google/googletest">google/googletest: 
+    <p> ソースをダウンロードします。<strong>GoogleTest</strong> リポジトリはこちらです。</p>
+    <p> <a href="https://github.com/google/googletest" target="_blank">google/googletest: 
     GoogleTest - Google Testing and Mocking Framework (github.com)</a></p>
     <p> &nbsp;</p>
     <p> Release はこちら。こちらをお勧め、という記事があったので私もこちらから取得します。</p>
-    <p> <a href="https://github.com/google/googletest/releases">Releases · 
+    <p> <a href="https://github.com/google/googletest/releases" target="_blank">Releases · 
     google/googletest (github.com)</a></p>
     <p> &nbsp;</p>
     <p> <strong>Step2</strong>. </p>
@@ -177,7 +179,7 @@
     <pre class="prettyprint" style="width: 800px">sudo apt install build-essential cmake lcov</pre>
     <p> &nbsp;</p>
     <p> <strong>Step3</strong>. Google Test をビルド</p>
-    <p> 普通に cmake でビルドします。</p>
+    <p> 普通に cmake でビルドします。（取得するあたりのバージョン番号は適宜変更してください）</p>
     
 	  <pre class="prettyprint" style="width: 800px">
 $ mkdir temp
