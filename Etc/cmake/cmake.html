@@ -42,6 +42,9 @@
     .auto-style2 {
       color: #87CEEB;
     }
+    .auto-style3 {
+      background-color: #505000;
+    }
   </style>
 
 </head>
@@ -50,7 +53,7 @@
 
   <h1>cmake の使い方</h1>
 
-  <p> cmake の使い方について記載してみたいと思います。</p>
+  <p> cmake の使い方について記載します。</p>
   <p>&nbsp;</p>
   
   <div class="mokuji">
@@ -59,6 +62,8 @@
     	<p><a href="#1._ステップ１:_実行ファイルを作成">1. ステップ１： 実行ファイルを作成</a></p>
     	<p><a href="#2._ステップ２:_静的・動的ライブラリを作成">2. ステップ２： 静的・動的ライブラリを作成</a></p>
     	<p><a href="#3._ステップ３:_サブディレクトリにソースが分散している場合">3. ステップ３： サブディレクトリにソースが分散している場合</a></p>
+      <p><a href="#4._CMAKE_BUILD_TYPE">4. CMAKE_BUILD_TYPE</a></p>
+      <p><a href="#5._GoogleTest">5. GoogleTest</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -393,7 +398,6 @@ Good morning!</pre>
 
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
     <h4>2-2-2. 動的ライブラリの作成</h4>
     <p>CMakeLists.txt を以下のように作成します。</p>
     <p>[CMakeLists.txt]</p>
@@ -682,9 +686,111 @@ Good morning!</pre>
     <p>&nbsp;</p>	
        
   </section>
-  	
+  
   <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="4._CMAKE_BUILD_TYPE">4. CMAKE_BUILD_TYPE</a></h2>
+    <p> &nbsp;</p>
+    <h3> CMAKE_BUILD_TYPE とは</h3>
+    <p> cmake を用いてビルドするときに <span class="cpp-source">-DCMAKE_BUILD_TYPE</span> を指定すると、<span class="cpp-source">CMakeLists.txt</span> 
+    に書かれている定義に従って適切なオプションを付けてビルドが行われる、というものです。</p>
+    <p> 
+    <a href="https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html" target="_blank">CMAKE_BUILD_TYPE — CMake 4.3.0 Documentation</a></p>
+    <p> &nbsp;</p>
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ cmake -DCMAKE_BUILD_TYPE=Release  # -O2 とか -DNDEBUG とかが付く
+$ cmake -DCMAKE_BUILD_TYPE=Debug    # -O0 とか -g とかが付く</pre>
 
+    <p> &nbsp;</p>
+    <p> 値として <span class="cpp-source">empty</span>,&nbsp;<span class="cpp-source">Debug</span>,&nbsp;<span class="cpp-source">Release</span>,&nbsp;<span class="cpp-source">MinSizeRel</span>,&nbsp;<span class="cpp-source">RelWithDebInfo</span> などを使用できるようです。</p>
+    <p> それぞれの具体的なビルドオプションは、<span class="cpp-source">CMakeLists.txt</span> 
+    内で定義します。下記例を参照。</p>
+    <p> &nbsp;</p>
+    <p> 
+    <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
+    ["CMakeLists.txt" 例]</span></p>
+    
+    <pre class="prettyprint linenums:1 lang-cpp" style="width:800px">
+# このバージョン以上のCMAKEを使うよう宣言
+cmake_minimum_required(VERSION 3.10)
+
+# プロジェクト名．c/c++言語であることを宣言
+project(test_sample CXX)
+&nbsp;
+# To use the googletest
+find_package(GTest REQUIRED)
+&nbsp;
+# デバッグ出力
+message(STATUS "PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
+message(STATUS "PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
+message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
+&nbsp;
+# 共通オプション
+set(CMAKE_CXX_FLAGS "--coverage")
+set(CMAKE_C_FLAGS "--coverage")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+&nbsp;
+# ビルドの種類によってオプションを変える
+<span class="auto-style3">set(CMAKE_CXX_FLAGS_DEBUG "-Wall -O0 -g")</span>
+<span class="auto-style3">set(CMAKE_CXX_FLAGS_RELEASE "-Wall -O3 -DNDEBUG")</span>
+<span class="auto-style3">set(CMAKE_CXX_FLAGS_MINSIZEREL "-Wall -Os -DNDEBUG")</span>
+<span class="auto-style3">set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-Wall -O2 -g -DNDEBUG")</span>
+&nbsp;
+# リンクディレクトリの指定
+#link_directories(PfLogPrintf)
+&nbsp;
+# 今回作成する実行ファイル test_sample, ソースファイル３つ
+add_executable(
+    test_sample
+    function1_test.cpp
+    function2_test.cpp
+    function3_test.cpp)
+
+# gtest, pthread をリンクします
+target_link_libraries(
+    test_sample 
+    ${GTEST_BOTH_LIBRARIES} 
+    pthread
+    sample)
+&nbsp;
+# target_link_libraries(test_sample GTest::GTest GTest::Main)
+target_include_directories(test_sample PUBLIC ${GTEST_INCLUDE_DIRS})
+&nbsp;
+include(GoogleTest)
+gtest_add_tests(TARGET test_sample)</pre>
+    <p> &nbsp;</p>
+    
+    <h3> (注意1) 値は case insensitive</h3>
+    <p> 大文字小文字は区別されず、<span class="cpp-source">Debug</span> でも 
+    <span class="cpp-source">DEBUG</span> でもOK。 </p>
+    
+    <pre class="prettyprint lang-bsh" style="width: 600px">
+$ cmake -DCMAKE_BUILD_TYPE=Debug  # -g が付く
+$ cmake -DCMAKE_BUILD_TYPE=debug  # -g が付く
+$ cmake -DCMAKE_BUILD_TYPE=DEBUG  # -g が付く
+$ cmake -DCMAKE_BUILD_TYPE=DeBuG  # -g が付く</pre>
+
+    <p> &nbsp;</p>
+    <h3> (注意2) Invalid value に対して警告が出ない</h3>
+    <p> 下記のように定義を誤記してもエラーにならないし警告も出ません。</p>
+    <pre class="prettyprint lang-bsh" style="width: 600px">$ cmake -DCMAKE_BUILD_TYPE=Dedug  # typoだが、警告は出ない</pre>
+    <p> &nbsp;</p>
+    
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="5._GoogleTest">5. GoogleTest</a></h2>
+    <p> "Google Test" によるユニットテストを cmake でビルドする方法について。<a href="../GoogleTest/GoogleTest_Ubuntu.html">こちらの記事</a> 
+    を参照。</p>
+    <p> &nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
     <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
@@ -768,6 +874,18 @@ Good morning!</pre>
 <section>
 	<h2 style="margin-bottom:5px">記載</h2>
 	<table>
+	  <tr>
+	    <td class="td_history_date">2026-03-20</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#4._CMAKE_BUILD_TYPE">4._CMAKE_BUILD_TYPE</a>」を追記</td>
+	  </tr>
+	  
+	  <tr>
+	    <td class="td_history_date">&nbsp;</td>
+	    <td class="td_history_separator">-</td>
+	    <td class="td_history">「<a href="#5._Google_Test">5._Google_Test</a>」を追記</td>
+	  </tr>
+	  
 	  <tr>
 	    <td class="td_history_date">2024-12-15</td>
 	    <td class="td_history_separator">-</td>
