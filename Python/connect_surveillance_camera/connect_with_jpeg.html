@@ -75,47 +75,101 @@
 </table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p> 製品紹介ページ： </p>
-<ul>
-  <li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
-  i-pro-mini-lp</a></li>
-  <li>
-  <a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
-  i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
-</ul>
-<p> &nbsp;</p>
-<p> 
-<img alt="i-PRO mini" src="connect_with_jpeg/imgE.jpg" class="border_with_drop-shadow" width="400"></p>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  <p>本ページでは、<strong>i-PRO</strong> カメラとPCを <strong>JPEG</strong> 
+  により接続してPC画面へ表示するプログラムを Python 
+  で作成する例を紹介します。とても短いプログラムで i-PRO カメラの映像を見ることができます。動作確認は i-PRO mini (WV-S7130)、モジュールカメラ（AIスターターキット）を使って行いましたが、ほとんどの i-PRO 
+  カメラでそのまま利用できるはずです。ぜひお試しください。</p>
+  <p>&nbsp;</p>
 
-<section>
-	<h2> <a name="1._CGI_表記仕様">1. CGI 表記仕様</a></h2>
-	<h4>[概要]</h4>
-  	<p> JPEG(1shot要求)で接続するための表記を以下に記載します。</p>
-    <p> 「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> では下記あたりに書いてある情報です。</p>
+  <figure>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="connect_with_jpeg/jpeg_first.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    <figcaption>[動画] JPEG でカメラと接続して映像表示した様子</figcaption>
+  </figure>
+
+  <p> &nbsp;</p>
+  <hr>
+  <p> &nbsp;</p>
+  
+  <section>
+    <p class="auto-style3"> <strong>"i-PRO mini" 紹介： </strong> </p>
     <ul>
-      <li>「4.8. カメラ映像(JPEG)1shot要求」</li>
+      <li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
+        i-PRO mini</a></li>
+      <li><a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130ux" target="_blank">
+        i-PRO mini 有線LANモデル WV-S7130UX</a></li>
+      <li>  <a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
+        i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
+      <li><a href="https://japancs.i-pro.com/space/DLJP/724085590/WV-S7130UX　i-PRO+mini+有線LANモデル" target="_blank">
+        WV-S7130UX　i-PRO mini 有線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
+      <li><a href="https://japancs.i-pro.com/space/DLJP/724086255/WV-S7130WUX　i-PRO+mini+無線LANモデル" target="_blank">
+        WV-S7130WUX　i-PRO mini 無線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
     </ul>
-    <p> &nbsp;</p>
-    <p><span class="cpp-source">
-    <a href="http://%3CカメラのIPアドレス%3E/cgi-bin/camera?resolution={resolution">
-    http://&lt;カメラのIPアドレス&gt;/cgi-bin/camera?resolution={resolution</a>}</span></p>
+  
+    <p>
+    <a href="../../cpp_vs/connect_camera/images/i-PRO_mini.jpg" target="_blank">
+    <img alt="i-PRO mini 画像" src="../../cpp_vs/connect_camera/images/i-PRO_mini.jpg" class="border_with_drop-shadow" width="348"></a></p>
+  
     <p>&nbsp;</p>
-    <p>補足説明</p>
+    <p class="auto-style3"><strong>"モジュールカメラ" 紹介：</strong></p>
     <ul>
-      <li>resolution :<br>任意の数字を書けそうに見えますが、カメラ側で設定されている解像度から選択する必要があります。<br>
-      カメラ側設定と一致する値が無い場合はカメラ側設定のデフォルト値が採用されます。<br>こういう仕様みたいです</li>
+      <li><a href="https://moduca.i-pro.com" target="_blank">
+        モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+      <li><a href="https://moduca.i-pro.com/space/MCT/768743132/各種マニュアル" target="_blank">
+        各種マニュアル - Module Camera Technical Information - モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+      <li><a href="https://moduca.i-pro.com/space/MCP/768743111/AIソフトウェア" target="_blank">
+        AIソフトウェア - Module Camera Product Information - モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+    </ul>
+    <p> 
+    <a href="../../cpp_vs/connect_camera/images/ai_starter_kit_1.png" target="_blank">
+    <img alt="AI スターターキット 画像(1)" class="border_with_drop-shadow" src="../../cpp_vs/connect_camera/images/ai_starter_kit_1.png" width="404"></a>
+    <a href="../../cpp_vs/connect_camera/images/ai_starter_kit_2.png" target="_blank">
+    <img alt="AI スターターキット 画像(2)" class="border_with_drop-shadow" src="../../cpp_vs/connect_camera/images/ai_starter_kit_2.png" width="444"></a></p>
+    <p>&nbsp;</p>
+    <p>カメラ初期設定についてはカメラ毎の取扱説明書をご確認ください。</p>
+    <p>カメラのIPアドレスを確認・設定できる下記ツールを事前に入手しておくと便利です。</p>
+    <ul>
+      <li>
+        <a href="https://i-pro.com/products_and_solutions/ja/surveillance/learning-and-support/tools/learning-and-support/tools/ip-setting-software" target="_blank">
+        IP簡単設定ソフトウェア</a>&nbsp; (日本国内)</li>
+      <li>
+        <a href="https://i-pro.com/products_and_solutions/en/surveillance/documentation-database/ip-setting-software" target="_blank">
+        IP Setting Software</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (グローバル)</li>
+    </ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+
+  <section>
+  	<h2> <a name="1._CGI_表記仕様">1. CGI 表記仕様</a></h2>
+    <p>JPEG(1shot要求)で接続するための表記を以下に記載します。</p>
+    <p>「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> 
+    で下記に記載されている情報です。</p>
+    <ul>
+      <li>i-pro カメラ外部インタフェース仕様書ver1.59.pdf ： 「3.1.8. カメラ映像 (JPEG) 1shot要求」</li>
+    </ul>
+    <p><span class="cpp-source">
+    http://&lt;カメラのIPアドレス&gt;/cgi-bin/camera?resolution={resolution}</span></p>
+    <p>&nbsp;</p>
+    <p class="auto-style2"><strong>補足説明:</strong></p>
+    <ul>
+      <li>resolution :<br>カメラ側で設定されている解像度から選択する必要があります。<br>
+      カメラ側設定と一致する値が無い場合はカメラ側設定のデフォルト値が採用されます。</li>
     </ul>
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
-</section>
+  </section>
 
-<section>
+  <p> &nbsp;</p>
+    
+  <section>
     <h2> <a name="2. i-PRO カメラと JPEG 接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></h2>
-	<h4>[概要]</h4>
-	<p> とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
+  	<h4>[概要]</h4>
+  	<p> とりあえず映像を取得してPC画面に表示するまでをやってみます。</p>
     <p> &nbsp;</p>
 	
 	<h4>[評価環境1]</h4>
@@ -184,7 +238,7 @@
 	<h4> [プログラム]</h4>
 	
 	<p>[プログラムソース &quot;connect_with_jpeg_1.py&quot;]</p>
-	<pre class="prettyprint linenums lang-py">
+	<pre class="prettyprint linenums lang-py" style="width:800px">
 '''
 [Abstract]
     JPEG(1shot) で i-PRO カメラと接続してみる
@@ -361,7 +415,7 @@ while True:
 	<h4> [プログラム]</h4>
 	
   <p>[プログラムソース &quot;connect_with_jpeg_2.py&quot;]</p>
-	<pre class="prettyprint linenums lang-py">
+	<pre class="prettyprint linenums lang-py" style="width:800px">
 '''
 [Abstract]
     JPEG(1shot) で i-PRO カメラと接続してみる
@@ -539,7 +593,7 @@ while True:
 	<h4> [プログラム]</h4>
 	
 	<p>[プログラムソース &quot;connect_with_jpeg_3.py&quot;]</p>
-	<pre class="prettyprint linenums lang-py">
+	<pre class="prettyprint linenums lang-py" style="width:800px">
 '''
 [Abstract]
     JPEG(1shot) でカメラと接続します。
@@ -673,7 +727,7 @@ while True:
   </ul>
   <p>&nbsp;</p>
   <p>[プログラムソース &quot;connect_with_jpeg_4.py&quot;]</p>
-  <pre class="prettyprint linenums lang-py">
+  <pre class="prettyprint linenums lang-py" style="width:800px">
 '''
 [Abstract]
     JPEG(1shot) でカメラと接続します。
@@ -851,7 +905,7 @@ if __name__ == '__main__':
 	
 	<p>&nbsp;</p>
   <p>[プログラムソース &quot;connect_with_jpeg_5.py&quot;]</p>
-  <pre class="prettyprint linenums lang-py">
+  <pre class="prettyprint linenums lang-py" style="width:800px">
 '''
 [Abstract]
     Try connecting to an i-PRO camera with JPEG(1 shot).
@@ -1026,7 +1080,7 @@ cv2.destroyAllWindows()</pre>
 	
 	<p>&nbsp;</p>
   <p>[プログラムソース &quot;connect_with_mjpeg_6.py&quot;]</p>
-  <pre class="prettyprint linenums lang-py">'''
+  <pre class="prettyprint linenums lang-py" style="width:900px">'''
 [Abstract]
     Try connecting to an i-PRO camera with JPEG.
     JPEG で i-PRO カメラと接続してみる。
@@ -1229,8 +1283,25 @@ if __name__ == "__main__":
     app = Application(master = root)
     app.mainloop()</pre>
   <p>&nbsp;</p>
+  
+  <figure>
+    <img src="connect_with_jpeg/img7.jpg" alt="テスト画像" width="800" class="border">
+    <figcaption>[図] tkinter で作成した GUI アプリ</figcaption>
+  </figure>
+  
   <p>&nbsp;</p>
+      
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>Frame のサイズ（width, height）を指定できますが、デフォルトではこれらの値を指定しても無視されます。pack_propagate(False) または propagate(False) を実行することで意図通りに設定できるようになりました。</p>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+  
 </section>
+
 <p>&nbsp;</p>
   
 <section>

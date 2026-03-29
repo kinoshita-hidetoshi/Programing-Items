@@ -46,36 +46,44 @@
 
 <body onload="prettyPrint();">
 
-<h1>JPEGで画像を取得する (c++/Linux)</h1>
+  <h1>JPEGで画像を取得する (c++/Linux)</h1>
+  
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+      <h2>目次</h2>
+      <p><a href="#1._JPEG_表記仕様">1. JPEG 表記仕様</a></p>
+      <p><a href="#2. i-PRO カメラと JPEG 接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></p>
+      <br>
+      <p><a href="#ライセンス">ライセンス</a></p>
+      <p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <p>本ページでは、<strong>i-PRO</strong> カメラとPCを <strong>JPEG</strong> により接続してPC画面へ表示するプログラムを 
+  c++ (Linux) 
+  で作成する例を紹介します。とても短いプログラムで i-PRO カメラの映像を見ることができます。動作確認は i-PRO mini (WV-S7130)、モジュールカメラ（AIスターターキット）を使って行いましたが、ほとんどの i-PRO 
+  カメラでそのまま利用できるはずです。ぜひお試しください。</p>
+  <p>&nbsp;</p>
 
-<p>&nbsp;</p>
+  <figure>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="connect_with_jpeg/jpeg_first.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    <figcaption>[動画] JPEG でカメラと接続して映像表示した様子</figcaption>
+  </figure>
 
-<div class="mokuji">
-  <nav>
-    <h2>目次</h2>
-    <p><a href="#1._JPEG_表記仕様">1. JPEG 表記仕様</a></p>
-    <p><a href="#2. i-PRO カメラと JPEG 接続して映像を表示してみる">2. i-PRO カメラと JPEG 接続して映像を表示してみる</a></p>
-    <br>
-    <p><a href="#ライセンス">ライセンス</a></p>
-    <p><a href="#参考">参考</a></p>
-  </nav>
-</div>
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<p> 本ページでは、i-PRO カメラとLinux OS の PCを HTTPで接続してJPEG映像を連続で表示するプログラムを&nbsp;c++ で作成します。</p>
-<p> Python の記事は <a href="../../Python/connect_surveillance_camera/connect_with_jpeg.html">
-<strong>こちら</strong></a> を参照ください。</p>
-    
-<p>&nbsp;</p>
-<hr>
-<hr>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
 
 <section>
   <h2><a id="1._JPEG_表記仕様">1. JPEG 表記仕様</a></h2>
-  <h4>[概要]</h4>
   <p>JPEG(1shot要求)で接続するための表記を以下に記載します。</p>
   <p>「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> 
   で下記に記載されている情報です。</p>
@@ -160,7 +168,7 @@ sudo apt update -y &amp;&amp; sudo apt upgrade -y</pre>
 	  <li>プログラムを終了するときはキーボードから "q" キーを押す、またはコンソール上で [ctrl]+[c] してください。</li>
 	</ul>
   <p>&nbsp;</p>
-  <p>[プログラムソース &quot;<a href="https://github.com/i-pro-corp/cpp-examples/blob/main/linux/connect_with_jpeg/opencv_jpeg.cpp" target="_blank">opencv_jpeg.cpp</a>&quot;]</p>
+  <p>[プログラムソース &quot;opencv_jpeg.cpp&quot;]</p>
   
 	<pre class="prettyprint linenums lang-cpp">/*
 ======================================================================================
@@ -296,7 +304,7 @@ int main() {
 	<span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">
 	CMake</span>の知識がある方は、内容をカスタマイズしてお使いください。</p>
   <p>&nbsp;</p>
-  <p>["<a href="https://github.com/i-pro-corp/cpp-examples/blob/main/linux/connect_with_jpeg/CMakeLists.txt" target="_blank">CMakeLists.txt</a>"]</p>
+  <p>["CMakeLists.txt"]</p>
   
 	<pre class="prettyprint linenums lang-cpp"># 変数SOURCE_CORDEを宣言し、ソースコードのファイル名の拡張子無くした値を入れる。
 # cmake -D SOURCE_CODE=(ソース名)で上書き可

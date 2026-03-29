@@ -71,8 +71,7 @@
 c++ (Visual Studio) 
 で作成する例を紹介します。とても短いプログラムで i-PRO カメラの映像を見ることができます。動作確認は i-PRO mini (WV-S7130)、モジュールカメラ（AIスターターキット）を使って行いましたが、ほとんどの i-PRO 
 カメラでそのまま利用できるはずです。ぜひお試しください。</p>
-<p>Python の記事は <a href="../../Python/connect_surveillance_camera/connect_with_jpeg.html">
-<strong>こちら</strong></a> を参照ください。</p>
+<p>&nbsp;</p>
     
 <video controls muted autoplay="y" loop="y" width="800">
   <source src="connect_with_jpeg/jpeg_first.mp4" type="video/mp4">
@@ -137,9 +136,20 @@ c++ (Visual Studio)
 
 <section>
 	<h2> <a name="1._JPEG_表記仕様">1. JPEG 表記仕様</a></h2>
-	<p> i-PRO カメラと接続するための JPEG 表記仕様は 
-	<a href="../../Python/connect_camera/connect_with_jpeg.html#1._JPEG_表記仕様">
-	<strong>こちら</strong></a> を参照ください。</p>
+  <p>JPEG(1shot要求)で接続するための表記を以下に記載します。</p>
+  <p>「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> 
+  で下記に記載されている情報です。</p>
+  <ul>
+    <li>i-pro カメラ外部インタフェース仕様書ver1.59.pdf ： 「3.1.8. カメラ映像 (JPEG) 1shot要求」</li>
+  </ul>
+  <p><span class="cpp-source">
+  http://&lt;カメラのIPアドレス&gt;/cgi-bin/camera?resolution={resolution}</span></p>
+  <p>&nbsp;</p>
+  <p class="auto-style2"><strong>補足説明:</strong></p>
+  <ul>
+    <li>resolution :<br>カメラ側で設定されている解像度から選択する必要があります。<br>
+    カメラ側設定と一致する値が無い場合はカメラ側設定のデフォルト値が採用されます。</li>
+  </ul>
 	<p> &nbsp;</p>
 </section>
 
@@ -395,7 +405,7 @@ C:\Users\foo\Documents\Github\vcpkg&gt;</pre>
 	</ul>
   <p>&nbsp;</p>
   
-  <p>[プログラムソース &quot;<a href="https://github.com/i-pro-corp/cpp-examples/blob/main/vs/connect_with_jpeg/connect_with_jpeg/connect_with_jpeg_1/connect_with_jpeg_1.cpp" target="_blank">connect_with_jpeg_1.cpp</a>&quot;]</p>
+  <p>[プログラムソース &quot;connect_with_jpeg_1.cpp&quot;]</p>
   <pre class="prettyprint linenums lang-cpp">/*
 ======================================================================================
 [Abstract]

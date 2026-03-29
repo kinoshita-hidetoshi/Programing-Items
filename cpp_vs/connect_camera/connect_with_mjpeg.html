@@ -68,14 +68,15 @@
 c++ (Visual Studio) 
 で作成する例を紹介します。とても短いプログラムで i-PRO カメラの映像を見ることができます。動作確認は i-PRO mini (WV-S7130)、モジュールカメラ（AIスターターキット）を使って行いましたが、ほとんどの i-PRO 
 カメラでそのまま利用できるはずです。ぜひお試しください。</p>
-<p>Python の記事は <a href="../../Python/connect_surveillance_camera/connect_with_mjpeg.html">
-<strong>こちら</strong></a> を参照ください。</p>
+<p>&nbsp;</p>
     
-<video controls muted autoplay="y" loop="y" width="800">
-  <source src="connect_with_mjpeg/mjpeg_first.mp4" type="video/mp4">
-  動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
-</video>
-<p>[動画] MJPEG でカメラと接続して映像表示してみた様子</p>
+  <figure>
+    <video controls muted autoplay="y" loop="y" width="800">
+      <source src="connect_with_mjpeg/mjpeg_first.mp4" type="video/mp4">
+      動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+    </video>
+    <figcaption>[動画] MJPEG でカメラと接続して映像表示した様子</figcaption>
+  </figure>
     
 <p> &nbsp;</p>
 <hr>
@@ -136,11 +137,25 @@ c++ (Visual Studio)
 
 <section>
 	<h2> <a name="1._MJPEG 表記仕様">1. MJPEG 表記仕様</a></h2>
-	<p> i-PRO カメラと接続するための MJPEG 表記仕様は 
-	<a href="../../Python/connect_camera/connect_with_mjpeg.html#1._MJPEG 表記仕様">
-	<strong>こちら</strong></a> 
-	を参照ください。</p>
-	<p> &nbsp;</p>
+	<p> MJPEG で接続するための表記を以下に記載します。</p>
+  <p> 「ネットワークカメラCGIコマンドインターフェース仕様書 統合版」<span class="super">[1]</span> で下記に記載されている情報を元に加筆などしています。</p>
+  <ul>
+    <li>「3.13 動画像取得(Motion JPEG 形式取得：リアルタイム) (nphMotionJpeg)」</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p><span class="cpp-source">http://&lt;user-id&gt;:&lt;user-password&gt;@&lt;カメラのIPアドレス&gt;/nphMotionJpeg?Resolution=&lt;解像度&gt;&amp;Quality=&lt;品質&gt;&amp;Framerate=&lt;フレームレート&gt;</span></p>
+  <p>(例) <span class="cpp-source">
+  http://admin:password@192.168.0.10/nphMotionJpeg?Resolution=1920x1080&amp;Quality=Standard&amp;Framerate=15</span></p>
+  <p>&nbsp;</p>
+  <h3>注意事項</h3>
+  <ul>
+    <li>実験してみたところ、ストリーム(1)～(4) を On にしているとMJPEGの配信性能が落ちる様子です。フレームレートを例えば 15 
+    と設定してもコマ落ちが多く発生しているように見えました。<br>カメラの設定にて、ストリーム(1)～(4)を Off、にすることで 30fps 
+    の動作もできているように見えます。</li>
+    <li>CGI のせっていでは "Framerate" の指定を必ず行った方が良さそうです。試しに Framerate 指定を行わなかったところ 0.2fps 
+  程度の表示となりました。恐らくデフォルト値が 0.2fps ぐらいになっていると思われます。</li>
+  </ul>
+  <p>&nbsp;</p>
 </section>
 
 <p>&nbsp;</p>
@@ -213,7 +228,7 @@ c++ (Visual Studio)
 	  <li>プログラムを終了するときはキーボードから "q" キーを押す、またはコンソール上で [ctrl]+[c] してください。</li>
 	</ul>
   <p>&nbsp;</p>
-  <p>[プログラムソース &quot;<a href="https://github.com/i-pro-corp/cpp-examples/blob/main/vs/connect_with_mjpeg/connect_with_mjpeg_1/connect_with_mjpeg_1.cpp" target="_blank">connect_with_mjpeg_1.cpp</a>&quot;]</p>
+  <p>[プログラムソース &quot;connect_with_mjpeg_1.cpp&quot;]</p>
   
 	<pre class="prettyprint linenums lang-cpp">/*
 ======================================================================================
