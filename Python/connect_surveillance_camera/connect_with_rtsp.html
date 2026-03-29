@@ -85,19 +85,78 @@
 </table>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p> 製品紹介ページ： </p>
-<ul>
-  <li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
-  i-pro-mini-lp</a></li>
-  <li>
-  <a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
-  i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
-</ul>
+
+<p> <strong>RTSP</strong> (<strong>Real Time Streaming Protocol</strong>) 
+とは、IETF において標準化された映像（ビデオ）および音声（オーディオ）などのストリーミングデータを制御するためのプロトコルです。1998年に最初の版が "<a href="https://www.rfc-editor.org/rfc/rfc2326" target="_blank">RFC 
+2326</a>" として、バージョン2.0が2016年に "<a href="https://tools.ietf.org/html/rfc7826" target="_blank">RFC 
+7826</a>" として標準化されました。</p>
+<p>本ページでは、<strong>i-PRO</strong> カメラとPCを <strong>RTSP</strong> により接続してPC画面へ表示するプログラムを 
+c++ (Visual Studio) 
+で作成する例を紹介します。とても短いプログラムで i-PRO カメラの映像を見ることができます。動作確認は i-PRO mini (WV-S7130)、モジュールカメラ（AIスターターキット）を使って行いましたが、ほとんどの i-PRO 
+カメラでそのまま利用できるはずです。ぜひお試しください。</p>
 <p> &nbsp;</p>
-<p> 
-<img alt="i-PRO mini" src="connect_with_rtsp/img10.jpg" class="border_with_drop-shadow" width="400"></p>
+    
+<video controls muted autoplay="y" loop="y" width="800">
+  <source src="connect_with_rtsp/rtsp_first.mp4" type="video/mp4">
+  動画を再生するには &lt;video&gt; タグをサポートしたブラウザが必要です。
+</video>
+<p>[動画] RTSP でPCと i-PRO カメラを接続して映像表示した様子</p>
+    
+<p> &nbsp;</p>
+<hr>
+<p> &nbsp;</p>
+
+<section>
+  <p class="auto-style3"> <strong>"i-PRO mini" 紹介： </strong> </p>
+  <ul>
+    <li><a href="https://cwc.i-pro.com/pages/i-pro-mini-lp" target="_blank">
+      i-PRO mini</a></li>
+    <li><a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130ux" target="_blank">
+      i-PRO mini 有線LANモデル WV-S7130UX</a></li>
+    <li>  <a href="https://cwc.i-pro.com/collections/camera/products/wv-s7130wux" target="_blank">
+      i-PRO mini 無線LANモデル WV-S7130WUX</a></li>
+    <li><a href="https://japancs.i-pro.com/space/DLJP/724085590/WV-S7130UX　i-PRO+mini+有線LANモデル" target="_blank">
+      WV-S7130UX　i-PRO mini 有線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
+    <li><a href="https://japancs.i-pro.com/space/DLJP/724086255/WV-S7130WUX　i-PRO+mini+無線LANモデル" target="_blank">
+      WV-S7130WUX　i-PRO mini 無線LANモデル - ダウンロード - i-PRO サポートポータル</a></li>
+  </ul>
+
+  <p>
+    <a href="../../cpp_vs/connect_camera/images/i-PRO_mini.jpg" target="_blank">
+    <img alt="i-PRO mini 画像" src="images/i-PRO_mini.jpg" class="border_with_drop-shadow" width="348"></a>
+  </p>
+
+  <p>&nbsp;</p>
+  <p class="auto-style3"><strong>"モジュールカメラ" 紹介：</strong></p>
+  <ul>
+    <li><a href="https://moduca.i-pro.com" target="_blank">
+      モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+    <li><a href="https://moduca.i-pro.com/space/MCT/768743132/各種マニュアル" target="_blank">
+      各種マニュアル - Module Camera Technical Information - モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+    <li><a href="https://moduca.i-pro.com/space/MCP/768743111/AIソフトウェア" target="_blank">
+      AIソフトウェア - Module Camera Product Information - モジュールカメラ｜ポータルサイト (i-pro.com)</a></li>
+  </ul>
+  <p> 
+    <a href="../../cpp_vs/connect_camera/images/ai_starter_kit_1.png" target="_blank">
+    <img alt="AI スターターキット 画像(1)" class="border_with_drop-shadow" src="images/ai_starter_kit_1.png" width="404"></a>
+    <a href="../../cpp_vs/connect_camera/images/ai_starter_kit_2.png" target="_blank">
+    <img alt="AI スターターキット 画像(2)" class="border_with_drop-shadow" src="images/ai_starter_kit_2.png" width="444"></a>
+  </p>
+  <p>&nbsp;</p>
+  <p>カメラ初期設定についてはカメラ毎の取扱説明書をご確認ください。</p>
+  <p>カメラのIPアドレスを確認・設定できる下記ツールを事前に入手しておくと便利です。</p>
+  <ul>
+    <li>
+      <a href="https://i-pro.com/products_and_solutions/ja/surveillance/learning-and-support/tools/learning-and-support/tools/ip-setting-software" target="_blank">
+      IP簡単設定ソフトウェア</a>&nbsp; (日本国内)</li>
+    <li>
+      <a href="https://i-pro.com/products_and_solutions/en/surveillance/documentation-database/ip-setting-software" target="_blank">
+      IP Setting Software</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (グローバル)</li>
+  </ul>
+</section>
 
 <p>&nbsp;</p>
+<hr>
 <p>&nbsp;</p>
 
 <section>
@@ -110,7 +169,6 @@
     <li>「10.5. 汎用ビューアで H.264 を見る」</li>
     <li>「10.6. 汎用ビューアで H.265 を見る」</li>
   </ul>
-  <p>&nbsp;</p>
   <p>&nbsp;</p>
   <h3>i-PRO カメラ</h3>
   <table class="border-collapse">
@@ -137,7 +195,6 @@
   rtsp://admin:password@192.168.0.10/MediaInput/stream_1</span></p>
   <p>&nbsp;</p>
   <p>補足： カメラ側の映像圧縮方式設定が H.264/H.265 のいずれの場合も上記で接続できました。</p>
-  <p>&nbsp;</p>
   <p>&nbsp;</p>
 
   <h3>マルチセンサーカメラ（X8570 / S8530）</h3>
@@ -180,7 +237,6 @@
     </tr>
   </table>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
   <h3>i-PRO (Panasonic) 従来 model</h3>
   <table class="border-collapse">
     <tr>
@@ -204,16 +260,15 @@
   <p>(例) <span class="cpp-source">
   rtsp://admin:password@192.168.0.10/MediaInput/h264/stream_1</span></p>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
   <h3>注意事項</h3>
   <ul>
     <li>RTSPを使用するためには「インターネットモード(over HTTP) の設定を On にする」と[1]に記載されています。</li>
   </ul>
   <p>&nbsp;</p>
-  <p>&nbsp;</p>
 </section>
-<p>&nbsp;</p>
 
+<p>&nbsp;</p>
+  
 <section>
   <h2><a name="2. i-PRO カメラと RTSP 接続して映像を表示してみる">2. i-PRO カメラと RTSP 接続して映像を表示してみる</a></h2>
   <h4>[概要]</h4>
@@ -389,7 +444,6 @@ cv2.destroyAllWindows()</pre>
   <p>課題３<br>同様に、任意のキー入力でプログラムを終了できるとうれしい。<br>⇨ "z" キー押下でプログラムを終了できるようにします。</p>
   <p>&nbsp;</p>
     <p>&nbsp;</p>
-	<p> &nbsp;</p>
 	
 	<h4>[評価環境1]</h4>
 	<table>
@@ -2048,20 +2102,26 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Application(master = root)
     app.mainloop()</pre>
-  <p>&nbsp;</p>
-  <p>
-  <img alt="GUI sample image with tkinter." class="border_with_drop-shadow" src="connect_with_rtsp/img7.jpg" width="800"></p>
- 
-  <p>[図] tkinter で作成した GUI アプリ</p>
-  <p>&nbsp;</p>
-  <p class="auto-style3"><strong>NOTE</strong></p>
-  <ul>
-    <li>Frame のサイズ（width, height）を指定することができますが、デフォルトではこれらの値を指定しても無視されます。<br>
-    pack_propagate(False) または propagate(False) を実行することで意図通りに設定できるようになります。</li>
-  </ul>
 
   <p>&nbsp;</p>
+  
+  <figure>
+    <img src="connect_with_rtsp/img7.jpg" alt="テスト画像" width="800" class="border">
+    <figcaption>[図] tkinter で作成した GUI アプリ</figcaption>
+  </figure>
+  
   <p>&nbsp;</p>
+      
+  <div class="status_information">
+    <div></div>
+    <div>
+      <p><strong>NOTE</strong></p>
+      <p>Frame のサイズ（width, height）を指定できますが、デフォルトではこれらの値を指定しても無視されます。pack_propagate(False) または propagate(False) を実行することで意図通りに設定できるようになりました。</p>
+    </div>
+  </div>
+
+  <p>&nbsp;</p>
+ 
 </section>
 
 <br>
