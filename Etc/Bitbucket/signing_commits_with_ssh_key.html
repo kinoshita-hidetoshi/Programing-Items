@@ -180,7 +180,32 @@
   <section>
   	<h2> <a name="4._SSH_キーでコミットに署名する">4. SSH キーでコミットに署名する</a></h2>
     <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順に従います。</p>
-    <p> 下記説明は、リポジトリ毎に設定する例を説明します。全ての git リポジトリを対象に設定する場合は "<span class="cpp-source">--global</span>" を付与して実施します。</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>下記ではリポジトリ毎に設定する場合を想定して説明します。
+</p>
+        <p>全ての git リポジトリを対象に設定する場合は <span class="cpp-source">--global</span> を付与して実施します。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>登録されている下記メールアドレスは、大文字・小文字 まで完全一致している必要があります。      
+        <ul>
+          <li>Bitbucket に登録のメールアドレス</li>
+          <li>公開鍵に記載のメールアドレス</li>
+          <li>git config user.email</li>
+        </ul>
+      </div>
+    </div>
+
     <p> &nbsp;</p>
     <ol>
       <li>設定対象のフォルダ（git リポジトリ）へ移動します<br>
@@ -193,8 +218,8 @@
         私の場合は <span class="cpp-source">~/.ssh/bitbucket/id_ed25519</span> を秘密鍵として使用しているので下記コマンドを使用します。<br><br>
         Linux の場合：<pre class="prettyprint" style="width: 800px">git config user.signingkey ~/.ssh/bitbucket/id_ed25519</pre>
         Windows の場合：<pre class="prettyprint" style="width: 800px">git config user.signingkey "c:\users\your_name\.ssh\bitbucket\id_ed25519"</pre>
-        <br><strong>補足：</strong><br>インターネット上の記事では、<strong>公開鍵</strong>を登録する、と記載しているものが多数あります。秘密鍵で署名して公開鍵で検証するので、ここで設定するのは秘密鍵で正しいです。ただし、公開鍵を指定した場合でも、git 
-        プログラムが自動的に処理しているのか、期待通りに動作してくれることを検証済みです。ご心配なく。結果として、登録するのは秘密鍵でも公開鍵でもOKです。私も両方で検証済みです。 
+        <br><strong>補足：</strong><br>インターネット上の記事では、<strong>公開鍵</strong>を登録する、と記載しているものが多数あります。秘密鍵で署名して公開鍵で検証するので、ここで設定するのは秘密鍵で正しいです。ただし、公開鍵を指定した場合でも git 
+        プログラムが自動的に処理しているのか、期待通りに動作してくれることを検証済みです。結果として、登録するのは秘密鍵でも公開鍵でもOKです。私も両方で検証済みです。 
         <br>
       <li>ローカルブランチに変更をコミットする場合は、コマンドのフラグ（-S）を使用します。<br>
         <pre class="prettyprint" style="width: 800px">git commit -S -m "your commit message"</pre>
