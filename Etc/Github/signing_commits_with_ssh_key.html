@@ -196,7 +196,31 @@ Enter same passphrase again:</pre>
   <section>
   	<h2> <a name="5._SSH_キーでコミットに署名する">5. SSH キーでコミットに署名する</a></h2>
     <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順に従います。</p>
-    <p> 下記説明は、リポジトリ毎に設定する例を説明します。全ての git リポジトリを対象に設定する場合は "<span class="cpp-source">--global</span>" を付与して実施します。</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>下記ではリポジトリ毎に設定する場合を想定して説明します。</p>
+        <p>全ての git リポジトリを対象に設定する場合は <span class="cpp-source">--global</span> を付与して実施します。</p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>注意</strong></p>
+        <p>登録されている下記メールアドレスは、大文字・小文字 まで完全一致している必要があります。<strong>メールアドレスを全て小文字で記載</strong>しましょう。      
+        <ul>
+          <li>GitHub に登録のメールアドレス</li>
+          <li>公開鍵に記載のメールアドレス</li>
+          <li>git config user.email</li>
+        </ul>
+      </div>
+    </div>
+
     <p> &nbsp;</p>
     <ol>
       <li>設定対象のフォルダ（git リポジトリ）へ移動します<br>
