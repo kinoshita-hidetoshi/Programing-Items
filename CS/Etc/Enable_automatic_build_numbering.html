@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>ビルド番号の自動採番を有効化 | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <!--<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="../../ress.min.css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>ビルド番号の自動採番を有効化</h1>
+  
+  <p> Microsoft Visual Studio に関する記載です。</p>
+  <p> バージョン番号指定を '1.0.*' とすることで、ビルド番号とリビジョン番号を自動的に採番する手順について記載します。</p>
+  <p> &nbsp;</p>
+    
+  <figure>
+  <img alt="バージョン番号" src="Enable_automatic_build_numbering/img22.jpg" width="500">
+    <figcaption>バージョン番号 付与例</figcaption>
+  </figure>
+    
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#Step_1:_最初の状態を確認">Step_1:_最初の状態を確認</a></p>
+        <p><a href="#Step_2:_アセンブリ_バージョン_を_1.0.*_にする">
+        Step_2:_アセンブリ_バージョン_を_1.0.*_にする</a></p>
+        <p><a href="#Step_3:_コンパイルの決定性を無効にする">Step_3:_コンパイルの決定性を無効にする</a></p>
+        <p><a href="#Step_4：_[assembly:_AssemblyFileVersion(1.2.3.4)]_をコメントアウト">
+        Step_4：_[assembly:_AssemblyFileVersion(1.2.3.4)]_をコメントアウト</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+  <p> 本ページで記載の内容は、下記環境で確認しています。</p>
+  <p> &nbsp;</p>
+  	
+	<p>[評価環境]</p>
+	<table class="evaluation_environment">
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	    <td>Visual Studio 2022 pro.,</td>
+  	    <td>Version 17.14.29 (March 2026)</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows11 home,</td>
+  	    <td>25H2</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+	</table>
+	
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+
+  <section>
+    <h2> <a name="Step_1:_最初の状態を確認">Step 1: 最初の状態を確認</a></h2>
+    <p> WinForm (.NET Framework) のアプリを作成し、アセンブリ情報を確認します。</p>
+    <p> すると下図のようになっています。</p>
+    <p> ファイルバージョンの初期値は "1.0.0.0" でしたが、次の確認を目的にここでは "1.2.3.4" に変更しています。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="バージョン番号" src="Enable_automatic_build_numbering/img12.jpg" width="700">&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>アプリケーションをビルドしてプロパティを確認すると、下図のようになりました。</p>
+    <p>上記「ファイル バージョン」に記載の内容が 「ファイル 
+    バージョン」「製品バージョン」として使用されることがわかります。</p>
+    <p>
+    <img alt="ビルドしたアセンブリに付与されているバージョン番号" src="Enable_automatic_build_numbering/img21.jpg" width="500">&nbsp;</p>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="Step_2:_アセンブリ_バージョン_を_1.0.*_にする">Step 2: アセンブリ バージョン を '1.0.*' にする</a></h2>
+    <p>ここで「アセンブリ バージョン」を下図のように変更します。</p>
+    <p>
+    <img alt="アセンブリバージョンを * で表記" src="Enable_automatic_build_numbering/img1E.jpg" width="700"></p>
+    <p>&nbsp;</p>
+    <p>この状態でビルドすると、</p>
+    
+    <blockquote style="width: 1000px">
+      error CS8357: 指定されたバージョン文字列 '1.0.*' <br>
+      には、決定性と互換性のないワイルドカードが含まれています。バージョン文字列からワイルドカードを削除するか、このコンパイルの決定性を無効にしてください。
+    </blockquote>
+    
+    <p>というメッセージを出力してビルドエラーになりました。</p>
+    <p>&nbsp;</p>
+  </section>
+    
+  <p>&nbsp;</p>
+
+  <section>
+    <h2> <a name="Step_3:_コンパイルの決定性を無効にする">Step 3: コンパイルの決定性を無効にする</a></h2>
+    <p> アセンブリバージョンを '1.0.*' とするには、コンパイルの決定性を無効にする必要があるようです。</p>
+    <p>コンパイルの決定性を無効にするには、プロジェクトの設定ファイル (xxx.csproj) をテキストエディタなどで開き、<strong>&lt;Deterministic&gt;</strong> 
+    の設定を<Deterministic> 
+    <span class="cpp-source">false</span> にして追加する、</Deterministic>もしくは同じ設定項目が既にある場合は、<span class="cpp-source">true</span> を 
+    <span class="cpp-source">false</span> に変更します。 </p>
+    
+    <p>&nbsp;</p>
+	  	
+    <pre class="prettyprint linenums:1 lang-xml" style="width:800px">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;
+  ...
+  &lt;PropertyGroup&gt;
+    ...
+    &lt;Deterministic&gt;false&lt;/Deterministic&gt;
+  &lt;/PropertyGroup&gt;
+  ...
+&lt;/Project&gt;</pre>
+  	
+    <p>&nbsp;</p>
+    <p>これで正常にビルドできるようになりました。</p>
+    <p>しかし、残念ながらビルドでできたアセンブリに記載のバージョンは下図の通り、ファイルバージョンを適用されます。</p>
+    <p><img alt="" src="Enable_automatic_build_numbering/img21.jpg" width="500"></p>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2><a name="Step_4：_[assembly:_AssemblyFileVersion(1.2.3.4)]_をコメントアウト">Step 4： [assembly: AssemblyFileVersion("1.2.3.4")] をコメントアウト</a></h2>
+    <p>"Properties/AssemblyInfo.cs" ファイルを開き、<span class="cpp-source">[assembly: 
+    AssemblyFileVersion("1.2.3.4")]</span> の部分をコメントアウトします。</p>
+    <p>&nbsp;</p>
+    <p>
+    <img alt="バージョン番号" src="Enable_automatic_build_numbering/img23.jpg" width="1200"></p>
+    <p>&nbsp;</p>
+    <p>この状態でビルドすると、下図のようになりました。ビルド番号、リビジョン番号 が自動付与されるようになりました。</p>
+    <p>
+    <img alt="バージョン番号" src="Enable_automatic_build_numbering/img22.jpg" width="500"></p>
+    <p>&nbsp;</p>
+      
+    <div class="status_information">
+      <div></div>
+      <div>
+        <p><strong>NOTE</strong></p>
+        <p>ビルド番号は、2000/01/01 からの経過日です。 </p>
+        <p>リビジョン番号は、現地時間の午前 0 時からの経過秒を 2 で割った値です。</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    <p> <strong>設定可能な例</strong>： </p>
+    <ul>
+      <li>1.2.* : ビルド番号、リビジョン番号が自動採番される </li>
+      <li>1.2.3.* ： リビジョン番号が自動採番される</li>
+    </ul>
+    <p><strong>設定不可な例</strong>：</p>
+    <ul>
+      <li>&nbsp;1.2.*.*</li>
+      <li>&nbsp;1.2.*.3 </li>
+    </ul>
+  
+    <p> &nbsp;</p>
+
+  </section>
+
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2026 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://usagi.hatenablog.jp/entry/2018/12/13/122113" target="_blank">
+        C#: ビルド番号の自動採番の有効化と Properties.Settings.Default の Upgrade トリックの必要について - 
+        C++ ときどき ごはん、わりとてぃーぶれいく☆</a></li>
+        <li>
+        <a href="https://helve-blog.com/posts/csharp/software-version/" target="_blank">
+        C#ソフトウェアのバージョンを設定する · Helve Tech Blog</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-04-08</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2026 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
