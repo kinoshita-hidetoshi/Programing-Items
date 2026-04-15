@@ -179,7 +179,50 @@
   
   <section>
   	<h2> <a name="4._SSH_キーでコミットに署名する">4. SSH キーでコミットに署名する</a></h2>
-    <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順に従います。</p>
+    <p> SSH キーを使用してコミットに署名するには、ターミナル (CLI) を使用して次の手順で設定します。 </p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p><strong>重要</strong></p>
+        <p>登録されている下記メールアドレスは、大文字・小文字 まで完全一致している必要があります。<strong>メールアドレスを全て小文字で記載</strong>しましょう。
+        <ul>
+          <li>Bitbucket に登録のメールアドレス</li>
+          <li>公開鍵に記載のメールアドレス</li>
+          <li>git config user.email</li>
+        </ul>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <p> あなたが <strong>Bitbucket</strong> 
+    だけを使用していてとにかく設定できれば良いという場合は、下記５つのコマンドを（あなたのパスや鍵ファイルに置き換えて）実行すれば設定完了です。あなたが 
+    <strong>user.name</strong>, <strong>user.email</strong> 
+    を設定済みなら、残る３つのコマンドを実行するだけです。この作業だけで全リポジトリを対象にコミット署名を有効化できます。 </p>
+    <p> &nbsp;</p>
+    <p> <strong>Windows の場合：</strong></p>
+    
+    <pre class="prettyprint linenums:1 lang-cpp" style="width:800px">
+git config --global user.name "hoge hoge"
+git config --global user.email "hoge.hoge@foo.com"
+git config --global gpg.format ssh
+git config --global user.signingkey "c:\users\&lt;あなたのID&gt;\.ssh\bitbucket\id_ed25519"
+git config --global commit.gpgsign true</pre>
+
+    <p> &nbsp;</p>
+    <p> <strong>Linux の場合：</strong></p>
+    
+    <pre class="prettyprint linenums:1 lang-cpp" style="width:800px">
+git config --global user.name "hoge hoge"
+git config --global user.email "hoge.hoge@foo.com"
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/bitbucket/id_ed25519
+git config --global commit.gpgsign true</pre>
+
+    <p> &nbsp;</p>
+    <p> Bitbucket 以外の git （例： GitHub, Azure 
+    DevOps）も使用している人、丁寧に理解して使いたい人は、以下で記載の説明をご確認ください。 </p>
+    <p> &nbsp;</p>
     
     <div class="status_warning">
       <div></div>
@@ -188,21 +231,6 @@
         <p>下記ではリポジトリ毎に設定する場合を想定して説明します。
 </p>
         <p>全ての git リポジトリを対象に設定する場合は <span class="cpp-source">--global</span> を付与して実施します。</p>
-      </div>
-    </div>
-
-    <p> &nbsp;</p>
-    
-    <div class="status_warning">
-      <div></div>
-      <div>
-        <p><strong>注意</strong></p>
-        <p>登録されている下記メールアドレスは、大文字・小文字 まで完全一致している必要があります。<strong>メールアドレスを全て小文字で記載</strong>しましょう。
-        <ul>
-          <li>Bitbucket に登録のメールアドレス</li>
-          <li>公開鍵に記載のメールアドレス</li>
-          <li>git config user.email</li>
-        </ul>
       </div>
     </div>
 
