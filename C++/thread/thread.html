@@ -52,8 +52,7 @@
 
   <h1>std::thread (c++11)</h1>
   
-  <p><strong>std::thread</strong> 
-  は boost::thread から標準に採用されたライブラリです。</p>
+  <p><strong>std::thread</strong> は、boost::thread から標準に採用されたライブラリです。</p>
   <p>C++03 ではスレッドライブラリがなかったので Win32 や pthread を使う必要がありました。Win32 の _beginthread を使用した場合はクラスのメソッドを呼ぶ場合に static 
   なメソッドなどをいったん間にかませる必要があるのですが、この <strong>std::thread</strong> はこの手順が不要でクラスメソッドを一発起動できて便利です。</p>
   <p>類似の機能として <strong>std::jthread</strong>,  <strong>std::async</strong> などがあります。</p>
