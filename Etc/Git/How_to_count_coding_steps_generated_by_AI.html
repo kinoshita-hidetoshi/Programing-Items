@@ -70,6 +70,7 @@
       <p><a href="#2._指定したコミット間の変更ステップ数をカウントしたい_(--shortstat)">2. 指定したコミット間の変更ステップ数をカウントしたい (--shortstat)</a></p>
       <p><a href="#3._指定したコミット間の変更ステップ数をカウントしたい_(--numstat)">3. 指定したコミット間の変更ステップ数をカウントしたい (--numstat)</a></p>
       <p><a href="#4._コミットタイトルに_“[AI-gen]”_を含むもののみを対象としたい">4. コミットタイトルに "[AI-gen]" を含むもののみを対象としたい</a></p>
+      <p><a href="#5._コミットした人、を条件に追加">5. コミットした人、を条件に追加</a></p>
       <p><a href="#注意事項など">注意事項など</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
@@ -80,7 +81,7 @@
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <div>
-    <p>[評価環境１]</p>
+    <p><strong>[評価環境１]</strong></p>
   	<table class="evaluation_environment">
       <tbody>
       	<tr>
@@ -125,7 +126,7 @@
   
   <div>
     
-    <p>[評価環境２]</p>
+    <p><strong>[評価環境２]</strong></p>
   	<table class="evaluation_environment">
       <tbody>
       	<tr>
@@ -172,7 +173,8 @@
   <section>
   	<h2> <a name="1._2つのコミット間の「コミット一覧」を出力">1. 2つのコミット間の「コミット一覧」を出力</a></h2>
     <p>2つのコミット間の「コミット一覧」を出力する方法を記載します。</p>
-    <p>&lt;commit1&gt; の次のコミットから &lt;commit2&gt; までが対象となります。 </p>
+    <p><span class="cpp-source">&lt;commit1&gt;</span> の次のコミットから  
+    <span class="cpp-source">&lt;commit2&gt;</span> までが対象となります。</p>
     <p>&nbsp;</p>
     <p><strong>コマンド：</strong> <span class="cpp-source">git log &lt;commit1&gt; .. &lt;commit2&gt; --oneline</span> </p>
     <p><strong>具体例：</strong> </p>
@@ -221,7 +223,6 @@ $</pre>
   <section>
   	<h2> <a name="3._指定したコミット間の変更ステップ数をカウントしたい_(--numstat)">3. 指定したコミット間の変更ステップ数をカウントしたい (--numstat)</a></h2>
   
-  <section>
     <p>指定したコミット間の変更ステップ数をカウントする方法を記載します。</p>
     <p>下記コマンドは、2つのコミット間で「何行追加され、何行削除され、何ファイルが変更されたか」を一行で要約して表示するコマンドです。 </p>
     <p><span class="cpp-source">&lt;commit1&gt;</span> の次のコミットから  
@@ -252,7 +253,7 @@ $</pre>
 files: 11 added: 167 deleted: 40 total: 207
 &gt; </pre>
     <p>&nbsp;</p>
-  </section>
+    
   </section>
   	
   <p>&nbsp;</p>
@@ -264,6 +265,7 @@ files: 11 added: 167 deleted: 40 total: 207
     <p> <span class="cpp-source">--grep="^\[AI-gen\]"</span> 中の 
     <span class="cpp-source">^</span> が文字列先頭（プレフィックス）を指定する記号です。 </p>
     <p> &nbsp;</p>
+    <h3> Linux</h3>
     <p><strong>コマンド (Linux shell)：</strong></p>
     
     <pre class="prettyprint linenums:1 lang-sh" style="width:800px">
@@ -304,7 +306,6 @@ while IFS= read -r hash; do
 done | awk '{ files++; add+=$1; del+=$2 }
 END { print "files:", files, "added:", add, "deleted:", del, "total:", add+del }'</pre>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
     
     <div class="status_information">
       <div></div>
@@ -316,6 +317,7 @@ END { print "files:", files, "added:", add, "deleted:", del, "total:", add+del }
     </div>
 
     <p>&nbsp;</p>
+    <h3>Windows</h3>
     
     <p><strong>コマンド (Windows PowerShell)：</strong></p>
     
@@ -354,9 +356,88 @@ foreach ($hash in $hashes){
 }
 
 "files: $files added: $add deleted: $del total: $($add+$del)"</pre>
-    <p>&nbsp;</p>    
+    <p>&nbsp;</p>
   </section>
   	
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="5._コミットした人、を条件に追加">5. コミットした人、を条件に追加</a></h2>
+    <p> “コミットした人” を検索条件に追加可能です。<br>これにより 人毎のメトリクス集計 も可能となります。</p>
+    <p> &nbsp;</p>
+    <p> 詳細は下記サンプルを参照ください。 </p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p class="status_title"><strong>注意</strong></p>
+        <p><strong>author</strong> に記載するテキストは 正規表現 です。メールアドレス中に 
+        <span class="cpp-source">.</span> を含む場合、 <span class="cpp-source">\.</span> 
+        というようにエスケープが必要です。 </p>
+      </div>
+    </div>
+
+    <p> &nbsp;</p>
+    <h3> Linux</h3>
+    <h4> Bash シェルスクリプト： "count-ai-steps.sh"</h4>
+    
+    <pre class="prettyprint linenums:1 lang-sh" style="width:1000px;">
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+from="dccfd079"
+to="HEAD"
+keyword="^\[AI-gen\]"
+author="^kinoshita hidetoshi &lt;kinoshita\.hidetoshi@google\.com&gt;$"   # 完全一致
+#author="kinoshita hidetoshi"   # 部分一致
+#author="kinoshita\.hidetoshi@google\.com"   # 部分一致
+
+git log "${from}".."${to}" --author="${author}" --grep="${keyword}" --pretty=format:"%H%n" | \
+grep -v '^$' | \
+while IFS= read -r hash; do
+    git diff --numstat "${hash}^" "${hash}"
+done | awk '{ files++; add+=$1; del+=$2 }
+END { print "files:", files, "added:", add, "deleted:", del, "total:", add+del }'</pre>
+
+    <p> &nbsp;</p>
+    
+    <h3> Windows </h3>
+    <h4> PowerShell シェルスクリプト： "count-ai-steps.ps1" </h4>
+    
+    <pre class="prettyprint linenums:1 lang-sh" style="width:1000px;">
+$from='dccfd079'
+$to='HEAD'
+$keyword='^\[AI-gen\]'
+$author='^kinoshita hidetoshi &lt;kinoshita\.hidetoshi@google\.com&gt;$'   # 完全一致
+#$author='kinoshita hidetoshi'   # 部分一致
+#$author='kinoshita\.hidetoshi@google\.com'   # 部分一致
+
+$hashes=git log "$from..$to" --author="$author" --grep="$keyword" --pretty=format:"%H%n" | Where-Object {$_ -and $_.Trim() -ne ''}
+
+$files=0; $add=0; $del=0
+
+foreach ($hash in $hashes){
+    git diff --numstat "$hash^" $hash | ForEach-Object{
+        $c=$_ -split "`t",3
+        if ($c.Count -ge 2){
+            $files++
+            $a=0
+            $d=0
+            [void][int]::TryParse($c[0],[ref]$a)
+            [void][int]::TryParse($c[1],[ref]$d)
+            $add+=$a
+            $del+=$d
+        }
+    }
+}
+
+"files: $files added: $add deleted: $del total: $($add+$del)"</pre>
+
+    <p> &nbsp;</p>
+
+  </section>
+  
   <p>&nbsp;</p>
   
   <section>
