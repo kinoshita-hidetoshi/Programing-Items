@@ -39,6 +39,9 @@
     .auto-style8 {
     	background-color: #505000;
     }
+  .auto-style9 {
+    text-decoration: underline;
+  }
   </style>
 </head>
 
@@ -47,66 +50,119 @@
 <h1>[WPF] FormアプリからWPF子ウィンドウを起動する</h1>
 <p>&nbsp;</p>
 
-<p>Formアプリの子画面としてWPFで作成した子ウィンドウを起動する方法について記載します。</p>
+<p>Form アプリの子画面として WPF で作成した子ウィンドウを起動する方法について記載します。</p>
 <p>&nbsp;</p>
-	<h4>[概要]</h4>
-<p>Formアプリの子画面としてWPFで作成した子ウィンドウを起動する方法について記載します。</p>
-	<p> &nbsp;</p>
-	
-	<h4>[環境]</h4>
-	<table>
-	<tbody>
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>コンパイラ :</td>
-	      <td>Visual Studio 2013</td>
-	      <td>&nbsp;</td>
-	  </tr>
-		
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-		
-	  <tr>
-	    <td>OS :</td>
-	    <td>Windows7</td>
-	    <td>&nbsp;</td>
-	  </tr>
-	  
-	  <tr>
-	    <td class="td_separate" colspan="3"></td>
-	  </tr>
-	</tbody>
-	</table>
-	
-	<p> &nbsp;</p>
-	
-	<p>&nbsp;</p>	
-<p>作成するアプリはこんな感じです。&nbsp;</p>
-<p>&nbsp;</p>
-<p>まずは親側のFormで作成したアプリ。 「New Window」ボタンを押すことでWPFのウィンドウを起動するようにします。</p>
-<p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._概要">1._概要</a></p>
+      <p><a href="#2._WPF_ウィンドウ部">2._WPF_ウィンドウ部</a></p>
+      <p><a href="#3._Form_ウィンドウ部">3._Form_ウィンドウ部</a></p>
+      <p><a href="#4._参考プログラム">4._参考プログラム</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2><a name="1._概要">1. 概要</a></h2>
+    <p>Formアプリの子画面としてWPFで作成した子ウィンドウを起動する方法について記載します。</p>
+  	<p> &nbsp;</p>
+  	
+  	<p><strong>[環境]</strong></p>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>Visual Studio 2022/2026</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows11</td>
+  	    <td>&nbsp;</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p>&nbsp;</p>
+  	<table>
+  	<tbody>
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>コンパイラ :</td>
+  	      <td>Visual Studio 2013</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>OS :</td>
+  	    <td>Windows7</td>
+  	    <td>&nbsp;</td>
+  	  </tr>
+  	  
+  	  <tr>
+  	    <td class="td_separate" colspan="3"></td>
+  	  </tr>
+  	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
+  	
+  	<p>&nbsp;</p>	
+    <p>作成するアプリはこんな感じです。&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>まずは親側の Form で作成したアプリです。「New Window」ボタンをクリックで WPF 子ウィンドウを起動します。</p>
+    <p>
+    <img alt="Form 側アプリの画面" src="WpfInterope01/img18.gif" width="350"></p>
+    <p>&nbsp;</p>
+    
+    <p>「New Window」ボタンをクリックすることで下図 <span class="auto-style9">WPF 子ウィンドウ</span> を表示します。</p>
+    <p><img alt="WPF 側アプリの画面" src="WpfInterope01/img1A1.jpg"  width="450"></p>
+    
+    <p>&nbsp;</p>
+    
+    <p>「閉じる」ボタンを押すことでForm側へ情報を反映するようにします。</p>
+    <p><img alt="２つのGUIで連動動作した様子" src="WpfInterope01/img1C.gif" width="350"></p>
+    
+    <p>&nbsp;</p>
+  </section>
 
-<img alt="Form 側アプリの画面" src="WpfInterope01/img18.gif"></p>
-<p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
 
-<p>「New Window」ボタンを押すことで下図のWPF子ウィンドウを開くようにします。</p>
-<p><img alt="WPF 側アプリの画面" src="WpfInterope01/img1A1.jpg"></p>
-
-<p>&nbsp;</p>
-
-<p>「閉じる」ボタンを押すことでForm側へ情報を反映するようにします。</p>
-<p><img alt="２つのGUIで連動動作した様子" src="WpfInterope01/img1C.gif"></p>
-
-<p>&nbsp;</p>
-<p>次にコード部分を紹介します。</p>
-
-<p>WPF側のコードです。VS2013で「WPFアプリケーション」を新規作成します。<p>["MainWindow.xaml"]
-
-<pre class="prettyprint linenums lang-xaml">
+    <h2><a name="2._WPF_ウィンドウ部">2. WPF ウィンドウ部</a></h2>
+    <p>次にコード部分を紹介します。</p>
+    
+    <p>WPF側のコードです。Visual Studio で「WPFアプリケーション」を新規作成します。<p>["MainWindow.xaml"]
+    
+    <pre class="prettyprint linenums lang-xaml">
 &lt;Window x:Name="window" x:Class="WpfWindow.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -122,10 +178,10 @@
     &lt;/Grid&gt;
 &lt;/Window&gt;</pre>
 
-<p>&nbsp;</p>
-
-<p>["MainWindow.xaml.cs"]</p>
-<pre class="prettyprint linenums lang-cs">
+    <p>&nbsp;</p>
+    
+    <p>["MainWindow.xaml.cs"]</p>
+    <pre class="prettyprint linenums lang-cs">
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,21 +238,57 @@ namespace WpfWindow
     }
 }</pre>
 
-<p>&nbsp;</p>
-<p>次にForm側のコードです。<p>Formアプリケーションを新規作成後、まずは参照に以下を追加します。WpfWindowは前述のWPFアプリケーションの名前空間です。<ul>
-  <li>PresentationCore</li>
-  <li>PresentationFramework</li>
-  <li>WindowsFormIntegration</li>
-  <li>System.Xaml</li>
-  <li>System.Windows.Form.Integration</li>
-  <li>WpfWindow</li>
-</ul>
+    <p>&nbsp;</p>
+    <p>["app.manifest"]</p>
+    <p>"app.manifest" に <strong>DpiAwareness</strong>, <strong>DpiAware</strong> の設定を加えます。同一アプリケーションなので、Form と WPF 
+    を同じ動作条件にします。</p>
 
-<p>&nbsp;</p>
+    <pre class="prettyprint linenums:1 lang-xml" style="width:800px">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1"&gt;
+  &lt;assemblyIdentity version="1.0.0.0" name="MyApplication.app"/&gt;
+  &lt;trustInfo xmlns="urn:schemas-microsoft-com:asm.v2"&gt;
+    &lt;security&gt;
+      &lt;requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3"&gt;
+        &lt;requestedExecutionLevel level="asInvoker" uiAccess="false" /&gt;
+      &lt;/requestedPrivileges&gt;
+    &lt;/security&gt;
+  &lt;/trustInfo&gt;
 
-<p>["Form1.cs"]</p>
+  &lt;compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1"&gt;
+    &lt;application xmlns="urn:schemas-microsoft-com:asm.v3"&gt;
+      &lt;windowsSettings&gt;
+<span class="auto-style8">        &lt;!-- Per Monitor V2 is recommended for .NET 4.8 --&gt;</span>
+<span class="auto-style8">        &lt;dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings"&gt;PerMonitorV2&lt;/dpiAwareness&gt;</span>
+<span class="auto-style8">        &lt;dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings"&gt;true&lt;/dpiAware&gt;</span>
+      &lt;/windowsSettings&gt;
+    &lt;/application&gt;
+  &lt;/compatibility&gt;
+&lt;/assembly&gt;</pre>
 
-<pre class="prettyprint linenums lang-cs">
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  
+  <section>
+    <h2><a name="3._Form_ウィンドウ部">3. Form ウィンドウ部</a></h2>
+    <p>次に Form 側のコードです。<p>Form アプリケーションを新規作成後、まずは参照に以下を追加します。<strong>WpfWindow</strong> は前述のWPFアプリケーションの名前空間です。
+    
+    <ul>
+      <li>PresentationCore</li>
+      <li>PresentationFramework</li>
+      <li>WindowsFormIntegration</li>
+      <li>System.Xaml</li>
+      <li>System.Windows.Form.Integration</li>
+      <li>WpfWindow</li>
+    </ul>
+    
+    <p>&nbsp;</p>
+    
+    <p>["Form1.cs"]</p>
+    
+    <pre class="prettyprint linenums lang-cs">
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -261,96 +353,130 @@ namespace FormSideAp
     }
 }</pre>
 
-<p>&nbsp;</p>
-
-<p>これで完成です。「ElementHost.EnableModelessKeyboardInterop()」の部分だけ注意して実装すれば特に大きな問題はなさそうです。</p>
-
-<p>&nbsp;</p>
-
-<p>参考プログラム：<a href="WpfInterope01/FormToWpfInteropTest.zip">ダウンロード</a></p>
-
-<p>&nbsp;</p>
-
-<p> &nbsp;</p>
-
-
-<section>
-  <h2><a id="ライセンス">ライセンス</a></h2>
-  <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
-  <div class="license">
-    The MIT License (MIT)<br><br>
+    <p>&nbsp;</p>
+    <p>["app.config"]</p>
+    <p>"app.config" に <strong>DpiAwareness</strong> の設定を加えます。同一アプリケーションなので、Form と WPF 
+    を同じ動作条件にする必要があります。</p>
     
-    &nbsp; Copyright 2014 Kinoshita Hidetoshi<br><br>
+    <pre class="prettyprint linenums:1 lang-xml" style="width:800px">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+  &lt;startup&gt;
+    &lt;supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.8.1"/&gt;
+  &lt;/startup&gt;
+<span class="auto-style8">  &lt;System.Windows.Forms.ApplicationConfigurationSection&gt;</span>
+<span class="auto-style8">    &lt;add key="DpiAwareness" value="PerMonitorV2" /&gt;</span>
+<span class="auto-style8">  &lt;/System.Windows.Forms.ApplicationConfigurationSection&gt;</span>
+&lt;/configuration&gt;</pre>
+
+    <p>&nbsp;</p>
+    <p></p>
     
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:<br><br>
+    <p>これで完成です。「ElementHost.EnableModelessKeyboardInterop()」の部分だけ注意して実装すれば特に大きな問題はなさそうです。</p>
     
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.<br><br>
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-  </div>
+    <p>&nbsp;</p>
+  </section>
+
   <p>&nbsp;</p>
-</section>
+  
+  <section>
+    <h2><a name="4._参考プログラム">4. 参考プログラム</a></h2>
+    
+    <p>参考プログラム：<a href="WpfInterope01/FormToWpfInteropTest.zip">ダウンロード</a></p>
+    
+    <p>&nbsp;</p>
+  </section>
 
-<br>
+  <p> &nbsp;</p>
 
-<section>
-	<h2><a id="参考">参考</a></h2>
-	<ul>
-		<li>
-      <a href="https://blog.yuizi.com/2015/09/winformwpfwindow.html" target="_blank">
-      Windows FormアプリからWPFのWindowを表示する | ヤスダ式仕事のブログ</a></li>
-    <li>
-      <a href="https://rimever.hatenablog.com/entry/2021/03/06/000000" target="_blank">
-      WinFormsとWPFを共存させる - より良いエンジニアを目指して</a></li>
-	</ul>
-</section>
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2014 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
 
-<p>&nbsp;</p>
+  <br>
 
-<hr>
-
-<p>&nbsp;</p>
-
-<section>
-	<h2 style="margin-bottom:5px">変更履歴</h2>
-	<table>
-	  <tr>
-	    <td class="td_history_date" style="height: 16px">2023-05-25</td>
-	    <td class="td_history_separator" style="height: 16px">-</td>
-	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
-	  </tr>
-	  <tr>
-	    <td class="td_history_date">2014-06-14</td>
-	    <td class="td_history_separator">-</td>
-	    <td class="td_history">新規作成 </td>
-	  </tr>
-	</table>
-</section>
-
-<p>&nbsp;</p>
-
-<section>
-<p><a href="index.html" target="_parent">Programming Items トップページ</a></p>
-<p><a href="privacy_policy.html">プライバシーポリシー</a></p>
-</section>
-
-<p>&nbsp;</p>
-
-<footer>
-	<p><small>© 2014 Kinoshita Hidetoshi (木下英俊)</small></p>
-</footer>
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://blog.yuizi.com/2015/09/winformwpfwindow.html" target="_blank">
+        Windows FormアプリからWPFのWindowを表示する | ヤスダ式仕事のブログ</a></li>
+      <li>
+        <a href="https://rimever.hatenablog.com/entry/2021/03/06/000000" target="_blank">
+        WinFormsとWPFを共存させる - より良いエンジニアを目指して</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <hr>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2026-04-25</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">Visual Studio 2022/2026 
+        による確認を追加</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">&nbsp;</td>
+  	    <td class="td_history_separator" style="height: 16px">&nbsp;</td>
+  	    <td class="td_history" style="height: 16px">記事更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date" style="height: 16px">2023-05-25</td>
+  	    <td class="td_history_separator" style="height: 16px">-</td>
+  	    <td class="td_history" style="height: 16px">ページデザイン更新</td>
+  	  </tr>
+  	  <tr>
+  	    <td class="td_history_date">2014-06-14</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+  <p><a href="index.html" target="_parent">Programming Items トップページ</a></p>
+  <p><a href="privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>© 2014 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
 
 </body>
 </html>
