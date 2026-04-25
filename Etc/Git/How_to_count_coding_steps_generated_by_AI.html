@@ -444,11 +444,13 @@ foreach ($hash in $hashes){
   	<h2><a name="注意事項など">注意事項など</a></h2>
     <ul>
       <li>Pull Request の扱いによっては注意が必要： <br>Pull Request もコミットとして扱われます。Merge 
-      の場合、他のコミットと重複カウントされるので Pull Request タイトルに［AI-gen］を付けるとダブルカウントされました。 Squash 
+      の場合、他のコミットと重複カウントされるので Pull Request タイトルに <span class="cpp-source">
+      [AI-gen]</span> を付けるとダブルカウントされました。 Squash 
       の場合、元のコミット記録が削除されてしまうので、Pull Request 
-      タイトルに［AI-gen］を付けてカウント対象として扱う必要がありそうです。 ⇨ 通常 Pull Request 
+      タイトルに <span class="cpp-source">[AI-gen]</span> を付けてカウント対象として扱う必要がありそうです。 
+      <br>⇨ 通常 Pull Request 
       は複数のコミットを含みます。とすると AI コーディングと人のコーディングが混ざった状態である場合が多いでしょう。ですので、Pull Request 
-      を Merge 方式として Pull Request タイトルに［AI-gen］を付けない、という運用が良さそうです。 </li>
+      を Merge 方式として Pull Request タイトルに <span class="cpp-source">[AI-gen]</span> を付けない、という運用が良さそうです。 </li>
     </ul>
     
     <p>&nbsp;</p>
