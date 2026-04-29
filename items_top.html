@@ -20,15 +20,18 @@
   <link rel="stylesheet" href="ress.min.css">
   <link href="design_items_v3.css" rel="stylesheet">
 
+  <!-- このページ内の <a> タグで target を省略したリンクは、target="contents" と同様に、親フレームの contents フレーム内で開きます -->
   <base target="contents">
 	
-	<!--
   <script type="text/javascript">
     function checkedOff(){
-      window.parent.checkedOff();
+      /*window.parent.checkedOff();*/
+      // 全てのメニューのコンテントを閉じる
+      $(".menu-list .accordion-content").slideUp("fast").removeClass("open");
+      // 全てのメニューのアイコンを '+' にする
+      $(".menu-list .accordion-toggle").removeClass("active-tab").find(".menu-link").removeClass("active");
     }
 	</script>	
-  -->
   
   <script src="jquery.js"></script>  
   <script>
