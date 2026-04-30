@@ -103,7 +103,7 @@
     <p> &nbsp;</p>
     <h3> <a name="background-image_で表示したい背景画像を指定する">background-image で表示したい背景画像を指定する</a></h3>
     <p> HTML を次のようにシンプルなものにしておきます。</p>
-    <p> "index.html"</p>
+    <p> "index.html":</p>
     
     <pre  class="prettyprint lang-html" style="width:800px">
 &lt;!DOCTYPE html&gt;
@@ -333,10 +333,15 @@ body {
     <h2><a name="2._背景画像を全画面表示する">2. 背景画像を全画面表示する</a></h2>
     <p>背景画像を全画面表示(画面いっぱいに)するためには、画像のサイズが横幅も高さも100%にする必要があります。</p>
     <p>このような背景画像を実装するには次のようなコードを書きます。</p>
-    <p><span class="source_code">height</span> で <span class="source_code">100vh</span> 
-    を指定すると画面の高さが100%となりフルスクリーン表示できます。 </p>
+    <ul>
+      <li><span class="source_code">height</span> で <span class="source_code">100vh</span> 
+    を指定すると画面の高さが100%となりフルスクリーン表示できます。 </li>
+      <li>これだけで背景画像を全画面表示できましたが、上下スクロールバーを表示するようになったので <span class="source_code">
+      overflow: hidden;</span> を追加してみました。スクロールバーの表示が気にならない場合は不要です。margin 
+      の調整でもスクロールバーを消すことができそうです。</li>
+    </ul>
     <p>&nbsp;</p>
-    <p> "index.html"</p>
+    <p> "index.html":</p>
     
     <pre  class="prettyprint lang-html" style="width:800px">
 &lt;!DOCTYPE html&gt;
@@ -352,7 +357,7 @@ body {
 &lt;/html&gt;</pre>
 
     <p> &nbsp;</p>
-    <p>"style.css"</p>
+    <p>"sytle.css":</p>
     
     <pre  class="prettyprint lang-css" style="width:800px">
 html, body {
@@ -373,12 +378,107 @@ body {
     <p>&nbsp;</p>
     <p>&nbsp;</p>
     <h2><a name="3._背景画像を透過させて薄く表示する">3. 背景画像を透過させて薄く表示する</a></h2>
+    <p>画像の上に文字を置くとどうしても文字が見にくくなることがあります。</p>
+    <p>そのような場合に背景画像を透過させて薄くすることで文字を見やすくすることができます。</p>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <h3>方法１</h3>
+    <p><span class="source_code">backgroud-image</span> を以下のように設定します。半透明白のレイヤーの後に "backgroud_image.png" 
+    を重ねる複合レイヤーを構成しています。</p>
+    
+    <pre style="width:1000px">background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("backgroud_image.png");</pre>
+    
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
+    <p> "index.html":</p>
+    
+    <pre  class="prettyprint lang-html" style="width:800px">
+&lt;!DOCTYPE html&gt;
+&lt;html jang="ja"&gt;
+&lt;head&gt;
+  &lt;title&gt;背景画像のテスト&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;<br>&lt;body&gt;
+  &lt;h1&gt;背景画像の例&lt;/h1&gt;
+  &lt;p&gt;背景画像を設定するには、CSSの background-image プロパティを使用します。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+    <p>&nbsp;</p>
+    <p>"sytle.css":</p>
+    
+    <pre class="prettyprint lang-css" style="width:1000px">
+html, body {
+    overflow: hidden;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("backgroud_image.png");
+    color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+}</pre>
+    <p>&nbsp;</p>
+    
+    <p><img alt="index.html" src="How_to_set_background_image_in_HTML/imgD.jpg" style="width:600px" class="border"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h3>方法２</h3>
+    <ul>
+      <li>背景画像のみを半透明にするために <span class="source_code">body::before</span> 
+      疑似要素をつかいます</li>
+      <li>CSSプロパティの 
+    <span class="source_code">opacity</span> を設定して半透明にしてみます</li>
+      <li>擬似要素を使う場合は <span class="source_code">content</span> および 
+      <span class="source_code">position</span> の設定をしましょう </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p> "index.html":</p>
+    
+    <pre  class="prettyprint lang-html" style="width:800px">
+&lt;!DOCTYPE html&gt;
+&lt;html jang="ja"&gt;
+&lt;head&gt;
+  &lt;title&gt;背景画像のテスト&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;<br>&lt;body&gt;
+  &lt;h1&gt;背景画像の例&lt;/h1&gt;
+  &lt;p&gt;背景画像を設定するには、CSSの background-image プロパティを使用します。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+    <p>&nbsp;</p>
+    <p>"sytle.css":</p>
+    
+    <pre  class="prettyprint lang-css" style="width:800px">
+html, body {
+    overflow: hidden;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    color: black;
+    background: transparent;
+    z-index: 0;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("backgroud_image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+}</pre>
+    <p>&nbsp;</p>
+    <p><img alt="index.html" src="How_to_set_background_image_in_HTML/imgD.jpg" style="width:600px" class="border"></p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
   
   </section>
   
