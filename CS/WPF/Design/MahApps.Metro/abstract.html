@@ -35,91 +35,174 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
-  <style type="text/css">
-    .auto-style7 {
-    	font-weight: normal;
-    }
-  </style>
-
 </head>
 
 <body onload="prettyPrint();">
-<h1 class="auto-style7">
-［MahApps.Metro］はじめに</h1>
+  <h1>[MahApps.Metro] はじめに</h1>
 
-<p> 「MahApps.Metro」 は、WPF向けのUIライブラリです。<br>
-Windowsストアアプリのようなモダンな外観のコントロールをアプリ開発で利用できるようになります。<br>
-使用ライセンスは「Ms-PL」（<a href="https://msdn.microsoft.com/ja-jp/library/gg592960.aspx">https://msdn.microsoft.com/ja-jp/library/gg592960.aspx</a>）です。このライセンスは、いくつかの条件を守れば、商用／非商用にかかわらず無償使用できるものです。</p>
-<p> &nbsp;</p>
-<h2> 目次</h2>
-<p> <a href="#1._ライブラリを取得する">1. ライブラリを取得する</a><br><a href="#2._サンプル画面を動かす">2. サンプル画面を動かす</a></p>
-<p> &nbsp;</p>
-<p> &nbsp;</p>
-<h2> <a name="1._ライブラリを取得する">1. ライブラリを取得する</a></h2>
-<p> 「MahApps.Metro」 は以下の方法で取得可能です。</p>
-<h3> GitGub</h3>
-<p> 下記より入手できます。<br>
-<a href="https://github.com/MahApps/MahApps.Metro" target="_blank">
-https://github.com/MahApps/MahApps.Metro</a></p>
-<p> &nbsp;</p>
-<h3> NuGet</h3>
-<p> 下記より入手できます。<br>
-<a href="https://www.nuget.org/packages/MahApps.Metro" target="_blank">
-https://www.nuget.org/packages/MahApps.Metro</a></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h2> <a name="2._サンプル画面を動かす">2. サンプル画面を動かす</a></h2>
-<p> サンプルプログラムをコンパイルして、デザインや動作を見てみます。<br>以下、一部の代表的なサンプル画面を記載します。</p>
-<h3> Theme を「BaseLight」にした場合の［buttons］</h3>
-<p> <img alt="Theme を「BaseLight」にした場合の［buttons］" src="abstract/img25.jpg"></p>
-<p> &nbsp;</p>
-<h3> Theme を「BaseDark」にした場合の［buttons］</h3>
-<p> <img alt="Theme を「BaseDark」にした場合の［buttons］" src="abstract/img29.jpg"></p>
-<p> &nbsp;</p>
-<h3> ［text］</h3>
-<p> <img alt="[text]" src="abstract/img27.jpg"></p>
-<p> &nbsp;</p>
-<h3> [sliders and progress]</h3>
-<p> <img alt="[sliders and progress]" src="abstract/img26.jpg"></p>
-<p> &nbsp;</p>
-<h3> [tabcontrol]</h3>
-<p> <img alt="[tabcontrol]" src="abstract/img2B.jpg"></p>
-<p> &nbsp;</p>
-<h3> [Dialog]</h3>
-<p> <img alt="[Dialog]" src="abstract/img2D.jpg"></p>
-<p> <img alt="[Dialog]" src="abstract/img37.jpg"></p>
-<p> &nbsp;</p>
-<h3> [Window]</h3>
-<p> <img alt="[Window]" src="abstract/img30.jpg"></p>
-<p> <img alt="[Window]" src="abstract/img31.jpg"></p>
-<p> <img alt="[Window]" src="abstract/img32.jpg"></p>
-<p>&nbsp;</p>
-<p>「Window」のサンプル中には、<br>・Ignore taskbar on maximize<br>・Toggle FullScreen (no 
-taskbar, window style = none)<br>などがあり、各種応用をすぐに行えそうです。<br>
-<img alt="その他「Window」サンプル" src="abstract/img3A.jpg"></p>
-<p>&nbsp;</p>
+  <p> <strong>MahApps.Metro</strong> は、WPF 向けのUIライブラリです。<br>
+  Windows ストアアプリのようなモダンな外観のコントロールをアプリ開発で利用できるようになります。<br>
+  使用ライセンスは「Ms-PL」（<a href="https://msdn.microsoft.com/ja-jp/library/gg592960.aspx">https://msdn.microsoft.com/ja-jp/library/gg592960.aspx</a>）です。このライセンスは、いくつかの条件を守れば、商用／非商用にかかわらず無償使用できるものです。</p>
+  <p> &nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#1._ライブラリを取得する">1._ライブラリを取得する</a></p>
+      <p><a href="#2._サンプル画面を動かす">2._サンプル画面を動かす</a></p>
+      <p>&nbsp;&nbsp; <a href="#Buttons">Buttons</a></p>
+      <p>&nbsp;&nbsp; <a href="#Text">Text</a></p>
+      <p>&nbsp;&nbsp; <a href="#Sliders_and_progress">Sliders_and_progress</a></p>
+      <p>&nbsp;&nbsp; <a href="#TabControl">TabControl</a></p>
+      <p>&nbsp;&nbsp; <a href="#Dialog">Dialog</a></p>
+      <p>&nbsp;&nbsp; <a href="#Window">Window</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p> &nbsp;</p>
+  <p> &nbsp;</p>
+
+  <section>
+    <h2> <a name="1._ライブラリを取得する">1. ライブラリを取得する</a></h2>
+    <p> <strong>MahApps.Metro</strong> は、以下の方法で取得可能です。</p>
+    <p> &nbsp;</p>
+    <h3>GitHub</h3>
+    <p> 下記より入手できます。<br>
+    <a href="https://github.com/MahApps/MahApps.Metro" target="_blank">
+    https://github.com/MahApps/MahApps.Metro</a></p>
+    <p> &nbsp;</p>
+    <h3> NuGet</h3>
+    <p> 下記より入手できます。<br>
+    <a href="https://www.nuget.org/packages/MahApps.Metro" target="_blank">
+    https://www.nuget.org/packages/MahApps.Metro</a></p>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+
+  <section>
+    <h2> <a name="2._サンプル画面を動かす">2. サンプル画面を動かす</a></h2>
+    <p> サンプルプログラムをコンパイルして、デザインや動作を見てみます。<br>以下、一部の代表的なサンプル画面を記載します。</p>
+    <p> &nbsp;</p>
+    <h3> <a name="Buttons">Buttons</a></h3>
+    <p> &nbsp;</p>
+    <h4> Theme を「BaseLight」にした場合の［buttons］</h4>
+    <p> <img alt="Theme を「BaseLight」にした場合の［buttons］" src="abstract/img25.jpg"></p>
+    <p> &nbsp;</p>
+    <h4> Theme を「BaseDark」にした場合の［buttons］</h4>
+    <p> <img alt="Theme を「BaseDark」にした場合の［buttons］" src="abstract/img29.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> <a name="Text">Text</a></h3>
+    <p> <img alt="[text]" src="abstract/img27.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> <a name="Sliders_and_progress">Sliders and progress</a></h3>
+    <p> <img alt="[sliders and progress]" src="abstract/img26.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> <a name="TabControl">TabControl</a></h3>
+    <p> <img alt="[tabcontrol]" src="abstract/img2B.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> <a name="Dialog">Dialog</a></h3>
+    <p> <img alt="[Dialog]" src="abstract/img2D.jpg"></p>
+    <p> <img alt="[Dialog]" src="abstract/img37.jpg"></p>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h3> <a name="Window">Window</a></h3>
+    <p> <img alt="[Window]" src="abstract/img30.jpg"></p>
+    <p> <img alt="[Window]" src="abstract/img31.jpg"></p>
+    <p> <img alt="[Window]" src="abstract/img32.jpg"></p>
+    <p>&nbsp;</p>
+    <p>「Window」のサンプル中には</p>
+    <ul>
+      <li>Ignore taskbar on maximize</li>
+      <li>Toggle FullScreen (no taskbar, window style = none)<br></li>
+    </ul>
+    <p>などもあるので、各種応用をすぐに行えそうです。</p>
+    <p><br>
+    <img alt="その他「Window」サンプル" src="abstract/img3A.jpg" class="border_with_drop-shadow"></p>
+    <p>&nbsp;</p>
+
+  </section>
 	
-<br>
-<h2>
-サンプルプログラム</h2>
-<p>
-サンプルプログラム ダウンロード</p>
-<p>
-&nbsp;</p>
-<h2>
-参考</h2>
-<ul>
-	<li>日経ソフトウェア2016年１月号 「基礎からわかる C# デスクトップアプリ開発： 第7回 外部のライブラリを使ってモダンな外観を作成し</li>
-	<li><a href="http://mahapps.com/" target="_blank">http://mahapps.com/</a></li>
-	<li><a href="https://github.com/MahApps/MahApps.Metro" target="_blank">https://github.com/MahApps/MahApps.Metro</a></li>
-	<li><a href="https://www.nuget.org/packages/MahApps.Metro" target="_blank">https://www.nuget.org/packages/MahApps.Metro</a></li>
-	<li>MahApps.Metro を使ってみた<br>
-	<a href="http://sourcechord.hatenablog.com/entry/2016/02/23/012511" target="_blank">
-	http://sourcechord.hatenablog.com/entry/2016/02/23/012511</a></li>
-</ul>
-<p>&nbsp;</p>
-<hr>
-<p> &nbsp;</p>
-<p> <font face="Meiryo UI">記載： 2016年02月27日 木下英俊</font></p>
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2016 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+    <ul>
+    	<li>日経ソフトウェア2016年１月号 「基礎からわかる C# デスクトップアプリ開発： 第7回 外部のライブラリを使ってモダンな外観を作成し</li>
+    	<li><a href="http://mahapps.com/" target="_blank">http://mahapps.com/</a></li>
+    	<li><a href="https://github.com/MahApps/MahApps.Metro" target="_blank">https://github.com/MahApps/MahApps.Metro</a></li>
+    	<li><a href="https://www.nuget.org/packages/MahApps.Metro" target="_blank">https://www.nuget.org/packages/MahApps.Metro</a></li>
+    	<li>MahApps.Metro を使ってみた<br>
+    	<a href="http://sourcechord.hatenablog.com/entry/2016/02/23/012511" target="_blank">
+    	http://sourcechord.hatenablog.com/entry/2016/02/23/012511</a></li>
+    </ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2016-02-27</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2016 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
 </body>
 </html>
