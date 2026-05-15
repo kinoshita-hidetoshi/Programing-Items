@@ -53,7 +53,7 @@
         <ul>
           <li>AI が作成したコーディングと人によるコーディングを別コミットにわける </li>
           <li>コミットタイトルのプレフィックスに特定キーワードを加える（<span class="cpp-source">[AI-gen]</span>,
-          <span class="cpp-source">AI-gen:</span> など） </li>
+          <span class="cpp-source">[AI]</span> など） </li>
           <li>コミットタイトルのプレフィックスに特定キーワードがあるコミットのみをステップカウントする </li>
         </ul>
       </div>
@@ -71,6 +71,7 @@
       <p><a href="#3._指定したコミット間の変更ステップ数をカウントしたい_(--numstat)">3. 指定したコミット間の変更ステップ数をカウントしたい (--numstat)</a></p>
       <p><a href="#4._コミットタイトルに_“[AI-gen]”_を含むもののみを対象としたい">4. コミットタイトルに "[AI-gen]" を含むもののみを対象としたい</a></p>
       <p><a href="#5._コミットした人、を条件に追加">5. コミットした人、を条件に追加</a></p>
+      <p><a href="#6._コミットタイトル先頭の文字列記載を強制する方法_-_.git/hookscommit-msg">6. コミットタイトル先頭の文字列記載を強制する方法 - ".git/hookscommit-msg"</a></p>
       <p><a href="#注意事項など">注意事項など</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
@@ -441,6 +442,145 @@ foreach ($hash in $hashes){
   <p>&nbsp;</p>
   
   <section>
+    <h2><a name="6._コミットタイトル先頭の文字列記載を強制する方法_-_.git/hookscommit-msg">6. コミットタイトル先頭の文字列記載を強制する方法 - ".git/hookscommit-msg"</a></h2>
+    <p>Git コミットタイトル先頭に <span class="source_code">[AI]</span>
+    <span class="source_code">[HUMAN]</span> など固定キーワードを挿入するのって忘れてしまいそうですよね。<strong>"Git 
+    hooks"</strong> という仕組みを使用することで、メッセージ規約を強制することができます。</p>
+    <p>&nbsp;</p>
+    <p><strong>Git hooks とは：</strong></p>
+    <p>Git hooks は、Git の特定イベントに合わせて自動実行されるスクリプトです。<br>例：</p>
+    <ul>
+      <li>commit 前に整形、Lint実施、テスト実行 (pre-commit)</li>
+      <li>コミットメッセージのルール強制 (commit-msg)</li>
+      <li>push 前に CI 相当のチェック (pre-push)</li>
+      <li>merge/rebase 時の検査 (post-merge, re-rebase)</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p><strong>代表的な hooks 一覧（よく使うもの）：</strong></p>
+    <table class="border-collapse" border="1" width="800">
+      <caption>[table.] simple table のサンプル１</caption>
+      <thead class="standard_table">
+        <tr>
+          <th>フック</th>
+          <th>タイミング</th>
+          <th>主用途</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>pre-commit</td>
+          <td>コミット作成の直前</td>
+          <td>フォーマット、Lint, 秘密情報検査、差分検査</td>
+        </tr>
+        <tr>
+          <td>commit-msg</td>
+          <td>コミットメッセージ確定前</td>
+          <td>メッセージ規約（Jira キー、[AI] 等）</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap">prepare-commit-msg</td>
+          <td>エディタ起動前</td>
+          <td>メッセージ自動生成、テンプレート挿入</td>
+        </tr>
+        <tr>
+          <td>pre-push</td>
+          <td>push 直前</td>
+          <td>テスト、ブランチ名規約、禁止ブランチガード</td>
+        </tr>
+        <tr>
+          <td>post-checkout</td>
+          <td>checkout 後</td>
+          <td>依存更新、サブモジュール更新、生成物同期</td>
+        </tr>
+        <tr>
+          <td>post-merge</td>
+          <td>merge 後</td>
+          <td>依存更新、サブモジュール更新、生成物同期</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <p>&nbsp;</p>
+    <p>以下、<strong>commit-msg</strong> を使って git コミットメッセージ先頭に 
+    <span class="source_code">[AI]</span> または <span class="source_code">[HUMAN]</span> 
+    の記載を強制化する方法を記載します。</p>
+    <p>&nbsp;</p>
+    
+    <h4>Linux (Ubuntu):</h4>
+    <p>1. リポジトリの ".git/hooks/commit-msg" に以下のスクリプトを保存します。</p>
+    
+    <pre class="prettyprint linenums:1 lang-bsh" style="width:800px">
+#!/usr/bin/env bash
+set -euo pipefail
+ 
+msg_file="$1"
+first_line="$(head -n 1 "$msg_file" | tr -d '\r')"
+ 
+# マージコミットやリバートなどを除外したい場合はここで許可
+# 例: Merge / Revert を許可する
+if [[ "$first_line" =~ ^Merge\  ]] || [[ "$first_line" =~ ^Revert\  ]]; then
+  exit 0
+fi
+ 
+if [[ ! "$first_line" =~ ^\[(AI|HUMAN)\]\  ]]; then
+  echo "ERROR: コミットメッセージ先頭は [AI] または [HUMAN] で始めてください。" &gt;&amp;2
+  echo "例: [AI] Fix dewarp edge case" &gt;&amp;2
+  echo "例: [HUMAN] Refactor stitching pipeline" &gt;&amp;2
+  exit 1
+fi</pre>
+
+    <p>&nbsp;</p>
+    <p>2.".git/hooks/commit-msg" に実行権限を付与します。</p>
+    
+    <pre class="prettyprint lang-bsh" style="width:800px">
+$ chmod +x ./git/hooks/commit-msg</pre>
+
+    <p>&nbsp;</p>
+    <p>以上で設定完了です。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+    <h4>Windows:</h4>
+    <p>1. リポジトリの ".git/hooks/commit-msg" に以下のスクリプトを保存します。文字コードを <strong>UTF-8</strong> 
+    で保存します。</p>
+    
+    <pre class="prettyprint linenums:1 lang-bsh" style="width:800px">
+#!/bin/sh
+set -euo pipefail
+ 
+msg_file="$1"
+first_line="$(head -n 1 "$msg_file" | tr -d '\r')"
+ 
+# マージコミットやリバートなどを除外したい場合はここで許可
+# 例: Merge / Revert を許可する
+if [[ "$first_line" =~ ^Merge\  ]] || [[ "$first_line" =~ ^Revert\  ]]; then
+  exit 0
+fi
+ 
+if [[ ! "$first_line" =~ ^\[(AI|HUMAN)\]\  ]]; then
+  echo "ERROR: コミットメッセージ先頭は [AI] または [HUMAN] で始めてください。" &gt;&amp;2
+  echo "例: [AI] Fix dewarp edge case" &gt;&amp;2
+  echo "例: [HUMAN] Refactor stitching pipeline" &gt;&amp;2
+  exit 1
+fi</pre>
+
+    <p>&nbsp;</p>
+    <p>以上で設定完了です。</p>
+    <p>&nbsp;</p>
+    <p>ではコミット実行してみます。</p>
+    <p>コミットタイトルを「テスト」としてコミット操作すると、下図のような画面を表示しました。期待通りに動作していることを確認できました。</p>
+    
+    <figure>
+      <img alt="commit-msg 実行結果" src="How_to_count_coding_steps_generated_by_AI/img23.jpg" width="800"></p>
+      <figcaption>コミットNG 例</figcaption>
+    </figure>
+    
+    <p>&nbsp;</p>
+  </section>
+  
+  <p>&nbsp;</p>
+    
+  <section>
   	<h2><a name="注意事項など">注意事項など</a></h2>
     <ul>
       <li>Pull Request の扱いによっては注意が必要： <br>Pull Request もコミットとして扱われます。Merge 
@@ -455,8 +595,9 @@ foreach ($hash in $hashes){
     
     <p>&nbsp;</p>
   </section>
-  	
+  
   <p>&nbsp;</p>
+  
   
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
@@ -503,6 +644,11 @@ foreach ($hash in $hashes){
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-05-15</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#6._コミットタイトル先頭の文字列記載を強制する方法_-_.git/hookscommit-msg">6. コミットタイトル先頭の文字列記載を強制する方法 - ".git/hookscommit-msg"</a>」を追加&nbsp;</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-04-21</td>
   	    <td class="td_history_separator">-</td>
