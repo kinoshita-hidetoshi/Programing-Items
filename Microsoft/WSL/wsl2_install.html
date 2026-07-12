@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="kinoshita hidetoshi (木下 英俊)">
+  <meta name="description" content="木下英俊が自身のためにプログラムメモを残すことを目的に作成したページです">
+  <meta name="keywords" content="">
+  <!-- キャッシュ無効化 -->
+  <meta http-equiv="Cache-Control" content="no-cache">
+	
+  <!-- タイトル -->
+  <title>WSL インストール手順 | Programming Items</title>
+	
+  <!-- ファビコン -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+  
+  <!-- CSS -->
+  <!--<link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="../../ress.min.css">
+	<link rel="stylesheet" href="../../design.css" type="text/css">
+  
+	<!-- Start for 'google-code-prettify' -->
+	<link href="../../prettify/styles/desert.css" rel="stylesheet" type="text/css">
+	<script src="../../prettify/prettify.js" type="text/javascript"></script>
+	<!-- End for 'google-code-prettify' -->	
+	
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2DZQK54C2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-V2DZQK54C2');
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+</head>
+
+<body onload="prettyPrint();">
+	
+  <h1>WSL インストール手順</h1>
+  
+  <p> WSL をインストールする手順について記載します。</p>
+  <p> 具体例として "Ubuntu-26.04" インストールを行います。</p>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <div class="mokuji">
+    <nav>
+    	<h2>目次</h2>
+    	<p><a href="#WSL_インストール手順">WSL_インストール手順</a></p>
+        <p><a href="#参考：_ダウンロード版によるインストール手順">参考：_ダウンロード版によるインストール手順</a></p>
+        <p><a href="#参考：_WSL_アンインストール手順">参考：_WSL_アンインストール手順</a></p>
+    	<p>&nbsp;</p>
+    	<p><a href="#ライセンス">ライセンス</a></p>
+    	<p><a href="#参考">参考</a></p>
+    </nav>
+  </div>
+  
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2> <a name="WSL_インストール手順">WSL インストール手順</a></h2>
+    <p> &nbsp;</p>
+    <ol>
+      <li>Windows で PowerShell または Windows コマンド プロンプトを管理者モードで開く </li>
+      <li><span class="source_code">wsl --install</span> を実行：<br>このコマンドにより、WSL 
+      を実行し、Linux の Ubuntu ディストリビューションをインストールするために必要な機能が有効になります。<br>このコマンドは、WSL 
+      がまったくインストールされていない場合にのみ機能します。 </li>
+      <li><span class="source_code">wsl --list --online</span> を実行：<br>
+      使用可能なディストリビューションの一覧を出力します。 <br>
+      <img alt="wsl --list --online" src="wsl2_install/img6.jpg" width="800"><br>
+      </li>
+      <li><span class="source_code">wsl --install -d &lt;DistroName&gt;</span> を実行：<br>
+      今回は例として <strong>Ubuntu-26.04</strong> を使用します<br><span class="source_code">
+      wsl --install -d Ubuntu-26.04</span> <br>
+      <img alt="wsl --install -d Ubuntu-26.04" src="wsl2_install/img5.jpg" width="800"><br>
+      </li>
+      <li>Windows を再起動：<br>”システムを再起動する必要があります” を表示した場合、指示に従って Windows を再起動します。 
+      <br></li>
+      <li>Linux 環境で使用するユーザー名、パスワードを登録：<br>
+      デフォルト状態であなたのユーザー名を表示。そのままでも良いですし、任意の名前へ変更しても OK です。 <br></li>
+      <li>確認画面：<br>下図画面を表示したら “n” を入力します。<br><strong>補足</strong>：<br>
+      これは、Ubuntu（Linux）初回起動時に表示されるデータ収集の同意確認メッセージです。Ubuntu があなたに対して<br>
+      「システム情報（ハード構成や利用状況）を匿名で Canonical に送ってもいいですか？」<br>と確認しています。あなたがよければ "y" 
+      を入力しても良いですが、基本 "n" で良いでしょう。<br>
+      <img alt="確認画面" src="wsl2_install/img7.jpg"><br>
+      </li>
+      <li>インストールを完了したら "exit" を入力して一旦終了<br></li>
+      <li>｢スタート｣ から ［Ubuntu 26.04］を起動<br>
+      <img alt="Ubuntu 26.04 起動" src="wsl2_install/img8.jpg"><br>
+      </li>
+      <li>Ubuntu 起動後、最新版へアップデート<br>パスワードを聞かれるので、インストール時に設定したパスワードを入力 <br>
+      
+      <pre class="prettyprint linenums:1 lang-sh" style="width:800px">
+# パッケージリストを最新へ更新
+sudo apt update
+# 最新版へアップデート
+sudo apt upgrade</pre>
+
+      </li>
+    </ol>
+    <p> &nbsp;</p>
+    <p> &nbsp;</p>
+    <h2> <a name="参考：_ダウンロード版によるインストール手順">参考： ダウンロード版によるインストール手順</a></h2>
+    <p> &nbsp;</p>
+    <ol>
+      <li><a href="https://ubuntu.com/download/wsl" target="_blank">Ubuntu 公式サイト</a> 
+      から .wsl ファイルをダウンロード</li>
+      <li>&nbsp;そのまま ダブルクリック</li>
+    </ol>
+    <p>&nbsp;</p>
+    <p>&nbsp;これだけでインストールは完了です。初期ユーザー作成まで自動で進んで、すぐに使えます。 </p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h2><a name="参考：_WSL_アンインストール手順">参考： WSL アンインストール手順</a></h2>
+    <p>&nbsp;</p>
+    <ol>
+      <li>インストール済み WSL を確認する<br>削除対象のディストリビューション名を正確に把握します。<br>PowerShell または 
+      Windows Terminal で実行<ul>
+        <li><span class="source_code">&nbsp;wsl -l -v</span> を実行</li>
+        <li>&nbsp;一覧に表示される名前を確認（例： Ubuntu-26.04, Ubuntu-22.04, Ubuntu） <br>
+        <img alt="" src="wsl2_install/imgD.jpg" width="800"><br></li>
+      </ul>
+      </li>
+      <li>対象の Ubuntu を登録解除する<br>&nbsp;WSL 内のファイル・設定・環境がすべて削除されます。<ul>
+        <li>&nbsp;<span class="source_code">wsl --unregister Ubuntu-26.04</span> 
+        のように実行</li>
+        <li>名前は Step01 で確認したものを使う </li>
+        <li>実行後、そのディストリビューションは WSL から完全に消える <br></li>
+      </ul>
+      </li>
+      <li>Windows 側の Ubuntu アプリをアンインストール<br>Microsoft Store 
+      版などダウンロード版をインストールしている場合は、<br>設定 → アプリ → インストールされているアプリ<br>
+      を開いてアンインストールを実行します。 <br>
+      <img alt="" class="border_with_drop-shadow" src="wsl2_install/imgE.jpg" width="800"><br>
+      </li>
+      <li>WSL 全体を初期化したい場合（任意）<br>Ubuntu だけでなく WSL 全体を削除する場合の手順です。<ul>
+        <li>&nbsp;wsl --shutdown を実行</li>
+        <li>「Windows の機能」→「Linux 用 Windows サブシステム」のチェックを外す<br>
+        <img alt="" class="border_with_drop-shadow" src="wsl2_install/imgF.jpg" width="800"><br>
+        </li>
+        <li>PC を再起動</li>
+      </ul>
+      </li>
+    </ol>
+    <p>&nbsp;</p>
+  </section>
+	
+  <p> &nbsp;</p>
+
+  <section>
+    <h2><a id="ライセンス">ライセンス</a></h2>
+    <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
+    <div class="license">
+      The MIT License (MIT)<br><br>
+      
+      &nbsp; Copyright 2026 Kinoshita Hidetoshi<br><br>
+      
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:<br><br>
+      
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.<br><br>
+      
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+    </div>
+    <p>&nbsp;</p>
+  </section>
+  
+  <p> &nbsp;</p>
+  
+  <section>
+  	<h2><a id="参考">参考</a></h2>
+  	<ul>
+  		<li>
+        <a href="https://learn.microsoft.com/ja-jp/windows/wsl/install" target="_blank">
+        WSL のインストール | Microsoft Learn</a></li>
+  	</ul>
+  </section>
+  
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
+  <section>
+  	<h2 style="margin-bottom:5px">変更履歴</h2>
+  	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-07-12</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">新規作成 </td>
+  	  </tr>
+  	</table>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <section>
+    <p><a href="../../index.html" target="_parent">Programming Items トップページ</a></p>
+    <p><a href="../../privacy_policy.html">プライバシーポリシー</a></p>
+  </section>
+  
+  <p>&nbsp;</p>
+  
+  <footer>
+  	<p><small>&copy; 2026 Kinoshita Hidetoshi (木下英俊)</small></p>
+  </footer>
+  
+</body>
+</html>
