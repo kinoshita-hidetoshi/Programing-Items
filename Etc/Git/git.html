@@ -53,9 +53,11 @@
         <p><a href="#1._git_を導入する">1. git を導入する</a></p>
 		    <p>&nbsp;&nbsp;<a href="#1-1._git_インストール">1-1. git インストール</a></p>
 		    <p>&nbsp;&nbsp;<a href="#1-2._git_初期設定">1-2. git 初期設定</a></p>
-		    <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-2-1._ユーザー名、メールアドレスを設定">1-2-1. ユーザー名、メールアドレス設定</a></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-2._git_pull_のデフォルト動作を設定">1-2-2. git_pull のデフォルト動作を設定</a></p>
-		    <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-2-3._プロキシ設定">1-2-3. プロキシ設定</a></p>
+		    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-1._ユーザー名、メールアドレスを設定">1-2-1. ユーザー名、メールアドレス設定</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-2._git_pull_のデフォルト動作を設定">1-2-2. git pull のデフォルト動作を設定</a></p>
+		    <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-3._プロキシ設定">1-2-3. プロキシ設定</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-4._(任意)SSH_認証鍵を設定する">1-2-4. (任意)SSH 認証鍵を設定する</a></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-2-5._(任意)SSHキーを使用してコミットに署名する">1-2-5. (任意)SSHキーを使用してコミットに署名する</a></p>
         <p>&nbsp;&nbsp; <a href="#1-3._git_アップグレード（バージョンアップ）">1-3. git アップグレード（バージョンアップ）</a></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-3-1._Windows">1-3-1. Windows</a></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#1-3-2._Linux(Ubuntu)">1-3-2. Linux (Ubuntu)&nbsp;</a></p>
@@ -80,508 +82,544 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<h2><a name="1._git_を導入する">1. git を導入する</a></h2>
-<h3><a name="1-1._git_インストール">1-1. git インストール</a></h3>
-<p>&nbsp;</p>
-
-<h4>Windows の場合</h4>
-<p>&nbsp;</p>
-<p>Git のダウンロードページ “<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>” 
-を開きます。</p>
-<p>&nbsp;</p>
-<p>
-<img alt="" src="git/img6.jpg" width="800"></p>
-<p>&nbsp;</p>
-<p>”Windows” または ”Download x.xx for Windows” をクリックすると下記画面になります。 </p>
-<p>&nbsp;</p>
-<p>
-<img alt="" src="git/img7.jpg" width="800"></p>
-<p>&nbsp;</p>
-<p>この画面に遷移すると最新版の ”Git for Windows Setup” を自動的にダウンロード開始します。または必要とする downloads 
-を選んでダウンロードを実施します。</p>
-<p>ダウンロード完了後は、ダウンロードしたファイルを実行して指示に従ってインストールを行います。特に難しいところはありませんでした。 </p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>Linux, Unix の場合</h4>
-<p>Git のダウンロードページ “<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>” 
-を開きます。</p>
-<p>&nbsp;</p>
-<p>
-<img alt="" src="git/img8.jpg" width="800"></p>
-<p>&nbsp;</p>
-<p>”Linux/Unix” をクリックすると下記画面になります。 使用している環境と一致するOSを探し、その指示に従ってインストールを行います。 </p>
-<p>&nbsp;</p>
-<p><strong>注意</strong></p>
-<p>下記コマンドをそのまま入力してもインストールに失敗する場合が多いようです。例えば Debian/Ubuntu 
-の場合、下記のようにコマンドを入力する必要がありました。</p>
-
-<blockquote>
-sudo apt-get install git
-</blockquote>
-
-<p>ご注意ください。 </p>
-<p>
-<img alt="" src="git/imgA.jpg" width="800"></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
   <section>
-    <h3><a name="1-2._git_初期設定">1-2. git 初期設定</a></h3>
+    <h2><a name="1._git_を導入する">1. git を導入する</a></h2>
+
+    <section>
+      <h3><a name="1-1._git_インストール">1-1. git インストール</a></h3>
+      <p>&nbsp;</p>
+
+      <h4>Windows の場合</h4>
+      <p>&nbsp;</p>
+      <p>Git のダウンロードページ “<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>” 
+      を開きます。</p>
+      <p>&nbsp;</p>
+      <p>
+      <img alt="" src="git/img6.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>”Windows” または ”Download x.xx for Windows” をクリックすると下記画面になります。 </p>
+      <p>&nbsp;</p>
+      <p>
+      <img alt="" src="git/img7.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>この画面に遷移すると最新版の ”Git for Windows Setup” を自動的にダウンロード開始します。または必要とする downloads 
+      を選んでダウンロードを実施します。</p>
+      <p>ダウンロード完了後は、ダウンロードしたファイルを実行して指示に従ってインストールを行います。特に難しいところはありませんでした。 </p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+
+      <h4>Linux, Unix の場合</h4>
+      <p>Git のダウンロードページ “<a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>” 
+      を開きます。</p>
+      <p>&nbsp;</p>
+      <p>
+      <img alt="" src="git/img8.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>”Linux/Unix” をクリックすると下記画面になります。 使用している環境と一致するOSを探し、その指示に従ってインストールを行います。 </p>
+      <p>&nbsp;</p>
+      <p><strong>注意</strong></p>
+      <p>下記コマンドをそのまま入力してもインストールに失敗する場合が多いようです。例えば Debian/Ubuntu 
+      の場合、下記のようにコマンドを入力する必要がありました。</p>
+
+      <blockquote>
+      sudo apt-get install git
+      </blockquote>
+
+      <p>ご注意ください。 </p>
+      <p>
+      <img alt="" src="git/imgA.jpg" width="800"></p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </section>
+
     <p>&nbsp;</p>
 
-    <h4><a name="1-2-1._ユーザー名、メールアドレスを設定">1-2-1. ユーザー名、メールアドレスを設定</a></h4>
-    <p>Git を使用する際は、ユーザ名、メールアドレスの情報を必要とします。以下に設定を行うコマンド入力例を示します。”コマンドプロンプト” や 
-    ”Terminal” などのコンソールにより設定を行ってください。</p>
+    <section>
+      <h3><a name="1-2._git_初期設定">1-2. git 初期設定</a></h3>
+      <p>&nbsp;</p>
 
-    <p>［実施例］</p>
-    <blockquote>
-    <p>$ git config --global user.name "foo boo" </p>
-    <p>$ git config --global user.email "foo.boo@hoge..com" </p>
-    </blockquote>
-
-    <p>特定リポジトリのみ別の設定としたい場合は、そのリポジトリ配下にいる状態で ”--global” を “--local“ 
-    へ置き換えて上記コマンドを実施することで実施できます。 </p>
-
-    <blockquote>
-    <p>$ git config --local user.name "foo boo" </p>
-    <p>$ git config --local user.email "foo.boo@hoge.com" </p>
-    </blockquote>
-
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-
-    <h4><a name="1-2-2._git_pull_のデフォルト動作を設定">1-2-2. git pull のデフォルト動作を設定</a></h4>
-    <p>Git 2.27 以降では、git pull のデフォルト動作（merge / rebase / 
-    fast-forward）が明示されていない場合「どの統合方法を使うか分からない」という理由でエラーを出すようになりました。 そのため、<strong>初期設定で方針を決めておく</strong>ことを推奨されています。</p>
-    <p>多くの開発環境では、まず次のように設定しておくのが安全です。</p>
-
-    <blockquote>
-    <p>$ git config --global pull.rebase false</p>
-    </blockquote>
+      <section>
+        <h4><a name="1-2-1._ユーザー名、メールアドレスを設定">1-2-1. ユーザー名、メールアドレスを設定</a></h4>
+        <p>Git を使用する際は、ユーザ名、メールアドレスの情報を必要とします。以下に設定を行うコマンド入力例を示します。”コマンドプロンプト” や 
+        ”Terminal” などのコンソールにより設定を行ってください。</p>
     
-    <p>&nbsp;</p>
-
-    <table class="border-collapse" border="1" width="800">
-      <caption>⚙️ 選択肢と意味</caption>
-      <thead class="standard_table">
-        <tr>
-          <th>設定</th>
-          <th>動作</th>
-          <th>向いているケース</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="source_code">git config --global pull.rebase false
-          </span></td>
-          <td>merge（履歴を残す）</td>
-          <td>チーム開発でマージ履歴を明確に残したい場合</td>
-        </tr>
-        <tr>
-          <td><span class="source_code">git config --global pull.rebase true           </span></td>
-          <td>rrebase（履歴を直線化） </td>
-          <td>個人開発や履歴をきれいに保ちたい場合</td>
-        </tr>
-        <tr>
-          <td><span class="source_code">git config --global pull.ff only /span></td>
-          <td>ffast-forward のみ許可 </td>
-          <td>履歴が完全一致しているときだけ pull したい場合</td>
-        </tr>
-      </tbody>
-    </table>
+        <p>［実施例］</p>
+        <blockquote>
+        <p>$ git config --global user.name "foo boo" </p>
+        <p>$ git config --global user.email "foo.boo@hoge..com" </p>
+        </blockquote>
     
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-
-    <h4><a name="1-2-3._プロキシ設定">1-2-3. プロキシ設定</a></h4>
+        <p>特定リポジトリのみ別の設定としたい場合は、そのリポジトリ配下にいる状態で ”--global” を “--local“ 
+        へ置き換えて上記コマンドを実施することで実施できます。 </p>
+    
+        <blockquote>
+        <p>$ git config --local user.name "foo boo" </p>
+        <p>$ git config --local user.email "foo.boo@hoge.com" </p>
+        </blockquote>
+    
+        <p>&nbsp;</p>
+      </section>
       
-    <div class="status_information">
-      <div></div>
-      <div>
-        <p class="status_title"><strong>NOTE</strong></p>
-        <p>こちらは多くの場合に設定不要です。</p>
-        <p>企業などのネット環境でプロキシを使用している場合にのみ必要な設定です。</p>
-        <p>
-        プロキシ設定はご使用の環境によって設定が異なりますので、プロキシ設定を行う必要がある場合はIT部門などに必要な設定内容を確認して行いましょう。</p>
-      </div>
-    </div>
+      <p>&nbsp;</p>
+
+      <section>
+        <h4><a name="1-2-2._git_pull_のデフォルト動作を設定">1-2-2. git pull のデフォルト動作を設定</a></h4>
+        <p>Git 2.27 以降では、git pull のデフォルト動作（merge / rebase / 
+        fast-forward）が明示されていない場合「どの統合方法を使うか分からない」という理由でエラーを出すようになりました。 そのため、<strong>初期設定で方針を決めておく</strong>ことを推奨されています。</p>
+        <p>多くの開発環境では、まず次のように設定しておくのが安全です。</p>
+    
+        <blockquote>
+        <p>$ git config --global pull.rebase false</p>
+        </blockquote>
+        
+        <p>&nbsp;</p>
+    
+        <table class="border-collapse" border="1" width="800">
+          <caption>⚙️ 選択肢と意味</caption>
+          <thead class="standard_table">
+            <tr>
+              <th>設定</th>
+              <th>動作</th>
+              <th>向いているケース</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="source_code">git config --global pull.rebase false
+              </span></td>
+              <td>merge（履歴を残す）</td>
+              <td>チーム開発でマージ履歴を明確に残したい場合</td>
+            </tr>
+            <tr>
+              <td><span class="source_code">git config --global pull.rebase true           </span></td>
+              <td>rrebase（履歴を直線化） </td>
+              <td>個人開発や履歴をきれいに保ちたい場合</td>
+            </tr>
+            <tr>
+              <td><span class="source_code">git config --global pull.ff only </span></td>
+              <td>ffast-forward のみ許可 </td>
+              <td>履歴が完全一致しているときだけ pull したい場合</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <p>&nbsp;</p>
+      </section>
+      
+      <p>&nbsp;</p>
+      
+      <section>
+        <h4><a name="1-2-3._プロキシ設定">1-2-3. プロキシ設定</a></h4>
+          
+        <div class="status_information">
+          <div></div>
+          <div>
+            <p class="status_title"><strong>NOTE</strong></p>
+            <p>こちらは多くの場合に設定不要です。</p>
+            <p>企業などのネット環境でプロキシを使用している場合にのみ必要な設定です。</p>
+            <p>
+            プロキシ設定はご使用の環境によって設定が異なりますので、プロキシ設定を行う必要がある場合はIT部門などに必要な設定内容を確認して行いましょう。</p>
+          </div>
+        </div>
+    
+        <p>&nbsp;</p>
+        <p>プロキシ設定を必要とする環境では、http, https ２つのプロトコルに対してプロキシ設定を行う必要があります。</p>
+        <p>以下に設定を行うコマンド入力例を示します。”コマンドプロンプト” や ”Terminal” などのコンソールにより設定を行ってください。 </p>
+    
+        <p>［実施例］ </p>
+        <blockquote>
+        <p>$ git config --global http.proxy http://proxy.hoge.co.jp:8080</p>
+        <p>$ git config --global https.proxy https://proxy.hoge.co.jp:8080</p>
+        </blockquote>
+    
+        <p>このコマンド入力により、”~/.gitconfig” ファイルに下記情報が記載されます。 </p>
+        <blockquote>
+        <p>[http]</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy = http://proxy.hoge.co.jp:8080</p>
+        <p>[https]</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy = https://proxy.hoge.co.jp:8080</p>
+        </blockquote>
+    
+        <p>補足： </p>
+        <p>上記は本書記載時点における 特定プロキシー環境で使用する場合の設定例です。</p>
+        <p>プロキシのアドレスおよびポート番号は使用環境に合わせて変更してください。 </p>
+        <p>&nbsp;</p>
+      </section>
+
+      <p>&nbsp;</p>
+    
+      <section>
+        <h4><a name="1-2-4._(任意)SSH_認証鍵を設定する">1-2-4. (任意)SSH 認証鍵を設定する</a></h4>
+        <p>SSH 認証鍵を設定します。</p>
+        <p>任意 と書いていますがセキュリティという観点から実質必須と考えます。</p>
+        <ul>
+          <li><a href="../Bitbucket/How%20to%20use%20SSH%20key.html">[Bitbucket] SSH認証カギを設定する</a></li>
+          <li><a href="../Github/How%20to%20use%20SSH%20key.html">[GitHub] SSH認証カギを設定する</a></li>
+        </ul>
+        <p>&nbsp;</p>    
+      </section>
+      
+      <p>&nbsp;</p>
+      
+      <section>
+        <h4><a name="1-2-5._(任意)SSHキーを使用してコミットに署名する">1-2-5. (任意)SSHキーを使用してコミットに署名する</a></h4>
+        <p>SSHキーを使用してコミットに署名を行う設定を行います。</p>
+        <ul>
+          <li><a href="../Bitbucket/signing_commits_with_ssh_key.html">[Bitbucket] SSHキーを使用してコミットに署名する</a></li>
+          <li><a href="../Github/signing_commits_with_ssh_key.html">[GitHub] SSHキーを使用してコミットに署名する</a></li>
+        </ul>
+        <p>&nbsp;</p>
+      </section>
+      
+    </section>
 
     <p>&nbsp;</p>
-    <p>プロキシ設定を必要とする環境では、http, https ２つのプロトコルに対してプロキシ設定を行う必要があります。</p>
-    <p>以下に設定を行うコマンド入力例を示します。”コマンドプロンプト” や ”Terminal” などのコンソールにより設定を行ってください。 </p>
 
-    <p>［実施例］ </p>
-    <blockquote>
-    <p>$ git config --global http.proxy http://proxy.hoge.co.jp:8080</p>
-    <p>$ git config --global https.proxy https://proxy.hoge.co.jp:8080</p>
-    </blockquote>
-
-    <p>このコマンド入力により、”~/.gitconfig” ファイルに下記情報が記載されます。 </p>
-    <blockquote>
-    <p>[http]</p>
-    <p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = http://proxy.hoge.co.jp:8080</p>
-    <p>[https]</p>
-    <p>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy = https://proxy.hoge.co.jp:8080</p>
-    </blockquote>
-
-    <p>補足： </p>
-    <p>上記は本書記載時点における 特定プロキシー環境で使用する場合の設定例です。</p>
-    <p>プロキシのアドレスおよびポート番号は使用環境に合わせて変更してください。 </p>
+    <section>
+      <h3><a name="1-3._git_アップグレード（バージョンアップ）">1-3. git アップグレード（バージョンアップ）<a></h3>
+      <p>git を最新バージョンへアップグレードする方法について記載します。</p>
+      <p>&nbsp;</p>
+      
+      <h4><a name="1-3-1._Windows">1-3-1. Windows</a></h4>
+      <p>Windows 環境については下記コマンドで最新版へアップデートできました。</p>
+      <blockquote>
+        $
+        git update-git-for-windows
+      </blockquote>
+      <p>古すぎる Git 使用の場合はこのコマンドが無い場合もあります。その場合は最新の Git を入手してインストールしてください。</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h4><a name="1-3-2._Linux(Ubuntu)">1-3-2. Linux(Ubuntu)</a></h4>
+      <p>Linux／Unix については
+      <a href="https://git-scm.com/download/linux" rel="noreferrer noopener" tabindex="-1" target="_blank" title="https://git-scm.com/download/linux">
+      Git (git-scm.com)</a> をご確認ください。</p>
+      <p>Ubuntu で git インストール済みの場合、下記手順で最新版へアップデートできました。</p>
+      <blockquote>
+        <p>sudo add-apt-repository ppa:git-core/ppa</p>
+        <p>sudo apt update</p>
+        <p>sudo apt upgrade</p>
+      </blockquote>
+      <p>上記は一回のみ行えばよく、次回からは下記コマンドでアップグレードできます。</p>
+      <blockquote>
+        <p>sudo apt update</p>
+        <p>sudo apt upgrade</p>
+      </blockquote>
+      <p>&nbsp;</p>
+    </section>
+    
     <p>&nbsp;</p>
     
   </section>
-
+  
+  <p>&nbsp;</p>
+  <hr>
   <p>&nbsp;</p>
 
   <section>
-    <h3><a name="1-3._git_アップグレード（バージョンアップ）">1-3. git アップグレード（バージョンアップ）<a></h3>
-    <p>git を最新バージョンへアップグレードする方法について記載します。</p>
+  
+    <h2><a name="2._git_コマンド">2. git コマンド</a></h2>
     <p>&nbsp;</p>
-    <h4><a name="1-3-1._Windows">1-3-1. Windows</a></h4>
-    <p>Windows 環境については下記コマンドで最新版へアップデートできました。</p>
+    
+    <h3><a name="2-1._基本的な_git_コマンド">2-1. 基本的な git コマンド</a></h3>
+    <p>&nbsp;</p>
+    <h4>git init</h4>
+    <p>概要： リポジトリの作成</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git status</h4>
+    <p>概要： 現在のリポジトリ状況を確認</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git add</h4>
+    <p>概要： 追加・編集などで変化があったファイルをステージングする</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit</h4>
+    <p>概要： ステージングしたファイル・ディレクトリをコミット</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git push origin main</h4>
+    <p>概要： Remote Repository (origin main) に Local Repository を反映</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="2-2._変更系">2-2. 変更系</a></h3>
+    <p>&nbsp;</p>
+    
+    <h4>git add .</h4>
+    <p>概要： WorkTree ファイルを全て add でステージング</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit -m &quot;commit comment&quot;</h4>
+    <p>概要： コメントを付けて commit 実行</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit -am &quot;commit comment&quot;</h4>
+    <p>概要： add &amp; コメント付きで commit 実行</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit -F- &lt;&lt;EOM</h4>
+    <p>概要： 複数行コメントでコミット（１）</p>
+    <p>&nbsp;</p>
+    <p>(例)</p>
+    <pre>$ git commit -F- &lt;&lt;EOM
+    &gt;<EOM > 要約
+    &gt;
+    &gt; 詳細 
+    &gt; 
+    &gt; EOM</pre>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit -m &quot;コメント１行目&quot; -m &quot;コメント２行目&quot; -m &quot;コメント３行目&quot;</h4>
+    <p>概要： 複数行コメントでコミット（２）</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h4>git commit --amend</h4>
+    <p>概要： 直前のコミットを編集</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git push origin main</p>
+    <p>概要： リモートリポジトリにローカルリポジトリを反映</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git push -f origin main</p>
+    <p>概要： リモートリポジトリにローカルリポジトリを強制反映</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git fetch</p>
+    <p>概要： リモートリポジトリをダウンロード。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git pull</p>
+    <p>概要： リモートリポジトリをローカルへ反映</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git pull origin &lt;remote branch name&gt;</p>
+    <p>概要： 指定のリモートブランチをローカルへ反映</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git branch &lt;branch name&gt;</p>
+    <p>概要： ブランチ作成</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git branch -m &lt;<strong>old</strong> branch name&gt; &lt;<strong>new</strong> branch 
+    name&gt;</p>
+    <p>概要： ブランチ名を変更</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git checkout &lt;branch name&gt;</p>
+    <p>概要： 作業ブランチ（HEAD）変更</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git checkout -b &lt;branch name&gt;</p>
+    <p>概要： ブランチ作成 ＆ 作業ブランチ（HEAD）変更</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git merge &lt;branch name&gt;</p>
+    <p>概要： 現在のブランチへ &lt;branch name&gt; の内容をマージ</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git stash</p>
+    <p>概要： 変更退避</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git mv &lt;old filename&gt; &lt;new filename&gt;</p>
+    <p>概要： ファイル名を変更する、ファイルを移動する</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git rm &lt;ファイル名&gt;</p>
+    <p>概要： git で管理しているファイルを削除し、ワークツリーからも削除する</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="2-3._確認系">2-3. 確認系</a></h3>
+    <p>&nbsp;</p>
+    <p>git branch</p>
+    <p>&nbsp;</p>
+    <p>git branch -a</p>
+    <p>&nbsp;</p>
+    <p>git status</p>
+    <p>&nbsp;</p>
+    <p>git add --dry-run .</p>
+    <p>&nbsp;</p>
+    <p>git ls-files</p>
+    <p>&nbsp;</p>
+    <p>git diff --name-only</p>
+    <p>&nbsp;</p>
+    <p>git diff --staged</p>
+    <p>&nbsp;</p>
+    <p>git log -2</p>
+    <p>&nbsp;</p>
+    <p>git log -2 --stat</p>
+    <p>&nbsp;</p>
+    <p>git log -2 --patch</p>
+    <p>&nbsp;</p>
+    <p>git log -p &lt;ファイルパス / ファイル名&gt;</p>
+    <p>&nbsp;</p>
+    <p>git stash list</p>
+    <p>&nbsp;</p>
+    <p>git clean -nd</p>
+    <p>概要： Untracked ファイルの確認</p>
+    <p>&nbsp;</p>
+    <p>git show</p>
+    <p>&nbsp;</p>
+    <p>git branch -r</p>
+    <p>概要： リモートブランチ確認</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git remote</p>
+    <p>概要： リモートリポジトリ表示</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git remote -v</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git remove rm origin</p>
+    <p>概要： リモートリポジトリ削除</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git help</p>
+    <p>概要： ヘルプページ表示</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git help -a</p>
+    <p>概要： git 全コマンドリスト</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git tag</p>
+    <p>概要： tag 一覧表示</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git reflog</p>
+    <p>概要： 過去の HEAD コミット一覧表示</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git config --list</p>
+    <p>概要： リポジトリ設定内容表示</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git config user.email</p>
+    <p>概要： </p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git config user.name</p>
+    <p>概要：</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git --version</p>
+    <p>概要： git インストールバージョン確認</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="2-4._取り消し系">2-4. 取り消し系</a></h3>
+    <p>&nbsp;</p>
+    <p>git rm --cached &lt;ファイル名&gt;</p>
+    <p>概要： git で管理しているファイルを削除し、ワークツリーからは削除しない</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git branch --delete &lt;ブランチ名&gt;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git reflog</p>
+    <p>概要： 削除したブランチの最後のコミットを見つけて</p>
+    <p><span class="cpp-source">git branch &lt;ブランチ名&gt; HEAD@{ログ番号}</span></p>
+    <p>ブランチを復活。</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <h4>git reset</h4>
+    <p>&nbsp;</p>
+    <p>(1) 直前のコミットを取り消したい（コミットのみ取り消し）</p>
     <blockquote>
-      $
-      git update-git-for-windows
+    <p>$ git reset --soft HEAD^ </p>
     </blockquote>
-    <p>古すぎる Git 使用の場合はこのコマンドが無い場合もあります。その場合は最新の Git を入手してインストールしてください。</p>
+    
+    <ul>
+      <li>HEAD^：直前のコミットを意味する。<ul>
+        <li>&nbsp;@^、HEAD~も同じ意味。 </li>
+        <li>HEAD~{n}&nbsp;：n個前のコミットを意味する。 </li>
+        <li>HEAD^ や HEAD~{n} の代わりにコミットのハッシュ値を書いても良い。 </li>
+        <li>gitのv1.8.5からは、「HEAD」のエイリアスとして「＠」が用意されている。 </li>
+        <li>HEAD^^^とHEAD~3とHEAD~~~とHEAD~{3}と@^^^は同じ意味。 </li>
+      </ul>
+      </li>
+      <li><span class="cpp-source">--soft</span> なので、インデックス・ワーキングツリーはそのまま。</li>
+      <li>上書きコミットしたいなら、<span class="cpp-source">git commit --amend</span> を使うとラク！ </li>
+    </ul>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <h4><a name="1-3-2._Linux(Ubuntu)">1-3-2. Linux(Ubuntu)</a></h4>
-    <p>Linux／Unix については
-    <a href="https://git-scm.com/download/linux" rel="noreferrer noopener" tabindex="-1" target="_blank" title="https://git-scm.com/download/linux">
-    Git (git-scm.com)</a> をご確認ください。</p>
-    <p>Ubuntu で git インストール済みの場合、下記手順で最新版へアップデートできました。</p>
+    <p>(2) 直前のコミットを取り消したい（マルっと消したい）</p>
     <blockquote>
-      <p>sudo add-apt-repository ppa:git-core/ppa</p>
-      <p>sudo apt update</p>
-      <p>sudo apt upgrade</p>
+    <p>$ git reset --hard HEAD^ </p>
     </blockquote>
-    <p>上記は一回のみ行えばよく、次回からは下記コマンドでアップグレードできます。</p>
-    <blockquote>
-      <p>sudo apt update</p>
-      <p>sudo apt upgrade</p>
-    </blockquote>
+    
+    <ul>
+      <li><span class="cpp-source">--hard</span> なので、「インデックス・ワーキングツリー」も1つ前のコミットの状態に戻る。</li>
+    </ul>
     <p>&nbsp;</p>
+    <p>(3) コミット後の変更を全部消したい</p>
+    <blockquote>
+    <p>$ git reset --hard HEAD </p>
+    </blockquote>
+    
+    <ul>
+      <li>--hardなので、「HEADの位置・インデックス・ワーキングツリー」を全てHEADの位置に動かす。 
+      <ul>
+        <li>HEADの位置はそのまま。</li>
+        <li>「インデックス・ワーキングツリー」の変更が消せる。 </li>
+      </ul>
+      </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>(4) addを取り消したい </p>
+    <blockquote>
+    <p>$ git reset --mixed HEAD </p>
+    </blockquote>
+    
+    <ul>
+      <li>--mixed（or オプション無し）なので、「HEADの位置・インデックス」をHEADの位置に動かす。 
+      <ul>
+        <li>HEADの位置はそのまま。</li>
+        <li>従って、インデックスの変更（addした内容）のみ元に戻す。 </li>
+      </ul>
+      </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git revert</p>
+    <p>概要： コミットを打ち消して記録残す</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git clean -fd</p>
+    <p>概要： Untracked ファイルの削除</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git merge --abort</p>
+    <p>概要： 直前マージの取り消し</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git reflog</p>
+    <p>概要： 復活する可能性のある呪文</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>git push --delete origin &lt;リモートブランチ名&gt;</p>
+    <p>概要： リモート上のブランチを削除</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    
+    <h3><a name="2-5._git_submodule">2-5. &quot;git submodule&quot;</a></h3>
+    <p><a href="submodule.html">こちら</a> へ移動</p>
+    <p>&nbsp;</p>
+      
   </section>
-
-<p>&nbsp;</p>
-<hr>
-<p>&nbsp;</p>
-
-<h2><a name="2._git_コマンド">2. git コマンド</a></h2>
-<p>&nbsp;</p>
-
-<h3><a name="2-1._基本的な_git_コマンド">2-1. 基本的な git コマンド</a></h3>
-<p>&nbsp;</p>
-<h4>git init</h4>
-<p>概要： リポジトリの作成</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git status</h4>
-<p>概要： 現在のリポジトリ状況を確認</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git add</h4>
-<p>概要： 追加・編集などで変化があったファイルをステージングする</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit</h4>
-<p>概要： ステージングしたファイル・ディレクトリをコミット</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git push origin main</h4>
-<p>概要： Remote Repository (origin main) に Local Repository を反映</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h3><a name="2-2._変更系">2-2. 変更系</a></h3>
-<p>&nbsp;</p>
-
-<h4>git add .</h4>
-<p>概要： WorkTree ファイルを全て add でステージング</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit -m &quot;commit comment&quot;</h4>
-<p>概要： コメントを付けて commit 実行</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit -am &quot;commit comment&quot;</h4>
-<p>概要： add &amp; コメント付きで commit 実行</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit -F- &lt;&lt;EOM</h4>
-<p>概要： 複数行コメントでコミット（１）</p>
-<p>&nbsp;</p>
-<p>(例)</p>
-<pre>$ git commit -F- &lt;&lt;EOM
-&gt;<EOM > 要約
-&gt;
-&gt; 詳細 
-&gt; 
-&gt; EOM</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit -m &quot;コメント１行目&quot; -m &quot;コメント２行目&quot; -m &quot;コメント３行目&quot;</h4>
-<p>概要： 複数行コメントでコミット（２）</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h4>git commit --amend</h4>
-<p>概要： 直前のコミットを編集</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git push origin main</p>
-<p>概要： リモートリポジトリにローカルリポジトリを反映</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git push -f origin main</p>
-<p>概要： リモートリポジトリにローカルリポジトリを強制反映</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git fetch</p>
-<p>概要： リモートリポジトリをダウンロード。</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git pull</p>
-<p>概要： リモートリポジトリをローカルへ反映</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git pull origin &lt;remote branch name&gt;</p>
-<p>概要： 指定のリモートブランチをローカルへ反映</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git branch &lt;branch name&gt;</p>
-<p>概要： ブランチ作成</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git branch -m &lt;<strong>old</strong> branch name&gt; &lt;<strong>new</strong> branch 
-name&gt;</p>
-<p>概要： ブランチ名を変更</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git checkout &lt;branch name&gt;</p>
-<p>概要： 作業ブランチ（HEAD）変更</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git checkout -b &lt;branch name&gt;</p>
-<p>概要： ブランチ作成 ＆ 作業ブランチ（HEAD）変更</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git merge &lt;branch name&gt;</p>
-<p>概要： 現在のブランチへ &lt;branch name&gt; の内容をマージ</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git stash</p>
-<p>概要： 変更退避</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git mv &lt;old filename&gt; &lt;new filename&gt;</p>
-<p>概要： ファイル名を変更する、ファイルを移動する</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git rm &lt;ファイル名&gt;</p>
-<p>概要： git で管理しているファイルを削除し、ワークツリーからも削除する</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h3><a name="2-3._確認系">2-3. 確認系</a></h3>
-<p>&nbsp;</p>
-<p>git branch</p>
-<p>&nbsp;</p>
-<p>git branch -a</p>
-<p>&nbsp;</p>
-<p>git status</p>
-<p>&nbsp;</p>
-<p>git add --dry-run .</p>
-<p>&nbsp;</p>
-<p>git ls-files</p>
-<p>&nbsp;</p>
-<p>git diff --name-only</p>
-<p>&nbsp;</p>
-<p>git diff --staged</p>
-<p>&nbsp;</p>
-<p>git log -2</p>
-<p>&nbsp;</p>
-<p>git log -2 --stat</p>
-<p>&nbsp;</p>
-<p>git log -2 --patch</p>
-<p>&nbsp;</p>
-<p>git log -p &lt;ファイルパス / ファイル名&gt;</p>
-<p>&nbsp;</p>
-<p>git stash list</p>
-<p>&nbsp;</p>
-<p>git clean -nd</p>
-<p>概要： Untracked ファイルの確認</p>
-<p>&nbsp;</p>
-<p>git show</p>
-<p>&nbsp;</p>
-<p>git branch -r</p>
-<p>概要： リモートブランチ確認</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git remote</p>
-<p>概要： リモートリポジトリ表示</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git remote -v</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git remove rm origin</p>
-<p>概要： リモートリポジトリ削除</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git help</p>
-<p>概要： ヘルプページ表示</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git help -a</p>
-<p>概要： git 全コマンドリスト</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git tag</p>
-<p>概要： tag 一覧表示</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git reflog</p>
-<p>概要： 過去の HEAD コミット一覧表示</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git config --list</p>
-<p>概要： リポジトリ設定内容表示</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git config user.email</p>
-<p>概要： </p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git config user.name</p>
-<p>概要：</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git --version</p>
-<p>概要： git インストールバージョン確認</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h3><a name="2-4._取り消し系">2-4. 取り消し系</a></h3>
-<p>&nbsp;</p>
-<p>git rm --cached &lt;ファイル名&gt;</p>
-<p>概要： git で管理しているファイルを削除し、ワークツリーからは削除しない</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git branch --delete &lt;ブランチ名&gt;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git reflog</p>
-<p>概要： 削除したブランチの最後のコミットを見つけて</p>
-<p><span class="cpp-source">git branch &lt;ブランチ名&gt; HEAD@{ログ番号}</span></p>
-<p>ブランチを復活。</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<h4>git reset</h4>
-<p>&nbsp;</p>
-<p>(1) 直前のコミットを取り消したい（コミットのみ取り消し）</p>
-<blockquote>
-<p>$ git reset --soft HEAD^ </p>
-</blockquote>
-
-<ul>
-  <li>HEAD^：直前のコミットを意味する。<ul>
-    <li>&nbsp;@^、HEAD~も同じ意味。 </li>
-    <li>HEAD~{n}&nbsp;：n個前のコミットを意味する。 </li>
-    <li>HEAD^ や HEAD~{n} の代わりにコミットのハッシュ値を書いても良い。 </li>
-    <li>gitのv1.8.5からは、「HEAD」のエイリアスとして「＠」が用意されている。 </li>
-    <li>HEAD^^^とHEAD~3とHEAD~~~とHEAD~{3}と@^^^は同じ意味。 </li>
-  </ul>
-  </li>
-  <li><span class="cpp-source">--soft</span> なので、インデックス・ワーキングツリーはそのまま。</li>
-  <li>上書きコミットしたいなら、<span class="cpp-source">git commit --amend</span> を使うとラク！ </li>
-</ul>
-<p>&nbsp;</p>
-<p>(2) 直前のコミットを取り消したい（マルっと消したい）</p>
-<blockquote>
-<p>$ git reset --hard HEAD^ </p>
-</blockquote>
-
-<ul>
-  <li><span class="cpp-source">--hard</span> なので、「インデックス・ワーキングツリー」も1つ前のコミットの状態に戻る。</li>
-</ul>
-<p>&nbsp;</p>
-<p>(3) コミット後の変更を全部消したい</p>
-<blockquote>
-<p>$ git reset --hard HEAD </p>
-</blockquote>
-
-<ul>
-  <li>--hardなので、「HEADの位置・インデックス・ワーキングツリー」を全てHEADの位置に動かす。 
-  <ul>
-    <li>HEADの位置はそのまま。</li>
-    <li>「インデックス・ワーキングツリー」の変更が消せる。 </li>
-  </ul>
-  </li>
-</ul>
-<p>&nbsp;</p>
-<p>(4) addを取り消したい </p>
-<blockquote>
-<p>$ git reset --mixed HEAD </p>
-</blockquote>
-
-<ul>
-  <li>--mixed（or オプション無し）なので、「HEADの位置・インデックス」をHEADの位置に動かす。 
-  <ul>
-    <li>HEADの位置はそのまま。</li>
-    <li>従って、インデックスの変更（addした内容）のみ元に戻す。 </li>
-  </ul>
-  </li>
-</ul>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git revert</p>
-<p>概要： コミットを打ち消して記録残す</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git clean -fd</p>
-<p>概要： Untracked ファイルの削除</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git merge --abort</p>
-<p>概要： 直前マージの取り消し</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git reflog</p>
-<p>概要： 復活する可能性のある呪文</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>git push --delete origin &lt;リモートブランチ名&gt;</p>
-<p>概要： リモート上のブランチを削除</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<h3><a name="2-5._git_submodule">2-5. &quot;git submodule&quot;</a></h3>
-<p><a href="submodule.html">こちら</a> へ移動</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+  
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
