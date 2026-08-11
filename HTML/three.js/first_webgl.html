@@ -1,0 +1,82 @@
+﻿<!--
+  下記ページを参考に作成しました
+  https://ics.media/tutorial-three/quickstart/
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- キャッシュ無効化 -->
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <!-- タイトル -->
+    <title>Three.js 入門 | Programming Items</title>
+    <!-- ファビコン -->
+    <link rel="shortcut icon" href="../../favicon.ico">
+    
+    <script async src="https://unpkg.com/es-module-shims@1.5.8/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.142.0/build/three.module.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      // Three.jsライブラリをインポート
+      //import * as THREE from "three/webgpu";
+      import * as THREE from "three";
+
+      console.log(THREE);
+
+      // キャンバスのサイズを指定
+      const width = 960;
+      const height = 540;
+
+      // WebGLレンダラーを作成
+      //const renderer = new THREE.WebGPURenderer({
+      const renderer = new THREE.WebGLRenderer({
+        // 使用するcanvas要素を指定
+        canvas: document.querySelector("#myCanvas"),
+      });
+      // デバイスのピクセル比率を設定（高DPIディスプレイに対応）
+      renderer.setPixelRatio(devicePixelRatio);
+      // レンダラーのサイズを設定（幅960px、高さ540px）
+      renderer.setSize(width, height);
+
+      // 毎フレーム時に実行されるアニメーションループを設定
+      renderer.setAnimationLoop(tick);
+
+      // シーン（3D空間）を作成
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+
+      // パースペクティブカメラを作成（視野角45度、アスペクト比 width/height）
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, +1000);
+
+      // ボックスジオメトリを作成（幅400、高さ400、奥行400）
+      const geometry = new THREE.BoxGeometry(400, 400, 400);
+      // 法線色マテリアルを設定（各面が異なる色で表示される）
+      const material = new THREE.MeshNormalMaterial();
+      // メッシュを作成してシーンに追加
+      const box = new THREE.Mesh(geometry, material);
+      scene.add(box);
+
+      // 毎フレーム時に実行されるアニメーションループ関数
+      function tick() {
+        // ボックスをY軸中心に回転させる
+        box.rotation.y += 0.01;
+        // シーンをカメラの視点から描画
+        renderer.render(scene, camera);
+      }
+    </script>
+  </head>
+  
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
+  
+</html>
