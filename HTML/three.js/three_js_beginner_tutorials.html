@@ -76,7 +76,7 @@
     <p> &nbsp;</p>
     
     <figure>
-      <img alt="three.js - webgl 表示例" src="tree_js_webgl_screen-shot.png" width="800">
+      <img alt="three.js - webgl 表示例" src="three_js_beginner_tutorials/three_js_webgl_screen-shot.png" width="800">
       <figcaption>three.js - webgl 表示例</figcaption>
     </figure>
     
@@ -253,32 +253,9 @@
 &lt;html&gt;
   &lt;head&gt;
     &lt;script type="module"&gt;
-      // 毎フレーム時に実行されるアニメーションループを設定
-      renderer.setAnimationLoop(tick);
-
       // シーン（3D空間）を作成
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x000000);
-
-      // パースペクティブカメラを作成（視野角45度、アスペクト比 width/height）
-      const camera = new THREE.PerspectiveCamera(45, width / height);
-      camera.position.set(0, 0, +1000);
-
-      // ボックスジオメトリを作成（幅400、高さ400、奥行400）
-      const geometry = new THREE.BoxGeometry(400, 400, 400);
-      // 法線色マテリアルを設定（各面が異なる色で表示される）
-      const material = new THREE.MeshNormalMaterial();
-      // メッシュを作成してシーンに追加
-      const box = new THREE.Mesh(geometry, material);
-      scene.add(box);
-
-      // 毎フレーム時に実行されるアニメーションループ関数
-      function tick() {
-        // ボックスをY軸中心に回転させる
-        box.rotation.y += 0.01;
-        // シーンをカメラの視点から描画
-        renderer.render(scene, camera);
-      }
     &lt;/script&gt;
   &lt;/head&gt;
 &lt;/html&gt;</pre>
