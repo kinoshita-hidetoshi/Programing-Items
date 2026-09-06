@@ -40,6 +40,9 @@
     .auto-style1 {
       background-color: #505000;
     }
+    .auto-style2 {
+      text-decoration: underline;
+    }
   </style>
 
 </head>
@@ -49,13 +52,14 @@
   <h1>Three.js 入門編</h1>
   
   <p> 
-  このサイトは WebGL の JS ライブラリ「Three.js」の入門サイトです。</p>
+  WebGL の JS ライブラリ「Three.js」を私が勉強でトライした内容をメモするページです。</p>
   <p>&nbsp;</p>
   
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1._簡単な_three.js_サンプルを試そう">1. 簡単な_three.js サンプルを試そう</a></p>
+        <p><a href="#2._マテリアル、ライト、影_の追加">2. マテリアル、ライト、影 の追加</a></p>
     	<p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
@@ -81,28 +85,29 @@
     </figure>
     
     <p> &nbsp;</p>
-    <p> <a href="first_webgl.html" target="_blank">サンプルを再生する</a></p>
+    <p> 
+    <a href="three_js_beginner_tutorials_samples/first_webgl.html" target="_blank">サンプルを再生する</a></p>
     <p> &nbsp;</p>
     <p> ブラウザの画面上に単色の直方体が回転します。</p>
     <p> &nbsp;</p>
     <p> まずは HTML ファイルを用意して、次のコードを貼り付けます。</p>
     <p> <a href="https://ics.media/tutorial-three/quickstart/" target="_blank">
     簡単なThree.jsのサンプルを試そう - ICS MEDIA</a> を参考に、WebGPU 方式を WebGL 方式へ変更しています。</p>
+    <p> &nbsp;</p>
 
     <pre class="prettyprint linenums:1 lang-html" style="width:800px">
 &lt;!doctype html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;
-    &lt;script async src="https://unpkg.com/es-module-shims@1.5.8/dist/es-module-shims.js"&gt;&lt;/script&gt;
+    &lt;script async src="https://unpkg.com/es-module-shims@2.8.4/dist/es-module-shims.js"&gt;&lt;/script&gt;
     &lt;script type="importmap"&gt;
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.142.0/build/three.module.js"
+          "three": "https://unpkg.com/three@0.184.0/build/three.module.js"
         }
       }
     &lt;/script&gt;
-
     &lt;script type="module"&gt;
       // Three.jsライブラリをインポート
       //import * as THREE from "three/webgpu";
@@ -125,9 +130,6 @@
       // レンダラーのサイズを設定（幅960px、高さ540px）
       renderer.setSize(width, height);
 
-      // 毎フレーム時に実行されるアニメーションループを設定
-      renderer.setAnimationLoop(tick);
-
       // シーン（3D空間）を作成
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x000000);
@@ -144,8 +146,11 @@
       const box = new THREE.Mesh(geometry, material);
       scene.add(box);
 
+      // アニメーションループを開始
+      renderScene();
+
       // 毎フレーム時に実行されるアニメーションループ関数
-      function tick() {
+      function renderScene() {
         // ボックスをY軸中心に回転させる
         box.rotation.y += 0.01;
         // シーンをカメラの視点から描画
@@ -310,11 +315,11 @@
 
     <p>&nbsp;</p>
     <h3>アニメーション</h3>
-    <p>Three.jsでは、<span class="source_code">renderer.setAnimationLoop()</span> 
-    に更新関数を登録することで毎フレームの描画ループを構築できます。 </p>
-    <p>次に、Three.js の表示結果を更新する命令を書きます。Three.js 
-    では自動的に画面が最新に切り替わらないので、明示的に画面が更新されるように命令を書く必要があります。<span class="source_code">renderer.render()</span> 
-    という命令で更新を指示できます。</p>
+    <p>モダンブラウザでは <span class="source_code">requestAnimationFrame</span>&nbsp;
+    関数の登場によってアニメーションを実現できます。</p>
+    <p><span class="source_code">requestAnimationFrame</span> 
+    を使用するとブラウザによって定義された感覚で呼び出される関数を定義することができます。必要なものをその関数内で自由に描画できます。この関数は、ブラウザができる限りなめらかかつ効率的に描画することを保証します。</p>
+    <p>利用は簡単で、レンダリングを処理する関数を作成して、引数として渡すだけです。</p>
     <p>アニメーションの処理として、立方体が回転するようにしてみます。時間経過で回転するように <span class="source_code">
     rotation.y</span> プロパティの数値を加算しています。 </p>
     <p>&nbsp;</p>
@@ -323,11 +328,11 @@
 &lt;html&gt;
   &lt;head&gt;
     &lt;script type="module"&gt;
-      // 毎フレーム時に実行されるアニメーションループを設定
-      renderer.setAnimationLoop(tick);
+      // アニメーションループを開始
+      renderScene();
 
       // 毎フレーム時に実行されるアニメーションループ関数
-      function tick() {
+      function renderScene() {
         // ボックスをY軸中心に回転させる
         box.rotation.y += 0.01;
         // シーンをカメラの視点から描画
@@ -338,12 +343,148 @@
 &lt;/html&gt;</pre>
 
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
     
   </section>
   
-  <p> &nbsp;</p>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+    
+  <section>
+    <h2><a name="2._マテリアル、ライト、影_の追加">2. マテリアル、ライト、影 の追加</a></h2>
+    <p>Three.js は、前章で BOX を追加したのとほとんど同じ手順で新しいマテリアル、ライト、影 を簡単に追加することができます。</p>
+    <p>以下の内容を実施します。</p>
+    <ul>
+      <li>箱(BOX)の影を投影する plane を追加</li>
+      <li>影を有効化するための設定を追加</li>
+      <li>光源としてスポットライト（SpotLight）を追加</li>
+      <li>光源として環境光（AmbientLight）を追加（スポットライトだけだとコントラストが強かったので、これを弱めるために追加）</li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>作成するサンプルをこちら（↓）で確認してください。</p>
+    <p>
+    <a href="three_js_beginner_tutorials_samples/add_materials_lights_and_shadows.html" target="_blank">サンプルを再生する</a></p>
+    <p>&nbsp;</p>
+    <p>"<span class="auto-style2"><a href="three_js_beginner_tutorials_samples/add_materials_lights_and_shadows.html" target="_blank">add_materials_lights_and_shadows.html</a></span>" 
+    :</p>
+    
+    <pre class="prettyprint linenums:1 lang-html" style="width:800px">
+&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
 
+    &lt;script async src="https://unpkg.com/es-module-shims@2.8.4/dist/es-module-shims.js"&gt;&lt;/script&gt;
+    &lt;script type="importmap"&gt;
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.184.0/build/three.module.js"
+        }
+      }
+    &lt;/script&gt;
+
+    &lt;script type="module"&gt;
+      // Three.js ライブラリをインポート
+      //import * as THREE from "three/webgpu";
+      import * as THREE from "three";
+
+      console.log(THREE);
+
+      // キャンバスのサイズを指定
+      const width = 960;
+      const height = 540;
+
+      // WebGL レンダラーを作成
+      //const renderer = new THREE.WebGPURenderer({
+      const renderer = new THREE.WebGLRenderer({
+        // 使用するcanvas要素を指定
+        canvas: document.querySelector("#myCanvas"),
+      });
+      // レンダラーのサイズを設定（幅960px、高さ540px）
+      renderer.setSize(width, height);
+      // 背景色を設定
+      renderer.setClearColor(new THREE.Color(0xEEEEEE));
+      // デバイスのピクセル比率を設定（高DPIディスプレイに対応）
+      renderer.setPixelRatio(devicePixelRatio);
+<span class="auto-style1">      // シャドウマップを有効にする</span>
+<span class="auto-style1">      renderer.shadowMap.enabled = true;</span>
+<span class="auto-style1">      // シャドウマップの種類を設定</span>
+<span class="auto-style1">      renderer.shadowMap.type = THREE.PCFSoftShadowMap;</span>
+
+      // シーン（3D空間）を作成
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xeeeeee);
+
+      // 環境光を追加
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+      scene.add(ambientLight);
+
+      // パースペクティブカメラを作成（視野角45度、アスペクト比 width/height）
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, +1000);
+
+      // ボックスジオメトリを作成（幅400、高さ400、奥行400）
+      const boxGeometry = new THREE.BoxGeometry(400, 400, 400);
+<span class="auto-style1">      // メッシュに影を落とすマテリアルを設定</span>
+<span class="auto-style1">      const boxMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });</span>
+      // メッシュを作成してシーンに追加
+      const box = new THREE.Mesh(boxGeometry, boxMaterial);
+      box.position.set(0, 0, 0);
+<span class="auto-style1">      box.castShadow = true;          // ボックスが影を落とすように設定</span>
+      scene.add(box);
+
+<span class="auto-style1">      // plane を追加</span>
+<span class="auto-style1">      const planeGeometry = new THREE.PlaneGeometry(1200, 1200);</span>
+<span class="auto-style1">      const planeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ffff });</span>
+<span class="auto-style1">      const plane = new THREE.Mesh(planeGeometry, planeMaterial);</span>
+<span class="auto-style1">      plane.rotation.x = -0.5 * Math.PI;</span>
+<span class="auto-style1">      plane.position.set(0, -300, 0);</span>
+<span class="auto-style1">      plane.receiveShadow = true;     // plane が影を受け取るように設定</span>
+<span class="auto-style1">      scene.add(plane);</span>
+
+<span class="auto-style1">      // スポットライト を追加。色は白 (0xffffff)</span>
+<span class="auto-style1">      const spotLight = new THREE.SpotLight(0xffffff);</span>
+<span class="auto-style1">      spotLight.position.set(-300, 400, 500);   // スポットライトの位置を設定</span>
+<span class="auto-style1">      spotLight.target.position.set(0, 0, 0);   // スポットライトの照射対象位置を設定</span>
+<span class="auto-style1">      spotLight.angle = Math.PI / 3;            // スポットライトの照射角 (60度 = Math.PI / 3)</span>
+<span class="auto-style1"><strong>      spotLight.castShadow = true;              // シャドウを有効にする</strong></span><strong>
+</strong><span class="auto-style1">      spotLight.shadow.camera.far = 2000;       // シャドウカメラの遠クリップ面を設定</span>
+<span class="auto-style1">      spotLight.shadow.mapSize.width = 2048;    // シャドウマップの幅を設定</span>
+<span class="auto-style1">      spotLight.shadow.mapSize.height = 2048;   // シャドウマップの高さを設定</span>
+<span class="auto-style1">      spotLight.distance = 2000;                // 0 は無限遠まで照射する</span>
+<span class="auto-style1">      spotLight.decay = 2;                      // 物理ベースの減衰</span>
+<span class="auto-style1">      spotLight.intensity = 500000;             // 物理ベース照明の強さ</span>
+<span class="auto-style1">      scene.add(spotLight.target);              // スポットライトの照射対象をシーンに追加</span>
+<span class="auto-style1">      scene.add(spotLight);                     // スポットライトをシーンに追加</span>
+
+      // アニメーションループを開始
+      renderScene();
+
+      // 毎フレーム時に実行されるアニメーションループ関数
+      function renderScene() {
+        // 次のフレームを要求
+        requestAnimationFrame(renderScene);
+
+        // ボックスをY軸中心に回転させる
+        box.rotation.y += 0.01;
+        // シーンをカメラの視点から描画
+        renderer.render(scene, camera);
+      }
+    &lt;/script&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+    &lt;canvas id="myCanvas"&gt;&lt;/canvas&gt;
+  &lt;/body&gt;
+  
+&lt;/html&gt;</pre>
+    <p>&nbsp;</p>
+  </section>
+
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
+  
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
     <p>本ページの情報は、特記無い限り下記 MIT ライセンスで提供されます。</p>
@@ -408,6 +549,11 @@
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-09-06</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#2._マテリアル、ライト、影_の追加">2._マテリアル、ライト、影_の追加</a>」を追加</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-08-11</td>
   	    <td class="td_history_separator">-</td>

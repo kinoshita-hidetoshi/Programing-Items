@@ -1,0 +1,126 @@
+﻿<!--
+  下記ページを参考に作成しました
+  https://ics.media/tutorial-three/quickstart/
+  - plane を追加
+  three.jp の CDN 最新は以下で確認
+  https://www.npmjs.com/package/three?utm_source=copilot.com
+-->
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- キャッシュ無効化 -->
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <!-- タイトル -->
+    <title>Three.js 入門 | Programming Items</title>
+    <!-- ファビコン -->
+    <link rel="shortcut icon" href="../../../favicon.ico">
+
+    <script async src="https://unpkg.com/es-module-shims@2.8.4/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.184.0/build/three.module.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      // Three.jsライブラリをインポート
+      //import * as THREE from "three/webgpu";
+      import * as THREE from "three";
+
+      console.log(THREE);
+
+      // キャンバスのサイズを指定
+      const width = 960;
+      const height = 540;
+
+      // WebGLレンダラーを作成
+      //const renderer = new THREE.WebGPURenderer({
+      const renderer = new THREE.WebGLRenderer({
+        // 使用するcanvas要素を指定
+        canvas: document.querySelector("#myCanvas"),
+      });
+      // シャドウマップを有効にする
+      renderer.shadowMap.enabled = true;
+      // シャドウマップの種類を設定
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      // デバイスのピクセル比率を設定（高DPIディスプレイに対応）
+      //renderer.setPixelRatio(devicePixelRatio);
+      // レンダラーのサイズを設定（幅960px、高さ540px）
+      renderer.setSize(width, height);
+      // 背景色を設定
+      renderer.setClearColor(new THREE.Color(0xEEEEEE));
+
+      // シーン（3D空間）を作成
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xeeeeee);
+
+      // 環境光を追加
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+      scene.add(ambientLight);
+
+      // パースペクティブカメラを作成（視野角45度、アスペクト比 width/height）
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, +1000);
+
+      // ボックスジオメトリを作成（幅400、高さ400、奥行400）
+      const boxGeometry = new THREE.BoxGeometry(400, 400, 400);
+      // メッシュに影を落とすマテリアルを設定
+      const boxMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+      // メッシュを作成してシーンに追加
+      const box = new THREE.Mesh(boxGeometry, boxMaterial);
+      box.position.set(0, 0, 0);
+      box.castShadow = true;            // ボックスが影を落とすように設定
+      scene.add(box);
+
+      // plane を追加
+      const planeGeometry = new THREE.PlaneGeometry(1200, 1200);
+      //const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+      //const planeMaterial = new THREE.MeshNormalMaterial();
+      const planeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ffff });
+      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.rotation.x = -0.5 * Math.PI;
+      plane.position.set(0, -300, 0);
+      plane.receiveShadow = true;       // plane が影を受け取るように設定
+      scene.add(plane);
+
+      // スポットライト を追加。色は白 (0xffffff)
+      const spotLight = new THREE.SpotLight(0xffffff);
+      spotLight.position.set(-300, 400, 500);   // スポットライトの位置を設定
+      spotLight.target.position.set(0, 0, 0);   // スポットライトの照射対象位置を設定
+      spotLight.angle = Math.PI / 3;            // スポットライトの照射角 (60度 = Math.PI / 3)
+      spotLight.castShadow = true;              // シャドウを有効にする
+      spotLight.shadow.camera.far = 2000;       // シャドウカメラの遠クリップ面を設定
+      spotLight.shadow.mapSize.width = 2048;    // シャドウマップの幅を設定
+      spotLight.shadow.mapSize.height = 2048;   // シャドウマップの高さを設定
+      spotLight.distance = 2000;                // 0 は無限遠まで照射する
+      spotLight.decay = 2;                      // 物理ベースの減衰
+      spotLight.intensity = 500000;             // 物理ベース照明の強さ
+      scene.add(spotLight.target);              // スポットライトの照射対象をシーンに追加
+      scene.add(spotLight);                     // スポットライトをシーンに追加
+
+      // アニメーションループを開始
+      renderScene();
+
+      // 毎フレーム時に実行されるアニメーションループ関数
+      function renderScene() {
+        // 次のフレームを要求
+        requestAnimationFrame(renderScene);
+
+        // ボックスをY軸中心に回転させる
+        box.rotation.y += 0.01;
+        // シーンをカメラの視点から描画
+        renderer.render(scene, camera);
+      }
+    </script>
+  </head>
+  
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
+  
+</html>
