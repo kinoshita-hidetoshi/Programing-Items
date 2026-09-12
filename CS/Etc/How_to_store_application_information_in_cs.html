@@ -218,7 +218,9 @@ string dir = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
     "MyCompany", "MyApp");
 
-Directory.CreateDirectory(dir);
+if (!Directory.Exists(dir)) {
+    Directory.CreateDirectory(dir); 
+}
 
 string path = Path.Combine(dir, "settings.json");
 File.WriteAllText(path, JsonConvert.SerializeObject(info));</pre>
@@ -253,7 +255,17 @@ var doc = new XDocument(
         new XElement("Height", this.Height)
     )
 );
-doc.Save("window.xml");</pre>
+
+string dir = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    "MyCompany", "MyApp");
+
+if (!Directory.Exists(dir)) {
+    Directory.CreateDirectory(dir); 
+}
+
+string path = Path.Combine(dir, "setting.xml");
+doc.Save(path);</pre>
 
   	<p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -284,9 +296,11 @@ string dir = Path.Combine(
     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
     "MyCompany", "MyApp");
 
-Directory.CreateDirectory(dir);
+if (!Directory.Exists(dir)) {
+    Directory.CreateDirectory(dir); 
+}
 
-string path = Path.Combine(dir, "window.ini");
+string path = Path.Combine(dir, "setting.ini");
 WritePrivateProfileString("MainWindow", "Left", this.Left.ToString(), path);</pre>
 
     <p> &nbsp;</p>
