@@ -67,7 +67,7 @@ ul {
 	/*font-family: sans-serif;*/
 	list-style-position: outside;
 	list-style-type: disc;
-	padding: 4px 0 4px 20px;
+	padding: 4px 0 4px 16px;
 }
 
 ol{
@@ -76,8 +76,7 @@ ol{
 }
 
 li{
-  /*padding: 3px 0 3px 0;*/
-  margin: 3px 0 3px 0;
+  margin: 3px 0 3px 3px;
 	line-height: 1.6; /* 1.6倍の行間 */
 }
 
@@ -116,8 +115,10 @@ table{
   max-width: 100%;
 }
 
-caption{
+table caption{
   text-align: left;
+  font-weight:bold;
+  margin: 0 0 0.2em 0;
 }
 
 th{
