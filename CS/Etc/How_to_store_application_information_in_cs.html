@@ -42,7 +42,7 @@
 	
   <h1>アプリケーション情報を記録する方法 (C#)</h1>
   
-  <p> .NET Framework でアプリケーション情報を保存する方法について記載します。</p>
+  <p> <strong>.NET Framework</strong> でアプリケーション情報を保存する方法について記載します。</p>
   <p>&nbsp;</p>
   
   <div class="mokuji">
@@ -61,7 +61,7 @@
   
   <p>&nbsp;</p>
   <p>&nbsp;</p>
-  <p>.NET Framework でアプリケーション情報を保存する方法はいろいろあります。<br>代表的な下記方法について記載します。</p>
+  <p><strong>.NET Framework</strong> でアプリケーション情報を保存する方法はいろいろあります。<br>代表的な下記方法について記載します。</p>
   <p>&nbsp;</p>
   <table class="border-collapse" border="1" width="1000">
     <caption><strong>方式の比較：</strong></caption>
@@ -77,7 +77,7 @@
       <th>1</th>
       <th>ApplicationSettings</th>
       <td>Properties.Settings に保存（最も実務的）<br>Visual Studio が自動生成するユーザー設定</td>
-      <td><span class="source_code">AppData\Local\&lt;Company&gt;\&lt;App&gt;\user.config</span></td>
+      <td><span class="source_code">AppData\Local\&lt;Company&gt;\&lt;App&gt;\&lt;Version&gt;\user.config</span></td>
     </tr>
     <tr>
       <th>2</th>
@@ -106,8 +106,8 @@
       <td>任意の場所<br>推奨は以下の場所 (AppData\Roaming)<br>
       <span class="source_code">%APPDATA%\&lt;Company&gt;\&lt;App&gt;\settings.ini</span></td>
     </tr>
-    </table>
-  <p>&nbsp;</p>
+  </table>
+  
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   
@@ -124,6 +124,37 @@
     </ul>
     
     <p>&nbsp;</p>
+  	
+  	<p><strong>[評価環境]</strong></p>
+  	<table class="evaluation_environment">
+    	<tbody>
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>コンパイラ :</td>
+    	    <td>Visual Studio 2026,</td>
+    	    <td>Version 18.10.0 </td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    		
+    	  <tr>
+    	    <td>OS :</td>
+    	    <td>Windows11,</td>
+    	    <td>25H2</td>
+    	  </tr>
+    	  
+    	  <tr>
+    	    <td class="td_separate" colspan="3"></td>
+    	  </tr>
+    	</tbody>
+  	</table>
+  	
+  	<p> &nbsp;</p>
     
     <p><strong>保存例（WinForms）</strong></p>
     
@@ -143,20 +174,96 @@ private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     Properties.Settings.Default.Size = this.Size;
     Properties.Settings.Default.Save();
 }</pre>
+
     <p>&nbsp;</p>
+    
     <p><strong>保存例（WPF）</strong></p>
-    <pre class="prettyprint linenums lang-cs" style="width:800px">protected override void OnClosing(CancelEventArgs e)
+    
+    <pre class="prettyprint linenums lang-cs" style="width:800px">
+using System.Windows;
+
+namespace property_settings
 {
-    Properties.Settings.Default.Left = this.Left;
-    Properties.Settings.Default.Top = this.Top;
-    Properties.Settings.Default.Width = this.Width;
-    Properties.Settings.Default.Height = this.Height;
-    Properties.Settings.Default.Save();
-    base.OnClosing(e);
+    /// &lt;summary&gt;
+    /// MainWindow.xaml の相互作用ロジック
+    /// &lt;/summary&gt;
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // アプリケーションの設定をアップグレードする
+            if (!Properties.Settings.Default.HasUpgradedSettings)
+            {
+                // Upgrade メソッドを呼び出して、以前のバージョンの設定を新しいバージョンに移行します
+                Properties.Settings.Default.Upgrade();
+
+                // HasUpgradedSettings は User スコープの bool 設定として追加します。
+                // これにより、アプリ更新後の初回起動時だけ旧バージョンの設定を引き継げます。
+                Properties.Settings.Default.HasUpgradedSettings = true;
+
+                // 設定を保存します
+                Properties.Settings.Default.Save();
+            }
+
+            // ウィンドウの位置を設定する
+            this.Left = Properties.Settings.Default.position_x;
+            this.Top = Properties.Settings.Default.position_y;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // ウィンドウの位置を保存する
+            Properties.Settings.Default.position_x = this.Left;
+            Properties.Settings.Default.position_y = this.Top;
+            Properties.Settings.Default.Save();
+        }
+    }
 }</pre>
+    <p>&nbsp;</p>
+
+    <figure>
+      <img alt="Visual Studio 設定例" src="How_to_store_application_information_in_cs/img9.jpg" width="800">
+      <figcaption>Visual Studio 設定例</figcaption>
+    </figure>
+
+
+    <p>&nbsp;</p>
+    <p><strong>"AppData\Local\&lt;Company&gt;\&lt;App&gt;\&lt;Version&gt;\user.config" 例</strong></p>
+    
+    <pre class="prettyprint linenums lang-xml" style="width:800px">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+    &lt;userSettings&gt;
+        &lt;property_settings.Properties.Settings&gt;
+            &lt;setting name="position_x" serializeAs="String"&gt;
+                &lt;value&gt;381.33333333333331&lt;/value&gt;
+            &lt;/setting&gt;
+            &lt;setting name="position_y" serializeAs="String"&gt;
+                &lt;value&gt;138&lt;/value&gt;
+            &lt;/setting&gt;
+            &lt;setting name="HasUpgradedSettings" serializeAs="String"&gt;
+                &lt;value&gt;True&lt;/value&gt;
+            &lt;/setting&gt;
+        &lt;/property_settings.Properties.Settings&gt;
+    &lt;/userSettings&gt;
+&lt;/configuration&gt;</pre>
+
+    <p>&nbsp;</p>
+    <p><span class="source_code">Save()</span> は必要ですが <span class="source_code">
+    Load()</span> は不要（ありません）のようです。アプリケーション起動時に自動的に読み込みをやってくれているようです。</p>
+    <ul>
+      <li>プログラム実行中に設定読み込みしたい場合は <span class="source_code">Reload()</span>
+      を実行します。</li>
+      <li>初期値に戻したい場合は <span class="source_code">Reset()</span> を実行します。</li>
+    </ul>
+    <p>上記のようにとても簡単に機能を実現可能です。</p>
     <p>&nbsp;</p>
   </section>
 	
+  <p>&nbsp;</p>
+  <hr>
   <p>&nbsp;</p>
   
   <section>
@@ -168,7 +275,7 @@ private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     	<li>読み書きが高速</li>
       <li>インストール不要のポータブルアプリでも使える</li>
       <li>企業アプリでよく使われる</li>
-      <li>ただし「設定ファイルとして見えない」ためユーザー編集は面倒</li>
+      <li>ただし「設定ファイルとして見えない」ためユーザー編集は面倒（regedit コマンドを使って閲覧・編集）</li>
     </ul>
     
   	<p> &nbsp;</p>
@@ -183,10 +290,12 @@ key.SetValue("Left", this.Left);
 key.SetValue("Top", this.Top);
 key.SetValue("Width", this.Width);
 key.SetValue("Height", this.Height);</pre>
+
     <p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>
 	
+  <hr>
   <p>&nbsp;</p>
   
   <section>
@@ -226,9 +335,10 @@ string path = Path.Combine(dir, "settings.json");
 File.WriteAllText(path, JsonConvert.SerializeObject(info));</pre>
 
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
   </section>
 	
+  <p>&nbsp;</p>
+  <hr>
   <p>&nbsp;</p>
   
   <section>
@@ -267,10 +377,11 @@ if (!Directory.Exists(dir)) {
 string path = Path.Combine(dir, "setting.xml");
 doc.Save(path);</pre>
 
-  	<p>&nbsp;</p>
     <p>&nbsp;</p>
   </section>
 	
+  <p>&nbsp;</p>
+  <hr>
   <p>&nbsp;</p>
   
   <section>
@@ -304,10 +415,11 @@ string path = Path.Combine(dir, "setting.ini");
 WritePrivateProfileString("MainWindow", "Left", this.Left.ToString(), path);</pre>
 
     <p> &nbsp;</p>
-    <p> &nbsp;</p>
   </section>
 	
-  <p> &nbsp;</p>
+  <p>&nbsp;</p>
+  <hr>
+  <p>&nbsp;</p>
 
   <section>
     <h2><a id="ライセンス">ライセンス</a></h2>
