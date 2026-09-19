@@ -360,6 +360,28 @@ pre.prettyprint ol.linenums {
 }
 
 
+/* 見出し － "この見出しへのリンクをコピー" 対応 */
+.heading {
+  position: relative;
+	text-decoration: none;
+}
+
+.heading .heading-text {
+	text-decoration: underline;
+}
+
+.heading .copy-link {
+  margin-left: 0px;
+	cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.heading:hover .copy-link {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
 
 /*
 ===
