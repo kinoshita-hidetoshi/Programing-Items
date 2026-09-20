@@ -286,8 +286,10 @@ blockquote{
 .source_code{
 	/*display: inline;*/
 	display: inline-block;
+	
   /* 途中改行を防止 */
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  
   /* 文字と高さをそろえる */
   /*vertical-align: middle;*/
 	line-height: 1.42857143;
