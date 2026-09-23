@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
@@ -36,6 +36,12 @@
   </script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
+  <style type="text/css">
+  .auto-style1 {
+    background-color: #505000;
+  }
+  </style>
+
 </head>
 
 <body onload="prettyPrint();">
@@ -48,12 +54,12 @@
   <div class="mokuji">
     <nav>
     	<h2>目次</h2>
-    	<p><a href="#1._ApplicationSettings">1._ApplicationSettings</a></p>
-        <p><a href="#2._Windows_レジストリ">2._Windows_レジストリ</a></p>
-        <p><a href="#3._JSON_ファイル">3._JSON_ファイル</a></p>
-        <p><a href="#4._XML_ファイル">4._XML_ファイル</a></p>
-        <p><a href="#5._INI_ファイル">5._INI_ファイル</a></p>
-        <p>&nbsp;</p>
+    	<p><a href="#1_ApplicationSettings">1._ApplicationSettings</a></p>
+      <p><a href="#2_windows_registory">2._Windows_レジストリ</a></p>
+      <p><a href="#3._JSON_ファイル">3._JSON_ファイル</a></p>
+      <p><a href="#4._XML_ファイル">4._XML_ファイル</a></p>
+      <p><a href="#5._INI_ファイル">5._INI_ファイル</a></p>
+      <p>&nbsp;</p>
     	<p><a href="#ライセンス">ライセンス</a></p>
     	<p><a href="#参考">参考</a></p>
     </nav>
@@ -70,7 +76,7 @@
         <th>&nbsp;</th>
         <th>方式</th>
         <th>説明</th>
-        <th>保存される場所</th>
+        <th>保存場所</th>
       </tr>
     </thead>
     <tr>
@@ -109,16 +115,55 @@
   </table>
   
   <p>&nbsp;</p>
+  <p><strong>補足など：</strong></p>
+  <p>Windows アプリ開発では、AppDataLocal と AppDataRoaming の使い分けが重要です。</p>
+  <p>&nbsp;</p>
+  <table class="border-collapse" border="1" width="1000">
+      <caption>Local と Roaming の比較・違い<br></caption>
+      <thead class="standard_table">
+        <tr>
+          <th>種別</th>
+          <th>説明</th>
+          <th>環境変数</th>
+          <th>フォルダの場所</th>
+          <th>他</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="white-space: nowrap"><strong>Local</strong></td>
+          <td>そのPC固有のデータ</td>
+          <td><span class="source_code">%LOCALAPPDATA%</span></td>
+          <td><span class="source_code">C:\Users\&lt;ユーザー名&gt;\AppData\Local</span></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap"><strong>Roaming</strong></td>
+          <td>ユーザーについて回る設定データ</td>
+          <td>
+          <span class="source_code">%APPDATA%</span></td>
+          <td><span class="source_code">C:\Users\&lt;ユーザー名&gt;\AppData\Roaming</span></td>
+          <td>企業の Active Directory 環境では、ログオン時に別PCへ同期されることがあります。そのため Microsoft は、 
+          小さな設定データ を置く場所として Roaming を想定しています。 </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
   
   <section>
-  	<h2> <a name="1._ApplicationSettings">1. ApplicationSettings</a></h2>
-    <p> .NET, .NET Framework アプリでは、特に理由なければ通常はこの方法でアプリ情報を保存するのが最も簡単で良いでしょう。</p>
+    <h2 id="1_ApplicationSettings" class="heading">
+      <span class="heading-text">1. ApplicationSettings</span>
+      <span class="copy-link" onclick="copyHeadingLink('#section-1')" title="この見出しへのリンクをコピー">🔗</span>
+    </h2>
+
+  	<p> .NET, .NET Framework アプリでは、特に理由なければ通常はこの方法でアプリ情報を保存するのが最も簡単で良いでしょう。</p>
     <p> &nbsp;</p>
   	<h4>✔ 特徴</h4>
     <ul>
       <li>.NET Framework 標準機能</li>
-      <li>コードが極端に少ない</li>
+      <li>とても少ないコードで実現できる</li>
       <li>自動保存・自動読み込みが可能</li>
       <li>WinForms / WPF 両方で使える 
     </ul>
@@ -156,7 +201,7 @@
   	
   	<p> &nbsp;</p>
     
-    <p><strong>保存例（WinForms）</strong></p>
+    <p><strong>保存例（WinForms, C#）</strong></p>
     
     <pre class="prettyprint linenums lang-cs" style="width:800px">
 private void Form1_Load(object sender, EventArgs e)
@@ -177,7 +222,7 @@ private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 
     <p>&nbsp;</p>
     
-    <p><strong>保存例（WPF）</strong></p>
+    <p><strong>保存例（WPF, C#）</strong></p>
     
     <pre class="prettyprint linenums lang-cs" style="width:800px">
 using System.Windows;
@@ -222,6 +267,8 @@ namespace property_settings
     }
 }</pre>
     <p>&nbsp;</p>
+    <p>各パラメータの名前・種類・スコープ・初期値は、Visual Studio の<strong>設定</strong>で登録します。（下図参照）</p>
+    <p>&nbsp;</p>
 
     <figure>
       <img alt="Visual Studio 設定例" src="How_to_store_application_information_in_cs/img9.jpg" width="800">
@@ -229,6 +276,8 @@ namespace property_settings
     </figure>
 
 
+    <p>&nbsp;</p>
+    <p>実際に保存された <strong>user.config</strong> の例を以下に示します。</p>
     <p>&nbsp;</p>
     <p><strong>"AppData\Local\&lt;Company&gt;\&lt;App&gt;\&lt;Version&gt;\user.config" 例</strong></p>
     
@@ -251,14 +300,26 @@ namespace property_settings
 &lt;/configuration&gt;</pre>
 
     <p>&nbsp;</p>
-    <p><span class="source_code">Save()</span> は必要ですが <span class="source_code">
-    Load()</span> は不要（ありません）のようです。アプリケーション起動時に自動的に読み込みをやってくれているようです。</p>
+    <p>プログラムで <span class="source_code">Save()</span> は必要ですが <span class="source_code">
+    Load()</span> は不要（ありません）のようです。アプリケーション起動時に自動的に読み込みをしてくれます。</p>
     <ul>
       <li>プログラム実行中に設定読み込みしたい場合は <span class="source_code">Reload()</span>
       を実行します。</li>
       <li>初期値に戻したい場合は <span class="source_code">Reset()</span> を実行します。</li>
+      <li>&lt;Campany&gt;, &lt;App&gt;, &lt;Version&gt; は "アセンブリ情報" の "会社(C)" "製品(P)" 
+      および "アセンブリバージョン(F)" 
+      の情報を使用します。<br>空欄の場合は何か情報を記載しましょう。</li>
     </ul>
-    <p>上記のようにとても簡単に機能を実現可能です。</p>
+    
+    <p>&nbsp;</p>
+    
+    <figure>
+      <img alt="アセンブリ情報" src="How_to_store_application_information_in_cs/img2B.jpg" width="600">
+      <figcaption>アセンブリ情報</figcaption>
+    </figure>
+        
+    <p>&nbsp;</p>
+    <p>以上のようにとても簡単に機能を実現可能です。</p>
     <p>&nbsp;</p>
   </section>
 	
@@ -267,40 +328,273 @@ namespace property_settings
   <p>&nbsp;</p>
   
   <section>
-  	<h2> <a name="2._Windows_レジストリ">2. Windows レジストリ</a></h2>
+    <h2 id="2_windows_registory" class="heading">
+      <span class="heading-text">2. Windows レジストリ</span>
+      <span class="copy-link" onclick="copyHeadingLink('#section-1')" title="この見出しへのリンクをコピー">🔗</span>
+    </h2>
+
     <p> &nbsp;</p>
-    <h4> ✔ 特徴</h4>
+    <h4>✔ 特徴</h4>
     
     <ul>
     	<li>読み書きが高速</li>
       <li>インストール不要のポータブルアプリでも使える</li>
       <li>企業アプリでよく使われる</li>
-      <li>ただし「設定ファイルとして見えない」ためユーザー編集は面倒（<strong>regedit</strong> コマンドを使って閲覧・編集）</li>
+      <li>ただし「設定ファイルとして見えない」ためユーザー編集は面倒（regedit コマンドを使って閲覧・編集します）</li>
     </ul>
     
   	<p> &nbsp;</p>
-  	
-    <p><strong>保存例 (c#)</strong></p>
-    
-    <pre class="prettyprint linenums lang-cs" style="width:800px">
-using Microsoft.Win32;
+    <p> レジストリ HKEY_CURRENT_USER に保存する例を以下に記載します。</p>
+    <p> <br><strong>例１ (WPF, c#)： シンプルバージョン</strong></p>
 
-RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\MyApp");
-key.SetValue("Left", this.Left);
-key.SetValue("Top", this.Top);
-key.SetValue("Width", this.Width);
-key.SetValue("Height", this.Height);</pre>
+    <p> <strong>HKEY_CURRENT_USER</strong> 中のパスは、通常以下のルールで作成します。</p>
+    
+    <pre class="prettyprint linenums:9 lang-cs" style="width:800px">
+private const string RegistryPath = @&quot;Software\&lt;Company_Name&gt;\&lt;App_Name&gt;&quot;;</pre>
 
     <p>&nbsp;</p>
+    <p> 下記例では以下のように記載しています。</p>
+    
+    <pre class="prettyprint linenums:9 lang-cs" style="width:800px">
+private const string RegistryPath = @&quot;Software\HIDE\windows_registory&quot;;</pre>
+
+    <p>&nbsp;</p>
+
+    <pre class="prettyprint linenums lang-cs" style="width:900px">
+using Microsoft.Win32;
+using System;
+using System.Windows;
+
+namespace windows_registory
+{
+    public partial class MainWindow : Window
+    {
+        private const string RegistryPath = @&quot;Software\HIDE\windows_registory&quot;;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadWindowState();
+        }
+
+        /// 
+        /// レジストリからウィンドウの状態を読み込む
+        /// 
+        private void LoadWindowState()
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryPath))
+                {
+                    if (key != null)
+                    {
+                        object left = key.GetValue(&quot;Left&quot;);
+                        object top = key.GetValue(&quot;Top&quot;);
+                        object width = key.GetValue(&quot;Width&quot;);
+                        object height = key.GetValue(&quot;Height&quot;);
+
+                        if (left != null &amp;&amp; double.TryParse(left.ToString(), out double leftValue))
+                        {
+                            this.Left = leftValue;
+                        }
+                        if (top != null &amp;&amp; double.TryParse(top.ToString(), out double topValue))
+                        {
+                            this.Top = topValue;
+                        }
+                        if (width != null &amp;&amp; double.TryParse(width.ToString(), out double widthValue))
+                        {
+                            this.Width = widthValue;
+                        }
+                        if (height != null &amp;&amp; double.TryParse(height.ToString(), out double heightValue))
+                        {
+                            this.Height = heightValue;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($&quot;レジストリ読み込みエラー: {ex.Message}&quot;);
+            }
+        }
+
+        /// 
+        /// ウィンドウの状態をレジストリに保存する
+        /// 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryPath))
+                {
+                    if (key != null)
+                    {
+                        key.SetValue(&quot;Left&quot;, this.Left);
+                        key.SetValue(&quot;Top&quot;, this.Top);
+                        key.SetValue(&quot;Width&quot;, this.Width);
+                        key.SetValue(&quot;Height&quot;, this.Height);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($&quot;レジストリ保存エラー: {ex.Message}&quot;);
+            }
+        }
+    }
+}</pre>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p><strong>例２ (WPF, c#)： 会社名・アプリケーション名をアセンブリ情報から取得</strong></p>
+    <p>前章と同様に、アセンブリ情報から 会社名・アプリケーション名 を取得して使用する例を紹介します。</p>
+    <p>&nbsp;</p>
+    
+    <figure>
+      <img alt="あああ" src="How_to_store_application_information_in_cs/img2B.jpg" width="600">
+      <figcaption>アセンブリ情報</figcaption>
+    </figure>
+        
+    <p>&nbsp;</p>
+    <p>例１ との差分箇所を色付けしておきます。</p>
+    
+    <pre class="prettyprint linenums lang-cs" style="width:900px">
+using Microsoft.Win32;
+using System;
+<span class="auto-style1">using System.Reflection;</span>
+using System.Windows;
+
+namespace windows_registory
+{
+    /// 
+    /// MainWindow.xaml の相互作用ロジック
+    /// 
+    public partial class MainWindow : Window
+    {
+        <span class="auto-style1">private string _registryPath;</span>
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+<span class="auto-style1">            // アセンブリ情報から 会社名、アプリケーション名 を取得</span>
+<span class="auto-style1">            string companyName = GetAssemblyAttribute&lt;<strong>AssemblyCompanyAttribute</strong>&gt;(a =&gt; a.Company);</span>
+<span class="auto-style1">            string applicationName = GetAssemblyAttribute&lt;<strong>AssemblyTitleAttribute</strong>&gt;(a =&gt; a.Title);</span>
+<span class="auto-style1">            </span>
+<span class="auto-style1">            // RegistryPath を動的に生成</span>
+<span class="auto-style1">            _registryPath = &quot;Software\\&quot; + companyName + &quot;\\&quot; + applicationName;</span>
+
+            // ウィンドウの状態をレジストリから読み込む
+            LoadWindowState();
+        }
+
+<span class="auto-style1">        /// </span>
+<span class="auto-style1">        /// アセンブリ属性から値を取得するヘルパーメソッド</span>
+<span class="auto-style1">        /// </span>
+<span class="auto-style1">        private string GetAssemblyAttribute&lt;T&gt;(Func</span><T, string><span class="auto-style1"> valueSelector) where T : Attribute</span>
+<span class="auto-style1">        {</span>
+<span class="auto-style1">            try</span>
+<span class="auto-style1">            {</span>
+<span class="auto-style1">                Assembly assembly = Assembly.GetExecutingAssembly();</span>
+<span class="auto-style1">                object[] attributes = assembly.GetCustomAttributes(typeof(T), false);</span>
+
+<span class="auto-style1">                if (attributes.Length &gt; 0)</span>
+<span class="auto-style1">                {</span>
+<span class="auto-style1">                    return valueSelector((T)attributes[0]);</span>
+<span class="auto-style1">                }</span>
+<span class="auto-style1">            }</span>
+<span class="auto-style1">            catch (Exception ex)</span>
+<span class="auto-style1">            {</span>
+<span class="auto-style1">                System.Diagnostics.Debug.WriteLine($&quot;アセンブリ属性取得エラー: {ex.Message}&quot;);</span>
+<span class="auto-style1">            }</span>
+
+<span class="auto-style1">            return string.Empty;</span>
+<span class="auto-style1">        }</span>
+
+        /// 
+        /// レジストリからウィンドウの状態を読み込む
+        /// 
+        private void LoadWindowState()
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(_registryPath))
+                {
+                    if (key != null)
+                    {
+                        object left = key.GetValue(&quot;Left&quot;);
+                        object top = key.GetValue(&quot;Top&quot;);
+                        object width = key.GetValue(&quot;Width&quot;);
+                        object height = key.GetValue(&quot;Height&quot;);
+
+                        if (left != null &amp;&amp; double.TryParse(left.ToString(), out double leftValue))
+                        {
+                            this.Left = leftValue;
+                        }
+                        if (top != null &amp;&amp; double.TryParse(top.ToString(), out double topValue))
+                        {
+                            this.Top = topValue;
+                        }
+                        if (width != null &amp;&amp; double.TryParse(width.ToString(), out double widthValue))
+                        {
+                            this.Width = widthValue;
+                        }
+                        if (height != null &amp;&amp; double.TryParse(height.ToString(), out double heightValue))
+                        {
+                            this.Height = heightValue;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($&quot;レジストリ読み込みエラー: {ex.Message}&quot;);
+            }
+        }
+
+        /// 
+        /// ウィンドウの状態をレジストリに保存する
+        /// 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(_registryPath))
+                {
+                    if (key != null)
+                    {
+                        key.SetValue(&quot;Left&quot;, this.Left);
+                        key.SetValue(&quot;Top&quot;, this.Top);
+                        key.SetValue(&quot;Width&quot;, this.Width);
+                        key.SetValue(&quot;Height&quot;, this.Height);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($&quot;レジストリ保存エラー: {ex.Message}&quot;);
+            }
+        }
+    }</pre>
+
+
+    <p>&nbsp;</p>
+    
+    <figure>
+      <img alt="レジストリ保存例" src="How_to_store_application_information_in_cs/img4.jpg" style="width: 1000px">
+      <figcaption>レジストリ保存例</figcaption>
+    </figure>
+    
     <p>&nbsp;</p>
   </section>
 	
+  <p>&nbsp;</p>
   <hr>
   <p>&nbsp;</p>
   
   <section>
   	<h2> <a name="3._JSON_ファイル">3. JSON ファイル</a></h2>
-    <p> &nbsp;</p>
+    <p>&nbsp;</p>
     <h4> ✔ 特徴</h4>
     
     <ul>
@@ -466,6 +760,11 @@ WritePrivateProfileString("MainWindow", "Left", this.Left.ToString(), path);</pr
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-09-23</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">「<a href="#2_windows_registory">2._Windows_レジストリ</a>」を更新</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-09-12</td>
   	    <td class="td_history_separator">-</td>
