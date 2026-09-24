@@ -75,7 +75,7 @@
     <p>&nbsp;</p>
         
     <table class="border-collapse" border="1" width="1000">
-      <caption>[table.] .NET が提供する保存場所プロパティ</caption>
+      <caption>[table] .NET が提供する保存場所プロパティ</caption>
       <thead class="standard_table">
         <tr>
           <th>プロパティ</th>
@@ -89,7 +89,7 @@
           <td style="white-space: nowrap">Application.CommonAppDataPath</td>
           <td>ファイル</td>
           <td>ユーザー共通の設定情報（ローミング<sup>(*1)</sup> しない）</td>
-          <td>"C:\ProgramData\CommonAppDataPath\<em>&lt;Company&gt;</em>\<em>&lt;Product&gt;</em>\<em>&lt;Version&gt;</em>"</td>
+          <td>"C:\ProgramData\<em>&lt;Company&gt;</em>\<em>&lt;Product&gt;</em>\<em>&lt;Version&gt;</em>"</td>
         </tr>
         <tr>
           <td style="white-space: nowrap">Application.UserAppDataPath</td>
@@ -131,7 +131,7 @@
   <section>
   	<h2> <a name="2._Application.CommonAppDataPath">2. Application.CommonAppDataPath</a></h2>
   	<h4>[概要]</h4>
-    <p><strong>Application.CommonAppDataPath</strong> の情報を取得して画面表示してみます。</p>
+    <p><span class="source_code">Application.CommonAppDataPath</span> の情報を取得して画面表示してみます。</p>
   	<p> &nbsp;</p>
   	
   	<h4>[環境]</h4>
@@ -145,6 +145,12 @@
   	    <td>コンパイラ :</td>
   	      <td>Visual Studio 2022,</td>
   	      <td>Version 17.9.5 </td>
+  	  </tr>
+  		
+  	  <tr>
+  	    <td>&nbsp;</td>
+  	      <td>Visual Studio 2026,</td>
+  	      <td>Version 18.10.2</td>
   	  </tr>
   		
   	  <tr>
@@ -168,13 +174,19 @@
   	  </tr>
   		
   	  <tr>
+  	    <td>&nbsp;</td>
+  	      <td>.NET 10.0</td>
+  	      <td>&nbsp;</td>
+  	  </tr>
+  		
+  	  <tr>
   	    <td class="td_separate" colspan="3"></td>
   	  </tr>
   		
   	  <tr>
   	    <td>OS :</td>
   	    <td>Windows11 home,</td>
-  	    <td>23H2 </td>
+  	    <td>23H2, 25H2 </td>
   	  </tr>
   	  
   	  <tr>
@@ -185,7 +197,7 @@
   	
   	<p>&nbsp;</p>
     <p>プログラム</p>
-    <pre class="prettyprint linenums lang-cpp" style="width: 1000px">
+    <pre class="prettyprint linenums lang-csharp" style="width: 1000px">
 namespace CommonAppDataPath
 {
     internal class Program
@@ -194,7 +206,7 @@ namespace CommonAppDataPath
         {
             Console.WriteLine("Application.CommonAppDataPath = \"" + Application.CommonAppDataPath + "\"");
 
-            Console.Write("HIT [Enger] key ");
+            Console.Write("HIT [Enter] key ");
             Console.ReadLine();
         }
     }
@@ -232,17 +244,18 @@ namespace CommonAppDataPath
     </div>
 
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
+    <p><span class="source_code">&lt;UseWindowsForms&gt;true&lt;/UseWindowsForms&gt;</span> 
+    以外については下図の場所で設定できそうです。</p>
+    <p>
+    <img alt="設定" src="Where_to_store_application_configuration_information/img8.jpg" width="1000" class="border"></p>
     <p>&nbsp;</p>
     <p>実行結果</p>
     <p>
-    <img alt="実行結果" src="Where_to_store_application_configuration_information/img2D.jpg" width="1000"></p>
-  	<p>&nbsp;</p>
+    <img alt="実行結果" src="Where_to_store_application_configuration_information/img4.jpg" width="1000"></p>
     <p>&nbsp;</p>	
 	
   </section>
   	
-  <p>&nbsp;</p>
   <p>&nbsp;</p>
 
   <section>
@@ -299,6 +312,11 @@ namespace CommonAppDataPath
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-09-24</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">誤記修正、他</td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2024-03-31</td>
   	    <td class="td_history_separator">-</td>
