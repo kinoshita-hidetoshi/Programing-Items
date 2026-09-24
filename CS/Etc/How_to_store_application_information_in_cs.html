@@ -55,7 +55,7 @@
     <nav>
     	<h2>目次</h2>
     	<p><a href="#1_ApplicationSettings">1._ApplicationSettings</a></p>
-      <p><a href="#2_windows_registory">2._Windows_レジストリ</a></p>
+      <p><a href="#2_windows_registry">2._Windows_レジストリ</a></p>
       <p><a href="#3._JSON_ファイル">3._JSON_ファイル</a></p>
       <p><a href="#4._XML_ファイル">4._XML_ファイル</a></p>
       <p><a href="#5._INI_ファイル">5._INI_ファイル</a></p>
@@ -116,8 +116,8 @@
   
   <p>&nbsp;</p>
   <p><strong>補足など：</strong></p>
-  <p>Windows アプリ開発では、<span class="source_code">AppData\Local</span> と  
-  <span class="source_code">AppData\Roaming</span> の使い分けが重要です。</p>
+  <p>1. Windows アプリ開発では、<span class="source_code">AppData\Local</span> と  
+  <span class="source_code">AppData\Roaming</span> の使い分けが重要</p>
   <p>&nbsp;</p>
   <table class="border-collapse" border="1" width="1000">
       <caption>Local と Roaming の比較・違い<br></caption>
@@ -151,12 +151,21 @@
     </table>
     
   <p>&nbsp;</p>
+  
+  <p>2. セキュリティ観点</p>
+  <p>どの方式を使用する場合も、下記セキュリティ視点での注意をしましょう。</p>
+  <ul>
+    <li>&nbsp;パスワードやトークンはレジストリや設定ファイルに保存しない</li>
+    <li>ローカルに保存する場合は暗号化を検討する</li>
+    <li>機密情報は AppData よりも専用の保護された保存方法が必要</li>
+  </ul>
+  <p>&nbsp;</p>
   <p>&nbsp;</p>
   
   <section>
     <h2 id="1_ApplicationSettings" class="heading">
       <span class="heading-text">1. ApplicationSettings</span>
-      <span class="copy-link" onclick="copyHeadingLink('#section-1')" title="この見出しへのリンクをコピー">🔗</span>
+      <span class="copy-link" onclick="copyHeadingLink('#1_ApplicationSettings')" title="この見出しへのリンクをコピー">🔗</span>
     </h2>
 
   	<p> .NET, .NET Framework アプリでは、特に理由なければ通常はこの方法でアプリ情報を保存するのが最も簡単で良いでしょう。</p>
@@ -307,7 +316,7 @@ namespace property_settings
       <li>プログラム実行中に設定読み込みしたい場合は <span class="source_code">Reload()</span>
       を実行します。</li>
       <li>初期値に戻したい場合は <span class="source_code">Reset()</span> を実行します。</li>
-      <li>&lt;Campany&gt;, &lt;App&gt;, &lt;Version&gt; は "アセンブリ情報" の "会社(C)" "製品(P)" 
+      <li>&lt;Company&gt;, &lt;App&gt;, &lt;Version&gt; は "アセンブリ情報" の "会社(C)" "製品(P)" 
       および "アセンブリバージョン(F)" 
       の情報を使用します。<br>空欄の場合は何か情報を記載しましょう。</li>
     </ul>
@@ -329,9 +338,9 @@ namespace property_settings
   <p>&nbsp;</p>
   
   <section>
-    <h2 id="2_windows_registory" class="heading">
+    <h2 id="2_windows_registry" class="heading">
       <span class="heading-text">2. Windows レジストリ</span>
-      <span class="copy-link" onclick="copyHeadingLink('#section-1')" title="この見出しへのリンクをコピー">🔗</span>
+      <span class="copy-link" onclick="copyHeadingLink('#2_windows_registry')" title="この見出しへのリンクをコピー">🔗</span>
     </h2>
 
     <p> &nbsp;</p>
@@ -357,7 +366,7 @@ private const string RegistryPath = @&quot;Software\&lt;Company_Name&gt;\&lt;App
     <p> 下記例では以下のように記載しています。</p>
     
     <pre class="prettyprint linenums:9 lang-cs" style="width:800px">
-private const string RegistryPath = @&quot;Software\HIDE\windows_registory&quot;;</pre>
+private const string RegistryPath = @&quot;Software\HIDE\windows_registry&quot;;</pre>
 
     <p>&nbsp;</p>
 
@@ -366,11 +375,11 @@ using Microsoft.Win32;
 using System;
 using System.Windows;
 
-namespace windows_registory
+namespace windows_registry
 {
     public partial class MainWindow : Window
     {
-        private const string RegistryPath = @&quot;Software\HIDE\windows_registory&quot;;
+        private const string RegistryPath = @&quot;Software\HIDE\windows_registry&quot;;
 
         public MainWindow()
         {
@@ -465,7 +474,7 @@ using System;
 <span class="auto-style1">using System.Reflection;</span>
 using System.Windows;
 
-namespace windows_registory
+namespace windows_registry
 {
     /// 
     /// MainWindow.xaml の相互作用ロジック
@@ -492,7 +501,7 @@ namespace windows_registory
 <span class="auto-style1">        /// </span>
 <span class="auto-style1">        /// アセンブリ属性から値を取得するヘルパーメソッド</span>
 <span class="auto-style1">        /// </span>
-<span class="auto-style1">        private string GetAssemblyAttribute&lt;T&gt;(Func</span><T, string><span class="auto-style1"> valueSelector) where T : Attribute</span>
+<span class="auto-style1">        private string GetAssemblyAttribute&lt;T&gt;(Func&lt;T, string&gt; valueSelector) where T : Attribute</span>
 <span class="auto-style1">        {</span>
 <span class="auto-style1">            try</span>
 <span class="auto-style1">            {</span>
@@ -669,7 +678,7 @@ if (!Directory.Exists(dir)) {
     Directory.CreateDirectory(dir); 
 }
 
-string path = Path.Combine(dir, "setting.xml");
+string path = Path.Combine(dir, "settings.xml");
 doc.Save(path);</pre>
 
     <p>&nbsp;</p>
@@ -706,7 +715,7 @@ if (!Directory.Exists(dir)) {
     Directory.CreateDirectory(dir); 
 }
 
-string path = Path.Combine(dir, "setting.ini");
+string path = Path.Combine(dir, "settings.ini");
 WritePrivateProfileString("MainWindow", "Left", this.Left.ToString(), path);</pre>
 
     <p> &nbsp;</p>
@@ -764,7 +773,7 @@ WritePrivateProfileString("MainWindow", "Left", this.Left.ToString(), path);</pr
   	  <tr>
   	    <td class="td_history_date">2026-09-23</td>
   	    <td class="td_history_separator">-</td>
-  	    <td class="td_history">「<a href="#2_windows_registory">2._Windows_レジストリ</a>」を更新</td>
+  	    <td class="td_history">「<a href="#2_windows_registry">2._Windows_レジストリ</a>」を更新</td>
   	  </tr>
   	  <tr>
   	    <td class="td_history_date">2026-09-12</td>
