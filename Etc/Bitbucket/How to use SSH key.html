@@ -241,31 +241,36 @@ $</pre>
     <p><strong>["config"]</strong></p>
     
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-Host bitbucket.org
-  HostName bitbucket.org
+Host ssh.bitbucket.org
+  HostName ssh.bitbucket.org
   IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port 22
   TCPKeepAlive yes
   IdentitiesOnly yes</pre>
+  
     <p>&nbsp;</p>
+    
   	<p><strong>["config" (port 443 環境)]</strong></p>
   	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
-  	<pre style="color: #FFFFFF; background-color: #000000; width: 800px;">Host bitbucket.org
-  HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
+  	
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
+Host ssh.bitbucket.org
+  HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org
   IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port <span class="auto-style1"><strong>443</strong></span>
   TCPKeepAlive yes
   IdentitiesOnly yes</pre>
-  	<p>&nbsp;</p>
+  
+    <p>&nbsp;</p>
   	
   	<p><strong>["config" プロキシ環境下]</strong></p>
   	<p>proxy 環境下ではこちらのサンプルを参照ください。"ProxyCommand" の行を追加しています。</p>
   	
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-Host bitbucket.org
-  HostName bitbucket.org
+Host ssh.bitbucket.org
+  HostName ssh.bitbucket.org
   IdentityFile ~/.ssh/bitbucket/id_ed25519
   User git
   Port 22
@@ -326,7 +331,7 @@ ssh-ed25519 **********
     <h3>1-6. 接続できるか確認</h3>
     <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-$ ssh -T git@bitbucket.org
+$ ssh -T git@ssh.bitbucket.org
 authenticated via ssh key.
 
 You can use git to connect to Bitbucket. Shell access is disabled
@@ -335,10 +340,10 @@ $</pre>
     <p>&nbsp;</p>
     <p>
     <h3>1-7. git clone</h3>
-    <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
+    <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@ssh.bitbucket.org:&quot; 
     とします。</p>
     
-    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">$ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
+    <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">$ git clone git@ssh.bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
     
     <p><img alt="" src="How%20to%20use%20SSH%20key/img17.gif"></p>
     <p>&nbsp;</p>
@@ -505,8 +510,8 @@ C:\Users\[ユーザ名]\.ssh\bitbucket&gt;</pre>
     
     <p><strong>["config"]</strong></p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-Host bitbucket.org
-  HostName bitbucket.org
+Host ssh.bitbucket.org
+  HostName ssh.bitbucket.org
   IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
   Port 22
@@ -518,7 +523,7 @@ Host bitbucket.org
   	<p>ポート番号 22 を遮断している環境で 443 を使える場合、こちらの設定を使用してみてください。</p>
   	
   	<pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-Host bitbucket.org
+Host ssh.bitbucket.org
   HostName <span class="auto-style1"><strong>altssh.</strong></span>bitbucket.org 
   IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
@@ -532,8 +537,8 @@ Host bitbucket.org
     <p>"ProxyCommand" の行を追加しています。</p>
     
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-Host bitbucket.org
-  HostName bitbucket.org
+Host ssh.bitbucket.org
+  HostName ssh.bitbucket.org
   IdentityFile C:\Users\[ユーザ名]\.ssh\bitbucket\id_ed25519
   User git
   Port 22
@@ -584,7 +589,7 @@ ssh-ed25519 **********
     <p>&quot;ssh -T&quot; コマンドで接続できるかを確認します。<br>以下のように表示されればOKです。</p>
     <p>
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-$ ssh -T git@bitbucket.org
+$ ssh -T git@ssh.bitbucket.org
 authenticated via ssh key.
 
 You can use git to connect to Bitbucket. Shell access is disabled
@@ -594,11 +599,11 @@ $</pre>
     <p>&nbsp;</p>
     
     <h3>2-7. git clone</h3>
-    <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@bitbucket.org:&quot; 
+    <p>リモートで作成済みのリポジトリを clone してみることで最後の動作確認としてみます。<br>コマンドは下記の通り先頭を &quot;git@ssh.bitbucket.org:&quot; 
     とします。</p>
 
     <pre style="color: #FFFFFF; background-color: #000000; width: 800px;">
-$ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
+$ git clone git@ssh.bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.git</pre>
 
     <p>&nbsp;</p>
     <p>
@@ -661,6 +666,14 @@ $ git clone git@bitbucket.org:&lt;ユーザ名&gt;/&lt;リポジトリ名&gt;.gi
   <section>
   	<h2 style="margin-bottom:5px">変更履歴</h2>
   	<table>
+  	  <tr>
+  	    <td class="td_history_date">2026-10-25</td>
+  	    <td class="td_history_separator">-</td>
+  	    <td class="td_history">SSH 接続先URL を ssh.bitbucket.org へ変更<br>関連： 
+        <a href="https://community.atlassian.com/forums/discussion/3234032/upcoming-change-to-bitbucket-cloud-ssh-access-move-from-bitbucket-org-to-ssh-bitbucket-org?utm_source=sfmc&amp;utm_medium=email&amp;utm_campaign=ACM-17162&amp;jobid=108328089&amp;subid=1681246197" target="_blank">
+        Upcoming change to Bitbucket Cloud SSH access: move from bitbucket.org 
+        to ssh.bitbucket.org - Atlassian</a></td>
+  	  </tr>
   	  <tr>
   	    <td class="td_history_date">2024-02-29</td>
   	    <td class="td_history_separator">-</td>
