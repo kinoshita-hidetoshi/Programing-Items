@@ -144,8 +144,8 @@ $ ssh-keygen -t ed25519 -C hoge@foo.com          <span class="auto-style1">&lt;-
 Generating public/private ed25519 key pair.
 Enter file in which to save the key (/home/[ユーザ名]/.ssh/id_ed25519):/home/[ユーザ名]/.ssh/bitbucket/id_ed25519
                                                  <span class="auto-style1">&lt;----- "bitbucket"フォルダへ修正してEnter</span>
-Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
-Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;----- 入力後 Enter を押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;----- 入力後 Enter を押す</span>
 Your identification has been saved in /home/[ユーザ名]/.ssh/bitbucket/id_ed25519.
 Your public key has been saved in /home/[ユーザ名]/.ssh/bitbucket/id_ed25519.pub.
 The key fingerprint is:
@@ -163,6 +163,7 @@ The key's randomart image is:
 |       .++o      |
 +----[SHA256]-----+
 $</pre>
+
     <p>&nbsp;</p>
 
     <p>これで公開鍵と秘密鍵を作成できました。</p>
@@ -171,10 +172,22 @@ $</pre>
       <li>id_ed25519.pub: 公開鍵</li>
     </ul>
   
+    <p>&nbsp;</p>
+    
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p class="status_title"><strong>注意</strong></p>
+        <p>パスフレーズ（passfhrase）は必須ではありませんが、秘密鍵を不正から保護するセキュリティ対策として指定することを推奨します。&nbsp;</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+    
     <div class="status_information">
       <div></div>
       <div>
-        <p><strong>NOTE</strong></p>
+        <p class="status_title"><strong>NOTE</strong></p>
         <p>説明を <span class="cpp-source">ssh-keygen -t ed25519</span> 
         へ変更しました。動作確認済みです。</p>
         <ul>
@@ -413,8 +426,8 @@ $</pre>
 Generating public/private ed25519 key pair.
 Enter file in which to save the key (C:\Users\[ユーザ名]/.ssh/id_ed25519): c:\users\[ユーザ名]/.ssh/bitbucket/id_ed25519
                                                  <span class="auto-style1">&lt;----- "bitbucket"フォルダへ修正してEnter</span>
-Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;-----Enterを押す</span>
-Enter same passphrase again:                     <span class="auto-style1">&lt;-----Enterを押す</span>
+Enter passphrase (empty for no passphrase):      <span class="auto-style1">&lt;----- 入力後 Enter を押す</span>
+Enter same passphrase again:                     <span class="auto-style1">&lt;----- 入力後 Enter を押す</span>
 Your identification has been saved in c:\Users\[ユーザ名]/.ssh/bitbucket/id_ed25519.
 Your public key has been saved in c:\Users\[ユーザ名]/.ssh/bitbucket/id_ed25519.pub.
 The key fingerprint is:
@@ -440,7 +453,19 @@ C:\Users\[ユーザ名]\.ssh\bitbucket&gt;</pre>
       <li>id_ed25519:&nbsp;&nbsp;&nbsp;&nbsp; 秘密鍵</li>
       <li>id_ed25519.pub: 公開鍵</li>
     </ul>
-  
+
+    <p>&nbsp;</p>
+      
+    <div class="status_warning">
+      <div></div>
+      <div>
+        <p class="status_title"><strong>注意</strong></p>
+        <p>パスフレーズ（passfhrase）は必須ではありませんが、秘密鍵を不正から保護するセキュリティ対策として指定することを推奨します。&nbsp;</p>
+      </div>
+    </div>
+
+    <p>&nbsp;</p>
+      
     <div class="status_information">
       <div></div>
       <div>
